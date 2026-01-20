@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Bear CSS Variables */
+:root {
+  /* Primary colors (Bear Pink) */
+  --bear-primary-50: #fdf2f8;
+  --bear-primary-100: #fce7f3;
+  --bear-primary-200: #fbcfe8;
+  --bear-primary-300: #f9a8d4;
+  --bear-primary-400: #f472b6;
+  --bear-primary-500: #ec4899;
+  --bear-primary-600: #db2777;
+  --bear-primary-700: #be185d;
+  --bear-primary-800: #9d174d;
+  --bear-primary-900: #831843;
+  --bear-primary-950: #500724;
+
+  /* Background colors - Light mode */
+  --bear-bg-primary: #ffffff;
+  --bear-bg-secondary: #f9fafb;
+  --bear-bg-tertiary: #f3f4f6;
+
+  /* Text colors - Light mode */
+  --bear-text-primary: #111827;
+  --bear-text-secondary: #4b5563;
+  --bear-text-muted: #9ca3af;
+
+  /* Border colors - Light mode */
+  --bear-border-default: #e5e7eb;
+}
+
+/* Dark mode variables */
+.bear-dark {
+  --bear-bg-primary: #09090b;
+  --bear-bg-secondary: #18181b;
+  --bear-bg-tertiary: #27272a;
+
+  --bear-text-primary: #fafafa;
+  --bear-text-secondary: #a1a1aa;
+  --bear-text-muted: #71717a;
+
+  --bear-border-default: #27272a;
+}
+
+/* Base component layer */
+@layer components {
+  /* Focus ring utility */
+  .bear-focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-pink-500/50 focus:ring-offset-2;
+  }
+
+  /* Transition utility */
+  .bear-transition {
+    @apply transition-all duration-200 ease-in-out;
+  }
+}
+

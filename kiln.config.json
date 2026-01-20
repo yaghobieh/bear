@@ -1,0 +1,22 @@
+{
+  "title": "Bear UI Components",
+  "description": "Strong, reliable React UI components - ForgeStack Bear Library",
+  "theme": "dark",
+  "primaryColor": "#ec4899",
+  "stories": [
+    "src/**/*.kiln.tsx",
+    "src/**/*.story.tsx",
+    "src/**/*.stories.tsx"
+  ],
+  "port": 6006,
+  "showCodeDefault": true,
+  "testing": false,
+  "cssImport": "../src/styles/main.css",
+  "wrapper": {
+    "from": "../src/context/BearProvider",
+    "name": "BearProvider",
+    "props": {
+      "defaultMode": "dark"
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import { FC, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { cn } from '../../utils/cn';
-import { XIcon } from '../Icon';
+import { CloseIcon } from '../Icon/icons/navigation';
 import type { ModalProps } from './Modal.types';
 
 const sizeClasses = {
@@ -48,14 +48,12 @@ export const Modal: FC<ModalProps> = ({
 
   const modalContent = (
     <div className="bear-fixed bear-inset-0 bear-z-50 bear-flex bear-items-center bear-justify-center">
-      {/* Backdrop */}
       <div
         className="bear-absolute bear-inset-0 bear-bg-black/60 bear-backdrop-blur-sm bear-transition-opacity"
         onClick={closeOnBackdrop ? onClose : undefined}
         aria-hidden="true"
       />
 
-      {/* Modal */}
       <div
         role="dialog"
         aria-modal="true"
@@ -69,7 +67,6 @@ export const Modal: FC<ModalProps> = ({
           className
         )}
       >
-        {/* Header */}
         {(title || showCloseButton) && (
           <div className="bear-flex bear-items-center bear-justify-between bear-px-6 bear-py-4 bear-border-b bear-border-gray-700">
             {title && (
@@ -86,18 +83,16 @@ export const Modal: FC<ModalProps> = ({
                 className="bear-p-1 bear-rounded-lg bear-text-gray-400 hover:bear-text-white hover:bear-bg-gray-700 bear-transition-colors"
                 aria-label="Close modal"
               >
-                <XIcon className="bear-w-5 bear-h-5" />
+                <CloseIcon className="bear-w-5 bear-h-5" />
               </button>
             )}
           </div>
         )}
 
-        {/* Body */}
         <div className="bear-px-6 bear-py-4 bear-text-gray-300">
           {children}
         </div>
 
-        {/* Footer */}
         {footer && (
           <div className="bear-flex bear-items-center bear-justify-end bear-gap-3 bear-px-6 bear-py-4 bear-border-t bear-border-gray-700">
             {footer}

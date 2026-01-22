@@ -1,6 +1,6 @@
 {
   "name": "@forgedevstack/bear",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Strong, reliable React UI components. Tailwind-powered, zero config required. The protective force of ForgeStack.",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -44,6 +44,9 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "test": "vitest",
     "kiln": "kiln dev",
+    "portal": "cd portal && npm run dev",
+    "portal:install": "cd portal && npm install",
+    "portal:build": "cd portal && npm run build",
     "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
@@ -87,12 +90,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AY-Space/forgestack.git",
+    "url": "https://github.com/yaghobieh/bear.git",
     "directory": "packages/ember"
   },
   "homepage": "https://forgestack.dev/bear",
   "bugs": {
-    "url": "https://github.com/AY-Space/forgestack/issues"
+    "url": "https://github.com/yaghobieh/bear/issues"
   }
 }
 

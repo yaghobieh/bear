@@ -156,7 +156,6 @@ export const Autocomplete: FC<AutocompleteProps> = ({
           )}
         />
 
-        {/* Loading/Search icon */}
         <div className="bear-absolute bear-right-3 bear-top-1/2 bear-transform bear--translate-y-1/2">
           {loading ? (
             <svg className="bear-animate-spin bear-w-4 bear-h-4 bear-text-gray-400" viewBox="0 0 24 24" fill="none">
@@ -171,7 +170,6 @@ export const Autocomplete: FC<AutocompleteProps> = ({
         </div>
       </div>
 
-      {/* Dropdown */}
       {isOpen && !disabled && filteredOptions.length > 0 && (
         <div
           ref={listRef}
@@ -203,14 +201,12 @@ export const Autocomplete: FC<AutocompleteProps> = ({
         </div>
       )}
 
-      {/* Empty state */}
       {isOpen && !disabled && filteredOptions.length === 0 && value && !loading && (
         <div className="bear-absolute bear-z-50 bear-w-full bear-mt-1 bear-py-3 bear-px-4 bear-bg-white dark:bear-bg-gray-800 bear-border bear-border-gray-200 dark:bear-border-gray-700 bear-rounded-lg bear-shadow-lg bear-text-sm bear-text-gray-500">
           {freeSolo ? 'Press Enter to use this value' : 'No results found'}
         </div>
       )}
 
-      {/* Helper/Error text */}
       {(helperText || error) && (
         <p className={cn(
           'bear-mt-1.5 bear-text-xs',

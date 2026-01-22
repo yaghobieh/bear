@@ -6,11 +6,14 @@ import type { TooltipProps } from './Tooltip.types';
 export const Tooltip: FC<TooltipProps> = ({
   content,
   children,
-  position = 'top',
+  position: positionProp,
+  placement,
   delay = 200,
   className,
   disabled = false,
 }) => {
+  // Support both position and placement props
+  const position = placement || positionProp || 'top';
   const [isVisible, setIsVisible] = useState(false);
   const [coords, setCoords] = useState({ x: 0, y: 0 });
   const triggerRef = useRef<HTMLDivElement>(null);

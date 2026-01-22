@@ -74,14 +74,12 @@ export const Drawer: FC<DrawerProps> = ({
 
   const drawerContent = (
     <div className="bear-fixed bear-inset-0 bear-z-50">
-      {/* Backdrop */}
       <div
         className="bear-absolute bear-inset-0 bear-bg-black/60 bear-backdrop-blur-sm"
         onClick={closeOnBackdrop ? onClose : undefined}
         aria-hidden="true"
       />
 
-      {/* Drawer */}
       <div
         role="dialog"
         aria-modal="true"
@@ -99,7 +97,6 @@ export const Drawer: FC<DrawerProps> = ({
           className
         )}
       >
-        {/* Header */}
         {(title || showCloseButton) && (
           <div className="bear-flex bear-items-center bear-justify-between bear-px-4 bear-py-3 bear-border-b bear-border-gray-700">
             {title && (
@@ -122,7 +119,6 @@ export const Drawer: FC<DrawerProps> = ({
           </div>
         )}
 
-        {/* Content */}
         <div className="bear-flex-1 bear-overflow-y-auto bear-p-4 bear-text-gray-300">
           {children}
         </div>

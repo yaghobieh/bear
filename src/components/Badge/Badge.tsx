@@ -19,6 +19,7 @@ const variantClasses: Record<EmberVariant | 'neutral', string> = {
   info: 'ember-bg-blue-100 ember-text-blue-700 dark:ember-bg-blue-900/30 dark:ember-text-blue-400',
   ghost: 'ember-bg-gray-100 ember-text-gray-700 dark:ember-bg-gray-800 dark:ember-text-gray-300',
   outline: 'ember-bg-transparent ember-text-gray-700 ember-border ember-border-gray-300 dark:ember-text-gray-300 dark:ember-border-gray-600',
+  error: 'ember-bg-red-100 ember-text-red-700 dark:ember-bg-red-900/30 dark:ember-text-red-400',
   neutral: 'ember-bg-gray-100 ember-text-gray-600 dark:ember-bg-gray-800 dark:ember-text-gray-400',
 };
 
@@ -31,6 +32,7 @@ const dotVariantColors: Record<EmberVariant | 'neutral', string> = {
   info: 'ember-bg-blue-500',
   ghost: 'ember-bg-gray-500',
   outline: 'ember-bg-gray-500',
+  error: 'ember-bg-red-500',
   neutral: 'ember-bg-gray-500',
 };
 

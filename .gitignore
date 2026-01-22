@@ -1,3 +1,5 @@
 node_modules
 dist
 demo
+portal/dist
+portal/node_modules

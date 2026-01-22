@@ -71,6 +71,13 @@ const variantClasses: Record<EmberVariant, string> = {
     disabled:ember-text-ember-300 disabled:ember-border-ember-300 disabled:ember-cursor-not-allowed
     dark:hover:ember-bg-ember-950 dark:active:ember-bg-ember-900
   `,
+  error: `
+    ember-bg-red-500 ember-text-white
+    hover:ember-bg-red-600
+    focus:ember-ring-2 focus:ember-ring-red-500/50 focus:ember-ring-offset-2
+    active:ember-bg-red-700
+    disabled:ember-bg-red-300 disabled:ember-cursor-not-allowed
+  `,
 };
 
 /**

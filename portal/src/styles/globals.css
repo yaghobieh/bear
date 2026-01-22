@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #475569;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* Thin scrollbar for sidebar */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.4);
+  border-radius: 2px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgba(156, 163, 175, 0.6);
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(75, 85, 99, 0.5);
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgba(75, 85, 99, 0.7);
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Bear loader animation */
+@keyframes bear-bounce {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-20px) scale(1.05);
+  }
+}
+
+@keyframes bear-wiggle {
+  0%, 100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.bear-bounce {
+  animation: bear-bounce 1.5s ease-in-out infinite;
+}
+
+.bear-wiggle {
+  animation: bear-wiggle 0.3s ease-in-out infinite;
+}
+
+.fade-in {
+  animation: fade-in 0.3s ease-out forwards;
+}
+
+/* Code block syntax highlighting */
+.code-block {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* Selection color */
+::selection {
+  background-color: rgba(236, 72, 153, 0.3);
+}
+
+/* Focus ring */
+*:focus-visible {
+  outline: 2px solid #ec4899;
+  outline-offset: 2px;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Base styles */
+body {
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Nav link active state */
+.nav-link-active {
+  background-color: rgba(236, 72, 153, 0.1);
+  color: #ec4899;
+  border-left: 2px solid #ec4899;
+}
+
+.dark .nav-link-active {
+  background-color: rgba(236, 72, 153, 0.15);
+}
+

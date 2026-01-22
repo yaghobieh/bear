@@ -97,7 +97,6 @@ export const Carousel: FC<CarouselProps> = ({
       onTouchEnd={onTouchEnd}
       data-testid={testId}
     >
-      {/* Slides container */}
       <div
         className="bear-flex bear-transition-transform bear-duration-500 bear-ease-out"
         style={{
@@ -116,7 +115,6 @@ export const Carousel: FC<CarouselProps> = ({
         ))}
       </div>
       
-      {/* Arrow buttons */}
       {showArrows && totalSlides > slidesToShow && (
         <>
           <button
@@ -156,7 +154,6 @@ export const Carousel: FC<CarouselProps> = ({
         </>
       )}
       
-      {/* Dots */}
       {showDots && totalSlides > slidesToShow && (
         <div className="bear-flex bear-justify-center bear-gap-2 bear-mt-4">
           {Array.from({ length: maxIndex + 1 }).map((_, index) => (

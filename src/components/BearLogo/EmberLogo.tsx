@@ -32,7 +32,6 @@ export const EmberLogo: FC<EmberLogoProps> = ({
       )}
     >
       <defs>
-        {/* Main flame gradient */}
         <linearGradient id="emberFlameGrad" x1="50%" y1="100%" x2="50%" y2="0%">
           <stop offset="0%" stopColor="#ea580c" />
           <stop offset="30%" stopColor="#f97316" />
@@ -40,14 +39,12 @@ export const EmberLogo: FC<EmberLogoProps> = ({
           <stop offset="100%" stopColor="#fed7aa" />
         </linearGradient>
         
-        {/* Inner flame gradient */}
         <linearGradient id="emberCoreGrad" x1="50%" y1="100%" x2="50%" y2="0%">
           <stop offset="0%" stopColor="#f97316" />
           <stop offset="50%" stopColor="#fbbf24" />
           <stop offset="100%" stopColor="#fef3c7" />
         </linearGradient>
 
-        {/* Glow filter */}
         <filter id="emberGlow" x="-50%" y="-50%" width="200%" height="200%">
           <feGaussianBlur stdDeviation="3" result="coloredBlur" />
           <feMerge>
@@ -57,7 +54,6 @@ export const EmberLogo: FC<EmberLogoProps> = ({
         </filter>
       </defs>
 
-      {/* Background circle */}
       <circle
         cx="50"
         cy="50"
@@ -67,7 +63,6 @@ export const EmberLogo: FC<EmberLogoProps> = ({
         strokeWidth="2"
       />
 
-      {/* Main flame */}
       <path
         d="M50 15
            C35 30 25 45 25 60
@@ -85,7 +80,6 @@ export const EmberLogo: FC<EmberLogoProps> = ({
         filter="url(#emberGlow)"
       />
 
-      {/* Inner bright core */}
       <path
         d="M50 45
            C45 50 42 55 42 62
@@ -97,7 +91,6 @@ export const EmberLogo: FC<EmberLogoProps> = ({
         opacity="0.9"
       />
 
-      {/* Sparkle effects */}
       <circle cx="38" cy="35" r="2" fill="#fed7aa" opacity="0.8" />
       <circle cx="62" cy="38" r="1.5" fill="#fef3c7" opacity="0.7" />
       <circle cx="45" cy="28" r="1" fill="#ffffff" opacity="0.6" />

@@ -7,6 +7,8 @@ export interface TooltipProps {
   children: ReactNode;
   /** Tooltip position */
   position?: 'top' | 'bottom' | 'left' | 'right';
+  /** Alias for position */
+  placement?: 'top' | 'bottom' | 'left' | 'right';
   /** Delay before showing (ms) */
   delay?: number;
   /** Additional class names */

@@ -130,7 +130,6 @@ export const MultiSelect: FC<MultiSelectProps> = ({
           }
         }}
       >
-        {/* Selected tags */}
         {selectedLabels.map((lbl, idx) => (
           <span
             key={selectedValues[idx]}
@@ -152,7 +151,6 @@ export const MultiSelect: FC<MultiSelectProps> = ({
           </span>
         ))}
 
-        {/* Search input */}
         {searchable && !disabled && (
           <input
             ref={inputRef}
@@ -170,7 +168,6 @@ export const MultiSelect: FC<MultiSelectProps> = ({
           />
         )}
 
-        {/* Dropdown indicator */}
         <svg
           className={cn(
             'bear-w-4 bear-h-4 bear-text-gray-400 bear-transition-transform bear-ml-auto',
@@ -184,7 +181,6 @@ export const MultiSelect: FC<MultiSelectProps> = ({
         </svg>
       </div>
 
-      {/* Dropdown */}
       {isOpen && !disabled && filteredOptions.length > 0 && (
         <div className="bear-absolute bear-z-50 bear-w-full bear-mt-1 bear-py-1 bear-bg-white dark:bear-bg-gray-800 bear-border bear-border-gray-200 dark:bear-border-gray-700 bear-rounded-lg bear-shadow-lg bear-max-h-60 bear-overflow-auto">
           {filteredOptions.map((opt) => (
@@ -206,14 +202,12 @@ export const MultiSelect: FC<MultiSelectProps> = ({
         </div>
       )}
 
-      {/* Empty state */}
       {isOpen && !disabled && filteredOptions.length === 0 && search && (
         <div className="bear-absolute bear-z-50 bear-w-full bear-mt-1 bear-py-3 bear-px-4 bear-bg-white dark:bear-bg-gray-800 bear-border bear-border-gray-200 dark:bear-border-gray-700 bear-rounded-lg bear-shadow-lg bear-text-sm bear-text-gray-500">
           No options found
         </div>
       )}
 
-      {/* Helper/Error text */}
       {(helperText || error) && (
         <p className={cn(
           'bear-mt-1.5 bear-text-xs',

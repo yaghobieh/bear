@@ -1,0 +1,30 @@
+<svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Head -->
+  <ellipse cx="50" cy="50" rx="35" ry="33" fill="#f9a8d4"/>
+  
+  <!-- Ears -->
+  <ellipse cx="20" cy="25" rx="14" ry="14" fill="#f9a8d4"/>
+  <ellipse cx="20" cy="25" rx="8" ry="8" fill="#fce7f3"/>
+  <ellipse cx="80" cy="25" rx="14" ry="14" fill="#f9a8d4"/>
+  <ellipse cx="80" cy="25" rx="8" ry="8" fill="#fce7f3"/>
+  
+  <!-- Snout -->
+  <ellipse cx="50" cy="58" rx="16" ry="12" fill="#fce7f3"/>
+  
+  <!-- Nose -->
+  <path d="M50 55 L47 52 Q45 50 47 48 Q49 46 50 48 Q51 46 53 48 Q55 50 53 52 L50 55 Z" fill="#be185d"/>
+  
+  <!-- Eyes -->
+  <ellipse cx="38" cy="42" rx="5" ry="6" fill="#1f2937"/>
+  <ellipse cx="36" cy="40" rx="2" ry="2.5" fill="#ffffff"/>
+  <ellipse cx="62" cy="42" rx="5" ry="6" fill="#1f2937"/>
+  <ellipse cx="60" cy="40" rx="2" ry="2.5" fill="#ffffff"/>
+  
+  <!-- Smile -->
+  <path d="M42 62 Q50 68 58 62" stroke="#be185d" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  
+  <!-- Cheeks -->
+  <ellipse cx="28" cy="52" rx="6" ry="4" fill="#f472b6" opacity="0.4"/>
+  <ellipse cx="72" cy="52" rx="6" ry="4" fill="#f472b6" opacity="0.4"/>
+</svg>
+

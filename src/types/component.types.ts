@@ -1,12 +1,13 @@
 /**
- * Ember Component Types
- * Shared types used across all Ember components
+ * Bear Component Types
+ * Shared types used across all Bear components
  */
 
 import { ReactNode, CSSProperties } from 'react';
 
 // Size variants
 export type EmberSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+// BearSize is exported from theme.types.ts
 
 // Color variants
 export type EmberVariant = 
@@ -17,7 +18,10 @@ export type EmberVariant =
   | 'danger' 
   | 'info' 
   | 'ghost' 
-  | 'outline';
+  | 'outline'
+  | 'error'; // Added error variant
+
+export type BearVariant = EmberVariant; // Alias for Bear
 
 // Common props shared across components
 export interface EmberBaseProps {

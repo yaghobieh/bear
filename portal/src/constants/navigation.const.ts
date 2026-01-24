@@ -17,7 +17,7 @@ export interface NavGroup {
 
 export const BEAR_VERSION = '1.0.0';
 
-export const GITHUB_URL = 'https://github.com/forgedevstack/bear';
+export const GITHUB_URL = 'https://github.com/yaghobieh/bear.git';
 export const NPM_URL = 'https://www.npmjs.com/package/@forgedevstack/bear';
 
 export const NAVIGATION: NavGroup[] = [

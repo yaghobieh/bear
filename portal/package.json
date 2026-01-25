@@ -12,7 +12,7 @@
   "scripts": {
     "predev": "cd .. && npm run build",
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "npx tsc && npx vite build",
     "preview": "vite preview"
   },
   "devDependencies": {

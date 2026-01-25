@@ -46,7 +46,7 @@
     "kiln": "kiln dev",
     "portal": "cd portal && npm run dev",
     "portal:install": "cd portal && npm install",
-    "portal:build": "npm run build && cd portal && npm install && npm run build",
+    "portal:build": "npm install --include=dev && npm run build && cd portal && npm install --include=dev && npm run build",
     "prepublishOnly": "npm run build",
     "release": "npm run build && npm publish --access public",
     "release:patch": "npm version patch && npm run release",

@@ -3,22 +3,22 @@ import { cn } from '../../utils/cn';
 import type { DropdownProps, DropdownItem } from './Dropdown.types';
 
 const SIZE_CLASSES = {
-  xs: 'ember-text-xs ember-py-1 ember-px-2',
-  sm: 'ember-text-sm ember-py-1.5 ember-px-3',
-  md: 'ember-text-sm ember-py-2 ember-px-3',
-  lg: 'ember-text-base ember-py-2.5 ember-px-4',
-  xl: 'ember-text-lg ember-py-3 ember-px-5',
+  xs: 'bear-text-xs bear-py-1 bear-px-2',
+  sm: 'bear-text-sm bear-py-1.5 bear-px-3',
+  md: 'bear-text-sm bear-py-2 bear-px-3',
+  lg: 'bear-text-base bear-py-2.5 bear-px-4',
+  xl: 'bear-text-lg bear-py-3 bear-px-5',
 } as const;
 
 const PLACEMENT_CLASSES = {
-  'bottom-start': 'ember-top-full ember-left-0 ember-mt-1',
-  'bottom-end': 'ember-top-full ember-right-0 ember-mt-1',
-  'bottom': 'ember-top-full ember-left-1/2 -ember-translate-x-1/2 ember-mt-1',
-  'top-start': 'ember-bottom-full ember-left-0 ember-mb-1',
-  'top-end': 'ember-bottom-full ember-right-0 ember-mb-1',
-  'top': 'ember-bottom-full ember-left-1/2 -ember-translate-x-1/2 ember-mb-1',
-  'left': 'ember-right-full ember-top-0 ember-mr-1',
-  'right': 'ember-left-full ember-top-0 ember-ml-1',
+  'bottom-start': 'bear-top-full bear-left-0 bear-mt-1',
+  'bottom-end': 'bear-top-full bear-right-0 bear-mt-1',
+  'bottom': 'bear-top-full bear-left-1/2 -bear-translate-x-1/2 bear-mt-1',
+  'top-start': 'bear-bottom-full bear-left-0 bear-mb-1',
+  'top-end': 'bear-bottom-full bear-right-0 bear-mb-1',
+  'top': 'bear-bottom-full bear-left-1/2 -bear-translate-x-1/2 bear-mb-1',
+  'left': 'bear-right-full bear-top-0 bear-mr-1',
+  'right': 'bear-left-full bear-top-0 bear-ml-1',
 } as const;
 
 /**
@@ -159,7 +159,7 @@ export const Dropdown: FC<DropdownProps> = ({
       return (
         <div
           key={item.key}
-          className="ember-my-1 ember-mx-2 ember-h-px ember-bg-gray-200 dark:ember-bg-gray-700"
+          className="bear-my-1 bear-mx-2 bear-h-px bear-bg-gray-200 dark:bear-bg-gray-700"
           role="separator"
         />
       );
@@ -169,7 +169,7 @@ export const Dropdown: FC<DropdownProps> = ({
       return (
         <div
           key={item.key}
-          className="ember-px-3 ember-py-1.5 ember-text-xs ember-font-semibold ember-uppercase ember-tracking-wider ember-text-gray-500 dark:ember-text-gray-400"
+          className="bear-px-3 bear-py-1.5 bear-text-xs bear-font-semibold bear-uppercase bear-tracking-wider bear-text-gray-500 dark:bear-text-gray-400"
         >
           {item.label}
         </div>
@@ -191,29 +191,29 @@ export const Dropdown: FC<DropdownProps> = ({
         onClick={() => handleItemClick(item)}
         onMouseEnter={() => setFocusedIndex(selectableIndex)}
         className={cn(
-          'ember-w-full ember-flex ember-items-center ember-gap-2 ember-text-left ember-border-none ember-bg-transparent',
+          'bear-w-full bear-flex bear-items-center bear-gap-2 bear-text-left bear-border-none bear-bg-transparent',
           SIZE_CLASSES[size],
-          'ember-transition-colors ember-cursor-pointer',
-          isFocused && 'ember-bg-gray-100 dark:ember-bg-gray-800',
+          'bear-transition-colors bear-cursor-pointer',
+          isFocused && 'bear-bg-gray-100 dark:bear-bg-gray-800',
           item.danger 
-            ? 'ember-text-red-600 dark:ember-text-red-400 hover:ember-bg-red-50 dark:hover:ember-bg-red-900/20'
-            : 'ember-text-gray-700 dark:ember-text-gray-200 hover:ember-bg-gray-100 dark:hover:ember-bg-gray-800',
-          item.disabled && 'ember-opacity-50 ember-cursor-not-allowed ember-pointer-events-none'
+            ? 'bear-text-red-600 dark:bear-text-red-400 hover:bear-bg-red-50 dark:hover:bear-bg-red-900/20'
+            : 'bear-text-gray-700 dark:bear-text-gray-200 hover:bear-bg-gray-100 dark:hover:bear-bg-gray-800',
+          item.disabled && 'bear-opacity-50 bear-cursor-not-allowed bear-pointer-events-none'
         )}
       >
         {item.icon && (
-          <span className="ember-flex-shrink-0 ember-w-5 ember-h-5 ember-flex ember-items-center ember-justify-center">
+          <span className="bear-flex-shrink-0 bear-w-5 bear-h-5 bear-flex bear-items-center bear-justify-center">
             {item.icon}
           </span>
         )}
-        <span className="ember-flex-1">{item.label}</span>
+        <span className="bear-flex-1">{item.label}</span>
         {item.trailing && (
-          <span className="ember-flex-shrink-0 ember-text-gray-400">
+          <span className="bear-flex-shrink-0 bear-text-gray-400">
             {item.trailing}
           </span>
         )}
         {item.items && (
-          <svg className="ember-w-4 ember-h-4 ember-text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg className="bear-w-4 bear-h-4 bear-text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <polyline points="9 18 15 12 9 6" />
           </svg>
         )}
@@ -234,7 +234,7 @@ export const Dropdown: FC<DropdownProps> = ({
   return (
     <div
       ref={containerRef}
-      className={cn('ember-relative ember-inline-block', className)}
+      className={cn('bear-relative bear-inline-block', className)}
       data-testid={testId}
       {...props}
     >
@@ -245,12 +245,12 @@ export const Dropdown: FC<DropdownProps> = ({
           ref={menuRef}
           role="menu"
           className={cn(
-            'ember-absolute ember-z-50',
-            'ember-bg-white dark:ember-bg-gray-900',
-            'ember-border ember-border-gray-200 dark:ember-border-gray-700',
-            'ember-rounded-lg ember-shadow-lg',
-            'ember-py-1 ember-overflow-y-auto',
-            'ember-animate-in ember-fade-in-0 ember-zoom-in-95 ember-duration-100',
+            'bear-absolute bear-z-50',
+            'bear-bg-white dark:bear-bg-gray-900',
+            'bear-border bear-border-gray-200 dark:bear-border-gray-700',
+            'bear-rounded-lg bear-shadow-lg',
+            'bear-py-1 bear-overflow-y-auto',
+            'bear-animate-in bear-fade-in-0 bear-zoom-in-95 bear-duration-100',
             PLACEMENT_CLASSES[placement]
           )}
           style={{

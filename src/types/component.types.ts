@@ -23,12 +23,16 @@ export type EmberVariant =
 
 export type BearVariant = EmberVariant; // Alias for Bear
 
+import type { BisProp } from './bis.types';
+
 // Common props shared across components
 export interface EmberBaseProps {
   /** Additional CSS class names */
   className?: string;
   /** Inline styles */
   style?: CSSProperties;
+  /** Bear Inner Style - sx-like overrides (object or (theme) => object) */
+  bis?: BisProp;
   /** Children elements */
   children?: ReactNode;
   /** Test ID for testing */

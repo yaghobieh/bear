@@ -1,6 +1,7 @@
 import { FC, useRef, useState, useCallback } from 'react';
 import { FileUploadProps, UploadedFile } from './FileUpload.types';
 import { cn } from '../../utils/cn';
+import { formatSize } from './FileUpload.utils';
 
 const UploadIcon: FC<{ className?: string }> = ({ className }) => (
   <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -13,14 +14,6 @@ const FileIcon: FC<{ className?: string }> = ({ className }) => (
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
   </svg>
 );
-
-const formatSize = (bytes: number): string => {
-  if (bytes === 0) return '0 Bytes';
-  const k = 1024;
-  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-};
 
 export const FileUpload: FC<FileUploadProps> = ({
   onFilesSelect,

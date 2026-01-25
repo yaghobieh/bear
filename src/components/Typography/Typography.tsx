@@ -19,52 +19,52 @@ const VARIANT_MAP: Record<TypographyVariant, ElementType> = {
 };
 
 const VARIANT_CLASSES: Record<TypographyVariant, string> = {
-  h1: 'ember-text-5xl ember-font-bold ember-tracking-tight',
-  h2: 'ember-text-4xl ember-font-bold ember-tracking-tight',
-  h3: 'ember-text-3xl ember-font-semibold',
-  h4: 'ember-text-2xl ember-font-semibold',
-  h5: 'ember-text-xl ember-font-medium',
-  h6: 'ember-text-lg ember-font-medium',
-  subtitle1: 'ember-text-lg ember-font-normal',
-  subtitle2: 'ember-text-base ember-font-medium',
-  body1: 'ember-text-base ember-font-normal',
-  body2: 'ember-text-sm ember-font-normal',
-  caption: 'ember-text-xs',
-  overline: 'ember-text-xs ember-uppercase ember-tracking-wider',
-  code: 'ember-text-sm ember-font-mono ember-bg-gray-100 dark:ember-bg-gray-800 ember-px-1.5 ember-py-0.5 ember-rounded',
+  h1: 'bear-text-5xl bear-font-bold bear-tracking-tight',
+  h2: 'bear-text-4xl bear-font-bold bear-tracking-tight',
+  h3: 'bear-text-3xl bear-font-semibold',
+  h4: 'bear-text-2xl bear-font-semibold',
+  h5: 'bear-text-xl bear-font-medium',
+  h6: 'bear-text-lg bear-font-medium',
+  subtitle1: 'bear-text-lg bear-font-normal',
+  subtitle2: 'bear-text-base bear-font-medium',
+  body1: 'bear-text-base bear-font-normal',
+  body2: 'bear-text-sm bear-font-normal',
+  caption: 'bear-text-xs',
+  overline: 'bear-text-xs bear-uppercase bear-tracking-wider',
+  code: 'bear-text-sm bear-font-mono bear-bg-gray-100 dark:bear-bg-gray-800 bear-px-1.5 bear-py-0.5 bear-rounded',
 };
 
 const WEIGHT_CLASSES = {
-  thin: 'ember-font-thin',
-  light: 'ember-font-light',
-  normal: 'ember-font-normal',
-  medium: 'ember-font-medium',
-  semibold: 'ember-font-semibold',
-  bold: 'ember-font-bold',
-  extrabold: 'ember-font-extrabold',
+  thin: 'bear-font-thin',
+  light: 'bear-font-light',
+  normal: 'bear-font-normal',
+  medium: 'bear-font-medium',
+  semibold: 'bear-font-semibold',
+  bold: 'bear-font-bold',
+  extrabold: 'bear-font-extrabold',
 };
 
 const ALIGN_CLASSES = {
-  left: 'ember-text-left',
-  center: 'ember-text-center',
-  right: 'ember-text-right',
-  justify: 'ember-text-justify',
+  left: 'bear-text-left',
+  center: 'bear-text-center',
+  right: 'bear-text-right',
+  justify: 'bear-text-justify',
 };
 
 const COLOR_CLASSES = {
-  primary: 'ember-text-gray-900 dark:ember-text-gray-100',
-  secondary: 'ember-text-gray-600 dark:ember-text-gray-400',
-  muted: 'ember-text-gray-400 dark:ember-text-gray-500',
-  success: 'ember-text-green-600 dark:ember-text-green-400',
-  danger: 'ember-text-red-600 dark:ember-text-red-400',
-  warning: 'ember-text-amber-600 dark:ember-text-amber-400',
+  primary: 'bear-text-gray-900 dark:bear-text-gray-100',
+  secondary: 'bear-text-gray-600 dark:bear-text-gray-400',
+  muted: 'bear-text-gray-400 dark:bear-text-gray-500',
+  success: 'bear-text-green-600 dark:bear-text-green-400',
+  danger: 'bear-text-red-600 dark:bear-text-red-400',
+  warning: 'bear-text-amber-600 dark:bear-text-amber-400',
 };
 
 const LINE_HEIGHT_CLASSES = {
-  tight: 'ember-leading-tight',
-  normal: 'ember-leading-normal',
-  relaxed: 'ember-leading-relaxed',
-  loose: 'ember-leading-loose',
+  tight: 'bear-leading-tight',
+  normal: 'bear-leading-normal',
+  relaxed: 'bear-leading-relaxed',
+  loose: 'bear-leading-loose',
 };
 
 /**
@@ -110,14 +110,14 @@ export const Typography: FC<TypographyProps> = ({
         align && ALIGN_CLASSES[align],
         !isCustomColor && color && COLOR_CLASSES[color as keyof typeof COLOR_CLASSES],
         lineHeight && LINE_HEIGHT_CLASSES[lineHeight],
-        italic && 'ember-italic',
-        underline && 'ember-underline',
-        strikethrough && 'ember-line-through',
-        noWrap && 'ember-whitespace-nowrap',
-        inline && 'ember-inline',
-        paragraph && 'ember-mb-4',
-        truncate && !maxLines && 'ember-truncate',
-        truncate && maxLines && 'ember-overflow-hidden',
+        italic && 'bear-italic',
+        underline && 'bear-underline',
+        strikethrough && 'bear-line-through',
+        noWrap && 'bear-whitespace-nowrap',
+        inline && 'bear-inline',
+        paragraph && 'bear-mb-4',
+        truncate && !maxLines && 'bear-truncate',
+        truncate && maxLines && 'bear-overflow-hidden',
         className
       )}
       style={{

@@ -1,8 +1,12 @@
 import { FC, useState, useRef, useEffect } from 'react';
 import { TimePickerProps } from './TimePicker.types';
+import { DateTimePicker } from '../DateTimePicker';
 import { cn } from '../../utils/cn';
+import { formatTime } from './TimePicker.utils';
+import { sizeClasses, variantClasses, TIMEPICKER_HOURS_12H, TIMEPICKER_HOURS_24H, TIMEPICKER_MINUTES_DIVISOR } from './TimePicker.constants';
 
 export const TimePicker: FC<TimePickerProps> = ({
+  mode = 'time',
   value,
   onChange,
   disabled = false,
@@ -16,7 +20,30 @@ export const TimePicker: FC<TimePickerProps> = ({
   className,
   size = 'md',
   variant = 'default',
+  ...rest
 }) => {
+  if (mode === 'datetime') {
+    return (
+      <DateTimePicker
+        value={value instanceof Date ? value : null}
+        onChange={(d) => onChange?.(d)}
+        disabled={disabled}
+        placeholder={placeholder}
+        label={label}
+        error={error}
+        helperText={helperText}
+        timeFormat={format}
+        minuteStep={minuteStep}
+        clearable={clearable}
+        className={className}
+        size={size}
+        variant={variant}
+        {...rest}
+      />
+    );
+  }
+
+  const timeValue = value as string | undefined;
   const [isOpen, setIsOpen] = useState(false);
   const [selectedHour, setSelectedHour] = useState(12);
   const [selectedMinute, setSelectedMinute] = useState(0);
@@ -24,14 +51,14 @@ export const TimePicker: FC<TimePickerProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (value) {
-      const [time, p] = value.split(' ');
+    if (timeValue && typeof timeValue === 'string') {
+      const [time, p] = timeValue.split(' ');
       const [h, m] = time.split(':').map(Number);
       setSelectedHour(h);
       setSelectedMinute(m);
       if (p) setPeriod(p as 'AM' | 'PM');
     }
-  }, [value]);
+  }, [timeValue]);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -43,26 +70,19 @@ export const TimePicker: FC<TimePickerProps> = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const formatTime = (h: number, m: number, p: 'AM' | 'PM'): string => {
-    const hourStr = h.toString().padStart(2, '0');
-    const minStr = m.toString().padStart(2, '0');
-    return format === '12h' ? `${hourStr}:${minStr} ${p}` : `${h < 12 && p === 'PM' ? h + 12 : h}:${minStr}`;
-  };
-
   const handleConfirm = () => {
-    onChange?.(formatTime(selectedHour, selectedMinute, period));
+    onChange?.(formatTime(selectedHour, selectedMinute, period, format));
     setIsOpen(false);
   };
 
-  const hours = format === '12h' ? Array.from({ length: 12 }, (_, i) => i + 1) : Array.from({ length: 24 }, (_, i) => i);
-  const minutes = Array.from({ length: 60 / minuteStep }, (_, i) => i * minuteStep);
-
-  const sizeClasses = { sm: 'bear-py-1.5 bear-px-3 bear-text-sm', md: 'bear-py-2 bear-px-4', lg: 'bear-py-2.5 bear-px-5 bear-text-lg' };
-  const variantClasses = {
-    default: 'bear-bg-zinc-800 bear-border-zinc-600',
-    filled: 'bear-bg-zinc-700 bear-border-transparent',
-    outline: 'bear-bg-transparent bear-border-zinc-500',
-  };
+  const hours =
+    format === '12h'
+      ? Array.from({ length: TIMEPICKER_HOURS_12H }, (_, i) => i + 1)
+      : Array.from({ length: TIMEPICKER_HOURS_24H }, (_, i) => i);
+  const minutes = Array.from(
+    { length: TIMEPICKER_MINUTES_DIVISOR / minuteStep },
+    (_, i) => i * minuteStep
+  );
 
   return (
     <div ref={containerRef} className={cn('bear-relative', className)}>
@@ -77,10 +97,10 @@ export const TimePicker: FC<TimePickerProps> = ({
           variantClasses[variant],
           error ? 'bear-border-red-500' : 'focus:bear-border-pink-500',
           disabled && 'bear-opacity-50 bear-cursor-not-allowed',
-          value ? 'bear-text-white' : 'bear-text-zinc-500'
+          timeValue ? 'bear-text-white' : 'bear-text-zinc-500'
         )}
       >
-        <span>{value || placeholder}</span>
+        <span>{timeValue || placeholder}</span>
         <svg className="bear-w-5 bear-h-5 bear-text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
@@ -145,7 +165,7 @@ export const TimePicker: FC<TimePickerProps> = ({
             )}
           </div>
           <div className="bear-flex bear-gap-2 bear-pt-2 bear-border-t bear-border-zinc-700">
-            {clearable && value && (
+            {clearable && timeValue && (
               <button onClick={() => { onChange?.(''); setIsOpen(false); }} className="bear-flex-1 bear-py-1.5 bear-text-sm bear-text-zinc-400 hover:bear-text-white bear-rounded bear-border bear-border-zinc-600">
                 Clear
               </button>

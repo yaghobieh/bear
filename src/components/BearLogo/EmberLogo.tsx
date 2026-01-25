@@ -26,8 +26,8 @@ export const EmberLogo: FC<EmberLogoProps> = ({
       viewBox="0 0 100 100"
       fill="none"
       className={cn(
-        'ember-logo',
-        animated && 'ember-animate-ember-glow',
+        'bear-logo',
+        animated && 'bear-animate-bear-glow',
         className
       )}
     >

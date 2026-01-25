@@ -162,14 +162,14 @@ export const TransferList: FC<TransferListProps> = ({
     setSearch: (value: string) => void,
     placeholder: string
   ) => (
-    <div className="ember-flex-1 ember-min-w-0 ember-border ember-border-gray-200 dark:ember-border-gray-700 ember-rounded-lg ember-overflow-hidden">
-      <div className="ember-px-4 ember-py-3 ember-bg-gray-50 dark:ember-bg-gray-800/50 ember-border-b ember-border-gray-200 dark:ember-border-gray-700">
-        <div className="ember-flex ember-items-center ember-justify-between">
-          <span className="ember-font-medium ember-text-gray-900 dark:ember-text-gray-100">
+    <div className="bear-flex-1 bear-min-w-0 bear-border bear-border-gray-200 dark:bear-border-gray-700 bear-rounded-lg bear-overflow-hidden">
+      <div className="bear-px-4 bear-py-3 bear-bg-gray-50 dark:bear-bg-gray-800/50 bear-border-b bear-border-gray-200 dark:bear-border-gray-700">
+        <div className="bear-flex bear-items-center bear-justify-between">
+          <span className="bear-font-medium bear-text-gray-900 dark:bear-text-gray-100">
             {title}
           </span>
           {showCount && (
-            <span className="ember-text-sm ember-text-gray-500 dark:ember-text-gray-400">
+            <span className="bear-text-sm bear-text-gray-500 dark:bear-text-gray-400">
               {checked.size}/{items.length}
             </span>
           )}
@@ -181,30 +181,30 @@ export const TransferList: FC<TransferListProps> = ({
             onChange={(e) => setSearch(e.target.value)}
             placeholder={placeholder}
             size="sm"
-            className="ember-mt-2"
+            className="bear-mt-2"
             disabled={disabled}
           />
         )}
       </div>
 
       <div 
-        className="ember-overflow-y-auto"
+        className="bear-overflow-y-auto"
         style={{ maxHeight }}
       >
         {filteredItems.length === 0 ? (
-          <div className="ember-px-4 ember-py-8 ember-text-center ember-text-gray-500 dark:ember-text-gray-400 ember-text-sm">
+          <div className="bear-px-4 bear-py-8 bear-text-center bear-text-gray-500 dark:bear-text-gray-400 bear-text-sm">
             {search ? 'No items match your search' : 'No items'}
           </div>
         ) : (
-          <ul className="ember-list-none ember-m-0 ember-p-0">
+          <ul className="bear-list-none bear-m-0 bear-p-0">
             {filteredItems.map(item => (
               <li
                 key={item.id}
                 className={cn(
-                  'ember-flex ember-items-center ember-gap-3 ember-px-4 ember-py-2',
-                  'ember-border-b ember-border-gray-100 dark:ember-border-gray-800 last:ember-border-b-0',
-                  !item.disabled && !disabled && 'hover:ember-bg-gray-50 dark:hover:ember-bg-gray-800/30 ember-cursor-pointer',
-                  item.disabled && 'ember-opacity-50 ember-cursor-not-allowed'
+                  'bear-flex bear-items-center bear-gap-3 bear-px-4 bear-py-2',
+                  'bear-border-b bear-border-gray-100 dark:bear-border-gray-800 last:bear-border-b-0',
+                  !item.disabled && !disabled && 'hover:bear-bg-gray-50 dark:hover:bear-bg-gray-800/30 bear-cursor-pointer',
+                  item.disabled && 'bear-opacity-50 bear-cursor-not-allowed'
                 )}
                 onClick={() => !item.disabled && !disabled && toggleFn(item.id)}
               >
@@ -218,17 +218,17 @@ export const TransferList: FC<TransferListProps> = ({
                 )}
                 
                 {item.icon && (
-                  <span className="ember-flex-shrink-0 ember-text-gray-500">
+                  <span className="bear-flex-shrink-0 bear-text-gray-500">
                     {item.icon}
                   </span>
                 )}
                 
-                <div className="ember-flex-1 ember-min-w-0">
-                  <div className="ember-text-sm ember-text-gray-900 dark:ember-text-gray-100 ember-truncate">
+                <div className="bear-flex-1 bear-min-w-0">
+                  <div className="bear-text-sm bear-text-gray-900 dark:bear-text-gray-100 bear-truncate">
                     {item.label}
                   </div>
                   {item.secondary && (
-                    <div className="ember-text-xs ember-text-gray-500 dark:ember-text-gray-400 ember-truncate">
+                    <div className="bear-text-xs bear-text-gray-500 dark:bear-text-gray-400 bear-truncate">
                       {item.secondary}
                     </div>
                   )}
@@ -249,8 +249,8 @@ export const TransferList: FC<TransferListProps> = ({
   return (
     <div
       className={cn(
-        'ember-flex ember-items-stretch ember-gap-4',
-        disabled && 'ember-opacity-60 ember-pointer-events-none',
+        'bear-flex bear-items-stretch bear-gap-4',
+        disabled && 'bear-opacity-60 bear-pointer-events-none',
         className
       )}
       data-testid={testId}
@@ -267,14 +267,14 @@ export const TransferList: FC<TransferListProps> = ({
         leftSearchPlaceholder
       )}
 
-      <div className="ember-flex ember-flex-col ember-justify-center ember-gap-2">
+      <div className="bear-flex bear-flex-col bear-justify-center bear-gap-2">
         <Button
           variant="outline"
           size="sm"
           onClick={moveAllRight}
           disabled={disabled || !hasLeftItems}
           aria-label="Move all to right"
-          className="ember-px-2"
+          className="bear-px-2"
         >
           <DoubleChevronRightIcon />
         </Button>
@@ -285,7 +285,7 @@ export const TransferList: FC<TransferListProps> = ({
           onClick={moveRight}
           disabled={disabled || !hasLeftChecked}
           aria-label="Move selected to right"
-          className="ember-px-2"
+          className="bear-px-2"
         >
           <ChevronRightIcon />
         </Button>
@@ -296,7 +296,7 @@ export const TransferList: FC<TransferListProps> = ({
           onClick={moveLeft}
           disabled={disabled || !hasRightChecked}
           aria-label="Move selected to left"
-          className="ember-px-2"
+          className="bear-px-2"
         >
           <ChevronLeftIcon />
         </Button>
@@ -307,7 +307,7 @@ export const TransferList: FC<TransferListProps> = ({
           onClick={moveAllLeft}
           disabled={disabled || !hasRightItems}
           aria-label="Move all to left"
-          className="ember-px-2"
+          className="bear-px-2"
         >
           <DoubleChevronLeftIcon />
         </Button>

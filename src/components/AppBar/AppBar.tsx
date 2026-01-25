@@ -21,21 +21,21 @@ export const AppBar: FC<AppBarProps> = ({
   };
 
   const variantClasses = {
-    default: 'bear-bg-zinc-900',
+    default: 'bear-bg-zinc-900 bear-text-white',
     transparent: 'bear-bg-transparent',
     blur: 'bear-bg-zinc-900/80 bear-backdrop-blur-md',
   };
 
   const colorClasses = {
     default: '',
-    primary: 'bear-bg-pink-600',
-    dark: 'bear-bg-black',
+    primary: 'bear-bg-bear-600 bear-text-white',
+    dark: 'bear-bg-black bear-text-white',
   };
 
   return (
     <header
       className={cn(
-        'bear-h-16 bear-px-4 bear-flex bear-items-center',
+        'bear-w-full bear-h-16 bear-px-4 bear-flex bear-items-center',
         positionClasses[position],
         variant !== 'transparent' && variantClasses[variant],
         colorClasses[color],
@@ -43,7 +43,7 @@ export const AppBar: FC<AppBarProps> = ({
         className
       )}
     >
-      {children || (
+      {children ?? (
         <>
           <div className="bear-flex bear-items-center bear-gap-4">
             {leftContent}

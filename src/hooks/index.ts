@@ -8,4 +8,6 @@ export {
 } from './useMediaQuery';
 export { useClickOutside } from './useClickOutside';
 export { useDisclosure } from './useDisclosure';
+export { useBearStyles } from './useBearStyles';
+export { bearStyled } from './bearStyled';
 

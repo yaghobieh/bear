@@ -4,11 +4,11 @@ import type { BearSize, BearVariant } from '../../types';
 import type { CheckboxProps } from './Checkbox.types';
 
 const SIZE_CLASSES: Record<BearSize, string> = {
-  xs: 'ember-w-3.5 ember-h-3.5',
-  sm: 'ember-w-4 ember-h-4',
-  md: 'ember-w-5 ember-h-5',
-  lg: 'ember-w-6 ember-h-6',
-  xl: 'ember-w-7 ember-h-7',
+  xs: 'bear-w-3.5 bear-h-3.5',
+  sm: 'bear-w-4 bear-h-4',
+  md: 'bear-w-5 bear-h-5',
+  lg: 'bear-w-6 bear-h-6',
+  xl: 'bear-w-7 bear-h-7',
 };
 
 const ICON_SIZE: Record<BearSize, number> = {
@@ -20,11 +20,11 @@ const ICON_SIZE: Record<BearSize, number> = {
 };
 
 const LABEL_SIZE_CLASSES: Record<BearSize, string> = {
-  xs: 'ember-text-xs',
-  sm: 'ember-text-sm',
-  md: 'ember-text-base',
-  lg: 'ember-text-lg',
-  xl: 'ember-text-xl',
+  xs: 'bear-text-xs',
+  sm: 'bear-text-sm',
+  md: 'bear-text-base',
+  lg: 'bear-text-lg',
+  xl: 'bear-text-xl',
 };
 
 const VARIANT_COLORS: Record<BearVariant, string> = {
@@ -112,14 +112,14 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(({
   const isChecked = checked ?? defaultChecked;
 
   return (
-    <div className={cn('ember-flex ember-flex-col', className)}>
+    <div className={cn('bear-flex bear-flex-col', className)}>
       <label
         className={cn(
-          'ember-inline-flex ember-items-center ember-gap-2 ember-cursor-pointer',
-          disabled && 'ember-opacity-50 ember-cursor-not-allowed'
+          'bear-inline-flex bear-items-center bear-gap-2 bear-cursor-pointer',
+          disabled && 'bear-opacity-50 bear-cursor-not-allowed'
         )}
       >
-        <div className="ember-relative ember-flex ember-items-center ember-justify-center">
+        <div className="bear-relative bear-flex bear-items-center bear-justify-center">
           <input
             ref={ref as React.RefObject<HTMLInputElement>}
             type="checkbox"
@@ -127,7 +127,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(({
             defaultChecked={defaultChecked}
             disabled={disabled}
             onChange={onChange}
-            className="ember-sr-only"
+            className="bear-sr-only"
             id={id}
             data-testid={testId}
             {...props}
@@ -135,10 +135,10 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(({
           <div
             className={cn(
               SIZE_CLASSES[size],
-              'ember-rounded ember-border-2 ember-transition-all ember-flex ember-items-center ember-justify-center',
-              error ? 'ember-border-red-500' : 'ember-border-gray-300 dark:ember-border-gray-600',
-              (isChecked || indeterminate) && !error && 'ember-border-transparent',
-              !disabled && 'hover:ember-border-gray-400'
+              'bear-rounded bear-border-2 bear-transition-all bear-flex bear-items-center bear-justify-center',
+              error ? 'bear-border-red-500' : 'bear-border-gray-300 dark:bear-border-gray-600',
+              (isChecked || indeterminate) && !error && 'bear-border-transparent',
+              !disabled && 'hover:bear-border-gray-400'
             )}
             style={{ 
               backgroundColor: (isChecked || indeterminate) ? (error ? '#ef4444' : accentColor) : 'transparent',
@@ -155,8 +155,8 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(({
         {label && (
           <span className={cn(
             LABEL_SIZE_CLASSES[size],
-            'ember-text-gray-700 dark:ember-text-gray-300',
-            error && 'ember-text-red-500'
+            'bear-text-gray-700 dark:bear-text-gray-300',
+            error && 'bear-text-red-500'
           )}>
             {label}
           </span>
@@ -164,8 +164,8 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(({
       </label>
       {helperText && (
         <span className={cn(
-          'ember-text-xs ember-mt-1 ember-ml-7',
-          error ? 'ember-text-red-500' : 'ember-text-gray-500'
+          'bear-text-xs bear-mt-1 bear-ml-7',
+          error ? 'bear-text-red-500' : 'bear-text-gray-500'
         )}>
           {helperText}
         </span>

@@ -4,47 +4,47 @@ import type { ResponsiveProp } from '../../types';
 import type { FlexDirection, FlexWrap, FlexAlign, FlexJustify, FlexGap, FlexProps } from './Flex.types';
 
 const directionClasses: Record<FlexDirection, string> = {
-  row: 'ember-flex-row',
-  'row-reverse': 'ember-flex-row-reverse',
-  column: 'ember-flex-col',
-  'column-reverse': 'ember-flex-col-reverse',
+  row: 'bear-flex-row',
+  'row-reverse': 'bear-flex-row-reverse',
+  column: 'bear-flex-col',
+  'column-reverse': 'bear-flex-col-reverse',
 };
 
 const wrapClasses: Record<FlexWrap, string> = {
-  nowrap: 'ember-flex-nowrap',
-  wrap: 'ember-flex-wrap',
-  'wrap-reverse': 'ember-flex-wrap-reverse',
+  nowrap: 'bear-flex-nowrap',
+  wrap: 'bear-flex-wrap',
+  'wrap-reverse': 'bear-flex-wrap-reverse',
 };
 
 const alignClasses: Record<FlexAlign, string> = {
-  start: 'ember-items-start',
-  center: 'ember-items-center',
-  end: 'ember-items-end',
-  stretch: 'ember-items-stretch',
-  baseline: 'ember-items-baseline',
+  start: 'bear-items-start',
+  center: 'bear-items-center',
+  end: 'bear-items-end',
+  stretch: 'bear-items-stretch',
+  baseline: 'bear-items-baseline',
 };
 
 const justifyClasses: Record<FlexJustify, string> = {
-  start: 'ember-justify-start',
-  center: 'ember-justify-center',
-  end: 'ember-justify-end',
-  between: 'ember-justify-between',
-  around: 'ember-justify-around',
-  evenly: 'ember-justify-evenly',
+  start: 'bear-justify-start',
+  center: 'bear-justify-center',
+  end: 'bear-justify-end',
+  between: 'bear-justify-between',
+  around: 'bear-justify-around',
+  evenly: 'bear-justify-evenly',
 };
 
 const gapClasses: Record<FlexGap, string> = {
-  0: 'ember-gap-0',
-  1: 'ember-gap-1',
-  2: 'ember-gap-2',
-  3: 'ember-gap-3',
-  4: 'ember-gap-4',
-  5: 'ember-gap-5',
-  6: 'ember-gap-6',
-  8: 'ember-gap-8',
-  10: 'ember-gap-10',
-  12: 'ember-gap-12',
-  16: 'ember-gap-16',
+  0: 'bear-gap-0',
+  1: 'bear-gap-1',
+  2: 'bear-gap-2',
+  3: 'bear-gap-3',
+  4: 'bear-gap-4',
+  5: 'bear-gap-5',
+  6: 'bear-gap-6',
+  8: 'bear-gap-8',
+  10: 'bear-gap-10',
+  12: 'bear-gap-12',
+  16: 'bear-gap-16',
 };
 
 const getResponsiveClass = <T extends string | number>(
@@ -94,7 +94,7 @@ export const Flex = forwardRef<HTMLDivElement, FlexProps>(
       <div
         ref={ref}
         className={cn(
-          inline ? 'ember-inline-flex' : 'ember-flex',
+          inline ? 'bear-inline-flex' : 'bear-flex',
           getResponsiveClass(direction, directionClasses),
           getResponsiveClass(wrap, wrapClasses),
           getResponsiveClass(align, alignClasses),

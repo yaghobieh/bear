@@ -3,12 +3,12 @@ import { cn } from '../../utils/cn';
 import type { ContainerSize, ContainerProps } from './Container.types';
 
 const sizeClasses: Record<ContainerSize, string> = {
-  sm: 'ember-max-w-screen-sm',
-  md: 'ember-max-w-screen-md',
-  lg: 'ember-max-w-screen-lg',
-  xl: 'ember-max-w-screen-xl',
-  '2xl': 'ember-max-w-screen-2xl',
-  full: 'ember-max-w-full',
+  sm: 'bear-max-w-screen-sm',
+  md: 'bear-max-w-screen-md',
+  lg: 'bear-max-w-screen-lg',
+  xl: 'bear-max-w-screen-xl',
+  '2xl': 'bear-max-w-screen-2xl',
+  full: 'bear-max-w-full',
 };
 
 /**
@@ -38,10 +38,10 @@ export const Container = forwardRef<HTMLDivElement, ContainerProps>(
       <div
         ref={ref}
         className={cn(
-          'ember-w-full',
+          'bear-w-full',
           sizeClasses[size],
-          centered && 'ember-mx-auto',
-          padding && 'ember-px-4 sm:ember-px-6 lg:ember-px-8',
+          centered && 'bear-mx-auto',
+          padding && 'bear-px-4 sm:bear-px-6 lg:bear-px-8',
           className
         )}
         data-testid={testId}

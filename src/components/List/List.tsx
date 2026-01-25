@@ -41,17 +41,17 @@ export const List = forwardRef<HTMLUListElement, ListProps>(({
   ...props
 }, ref) => {
   const sizeClasses = {
-    xs: 'ember-text-xs',
-    sm: 'ember-text-sm',
-    md: 'ember-text-base',
-    lg: 'ember-text-lg',
-    xl: 'ember-text-xl',
+    xs: 'bear-text-xs',
+    sm: 'bear-text-sm',
+    md: 'bear-text-base',
+    lg: 'bear-text-lg',
+    xl: 'bear-text-xl',
   };
 
   const variantClasses = {
     default: '',
-    bordered: 'ember-border ember-border-gray-200 dark:ember-border-gray-700 ember-rounded-lg',
-    divided: '[&>li:not(:last-child)]:ember-border-b [&>li:not(:last-child)]:ember-border-gray-200 dark:[&>li:not(:last-child)]:ember-border-gray-700',
+    bordered: 'bear-border bear-border-gray-200 dark:bear-border-gray-700 bear-rounded-lg',
+    divided: '[&>li:not(:last-child)]:bear-border-b [&>li:not(:last-child)]:bear-border-gray-200 dark:[&>li:not(:last-child)]:bear-border-gray-700',
   };
 
   return (
@@ -60,8 +60,8 @@ export const List = forwardRef<HTMLUListElement, ListProps>(({
         ref={ref}
         role="list"
         className={cn(
-          'ember-list-none ember-m-0',
-          !disablePadding && 'ember-py-2',
+          'bear-list-none bear-m-0',
+          !disablePadding && 'bear-py-2',
           sizeClasses[size],
           variantClasses[variant],
           className
@@ -115,46 +115,46 @@ export const ListItem = forwardRef<HTMLLIElement, ListItemProps>(({
         }
       }}
       className={cn(
-        'ember-flex ember-items-center ember-gap-3',
-        dense ? 'ember-py-1 ember-px-3' : 'ember-py-2 ember-px-4',
-        isClickable && !disabled && 'ember-cursor-pointer',
-        (hoverable || isClickable) && !disabled && 'hover:ember-bg-gray-100 dark:hover:ember-bg-gray-800',
-        selected && 'ember-bg-primary-50 dark:ember-bg-primary-900/20',
-        disabled && 'ember-opacity-50 ember-cursor-not-allowed',
-        divider && 'ember-border-b ember-border-gray-200 dark:ember-border-gray-700',
+        'bear-flex bear-items-center bear-gap-3',
+        dense ? 'bear-py-1 bear-px-3' : 'bear-py-2 bear-px-4',
+        isClickable && !disabled && 'bear-cursor-pointer',
+        (hoverable || isClickable) && !disabled && 'hover:bear-bg-gray-100 dark:hover:bear-bg-gray-800',
+        selected && 'bear-bg-primary-50 dark:bear-bg-primary-900/20',
+        disabled && 'bear-opacity-50 bear-cursor-not-allowed',
+        divider && 'bear-border-b bear-border-gray-200 dark:bear-border-gray-700',
         className
       )}
       data-testid={testId}
       {...props}
     >
       {leading && (
-        <div className="ember-flex-shrink-0 ember-text-gray-500 dark:ember-text-gray-400">
+        <div className="bear-flex-shrink-0 bear-text-gray-500 dark:bear-text-gray-400">
           {leading}
         </div>
       )}
       
       {(primary || secondary) ? (
-        <div className="ember-flex-1 ember-min-w-0">
+        <div className="bear-flex-1 bear-min-w-0">
           {primary && (
-            <div className="ember-text-gray-900 dark:ember-text-gray-100 ember-truncate">
+            <div className="bear-text-gray-900 dark:bear-text-gray-100 bear-truncate">
               {primary}
             </div>
           )}
           {secondary && (
             <div className={cn(
-              'ember-text-gray-500 dark:ember-text-gray-400 ember-truncate',
-              dense ? 'ember-text-xs' : 'ember-text-sm'
+              'bear-text-gray-500 dark:bear-text-gray-400 bear-truncate',
+              dense ? 'bear-text-xs' : 'bear-text-sm'
             )}>
               {secondary}
             </div>
           )}
         </div>
       ) : (
-        <div className="ember-flex-1 ember-min-w-0">{children}</div>
+        <div className="bear-flex-1 bear-min-w-0">{children}</div>
       )}
       
       {trailing && (
-        <div className="ember-flex-shrink-0 ember-text-gray-500 dark:ember-text-gray-400">
+        <div className="bear-flex-shrink-0 bear-text-gray-500 dark:bear-text-gray-400">
           {trailing}
         </div>
       )}
@@ -178,11 +178,11 @@ export const ListSubheader: FC<ListSubheaderProps> = ({
   <li
     role="presentation"
     className={cn(
-      'ember-py-2 ember-px-4 ember-text-xs ember-font-semibold ember-uppercase ember-tracking-wider',
-      'ember-text-gray-500 dark:ember-text-gray-400',
-      'ember-bg-gray-50 dark:ember-bg-gray-800/50',
-      sticky && 'ember-sticky ember-top-0 ember-z-10',
-      inset && 'ember-pl-12',
+      'bear-py-2 bear-px-4 bear-text-xs bear-font-semibold bear-uppercase bear-tracking-wider',
+      'bear-text-gray-500 dark:bear-text-gray-400',
+      'bear-bg-gray-50 dark:bear-bg-gray-800/50',
+      sticky && 'bear-sticky bear-top-0 bear-z-10',
+      inset && 'bear-pl-12',
       className
     )}
     data-testid={testId}
@@ -205,21 +205,21 @@ export const ListItemText: FC<ListItemTextProps> = ({
 }) => (
   <div
     className={cn(
-      'ember-flex-1 ember-min-w-0',
-      inset && 'ember-pl-9',
+      'bear-flex-1 bear-min-w-0',
+      inset && 'bear-pl-9',
       className
     )}
     {...props}
   >
     {primary && (
-      <div className="ember-text-gray-900 dark:ember-text-gray-100">
+      <div className="bear-text-gray-900 dark:bear-text-gray-100">
         {primary}
       </div>
     )}
     {secondary && (
       <div className={cn(
-        'ember-text-gray-500 dark:ember-text-gray-400',
-        dense ? 'ember-text-xs' : 'ember-text-sm'
+        'bear-text-gray-500 dark:bear-text-gray-400',
+        dense ? 'bear-text-xs' : 'bear-text-sm'
       )}>
         {secondary}
       </div>
@@ -238,9 +238,9 @@ export const ListItemIcon: FC<ListItemIconProps> = ({
 }) => (
   <div
     className={cn(
-      'ember-flex-shrink-0 ember-min-w-[36px]',
-      'ember-text-gray-500 dark:ember-text-gray-400',
-      align === 'top' && 'ember-self-start ember-mt-1',
+      'bear-flex-shrink-0 bear-min-w-[36px]',
+      'bear-text-gray-500 dark:bear-text-gray-400',
+      align === 'top' && 'bear-self-start bear-mt-1',
       className
     )}
     {...props}
@@ -274,12 +274,12 @@ export const ListItemButton: FC<ListItemButtonProps> = ({
       }
     }}
     className={cn(
-      'ember-flex ember-items-center ember-gap-3 ember-w-full ember-text-left',
-      dense ? 'ember-py-1 ember-px-3' : 'ember-py-2 ember-px-4',
-      'ember-cursor-pointer ember-transition-colors',
-      'hover:ember-bg-gray-100 dark:hover:ember-bg-gray-800',
-      selected && 'ember-bg-primary-50 dark:ember-bg-primary-900/20',
-      disabled && 'ember-opacity-50 ember-cursor-not-allowed ember-pointer-events-none',
+      'bear-flex bear-items-center bear-gap-3 bear-w-full bear-text-left',
+      dense ? 'bear-py-1 bear-px-3' : 'bear-py-2 bear-px-4',
+      'bear-cursor-pointer bear-transition-colors',
+      'hover:bear-bg-gray-100 dark:hover:bear-bg-gray-800',
+      selected && 'bear-bg-primary-50 dark:bear-bg-primary-900/20',
+      disabled && 'bear-opacity-50 bear-cursor-not-allowed bear-pointer-events-none',
       className
     )}
     {...props}

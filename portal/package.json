@@ -1,9 +1,10 @@
 {
   "name": "bear-portal",
-  "version": "0.1.0",
+  "version": "1.0.2",
   "private": true,
   "type": "module",
   "scripts": {
+    "predev": "cd .. && npm run build:css",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview"

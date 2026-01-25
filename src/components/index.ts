@@ -161,8 +161,14 @@ export { BearLoader } from './BearLoader';
 export type { BearLoaderProps } from './BearLoader';
 
 // Date & Time
+export { Calendar } from './Calendar';
+export type { CalendarProps, CalendarSlots, CalendarDayProps, CalendarNavActions } from './Calendar';
+
 export { DatePicker } from './DatePicker';
 export type { DatePickerProps } from './DatePicker';
+
+export { DateTimePicker } from './DateTimePicker';
+export type { DateTimePickerProps } from './DateTimePicker';
 
 export { TimePicker } from './TimePicker';
 export type { TimePickerProps } from './TimePicker';

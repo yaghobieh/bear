@@ -5,27 +5,27 @@ import type { CardProps, CardHeaderProps, CardBodyProps, CardFooterProps } from 
 
 const paddingClasses: Record<EmberSize | 'none', string> = {
   none: '',
-  xs: 'ember-p-2',
-  sm: 'ember-p-3',
-  md: 'ember-p-4',
-  lg: 'ember-p-6',
-  xl: 'ember-p-8',
+  xs: 'bear-p-2',
+  sm: 'bear-p-3',
+  md: 'bear-p-4',
+  lg: 'bear-p-6',
+  xl: 'bear-p-8',
 };
 
 const radiusClasses: Record<string, string> = {
   none: '',
-  sm: 'ember-rounded-sm',
-  md: 'ember-rounded-md',
-  lg: 'ember-rounded-lg',
-  xl: 'ember-rounded-xl',
-  '2xl': 'ember-rounded-2xl',
+  sm: 'bear-rounded-sm',
+  md: 'bear-rounded-md',
+  lg: 'bear-rounded-lg',
+  xl: 'bear-rounded-xl',
+  '2xl': 'bear-rounded-2xl',
 };
 
 const variantClasses = {
-  elevated: 'ember-bg-white dark:ember-bg-gray-900 ember-shadow-md',
-  outlined: 'ember-bg-white dark:ember-bg-gray-900 ember-border ember-border-gray-200 dark:ember-border-gray-700',
-  filled: 'ember-bg-gray-100 dark:ember-bg-gray-800',
-  ghost: 'ember-bg-transparent',
+  elevated: 'bear-bg-white dark:bear-bg-gray-900 bear-shadow-md',
+  outlined: 'bear-bg-white dark:bear-bg-gray-900 bear-border bear-border-gray-200 dark:bear-border-gray-700',
+  filled: 'bear-bg-gray-100 dark:bear-bg-gray-800',
+  ghost: 'bear-bg-transparent',
 };
 
 /**
@@ -58,11 +58,11 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
       <div
         ref={ref}
         className={cn(
-          'ember-overflow-hidden',
+          'bear-overflow-hidden',
           variantClasses[variant],
           paddingClasses[padding],
           radiusClasses[radius],
-          interactive && 'ember-transition-all ember-duration-200 ember-cursor-pointer hover:ember-shadow-lg hover:ember-scale-[1.02]',
+          interactive && 'bear-transition-all bear-duration-200 bear-cursor-pointer hover:bear-shadow-lg hover:bear-scale-[1.02]',
           className
         )}
         data-testid={testId}
@@ -85,26 +85,26 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
       <div
         ref={ref}
         className={cn(
-          'ember-flex ember-items-start ember-justify-between ember-p-4 ember-border-b ember-border-gray-200 dark:ember-border-gray-700',
+          'bear-flex bear-items-start bear-justify-between bear-p-4 bear-border-b bear-border-gray-200 dark:bear-border-gray-700',
           className
         )}
         {...props}
       >
-        <div className="ember-flex-1 ember-min-w-0">
+        <div className="bear-flex-1 bear-min-w-0">
           {title && (
-            <h3 className="ember-text-lg ember-font-semibold ember-text-gray-900 dark:ember-text-white ember-truncate">
+            <h3 className="bear-text-lg bear-font-semibold bear-text-gray-900 dark:bear-text-white bear-truncate">
               {title}
             </h3>
           )}
           {subtitle && (
-            <p className="ember-text-sm ember-text-gray-500 dark:ember-text-gray-400 ember-mt-1">
+            <p className="bear-text-sm bear-text-gray-500 dark:bear-text-gray-400 bear-mt-1">
               {subtitle}
             </p>
           )}
           {children}
         </div>
         {action && (
-          <div className="ember-ml-4 ember-shrink-0">
+          <div className="bear-ml-4 bear-shrink-0">
             {action}
           </div>
         )}
@@ -123,7 +123,7 @@ export const CardBody = forwardRef<HTMLDivElement, CardBodyProps>(
     return (
       <div
         ref={ref}
-        className={cn('ember-p-4', className)}
+        className={cn('bear-p-4', className)}
         {...props}
       >
         {children}
@@ -143,8 +143,8 @@ export const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
       <div
         ref={ref}
         className={cn(
-          'ember-p-4',
-          divider && 'ember-border-t ember-border-gray-200 dark:ember-border-gray-700',
+          'bear-p-4',
+          divider && 'bear-border-t bear-border-gray-200 dark:bear-border-gray-700',
           className
         )}
         {...props}

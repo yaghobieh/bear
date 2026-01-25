@@ -4,19 +4,19 @@ import type { BearSize, BearVariant } from '../../types';
 import type { RadioProps, RadioGroupProps } from './Radio.types';
 
 const SIZE_CLASSES: Record<BearSize, string> = {
-  xs: 'ember-w-3 ember-h-3',
-  sm: 'ember-w-4 ember-h-4',
-  md: 'ember-w-5 ember-h-5',
-  lg: 'ember-w-6 ember-h-6',
-  xl: 'ember-w-7 ember-h-7',
+  xs: 'bear-w-3 bear-h-3',
+  sm: 'bear-w-4 bear-h-4',
+  md: 'bear-w-5 bear-h-5',
+  lg: 'bear-w-6 bear-h-6',
+  xl: 'bear-w-7 bear-h-7',
 };
 
 const LABEL_SIZE_CLASSES: Record<BearSize, string> = {
-  xs: 'ember-text-xs',
-  sm: 'ember-text-sm',
-  md: 'ember-text-base',
-  lg: 'ember-text-lg',
-  xl: 'ember-text-xl',
+  xs: 'bear-text-xs',
+  sm: 'bear-text-sm',
+  md: 'bear-text-base',
+  lg: 'bear-text-lg',
+  xl: 'bear-text-xl',
 };
 
 const VARIANT_COLORS: Record<BearVariant, string> = {
@@ -82,14 +82,14 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(({
   }, [groupContext, value, onChange, effectiveDisabled]);
 
   return (
-    <div className={cn('ember-flex ember-flex-col', className)}>
+    <div className={cn('bear-flex bear-flex-col', className)}>
       <label
         className={cn(
-          'ember-inline-flex ember-items-center ember-gap-2 ember-cursor-pointer',
-          effectiveDisabled && 'ember-opacity-50 ember-cursor-not-allowed'
+          'bear-inline-flex bear-items-center bear-gap-2 bear-cursor-pointer',
+          effectiveDisabled && 'bear-opacity-50 bear-cursor-not-allowed'
         )}
       >
-        <div className="ember-relative ember-flex ember-items-center ember-justify-center">
+        <div className="bear-relative bear-flex bear-items-center bear-justify-center">
           <input
             ref={ref}
             type="radio"
@@ -98,7 +98,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(({
             checked={effectiveChecked}
             disabled={effectiveDisabled}
             onChange={handleChange}
-            className="ember-sr-only"
+            className="bear-sr-only"
             id={id}
             data-testid={testId}
             {...props}
@@ -106,10 +106,10 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(({
           <div
             className={cn(
               SIZE_CLASSES[effectiveSize],
-              'ember-rounded-full ember-border-2 ember-transition-all ember-flex ember-items-center ember-justify-center',
-              error ? 'ember-border-red-500' : 'ember-border-gray-300 dark:ember-border-gray-600',
-              effectiveChecked && !error && 'ember-border-current',
-              !effectiveDisabled && 'hover:ember-border-gray-400'
+              'bear-rounded-full bear-border-2 bear-transition-all bear-flex bear-items-center bear-justify-center',
+              error ? 'bear-border-red-500' : 'bear-border-gray-300 dark:bear-border-gray-600',
+              effectiveChecked && !error && 'bear-border-current',
+              !effectiveDisabled && 'hover:bear-border-gray-400'
             )}
             style={{ 
               borderColor: effectiveChecked && !error ? accentColor : undefined 
@@ -117,8 +117,8 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(({
           >
             <div
               className={cn(
-                'ember-rounded-full ember-transition-all ember-scale-0',
-                effectiveChecked && 'ember-scale-100'
+                'bear-rounded-full bear-transition-all bear-scale-0',
+                effectiveChecked && 'bear-scale-100'
               )}
               style={{ 
                 width: '50%', 
@@ -131,8 +131,8 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(({
         {label && (
           <span className={cn(
             LABEL_SIZE_CLASSES[effectiveSize],
-            'ember-text-gray-700 dark:ember-text-gray-300',
-            error && 'ember-text-red-500'
+            'bear-text-gray-700 dark:bear-text-gray-300',
+            error && 'bear-text-red-500'
           )}>
             {label}
           </span>
@@ -140,8 +140,8 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(({
       </label>
       {helperText && (
         <span className={cn(
-          'ember-text-xs ember-mt-1 ember-ml-7',
-          error ? 'ember-text-red-500' : 'ember-text-gray-500'
+          'bear-text-xs bear-mt-1 bear-ml-7',
+          error ? 'bear-text-red-500' : 'bear-text-gray-500'
         )}>
           {helperText}
         </span>
@@ -185,15 +185,15 @@ export const RadioGroup: FC<RadioGroupProps> = ({
 
   return (
     <div 
-      className={cn('ember-flex ember-flex-col', className)}
+      className={cn('bear-flex bear-flex-col', className)}
       role="radiogroup"
       aria-label={typeof label === 'string' ? label : undefined}
       data-testid={testId}
     >
       {label && (
         <span className={cn(
-          'ember-text-sm ember-font-medium ember-mb-2 ember-text-gray-700 dark:ember-text-gray-300',
-          error && 'ember-text-red-500'
+          'bear-text-sm bear-font-medium bear-mb-2 bear-text-gray-700 dark:bear-text-gray-300',
+          error && 'bear-text-red-500'
         )}>
           {label}
         </span>
@@ -201,8 +201,8 @@ export const RadioGroup: FC<RadioGroupProps> = ({
       <RadioGroupContext.Provider value={{ name, value: currentValue, onChange: handleChange, size, variant, disabled }}>
         <div 
           className={cn(
-            'ember-flex',
-            direction === 'column' ? 'ember-flex-col' : 'ember-flex-row ember-flex-wrap'
+            'bear-flex',
+            direction === 'column' ? 'bear-flex-col' : 'bear-flex-row bear-flex-wrap'
           )}
           style={{ gap: `${gap * 0.25}rem` }}
         >
@@ -211,8 +211,8 @@ export const RadioGroup: FC<RadioGroupProps> = ({
       </RadioGroupContext.Provider>
       {helperText && (
         <span className={cn(
-          'ember-text-xs ember-mt-2',
-          error ? 'ember-text-red-500' : 'ember-text-gray-500'
+          'bear-text-xs bear-mt-2',
+          error ? 'bear-text-red-500' : 'bear-text-gray-500'
         )}>
           {helperText}
         </span>

@@ -1,6 +1,9 @@
 export interface TimePickerProps {
-  value?: string;
-  onChange?: (time: string) => void;
+  /** Time-only (string) or date+time (Date). When 'datetime', uses Calendar + time. */
+  mode?: 'time' | 'datetime';
+  /** Time string (e.g. "02:30 PM") when mode='time'; Date when mode='datetime' */
+  value?: string | Date | null;
+  onChange?: (time: string | Date | null) => void;
   disabled?: boolean;
   placeholder?: string;
   label?: string;

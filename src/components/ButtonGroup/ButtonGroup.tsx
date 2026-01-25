@@ -39,28 +39,28 @@ export const ButtonGroup: FC<ButtonGroupProps> = ({
     let borderRadiusClass = '';
     if (isHorizontal) {
       if (isFirst) {
-        borderRadiusClass = 'ember-rounded-r-none';
+        borderRadiusClass = 'bear-rounded-r-none';
       } else if (isLast) {
-        borderRadiusClass = 'ember-rounded-l-none';
+        borderRadiusClass = 'bear-rounded-l-none';
       } else if (isMiddle) {
-        borderRadiusClass = 'ember-rounded-none';
+        borderRadiusClass = 'bear-rounded-none';
       }
     } else {
       if (isFirst) {
-        borderRadiusClass = 'ember-rounded-b-none';
+        borderRadiusClass = 'bear-rounded-b-none';
       } else if (isLast) {
-        borderRadiusClass = 'ember-rounded-t-none';
+        borderRadiusClass = 'bear-rounded-t-none';
       } else if (isMiddle) {
-        borderRadiusClass = 'ember-rounded-none';
+        borderRadiusClass = 'bear-rounded-none';
       }
     }
 
     // Add negative margin to overlap borders
     let marginClass = '';
     if (isHorizontal && !isFirst) {
-      marginClass = 'ember--ml-px';
+      marginClass = 'bear--ml-px';
     } else if (!isHorizontal && !isFirst) {
-      marginClass = 'ember--mt-px';
+      marginClass = 'bear--mt-px';
     }
 
     return cloneElement(child as React.ReactElement, {
@@ -70,7 +70,7 @@ export const ButtonGroup: FC<ButtonGroupProps> = ({
       className: cn(
         borderRadiusClass,
         marginClass,
-        fullWidth && 'ember-flex-1',
+        fullWidth && 'bear-flex-1',
         (child.props as { className?: string }).className
       ),
     });
@@ -80,9 +80,9 @@ export const ButtonGroup: FC<ButtonGroupProps> = ({
     <div
       role="group"
       className={cn(
-        'ember-inline-flex',
-        isHorizontal ? 'ember-flex-row' : 'ember-flex-col',
-        fullWidth && 'ember-w-full',
+        'bear-inline-flex',
+        isHorizontal ? 'bear-flex-row' : 'bear-flex-col',
+        fullWidth && 'bear-w-full',
         className
       )}
       data-testid={testId}

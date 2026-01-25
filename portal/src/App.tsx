@@ -4,11 +4,11 @@ import { BearLoader } from './components/BearLoader';
 import { Topbar } from './components/Topbar';
 import { Sidebar } from './components/Sidebar';
 
-// Banner configuration
+// Banner configuration — survey link points to main repo
 const BANNER_CONFIG = {
   id: 'bear-roadmap-2026',
   message: '🚀 Influence Bear UI\'s 2026 roadmap! Take our latest Developer Survey',
-  link: 'https://github.com/yaghobieh/bear-ui/discussions',
+  link: 'https://github.com/yaghobieh/bear',
   linkText: 'Take the survey →',
 };
 
@@ -64,7 +64,9 @@ const SliderPage = lazy(() => import('./pages/components/Slider'));
 const PaginationPage = lazy(() => import('./pages/components/Pagination'));
 
 // Date & Time Components
+const CalendarPage = lazy(() => import('./pages/components/Calendar'));
 const DatePickerPage = lazy(() => import('./pages/components/DatePicker'));
+const DateTimePickerPage = lazy(() => import('./pages/components/DateTimePicker'));
 const TimePickerPage = lazy(() => import('./pages/components/TimePicker'));
 
 // Navigation Components (Additional)
@@ -219,7 +221,9 @@ function App() {
                 <Route path="/components/app-bar" element={<AppBarPage />} />
                 <Route path="/components/bottom-navigation" element={<BottomNavigationPage />} />
                 
+                <Route path="/components/calendar" element={<CalendarPage />} />
                 <Route path="/components/date-picker" element={<DatePickerPage />} />
+                <Route path="/components/date-time-picker" element={<DateTimePickerPage />} />
                 <Route path="/components/time-picker" element={<TimePickerPage />} />
                 
                 <Route path="/components/popover" element={<PopoverPage />} />

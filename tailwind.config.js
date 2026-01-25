@@ -1,11 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
-  prefix: 'ember-',
+  prefix: 'bear-',
   theme: {
     extend: {
       colors: {
-        // Pink color palette for Bear
         ember: {
           50: '#fdf2f8',
           100: '#fce7f3',

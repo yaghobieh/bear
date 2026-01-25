@@ -15,9 +15,10 @@ export interface NavGroup {
   items: NavItem[];
 }
 
-export const BEAR_VERSION = '1.0.0';
+export const BEAR_VERSION = '1.0.2';
 
-export const GITHUB_URL = 'https://github.com/yaghobieh/bear.git';
+/** Main Bear UI repository */
+export const GITHUB_URL = 'https://github.com/yaghobieh/bear';
 export const NPM_URL = 'https://www.npmjs.com/package/@forgedevstack/bear';
 
 export const NAVIGATION: NavGroup[] = [
@@ -57,7 +58,9 @@ export const NAVIGATION: NavGroup[] = [
       { path: '/components/switch', label: 'Switch' },
       { path: '/components/slider', label: 'Slider' },
       { path: '/components/rating', label: 'Rating' },
+      { path: '/components/calendar', label: 'Calendar', badge: 'New' },
       { path: '/components/date-picker', label: 'DatePicker', badge: 'New' },
+      { path: '/components/date-time-picker', label: 'DateTimePicker', badge: 'New' },
       { path: '/components/time-picker', label: 'TimePicker', badge: 'New' },
       { path: '/components/color-picker', label: 'ColorPicker', badge: 'New' },
       { path: '/components/file-upload', label: 'FileUpload', badge: 'New' },
@@ -127,7 +130,8 @@ export const NAVIGATION: NavGroup[] = [
 ];
 
 export const VERSIONS = [
-  { value: '1.0.0', label: 'v1.0.0 (latest)' },
+  { value: '1.0.2', label: 'v1.0.2 (latest)' },
+  { value: '1.0.0', label: 'v1.0.0' },
   { value: '0.1.0', label: 'v0.1.0' },
 ];
 

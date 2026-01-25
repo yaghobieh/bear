@@ -4,33 +4,33 @@ import type { PaperProps } from './Paper.types';
 
 const ELEVATION_CLASSES = {
   0: '',
-  1: 'ember-shadow-sm',
-  2: 'ember-shadow',
-  3: 'ember-shadow-md',
-  4: 'ember-shadow-lg',
-  5: 'ember-shadow-xl',
+  1: 'bear-shadow-sm',
+  2: 'bear-shadow',
+  3: 'bear-shadow-md',
+  4: 'bear-shadow-lg',
+  5: 'bear-shadow-xl',
 };
 
 const ROUNDED_CLASSES = {
-  none: 'ember-rounded-none',
-  sm: 'ember-rounded-sm',
-  md: 'ember-rounded-md',
-  lg: 'ember-rounded-lg',
-  xl: 'ember-rounded-xl',
-  full: 'ember-rounded-full',
+  none: 'bear-rounded-none',
+  sm: 'bear-rounded-sm',
+  md: 'bear-rounded-md',
+  lg: 'bear-rounded-lg',
+  xl: 'bear-rounded-xl',
+  full: 'bear-rounded-full',
 };
 
 const PADDING_CLASSES = {
   none: '',
-  sm: 'ember-p-2',
-  md: 'ember-p-4',
-  lg: 'ember-p-6',
+  sm: 'bear-p-2',
+  md: 'bear-p-4',
+  lg: 'bear-p-6',
 };
 
 const BACKGROUND_CLASSES = {
-  default: 'ember-bg-white dark:ember-bg-gray-900',
-  paper: 'ember-bg-gray-50 dark:ember-bg-gray-800',
-  transparent: 'ember-bg-transparent',
+  default: 'bear-bg-white dark:bear-bg-gray-900',
+  paper: 'bear-bg-gray-50 dark:bear-bg-gray-800',
+  transparent: 'bear-bg-transparent',
 };
 
 /**
@@ -70,8 +70,8 @@ export const Paper = forwardRef<HTMLDivElement, PaperProps>(({
         PADDING_CLASSES[padding],
         !isCustomBackground && BACKGROUND_CLASSES[background as keyof typeof BACKGROUND_CLASSES],
         variant === 'elevation' && ELEVATION_CLASSES[elevation],
-        variant === 'outlined' && 'ember-border ember-border-gray-200 dark:ember-border-gray-700',
-        fullWidth && 'ember-w-full',
+        variant === 'outlined' && 'bear-border bear-border-gray-200 dark:bear-border-gray-700',
+        fullWidth && 'bear-w-full',
         className
       )}
       style={{

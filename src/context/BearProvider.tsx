@@ -161,11 +161,21 @@ export const useBear = (): BearContextValue => {
 };
 
 /**
- * Hook to access just the theme
+ * Hook to access just the theme. Throws if used outside BearProvider.
  */
 export const useBearTheme = (): BearTheme => {
   const { theme } = useBear();
   return theme;
+};
+
+/**
+ * Hook to access theme when optionally inside BearProvider.
+ * Returns default dark theme when outside provider. Use for bis callback.
+ */
+export const useBearThemeOptional = (): BearTheme => {
+  const context = useContext(BearContext);
+  if (context) return context.theme;
+  return defaultDarkTheme;
 };
 
 /**

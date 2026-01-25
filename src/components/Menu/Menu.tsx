@@ -22,11 +22,11 @@ export const MenuItem: FC<MenuItemProps> = ({
         role="menuitem"
         tabIndex={disabled ? -1 : 0}
         className={cn(
-          'ember-flex ember-items-center ember-gap-3 ember-px-4 ember-py-2 ember-cursor-pointer ember-transition-colors',
-          'hover:ember-bg-gray-100 dark:hover:ember-bg-gray-700',
-          'focus:ember-outline-none focus:ember-bg-gray-100 dark:focus:ember-bg-gray-700',
-          selected && 'ember-bg-pink-50 dark:ember-bg-pink-900/20 ember-text-pink-600',
-          disabled && 'ember-opacity-50 ember-cursor-not-allowed hover:ember-bg-transparent',
+          'bear-flex bear-items-center bear-gap-3 bear-px-4 bear-py-2 bear-cursor-pointer bear-transition-colors',
+          'hover:bear-bg-gray-100 dark:hover:bear-bg-gray-700',
+          'focus:bear-outline-none focus:bear-bg-gray-100 dark:focus:bear-bg-gray-700',
+          selected && 'bear-bg-pink-50 dark:bear-bg-pink-900/20 bear-text-pink-600',
+          disabled && 'bear-opacity-50 bear-cursor-not-allowed hover:bear-bg-transparent',
           className
         )}
         onClick={disabled ? undefined : onClick}
@@ -39,11 +39,11 @@ export const MenuItem: FC<MenuItemProps> = ({
         {...props}
       >
         {icon && (
-          <span className="ember-flex-shrink-0 ember-text-gray-500">
+          <span className="bear-flex-shrink-0 bear-text-gray-500">
             {icon}
           </span>
         )}
-        <span className="ember-flex-1 ember-text-sm">
+        <span className="bear-flex-1 bear-text-sm">
           {children}
         </span>
       </div>
@@ -56,7 +56,7 @@ export const MenuItem: FC<MenuItemProps> = ({
  * MenuDivider component for separating menu sections
  */
 export const MenuDivider: FC<MenuDividerProps> = ({ className }) => (
-  <div className={cn('ember-h-px ember-bg-gray-200 dark:ember-bg-gray-700 ember-my-1', className)} />
+  <div className={cn('bear-h-px bear-bg-gray-200 dark:bear-bg-gray-700 bear-my-1', className)} />
 );
 
 /**
@@ -158,10 +158,10 @@ export const Menu: FC<MenuProps> = ({
       ref={menuRef}
       role="menu"
       className={cn(
-        'ember-fixed ember-z-50 ember-bg-white dark:ember-bg-gray-800',
-        'ember-border ember-border-gray-200 dark:ember-border-gray-700',
-        'ember-rounded-lg ember-shadow-lg ember-py-1',
-        'ember-overflow-y-auto',
+        'bear-fixed bear-z-50 bear-bg-white dark:bear-bg-gray-800',
+        'bear-border bear-border-gray-200 dark:bear-border-gray-700',
+        'bear-rounded-lg bear-shadow-lg bear-py-1',
+        'bear-overflow-y-auto',
         className
       )}
       style={{

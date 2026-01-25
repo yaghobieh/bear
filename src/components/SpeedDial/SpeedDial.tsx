@@ -5,17 +5,17 @@ import { Tooltip } from '../Tooltip';
 import type { SpeedDialProps, SpeedDialAction } from './SpeedDial.types';
 
 const POSITION_CLASSES = {
-  'bottom-right': 'ember-bottom-4 ember-right-4',
-  'bottom-left': 'ember-bottom-4 ember-left-4',
-  'top-right': 'ember-top-4 ember-right-4',
-  'top-left': 'ember-top-4 ember-left-4',
+  'bottom-right': 'bear-bottom-4 bear-right-4',
+  'bottom-left': 'bear-bottom-4 bear-left-4',
+  'top-right': 'bear-top-4 bear-right-4',
+  'top-left': 'bear-top-4 bear-left-4',
 } as const;
 
 const DIRECTION_CLASSES = {
-  up: 'ember-flex-col-reverse ember-pb-2',
-  down: 'ember-flex-col ember-pt-2',
-  left: 'ember-flex-row-reverse ember-pr-2',
-  right: 'ember-flex-row ember-pl-2',
+  up: 'bear-flex-col-reverse bear-pb-2',
+  down: 'bear-flex-col bear-pt-2',
+  left: 'bear-flex-row-reverse bear-pr-2',
+  right: 'bear-flex-row bear-pl-2',
 } as const;
 
 const DEFAULT_ICON = (
@@ -146,11 +146,11 @@ export const SpeedDial: FC<SpeedDialProps> = ({
         onClick={() => handleActionClick(action)}
         disabled={action.disabled}
         className={cn(
-          'ember-rounded-full ember-shadow-lg ember-transition-all ember-duration-200',
-          'ember-w-12 ember-h-12 ember-p-0 ember-flex ember-items-center ember-justify-center',
+          'bear-rounded-full bear-shadow-lg bear-transition-all bear-duration-200',
+          'bear-w-12 bear-h-12 bear-p-0 bear-flex bear-items-center bear-justify-center',
           isOpen 
-            ? 'ember-opacity-100 ember-scale-100' 
-            : 'ember-opacity-0 ember-scale-75 ember-pointer-events-none'
+            ? 'bear-opacity-100 bear-scale-100' 
+            : 'bear-opacity-0 bear-scale-75 bear-pointer-events-none'
         )}
         style={{
           transitionDelay: isOpen ? `${index * 50}ms` : '0ms',
@@ -180,9 +180,9 @@ export const SpeedDial: FC<SpeedDialProps> = ({
     <div
       ref={containerRef}
       className={cn(
-        'ember-inline-flex ember-items-center',
+        'bear-inline-flex bear-items-center',
         DIRECTION_CLASSES[direction],
-        fixed && 'ember-fixed ember-z-50',
+        fixed && 'bear-fixed bear-z-50',
         fixed && POSITION_CLASSES[position],
         className
       )}
@@ -191,7 +191,7 @@ export const SpeedDial: FC<SpeedDialProps> = ({
     >
       <div
         className={cn(
-          'ember-flex ember-gap-3',
+          'bear-flex bear-gap-3',
           DIRECTION_CLASSES[direction]
         )}
         role="menu"
@@ -205,9 +205,9 @@ export const SpeedDial: FC<SpeedDialProps> = ({
         size={size}
         onClick={handleToggle}
         className={cn(
-          'ember-rounded-full ember-shadow-xl ember-transition-transform ember-duration-300',
-          'ember-w-14 ember-h-14 ember-p-0 ember-flex ember-items-center ember-justify-center',
-          isOpen && 'ember-rotate-45'
+          'bear-rounded-full bear-shadow-xl bear-transition-transform bear-duration-300',
+          'bear-w-14 bear-h-14 bear-p-0 bear-flex bear-items-center bear-justify-center',
+          isOpen && 'bear-rotate-45'
         )}
         aria-label={ariaLabel}
         aria-expanded={isOpen}

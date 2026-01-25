@@ -144,3 +144,4 @@ export type BearThemeOverride = DeepPartial<BearTheme>;
 /** Size variant for Bear components */
 export type BearSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
+

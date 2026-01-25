@@ -147,8 +147,8 @@ export const Rating: FC<RatingProps> = ({
   return (
     <div
       className={cn(
-        'ember-inline-flex ember-items-center ember-gap-1',
-        disabled && 'ember-opacity-50 ember-cursor-not-allowed',
+        'bear-inline-flex bear-items-center bear-gap-1',
+        disabled && 'bear-opacity-50 bear-cursor-not-allowed',
         className
       )}
       role="radiogroup"
@@ -165,10 +165,10 @@ export const Rating: FC<RatingProps> = ({
           aria-checked={currentValue >= starValue}
           aria-label={`${starValue} star${starValue > 1 ? 's' : ''}`}
           className={cn(
-            'ember-p-0.5 ember-rounded ember-transition-transform ember-bg-transparent ember-border-none',
-            !readOnly && !disabled && 'hover:ember-scale-110 ember-cursor-pointer',
-            readOnly && 'ember-cursor-default',
-            disabled && 'ember-cursor-not-allowed'
+            'bear-p-0.5 bear-rounded bear-transition-transform bear-bg-transparent bear-border-none',
+            !readOnly && !disabled && 'hover:bear-scale-110 bear-cursor-pointer',
+            readOnly && 'bear-cursor-default',
+            disabled && 'bear-cursor-not-allowed'
           )}
           onClick={() => handleClick(starValue)}
           onMouseEnter={() => handleMouseEnter(starValue)}
@@ -179,7 +179,7 @@ export const Rating: FC<RatingProps> = ({
       ))}
       
       {showLabel && (
-        <span className="ember-ml-2 ember-text-sm ember-text-gray-600 dark:ember-text-gray-400">
+        <span className="bear-ml-2 bear-text-sm bear-text-gray-600 dark:bear-text-gray-400">
           {label}
         </span>
       )}

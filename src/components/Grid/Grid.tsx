@@ -4,41 +4,41 @@ import type { ResponsiveProp } from '../../types';
 import type { GridCols, GridGap, GridFlow, GridProps, GridItemProps } from './Grid.types';
 
 const colClasses: Record<GridCols | 'none', string> = {
-  none: 'ember-grid-cols-none',
-  1: 'ember-grid-cols-1',
-  2: 'ember-grid-cols-2',
-  3: 'ember-grid-cols-3',
-  4: 'ember-grid-cols-4',
-  5: 'ember-grid-cols-5',
-  6: 'ember-grid-cols-6',
-  7: 'ember-grid-cols-7',
-  8: 'ember-grid-cols-8',
-  9: 'ember-grid-cols-9',
-  10: 'ember-grid-cols-10',
-  11: 'ember-grid-cols-11',
-  12: 'ember-grid-cols-12',
+  none: 'bear-grid-cols-none',
+  1: 'bear-grid-cols-1',
+  2: 'bear-grid-cols-2',
+  3: 'bear-grid-cols-3',
+  4: 'bear-grid-cols-4',
+  5: 'bear-grid-cols-5',
+  6: 'bear-grid-cols-6',
+  7: 'bear-grid-cols-7',
+  8: 'bear-grid-cols-8',
+  9: 'bear-grid-cols-9',
+  10: 'bear-grid-cols-10',
+  11: 'bear-grid-cols-11',
+  12: 'bear-grid-cols-12',
 };
 
 const gapClasses: Record<GridGap, string> = {
-  0: 'ember-gap-0',
-  1: 'ember-gap-1',
-  2: 'ember-gap-2',
-  3: 'ember-gap-3',
-  4: 'ember-gap-4',
-  5: 'ember-gap-5',
-  6: 'ember-gap-6',
-  8: 'ember-gap-8',
-  10: 'ember-gap-10',
-  12: 'ember-gap-12',
-  16: 'ember-gap-16',
+  0: 'bear-gap-0',
+  1: 'bear-gap-1',
+  2: 'bear-gap-2',
+  3: 'bear-gap-3',
+  4: 'bear-gap-4',
+  5: 'bear-gap-5',
+  6: 'bear-gap-6',
+  8: 'bear-gap-8',
+  10: 'bear-gap-10',
+  12: 'bear-gap-12',
+  16: 'bear-gap-16',
 };
 
 const flowClasses: Record<GridFlow, string> = {
-  row: 'ember-grid-flow-row',
-  column: 'ember-grid-flow-col',
-  dense: 'ember-grid-flow-dense',
-  'row-dense': 'ember-grid-flow-row-dense',
-  'column-dense': 'ember-grid-flow-col-dense',
+  row: 'bear-grid-flow-row',
+  column: 'bear-grid-flow-col',
+  dense: 'bear-grid-flow-dense',
+  'row-dense': 'bear-grid-flow-row-dense',
+  'column-dense': 'bear-grid-flow-col-dense',
 };
 
 const getSimpleValue = <T extends string | number>(
@@ -84,11 +84,11 @@ export const Grid = forwardRef<HTMLDivElement, GridProps>(
       <div
         ref={ref}
         className={cn(
-          'ember-grid',
+          'bear-grid',
           colsValue !== undefined && colClasses[colsValue],
           gapValue !== undefined && gapClasses[gapValue],
-          rowGapValue !== undefined && `ember-gap-y-${rowGapValue}`,
-          colGapValue !== undefined && `ember-gap-x-${colGapValue}`,
+          rowGapValue !== undefined && `bear-gap-y-${rowGapValue}`,
+          colGapValue !== undefined && `bear-gap-x-${colGapValue}`,
           flow && flowClasses[flow],
           className
         )}
@@ -112,9 +112,9 @@ export const GridItem = forwardRef<HTMLDivElement, GridItemProps>(
     const rowSpanValue = getSimpleValue(rowSpan);
 
     const spanClass = spanValue === 'full' 
-      ? 'ember-col-span-full'
+      ? 'bear-col-span-full'
       : spanValue 
-        ? `ember-col-span-${spanValue}`
+        ? `bear-col-span-${spanValue}`
         : '';
 
     return (
@@ -122,7 +122,7 @@ export const GridItem = forwardRef<HTMLDivElement, GridItemProps>(
         ref={ref}
         className={cn(
           spanClass,
-          rowSpanValue && `ember-row-span-${rowSpanValue}`,
+          rowSpanValue && `bear-row-span-${rowSpanValue}`,
           className
         )}
         {...props}

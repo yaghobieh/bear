@@ -4,22 +4,22 @@ import type { BearVariant } from '../../types';
 import type { LinkProps } from './Link.types';
 
 const VARIANT_CLASSES: Record<BearVariant | 'inherit', string> = {
-  primary: 'ember-text-pink-500 hover:ember-text-pink-600',
-  secondary: 'ember-text-gray-600 hover:ember-text-gray-700',
-  success: 'ember-text-green-500 hover:ember-text-green-600',
-  danger: 'ember-text-red-500 hover:ember-text-red-600',
-  warning: 'ember-text-amber-500 hover:ember-text-amber-600',
-  info: 'ember-text-blue-500 hover:ember-text-blue-600',
-  ghost: 'ember-text-gray-500 hover:ember-text-gray-600',
-  outline: 'ember-text-gray-700 hover:ember-text-gray-800',
-  error: 'ember-text-red-500 hover:ember-text-red-600',
-  inherit: 'ember-text-inherit',
+  primary: 'bear-text-pink-500 hover:bear-text-pink-600',
+  secondary: 'bear-text-gray-600 hover:bear-text-gray-700',
+  success: 'bear-text-green-500 hover:bear-text-green-600',
+  danger: 'bear-text-red-500 hover:bear-text-red-600',
+  warning: 'bear-text-amber-500 hover:bear-text-amber-600',
+  info: 'bear-text-blue-500 hover:bear-text-blue-600',
+  ghost: 'bear-text-gray-500 hover:bear-text-gray-600',
+  outline: 'bear-text-gray-700 hover:bear-text-gray-800',
+  error: 'bear-text-red-500 hover:bear-text-red-600',
+  inherit: 'bear-text-inherit',
 };
 
 const UNDERLINE_CLASSES = {
-  none: 'ember-no-underline',
-  hover: 'ember-no-underline hover:ember-underline',
-  always: 'ember-underline',
+  none: 'bear-no-underline',
+  hover: 'bear-no-underline hover:bear-underline',
+  always: 'bear-underline',
 };
 
 const ExternalIcon = () => (
@@ -30,7 +30,7 @@ const ExternalIcon = () => (
     fill="none" 
     stroke="currentColor" 
     strokeWidth={2}
-    className="ember-inline-block ember-ml-1"
+    className="bear-inline-block bear-ml-1"
   >
     <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
     <polyline points="15 3 21 3 21 9" />
@@ -71,8 +71,8 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(({
     <a
       ref={ref}
       className={cn(
-        'ember-cursor-pointer ember-transition-colors ember-duration-200',
-        'focus:ember-outline-none focus:ember-ring-2 focus:ember-ring-pink-500 focus:ember-ring-offset-2 ember-rounded',
+        'bear-cursor-pointer bear-transition-colors bear-duration-200',
+        'focus:bear-outline-none focus:bear-ring-2 focus:bear-ring-pink-500 focus:bear-ring-offset-2 bear-rounded',
         !color && VARIANT_CLASSES[variant],
         UNDERLINE_CLASSES[underline],
         className

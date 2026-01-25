@@ -1,6 +1,6 @@
 {
   "name": "@forgedevstack/bear",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Strong, reliable React UI components. Tailwind-powered, zero config required. The protective force of ForgeStack.",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -39,7 +39,7 @@
   ],
   "scripts": {
     "dev": "vite build --watch",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && npm run build:css",
     "build:css": "tailwindcss -i ./src/styles/main.css -o ./dist/styles.css --minify",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "test": "vitest",
@@ -100,6 +100,9 @@
   "homepage": "https://bearui.com",
   "bugs": {
     "url": "https://github.com/yaghobieh/bear/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
 

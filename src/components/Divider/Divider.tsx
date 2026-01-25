@@ -3,15 +3,15 @@ import { cn } from '../../utils/cn';
 import type { DividerProps } from './Divider.types';
 
 const VARIANT_STYLES = {
-  solid: 'ember-border-solid',
-  dashed: 'ember-border-dashed',
-  dotted: 'ember-border-dotted',
+  solid: 'bear-border-solid',
+  dashed: 'bear-border-dashed',
+  dotted: 'bear-border-dotted',
 };
 
 const TEXT_ALIGN_CLASSES = {
-  left: 'before:ember-w-4 after:ember-flex-1',
-  center: 'before:ember-flex-1 after:ember-flex-1',
-  right: 'before:ember-flex-1 after:ember-w-4',
+  left: 'before:bear-w-4 after:bear-flex-1',
+  center: 'before:bear-flex-1 after:bear-flex-1',
+  right: 'before:bear-flex-1 after:bear-w-4',
 };
 
 /**
@@ -52,8 +52,8 @@ export const Divider: FC<DividerProps> = ({
     return (
       <hr
         className={cn(
-          'ember-border-0',
-          isHorizontal ? 'ember-w-full' : 'ember-h-full ember-w-px',
+          'bear-border-0',
+          isHorizontal ? 'bear-w-full' : 'bear-h-full bear-w-px',
           VARIANT_STYLES[variant],
           className
         )}
@@ -77,8 +77,8 @@ export const Divider: FC<DividerProps> = ({
   return (
     <div
       className={cn(
-        'ember-flex ember-items-center ember-gap-4',
-        isHorizontal ? 'ember-w-full' : 'ember-flex-col ember-h-full',
+        'bear-flex bear-items-center bear-gap-4',
+        isHorizontal ? 'bear-w-full' : 'bear-flex-col bear-h-full',
         TEXT_ALIGN_CLASSES[textAlign],
         className
       )}
@@ -92,7 +92,7 @@ export const Divider: FC<DividerProps> = ({
     >
       <span
         className={cn(
-          'ember-flex-shrink-0',
+          'bear-flex-shrink-0',
           VARIANT_STYLES[variant]
         )}
         style={{
@@ -101,12 +101,12 @@ export const Divider: FC<DividerProps> = ({
           borderColor: color || '#e5e7eb',
         }}
       />
-      <span className="ember-text-sm ember-text-gray-500 ember-whitespace-nowrap ember-px-2">
+      <span className="bear-text-sm bear-text-gray-500 bear-whitespace-nowrap bear-px-2">
         {children}
       </span>
       <span
         className={cn(
-          'ember-flex-shrink-0',
+          'bear-flex-shrink-0',
           VARIANT_STYLES[variant]
         )}
         style={{

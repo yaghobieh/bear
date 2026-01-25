@@ -1,7 +1,8 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import type { EmberSize, EmberVariant } from '../../types';
+import type { BisProp } from '../../types/bis.types';
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'style'> {
   /** Button variant style */
   variant?: EmberVariant;
   /** Button size */
@@ -16,5 +17,9 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   rightIcon?: ReactNode;
   /** Test ID for testing */
   testId?: string;
+  /** Bear Inner Style - sx-like overrides */
+  bis?: BisProp;
+  /** Inline styles */
+  style?: React.CSSProperties;
 }
 

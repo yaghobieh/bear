@@ -49,13 +49,13 @@ const SEVERITY_COLORS: Record<AlertSeverity, { bg: string; border: string; text:
 
 const VARIANT_CLASSES: Record<AlertVariant, (severity: AlertSeverity) => string> = {
   filled: (severity) => cn(
-    'ember-text-white',
-    severity === 'success' && 'ember-bg-green-500',
-    severity === 'info' && 'ember-bg-blue-500',
-    severity === 'warning' && 'ember-bg-amber-500',
-    severity === 'error' && 'ember-bg-red-500',
+    'bear-text-white',
+    severity === 'success' && 'bear-bg-green-500',
+    severity === 'info' && 'bear-bg-blue-500',
+    severity === 'warning' && 'bear-bg-amber-500',
+    severity === 'error' && 'bear-bg-red-500',
   ),
-  outlined: () => 'ember-bg-transparent ember-border',
+  outlined: () => 'bear-bg-transparent bear-border',
   standard: () => '',
 };
 
@@ -106,7 +106,7 @@ export const Alert: FC<AlertProps> = ({
     <div
       role="alert"
       className={cn(
-        'ember-flex ember-items-start ember-gap-3 ember-p-4 ember-rounded-lg',
+        'bear-flex bear-items-start bear-gap-3 bear-p-4 bear-rounded-lg',
         VARIANT_CLASSES[variant](severity),
         className
       )}
@@ -120,28 +120,28 @@ export const Alert: FC<AlertProps> = ({
     >
       {renderIcon() && (
         <span 
-          className="ember-flex-shrink-0 ember-mt-0.5"
+          className="bear-flex-shrink-0 bear-mt-0.5"
           style={{ color: isFilled ? 'currentColor' : colors.icon }}
         >
           {renderIcon()}
         </span>
       )}
       
-      <div className="ember-flex-1 ember-min-w-0">
+      <div className="bear-flex-1 bear-min-w-0">
         {title && (
-          <div className="ember-font-semibold ember-mb-1">
+          <div className="bear-font-semibold bear-mb-1">
             {title}
           </div>
         )}
         {children && (
-          <div className="ember-text-sm">
+          <div className="bear-text-sm">
             {children}
           </div>
         )}
       </div>
 
       {action && (
-        <div className="ember-flex-shrink-0">
+        <div className="bear-flex-shrink-0">
           {action}
         </div>
       )}
@@ -151,8 +151,8 @@ export const Alert: FC<AlertProps> = ({
           type="button"
           onClick={handleClose}
           className={cn(
-            'ember-flex-shrink-0 ember-p-1 ember-rounded hover:ember-bg-black/10 ember-transition-colors',
-            'ember-bg-transparent ember-border-none ember-cursor-pointer'
+            'bear-flex-shrink-0 bear-p-1 bear-rounded hover:bear-bg-black/10 bear-transition-colors',
+            'bear-bg-transparent bear-border-none bear-cursor-pointer'
           )}
           aria-label="Close alert"
         >

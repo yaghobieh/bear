@@ -36,10 +36,15 @@ const DateTimePickerPage: FC = () => {
       <ComponentPreview
         title="TimePicker mode='datetime'"
         description="TimePicker with mode='datetime' uses Calendar + time (same as DateTimePicker)."
-        code={`<TimePicker mode="datetime" value={value} onChange={setValue} />`}
+        code={`<TimePicker mode="datetime" value={value} onChange={(v) => setValue(v instanceof Date ? v : null)} />`}
       >
         <div className="w-full max-w-xs">
-          <TimePicker mode="datetime" value={value} onChange={setValue} placeholder="Select date and time" />
+          <TimePicker
+            mode="datetime"
+            value={value}
+            onChange={(v) => setValue(v instanceof Date ? v : null)}
+            placeholder="Select date and time"
+          />
         </div>
       </ComponentPreview>
 

@@ -42,7 +42,7 @@ const DateTimePickerPage: FC = () => {
           <TimePicker
             mode="datetime"
             value={value}
-            onChange={(v) => setValue(v instanceof Date ? v : null)}
+            onChange={(v: Date | string | null) => setValue(v instanceof Date ? v : null)}
             placeholder="Select date and time"
           />
         </div>

@@ -7,7 +7,6 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),
-      '@forgedevstack/bear': resolve(__dirname, '../src'),
     },
   },
   server: {

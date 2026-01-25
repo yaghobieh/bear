@@ -17,8 +17,7 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@forgedevstack/bear": ["../src"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src"],

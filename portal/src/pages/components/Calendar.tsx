@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
+import { KilnLink } from '@/components/KilnLink';
 import { Calendar } from '@forgedevstack/bear';
 
 const CalendarPage: FC = () => {
@@ -9,7 +10,10 @@ const CalendarPage: FC = () => {
 
   return (
     <div className="fade-in">
-      <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Calendar</h1>
+      <div className="flex items-center gap-3 mb-4">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Calendar</h1>
+        <KilnLink path="/calendar" />
+      </div>
       <p className="text-gray-600 dark:text-gray-400 mb-8">
         Standalone calendar with customizable slots. Use with DatePicker or alone for date display and selection.
       </p>
@@ -35,16 +39,15 @@ const CalendarPage: FC = () => {
   onToday={() => { setValue(new Date()); setViewDate(new Date()); }}
 />`}
       >
-        <div className="relative inline-block">
-          <Calendar
-            viewDate={viewDate}
-            onViewChange={setViewDate}
-            value={value}
-            onSelect={setValue}
-            onClear={() => setValue(null)}
-            onToday={() => { setValue(new Date()); setViewDate(new Date()); }}
-          />
-        </div>
+        <Calendar
+          viewDate={viewDate}
+          onViewChange={setViewDate}
+          value={value}
+          onSelect={setValue}
+          onClear={() => setValue(null)}
+          onToday={() => { setValue(new Date()); setViewDate(new Date()); }}
+          inline
+        />
       </ComponentPreview>
 
       <ComponentPreview
@@ -60,18 +63,17 @@ const CalendarPage: FC = () => {
   onClear={() => setValue(null)}
 />`}
       >
-        <div className="relative inline-block">
-          <Calendar
-            viewDate={viewDate}
-            onViewChange={setViewDate}
-            value={value}
-            onSelect={setValue}
-            minDate={new Date()}
-            maxDate={new Date(new Date().getFullYear(), 11, 31)}
-            onClear={() => setValue(null)}
-            onToday={() => { setValue(new Date()); setViewDate(new Date()); }}
-          />
-        </div>
+        <Calendar
+          viewDate={viewDate}
+          onViewChange={setViewDate}
+          value={value}
+          onSelect={setValue}
+          minDate={new Date()}
+          maxDate={new Date(new Date().getFullYear(), 11, 31)}
+          onClear={() => setValue(null)}
+          onToday={() => { setValue(new Date()); setViewDate(new Date()); }}
+          inline
+        />
       </ComponentPreview>
 
       <ComponentPreview
@@ -83,18 +85,17 @@ const CalendarPage: FC = () => {
   ...
 />`}
       >
-        <div className="relative inline-block">
-          <Calendar
-            viewDate={viewDate}
-            onViewChange={setViewDate}
-            value={value}
-            onSelect={setValue}
-            firstDayOfWeek={1}
-            weekdayLabels={['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']}
-            onClear={() => setValue(null)}
-            onToday={() => { setValue(new Date()); setViewDate(new Date()); }}
-          />
-        </div>
+        <Calendar
+          viewDate={viewDate}
+          onViewChange={setViewDate}
+          value={value}
+          onSelect={setValue}
+          firstDayOfWeek={1}
+          weekdayLabels={['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']}
+          onClear={() => setValue(null)}
+          onToday={() => { setValue(new Date()); setViewDate(new Date()); }}
+          inline
+        />
       </ComponentPreview>
 
       <section className="mb-12">

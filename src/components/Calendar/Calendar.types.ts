@@ -10,6 +10,8 @@ export interface CalendarDayProps {
   isHighlighted?: boolean;
 }
 
+export type HeaderLabelRFC = (props: { month: string; year: number }) => ReactNode;
+
 export interface CalendarNavActions {
   onPrevYear: () => void;
   onPrevMonth: () => void;

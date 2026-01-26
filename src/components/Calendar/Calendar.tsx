@@ -1,47 +1,17 @@
 import { FC, useCallback, useMemo } from 'react';
-import type { CalendarProps, CalendarDayProps, CalendarNavActions } from './Calendar.types';
+import type { CalendarProps, CalendarDayProps, CalendarNavActions, HeaderLabelRFC } from './Calendar.types';
 import { cn } from '../../utils/cn';
 import { useBearStyles } from '../../hooks/useBearStyles';
+import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon } from '../Icon';
+import { DEFAULT_WEEKDAYS, MONTHS, NUMBER, WEEKEND_LABELS } from './Calendar.const';
+import { buildCalendarGrid, isSameDay, isWeekendDay, reorderWeekdays } from './Calendar.utils';
 
-const DEFAULT_WEEKDAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-const getDaysInMonth = (y: number, m: number) => new Date(y, m + 1, 0).getDate();
-const getFirstDay = (y: number, m: number) => new Date(y, m, 1).getDay();
-
-const isSameDay = (a: Date | null, b: Date | null): boolean => {
-  if (!a || !b) return false;
-  return a.getDate() === b.getDate() && a.getMonth() === b.getMonth() && a.getFullYear() === b.getFullYear();
-};
-
-/** Build 6-week grid: prev month trailing, current month, next month leading (react-calendar style) */
-function buildCalendarGrid(year: number, month: number, firstDayOfWeek: number): { date: Date; isCurrentMonth: boolean }[] {
-  const first = getFirstDay(year, month);
-  let startOffset = (first - firstDayOfWeek + 7) % 7;
-  const daysInMonth = getDaysInMonth(year, month);
-  const prevMonth = month === 0 ? 11 : month - 1;
-  const prevYear = month === 0 ? year - 1 : year;
-  const daysInPrev = getDaysInMonth(prevYear, prevMonth);
-
-  const cells: { date: Date; isCurrentMonth: boolean }[] = [];
-  const totalCells = 42;
-
-  for (let i = 0; i < totalCells; i++) {
-    if (i < startOffset) {
-      const d = daysInPrev - startOffset + i + 1;
-      cells.push({ date: new Date(prevYear, prevMonth, d), isCurrentMonth: false });
-    } else if (i < startOffset + daysInMonth) {
-      const d = i - startOffset + 1;
-      cells.push({ date: new Date(year, month, d), isCurrentMonth: true });
-    } else {
-      const d = i - startOffset - daysInMonth + 1;
-      const nextMonth = month === 11 ? 0 : month + 1;
-      const nextYear = month === 11 ? year + 1 : year;
-      cells.push({ date: new Date(nextYear, nextMonth, d), isCurrentMonth: false });
-    }
-  }
-  return cells;
-}
+// Default render functions
+const defaultRenderHeaderLabel: HeaderLabelRFC = ({ month, year }) => (
+  <span className="font-semibold text-sm select-none">
+    {month} {year}
+  </span>
+);
 
 export const Calendar: FC<CalendarProps> = ({
   viewDate,
@@ -53,7 +23,7 @@ export const Calendar: FC<CalendarProps> = ({
   disabledDates = [],
   highlightedDates = [],
   weekdayLabels = DEFAULT_WEEKDAYS,
-  firstDayOfWeek = 0,
+  firstDayOfWeek = NUMBER.ZERO,
   showWeekNumbers: _showWeekNumbers = false,
   slots = {},
   clearable = true,
@@ -71,19 +41,19 @@ export const Calendar: FC<CalendarProps> = ({
   const today = useMemo(() => new Date(), []);
 
   const handlePrevYear = useCallback(() => {
-    onViewChange?.(new Date(year - 1, month, 1));
+    onViewChange?.(new Date(year - NUMBER.ONE, month, NUMBER.ONE));
   }, [year, month, onViewChange]);
 
   const handlePrevMonth = useCallback(() => {
-    onViewChange?.(new Date(year, month - 1, 1));
+    onViewChange?.(new Date(year, month - NUMBER.ONE, NUMBER.ONE));
   }, [year, month, onViewChange]);
 
   const handleNextMonth = useCallback(() => {
-    onViewChange?.(new Date(year, month + 1, 1));
+    onViewChange?.(new Date(year, month + NUMBER.ONE, NUMBER.ONE));
   }, [year, month, onViewChange]);
 
   const handleNextYear = useCallback(() => {
-    onViewChange?.(new Date(year + 1, month, 1));
+    onViewChange?.(new Date(year + NUMBER.ONE, month, NUMBER.ONE));
   }, [year, month, onViewChange]);
 
   const handlePrev = handlePrevMonth;
@@ -116,7 +86,7 @@ export const Calendar: FC<CalendarProps> = ({
   );
 
   const weekdays = useMemo(
-    () => (firstDayOfWeek > 0 ? [...weekdayLabels.slice(firstDayOfWeek), ...weekdayLabels.slice(0, firstDayOfWeek)] : weekdayLabels),
+    () => reorderWeekdays(weekdayLabels, firstDayOfWeek),
     [weekdayLabels, firstDayOfWeek]
   );
 
@@ -124,31 +94,35 @@ export const Calendar: FC<CalendarProps> = ({
   const hasSelection = value != null;
 
   const rootClassName = inline
-    ? 'bear-block bear-w-full bear-bg-white bear-rounded-xl bear-shadow-none bear-border bear-border-zinc-200 bear-p-4 bear-text-zinc-900'
-    : 'bear-absolute bear-z-50 bear-mt-2 bear-bg-white bear-rounded-xl bear-shadow-xl bear-border bear-border-zinc-200 bear-p-4 bear-w-80 bear-text-zinc-900';
+    ? 'block w-full bg-white dark:bg-gray-900 rounded-xl shadow-none border border-zinc-200 dark:border-zinc-700 p-4 text-zinc-900 dark:text-zinc-100'
+    : 'absolute z-50 mt-2 bg-white dark:bg-gray-900 rounded-xl shadow-xl border border-zinc-200 dark:border-zinc-700 p-4 w-80 text-zinc-900 dark:text-zinc-100';
 
   const renderHeader = () => {
     if (slots.header) {
       return slots.header({ month: monthLabel, year, onPrev: handlePrev, onNext: handleNext, nav });
     }
+
     const NavPrevY = slots.navPrevYear;
     const NavPrev = slots.navPrev;
     const NavNext = slots.navNext;
     const NavNextY = slots.navNextYear;
-    const Label = slots.headerLabel;
+    
+    // Use slot or default RFC for header label
+    const renderLabel: HeaderLabelRFC = slots.headerLabel || defaultRenderHeaderLabel;
+
     return (
-      <div className="bear-flex bear-items-center bear-justify-between bear-gap-1 bear-mb-4">
-        <div className="bear-flex bear-items-center bear-gap-0.5">
+      <div className="flex items-center justify-between gap-1 mb-4">
+        <div className="flex items-center gap-0.5">
           {NavPrevY ? (
             NavPrevY({ onClick: handlePrevYear })
           ) : (
             <button
               type="button"
               onClick={handlePrevYear}
-              className="bear-p-1.5 bear-rounded bear-text-zinc-500 hover:bear-bg-zinc-100 bear-dark:hover:bear-bg-zinc-800 bear-transition-colors bear-font-medium"
+              className="p-1.5 rounded text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
               aria-label="Previous year"
             >
-              ‹‹
+              <ChevronsLeftIcon size={16} />
             </button>
           )}
           {NavPrev ? (
@@ -157,31 +131,27 @@ export const Calendar: FC<CalendarProps> = ({
             <button
               type="button"
               onClick={handlePrev}
-              className="bear-p-1.5 bear-rounded bear-text-zinc-500 hover:bear-bg-zinc-100 bear-dark:hover:bear-bg-zinc-800 bear-transition-colors"
+              className="p-1.5 rounded text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
               aria-label="Previous month"
             >
-              ‹
+              <ChevronLeftIcon size={16} />
             </button>
           )}
         </div>
-        {Label ? (
-          Label({ month: monthLabel, year })
-        ) : (
-          <span className="bear-font-semibold bear-text-sm bear-select-none">
-            {monthLabel} {year}
-          </span>
-        )}
-        <div className="bear-flex bear-items-center bear-gap-0.5">
+
+        {renderLabel({ month: monthLabel, year })}
+
+        <div className="flex items-center gap-0.5">
           {NavNext ? (
             NavNext({ onClick: handleNext })
           ) : (
             <button
               type="button"
               onClick={handleNext}
-              className="bear-p-1.5 bear-rounded bear-text-zinc-500 hover:bear-bg-zinc-100 bear-dark:hover:bear-bg-zinc-800 bear-transition-colors"
+              className="p-1.5 rounded text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
               aria-label="Next month"
             >
-              ›
+              <ChevronRightIcon size={16} />
             </button>
           )}
           {NavNextY ? (
@@ -190,10 +160,10 @@ export const Calendar: FC<CalendarProps> = ({
             <button
               type="button"
               onClick={handleNextYear}
-              className="bear-p-1.5 bear-rounded bear-text-zinc-500 hover:bear-bg-zinc-100 bear-dark:hover:bear-bg-zinc-800 bear-transition-colors bear-font-medium"
+              className="p-1.5 rounded text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
               aria-label="Next year"
             >
-              ››
+              <ChevronsRightIcon size={16} />
             </button>
           )}
         </div>
@@ -205,7 +175,7 @@ export const Calendar: FC<CalendarProps> = ({
     if (slots.weekdays) return slots.weekdays({ days: weekdays });
     const Weekday = slots.weekday;
     return (
-      <div className="bear-grid bear-grid-cols-7 bear-gap-1 bear-mb-2">
+      <div className="grid grid-cols-7 gap-1 mb-2">
         {weekdays.map((label) =>
           Weekday ? (
             <div key={label}>{Weekday({ label })}</div>
@@ -213,8 +183,8 @@ export const Calendar: FC<CalendarProps> = ({
             <div
               key={label}
               className={cn(
-                'bear-text-center bear-text-xs bear-font-medium bear-uppercase',
-                (label === 'SUN' || label === 'SAT' || label === 'Sun' || label === 'Sat') && 'bear-text-red-500'
+                'text-center text-xs font-medium uppercase',
+                WEEKEND_LABELS.includes(label as typeof WEEKEND_LABELS[number]) && 'text-red-500'
               )}
             >
               {label}
@@ -229,7 +199,7 @@ export const Calendar: FC<CalendarProps> = ({
     const { date, isCurrentMonth } = cell;
     const day = date.getDate();
     const weekday = date.getDay();
-    const isWeekend = weekday === 0 || weekday === 6;
+    const isWeekend = isWeekendDay(weekday);
     const selected = isSameDay(value, date);
     const isToday = isSameDay(today, date);
     const disabled = isDateDisabled(date);
@@ -260,18 +230,18 @@ export const Calendar: FC<CalendarProps> = ({
         onClick={handleClick}
         disabled={disabled}
         className={cn(
-          'bear-w-8 bear-h-8 bear-rounded-full bear-text-sm bear-font-medium bear-transition-colors bear-flex bear-items-center bear-justify-center',
-          selected && 'bear-bg-bear-500 bear-text-white hover:bear-bg-bear-600',
-          !selected && isToday && 'bear-ring-2 bear-ring-bear-500/50 bear-bg-transparent',
+          'w-8 h-8 rounded-full text-sm font-medium transition-colors flex items-center justify-center',
+          selected && 'bg-pink-500 text-white hover:bg-pink-600',
+          !selected && isToday && 'ring-2 ring-pink-500/50 bg-transparent',
           !selected &&
             !isToday &&
             (isCurrentMonth
               ? isWeekend
-                ? 'bear-text-red-500 hover:bear-bg-zinc-100'
-                : 'bear-text-zinc-700 hover:bear-bg-zinc-100'
-              : 'bear-text-zinc-400 hover:bear-bg-zinc-50'),
-          highlighted && !selected && 'bear-bg-bear-500/15',
-          disabled && 'bear-opacity-40 bear-cursor-not-allowed'
+                ? 'text-red-500 dark:text-red-400 hover:bg-zinc-100 dark:hover:bg-zinc-800'
+                : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800'
+              : 'text-zinc-400 dark:text-zinc-600 hover:bg-zinc-50 dark:hover:bg-zinc-800/50'),
+          highlighted && !selected && 'bg-pink-500/15',
+          disabled && 'opacity-40 cursor-not-allowed'
         )}
       >
         {day}
@@ -281,8 +251,8 @@ export const Calendar: FC<CalendarProps> = ({
 
   const renderDays = () => {
     const cells = grid.map((cell, i) => renderDay(cell, i));
-    if (slots.daysGrid) return slots.daysGrid({ children: cells, className: 'bear-grid bear-grid-cols-7 bear-gap-1' });
-    return <div className="bear-grid bear-grid-cols-7 bear-gap-1">{cells}</div>;
+    if (slots.daysGrid) return slots.daysGrid({ children: cells, className: 'grid grid-cols-7 gap-1' });
+    return <div className="grid grid-cols-7 gap-1">{cells}</div>;
   };
 
   const renderFooter = () => {
@@ -295,14 +265,14 @@ export const Calendar: FC<CalendarProps> = ({
       const Today = slots.todayButton;
       return slots.footer({
         children: (
-          <div className="bear-flex bear-justify-between bear-gap-2 bear-mt-4 bear-pt-3 bear-border-t bear-border-zinc-200">
+          <div className="flex justify-between gap-2 mt-4 pt-3 border-t border-zinc-200 dark:border-zinc-700">
             {showClear && Clear ? Clear({ onClick: onClear!, hasSelection }) : showClear ? (
-              <button type="button" onClick={onClear} className="bear-text-sm bear-text-zinc-500 hover:bear-text-zinc-700">
+              <button type="button" onClick={onClear} className="text-sm text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200">
                 Clear
               </button>
             ) : <span />}
             {showToday && Today ? Today({ onClick: onToday }) : showToday ? (
-              <button type="button" onClick={onToday} className="bear-text-sm bear-text-bear-600 hover:bear-text-bear-700 bear-font-medium">
+              <button type="button" onClick={onToday} className="text-sm text-pink-600 hover:text-pink-700 font-medium">
                 Today
               </button>
             ) : null}
@@ -310,25 +280,27 @@ export const Calendar: FC<CalendarProps> = ({
         ),
       });
     }
+
     if (slots.clearButton && slots.todayButton) {
       return (
-        <div className="bear-flex bear-justify-between bear-gap-2 bear-mt-4 bear-pt-3 bear-border-t bear-border-zinc-200">
+        <div className="flex justify-between gap-2 mt-4 pt-3 border-t border-zinc-200 dark:border-zinc-700">
           {showClear && slots.clearButton({ onClick: onClear!, hasSelection })}
           {showToday && slots.todayButton({ onClick: onToday! })}
         </div>
       );
     }
+
     return (
-      <div className="bear-flex bear-justify-between bear-gap-2 bear-mt-4 bear-pt-3 bear-border-t bear-border-zinc-200">
+      <div className="flex justify-between gap-2 mt-4 pt-3 border-t border-zinc-200 dark:border-zinc-700">
         {showClear ? (
-          <button type="button" onClick={onClear} className="bear-text-sm bear-text-zinc-500 hover:bear-text-zinc-700 bear-transition-colors">
+          <button type="button" onClick={onClear} className="text-sm text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 transition-colors">
             Clear
           </button>
         ) : (
           <span />
         )}
         {showToday ? (
-          <button type="button" onClick={onToday} className="bear-text-sm bear-text-bear-600 hover:bear-text-bear-700 bear-font-medium bear-transition-colors">
+          <button type="button" onClick={onToday} className="text-sm text-pink-600 dark:text-pink-400 hover:text-pink-700 dark:hover:text-pink-300 font-medium transition-colors">
             Today
           </button>
         ) : null}

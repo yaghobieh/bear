@@ -1,104 +1,112 @@
 import { useState } from 'react';
-import { defineStories } from '@forgedevstack/kiln';
 import { Calendar } from './Calendar';
 
-export default defineStories({
-  title: 'Calendar',
-  component: Calendar,
-  description: 'Standalone calendar with customizable slots. Use with DatePicker or alone.',
-  stories: [
-    {
-      name: 'Default',
-      component: () => {
-        const [view, setView] = useState(new Date());
+export default {
+  title: 'Inputs/Calendar',
+  description: 'Standalone calendar with date selection, navigation, and customizable slots.',
+  stories: {
+    Default: {
+      render: () => {
+        const [viewDate, setViewDate] = useState(new Date());
         const [value, setValue] = useState<Date | null>(null);
+
         return (
-          <div className="p-4 relative">
-            <Calendar
-              viewDate={view}
-              onViewChange={setView}
-              value={value}
-              onSelect={setValue}
-              onClear={() => setValue(null)}
-              onToday={() => { setValue(new Date()); setView(new Date()); }}
-            />
-          </div>
+          <Calendar
+            viewDate={viewDate}
+            onViewChange={setViewDate}
+            value={value}
+            onSelect={setValue}
+            onClear={() => setValue(null)}
+            onToday={() => {
+              const today = new Date();
+              setValue(today);
+              setViewDate(today);
+            }}
+            inline
+          />
         );
       },
-      code: `<Calendar viewDate={view} onViewChange={setView} value={value} onSelect={setValue} onClear={() => setValue(null)} onToday={...} />`,
-      description: 'Basic calendar',
     },
-    {
-      name: 'With Min/Max',
-      component: () => {
-        const [view, setView] = useState(new Date());
+    Highlighted: {
+      render: () => {
+        const [viewDate, setViewDate] = useState(new Date());
         const [value, setValue] = useState<Date | null>(null);
-        return (
-          <div className="p-4 relative">
-            <Calendar
-              viewDate={view}
-              onViewChange={setView}
-              value={value}
-              onSelect={setValue}
-              minDate={new Date()}
-              maxDate={new Date(new Date().getFullYear(), 11, 31)}
-              onClear={() => setValue(null)}
-              onToday={() => { setValue(new Date()); setView(new Date()); }}
-            />
-          </div>
-        );
-      },
-      code: `minDate={new Date()} maxDate={new Date(y, 11, 31)}`,
-      description: 'Restrict selectable range',
-    },
-    {
-      name: 'Custom Week Start (Monday)',
-      component: () => {
-        const [view, setView] = useState(new Date());
-        const [value, setValue] = useState<Date | null>(null);
-        return (
-          <div className="p-4 relative">
-            <Calendar
-              viewDate={view}
-              onViewChange={setView}
-              value={value}
-              onSelect={setValue}
-              firstDayOfWeek={1}
-              weekdayLabels={['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']}
-              onClear={() => setValue(null)}
-              onToday={() => { setValue(new Date()); setView(new Date()); }}
-            />
-          </div>
-        );
-      },
-      code: `firstDayOfWeek={1} weekdayLabels={['Mon','Tue',...]} `,
-      description: 'Week starts on Monday',
-    },
-    {
-      name: 'Highlighted Dates',
-      component: () => {
-        const [view, setView] = useState(new Date());
-        const [value, setValue] = useState<Date | null>(null);
-        const highlights = [
-          new Date(view.getFullYear(), view.getMonth(), 5),
-          new Date(view.getFullYear(), view.getMonth(), 15),
+        const highlighted = [
+          new Date(viewDate.getFullYear(), viewDate.getMonth(), 10),
+          new Date(viewDate.getFullYear(), viewDate.getMonth(), 15),
+          new Date(viewDate.getFullYear(), viewDate.getMonth(), 20),
         ];
+
         return (
-          <div className="p-4 relative">
-            <Calendar
-              viewDate={view}
-              onViewChange={setView}
-              value={value}
-              onSelect={setValue}
-              highlightedDates={highlights}
-              onClear={() => setValue(null)}
-              onToday={() => { setValue(new Date()); setView(new Date()); }}
-            />
-          </div>
+          <Calendar
+            viewDate={viewDate}
+            onViewChange={setViewDate}
+            value={value}
+            onSelect={setValue}
+            highlightedDates={highlighted}
+            inline
+          />
         );
       },
-      code: `highlightedDates={[new Date(...), ...]} `,
-      description: 'Highlight specific dates',
     },
-  ],
-});
+    'Min/Max Dates': {
+      render: () => {
+        const [viewDate, setViewDate] = useState(new Date());
+        const [value, setValue] = useState<Date | null>(null);
+        const today = new Date();
+        const maxDate = new Date(today.getFullYear(), today.getMonth() + 2, 0);
+
+        return (
+          <Calendar
+            viewDate={viewDate}
+            onViewChange={setViewDate}
+            value={value}
+            onSelect={setValue}
+            minDate={today}
+            maxDate={maxDate}
+            inline
+          />
+        );
+      },
+    },
+    'Week Starts Monday': {
+      render: () => {
+        const [viewDate, setViewDate] = useState(new Date());
+        const [value, setValue] = useState<Date | null>(null);
+
+        return (
+          <Calendar
+            viewDate={viewDate}
+            onViewChange={setViewDate}
+            value={value}
+            onSelect={setValue}
+            firstDayOfWeek={1}
+            inline
+          />
+        );
+      },
+    },
+    'Disabled Dates': {
+      render: () => {
+        const [viewDate, setViewDate] = useState(new Date());
+        const [value, setValue] = useState<Date | null>(null);
+        const disabled = [
+          new Date(viewDate.getFullYear(), viewDate.getMonth(), 5),
+          new Date(viewDate.getFullYear(), viewDate.getMonth(), 12),
+          new Date(viewDate.getFullYear(), viewDate.getMonth(), 19),
+        ];
+
+        return (
+          <Calendar
+            viewDate={viewDate}
+            onViewChange={setViewDate}
+            value={value}
+            onSelect={setValue}
+            disabledDates={disabled}
+            inline
+          />
+        );
+      },
+    },
+  },
+};

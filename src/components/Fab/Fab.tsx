@@ -26,7 +26,7 @@ const VARIANT_CLASSES: Record<BearVariant, string> = {
   warning: 'bear-bg-amber-500 hover:bear-bg-amber-600 bear-text-white',
   info: 'bear-bg-blue-500 hover:bear-bg-blue-600 bear-text-white',
   ghost: 'bear-bg-gray-500 hover:bear-bg-gray-600 bear-text-white',
-  outline: 'bear-bg-white bear-border-2 bear-border-pink-500 hover:bear-bg-pink-50 bear-text-pink-500',
+  outline: 'bear-bg-white dark:bear-bg-gray-900 bear-border-2 bear-border-pink-500 hover:bear-bg-pink-50 dark:hover:bear-bg-pink-900/20 bear-text-pink-500',
   error: 'bear-bg-red-500 hover:bear-bg-red-600 bear-text-white',
 };
 

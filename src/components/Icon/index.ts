@@ -21,10 +21,15 @@ import * as MiscIcons from './icons/misc';
 // Export commonly used icons directly for convenience
 export const CheckIcon = StatusIcons.CheckIcon;
 export const CloseIcon = NavigationIcons.CloseIcon;
+export const EditIcon = ActionIcons.EditIcon;
 export const ChevronDownIcon = NavigationIcons.ChevronDownIcon;
 export const ChevronRightIcon = NavigationIcons.ChevronRightIcon;
 export const ChevronLeftIcon = NavigationIcons.ChevronLeftIcon;
 export const ChevronUpIcon = NavigationIcons.ChevronUpIcon;
+export const ChevronsUpIcon = NavigationIcons.ChevronsUpIcon;
+export const ChevronsDownIcon = NavigationIcons.ChevronsDownIcon;
+export const ChevronsLeftIcon = NavigationIcons.ChevronsLeftIcon;
+export const ChevronsRightIcon = NavigationIcons.ChevronsRightIcon;
 export const MenuIcon = NavigationIcons.MenuIcon;
 export const SearchIcon = ActionIcons.SearchIcon;
 export const SettingsIcon = ActionIcons.SettingsIcon;

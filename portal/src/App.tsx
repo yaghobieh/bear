@@ -1,7 +1,7 @@
 import { useState, useEffect, Suspense, lazy, useCallback } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { BearLoader } from './components/BearLoader';
-import { Topbar } from './components/Topbar';
+import { Topbar } from './components/Topbar/Topbar';
 import { Sidebar } from './components/Sidebar';
 
 // Banner configuration — survey link points to main repo
@@ -89,8 +89,21 @@ const EmptyStatePage = lazy(() => import('./pages/components/EmptyState'));
 const ImagePage = lazy(() => import('./pages/components/Image'));
 const ScrollAreaPage = lazy(() => import('./pages/components/ScrollArea'));
 const CollapsiblePage = lazy(() => import('./pages/components/Collapsible'));
+const SidebarPage = lazy(() => import('./pages/components/Sidebar'));
+const ColumnsPage = lazy(() => import('./pages/components/Columns'));
 const KbdPage = lazy(() => import('./pages/components/Kbd'));
 const CopyButtonPage = lazy(() => import('./pages/components/CopyButton'));
+
+// New Components
+const BoxPage = lazy(() => import('./pages/components/Box'));
+const EmPage = lazy(() => import('./pages/components/Em'));
+const HighlightPage = lazy(() => import('./pages/components/Highlight'));
+const MarkPage = lazy(() => import('./pages/components/Mark'));
+const CodeBlockPage = lazy(() => import('./pages/components/CodeBlockPage'));
+const HoverCardPage = lazy(() => import('./pages/components/HoverCard'));
+const EditablePage = lazy(() => import('./pages/components/Editable'));
+const ActiveBarPage = lazy(() => import('./pages/components/ActiveBar'));
+const RichEditorPage = lazy(() => import('./pages/components/RichEditor'));
 
 // Navigation Components
 const LinkPage = lazy(() => import('./pages/components/Link'));
@@ -241,6 +254,17 @@ function App() {
                 <Route path="/components/collapsible" element={<CollapsiblePage />} />
                 <Route path="/components/kbd" element={<KbdPage />} />
                 <Route path="/components/copy-button" element={<CopyButtonPage />} />
+                <Route path="/components/sidebar" element={<SidebarPage />} />
+                <Route path="/components/columns" element={<ColumnsPage />} />
+                <Route path="/components/box" element={<BoxPage />} />
+                <Route path="/components/em" element={<EmPage />} />
+                <Route path="/components/highlight" element={<HighlightPage />} />
+                <Route path="/components/mark" element={<MarkPage />} />
+                <Route path="/components/code-block" element={<CodeBlockPage />} />
+                <Route path="/components/hover-card" element={<HoverCardPage />} />
+                <Route path="/components/editable" element={<EditablePage />} />
+                <Route path="/components/active-bar" element={<ActiveBarPage />} />
+                <Route path="/components/rich-editor" element={<RichEditorPage />} />
                 
                 <Route path="/icons" element={<IconsPage />} />
                 <Route path="/hooks" element={<HooksPage />} />

@@ -131,7 +131,7 @@ export const DateTimePicker: FC<DateTimePickerProps> = ({
       {error && <p className="bear-mt-1 bear-text-xs bear-text-red-400">{error}</p>}
       {helperText && !error && <p className="bear-mt-1 bear-text-xs bear-text-zinc-500">{helperText}</p>}
       {isOpen && (
-        <div className="bear-absolute bear-z-50 bear-mt-2 bear-left-0 bear-right-0 bear-bg-white bear-rounded-xl bear-shadow-xl bear-border bear-border-zinc-200 bear-overflow-hidden bear-w-full bear-max-w-sm">
+        <div className="bear-absolute bear-z-50 bear-mt-2 bear-left-0 bear-right-0 bear-bg-white dark:bear-bg-gray-900 bear-rounded-xl bear-shadow-xl bear-border bear-border-zinc-200 dark:bear-border-zinc-700 bear-overflow-hidden bear-w-full bear-max-w-sm">
           <Calendar
             inline
             viewDate={viewDate}

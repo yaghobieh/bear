@@ -234,3 +234,53 @@ export type { KbdProps } from './Kbd';
 
 export { CopyButton } from './CopyButton';
 export type { CopyButtonProps } from './CopyButton';
+
+// Sidebar
+export { Sidebar, SidebarGroup } from './Sidebar';
+export type { SidebarProps, SidebarItem, SidebarGroupProps, SidebarItemProps } from './Sidebar';
+
+// Columns (CSS)
+export { Columns, Column } from './Columns';
+export type { ColumnsProps, ColumnProps, ColumnsCountType } from './Columns';
+
+// Box
+export { Box } from './Box';
+export type { BoxProps } from './Box';
+
+// Typography Extensions
+export { Em } from './Em';
+export type { EmProps } from './Em';
+
+export { Highlight } from './Highlight';
+export type { HighlightProps } from './Highlight';
+
+export { Mark } from './Mark';
+export type { MarkProps } from './Mark';
+
+// Editable
+export { Editable } from './Editable';
+export type {
+  EditableRootProps,
+  EditablePreviewProps,
+  EditableInputProps,
+  EditableControlProps,
+  EditableSubmitTriggerProps,
+  EditableCancelTriggerProps,
+  EditableEditTriggerProps,
+} from './Editable';
+
+// HoverCard
+export { HoverCard } from './HoverCard';
+export type { HoverCardProps } from './HoverCard';
+
+// CodeBlock
+export { CodeBlock } from './CodeBlock';
+export type { CodeBlockProps } from './CodeBlock';
+
+// ActiveBar
+export { ActiveBar } from './ActiveBar';
+export type { ActiveBarProps, ActiveBarItem } from './ActiveBar';
+
+// RichEditor
+export { RichEditor } from './RichEditor';
+export type { RichEditorProps, ToolbarOption } from './RichEditor';

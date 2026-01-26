@@ -46,7 +46,7 @@ const COLOR_STYLES: Record<BearVariant, { track: string; thumb: string }> = {
   },
   outline: { 
     track: 'bear-bg-gray-600', 
-    thumb: 'bear-bg-white bear-border-gray-600' 
+    thumb: 'bear-bg-white dark:bear-bg-gray-200 bear-border-gray-600 dark:bear-border-gray-400' 
   },
 };
 

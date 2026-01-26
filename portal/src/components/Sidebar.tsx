@@ -19,16 +19,32 @@ const NavGroupComponent: FC<{ group: NavGroup }> = ({ group }) => (
           <NavLink
             to={item.path}
             className={({ isActive }) =>
-              `flex items-center justify-between px-3 py-1.5 text-sm rounded-r-lg border-l-2 transition-colors
+              `group flex items-center justify-between px-3 py-1.5 text-sm rounded-r-lg border-l-2 transition-colors
               ${isActive
                 ? 'border-bear-500 bg-bear-50 text-bear-700 dark:bg-bear-900/20 dark:text-bear-400'
                 : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-400 dark:hover:text-gray-200 dark:hover:bg-gray-800/50'
               }`
             }
           >
-            <span>{item.label}</span>
-            {item.badge && (
-              <span className="px-1.5 py-0.5 text-xs rounded bg-bear-100 text-bear-600 dark:bg-bear-900/30 dark:text-bear-400">
+            <span 
+              className={
+                item.badge === 'Hot' 
+                  ? 'bg-gradient-to-r from-pink-400 to-pink-600 bg-clip-text text-transparent font-semibold' 
+                  : ''
+              }
+            >
+              {item.label}
+            </span>
+            {item.badge && item.badge !== 'Hot' && (
+              <span 
+                className={`text-xs font-bold ${
+                  item.badge === 'New'
+                    ? 'bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent'
+                    : item.badge === '300+'
+                    ? 'px-1.5 py-0.5 rounded bg-gradient-to-r from-pink-500 to-purple-500 text-white text-[10px]'
+                    : 'px-1.5 py-0.5 rounded bg-bear-100 text-bear-600 dark:bg-bear-900/30 dark:text-bear-400'
+                }`}
+              >
                 {item.badge}
               </span>
             )}

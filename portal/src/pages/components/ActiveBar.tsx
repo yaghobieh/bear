@@ -41,7 +41,7 @@ const ActiveBarPage: FC = () => {
     { id: 'tab2', label: 'Tab 2' },
     { id: 'tab3', label: 'Tab 3' },
   ]}
-  onItemClick={(item) => setActiveId(item.id)}
+  onItemClick={(item: ActiveBarItem) => setActiveId(item.id)}
 />`}
       >
         <ActiveBar
@@ -51,7 +51,7 @@ const ActiveBarPage: FC = () => {
             { id: 'tab2', label: 'Tab 2' },
             { id: 'tab3', label: 'Tab 3' },
           ]}
-          onItemClick={(item) => setActive1(item.id)}
+          onItemClick={(item: ActiveBarItem) => setActive1(item.id)}
         />
       </ComponentPreview>
 
@@ -65,7 +65,7 @@ const ActiveBarPage: FC = () => {
     { id: 'analytics', label: 'Analytics', icon: <Icon name="chart" /> },
     { id: 'settings', label: 'Settings', icon: <Icon name="settings" /> },
   ]}
-  onItemClick={(item) => setActiveId(item.id)}
+  onItemClick={(item: ActiveBarItem) => setActiveId(item.id)}
 />`}
       >
         <ActiveBar
@@ -75,7 +75,7 @@ const ActiveBarPage: FC = () => {
             { id: 'analytics', label: 'Analytics', icon: <span>📈</span> },
             { id: 'settings', label: 'Settings', icon: <span>⚙️</span> },
           ]}
-          onItemClick={(item) => setActive2(item.id)}
+          onItemClick={(item: ActiveBarItem) => setActive2(item.id)}
         />
       </ComponentPreview>
 
@@ -96,7 +96,7 @@ const ActiveBarPage: FC = () => {
                 { id: 'tab2', label: 'Tab 2' },
                 { id: 'tab3', label: 'Tab 3' },
               ]}
-              onItemClick={(item) => setActive1(item.id)}
+              onItemClick={(item: ActiveBarItem) => setActive1(item.id)}
               variant="default"
             />
           </div>
@@ -109,7 +109,7 @@ const ActiveBarPage: FC = () => {
                 { id: 'tab2', label: 'Tab 2' },
                 { id: 'tab3', label: 'Tab 3' },
               ]}
-              onItemClick={(item) => setActive1(item.id)}
+              onItemClick={(item: ActiveBarItem) => setActive1(item.id)}
               variant="pills"
             />
           </div>
@@ -122,7 +122,7 @@ const ActiveBarPage: FC = () => {
                 { id: 'tab2', label: 'Tab 2' },
                 { id: 'tab3', label: 'Tab 3' },
               ]}
-              onItemClick={(item) => setActive1(item.id)}
+              onItemClick={(item: ActiveBarItem) => setActive1(item.id)}
               variant="underline"
             />
           </div>

@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@forgedevstack/bear": "1.0.5",
+    "@forgedevstack/bear": "file:..",
     "@forgedevstack/grid-table": "1.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -12,6 +12,7 @@
   },
   "scripts": {
     "predev": "cd .. && npm run build",
+    "prebuild": "cd .. && npm run build",
     "dev": "vite",
     "build": "npx tsc && npx vite build",
     "preview": "vite preview"

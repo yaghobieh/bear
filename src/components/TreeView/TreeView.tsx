@@ -1,6 +1,6 @@
 import { FC, useState, useCallback } from 'react';
 import { TreeViewProps, TreeNode } from './TreeView.types';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 
 const ChevronIcon: FC<{ expanded: boolean; className?: string }> = ({ expanded, className }) => (
   <svg className={cn('bear-transition-transform', expanded && 'bear-rotate-90', className)} fill="none" viewBox="0 0 24 24" stroke="currentColor">

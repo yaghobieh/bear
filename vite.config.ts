@@ -12,7 +12,9 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@ember': resolve(__dirname, './src'),
+      '@utils': resolve(__dirname, './src/utils'),
+      '@hooks': resolve(__dirname, './src/hooks'),
+      '@context': resolve(__dirname, './src/context'),
     },
   },
   build: {
@@ -35,4 +37,3 @@ export default defineConfig({
     },
   },
 });
-

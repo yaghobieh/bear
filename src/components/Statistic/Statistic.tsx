@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { StatisticProps } from './Statistic.types';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 
 export const Statistic: FC<StatisticProps> = ({
   title,

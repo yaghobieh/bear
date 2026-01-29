@@ -74,7 +74,7 @@ const Root = forwardRef<HTMLDivElement, EditableRootProps>(({
     <EditableContext.Provider value={{ isEditing, value, startEditing, stopEditing, setValue, submit, cancel }}>
       <div
         ref={ref}
-        className={`bear-editable inline-block ${className}`.trim()}
+        className={`Bear-Editable bear-inline-block ${className}`.trim()}
         {...props}
       >
         {children}
@@ -97,11 +97,11 @@ const Preview = forwardRef<HTMLSpanElement, EditablePreviewProps>(({
   return (
     <span
       ref={ref}
-      className={`bear-editable-preview cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 px-2 py-1 rounded transition-colors ${className}`.trim()}
+      className={`Bear-Editable__preview bear-cursor-pointer bear-px-2 bear-py-1 bear-rounded bear-transition-all bear-border bear-border-transparent hover:bear-border-gray-300 dark:hover:bear-border-zinc-600 hover:bear-bg-gray-50 dark:hover:bear-bg-zinc-800 bear-text-gray-900 dark:bear-text-white ${className}`.trim()}
       onClick={startEditing}
       {...props}
     >
-      {children || value || <span className="text-gray-400 italic">Click to edit...</span>}
+      {children || value || <span className="bear-text-gray-400 dark:bear-text-zinc-500 bear-italic">Click to edit...</span>}
     </span>
   );
 });
@@ -135,7 +135,7 @@ const Input = forwardRef<HTMLInputElement, EditableInputProps>(({
 
   if (!isEditing) return null;
 
-  const baseClasses = 'bear-editable-input w-full px-2 py-1 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-pink-500';
+  const baseClasses = 'Bear-Editable__input bear-w-full bear-px-2 bear-py-1 bear-border bear-border-gray-300 dark:bear-border-zinc-600 bear-rounded bear-bg-white dark:bear-bg-zinc-800 bear-text-gray-900 dark:bear-text-white focus:bear-outline-none focus:bear-ring-2 focus:bear-ring-pink-500';
 
   if (asTextarea) {
     return (
@@ -145,7 +145,7 @@ const Input = forwardRef<HTMLInputElement, EditableInputProps>(({
         onChange={(e) => setValue(e.target.value)}
         onKeyDown={handleKeyDown}
         onBlur={submit}
-        className={`${baseClasses} min-h-[80px] resize-y ${className}`.trim()}
+        className={`${baseClasses} bear-min-h-[80px] bear-resize-y ${className}`.trim()}
         {...(props as React.TextareaHTMLAttributes<HTMLTextAreaElement>)}
       />
     );
@@ -179,7 +179,7 @@ const Control = forwardRef<HTMLDivElement, EditableControlProps>(({
   return (
     <div
       ref={ref}
-      className={`bear-editable-control flex items-center gap-1 mt-1 ${className}`.trim()}
+      className={`Bear-Editable__control bear-flex bear-items-center bear-gap-1 bear-mt-1 ${className}`.trim()}
       {...props}
     >
       {children}

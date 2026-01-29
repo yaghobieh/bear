@@ -1,6 +1,8 @@
 import { FC, useState } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
+import { KilnLink } from '@/components/KilnLink';
+import { LinesOfCode } from '@/components/LinesOfCode';
 import { Sidebar as BearSidebar } from '@forgedevstack/bear';
 
 // Simple inline icons for the demo
@@ -59,7 +61,11 @@ const SidebarPage: FC = () => {
 
   return (
     <div className="fade-in">
-      <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Sidebar</h1>
+      <div className="flex items-center gap-3 mb-4">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Sidebar</h1>
+        <KilnLink path="/sidebar" />
+        <LinesOfCode lines={110} />
+      </div>
       <p className="text-gray-600 dark:text-gray-400 mb-8">
         Collapsible navigation sidebar with nested items and customizable styling.
       </p>
@@ -89,12 +95,12 @@ const SidebarPage: FC = () => {
   header={<span className="font-bold text-lg">My App</span>}
 />`}
       >
-        <div className="h-80 border rounded-lg overflow-hidden">
+        <div className="h-80 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
           <BearSidebar
             items={basicItems}
             activeItemId={active}
             onItemClick={(item) => setActive(item.id)}
-            header={<span className="bear-font-bold bear-text-lg">My App</span>}
+            header={<span className="bear-font-bold bear-text-lg bear-text-gray-900 dark:bear-text-white">My App</span>}
           />
         </div>
       </ComponentPreview>
@@ -110,14 +116,14 @@ const SidebarPage: FC = () => {
   header={<span>Logo</span>}
 />`}
       >
-        <div className="h-80 border rounded-lg overflow-hidden">
+        <div className="h-80 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
           <BearSidebar
             items={basicItems}
             collapsed={collapsed}
             onCollapsedChange={setCollapsed}
             activeItemId={active}
             onItemClick={(item) => setActive(item.id)}
-            header={<span className="bear-font-bold">Logo</span>}
+            header={<span className="bear-font-bold bear-text-gray-900 dark:bear-text-white">Logo</span>}
           />
         </div>
       </ComponentPreview>
@@ -140,7 +146,7 @@ const SidebarPage: FC = () => {
 
 <Sidebar items={items} />`}
       >
-        <div className="h-80 border rounded-lg overflow-hidden">
+        <div className="h-80 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
           <BearSidebar
             items={nestedItems}
             activeItemId={active}
@@ -157,14 +163,14 @@ const SidebarPage: FC = () => {
 <Sidebar items={items} variant="floating" />`}
       >
         <div className="flex gap-4 h-64">
-          <div className="border rounded-lg overflow-hidden">
-            <BearSidebar items={basicItems.slice(0, 2)} variant="default" header="Default" />
+          <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+            <BearSidebar items={basicItems.slice(0, 2)} variant="default" header={<span className="bear-text-gray-900 dark:bear-text-white">Default</span>} />
           </div>
-          <div className="border rounded-lg overflow-hidden">
-            <BearSidebar items={basicItems.slice(0, 2)} variant="bordered" header="Bordered" />
+          <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+            <BearSidebar items={basicItems.slice(0, 2)} variant="bordered" header={<span className="bear-text-gray-900 dark:bear-text-white">Bordered</span>} />
           </div>
-          <div className="border rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800">
-            <BearSidebar items={basicItems.slice(0, 2)} variant="floating" header="Floating" />
+          <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800">
+            <BearSidebar items={basicItems.slice(0, 2)} variant="floating" header={<span className="bear-text-gray-900 dark:bear-text-white">Floating</span>} />
           </div>
         </div>
       </ComponentPreview>
@@ -181,16 +187,16 @@ const SidebarPage: FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-              <tr><td className="px-4 py-3 font-mono text-bear-600">items</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>SidebarItem[]</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Navigation items array</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">collapsed</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Collapsed state</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">onCollapsedChange</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>(collapsed: boolean) =&gt; void</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Collapse toggle callback</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">width</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>number | string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Expanded width (default: 256)</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">collapsedWidth</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>number | string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Collapsed width (default: 64)</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">header</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Header content (logo, title)</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">footer</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Footer content</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">activeItemId</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Active item ID for highlighting</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">variant</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>"default" | "bordered" | "floating"</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Visual style variant</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">position</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>"left" | "right"</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Sidebar position (default: left)</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-pink-600 dark:text-pink-400">items</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code className="bg-gray-100 dark:bg-gray-800 px-1 rounded">SidebarItem[]</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Navigation items array</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-pink-600 dark:text-pink-400">collapsed</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code className="bg-gray-100 dark:bg-gray-800 px-1 rounded">boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Collapsed state</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-pink-600 dark:text-pink-400">onCollapsedChange</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code className="bg-gray-100 dark:bg-gray-800 px-1 rounded">(collapsed: boolean) =&gt; void</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Collapse toggle callback</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-pink-600 dark:text-pink-400">width</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code className="bg-gray-100 dark:bg-gray-800 px-1 rounded">number | string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Expanded width (default: 256)</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-pink-600 dark:text-pink-400">collapsedWidth</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code className="bg-gray-100 dark:bg-gray-800 px-1 rounded">number | string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Collapsed width (default: 64)</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-pink-600 dark:text-pink-400">header</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code className="bg-gray-100 dark:bg-gray-800 px-1 rounded">ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Header content (logo, title)</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-pink-600 dark:text-pink-400">footer</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code className="bg-gray-100 dark:bg-gray-800 px-1 rounded">ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Footer content</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-pink-600 dark:text-pink-400">activeItemId</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code className="bg-gray-100 dark:bg-gray-800 px-1 rounded">string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Active item ID for highlighting</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-pink-600 dark:text-pink-400">variant</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code className="bg-gray-100 dark:bg-gray-800 px-1 rounded">"default" | "bordered" | "floating"</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Visual style variant</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-pink-600 dark:text-pink-400">position</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code className="bg-gray-100 dark:bg-gray-800 px-1 rounded">"left" | "right"</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Sidebar position (default: left)</td></tr>
             </tbody>
           </table>
         </div>
@@ -200,4 +206,3 @@ const SidebarPage: FC = () => {
 };
 
 export default SidebarPage;
-

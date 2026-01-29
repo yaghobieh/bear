@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react';
 
+export type ModalSize = 'sm' | 'md' | 'lg' | 'xl' | 'full';
+
 export interface ModalProps {
   /** Whether the modal is open */
   isOpen: boolean;
@@ -10,7 +12,7 @@ export interface ModalProps {
   /** Modal content */
   children: ReactNode;
   /** Modal size */
-  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+  size?: ModalSize;
   /** Whether to show close button */
   showCloseButton?: boolean;
   /** Whether clicking backdrop closes modal */
@@ -21,5 +23,8 @@ export interface ModalProps {
   className?: string;
   /** Footer content */
   footer?: ReactNode;
+  /** Test ID for testing purposes */
+  testId?: string;
+  /** Unique ID for accessibility */
+  id?: string;
 }
-

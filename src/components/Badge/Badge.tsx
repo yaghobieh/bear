@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 import type { BadgeProps } from './Badge.types';
 import { sizeClasses, variantClasses, dotVariantColors, BADGE_DOT_SIZE_CLASSES } from './Badge.constants';
 
@@ -26,10 +26,11 @@ export const Badge: FC<BadgeProps> = ({
   return (
     <span
       className={cn(
+        'Bear-Badge',
         'bear-inline-flex bear-items-center bear-gap-1.5 bear-font-medium',
         sizeClasses[size],
         variantClasses[variant],
-        pill ? 'bear-rounded-full' : 'bear-rounded-md',
+        pill ? 'Bear-Badge--pill bear-rounded-full' : 'bear-rounded-md',
         className
       )}
       data-testid={testId}
@@ -38,13 +39,14 @@ export const Badge: FC<BadgeProps> = ({
       {dot && (
         <span
           className={cn(
+            'Bear-Badge__dot',
             BADGE_DOT_SIZE_CLASSES,
             'bear-rounded-full',
             dotVariantColors[variant]
           )}
         />
       )}
-      {children}
+      <span className="Bear-Badge__content">{children}</span>
     </span>
   );
 };

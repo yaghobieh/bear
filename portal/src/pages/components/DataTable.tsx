@@ -1,6 +1,9 @@
 import { FC } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
+import { KilnLink } from '@/components/KilnLink';
+import { LinesOfCode } from '@/components/LinesOfCode';
+import { BearIcons, Alert, Card } from '@forgedevstack/bear';
 
 const DataTablePage: FC = () => {
   const sampleData = [
@@ -11,10 +14,52 @@ const DataTablePage: FC = () => {
 
   return (
     <div className="fade-in">
-      <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">DataTable</h1>
-      <p className="text-gray-600 dark:text-gray-400 mb-8">
+      <div className="flex items-center gap-3 mb-4">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">DataTable</h1>
+        <KilnLink path="/data-table" />
+        <LinesOfCode lines={280} />
+      </div>
+      <p className="text-gray-600 dark:text-gray-400 mb-6">
         Feature-rich data table with sorting, filtering, pagination, and more.
       </p>
+
+      {/* Grid Table Reference Card */}
+      <Card className="mb-8 p-4 bg-gradient-to-r from-pink-50 to-purple-50 dark:from-pink-900/20 dark:to-purple-900/20 border-pink-200 dark:border-pink-800">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex items-start gap-3">
+            <BearIcons.TableIcon size={24} className="text-pink-500 flex-shrink-0 mt-1" />
+            <div>
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
+                Need more power? Try Grid Table
+              </h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                For advanced features like drag-and-drop columns, virtual scrolling, mobile drawer, 
+                and headless architecture, check out our standalone <strong>@forgedevstack/grid-table</strong> package.
+              </p>
+            </div>
+          </div>
+          <div className="flex gap-3 flex-shrink-0">
+            <a
+              href="https://www.npmjs.com/package/@forgedevstack/grid-table"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-pink-500 hover:bg-pink-600 text-white text-sm font-medium transition-colors"
+            >
+              <BearIcons.PackageIcon size={16} />
+              npm
+            </a>
+            <a
+              href="https://github.com/yaghobieh/grid-table"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium transition-colors"
+            >
+              <BearIcons.GithubIcon size={16} />
+              GitHub
+            </a>
+          </div>
+        </div>
+      </Card>
 
       <section className="mb-12">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Import</h2>

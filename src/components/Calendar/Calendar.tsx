@@ -1,40 +1,35 @@
 import { FC, useCallback, useMemo } from 'react';
 import type { CalendarProps, CalendarDayProps, CalendarNavActions, HeaderLabelRFC } from './Calendar.types';
-import { cn } from '../../utils/cn';
-import { useBearStyles } from '../../hooks/useBearStyles';
+import { cn } from '@utils';
+import { useBearStyles } from '@hooks';
 import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon } from '../Icon';
 import { DEFAULT_WEEKDAYS, MONTHS, NUMBER, WEEKEND_LABELS } from './Calendar.const';
 import { buildCalendarGrid, isSameDay, isWeekendDay, reorderWeekdays } from './Calendar.utils';
+import { DefaultHeaderLabel } from './Calendar.helpers';
 
-// Default render functions
-const defaultRenderHeaderLabel: HeaderLabelRFC = ({ month, year }) => (
-  <span className="font-semibold text-sm select-none">
-    {month} {year}
-  </span>
-);
-
-export const Calendar: FC<CalendarProps> = ({
-  viewDate,
-  value = null,
-  onSelect,
-  onViewChange,
-  minDate,
-  maxDate,
-  disabledDates = [],
-  highlightedDates = [],
-  weekdayLabels = DEFAULT_WEEKDAYS,
-  firstDayOfWeek = NUMBER.ZERO,
-  showWeekNumbers: _showWeekNumbers = false,
-  slots = {},
-  clearable = true,
-  onClear,
-  showTodayButton = true,
-  onToday,
-  bis,
-  style,
-  inline = false,
-  className,
-}) => {
+export const Calendar: FC<CalendarProps> = (props) => {
+  const {
+    viewDate,
+    value = null,
+    onSelect,
+    onViewChange,
+    minDate,
+    maxDate,
+    disabledDates = [],
+    highlightedDates = [],
+    weekdayLabels = DEFAULT_WEEKDAYS,
+    firstDayOfWeek = NUMBER.ZERO,
+    showWeekNumbers: _showWeekNumbers = false,
+    slots = {},
+    clearable = true,
+    onClear,
+    showTodayButton = true,
+    onToday,
+    bis,
+    style,
+    inline = false,
+    className,
+  } = props;
   const year = viewDate.getFullYear();
   const mergedStyle = useBearStyles(bis, style);
   const month = viewDate.getMonth();
@@ -108,7 +103,7 @@ export const Calendar: FC<CalendarProps> = ({
     const NavNextY = slots.navNextYear;
     
     // Use slot or default RFC for header label
-    const renderLabel: HeaderLabelRFC = slots.headerLabel || defaultRenderHeaderLabel;
+    const renderLabel: HeaderLabelRFC = slots.headerLabel || DefaultHeaderLabel;
 
     return (
       <div className="flex items-center justify-between gap-1 mb-4">

@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
 import { KilnLink } from '@/components/KilnLink';
+import { LinesOfCode } from '@/components/LinesOfCode';
 import { Box } from '@forgedevstack/bear';
 
 const BoxPage: FC = () => {
@@ -10,6 +11,7 @@ const BoxPage: FC = () => {
       <div className="flex items-center gap-3 mb-4">
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Box</h1>
         <KilnLink path="/box" />
+        <LinesOfCode lines={45} />
       </div>
       <p className="text-gray-600 dark:text-gray-400 mb-8">
         The most fundamental layout component. A flexible container that can render as any HTML element.

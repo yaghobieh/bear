@@ -1,6 +1,6 @@
 import { FC, useState, useRef, useEffect, useCallback } from 'react';
 import { PopoverProps } from './Popover.types';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 
 export const Popover: FC<PopoverProps> = ({
   children,

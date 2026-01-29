@@ -1,3 +1,3 @@
-export { Modal } from './Modal';
-export type { ModalProps } from './Modal.types';
-
+export { Modal, default } from './Modal';
+export * from './Modal.types';
+export * from './Modal.const';

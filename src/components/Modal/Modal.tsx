@@ -1,29 +1,45 @@
 import { FC, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 import { CloseIcon } from '../Icon/icons/navigation';
 import type { ModalProps } from './Modal.types';
+import {
+  MODAL_SIZE_CLASSES,
+  MODAL_BACKDROP_CLASSES,
+  MODAL_CONTAINER_CLASSES,
+  MODAL_HEADER_CLASSES,
+  MODAL_TITLE_CLASSES,
+  MODAL_CLOSE_CLASSES,
+  MODAL_BODY_CLASSES,
+  MODAL_FOOTER_CLASSES,
+} from './Modal.const';
 
-const sizeClasses = {
-  sm: 'bear-max-w-sm',
-  md: 'bear-max-w-md',
-  lg: 'bear-max-w-lg',
-  xl: 'bear-max-w-xl',
-  full: 'bear-max-w-full bear-mx-4',
-};
+/**
+ * Modal - Dialog component for displaying content on top of the main UI
+ * 
+ * @example
+ * ```tsx
+ * <Modal isOpen={isOpen} onClose={handleClose} title="Modal Title">
+ *   Modal content goes here
+ * </Modal>
+ * ```
+ */
+export const Modal: FC<ModalProps> = (props) => {
+  const {
+    isOpen,
+    onClose,
+    title,
+    children,
+    size = 'md',
+    showCloseButton = true,
+    closeOnBackdrop = true,
+    closeOnEscape = true,
+    className,
+    footer,
+    testId,
+    id,
+  } = props;
 
-export const Modal: FC<ModalProps> = ({
-  isOpen,
-  onClose,
-  title,
-  children,
-  size = 'md',
-  showCloseButton = true,
-  closeOnBackdrop = true,
-  closeOnEscape = true,
-  className,
-  footer,
-}) => {
   const handleEscape = useCallback(
     (event: KeyboardEvent) => {
       if (closeOnEscape && event.key === 'Escape') {
@@ -47,9 +63,13 @@ export const Modal: FC<ModalProps> = ({
   if (!isOpen) return null;
 
   const modalContent = (
-    <div className="bear-fixed bear-inset-0 bear-z-50 bear-flex bear-items-center bear-justify-center">
+    <div 
+      className="Bear-Modal bear-fixed bear-inset-0 bear-z-50 bear-flex bear-items-center bear-justify-center"
+      id={id}
+      data-testid={testId}
+    >
       <div
-        className="bear-absolute bear-inset-0 bear-bg-black/60 bear-backdrop-blur-sm bear-transition-opacity"
+        className={cn('Bear-Modal__backdrop', MODAL_BACKDROP_CLASSES)}
         onClick={closeOnBackdrop ? onClose : undefined}
         aria-hidden="true"
       />
@@ -59,20 +79,18 @@ export const Modal: FC<ModalProps> = ({
         aria-modal="true"
         aria-labelledby={title ? 'modal-title' : undefined}
         className={cn(
-          'bear-relative bear-w-full bear-bg-gray-900 bear-rounded-xl bear-shadow-2xl',
-          'bear-border bear-border-gray-700',
-          'bear-transform bear-transition-all',
-          'bear-animate-in bear-fade-in bear-zoom-in-95',
-          sizeClasses[size],
+          'Bear-Modal__container',
+          MODAL_CONTAINER_CLASSES,
+          MODAL_SIZE_CLASSES[size],
           className
         )}
       >
         {(title || showCloseButton) && (
-          <div className="bear-flex bear-items-center bear-justify-between bear-px-6 bear-py-4 bear-border-b bear-border-gray-700">
+          <div className={cn('Bear-Modal__header', MODAL_HEADER_CLASSES)}>
             {title && (
               <h2
                 id="modal-title"
-                className="bear-text-lg bear-font-semibold bear-text-white"
+                className={cn('Bear-Modal__title', MODAL_TITLE_CLASSES)}
               >
                 {title}
               </h2>
@@ -80,7 +98,7 @@ export const Modal: FC<ModalProps> = ({
             {showCloseButton && (
               <button
                 onClick={onClose}
-                className="bear-p-1 bear-rounded-lg bear-text-gray-400 hover:bear-text-white hover:bear-bg-gray-700 bear-transition-colors"
+                className={cn('Bear-Modal__close', MODAL_CLOSE_CLASSES)}
                 aria-label="Close modal"
               >
                 <CloseIcon className="bear-w-5 bear-h-5" />
@@ -89,12 +107,12 @@ export const Modal: FC<ModalProps> = ({
           </div>
         )}
 
-        <div className="bear-px-6 bear-py-4 bear-text-gray-300">
+        <div className={cn('Bear-Modal__body', MODAL_BODY_CLASSES)}>
           {children}
         </div>
 
         {footer && (
-          <div className="bear-flex bear-items-center bear-justify-end bear-gap-3 bear-px-6 bear-py-4 bear-border-t bear-border-gray-700">
+          <div className={cn('Bear-Modal__footer', MODAL_FOOTER_CLASSES)}>
             {footer}
           </div>
         )}
@@ -105,3 +123,4 @@ export const Modal: FC<ModalProps> = ({
   return createPortal(modalContent, document.body);
 };
 
+export default Modal;

@@ -104,6 +104,7 @@ const HoverCardPage = lazy(() => import('./pages/components/HoverCard'));
 const EditablePage = lazy(() => import('./pages/components/Editable'));
 const ActiveBarPage = lazy(() => import('./pages/components/ActiveBar'));
 const RichEditorPage = lazy(() => import('./pages/components/RichEditor'));
+const SignPadPage = lazy(() => import('./pages/components/SignPad'));
 
 // Navigation Components
 const LinkPage = lazy(() => import('./pages/components/Link'));
@@ -112,6 +113,27 @@ const AccordionPage = lazy(() => import('./pages/components/Accordion'));
 const MenuPage = lazy(() => import('./pages/components/Menu'));
 const DropdownPage = lazy(() => import('./pages/components/Dropdown'));
 const SpeedDialPage = lazy(() => import('./pages/components/SpeedDial'));
+
+// Charts & Graphs
+const ChartPage = lazy(() => import('./pages/components/Chart'));
+const SparklinePage = lazy(() => import('./pages/components/Sparkline'));
+const GaugePage = lazy(() => import('./pages/components/Gauge'));
+
+// Animation Hooks
+const UseSlidePage = lazy(() => import('./pages/hooks/UseSlide'));
+const UseParallaxPage = lazy(() => import('./pages/hooks/UseParallax'));
+const UseBouncePage = lazy(() => import('./pages/hooks/UseBounce'));
+const UseFloatPage = lazy(() => import('./pages/hooks/UseFloat'));
+const UsePulsePage = lazy(() => import('./pages/hooks/UsePulse'));
+const UseShakePage = lazy(() => import('./pages/hooks/UseShake'));
+
+// Utility Hooks
+const UseClipboardPage = lazy(() => import('./pages/hooks/UseClipboard'));
+const UseDebouncePage = lazy(() => import('./pages/hooks/UseDebounce'));
+const UseThrottlePage = lazy(() => import('./pages/hooks/UseThrottle'));
+const UseLocalStoragePage = lazy(() => import('./pages/hooks/UseLocalStorage'));
+const UseKeyPressPage = lazy(() => import('./pages/hooks/UseKeyPress'));
+const UseIntersectionObserverPage = lazy(() => import('./pages/hooks/UseIntersectionObserver'));
 
 // Utilities
 const IconsPage = lazy(() => import('./pages/Icons'));
@@ -265,6 +287,31 @@ function App() {
                 <Route path="/components/editable" element={<EditablePage />} />
                 <Route path="/components/active-bar" element={<ActiveBarPage />} />
                 <Route path="/components/rich-editor" element={<RichEditorPage />} />
+                <Route path="/components/sign-pad" element={<SignPadPage />} />
+                
+                {/* Charts & Graphs */}
+                <Route path="/components/chart" element={<ChartPage />} />
+                <Route path="/components/bar-chart" element={<ChartPage />} />
+                <Route path="/components/line-chart" element={<ChartPage />} />
+                <Route path="/components/pie-chart" element={<ChartPage />} />
+                <Route path="/components/sparkline" element={<SparklinePage />} />
+                <Route path="/components/gauge" element={<GaugePage />} />
+                
+                {/* Animation Hooks */}
+                <Route path="/hooks/use-slide" element={<UseSlidePage />} />
+                <Route path="/hooks/use-parallax" element={<UseParallaxPage />} />
+                <Route path="/hooks/use-bounce" element={<UseBouncePage />} />
+                <Route path="/hooks/use-float" element={<UseFloatPage />} />
+                <Route path="/hooks/use-pulse" element={<UsePulsePage />} />
+                <Route path="/hooks/use-shake" element={<UseShakePage />} />
+                
+                {/* Utility Hooks */}
+                <Route path="/hooks/use-clipboard" element={<UseClipboardPage />} />
+                <Route path="/hooks/use-debounce" element={<UseDebouncePage />} />
+                <Route path="/hooks/use-throttle" element={<UseThrottlePage />} />
+                <Route path="/hooks/use-local-storage" element={<UseLocalStoragePage />} />
+                <Route path="/hooks/use-key-press" element={<UseKeyPressPage />} />
+                <Route path="/hooks/use-intersection-observer" element={<UseIntersectionObserverPage />} />
                 
                 <Route path="/icons" element={<IconsPage />} />
                 <Route path="/hooks" element={<HooksPage />} />

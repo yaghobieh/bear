@@ -1,5 +1,5 @@
 import { FC, useState, createContext, useContext } from 'react';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 import type { TabsContextValue, TabsProps, TabListProps, TabProps, TabPanelProps } from './Tabs.types';
 
 const TabsContext = createContext<TabsContextValue | null>(null);
@@ -36,7 +36,7 @@ export const Tabs: FC<TabsProps> = ({
   
   return (
     <TabsContext.Provider value={{ activeTab, setActiveTab, variant }}>
-      <div className={className} data-testid={testId}>
+      <div className={cn('Bear-Tabs', className)} data-testid={testId}>
         {children}
       </div>
     </TabsContext.Provider>
@@ -56,6 +56,8 @@ export const TabList: FC<TabListProps> = ({ children, className }) => {
     <div
       role="tablist"
       className={cn(
+        'Bear-Tabs__list',
+        `Bear-Tabs__list--${variant}`,
         'bear-flex bear-gap-1',
         variant === 'line' && 'bear-border-b bear-border-gray-200 dark:bear-border-gray-700',
         variant === 'pills' && 'bear-bg-gray-100 dark:bear-bg-gray-800 bear-p-1 bear-rounded-lg',
@@ -108,13 +110,15 @@ export const Tab: FC<TabProps> = ({ id, children, disabled = false, icon }) => {
       disabled={disabled}
       onClick={() => !disabled && setActiveTab(id)}
       className={cn(
+        'Bear-Tabs__tab',
+        isActive && 'Bear-Tabs__tab--active',
         baseClasses,
         variantClasses[variant],
-        disabled && 'bear-opacity-50 bear-cursor-not-allowed'
+        disabled && 'Bear-Tabs__tab--disabled bear-opacity-50 bear-cursor-not-allowed'
       )}
     >
-      {icon}
-      {children}
+      {icon && <span className="Bear-Tabs__tab-icon">{icon}</span>}
+      <span className="Bear-Tabs__tab-label">{children}</span>
     </button>
   );
 };
@@ -131,9 +135,8 @@ export const TabPanel: FC<TabPanelProps> = ({ tabId, children, className }) => {
   if (activeTab !== tabId) return null;
   
   return (
-    <div role="tabpanel" className={cn('bear-py-4', className)}>
+    <div role="tabpanel" className={cn('Bear-Tabs__panel bear-py-4', className)}>
       {children}
     </div>
   );
 };
-

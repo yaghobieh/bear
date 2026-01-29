@@ -1,5 +1,5 @@
 import { FC, createContext, useContext, forwardRef } from 'react';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 import type {
   ListProps,
   ListItemProps,

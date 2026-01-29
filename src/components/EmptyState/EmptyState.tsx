@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { EmptyStateProps } from './EmptyState.types';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 
 const DefaultIcon: FC<{ className?: string }> = ({ className }) => (
   <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -1,6 +1,28 @@
 import { FC, useRef, useState, useCallback, useEffect } from 'react';
-import { RichEditorProps, ToolbarButtonProps, ToolbarOption } from './RichEditor.types';
-import { DEFAULT_TOOLBAR, execCommand, queryCommandState } from './RichEditor.utils';
+import { cn } from '@utils';
+import type { RichEditorProps, ToolbarOption } from './RichEditor.types';
+import {
+  execCommand,
+  queryCommandValue,
+  getActiveFormats,
+  insertLink,
+  setTextColor,
+  setHighlightColor,
+  insertImage,
+  fileToDataUrl,
+} from './helpers';
+import {
+  RICH_EDITOR_MIN_HEIGHT,
+  RICH_EDITOR_DEFAULT_TOOLBAR,
+  RICH_EDITOR_ROOT_CLASSES,
+  RICH_EDITOR_TOOLBAR_CLASSES,
+  RICH_EDITOR_CONTENT_CLASSES,
+  RICH_EDITOR_DIVIDER_CLASSES,
+  RICH_EDITOR_BUTTON_CONFIG,
+  RICH_EDITOR_HEADING_OPTIONS,
+  RICH_EDITOR_CONTENT_STYLES,
+} from './RichEditor.const';
+import { ToolbarButton, ToolbarDropdown, ToolbarColorPicker, ToolbarMore } from './components';
 import {
   BoldIcon,
   ItalicIcon,
@@ -8,47 +30,76 @@ import {
   StrikethroughIcon,
   Heading1Icon,
   Heading2Icon,
-  BulletListIcon,
-  OrderedListIcon,
-  BlockquoteIcon,
+  Heading3Icon,
+  ListBulletIcon,
+  ListNumberedIcon,
+  QuoteIcon,
   CodeIcon,
-  LinkIcon,
-} from './RichEditor.icons';
+  InsertLinkIcon,
+  AlignLeftIcon,
+  AlignCenterIcon,
+  AlignRightIcon,
+  AlignJustifyIcon,
+  InsertPhotoIcon,
+  IndentIncreaseIcon,
+  IndentDecreaseIcon,
+  FormatClearIcon,
+  TableIcon,
+  TextIcon,
+} from '../Icon/icons/editor';
 
-const ToolbarButton: FC<ToolbarButtonProps> = ({ icon, title, active, onClick, disabled }) => (
-  <button
-    type="button"
-    title={title}
-    onClick={onClick}
-    disabled={disabled}
-    className={`
-      p-1.5 rounded transition-colors
-      ${active 
-        ? 'bg-pink-500 text-white' 
-        : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
-      }
-      ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
-    `}
-  >
-    {icon}
-  </button>
-);
+const MAX_RECENT_COLORS = 6;
 
-export const RichEditor: FC<RichEditorProps> = ({
-  value,
-  defaultValue = '',
-  onChange,
-  placeholder = 'Start typing...',
-  disabled = false,
-  readOnly = false,
-  minHeight = 150,
-  maxHeight,
-  toolbar = DEFAULT_TOOLBAR as ToolbarOption[],
-  className = '',
-  ...props
-}) => {
+/**
+ * RichEditor - WYSIWYG rich text editor with formatting toolbar
+ * 
+ * @example
+ * ```tsx
+ * const [value, setValue] = useState('<p>Start editing...</p>');
+ * 
+ * <RichEditor
+ *   value={value}
+ *   onChange={setValue}
+ *   placeholder="Start typing..."
+ * />
+ * ```
+ */
+export const RichEditor: FC<RichEditorProps> = (props) => {
+  const {
+    value,
+    defaultValue = '',
+    onChange,
+    placeholder = 'Start typing...',
+    disabled = false,
+    readOnly = false,
+    minHeight = RICH_EDITOR_MIN_HEIGHT,
+    maxHeight,
+    toolbar = RICH_EDITOR_DEFAULT_TOOLBAR,
+    className = '',
+    testId,
+    id,
+    allowImagePaste = true,
+    ...rest
+  } = props;
+
   const editorRef = useRef<HTMLDivElement>(null);
   const [activeFormats, setActiveFormats] = useState<Set<string>>(new Set());
+  const [currentBlock, setCurrentBlock] = useState<string>('p');
+  const [textColorValue, setTextColorValue] = useState<string>('#000000');
+  const [highlightColorValue, setHighlightColorValue] = useState<string>('#fef08a');
+  const [recentTextColors, setRecentTextColors] = useState<string[]>([]);
+  const [recentHighlightColors, setRecentHighlightColors] = useState<string[]>([]);
+
+  // Inject styles for content
+  useEffect(() => {
+    const styleId = 'bear-rich-editor-styles';
+    if (!document.getElementById(styleId)) {
+      const style = document.createElement('style');
+      style.id = styleId;
+      style.textContent = RICH_EDITOR_CONTENT_STYLES;
+      document.head.appendChild(style);
+    }
+  }, []);
 
   useEffect(() => {
     if (editorRef.current && value !== undefined) {
@@ -65,14 +116,13 @@ export const RichEditor: FC<RichEditorProps> = ({
   }, []);
 
   const updateActiveFormats = useCallback(() => {
-    const formats = new Set<string>();
-    if (queryCommandState('bold')) formats.add('bold');
-    if (queryCommandState('italic')) formats.add('italic');
-    if (queryCommandState('underline')) formats.add('underline');
-    if (queryCommandState('strikeThrough')) formats.add('strikethrough');
-    if (queryCommandState('insertUnorderedList')) formats.add('bulletList');
-    if (queryCommandState('insertOrderedList')) formats.add('orderedList');
-    setActiveFormats(formats);
+    setActiveFormats(getActiveFormats());
+    
+    // Get current block format
+    const block = queryCommandValue('formatBlock');
+    if (block) {
+      setCurrentBlock(block.toLowerCase().replace(/[<>]/g, ''));
+    }
   }, []);
 
   const handleInput = useCallback(() => {
@@ -87,76 +137,325 @@ export const RichEditor: FC<RichEditorProps> = ({
 
     editorRef.current?.focus();
 
-    switch (format) {
-      case 'bold':
-        execCommand('bold');
-        break;
-      case 'italic':
-        execCommand('italic');
-        break;
-      case 'underline':
-        execCommand('underline');
-        break;
-      case 'strikethrough':
-        execCommand('strikeThrough');
-        break;
-      case 'heading1':
-        execCommand('formatBlock', '<h1>');
-        break;
-      case 'heading2':
-        execCommand('formatBlock', '<h2>');
-        break;
-      case 'heading3':
-        execCommand('formatBlock', '<h3>');
-        break;
-      case 'bulletList':
-        execCommand('insertUnorderedList');
-        break;
-      case 'orderedList':
-        execCommand('insertOrderedList');
-        break;
-      case 'blockquote':
-        execCommand('formatBlock', '<blockquote>');
-        break;
-      case 'code':
-        execCommand('formatBlock', '<pre>');
-        break;
-      case 'link':
-        const url = prompt('Enter URL:');
-        if (url) execCommand('createLink', url);
-        break;
+    const config = RICH_EDITOR_BUTTON_CONFIG[format as keyof typeof RICH_EDITOR_BUTTON_CONFIG];
+    if (!config) return;
+
+    const configValue = 'value' in config ? config.value : undefined;
+    if (configValue) {
+      execCommand(config.command, configValue);
+    } else {
+      execCommand(config.command);
     }
 
     updateActiveFormats();
     handleInput();
   }, [disabled, readOnly, updateActiveFormats, handleInput]);
 
+  const handleHeadingChange = useCallback((value: string) => {
+    if (disabled || readOnly) return;
+    editorRef.current?.focus();
+    execCommand('formatBlock', value);
+    setCurrentBlock(value);
+    handleInput();
+  }, [disabled, readOnly, handleInput]);
+
+  const handleLink = useCallback(() => {
+    if (disabled || readOnly) return;
+    
+    const selection = window.getSelection();
+    const hasSelection = selection && selection.toString().length > 0;
+    
+    const url = prompt('Enter URL:', hasSelection ? '' : 'https://');
+    if (url) {
+      editorRef.current?.focus();
+      insertLink(url);
+      handleInput();
+    }
+  }, [disabled, readOnly, handleInput]);
+
+  const addToRecentColors = useCallback((color: string, type: 'text' | 'highlight') => {
+    if (!color) return;
+    
+    const setter = type === 'text' ? setRecentTextColors : setRecentHighlightColors;
+    setter((prev) => {
+      const filtered = prev.filter((c) => c !== color);
+      return [color, ...filtered].slice(0, MAX_RECENT_COLORS);
+    });
+  }, []);
+
+  const handleTextColor = useCallback((color: string) => {
+    if (disabled || readOnly) return;
+    editorRef.current?.focus();
+    setTextColor(color);
+    setTextColorValue(color);
+    addToRecentColors(color, 'text');
+    handleInput();
+  }, [disabled, readOnly, handleInput, addToRecentColors]);
+
+  const handleHighlightColor = useCallback((color: string) => {
+    if (disabled || readOnly) return;
+    editorRef.current?.focus();
+    setHighlightColor(color);
+    setHighlightColorValue(color);
+    addToRecentColors(color, 'highlight');
+    handleInput();
+  }, [disabled, readOnly, handleInput, addToRecentColors]);
+
+  const handleApplyLastTextColor = useCallback((color: string) => {
+    if (disabled || readOnly) return;
+    editorRef.current?.focus();
+    setTextColor(color);
+    handleInput();
+  }, [disabled, readOnly, handleInput]);
+
+  const handleApplyLastHighlightColor = useCallback((color: string) => {
+    if (disabled || readOnly) return;
+    editorRef.current?.focus();
+    setHighlightColor(color);
+    handleInput();
+  }, [disabled, readOnly, handleInput]);
+
+  const handlePaste = useCallback(async (event: React.ClipboardEvent) => {
+    if (!allowImagePaste) return;
+
+    const items = event.clipboardData?.items;
+    if (!items) return;
+
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      if (item.type.startsWith('image/')) {
+        event.preventDefault();
+        const file = item.getAsFile();
+        if (file) {
+          const dataUrl = await fileToDataUrl(file);
+          insertImage(dataUrl);
+          handleInput();
+        }
+        return;
+      }
+    }
+  }, [allowImagePaste, handleInput]);
+
+  const handleImageUpload = useCallback(() => {
+    if (disabled || readOnly) return;
+    
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = async (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (file) {
+        const dataUrl = await fileToDataUrl(file);
+        editorRef.current?.focus();
+        insertImage(dataUrl);
+        handleInput();
+      }
+    };
+    input.click();
+  }, [disabled, readOnly, handleInput]);
+
+  const icons: Record<string, JSX.Element> = {
+    bold: <BoldIcon size={16} />,
+    italic: <ItalicIcon size={16} />,
+    underline: <UnderlineIcon size={16} />,
+    strikethrough: <StrikethroughIcon size={16} />,
+    heading1: <Heading1Icon size={16} />,
+    heading2: <Heading2Icon size={16} />,
+    heading3: <Heading3Icon size={16} />,
+    bulletList: <ListBulletIcon size={16} />,
+    orderedList: <ListNumberedIcon size={16} />,
+    blockquote: <QuoteIcon size={16} />,
+    code: <CodeIcon size={16} />,
+    link: <InsertLinkIcon size={16} />,
+    alignLeft: <AlignLeftIcon size={16} />,
+    alignCenter: <AlignCenterIcon size={16} />,
+    alignRight: <AlignRightIcon size={16} />,
+    alignJustify: <AlignJustifyIcon size={16} />,
+    image: <InsertPhotoIcon size={16} />,
+    indent: <IndentIncreaseIcon size={16} />,
+    outdent: <IndentDecreaseIcon size={16} />,
+    clearFormat: <FormatClearIcon size={16} />,
+    table: <TableIcon size={16} />,
+  };
+
   const renderToolbarItem = (item: ToolbarOption, index: number) => {
     if (item === 'divider') {
-      return <div key={`divider-${index}`} className="w-px h-5 bg-gray-300 dark:bg-gray-600 mx-1" />;
+      return <div key={`divider-${index}`} className={cn('Bear-RichEditor__divider', RICH_EDITOR_DIVIDER_CLASSES)} />;
     }
 
-    const icons: Record<string, { icon: JSX.Element; title: string }> = {
-      bold: { icon: <BoldIcon />, title: 'Bold' },
-      italic: { icon: <ItalicIcon />, title: 'Italic' },
-      underline: { icon: <UnderlineIcon />, title: 'Underline' },
-      strikethrough: { icon: <StrikethroughIcon />, title: 'Strikethrough' },
-      heading1: { icon: <Heading1Icon />, title: 'Heading 1' },
-      heading2: { icon: <Heading2Icon />, title: 'Heading 2' },
-      bulletList: { icon: <BulletListIcon />, title: 'Bullet List' },
-      orderedList: { icon: <OrderedListIcon />, title: 'Numbered List' },
-      blockquote: { icon: <BlockquoteIcon />, title: 'Quote' },
-      code: { icon: <CodeIcon />, title: 'Code Block' },
-      link: { icon: <LinkIcon />, title: 'Insert Link' },
-    };
+    if (item === 'headingDropdown') {
+      return (
+        <ToolbarDropdown
+          key="heading-dropdown"
+          options={RICH_EDITOR_HEADING_OPTIONS}
+          value={currentBlock}
+          onChange={handleHeadingChange}
+          title="Text Style"
+          disabled={disabled || readOnly}
+          icon={<TextIcon size={16} />}
+        />
+      );
+    }
 
-    const config = icons[item];
-    if (!config) return null;
+    if (item === 'textColor') {
+      return (
+        <ToolbarColorPicker
+          key="text-color"
+          value={textColorValue}
+          onChange={handleTextColor}
+          title="Text Color"
+          disabled={disabled || readOnly}
+          type="text"
+          recentColors={recentTextColors}
+          onApplyLast={handleApplyLastTextColor}
+        />
+      );
+    }
+
+    if (item === 'highlightColor') {
+      return (
+        <ToolbarColorPicker
+          key="highlight-color"
+          value={highlightColorValue}
+          onChange={handleHighlightColor}
+          title="Highlight Color"
+          disabled={disabled || readOnly}
+          type="highlight"
+          recentColors={recentHighlightColors}
+          onApplyLast={handleApplyLastHighlightColor}
+        />
+      );
+    }
+
+    if (item === 'link') {
+      return (
+        <ToolbarButton
+          key="link"
+          icon={<InsertLinkIcon size={16} />}
+          title="Insert Link"
+          onClick={handleLink}
+          disabled={disabled || readOnly}
+        />
+      );
+    }
+
+    if (item === 'image') {
+      return (
+        <ToolbarButton
+          key="image"
+          icon={<InsertPhotoIcon size={16} />}
+          title="Insert Image"
+          onClick={handleImageUpload}
+          disabled={disabled || readOnly}
+        />
+      );
+    }
+
+    if (item === 'alignLeft') {
+      return (
+        <ToolbarButton
+          key="alignLeft"
+          icon={<AlignLeftIcon size={16} />}
+          title="Align Left"
+          onClick={() => { editorRef.current?.focus(); execCommand('justifyLeft'); handleInput(); }}
+          disabled={disabled || readOnly}
+        />
+      );
+    }
+
+    if (item === 'alignCenter') {
+      return (
+        <ToolbarButton
+          key="alignCenter"
+          icon={<AlignCenterIcon size={16} />}
+          title="Align Center"
+          onClick={() => { editorRef.current?.focus(); execCommand('justifyCenter'); handleInput(); }}
+          disabled={disabled || readOnly}
+        />
+      );
+    }
+
+    if (item === 'alignRight') {
+      return (
+        <ToolbarButton
+          key="alignRight"
+          icon={<AlignRightIcon size={16} />}
+          title="Align Right"
+          onClick={() => { editorRef.current?.focus(); execCommand('justifyRight'); handleInput(); }}
+          disabled={disabled || readOnly}
+        />
+      );
+    }
+
+    if (item === 'alignJustify') {
+      return (
+        <ToolbarButton
+          key="alignJustify"
+          icon={<AlignJustifyIcon size={16} />}
+          title="Justify"
+          onClick={() => { editorRef.current?.focus(); execCommand('justifyFull'); handleInput(); }}
+          disabled={disabled || readOnly}
+        />
+      );
+    }
+
+    if (item === 'indent') {
+      return (
+        <ToolbarButton
+          key="indent"
+          icon={<IndentIncreaseIcon size={16} />}
+          title="Increase Indent"
+          onClick={() => { editorRef.current?.focus(); execCommand('indent'); handleInput(); }}
+          disabled={disabled || readOnly}
+        />
+      );
+    }
+
+    if (item === 'outdent') {
+      return (
+        <ToolbarButton
+          key="outdent"
+          icon={<IndentDecreaseIcon size={16} />}
+          title="Decrease Indent"
+          onClick={() => { editorRef.current?.focus(); execCommand('outdent'); handleInput(); }}
+          disabled={disabled || readOnly}
+        />
+      );
+    }
+
+    if (item === 'clearFormat') {
+      return (
+        <ToolbarButton
+          key="clearFormat"
+          icon={<FormatClearIcon size={16} />}
+          title="Clear Formatting"
+          onClick={() => { editorRef.current?.focus(); execCommand('removeFormat'); handleInput(); }}
+          disabled={disabled || readOnly}
+        />
+      );
+    }
+
+    if (item === 'more') {
+      // Get remaining toolbar items not in the main toolbar
+      const moreItems: ToolbarOption[] = [
+        'alignLeft', 'alignCenter', 'alignRight', 'alignJustify',
+        'indent', 'outdent', 'blockquote', 'code', 'clearFormat',
+      ];
+      return (
+        <ToolbarMore key="more" disabled={disabled || readOnly}>
+          {moreItems.map((moreItem, idx) => renderToolbarItem(moreItem, idx + 1000))}
+        </ToolbarMore>
+      );
+    }
+
+    const config = RICH_EDITOR_BUTTON_CONFIG[item as keyof typeof RICH_EDITOR_BUTTON_CONFIG];
+    const icon = icons[item];
+    if (!config || !icon) return null;
 
     return (
       <ToolbarButton
         key={item}
-        icon={config.icon}
+        icon={icon}
         title={config.title}
         active={activeFormats.has(item)}
         onClick={() => handleFormat(item)}
@@ -167,11 +466,19 @@ export const RichEditor: FC<RichEditorProps> = ({
 
   return (
     <div
-      className={`bear-rich-editor rounded-lg border border-gray-300 dark:border-gray-600 overflow-hidden bg-white dark:bg-gray-900 ${className}`}
-      {...props}
+      id={id}
+      data-testid={testId}
+      className={cn(
+        'Bear-RichEditor',
+        RICH_EDITOR_ROOT_CLASSES,
+        disabled && 'Bear-RichEditor--disabled',
+        readOnly && 'Bear-RichEditor--readonly',
+        className
+      )}
+      {...rest}
     >
       {toolbar.length > 0 && (
-        <div className="bear-rich-editor-toolbar flex flex-wrap items-center gap-0.5 p-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
+        <div className={cn('Bear-RichEditor__toolbar', RICH_EDITOR_TOOLBAR_CLASSES)}>
           {toolbar.map((item, index) => renderToolbarItem(item, index))}
         </div>
       )}
@@ -183,13 +490,14 @@ export const RichEditor: FC<RichEditorProps> = ({
         onSelect={updateActiveFormats}
         onKeyUp={updateActiveFormats}
         onMouseUp={updateActiveFormats}
+        onPaste={handlePaste}
         data-placeholder={placeholder}
-        className={`
-          bear-rich-editor-content p-3 outline-none prose prose-sm dark:prose-invert max-w-none
-          text-gray-900 dark:text-white
-          [&:empty]:before:content-[attr(data-placeholder)] [&:empty]:before:text-gray-400 [&:empty]:before:pointer-events-none
-          ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
-        `}
+        className={cn(
+          'Bear-RichEditor__content',
+          RICH_EDITOR_CONTENT_CLASSES,
+          '[&:empty]:before:bear-content-[attr(data-placeholder)] [&:empty]:before:bear-text-gray-400 [&:empty]:before:bear-pointer-events-none',
+          disabled && 'Bear-RichEditor__content--disabled bear-opacity-50 bear-cursor-not-allowed'
+        )}
         style={{
           minHeight: typeof minHeight === 'number' ? `${minHeight}px` : minHeight,
           maxHeight: maxHeight ? (typeof maxHeight === 'number' ? `${maxHeight}px` : maxHeight) : undefined,
@@ -201,4 +509,3 @@ export const RichEditor: FC<RichEditorProps> = ({
 };
 
 export default RichEditor;
-

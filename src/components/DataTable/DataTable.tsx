@@ -1,4 +1,4 @@
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 import type { DataTableColumn, DataTableProps } from './DataTable.types';
 
 /**

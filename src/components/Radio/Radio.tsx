@@ -1,5 +1,5 @@
 import { FC, createContext, useContext, useState, useCallback, forwardRef, useId } from 'react';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 import type { BearSize, BearVariant } from '../../types';
 import type { RadioProps, RadioGroupProps } from './Radio.types';
 

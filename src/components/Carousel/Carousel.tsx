@@ -1,5 +1,5 @@
 import { FC, useState, useRef, useEffect, Children, TouchEvent } from 'react';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 import type { CarouselProps } from './Carousel.types';
 
 /**

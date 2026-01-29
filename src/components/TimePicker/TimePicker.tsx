@@ -1,9 +1,29 @@
 import { FC, useState, useRef, useEffect } from 'react';
 import { TimePickerProps } from './TimePicker.types';
 import { DateTimePicker } from '../DateTimePicker';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 import { formatTime } from './TimePicker.utils';
-import { sizeClasses, variantClasses, TIMEPICKER_HOURS_12H, TIMEPICKER_HOURS_24H, TIMEPICKER_MINUTES_DIVISOR } from './TimePicker.constants';
+import {
+  sizeClasses,
+  variantClasses,
+  TIMEPICKER_HOURS_12H,
+  TIMEPICKER_HOURS_24H,
+  TIMEPICKER_MINUTES_DIVISOR,
+  TIMEPICKER_ROOT_CLASSES,
+  TIMEPICKER_LABEL_CLASSES,
+  TIMEPICKER_BUTTON_CLASSES,
+  TIMEPICKER_DROPDOWN_CLASSES,
+  TIMEPICKER_COLUMN_HEADER_CLASSES,
+  TIMEPICKER_COLUMN_CLASSES,
+  TIMEPICKER_OPTION_CLASSES,
+  TIMEPICKER_OPTION_ACTIVE_CLASSES,
+  TIMEPICKER_OPTION_INACTIVE_CLASSES,
+  TIMEPICKER_FOOTER_CLASSES,
+  TIMEPICKER_CLEAR_BUTTON_CLASSES,
+  TIMEPICKER_CONFIRM_BUTTON_CLASSES,
+  TIMEPICKER_ERROR_CLASSES,
+  TIMEPICKER_HELPER_CLASSES,
+} from './TimePicker.constants';
 
 export const TimePicker: FC<TimePickerProps> = ({
   mode = 'time',
@@ -85,41 +105,41 @@ export const TimePicker: FC<TimePickerProps> = ({
   );
 
   return (
-    <div ref={containerRef} className={cn('bear-relative', className)}>
-      {label && <label className="bear-block bear-text-sm bear-font-medium bear-text-zinc-300 bear-mb-1.5">{label}</label>}
+    <div ref={containerRef} className={cn(TIMEPICKER_ROOT_CLASSES, className)}>
+      {label && <label className={TIMEPICKER_LABEL_CLASSES}>{label}</label>}
       <button
         type="button"
         onClick={() => !disabled && setIsOpen(!isOpen)}
         disabled={disabled}
         className={cn(
-          'bear-w-full bear-flex bear-items-center bear-justify-between bear-rounded-lg bear-border bear-text-left bear-transition-colors',
+          TIMEPICKER_BUTTON_CLASSES,
           sizeClasses[size],
           variantClasses[variant],
           error ? 'bear-border-red-500' : 'focus:bear-border-pink-500',
           disabled && 'bear-opacity-50 bear-cursor-not-allowed',
-          timeValue ? 'bear-text-white' : 'bear-text-zinc-500'
+          timeValue ? 'bear-text-gray-900 dark:bear-text-white' : 'bear-text-gray-400 dark:bear-text-zinc-500'
         )}
       >
         <span>{timeValue || placeholder}</span>
-        <svg className="bear-w-5 bear-h-5 bear-text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg className="bear-w-5 bear-h-5 bear-text-gray-400 dark:bear-text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
       </button>
-      {error && <p className="bear-mt-1 bear-text-xs bear-text-red-400">{error}</p>}
-      {helperText && !error && <p className="bear-mt-1 bear-text-xs bear-text-zinc-500">{helperText}</p>}
+      {error && <p className={TIMEPICKER_ERROR_CLASSES}>{error}</p>}
+      {helperText && !error && <p className={TIMEPICKER_HELPER_CLASSES}>{helperText}</p>}
       {isOpen && (
-        <div className="bear-absolute bear-z-50 bear-mt-1 bear-bg-zinc-800 bear-border bear-border-zinc-700 bear-rounded-lg bear-shadow-xl bear-p-3 bear-w-64">
+        <div className={TIMEPICKER_DROPDOWN_CLASSES}>
           <div className="bear-flex bear-gap-2 bear-mb-3">
             <div className="bear-flex-1">
-              <div className="bear-text-xs bear-text-zinc-500 bear-mb-1 bear-text-center">Hour</div>
-              <div className="bear-h-32 bear-overflow-y-auto bear-space-y-1 bear-scrollbar-thin">
+              <div className={TIMEPICKER_COLUMN_HEADER_CLASSES}>Hour</div>
+              <div className={TIMEPICKER_COLUMN_CLASSES}>
                 {hours.map(h => (
                   <button
                     key={h}
                     onClick={() => setSelectedHour(h)}
                     className={cn(
-                      'bear-w-full bear-py-1 bear-rounded bear-text-sm bear-transition-colors',
-                      selectedHour === h ? 'bear-bg-pink-500 bear-text-white' : 'bear-text-zinc-300 hover:bear-bg-zinc-700'
+                      TIMEPICKER_OPTION_CLASSES,
+                      selectedHour === h ? TIMEPICKER_OPTION_ACTIVE_CLASSES : TIMEPICKER_OPTION_INACTIVE_CLASSES
                     )}
                   >
                     {h.toString().padStart(2, '0')}
@@ -128,15 +148,15 @@ export const TimePicker: FC<TimePickerProps> = ({
               </div>
             </div>
             <div className="bear-flex-1">
-              <div className="bear-text-xs bear-text-zinc-500 bear-mb-1 bear-text-center">Minute</div>
-              <div className="bear-h-32 bear-overflow-y-auto bear-space-y-1 bear-scrollbar-thin">
+              <div className={TIMEPICKER_COLUMN_HEADER_CLASSES}>Minute</div>
+              <div className={TIMEPICKER_COLUMN_CLASSES}>
                 {minutes.map(m => (
                   <button
                     key={m}
                     onClick={() => setSelectedMinute(m)}
                     className={cn(
-                      'bear-w-full bear-py-1 bear-rounded bear-text-sm bear-transition-colors',
-                      selectedMinute === m ? 'bear-bg-pink-500 bear-text-white' : 'bear-text-zinc-300 hover:bear-bg-zinc-700'
+                      TIMEPICKER_OPTION_CLASSES,
+                      selectedMinute === m ? TIMEPICKER_OPTION_ACTIVE_CLASSES : TIMEPICKER_OPTION_INACTIVE_CLASSES
                     )}
                   >
                     {m.toString().padStart(2, '0')}
@@ -146,15 +166,16 @@ export const TimePicker: FC<TimePickerProps> = ({
             </div>
             {format === '12h' && (
               <div className="bear-flex-1">
-                <div className="bear-text-xs bear-text-zinc-500 bear-mb-1 bear-text-center">Period</div>
+                <div className={TIMEPICKER_COLUMN_HEADER_CLASSES}>Period</div>
                 <div className="bear-space-y-1">
                   {(['AM', 'PM'] as const).map(p => (
                     <button
                       key={p}
                       onClick={() => setPeriod(p)}
                       className={cn(
-                        'bear-w-full bear-py-2 bear-rounded bear-text-sm bear-transition-colors',
-                        period === p ? 'bear-bg-pink-500 bear-text-white' : 'bear-text-zinc-300 hover:bear-bg-zinc-700'
+                        TIMEPICKER_OPTION_CLASSES,
+                        'bear-py-2',
+                        period === p ? TIMEPICKER_OPTION_ACTIVE_CLASSES : TIMEPICKER_OPTION_INACTIVE_CLASSES
                       )}
                     >
                       {p}
@@ -164,13 +185,13 @@ export const TimePicker: FC<TimePickerProps> = ({
               </div>
             )}
           </div>
-          <div className="bear-flex bear-gap-2 bear-pt-2 bear-border-t bear-border-zinc-700">
+          <div className={TIMEPICKER_FOOTER_CLASSES}>
             {clearable && timeValue && (
-              <button onClick={() => { onChange?.(''); setIsOpen(false); }} className="bear-flex-1 bear-py-1.5 bear-text-sm bear-text-zinc-400 hover:bear-text-white bear-rounded bear-border bear-border-zinc-600">
+              <button onClick={() => { onChange?.(''); setIsOpen(false); }} className={TIMEPICKER_CLEAR_BUTTON_CLASSES}>
                 Clear
               </button>
             )}
-            <button onClick={handleConfirm} className="bear-flex-1 bear-py-1.5 bear-text-sm bear-bg-pink-500 bear-text-white bear-rounded hover:bear-bg-pink-600">
+            <button onClick={handleConfirm} className={TIMEPICKER_CONFIRM_BUTTON_CLASSES}>
               Confirm
             </button>
           </div>

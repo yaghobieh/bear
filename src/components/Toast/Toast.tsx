@@ -1,5 +1,5 @@
 import { FC, createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 import type { 
   ToastProps, 
   ToastContainerProps, 

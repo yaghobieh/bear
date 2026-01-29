@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 import type { ResponsiveProp } from '../../types';
 import type { FlexDirection, FlexWrap, FlexAlign, FlexJustify, FlexGap, FlexProps } from './Flex.types';
 

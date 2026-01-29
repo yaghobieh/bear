@@ -1,5 +1,5 @@
 import { FC, forwardRef } from 'react';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 import type { InputProps } from './Input.types';
 
 const sizeClasses = {
@@ -27,16 +27,16 @@ export const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
     const hasError = Boolean(error);
 
     return (
-      <div className={cn('bear-flex bear-flex-col bear-gap-1.5', fullWidth && 'bear-w-full')}>
+      <div className={cn('Bear-Input bear-flex bear-flex-col bear-gap-1.5', fullWidth && 'bear-w-full')}>
         {label && (
-          <label className="bear-text-sm bear-font-medium bear-text-gray-300">
+          <label className="Bear-Input__label bear-text-sm bear-font-medium bear-text-gray-300">
             {label}
           </label>
         )}
 
-        <div className="bear-relative bear-flex bear-items-center">
+        <div className="Bear-Input__wrapper bear-relative bear-flex bear-items-center">
           {leftAddon && (
-            <div className="bear-absolute bear-left-3 bear-text-gray-400">
+            <div className="Bear-Input__addon Bear-Input__addon--left bear-absolute bear-left-3 bear-text-gray-400">
               {leftAddon}
             </div>
           )}
@@ -45,14 +45,15 @@ export const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             disabled={disabled}
             className={cn(
+              'Bear-Input__field',
               'bear-w-full bear-rounded-lg bear-border bear-bg-gray-800',
               'bear-text-white placeholder:bear-text-gray-500',
               'bear-outline-none bear-transition-all bear-duration-200',
               'focus:bear-ring-2 focus:bear-ring-offset-2 focus:bear-ring-offset-gray-900',
               hasError
-                ? 'bear-border-red-500 focus:bear-ring-red-500'
+                ? 'Bear-Input__field--error bear-border-red-500 focus:bear-ring-red-500'
                 : 'bear-border-gray-600 focus:bear-border-bear-500 focus:bear-ring-bear-500',
-              disabled && 'bear-opacity-50 bear-cursor-not-allowed',
+              disabled && 'Bear-Input__field--disabled bear-opacity-50 bear-cursor-not-allowed',
               leftAddon && 'bear-pl-10',
               rightAddon && 'bear-pr-10',
               sizeClasses[size],
@@ -62,7 +63,7 @@ export const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
           />
 
           {rightAddon && (
-            <div className="bear-absolute bear-right-3 bear-text-gray-400">
+            <div className="Bear-Input__addon Bear-Input__addon--right bear-absolute bear-right-3 bear-text-gray-400">
               {rightAddon}
             </div>
           )}
@@ -71,8 +72,8 @@ export const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
         {(helperText || error) && (
           <p
             className={cn(
-              'bear-text-sm',
-              hasError ? 'bear-text-red-500' : 'bear-text-gray-400'
+              'Bear-Input__helper bear-text-sm',
+              hasError ? 'Bear-Input__helper--error bear-text-red-500' : 'bear-text-gray-400'
             )}
           >
             {error || helperText}
@@ -84,4 +85,3 @@ export const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
 );
 
 Input.displayName = 'Input';
-

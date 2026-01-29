@@ -1,6 +1,6 @@
 import { FC, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 import { XIcon } from '../Icon';
 import type { DrawerProps } from './Drawer.types';
 

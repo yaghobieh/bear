@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { BottomNavigationProps } from './BottomNavigation.types';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 
 export const BottomNavigation: FC<BottomNavigationProps> = ({
   items,

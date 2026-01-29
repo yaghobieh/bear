@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 import type { BearLoaderProps } from './BearLoader.types';
 
 const SIZE_MAP = {

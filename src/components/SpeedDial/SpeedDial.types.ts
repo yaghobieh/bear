@@ -1,54 +1,48 @@
-/**
- * SpeedDial Component Types
- */
-import type { HTMLAttributes, ReactNode } from 'react';
-import type { BearSize, BearVariant } from '../../types';
+import { HTMLAttributes, ReactNode } from 'react';
+
+export type SpeedDialDirection = 'up' | 'down' | 'left' | 'right';
+export type SpeedDialSize = 'sm' | 'md' | 'lg';
 
 export interface SpeedDialAction {
-  /** Unique key for the action */
-  key: string;
+  /** Action label (shown as tooltip) */
+  label: string;
   /** Action icon */
   icon: ReactNode;
-  /** Action tooltip/label */
-  label: string;
   /** Click handler */
   onClick?: () => void;
-  /** Whether action is disabled */
+  /** Disabled state */
   disabled?: boolean;
+  /** Custom color */
+  color?: string;
+  /** Tooltip position */
+  tooltipPosition?: 'left' | 'right' | 'top' | 'bottom';
 }
 
 export interface SpeedDialProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onClick'> {
-  /** Array of actions to display */
+  /** Array of actions */
   actions: SpeedDialAction[];
-  /** Main FAB icon (when closed) */
+  /** Main button icon (when closed) */
   icon?: ReactNode;
-  /** Main FAB icon when open */
+  /** Main button icon (when open) */
   openIcon?: ReactNode;
-  /** Whether SpeedDial is open */
-  open?: boolean;
-  /** Default open state */
-  defaultOpen?: boolean;
-  /** Direction to expand actions */
-  direction?: 'up' | 'down' | 'left' | 'right';
-  /** FAB variant */
-  variant?: BearVariant;
-  /** FAB size */
-  size?: BearSize;
-  /** Whether to show tooltips */
-  showTooltips?: boolean;
-  /** Tooltip placement relative to direction */
-  tooltipPlacement?: 'left' | 'right' | 'top' | 'bottom' | 'auto';
-  /** Whether to hide on click action */
-  closeOnAction?: boolean;
+  /** Direction to expand */
+  direction?: SpeedDialDirection;
+  /** Size */
+  size?: SpeedDialSize;
   /** Position on screen */
   position?: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left';
-  /** Fixed position */
+  /** Whether to use fixed positioning */
   fixed?: boolean;
-  /** ARIA label */
-  ariaLabel?: string;
-  /** Open/close handler */
+  /** Open on hover */
+  openOnHover?: boolean;
+  /** Controlled open state */
+  open?: boolean;
+  /** Called when open state changes */
   onOpenChange?: (open: boolean) => void;
+  /** Show labels next to actions */
+  showLabels?: boolean;
+  /** Hide main button label */
+  ariaLabel?: string;
   /** Test ID */
   testId?: string;
 }
-

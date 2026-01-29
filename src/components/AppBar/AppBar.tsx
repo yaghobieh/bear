@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { AppBarProps } from './AppBar.types';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 
 export const AppBar: FC<AppBarProps> = ({
   children,

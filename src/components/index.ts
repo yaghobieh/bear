@@ -67,8 +67,8 @@ export { CheckIcon } from './Icon/icons/status';
 export { BearPawIcon } from './Icon/icons/misc';
 
 // Logo
-export { BearLogo } from './BearLogo';
-export type { BearLogoProps } from './BearLogo';
+export { BearLogo, EmberLogo } from './BearLogo';
+export type { BearLogoProps, EmberLogoProps } from './BearLogo';
 
 // Overlay Components
 export { Modal } from './Modal';
@@ -177,8 +177,8 @@ export type { TimePickerProps } from './TimePicker';
 export { Breadcrumbs } from './Breadcrumbs';
 export type { BreadcrumbsProps, BreadcrumbItem } from './Breadcrumbs';
 
-export { Stepper } from './Stepper';
-export type { StepperProps, StepperStep } from './Stepper';
+export { Stepper, StepperControls } from './Stepper';
+export type { StepperProps, StepperControlsProps, Step, StepStatus, StepperOrientation, StepperSize } from './Stepper';
 
 export { BottomNavigation } from './BottomNavigation';
 export type { BottomNavigationProps, BottomNavItem } from './BottomNavigation';
@@ -237,7 +237,7 @@ export type { CopyButtonProps } from './CopyButton';
 
 // Sidebar
 export { Sidebar, SidebarGroup } from './Sidebar';
-export type { SidebarProps, SidebarItem, SidebarGroupProps, SidebarItemProps } from './Sidebar';
+export type { SidebarProps, SidebarItem, SidebarGroupProps, SidebarItemComponentProps } from './Sidebar';
 
 // Columns (CSS)
 export { Columns, Column } from './Columns';
@@ -284,3 +284,32 @@ export type { ActiveBarProps, ActiveBarItem } from './ActiveBar';
 // RichEditor
 export { RichEditor } from './RichEditor';
 export type { RichEditorProps, ToolbarOption } from './RichEditor';
+
+// StatCard
+export { StatCard } from './StatCard';
+export type { StatCardProps } from './StatCard';
+
+// ActivityItem
+export { ActivityItem } from './ActivityItem';
+export type { ActivityItemProps } from './ActivityItem';
+
+// Charts & Data Visualization
+export { Chart, BarChart, LineChart, PieChart } from './Chart';
+export type {
+  ChartProps,
+  BarChartProps,
+  LineChartProps,
+  PieChartProps,
+  ChartDataPoint,
+  ChartType,
+} from './Chart';
+
+export { Sparkline } from './Sparkline';
+export type { SparklineProps } from './Sparkline';
+
+export { Gauge } from './Gauge';
+export type { GaugeProps } from './Gauge';
+
+// SignPad
+export { SignPad } from './SignPad';
+export type { SignPadProps } from './SignPad';

@@ -1,3 +1,2 @@
-export { Rating, default } from './Rating';
-export type { RatingProps } from './Rating.types';
-
+export { Rating } from './Rating';
+export type { RatingProps, RatingSize } from './Rating.types';

@@ -16,7 +16,7 @@ export interface NavGroup {
   items: NavItem[];
 }
 
-export const BEAR_VERSION = '1.0.3';
+export const BEAR_VERSION = '1.0.4';
 export const KILN_BASE_URL = 'http://localhost:6006';
 
 /** Main Bear UI repository */
@@ -73,6 +73,7 @@ export const NAVIGATION: NavGroup[] = [
       { path: '/components/transfer-list', label: 'Transfer List', kilnPath: '/transfer-list' },
       { path: '/components/editable', label: 'Editable', badge: 'New', kilnPath: '/editable' },
       { path: '/components/rich-editor', label: 'RichEditor', badge: 'Hot', kilnPath: '/rich-editor' },
+      { path: '/components/sign-pad', label: 'SignPad', badge: 'New', kilnPath: '/sign-pad' },
     ],
   },
   {
@@ -132,10 +133,43 @@ export const NAVIGATION: NavGroup[] = [
     ],
   },
   {
+    title: 'Charts & Graphs',
+    items: [
+      { path: '/components/chart', label: 'Chart', badge: 'New', kilnPath: '/chart' },
+      { path: '/components/bar-chart', label: 'BarChart', badge: 'New', kilnPath: '/bar-chart' },
+      { path: '/components/line-chart', label: 'LineChart', badge: 'New', kilnPath: '/line-chart' },
+      { path: '/components/pie-chart', label: 'PieChart', badge: 'New', kilnPath: '/pie-chart' },
+      { path: '/components/sparkline', label: 'Sparkline', badge: 'New', kilnPath: '/sparkline' },
+      { path: '/components/gauge', label: 'Gauge', badge: 'New', kilnPath: '/gauge' },
+    ],
+  },
+  {
+    title: 'Effects & Animation',
+    items: [
+      { path: '/hooks/use-slide', label: 'useSlide' },
+      { path: '/hooks/use-parallax', label: 'useParallax' },
+      { path: '/hooks/use-bounce', label: 'useBounce' },
+      { path: '/hooks/use-float', label: 'useFloat' },
+      { path: '/hooks/use-pulse', label: 'usePulse' },
+      { path: '/hooks/use-shake', label: 'useShake' },
+    ],
+  },
+  {
+    title: 'Hooks',
+    items: [
+      { path: '/hooks/use-clipboard', label: 'useClipboard', badge: 'New' },
+      { path: '/hooks/use-debounce', label: 'useDebounce', badge: 'New' },
+      { path: '/hooks/use-throttle', label: 'useThrottle', badge: 'New' },
+      { path: '/hooks/use-local-storage', label: 'useLocalStorage', badge: 'New' },
+      { path: '/hooks/use-key-press', label: 'useKeyPress', badge: 'New' },
+      { path: '/hooks/use-intersection-observer', label: 'useIntersectionObserver', badge: 'New' },
+    ],
+  },
+  {
     title: 'Utilities',
     items: [
       { path: '/icons', label: 'Icons', badge: '300+' },
-      { path: '/hooks', label: 'Hooks' },
+      { path: '/hooks', label: 'All Hooks' },
       { path: '/components/kbd', label: 'Kbd', kilnPath: '/kbd' },
       { path: '/components/copy-button', label: 'CopyButton', kilnPath: '/copy-button' },
     ],
@@ -143,7 +177,8 @@ export const NAVIGATION: NavGroup[] = [
 ];
 
 export const VERSIONS = [
-  { value: '1.0.3', label: 'v1.0.3 (latest)' },
+  { value: '1.0.4', label: 'v1.0.4' },
+  { value: '1.0.3', label: 'v1.0.3' },
   { value: '1.0.2', label: 'v1.0.2' },
   { value: '1.0.0', label: 'v1.0.0' },
 ];

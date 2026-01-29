@@ -1,191 +1,218 @@
-import { FC, useState, useCallback, useMemo } from 'react';
-import { cn } from '../../utils/cn';
-import type { BearSize } from '../../types';
+import { forwardRef, useState, useCallback, useMemo } from 'react';
+import { cn } from '@utils';
 import type { RatingProps } from './Rating.types';
+import {
+  RATING_BASE_CLASSES,
+  RATING_SIZE_CLASSES,
+  RATING_STAR_BASE_CLASSES,
+  RATING_STAR_DISABLED_CLASSES,
+  RATING_STAR_READONLY_CLASSES,
+  RATING_DEFAULT_COLOR,
+  RATING_DEFAULT_EMPTY_COLOR,
+  RATING_DEFAULT_MAX,
+  RATING_DEFAULT_LABELS,
+} from './Rating.const';
 
-const SIZE_MAP: Record<BearSize, number> = {
-  xs: 14,
-  sm: 18,
-  md: 24,
-  lg: 30,
-  xl: 36,
-};
-
-const DEFAULT_COLOR = '#fbbf24'; // amber-400
-const DEFAULT_EMPTY_COLOR = '#d1d5db'; // gray-300
+// Star icon component
+const StarIcon = ({ size, filled, half, color, emptyColor }: {
+  size: number;
+  filled: boolean;
+  half?: boolean;
+  color: string;
+  emptyColor: string;
+}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    {half ? (
+      <>
+        <defs>
+          <linearGradient id={`half-${size}`}>
+            <stop offset="50%" stopColor={color} />
+            <stop offset="50%" stopColor={emptyColor} />
+          </linearGradient>
+        </defs>
+        <path
+          d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+          fill={`url(#half-${size})`}
+          stroke={color}
+          strokeWidth="1"
+        />
+      </>
+    ) : (
+      <path
+        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+        fill={filled ? color : emptyColor}
+        stroke={filled ? color : emptyColor}
+        strokeWidth="1"
+      />
+    )}
+  </svg>
+);
 
 /**
- * Rating component for displaying and capturing user ratings
+ * Rating - Star rating component
  * 
  * @example
  * ```tsx
- * // Basic rating
- * <Rating value={3} onChange={(v) => setRating(v)} />
+ * const [rating, setRating] = useState(3);
  * 
- * // Read-only rating with half stars
- * <Rating value={3.5} readOnly precision={0.5} />
- * 
- * // Custom size and color
- * <Rating value={4} size="lg" color="#ec4899" />
+ * <Rating value={rating} onChange={setRating} />
+ * <Rating value={3.5} allowHalf readOnly />
  * ```
  */
-export const Rating: FC<RatingProps> = ({
-  value: controlledValue,
-  defaultValue = 0,
-  max = 5,
-  size = 'md',
-  readOnly = false,
-  disabled = false,
-  precision = 1,
-  color = DEFAULT_COLOR,
-  emptyColor = DEFAULT_EMPTY_COLOR,
-  filledIcon,
-  emptyIcon,
-  halfIcon,
-  highlightOnHover = true,
-  showLabel = false,
-  formatLabel,
-  onChange,
-  className,
-  testId,
-  ...props
-}) => {
-  const [internalValue, setInternalValue] = useState(defaultValue);
-  const [hoverValue, setHoverValue] = useState<number | null>(null);
-  
-  const isControlled = controlledValue !== undefined;
-  const currentValue = isControlled ? controlledValue : internalValue;
-  const displayValue = hoverValue !== null && !readOnly && !disabled ? hoverValue : currentValue;
-  
-  const iconSize = SIZE_MAP[size];
+export const Rating = forwardRef<HTMLDivElement, RatingProps>(
+  (
+    {
+      value: controlledValue,
+      defaultValue = 0,
+      max = RATING_DEFAULT_MAX,
+      size = 'md',
+      onChange,
+      allowHalf = false,
+      allowClear = true,
+      disabled = false,
+      readOnly = false,
+      filledIcon,
+      emptyIcon,
+      halfIcon,
+      color = RATING_DEFAULT_COLOR,
+      emptyColor = RATING_DEFAULT_EMPTY_COLOR,
+      showValue = false,
+      labelFormatter,
+      labels = RATING_DEFAULT_LABELS,
+      testId,
+      className,
+      ...props
+    },
+    ref
+  ) => {
+    const [internalValue, setInternalValue] = useState(defaultValue);
+    const [hoverValue, setHoverValue] = useState<number | null>(null);
 
-  const handleClick = useCallback((newValue: number) => {
-    if (readOnly || disabled) return;
-    
-    if (!isControlled) {
-      setInternalValue(newValue);
-    }
-    onChange?.(newValue);
-  }, [isControlled, onChange, readOnly, disabled]);
+    const value = controlledValue !== undefined ? controlledValue : internalValue;
+    const displayValue = hoverValue !== null ? hoverValue : value;
 
-  const handleMouseEnter = useCallback((index: number) => {
-    if (readOnly || disabled || !highlightOnHover) return;
-    setHoverValue(index);
-  }, [readOnly, disabled, highlightOnHover]);
+    const sizeConfig = RATING_SIZE_CLASSES[size];
 
-  const handleMouseLeave = useCallback(() => {
-    if (readOnly || disabled || !highlightOnHover) return;
-    setHoverValue(null);
-  }, [readOnly, disabled, highlightOnHover]);
+    const handleClick = useCallback(
+      (index: number, isHalf: boolean = false) => {
+        if (disabled || readOnly) return;
 
-  const StarIcon = useMemo(() => {
-    const FilledStar: FC<{ size: number; color: string }> = ({ size: s, color: c }) => (
-      <svg width={s} height={s} viewBox="0 0 24 24" fill={c} stroke="none">
-        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-      </svg>
+        const newValue = isHalf && allowHalf ? index + 0.5 : index + 1;
+        const finalValue = allowClear && newValue === value ? 0 : newValue;
+
+        setInternalValue(finalValue);
+        onChange?.(finalValue);
+      },
+      [disabled, readOnly, allowHalf, allowClear, value, onChange]
     );
 
-    const EmptyStar: FC<{ size: number; color: string }> = ({ size: s, color: c }) => (
-      <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2">
-        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-      </svg>
+    const handleMouseMove = useCallback(
+      (index: number, event: React.MouseEvent<HTMLSpanElement>) => {
+        if (disabled || readOnly) return;
+
+        const rect = event.currentTarget.getBoundingClientRect();
+        const isLeftHalf = event.clientX - rect.left < rect.width / 2;
+        
+        if (allowHalf && isLeftHalf) {
+          setHoverValue(index + 0.5);
+        } else {
+          setHoverValue(index + 1);
+        }
+      },
+      [disabled, readOnly, allowHalf]
     );
 
-    const HalfStar: FC<{ size: number; color: string; emptyColor: string }> = ({ size: s, color: c, emptyColor: ec }) => (
-      <svg width={s} height={s} viewBox="0 0 24 24">
-        <defs>
-          <linearGradient id="halfGrad">
-            <stop offset="50%" stopColor={c} />
-            <stop offset="50%" stopColor={ec} stopOpacity="0" />
-          </linearGradient>
-        </defs>
-        <polygon 
-          points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" 
-          fill="url(#halfGrad)" 
-          stroke={ec} 
-          strokeWidth="2"
-        />
-      </svg>
+    const handleMouseLeave = useCallback(() => {
+      setHoverValue(null);
+    }, []);
+
+    const getStarState = (index: number): 'filled' | 'half' | 'empty' => {
+      if (displayValue >= index + 1) return 'filled';
+      if (displayValue >= index + 0.5 && allowHalf) return 'half';
+      return 'empty';
+    };
+
+    const formatLabel = useMemo(() => {
+      if (labelFormatter) return labelFormatter(displayValue);
+      const labelIndex = Math.ceil(displayValue) - 1;
+      return labels[labelIndex] || '';
+    }, [displayValue, labelFormatter, labels]);
+
+    const stars = useMemo(() => {
+      return Array.from({ length: max }).map((_, index) => {
+        const state = getStarState(index);
+        
+        const starClasses = cn(
+          RATING_STAR_BASE_CLASSES,
+          disabled && RATING_STAR_DISABLED_CLASSES,
+          readOnly && RATING_STAR_READONLY_CLASSES,
+          !disabled && !readOnly && 'hover:scale-110'
+        );
+
+        const renderIcon = () => {
+          if (state === 'filled' && filledIcon) return filledIcon;
+          if (state === 'half' && halfIcon) return halfIcon;
+          if (state === 'empty' && emptyIcon) return emptyIcon;
+          
+          return (
+            <StarIcon
+              size={sizeConfig.icon}
+              filled={state === 'filled'}
+              half={state === 'half'}
+              color={color}
+              emptyColor={emptyColor}
+            />
+          );
+        };
+
+        return (
+          <span
+            key={index}
+            className={starClasses}
+            onClick={(e) => {
+              const rect = e.currentTarget.getBoundingClientRect();
+              const isLeftHalf = e.clientX - rect.left < rect.width / 2;
+              handleClick(index, isLeftHalf);
+            }}
+            onMouseMove={(e) => handleMouseMove(index, e)}
+            onMouseLeave={handleMouseLeave}
+            role="radio"
+            aria-checked={value >= index + 1}
+            aria-label={labels[index]}
+          >
+            {renderIcon()}
+          </span>
+        );
+      });
+    }, [max, displayValue, disabled, readOnly, filledIcon, emptyIcon, halfIcon, sizeConfig, color, emptyColor, handleClick, handleMouseMove, handleMouseLeave, value, labels, allowHalf]);
+
+    return (
+      <div
+        ref={ref}
+        className={cn(RATING_BASE_CLASSES, className)}
+        role="radiogroup"
+        aria-label="Rating"
+        data-testid={testId}
+        {...props}
+      >
+        {stars}
+        {showValue && (
+          <span className={cn('Bear-Rating__value ml-2 text-gray-600 dark:text-gray-400', sizeConfig.text)}>
+            {displayValue.toFixed(allowHalf ? 1 : 0)}
+            {formatLabel && <span className="ml-1 text-gray-400 dark:text-gray-500">({formatLabel})</span>}
+          </span>
+        )}
+      </div>
     );
+  }
+);
 
-    return { FilledStar, EmptyStar, HalfStar };
-  }, []);
-
-  const renderStar = (index: number) => {
-    const fillLevel = displayValue - index;
-    const isFilled = fillLevel >= 1;
-    const isHalf = precision === 0.5 && fillLevel >= 0.5 && fillLevel < 1;
-    const isEmpty = fillLevel < (precision === 0.5 ? 0.5 : 1);
-
-    if (filledIcon && isFilled) {
-      return filledIcon;
-    }
-    if (halfIcon && isHalf) {
-      return halfIcon;
-    }
-    if (emptyIcon && isEmpty) {
-      return emptyIcon;
-    }
-
-    if (isFilled) {
-      return <StarIcon.FilledStar size={iconSize} color={color} />;
-    }
-    if (isHalf) {
-      return <StarIcon.HalfStar size={iconSize} color={color} emptyColor={emptyColor} />;
-    }
-    return <StarIcon.EmptyStar size={iconSize} color={emptyColor} />;
-  };
-
-  const stars = useMemo(() => 
-    Array.from({ length: max }, (_, i) => i + 1),
-  [max]);
-
-  const label = formatLabel 
-    ? formatLabel(displayValue) 
-    : `${displayValue} out of ${max}`;
-
-  return (
-    <div
-      className={cn(
-        'bear-inline-flex bear-items-center bear-gap-1',
-        disabled && 'bear-opacity-50 bear-cursor-not-allowed',
-        className
-      )}
-      role="radiogroup"
-      aria-label="Rating"
-      data-testid={testId}
-      onMouseLeave={handleMouseLeave}
-      {...props}
-    >
-      {stars.map((starValue) => (
-        <button
-          key={starValue}
-          type="button"
-          role="radio"
-          aria-checked={currentValue >= starValue}
-          aria-label={`${starValue} star${starValue > 1 ? 's' : ''}`}
-          className={cn(
-            'bear-p-0.5 bear-rounded bear-transition-transform bear-bg-transparent bear-border-none',
-            !readOnly && !disabled && 'hover:bear-scale-110 bear-cursor-pointer',
-            readOnly && 'bear-cursor-default',
-            disabled && 'bear-cursor-not-allowed'
-          )}
-          onClick={() => handleClick(starValue)}
-          onMouseEnter={() => handleMouseEnter(starValue)}
-          disabled={disabled || readOnly}
-        >
-          {renderStar(starValue - 1)}
-        </button>
-      ))}
-      
-      {showLabel && (
-        <span className="bear-ml-2 bear-text-sm bear-text-gray-600 dark:bear-text-gray-400">
-          {label}
-        </span>
-      )}
-    </div>
-  );
-};
+Rating.displayName = 'Rating';
 
 export default Rating;
-

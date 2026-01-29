@@ -1,5 +1,5 @@
 import { FC, useState, useRef, useCallback, useEffect } from 'react';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 import type { SliderProps } from './Slider.types';
 import type { BearSize, BearVariant } from '../../types';
 

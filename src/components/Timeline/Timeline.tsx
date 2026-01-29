@@ -1,112 +1,202 @@
-import { FC } from 'react';
-import { TimelineProps } from './Timeline.types';
-import { cn } from '../../utils/cn';
+import { forwardRef, useMemo } from 'react';
+import { cn } from '@utils';
+import type { TimelineProps, TimelineItem } from './Timeline.types';
+import {
+  TIMELINE_BASE_CLASSES,
+  TIMELINE_ITEM_BASE,
+  TIMELINE_POSITIONS,
+  TIMELINE_DOT_BASE,
+  TIMELINE_DOT_SIZES,
+  TIMELINE_DOT_ICON_SIZES,
+  TIMELINE_DOT_COLORS,
+  TIMELINE_LINE_BASE,
+  TIMELINE_LINE_COLOR,
+  TIMELINE_CONTENT_BASE,
+  TIMELINE_TITLE_SIZES,
+  TIMELINE_DESC_SIZES,
+  TIMELINE_TIME_CLASSES,
+} from './Timeline.const';
 
-export const Timeline: FC<TimelineProps> = ({
-  items,
-  orientation = 'vertical',
-  position = 'left',
-  className,
-  size = 'md',
-  showConnector = true,
-}) => {
-  const colorClasses = {
-    default: 'bear-bg-zinc-600 bear-border-zinc-600',
-    primary: 'bear-bg-pink-500 bear-border-pink-500',
-    success: 'bear-bg-green-500 bear-border-green-500',
-    warning: 'bear-bg-yellow-500 bear-border-yellow-500',
-    error: 'bear-bg-red-500 bear-border-red-500',
-    info: 'bear-bg-blue-500 bear-border-blue-500',
-  };
+/**
+ * Timeline - Vertical timeline for events
+ * 
+ * @example
+ * ```tsx
+ * <Timeline
+ *   items={[
+ *     { title: 'Step 1', description: 'Description', time: '2024-01-01' },
+ *     { title: 'Step 2', description: 'Description', time: '2024-01-02', active: true },
+ *     { title: 'Step 3', description: 'Description', time: '2024-01-03' },
+ *   ]}
+ * />
+ * ```
+ */
+export const Timeline = forwardRef<HTMLDivElement, TimelineProps>(
+  (
+    {
+      items,
+      position = 'left',
+      size = 'md',
+      showLine = true,
+      pending,
+      reverse = false,
+      lineColor,
+      testId,
+      className,
+      ...props
+    },
+    ref
+  ) => {
+    const positionConfig = TIMELINE_POSITIONS[position];
+    const dotSize = TIMELINE_DOT_SIZES[size];
+    const dotIconSize = TIMELINE_DOT_ICON_SIZES[size];
+    const titleSize = TIMELINE_TITLE_SIZES[size];
+    const descSize = TIMELINE_DESC_SIZES[size];
 
-  const sizeClasses = {
-    sm: { dot: 'bear-w-2.5 bear-h-2.5', iconDot: 'bear-w-6 bear-h-6', text: 'bear-text-xs', title: 'bear-text-sm' },
-    md: { dot: 'bear-w-3 bear-h-3', iconDot: 'bear-w-8 bear-h-8', text: 'bear-text-sm', title: 'bear-text-base' },
-    lg: { dot: 'bear-w-4 bear-h-4', iconDot: 'bear-w-10 bear-h-10', text: 'bear-text-base', title: 'bear-text-lg' },
-  };
+    const processedItems = useMemo(() => {
+      let result = [...items];
+      if (reverse) {
+        result = result.reverse();
+      }
+      if (pending) {
+        result.push({
+          title: typeof pending === 'string' ? pending : 'Loading...',
+          description: typeof pending === 'boolean' ? undefined : pending,
+          color: 'gray',
+        });
+      }
+      return result;
+    }, [items, reverse, pending]);
 
-  const isVertical = orientation === 'vertical';
+    const renderDot = (item: TimelineItem) => {
+      const color = item.color || 'pink';
+      const isActive = item.active;
+      const hasIcon = !!item.icon;
 
-  return (
-    <div className={cn(
-      'bear-relative',
-      isVertical ? '' : 'bear-flex bear-items-start',
-      className
-    )}>
-      {items.map((item, index) => {
-        const isLeft = position === 'left' || (position === 'alternate' && index % 2 === 0);
-        const isLast = index === items.length - 1;
-        const color = item.color || 'default';
-        const hasIcon = item.dotVariant === 'icon' && item.icon;
-
+      if (hasIcon) {
         return (
           <div
-            key={item.id}
             className={cn(
-              'bear-relative',
-              isVertical ? 'bear-pb-6' : 'bear-flex-1 bear-pr-4',
-              isVertical && position === 'alternate' && (isLeft ? 'bear-pr-8 bear-text-right' : 'bear-pl-8')
+              TIMELINE_DOT_BASE,
+              dotIconSize,
+              TIMELINE_DOT_COLORS[color],
+              'flex items-center justify-center text-white',
+              isActive && 'ring-4 ring-pink-500/30'
             )}
+            style={{
+              top: '2px',
+              ...(position === 'left' ? { left: '-4px' } : {}),
+              ...(position === 'right' ? { right: '-4px' } : {}),
+              ...(position === 'alternate' ? { left: '50%', transform: 'translateX(-50%)' } : {}),
+            }}
           >
-            <div className={cn(
-              'bear-absolute',
-              isVertical ? (
-                position === 'alternate'
-                  ? (isLeft ? 'bear-right-0 bear-translate-x-1/2' : 'bear-left-0 -bear-translate-x-1/2')
-                  : 'bear-left-0'
-              ) : 'bear-top-0',
-              hasIcon ? '' : 'bear-top-1'
-            )}>
-              {hasIcon ? (
-                <div className={cn(
-                  'bear-rounded-full bear-flex bear-items-center bear-justify-center bear-text-white',
-                  sizeClasses[size].iconDot,
-                  colorClasses[color]
-                )}>
-                  {item.icon}
-                </div>
-              ) : (
-                <div className={cn(
-                  'bear-rounded-full',
-                  sizeClasses[size].dot,
-                  item.dotVariant === 'outlined'
-                    ? `bear-border-2 bear-bg-zinc-900 ${colorClasses[color]}`
-                    : colorClasses[color]
-                )} />
-              )}
-            </div>
-            {showConnector && !isLast && (
-              <div className={cn(
-                'bear-absolute bear-bg-zinc-700',
-                isVertical ? (
-                  position === 'alternate'
-                    ? (isLeft ? 'bear-right-0 bear-w-0.5 bear-top-4 bear-bottom-0 bear-translate-x-1/2' : 'bear-left-0 bear-w-0.5 bear-top-4 bear-bottom-0 -bear-translate-x-1/2')
-                    : 'bear-left-1 bear-w-0.5 bear-top-4 bear-bottom-0'
-                ) : 'bear-left-3 bear-h-0.5 bear-top-1.5 bear-right-0'
-              )} />
-            )}
-            <div className={cn(
-              isVertical && position !== 'alternate' && 'bear-pl-6',
-              isVertical && position === 'alternate' && !isLeft && 'bear-pl-6'
-            )}>
-              {item.date && (
-                <div className={cn('bear-text-zinc-500 bear-mb-1', sizeClasses[size].text)}>
-                  {item.date}
-                </div>
-              )}
-              <div className={cn('bear-font-medium bear-text-white', sizeClasses[size].title)}>
-                {item.title}
-              </div>
-              {item.description && (
-                <div className={cn('bear-text-zinc-400 bear-mt-1', sizeClasses[size].text)}>
-                  {item.description}
-                </div>
-              )}
-            </div>
+            {item.icon}
           </div>
         );
-      })}
-    </div>
-  );
-};
+      }
 
+      return (
+        <div
+          className={cn(
+            TIMELINE_DOT_BASE,
+            dotSize,
+            TIMELINE_DOT_COLORS[color],
+            isActive && 'ring-4 ring-pink-500/30 scale-125'
+          )}
+          style={{
+            top: '6px',
+            ...(position === 'left' ? { left: '0' } : {}),
+            ...(position === 'right' ? { right: '0' } : {}),
+            ...(position === 'alternate' ? { left: '50%', transform: 'translateX(-50%)' } : {}),
+          }}
+        />
+      );
+    };
+
+    const getAlternateStyles = (index: number) => {
+      if (position !== 'alternate') return {};
+      
+      const isEven = index % 2 === 0;
+      return {
+        wrapper: isEven ? 'pr-8 text-right w-1/2' : 'pl-8 text-left w-1/2 ml-auto',
+        content: isEven ? 'text-right' : 'text-left',
+      };
+    };
+
+    return (
+      <div
+        ref={ref}
+        className={cn(TIMELINE_BASE_CLASSES, className)}
+        data-testid={testId}
+        {...props}
+      >
+        {showLine && (
+          <div
+            className={cn(
+              TIMELINE_LINE_BASE,
+              positionConfig.line,
+              lineColor ? '' : TIMELINE_LINE_COLOR
+            )}
+            style={lineColor ? { backgroundColor: lineColor } : undefined}
+          />
+        )}
+
+        {processedItems.map((item, index) => {
+          const alternateStyles = getAlternateStyles(index);
+
+          return (
+            <div
+              key={index}
+              className={cn(
+                TIMELINE_ITEM_BASE,
+                position !== 'alternate' && positionConfig.wrapper,
+                alternateStyles.wrapper
+              )}
+            >
+              {renderDot(item)}
+
+              <div className={cn(TIMELINE_CONTENT_BASE, alternateStyles.content)}>
+                {item.time && (
+                  <div className={cn(TIMELINE_TIME_CLASSES, 'mb-1')}>
+                    {item.time}
+                  </div>
+                )}
+
+                <h4
+                  className={cn(
+                    'Bear-Timeline__title font-medium text-gray-900 dark:text-white',
+                    titleSize,
+                    item.active && 'text-pink-600 dark:text-pink-400'
+                  )}
+                >
+                  {item.title}
+                </h4>
+
+                {item.description && (
+                  <div
+                    className={cn(
+                      'Bear-Timeline__description text-gray-600 dark:text-gray-400 mt-1',
+                      descSize
+                    )}
+                  >
+                    {item.description}
+                  </div>
+                )}
+
+                {item.extra && (
+                  <div className="Bear-Timeline__extra mt-3">
+                    {item.extra}
+                  </div>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+);
+
+Timeline.displayName = 'Timeline';
+
+export default Timeline;

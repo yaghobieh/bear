@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 import type { ContainerSize, ContainerProps } from './Container.types';
 
 const sizeClasses: Record<ContainerSize, string> = {

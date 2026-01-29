@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { ChipProps } from './Chip.types';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 
 export const Chip: FC<ChipProps> = ({
   children,

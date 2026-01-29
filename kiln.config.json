@@ -18,5 +18,15 @@
     "props": {
       "defaultMode": "dark"
     }
+  },
+  "vite": {
+    "resolve": {
+      "alias": {
+        "@utils": "./src/utils",
+        "@hooks": "./src/hooks",
+        "@context": "./src/context",
+        "@components": "./src/components"
+      }
+    }
   }
 }

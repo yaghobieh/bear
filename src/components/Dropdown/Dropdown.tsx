@@ -1,5 +1,5 @@
 import { FC, useState, useRef, useCallback, useEffect, cloneElement, isValidElement, ReactElement } from 'react';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 import type { DropdownProps, DropdownItem } from './Dropdown.types';
 
 const SIZE_CLASSES = {

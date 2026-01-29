@@ -1,10 +1,11 @@
 {
   "name": "bear-portal",
-  "version": "1.0.3",
+  "version": "1.0.4-alpha",
   "private": true,
   "type": "module",
   "dependencies": {
     "@forgedevstack/bear": "file:..",
+    "@forgedevstack/grid-table": "1.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.20.0"

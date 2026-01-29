@@ -93,6 +93,11 @@ export const ParagraphIcon: IconComponent = (props) => (
   <Icon {...props}><path d="M13 4v16" /><path d="M17 4v16" /><path d="M19 4H9.5a4.5 4.5 0 0 0 0 9H13" /></Icon>
 );
 
+// Text/Type icon for heading dropdown
+export const TextIcon: IconComponent = (props) => (
+  <Icon {...props}><path d="M4 7V4h16v3" /><path d="M9 20h6" /><path d="M12 4v16" /></Icon>
+);
+
 // Quote
 export const QuoteIcon: IconComponent = (props) => (
   <Icon {...props}><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V21" /><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3" /></Icon>

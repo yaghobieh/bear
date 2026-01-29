@@ -1,5 +1,8 @@
 import { ReactNode, CSSProperties } from 'react';
 
+export type SidebarVariant = 'default' | 'bordered' | 'floating';
+export type SidebarPosition = 'left' | 'right';
+
 export interface SidebarItem {
   id: string;
   label: string;
@@ -21,10 +24,12 @@ export interface SidebarProps {
   footer?: ReactNode;
   activeItemId?: string;
   onItemClick?: (item: SidebarItem) => void;
-  variant?: 'default' | 'bordered' | 'floating';
-  position?: 'left' | 'right';
+  variant?: SidebarVariant;
+  position?: SidebarPosition;
   className?: string;
   style?: CSSProperties;
+  testId?: string;
+  id?: string;
 }
 
 export interface SidebarGroupProps {
@@ -35,11 +40,10 @@ export interface SidebarGroupProps {
   className?: string;
 }
 
-export interface SidebarItemProps {
+export interface SidebarItemComponentProps {
   item: SidebarItem;
   isActive?: boolean;
   collapsed?: boolean;
   depth?: number;
   onClick?: (item: SidebarItem) => void;
 }
-

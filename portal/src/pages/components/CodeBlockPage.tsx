@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { CodeBlock as PortalCodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
 import { KilnLink } from '@/components/KilnLink';
+import { LinesOfCode } from '@/components/LinesOfCode';
 import { CodeBlock } from '@forgedevstack/bear';
 
 const CodeBlockPage: FC = () => {
@@ -10,6 +11,7 @@ const CodeBlockPage: FC = () => {
       <div className="flex items-center gap-3 mb-4">
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">CodeBlock</h1>
         <KilnLink path="/code-block" />
+        <LinesOfCode lines={120} />
       </div>
       <p className="text-gray-600 dark:text-gray-400 mb-8">
         Display code with syntax highlighting and optional line numbers.

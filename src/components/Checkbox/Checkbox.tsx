@@ -1,5 +1,5 @@
 import { forwardRef, useEffect, useRef, useId } from 'react';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 import type { BearSize, BearVariant } from '../../types';
 import type { CheckboxProps } from './Checkbox.types';
 

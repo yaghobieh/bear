@@ -295,6 +295,31 @@ export const DiscordIcon: IconComponent = (props) => (
   <Icon {...props}><path d="M18.93 5.34a16.89 16.89 0 0 0-4.07-1.23 12.08 12.08 0 0 0-.55 1.1 15.66 15.66 0 0 0-4.62 0 11.54 11.54 0 0 0-.56-1.1 16.85 16.85 0 0 0-4.07 1.24A17.18 17.18 0 0 0 2.1 17.89a17.05 17.05 0 0 0 5.12 2.53 12.32 12.32 0 0 0 1.09-1.74 10.98 10.98 0 0 1-1.72-.81c.14-.1.28-.21.42-.32a12.26 12.26 0 0 0 10.38 0c.14.11.28.22.42.32-.55.32-1.13.59-1.73.82a12.27 12.27 0 0 0 1.09 1.74 17 17 0 0 0 5.12-2.54 17.14 17.14 0 0 0-2.96-12.54ZM8.68 14.81c-1.13 0-2.06-1.01-2.06-2.26s.91-2.27 2.06-2.27 2.08 1.02 2.06 2.27-.91 2.26-2.06 2.26Zm7.64 0c-1.13 0-2.06-1.01-2.06-2.26s.91-2.27 2.06-2.27 2.08 1.02 2.06 2.27-.91 2.26-2.06 2.26Z" /></Icon>
 );
 
+// User/People Icons
+export const UserIcon: IconComponent = (props) => (
+  <Icon {...props}><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></Icon>
+);
+
+export const UsersIcon: IconComponent = (props) => (
+  <Icon {...props}><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></Icon>
+);
+
+export const UserPlusIcon: IconComponent = (props) => (
+  <Icon {...props}><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="8.5" cy="7" r="4" /><line x1="20" y1="8" x2="20" y2="14" /><line x1="23" y1="11" x2="17" y2="11" /></Icon>
+);
+
+export const UserMinusIcon: IconComponent = (props) => (
+  <Icon {...props}><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="8.5" cy="7" r="4" /><line x1="23" y1="11" x2="17" y2="11" /></Icon>
+);
+
+export const UserCheckIcon: IconComponent = (props) => (
+  <Icon {...props}><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="8.5" cy="7" r="4" /><polyline points="17 11 19 13 23 9" /></Icon>
+);
+
+export const UserXIcon: IconComponent = (props) => (
+  <Icon {...props}><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="8.5" cy="7" r="4" /><line x1="18" y1="8" x2="23" y2="13" /><line x1="23" y1="8" x2="18" y2="13" /></Icon>
+);
+
 // Common Aliases
 export const PlusIcon: IconComponent = (props) => (
   <Icon {...props}><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></Icon>
@@ -328,6 +353,68 @@ export const BearFaceIcon: IconComponent = (props) => (
     <circle cx="12" cy="12" r="1.5" fill="currentColor" />
     <circle cx="8" cy="10" r="1.5" fill="currentColor" />
     <circle cx="16" cy="10" r="1.5" fill="currentColor" />
+  </Icon>
+);
+
+// Grid/Layout icons
+export const GridIcon: IconComponent = (props) => (
+  <Icon {...props}>
+    <rect x="3" y="3" width="7" height="7" rx="1" />
+    <rect x="14" y="3" width="7" height="7" rx="1" />
+    <rect x="14" y="14" width="7" height="7" rx="1" />
+    <rect x="3" y="14" width="7" height="7" rx="1" />
+  </Icon>
+);
+
+// Feature/Concept icons for landing pages
+export const PaletteIcon: IconComponent = (props) => (
+  <Icon {...props}>
+    <circle cx="13.5" cy="6.5" r="1.5" />
+    <circle cx="17.5" cy="10.5" r="1.5" />
+    <circle cx="8.5" cy="7.5" r="1.5" />
+    <circle cx="6.5" cy="12.5" r="1.5" />
+    <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.9 0 1.7-.1 2.5-.3-.2-.2-.3-.5-.3-.8 0-.5.2-1 .6-1.3.4-.3.9-.5 1.4-.5h1.6c1.5 0 2.7-1.2 2.7-2.7 0-5.8-4.5-10.4-8.5-10.4z" />
+  </Icon>
+);
+
+export const WrenchIcon: IconComponent = (props) => (
+  <Icon {...props}>
+    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+  </Icon>
+);
+
+export const AccessibilityIcon: IconComponent = (props) => (
+  <Icon {...props}>
+    <circle cx="12" cy="4.5" r="2.5" />
+    <path d="M12 7v5" />
+    <path d="M7 12l5 3 5-3" />
+    <path d="M8 21l4-6 4 6" />
+  </Icon>
+);
+
+export const TypeScriptIcon: IconComponent = (props) => (
+  <Icon {...props}>
+    <rect x="3" y="3" width="18" height="18" rx="2" />
+    <path d="M12 8v8" />
+    <path d="M8 8h8" />
+    <path d="M16 12h-2.5a1.5 1.5 0 0 0 0 3H15a1.5 1.5 0 0 1 0 3h-3" />
+  </Icon>
+);
+
+export const SparklesIcon: IconComponent = (props) => (
+  <Icon {...props}>
+    <path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3z" />
+    <path d="M5 16l.75 2.25L8 19l-2.25.75L5 22l-.75-2.25L2 19l2.25-.75L5 16z" />
+    <path d="M19 14l.5 1.5L21 16l-1.5.5L19 18l-.5-1.5L17 16l1.5-.5L19 14z" />
+  </Icon>
+);
+
+export const RocketIcon: IconComponent = (props) => (
+  <Icon {...props}>
+    <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+    <path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+    <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
+    <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
   </Icon>
 );
 

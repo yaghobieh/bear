@@ -1,146 +1,194 @@
-import { FC } from 'react';
-import { cn } from '../../utils/cn';
-import type { SkeletonProps, SkeletonVariant, SkeletonAnimation } from './Skeleton.types';
+import { forwardRef, useEffect } from 'react';
+import { cn } from '@utils';
+import type { SkeletonProps, SkeletonTextProps, SkeletonAvatarProps } from './Skeleton.types';
+import {
+  SKELETON_BASE_CLASSES,
+  SKELETON_VARIANT_CLASSES,
+  SKELETON_ANIMATION_CLASSES,
+  SKELETON_BG_CLASSES,
+  SKELETON_WAVE_STYLES,
+  SKELETON_TEXT_HEIGHT,
+  SKELETON_AVATAR_SIZES,
+} from './Skeleton.const';
 
-const VARIANT_CLASSES: Record<SkeletonVariant, string> = {
-  text: 'bear-rounded',
-  circular: 'bear-rounded-full',
-  rectangular: 'bear-rounded-none',
-  rounded: 'bear-rounded-lg',
-};
-
-const ANIMATION_CLASSES: Record<SkeletonAnimation, string> = {
-  pulse: 'bear-animate-pulse',
-  wave: 'bear-skeleton-wave',
-  none: '',
+// Inject wave animation styles
+const injectStyles = () => {
+  const styleId = 'bear-skeleton-styles';
+  if (typeof document !== 'undefined' && !document.getElementById(styleId)) {
+    const style = document.createElement('style');
+    style.id = styleId;
+    style.textContent = SKELETON_WAVE_STYLES;
+    document.head.appendChild(style);
+  }
 };
 
 /**
- * Skeleton component for loading placeholders
- * 
- * @example
- * ```tsx
- * <Skeleton variant="text" width={200} />
- * <Skeleton variant="circular" width={40} height={40} />
- * <Skeleton variant="rectangular" width="100%" height={200} />
- * <Skeleton variant="text" count={3} />
- * ```
+ * Skeleton - Loading placeholder with animation
  */
-export const Skeleton: FC<SkeletonProps> = ({
-  variant = 'text',
-  animation = 'pulse',
-  width,
-  height,
-  count = 1,
-  gap = 8,
-  className,
-  testId,
-  style,
-  ...props
-}) => {
-  const getDefaultHeight = () => {
-    if (height) return height;
-    switch (variant) {
-      case 'text':
-        return '1em';
-      case 'circular':
-        return width || 40;
-      default:
-        return 'auto';
+export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
+  (
+    {
+      variant = 'text',
+      animation = 'pulse',
+      width,
+      height,
+      borderRadius,
+      count = 1,
+      gap = 8,
+      className,
+      style,
+      testId,
+      ...props
+    },
+    ref
+  ) => {
+    useEffect(() => {
+      if (animation === 'wave') {
+        injectStyles();
+      }
+    }, [animation]);
+
+    const getSize = (value: number | string | undefined) => {
+      if (value === undefined) return undefined;
+      return typeof value === 'number' ? `${value}px` : value;
+    };
+
+    const skeletonStyle = {
+      width: getSize(width),
+      height: getSize(height) || (variant === 'text' ? SKELETON_TEXT_HEIGHT : undefined),
+      borderRadius: borderRadius ? getSize(borderRadius) : undefined,
+      ...style,
+    };
+
+    const skeletonClasses = cn(
+      SKELETON_BASE_CLASSES,
+      SKELETON_VARIANT_CLASSES[variant],
+      SKELETON_ANIMATION_CLASSES[animation],
+      SKELETON_BG_CLASSES,
+      className
+    );
+
+    if (count > 1) {
+      return (
+        <div 
+          className="Bear-Skeleton__group flex flex-col" 
+          style={{ gap: getSize(gap) }}
+          data-testid={testId}
+        >
+          {Array.from({ length: count }).map((_, index) => (
+            <div
+              key={index}
+              ref={index === 0 ? ref : undefined}
+              className={skeletonClasses}
+              style={skeletonStyle}
+              {...props}
+            />
+          ))}
+        </div>
+      );
     }
-  };
 
-  const skeletonStyle = {
-    width: width || (variant === 'circular' ? 40 : '100%'),
-    height: getDefaultHeight(),
-    ...style,
-  };
+    return (
+      <div
+        ref={ref}
+        className={skeletonClasses}
+        style={skeletonStyle}
+        data-testid={testId}
+        {...props}
+      />
+    );
+  }
+);
 
-  if (count > 1 && variant === 'text') {
+Skeleton.displayName = 'Skeleton';
+
+/**
+ * SkeletonText - Text placeholder with multiple lines
+ */
+export const SkeletonText = forwardRef<HTMLDivElement, SkeletonTextProps>(
+  ({ lines = 3, lastLineWidth = '80%', gap = 8, animation = 'pulse', ...props }, ref) => {
+    useEffect(() => {
+      if (animation === 'wave') {
+        injectStyles();
+      }
+    }, [animation]);
+
+    const getSize = (value: number | string | undefined) => {
+      if (value === undefined) return undefined;
+      return typeof value === 'number' ? `${value}px` : value;
+    };
+
     return (
       <div 
-        className="bear-flex bear-flex-col" 
-        style={{ gap }}
-        data-testid={testId}
+        ref={ref} 
+        className="Bear-SkeletonText flex flex-col" 
+        style={{ gap: getSize(gap) }}
       >
-        {Array.from({ length: count }).map((_, index) => (
-          <div
+        {Array.from({ length: lines }).map((_, index) => (
+          <Skeleton
             key={index}
-            className={cn(
-              'bear-bg-gray-200 dark:bear-bg-gray-700',
-              VARIANT_CLASSES[variant],
-              ANIMATION_CLASSES[animation],
-              className
-            )}
-            style={{
-              ...skeletonStyle,
-              width: index === count - 1 ? '80%' : skeletonStyle.width,
-            }}
+            variant="text"
+            animation={animation}
+            width={index === lines - 1 ? lastLineWidth : '100%'}
             {...props}
           />
         ))}
       </div>
     );
   }
-
-  return (
-    <div
-      className={cn(
-        'bear-bg-gray-200 dark:bear-bg-gray-700',
-        VARIANT_CLASSES[variant],
-        ANIMATION_CLASSES[animation],
-        className
-      )}
-      style={skeletonStyle}
-      data-testid={testId}
-      {...props}
-    />
-  );
-};
-
-// Pre-built skeleton patterns
-export const SkeletonAvatar: FC<{ size?: number; className?: string }> = ({ 
-  size = 40, 
-  className 
-}) => (
-  <Skeleton 
-    variant="circular" 
-    width={size} 
-    height={size} 
-    className={className} 
-  />
 );
 
-export const SkeletonText: FC<{ 
-  lines?: number; 
-  width?: number | string; 
-  className?: string 
-}> = ({ 
-  lines = 3, 
-  width = '100%', 
-  className 
-}) => (
-  <Skeleton 
-    variant="text" 
-    count={lines} 
-    width={width} 
-    className={className} 
-  />
+SkeletonText.displayName = 'SkeletonText';
+
+/**
+ * SkeletonAvatar - Circular avatar placeholder
+ */
+export const SkeletonAvatar = forwardRef<HTMLDivElement, SkeletonAvatarProps>(
+  ({ size = 'md', animation = 'pulse', ...props }, ref) => {
+    const dimension = typeof size === 'number' ? size : SKELETON_AVATAR_SIZES[size];
+
+    return (
+      <Skeleton
+        ref={ref}
+        variant="circular"
+        animation={animation}
+        width={dimension}
+        height={dimension}
+        {...props}
+      />
+    );
+  }
 );
 
-export const SkeletonCard: FC<{ className?: string }> = ({ className }) => (
-  <div className={cn('bear-p-4 bear-space-y-4', className)}>
-    <Skeleton variant="rectangular" height={200} />
-    <div className="bear-flex bear-items-center bear-gap-3">
-      <SkeletonAvatar />
-      <div className="bear-flex-1">
-        <Skeleton variant="text" width="60%" />
-        <Skeleton variant="text" width="40%" className="bear-mt-2" />
+SkeletonAvatar.displayName = 'SkeletonAvatar';
+
+/**
+ * SkeletonCard - Card placeholder
+ */
+export const SkeletonCard = forwardRef<HTMLDivElement, SkeletonProps>(
+  ({ animation = 'pulse', className, ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          'Bear-SkeletonCard p-4 rounded-lg border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-900',
+          className
+        )}
+        {...props}
+      >
+        <div className="flex items-center gap-3 mb-4">
+          <SkeletonAvatar animation={animation} />
+          <div className="flex-1">
+            <Skeleton animation={animation} width="60%" height={16} className="mb-2" />
+            <Skeleton animation={animation} width="40%" height={12} />
+          </div>
+        </div>
+        <SkeletonText animation={animation} lines={3} />
       </div>
-    </div>
-    <SkeletonText lines={3} />
-  </div>
+    );
+  }
 );
+
+SkeletonCard.displayName = 'SkeletonCard';
 
 export default Skeleton;
-

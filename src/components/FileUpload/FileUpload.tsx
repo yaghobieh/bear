@@ -1,6 +1,6 @@
 import { FC, useRef, useState, useCallback } from 'react';
 import { FileUploadProps, UploadedFile } from './FileUpload.types';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 import { formatSize } from './FileUpload.utils';
 
 const UploadIcon: FC<{ className?: string }> = ({ className }) => (

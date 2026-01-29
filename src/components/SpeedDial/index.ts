@@ -1,3 +1,2 @@
 export { SpeedDial } from './SpeedDial';
-export type { SpeedDialProps, SpeedDialAction } from './SpeedDial.types';
-
+export type { SpeedDialProps, SpeedDialAction, SpeedDialDirection, SpeedDialSize } from './SpeedDial.types';

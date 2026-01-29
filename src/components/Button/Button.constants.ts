@@ -65,7 +65,7 @@ export const BUTTON_VARIANT: Record<EmberVariant, string> = {
     focus:bear-ring-2 focus:bear-ring-bear-500/50
     active:bear-bg-bear-100
     disabled:bear-text-bear-300 disabled:bear-border-bear-300 disabled:bear-cursor-not-allowed
-    dark:hover:bear-bg-bear-950 dark:active:bear-bg-bear-900
+    dark:bear-text-bear-400 dark:bear-border-bear-400 dark:hover:bear-bg-bear-950 dark:active:bear-bg-bear-900 dark:disabled:bear-border-bear-700 dark:disabled:bear-text-bear-700
   `,
   error: `
     bear-bg-red-500 bear-text-white

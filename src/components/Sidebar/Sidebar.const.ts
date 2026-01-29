@@ -1,4 +1,4 @@
-import type { SidebarVariant } from './Sidebar.types';
+import type { SidebarVariant, SidebarActiveVariant } from './Sidebar.types';
 
 // Layout dimensions
 export const SIDEBAR_WIDTH = 256;
@@ -18,7 +18,17 @@ export const SIDEBAR_VARIANT_STYLES: Record<SidebarVariant, string> = {
 // Item styles
 export const SIDEBAR_ITEM_BASE_CLASSES = 'bear-flex bear-items-center bear-gap-3 bear-py-2.5 bear-px-3 bear-rounded-lg bear-text-sm bear-transition-all bear-duration-200 bear-cursor-pointer';
 
-export const SIDEBAR_ITEM_ACTIVE_CLASSES = 'bear-bg-pink-500 bear-text-white bear-shadow-md';
+export const SIDEBAR_ITEM_ACTIVE_FILL = 'bear-bg-bear-500 bear-text-white bear-shadow-md';
+export const SIDEBAR_ITEM_ACTIVE_BORDER = 'bear-bg-bear-50 dark:bear-bg-bear-900/30 bear-text-bear-700 dark:bear-text-bear-200 bear-border-l-2 bear-border-bear-500 -bear-ml-px bear-pl-[11px]';
+export const SIDEBAR_ITEM_ACTIVE_INDICATOR = 'bear-relative bear-bg-bear-100 dark:bear-bg-bear-900/40 bear-text-bear-700 dark:bear-text-bear-200 before:bear-content-[\'\'] before:bear-absolute before:bear-left-0 before:bear-top-1/2 before:-bear-translate-y-1/2 before:bear-w-1 before:bear-h-6 before:bear-rounded-full before:bear-bg-bear-500';
+
+export const SIDEBAR_ITEM_ACTIVE_CLASSES = SIDEBAR_ITEM_ACTIVE_FILL;
+
+export const SIDEBAR_ITEM_ACTIVE_BY_VARIANT: Record<SidebarActiveVariant, string> = {
+  fill: SIDEBAR_ITEM_ACTIVE_FILL,
+  border: SIDEBAR_ITEM_ACTIVE_BORDER,
+  indicator: SIDEBAR_ITEM_ACTIVE_INDICATOR,
+};
 
 export const SIDEBAR_ITEM_INACTIVE_CLASSES = 'bear-text-zinc-600 dark:bear-text-zinc-400 hover:bear-bg-zinc-100 dark:hover:bear-bg-zinc-800 hover:bear-text-zinc-900 dark:hover:bear-text-zinc-100';
 

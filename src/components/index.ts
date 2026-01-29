@@ -237,7 +237,7 @@ export type { CopyButtonProps } from './CopyButton';
 
 // Sidebar
 export { Sidebar, SidebarGroup } from './Sidebar';
-export type { SidebarProps, SidebarItem, SidebarGroupProps, SidebarItemComponentProps } from './Sidebar';
+export type { SidebarProps, SidebarItem, SidebarGroupProps, SidebarItemComponentProps, SidebarActiveVariant } from './Sidebar';
 
 // Columns (CSS)
 export { Columns, Column } from './Columns';

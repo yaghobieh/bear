@@ -1,14 +1,15 @@
 import { FC, useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useTheme } from '@/hooks/useTheme';
+import { useBear } from '@forgedevstack/bear';
 import { useSearch } from '@/hooks/useSearch';
-import { GITHUB_URL, NPM_URL, BEAR_VERSION } from '@/constants/navigation.const';
+import { GITHUB_URL, NPM_URL, BEAR_VERSION, ADMIN_URL } from '@/constants/navigation.const';
 import { TopbarProps } from './Topbar.types';
 import { BearIcons } from '@forgedevstack/bear';
 import { BearIcon, NpmIcon } from './Topbar.icons';
 
 export const Topbar: FC<TopbarProps> = ({ onMenuClick, banner, onBannerVisibilityChange }) => {
-  const { isDark, toggleTheme } = useTheme();
+  const { mode, toggleMode } = useBear();
+  const isDark = mode === 'dark';
   const { query, setQuery, results, isOpen, openSearch, closeSearch } = useSearch();
   const navigate = useNavigate();
   const searchRef = useRef<HTMLDivElement>(null);
@@ -167,6 +168,14 @@ export const Topbar: FC<TopbarProps> = ({ onMenuClick, banner, onBannerVisibilit
               >
                 Icons
               </Link>
+              <a
+                href={ADMIN_URL}
+                target={ADMIN_URL.startsWith('http') ? '_blank' : undefined}
+                rel={ADMIN_URL.startsWith('http') ? 'noopener noreferrer' : undefined}
+                className="px-3 py-1.5 text-sm text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400 rounded-md transition-colors"
+              >
+                Admin
+              </a>
             </nav>
 
             <div className="hidden md:block w-px h-5 bg-gray-200 dark:bg-gray-700 mr-3" />
@@ -174,7 +183,7 @@ export const Topbar: FC<TopbarProps> = ({ onMenuClick, banner, onBannerVisibilit
             {/* Icon Buttons */}
             <div className="flex items-center gap-0.5">
               <button
-                onClick={toggleTheme}
+                onClick={toggleMode}
                 aria-label="Toggle theme"
                 className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-md transition-colors"
               >

@@ -6,20 +6,22 @@ import type { ButtonProps } from './Button.types';
 import { BUTTON_SIZE, BUTTON_VARIANT } from './Button.constants';
 
 /**
- * Button component with multiple variants, sizes, and states
- * 
+ * Button component with multiple variants, sizes, and states.
+ * Light and dark mode supported; outline variant has theme-aware borders.
+ * Override borders from outside via className (e.g. className="border-2 border-blue-500 dark:border-blue-400").
+ *
  * @example
  * ```tsx
  * <Button variant="primary" size="md">
  *   Click me
  * </Button>
- * 
+ *
  * <Button variant="outline" loading>
  *   Loading...
  * </Button>
- * 
- * <Button leftIcon={<IconPlus />}>
- *   Add Item
+ *
+ * <Button variant="outline" className="border-2 border-pink-500">
+ *   Custom border
  * </Button>
  * ```
  */

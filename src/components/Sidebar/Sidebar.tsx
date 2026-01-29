@@ -35,8 +35,11 @@ export const Sidebar: FC<SidebarProps> = (props) => {
     collapsedWidth = SIDEBAR_COLLAPSED_WIDTH,
     header,
     footer,
+    showHeader = true,
     activeItemId,
     onItemClick,
+    activeVariant = 'fill',
+    fullHeight = false,
     variant = 'default',
     position = 'left',
     className,
@@ -47,6 +50,7 @@ export const Sidebar: FC<SidebarProps> = (props) => {
 
   const currentWidth = collapsed ? collapsedWidth : width;
   const borderSide = position === 'left' ? 'bear-border-r' : 'bear-border-l';
+  const showHeaderArea = showHeader && header;
 
   return (
     <aside
@@ -57,13 +61,14 @@ export const Sidebar: FC<SidebarProps> = (props) => {
         `Bear-Sidebar--${variant}`,
         collapsed && 'Bear-Sidebar--collapsed',
         'bear-flex bear-flex-col bear-h-full bear-transition-all bear-duration-300',
+        fullHeight && 'bear-min-h-full',
         variant === 'default' && borderSide,
         SIDEBAR_VARIANT_STYLES[variant],
         className
       )}
       style={{ width: currentWidth, ...style }}
     >
-      {header && (
+      {showHeaderArea && (
         <div className={cn('Bear-Sidebar__header', SIDEBAR_HEADER_CLASSES)}>
           {!collapsed && header}
           {onCollapsedChange && (
@@ -83,7 +88,7 @@ export const Sidebar: FC<SidebarProps> = (props) => {
         </div>
       )}
 
-      <nav className="Bear-Sidebar__nav bear-flex-1 bear-overflow-y-auto bear-px-2 bear-py-3 bear-space-y-1">
+      <nav className="Bear-Sidebar__nav bear-flex-1 bear-overflow-y-auto bear-px-2 bear-py-3 bear-space-y-1 bear-min-h-0">
         {items.map((item) => (
           <SidebarItem
             key={item.id}
@@ -91,6 +96,7 @@ export const Sidebar: FC<SidebarProps> = (props) => {
             isActive={item.id === activeItemId}
             collapsed={collapsed}
             onClick={onItemClick}
+            activeVariant={activeVariant}
           />
         ))}
       </nav>

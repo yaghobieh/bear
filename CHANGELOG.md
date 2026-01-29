@@ -2,6 +2,32 @@
 
 All notable changes to Bear UI will be documented in this file.
 
+## [1.0.5] - 2026-01-29
+
+### Changed
+
+- **BearProvider**: Single source of truth for theme
+  - Adds/removes Tailwind `dark` class on `document.documentElement` when `mode` changes
+  - All `dark:` variants (inputs, forms, sidebar, etc.) now respond to `useBear().toggleMode()` and `setMode()`
+  - No separate theme hooks or sync components needed; wrap app with `BearProvider` and use `useBear()` or `useBearMode()`
+
+- **Button**: Dark/light support and border overrides
+  - Outline variant: full dark mode support (`dark:bear-text-bear-400`, `dark:bear-border-bear-400`, disabled states)
+  - All variants tested for light and dark; ghost and outline are theme-aware
+  - Borders can be overridden from outside via `className` (e.g. `className="border-2 border-blue-500 dark:border-blue-400"`)
+
+### Portal
+
+- Wrapped app with `BearProvider`; Topbar uses `useBear().mode` and `toggleMode` for theme toggle
+- Theme toggle now drives all components via BearProvider’s `dark` class
+
+### CMS Admin
+
+- Removed custom ThemeInit/useTheme; theme driven solely by BearProvider
+- Admin layout theme toggle uses `useBearMode()`; redirect `/` → `/admin/` in dev so app loads at correct URL
+
+---
+
 ## [1.0.4] - 2026-01-28
 
 ### Changed

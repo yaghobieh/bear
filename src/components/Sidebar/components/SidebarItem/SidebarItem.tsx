@@ -7,7 +7,7 @@ import {
   SIDEBAR_DEPTH_INDENT,
   SIDEBAR_ICON_SIZE,
   SIDEBAR_ITEM_BASE_CLASSES,
-  SIDEBAR_ITEM_ACTIVE_CLASSES,
+  SIDEBAR_ITEM_ACTIVE_BY_VARIANT,
   SIDEBAR_ITEM_INACTIVE_CLASSES,
   SIDEBAR_ITEM_DISABLED_CLASSES,
 } from '../../Sidebar.const';
@@ -19,6 +19,7 @@ export const SidebarItem: FC<SidebarItemComponentProps> = (props) => {
     collapsed,
     depth = 0,
     onClick,
+    activeVariant = 'fill',
   } = props;
 
   const [isOpen, setIsOpen] = useState(false);
@@ -60,11 +61,12 @@ export const SidebarItem: FC<SidebarItemComponentProps> = (props) => {
     </>
   );
 
+  const activeClasses = SIDEBAR_ITEM_ACTIVE_BY_VARIANT[activeVariant];
   const itemClassName = cn(
     'Bear-Sidebar__item',
     SIDEBAR_ITEM_BASE_CLASSES,
     isActive
-      ? `Bear-Sidebar__item--active ${SIDEBAR_ITEM_ACTIVE_CLASSES}`
+      ? `Bear-Sidebar__item--active ${activeClasses}`
       : SIDEBAR_ITEM_INACTIVE_CLASSES,
     item.disabled && `Bear-Sidebar__item--disabled ${SIDEBAR_ITEM_DISABLED_CLASSES}`,
     collapsed && 'Bear-Sidebar__item--collapsed bear-justify-center'

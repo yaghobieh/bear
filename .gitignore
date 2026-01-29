@@ -3,3 +3,4 @@ dist
 demo
 portal/dist
 portal/node_modules
+cms/*

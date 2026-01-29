@@ -21,9 +21,11 @@ export const AppBar: FC<AppBarProps> = ({
   };
 
   const variantClasses = {
-    default: 'bear-bg-zinc-900 bear-text-white',
+    default:
+      'bear-bg-white bear-text-gray-900 dark:bear-bg-zinc-900 dark:bear-text-white',
     transparent: 'bear-bg-transparent',
-    blur: 'bear-bg-zinc-900/80 bear-backdrop-blur-md',
+    blur:
+      'bear-bg-white/80 dark:bear-bg-zinc-900/80 bear-backdrop-blur-md',
   };
 
   const colorClasses = {
@@ -32,6 +34,10 @@ export const AppBar: FC<AppBarProps> = ({
     dark: 'bear-bg-black bear-text-white',
   };
 
+  const elevationClasses = elevation
+    ? 'bear-shadow-lg bear-border-b bear-border-gray-200 dark:bear-border-zinc-800'
+    : '';
+
   return (
     <header
       className={cn(
@@ -39,7 +45,7 @@ export const AppBar: FC<AppBarProps> = ({
         positionClasses[position],
         variant !== 'transparent' && variantClasses[variant],
         colorClasses[color],
-        elevation && 'bear-shadow-lg bear-border-b bear-border-zinc-800',
+        elevationClasses,
         className
       )}
     >

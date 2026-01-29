@@ -1,4 +1,4 @@
-import { FC, useState, useMemo } from 'react';
+import { type ChangeEvent, FC, useState, useMemo } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { KilnLink } from '@/components/KilnLink';
 import { LinesOfCode } from '@/components/LinesOfCode';
@@ -113,7 +113,7 @@ const Icons: FC = () => {
         <div className="bear-flex-1">
           <Input
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
             placeholder="Search icons..."
             className="bear-w-full"
           />

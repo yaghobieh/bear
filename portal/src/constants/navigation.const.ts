@@ -23,6 +23,9 @@ export const KILN_BASE_URL = 'http://localhost:6006';
 export const GITHUB_URL = 'https://github.com/yaghobieh/bear';
 export const NPM_URL = 'https://www.npmjs.com/package/@forgedevstack/bear';
 
+/** CMS Admin (Pages, Users). In dev set VITE_ADMIN_URL=http://localhost:3001/admin when admin runs on port 3001. */
+export const ADMIN_URL = import.meta.env?.VITE_ADMIN_URL ?? '/admin';
+
 export const NAVIGATION: NavGroup[] = [
   {
     title: 'Getting Started',
@@ -177,6 +180,7 @@ export const NAVIGATION: NavGroup[] = [
 ];
 
 export const VERSIONS = [
+  { value: '1.0.5', label: 'v1.0.5' },
   { value: '1.0.4', label: 'v1.0.4' },
   { value: '1.0.3', label: 'v1.0.3' },
   { value: '1.0.2', label: 'v1.0.2' },

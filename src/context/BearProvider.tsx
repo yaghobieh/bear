@@ -100,12 +100,19 @@ export const BearProvider = ({
     setCustomOverrides((prev: BearThemeOverride) => ({ ...prev, ...overrides }));
   }, []);
 
-  // Apply CSS variables to document
+  // Apply mode to document: Tailwind dark: variants + Bear classes + CSS variables
   useEffect(() => {
     if (typeof document !== 'undefined') {
       const root = document.documentElement;
-      
-      // Set mode class
+
+      // Tailwind dark mode (class strategy) – so dark: variants work everywhere
+      if (mode === 'dark') {
+        root.classList.add('dark');
+      } else {
+        root.classList.remove('dark');
+      }
+
+      // Bear-specific classes (for any bear-* scoped styles)
       root.classList.remove('bear-light', 'bear-dark');
       root.classList.add(`bear-${mode}`);
       

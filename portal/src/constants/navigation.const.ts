@@ -16,7 +16,7 @@ export interface NavGroup {
   items: NavItem[];
 }
 
-export const BEAR_VERSION = '1.0.4';
+export const BEAR_VERSION = '1.0.5';
 export const KILN_BASE_URL = 'http://localhost:6006';
 
 /** Main Bear UI repository */

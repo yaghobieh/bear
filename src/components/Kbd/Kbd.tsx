@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { KbdProps } from './Kbd.types';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 
 const KEY_MAP: Record<string, string> = {
   cmd: '⌘',

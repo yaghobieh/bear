@@ -1,144 +1,250 @@
-import { FC } from 'react';
-import { StepperProps } from './Stepper.types';
-import { cn } from '../../utils/cn';
+import { forwardRef } from 'react';
+import { cn } from '@utils';
+import type { StepperProps, StepperControlsProps, StepStatus, Step } from './Stepper.types';
+import {
+  STEPPER_BASE_CLASSES,
+  STEPPER_HORIZONTAL_CLASSES,
+  STEPPER_VERTICAL_CLASSES,
+  STEP_WRAPPER_HORIZONTAL,
+  STEP_WRAPPER_VERTICAL,
+  STEP_INDICATOR_BASE,
+  STEP_INDICATOR_SIZES,
+  STEP_STATUS_CLASSES,
+  CONNECTOR_BASE,
+  CONNECTOR_HORIZONTAL,
+  CONNECTOR_VERTICAL,
+  CONNECTOR_STATUS,
+  STEP_LABEL_BASE,
+  STEP_LABEL_SIZES,
+  STEP_DESCRIPTION_CLASSES,
+} from './Stepper.const';
+import { Button } from '../Button';
 
-const CheckIcon: FC<{ className?: string }> = ({ className }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+// Icons
+const CheckIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+    <polyline points="20 6 9 17 4 12" />
   </svg>
 );
 
-export const Stepper: FC<StepperProps> = ({
-  steps,
-  activeStep,
-  onStepClick,
-  orientation = 'horizontal',
-  variant = 'default',
-  size = 'md',
-  className,
-  completedIcon,
-  showConnector = true,
-  allowClickOnCompleted = true,
-}) => {
-  const sizeClasses = {
-    sm: { circle: 'bear-w-6 bear-h-6 bear-text-xs', text: 'bear-text-xs', icon: 'bear-w-3 bear-h-3' },
-    md: { circle: 'bear-w-8 bear-h-8 bear-text-sm', text: 'bear-text-sm', icon: 'bear-w-4 bear-h-4' },
-    lg: { circle: 'bear-w-10 bear-h-10 bear-text-base', text: 'bear-text-base', icon: 'bear-w-5 bear-h-5' },
-  };
+const ErrorIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+    <line x1="18" y1="6" x2="6" y2="18" />
+    <line x1="6" y1="6" x2="18" y2="18" />
+  </svg>
+);
 
-  const isHorizontal = orientation === 'horizontal';
-
-  const renderStep = (step: typeof steps[0], index: number) => {
-    const isCompleted = index < activeStep;
-    const isActive = index === activeStep;
-    const isClickable = onStepClick && (isCompleted ? allowClickOnCompleted : isActive);
-
-    const handleClick = () => {
-      if (isClickable) onStepClick?.(index);
+/**
+ * Stepper - Multi-step wizard component
+ */
+export const Stepper = forwardRef<HTMLDivElement, StepperProps>(
+  (
+    {
+      steps,
+      activeStep,
+      onStepClick,
+      orientation = 'horizontal',
+      size = 'md',
+      showNumbers = true,
+      clickable = false,
+      showConnectors = true,
+      connectorStyle = 'solid',
+      alternativeLabel = false,
+      completedIcon,
+      errorIcon,
+      testId,
+      className,
+      ...props
+    },
+    ref
+  ) => {
+    const getStepStatus = (index: number, step: Step): StepStatus => {
+      if (step.status) return step.status;
+      if (index < activeStep) return 'completed';
+      if (index === activeStep) return 'active';
+      return 'pending';
     };
 
-    const circleContent = () => {
-      if (isCompleted) {
-        return completedIcon || <CheckIcon className={sizeClasses[size].icon} />;
+    const isHorizontal = orientation === 'horizontal';
+    const sizeConfig = STEP_INDICATOR_SIZES[size];
+    const labelSizeConfig = STEP_LABEL_SIZES[size];
+
+    const renderIndicator = (step: Step, index: number, status: StepStatus) => {
+      const statusClasses = STEP_STATUS_CLASSES[status];
+
+      let content: React.ReactNode = null;
+
+      if (step.icon) {
+        content = step.icon;
+      } else if (status === 'completed') {
+        content = completedIcon || <CheckIcon />;
+      } else if (status === 'error') {
+        content = errorIcon || <ErrorIcon />;
+      } else if (showNumbers) {
+        content = index + 1;
       }
-      if (step.icon) return step.icon;
-      return index + 1;
-    };
 
-    const circleClass = cn(
-      'bear-rounded-full bear-flex bear-items-center bear-justify-center bear-font-medium bear-transition-all bear-shrink-0',
-      sizeClasses[size].circle,
-      isCompleted && 'bear-bg-pink-500 bear-text-white',
-      isActive && 'bear-bg-pink-500 bear-text-white bear-ring-4 bear-ring-pink-500/30',
-      !isCompleted && !isActive && 'bear-bg-zinc-700 bear-text-zinc-400',
-      step.error && 'bear-bg-red-500 bear-text-white',
-      isClickable && 'bear-cursor-pointer hover:bear-scale-110'
-    );
-
-    if (variant === 'dots') {
       return (
         <div
-          key={index}
-          onClick={handleClick}
           className={cn(
-            'bear-w-3 bear-h-3 bear-rounded-full bear-transition-all',
-            isCompleted && 'bear-bg-pink-500',
-            isActive && 'bear-bg-pink-500 bear-w-6',
-            !isCompleted && !isActive && 'bear-bg-zinc-600',
-            isClickable && 'bear-cursor-pointer'
+            STEP_INDICATOR_BASE,
+            sizeConfig,
+            statusClasses.indicator,
+            clickable && !step.disabled && 'cursor-pointer hover:scale-105'
+          )}
+          onClick={() => {
+            if (clickable && !step.disabled && onStepClick) {
+              onStepClick(index);
+            }
+          }}
+        >
+          {content}
+        </div>
+      );
+    };
+
+    const renderConnector = (index: number) => {
+      if (!showConnectors || index === steps.length - 1) return null;
+
+      const isCompleted = index < activeStep;
+      
+      return (
+        <div
+          className={cn(
+            CONNECTOR_BASE,
+            isHorizontal ? CONNECTOR_HORIZONTAL : CONNECTOR_VERTICAL,
+            isCompleted ? CONNECTOR_STATUS.completed : CONNECTOR_STATUS.pending,
+            connectorStyle === 'dashed' && 'border-t-2 border-dashed bg-transparent'
           )}
         />
       );
-    }
+    };
 
     return (
       <div
-        key={index}
+        ref={ref}
         className={cn(
-          'bear-flex bear-items-center',
-          isHorizontal ? 'bear-flex-col' : 'bear-flex-row bear-gap-3'
+          STEPPER_BASE_CLASSES,
+          isHorizontal ? STEPPER_HORIZONTAL_CLASSES : STEPPER_VERTICAL_CLASSES,
+          className
         )}
+        data-testid={testId}
+        {...props}
       >
-        <div onClick={handleClick} className={circleClass}>
-          {circleContent()}
-        </div>
-        <div className={cn('bear-text-center', isHorizontal ? 'bear-mt-2' : '')}>
-          <div className={cn(
-            sizeClasses[size].text,
-            isActive ? 'bear-text-white bear-font-medium' : 'bear-text-zinc-400'
-          )}>
-            {step.label}
-            {step.optional && <span className="bear-text-zinc-500 bear-ml-1">(Optional)</span>}
-          </div>
-          {step.description && (
-            <div className="bear-text-xs bear-text-zinc-500 bear-mt-0.5">{step.description}</div>
-          )}
-        </div>
+        {steps.map((step, index) => {
+          const status = getStepStatus(index, step);
+          const statusClasses = STEP_STATUS_CLASSES[status];
+
+          return (
+            <div
+              key={index}
+              className={cn(
+                'Bear-Stepper__step',
+                isHorizontal ? STEP_WRAPPER_HORIZONTAL : STEP_WRAPPER_VERTICAL
+              )}
+            >
+              {isHorizontal ? (
+                // Horizontal layout
+                <div className={cn('flex', alternativeLabel ? 'flex-col items-center' : 'items-center gap-3')}>
+                  {renderIndicator(step, index, status)}
+                  <div className={cn(alternativeLabel && 'text-center mt-2')}>
+                    <div className={cn(STEP_LABEL_BASE, labelSizeConfig.label, statusClasses.label)}>
+                      {step.label}
+                    </div>
+                    {step.description && (
+                      <div className={cn(STEP_DESCRIPTION_CLASSES, labelSizeConfig.description)}>
+                        {step.description}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                // Vertical layout
+                <>
+                  <div className="flex-shrink-0 mr-4">
+                    {renderIndicator(step, index, status)}
+                  </div>
+                  <div className="flex-1 pt-0.5">
+                    <div className={cn(STEP_LABEL_BASE, labelSizeConfig.label, statusClasses.label)}>
+                      {step.label}
+                    </div>
+                    {step.description && (
+                      <div className={cn(STEP_DESCRIPTION_CLASSES, labelSizeConfig.description)}>
+                        {step.description}
+                      </div>
+                    )}
+                    {step.content && status === 'active' && (
+                      <div className="mt-4">
+                        {step.content}
+                      </div>
+                    )}
+                  </div>
+                </>
+              )}
+              {renderConnector(index)}
+            </div>
+          );
+        })}
       </div>
     );
-  };
+  }
+);
 
-  const renderConnector = (index: number) => {
-    if (!showConnector || index === steps.length - 1) return null;
-    const isCompleted = index < activeStep;
+Stepper.displayName = 'Stepper';
 
-    if (variant === 'progress') {
-      const progress = isCompleted ? 100 : index === activeStep ? 50 : 0;
-      return (
-        <div className={cn(
-          'bear-bg-zinc-700 bear-rounded-full bear-overflow-hidden',
-          isHorizontal ? 'bear-flex-1 bear-h-1 bear-mx-2' : 'bear-w-1 bear-h-8 bear-my-2 bear-ml-4'
-        )}>
-          <div
-            className="bear-bg-pink-500 bear-h-full bear-transition-all bear-duration-300"
-            style={{ [isHorizontal ? 'width' : 'height']: `${progress}%` }}
-          />
-        </div>
-      );
-    }
+/**
+ * StepperControls - Navigation buttons for stepper
+ */
+export const StepperControls = forwardRef<HTMLDivElement, StepperControlsProps>(
+  (
+    {
+      activeStep,
+      totalSteps,
+      onPrev,
+      onNext,
+      onComplete,
+      disablePrev = false,
+      disableNext = false,
+      prevLabel = 'Previous',
+      nextLabel = 'Next',
+      completeLabel = 'Complete',
+      showIndicator = true,
+    },
+    ref
+  ) => {
+    const isFirstStep = activeStep === 0;
+    const isLastStep = activeStep === totalSteps - 1;
 
     return (
-      <div className={cn(
-        'bear-transition-colors',
-        isHorizontal ? 'bear-flex-1 bear-h-0.5 bear-mx-2' : 'bear-w-0.5 bear-h-8 bear-my-2 bear-ml-4',
-        isCompleted ? 'bear-bg-pink-500' : 'bear-bg-zinc-700'
-      )} />
+      <div ref={ref} className="Bear-StepperControls flex items-center justify-between mt-6">
+        <Button
+          variant="outline"
+          onClick={onPrev}
+          disabled={isFirstStep || disablePrev}
+        >
+          {prevLabel}
+        </Button>
+
+        {showIndicator && (
+          <span className="text-sm text-gray-500 dark:text-gray-400">
+            Step {activeStep + 1} of {totalSteps}
+          </span>
+        )}
+
+        {isLastStep ? (
+          <Button variant="primary" onClick={onComplete}>
+            {completeLabel}
+          </Button>
+        ) : (
+          <Button variant="primary" onClick={onNext} disabled={disableNext}>
+            {nextLabel}
+          </Button>
+        )}
+      </div>
     );
-  };
+  }
+);
 
-  return (
-    <div className={cn(
-      'bear-flex',
-      isHorizontal ? 'bear-flex-row bear-items-start' : 'bear-flex-col',
-      className
-    )}>
-      {steps.map((step, index) => (
-        <div key={index} className={cn('bear-flex', isHorizontal ? 'bear-flex-1 bear-items-center' : '')}>
-          {renderStep(step, index)}
-          {renderConnector(index)}
-        </div>
-      ))}
-    </div>
-  );
-};
+StepperControls.displayName = 'StepperControls';
 
+export default Stepper;

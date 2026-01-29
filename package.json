@@ -1,6 +1,6 @@
 {
   "name": "@forgedevstack/bear",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Strong, reliable React UI components. Tailwind-powered, zero config required. The protective force of ForgeStack.",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -8,29 +8,29 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
-      "require": "./dist/index.cjs",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/index.cjs"
     },
     "./components": {
+      "types": "./dist/components/index.d.ts",
       "import": "./dist/components/index.js",
-      "require": "./dist/components/index.cjs",
-      "types": "./dist/components/index.d.ts"
+      "require": "./dist/components/index.cjs"
     },
     "./hooks": {
+      "types": "./dist/hooks/index.d.ts",
       "import": "./dist/hooks/index.js",
-      "require": "./dist/hooks/index.cjs",
-      "types": "./dist/hooks/index.d.ts"
+      "require": "./dist/hooks/index.cjs"
     },
     "./context": {
+      "types": "./dist/context/index.d.ts",
       "import": "./dist/context/index.js",
-      "require": "./dist/context/index.cjs",
-      "types": "./dist/context/index.d.ts"
+      "require": "./dist/context/index.cjs"
     },
     "./utils": {
+      "types": "./dist/utils/index.d.ts",
       "import": "./dist/utils/index.js",
-      "require": "./dist/utils/index.cjs",
-      "types": "./dist/utils/index.d.ts"
+      "require": "./dist/utils/index.cjs"
     },
     "./styles.css": "./dist/styles.css"
   },
@@ -46,12 +46,8 @@
     "kiln": "kiln dev",
     "portal": "cd portal && npm run dev",
     "portal:install": "cd portal && npm install",
-    "portal:build": "npm install --include=dev && npm run build && cd portal && npm install --include=dev && npm run build",
-    "prepublishOnly": "npm run build",
-    "release": "npm run build && npm publish --access public",
-    "release:patch": "npm version patch && npm run release",
-    "release:minor": "npm version minor && npm run release",
-    "release:major": "npm version major && npm run release"
+    "portal:build": "cd portal && npm run build",
+    "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
     "react": ">=18.0.0",
@@ -94,15 +90,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yaghobieh/bear.git",
+    "url": "https://github.com/yaghobieh/bear",
     "directory": "packages/ember"
   },
   "homepage": "https://bearui.com",
   "bugs": {
     "url": "https://github.com/yaghobieh/bear/issues"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }
 

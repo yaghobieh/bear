@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 import type { DividerProps } from './Divider.types';
 
 const VARIANT_STYLES = {

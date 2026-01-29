@@ -1,5 +1,5 @@
 import { FC, useState, useCallback, useMemo } from 'react';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 import { Button } from '../Button';
 import { Input } from '../Input';
 import { Checkbox } from '../Checkbox';

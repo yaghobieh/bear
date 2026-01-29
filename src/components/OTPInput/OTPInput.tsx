@@ -1,6 +1,6 @@
 import { FC, useRef, useState, useEffect, useCallback, KeyboardEvent, ClipboardEvent } from 'react';
 import { OTPInputProps } from './OTPInput.types';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 
 export const OTPInput: FC<OTPInputProps> = ({
   length = 6,

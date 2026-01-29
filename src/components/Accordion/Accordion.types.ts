@@ -17,6 +17,8 @@ export interface AccordionProps {
   className?: string;
   /** Test ID */
   testId?: string;
+  /** Unique ID */
+  id?: string;
 }
 
 export interface AccordionItemProps {

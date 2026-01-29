@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 import type { ColumnsProps, ColumnProps } from './Columns.types';
 
 const COLUMN_GAP_VALUES = {

@@ -1,6 +1,6 @@
 import { FC, useState, useRef, useEffect } from 'react';
 import { CollapsibleProps } from './Collapsible.types';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 
 export const Collapsible: FC<CollapsibleProps> = ({
   children,

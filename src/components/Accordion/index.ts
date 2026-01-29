@@ -1,3 +1,3 @@
-export { Accordion, AccordionItem } from './Accordion';
-export type { AccordionProps, AccordionItemProps, AccordionContextValue } from './Accordion.types';
-
+export { Accordion, AccordionItem, default } from './Accordion';
+export * from './Accordion.types';
+export * from './Accordion.const';

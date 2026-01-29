@@ -1,5 +1,5 @@
 import { FC, useState, useRef, useEffect } from 'react';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 import { ChevronDownIcon, CheckIcon } from '../Icon';
 import type { SelectProps } from './Select.types';
 

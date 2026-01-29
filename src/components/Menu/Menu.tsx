@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef, useState } from 'react';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 import type { MenuProps, MenuItemProps, MenuDividerProps } from './Menu.types';
 
 /**

@@ -1,6 +1,6 @@
 import { FC, useState, useRef, useEffect } from 'react';
 import { ColorPickerProps } from './ColorPicker.types';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 
 const DEFAULT_PRESETS = [
   '#ef4444', '#f97316', '#eab308', '#22c55e', '#14b8a6', '#06b6d4',

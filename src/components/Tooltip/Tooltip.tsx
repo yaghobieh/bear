@@ -1,6 +1,6 @@
 import { FC, useState, useRef, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 import type { TooltipProps } from './Tooltip.types';
 
 export const Tooltip: FC<TooltipProps> = ({
@@ -92,7 +92,7 @@ export const Tooltip: FC<TooltipProps> = ({
         onMouseLeave={handleMouseLeave}
         onFocus={handleMouseEnter}
         onBlur={handleMouseLeave}
-        className="bear-inline-block"
+        className="Bear-Tooltip__trigger bear-inline-block"
       >
         {children}
       </div>
@@ -109,6 +109,8 @@ export const Tooltip: FC<TooltipProps> = ({
               zIndex: 9999,
             }}
             className={cn(
+              'Bear-Tooltip',
+              `Bear-Tooltip--${position}`,
               'bear-px-3 bear-py-2 bear-rounded-lg',
               'bear-bg-gray-800 bear-text-white bear-text-sm',
               'bear-border bear-border-gray-700',
@@ -117,11 +119,10 @@ export const Tooltip: FC<TooltipProps> = ({
               className
             )}
           >
-            {content}
+            <span className="Bear-Tooltip__content">{content}</span>
           </div>,
           document.body
         )}
     </>
   );
 };
-

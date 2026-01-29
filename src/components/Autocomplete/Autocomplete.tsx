@@ -1,5 +1,5 @@
 import { FC, useState, useRef, useEffect, KeyboardEvent, ChangeEvent } from 'react';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 import type { AutocompleteOption, AutocompleteProps } from './Autocomplete.types';
 
 const defaultFilter = (options: AutocompleteOption[], inputValue: string) => {

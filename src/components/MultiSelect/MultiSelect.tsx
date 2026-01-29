@@ -1,5 +1,5 @@
 import { FC, useState, useRef, useEffect, KeyboardEvent } from 'react';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 import type { MultiSelectProps } from './MultiSelect.types';
 
 /**

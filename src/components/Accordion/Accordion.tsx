@@ -1,6 +1,13 @@
 import { FC, useState, createContext, useContext } from 'react';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 import type { AccordionContextValue, AccordionProps, AccordionItemProps } from './Accordion.types';
+import {
+  ACCORDION_ROOT_CLASSES,
+  ACCORDION_ITEM_CLASSES,
+  ACCORDION_TRIGGER_CLASSES,
+  ACCORDION_TRIGGER_DISABLED_CLASSES,
+  ACCORDION_CONTENT_CLASSES,
+} from './Accordion.const';
 
 const AccordionContext = createContext<AccordionContextValue | null>(null);
 
@@ -19,31 +26,35 @@ const AccordionContext = createContext<AccordionContextValue | null>(null);
  * </Accordion>
  * ```
  */
-export const Accordion: FC<AccordionProps> = ({
-  children,
-  allowMultiple = false,
-  defaultOpen = [],
-  className,
-  testId,
-}) => {
+export const Accordion: FC<AccordionProps> = (props) => {
+  const {
+    children,
+    allowMultiple = false,
+    defaultOpen = [],
+    className,
+    testId,
+    id,
+  } = props;
+
   const [openItems, setOpenItems] = useState<string[]>(defaultOpen);
   
-  const toggleItem = (id: string) => {
+  const toggleItem = (itemId: string) => {
     setOpenItems((prev) => {
-      if (prev.includes(id)) {
-        return prev.filter((item) => item !== id);
+      if (prev.includes(itemId)) {
+        return prev.filter((item) => item !== itemId);
       }
       if (allowMultiple) {
-        return [...prev, id];
+        return [...prev, itemId];
       }
-      return [id];
+      return [itemId];
     });
   };
   
   return (
     <AccordionContext.Provider value={{ openItems, toggleItem, allowMultiple }}>
       <div
-        className={cn('bear-divide-y bear-divide-gray-200 dark:bear-divide-gray-700 bear-border bear-border-gray-200 dark:bear-border-gray-700 bear-rounded-lg bear-overflow-hidden', className)}
+        id={id}
+        className={cn('Bear-Accordion', ACCORDION_ROOT_CLASSES, className)}
         data-testid={testId}
       >
         {children}
@@ -55,14 +66,16 @@ export const Accordion: FC<AccordionProps> = ({
 /**
  * AccordionItem - Individual accordion panel
  */
-export const AccordionItem: FC<AccordionItemProps> = ({
-  id,
-  title,
-  children,
-  disabled = false,
-  icon,
-  className,
-}) => {
+export const AccordionItem: FC<AccordionItemProps> = (props) => {
+  const {
+    id,
+    title,
+    children,
+    disabled = false,
+    icon,
+    className,
+  } = props;
+
   const context = useContext(AccordionContext);
   if (!context) {
     throw new Error('AccordionItem must be used within an Accordion');
@@ -72,39 +85,43 @@ export const AccordionItem: FC<AccordionItemProps> = ({
   const isOpen = openItems.includes(id);
   
   return (
-    <div className={cn('bear-bg-white dark:bear-bg-gray-900', className)}>
+    <div className={cn('Bear-Accordion__item', ACCORDION_ITEM_CLASSES, className)}>
       <button
         onClick={() => !disabled && toggleItem(id)}
         disabled={disabled}
         className={cn(
-          'bear-w-full bear-flex bear-items-center bear-justify-between bear-px-4 bear-py-3',
-          'bear-text-left bear-font-medium bear-text-gray-900 dark:bear-text-white',
-          'hover:bear-bg-gray-50 dark:hover:bear-bg-gray-800 bear-transition-colors',
-          disabled && 'bear-opacity-50 bear-cursor-not-allowed'
+          'Bear-Accordion__trigger',
+          ACCORDION_TRIGGER_CLASSES,
+          disabled && `Bear-Accordion__trigger--disabled ${ACCORDION_TRIGGER_DISABLED_CLASSES}`
         )}
+        aria-expanded={isOpen}
       >
-        <span>{title}</span>
-        {icon || (
-          <svg
-            className={cn(
-              'bear-w-5 bear-h-5 bear-text-gray-500 bear-transition-transform bear-duration-200',
-              isOpen && 'bear-rotate-180'
-            )}
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-          </svg>
-        )}
+        <span className="Bear-Accordion__title">{title}</span>
+        <span className="Bear-Accordion__icon">
+          {icon || (
+            <svg
+              className={cn(
+                'bear-w-5 bear-h-5 bear-text-gray-500 dark:bear-text-gray-400 bear-transition-transform bear-duration-200',
+                isOpen && 'bear-rotate-180'
+              )}
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          )}
+        </span>
       </button>
       <div
         className={cn(
+          'Bear-Accordion__content-wrapper',
           'bear-overflow-hidden bear-transition-all bear-duration-200',
-          isOpen ? 'bear-max-h-96' : 'bear-max-h-0'
+          isOpen ? 'Bear-Accordion__content-wrapper--open bear-max-h-96' : 'bear-max-h-0'
         )}
       >
-        <div className="bear-px-4 bear-py-3 bear-text-gray-600 dark:bear-text-gray-300 bear-bg-gray-50 dark:bear-bg-gray-800/50">
+        <div className={cn('Bear-Accordion__content', ACCORDION_CONTENT_CLASSES)}>
           {children}
         </div>
       </div>
@@ -112,3 +129,4 @@ export const AccordionItem: FC<AccordionItemProps> = ({
   );
 };
 
+export default Accordion;

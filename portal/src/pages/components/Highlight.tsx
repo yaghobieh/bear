@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
 import { KilnLink } from '@/components/KilnLink';
+import { LinesOfCode } from '@/components/LinesOfCode';
 import { Highlight, Typography } from '@forgedevstack/bear';
 
 const HighlightPage: FC = () => {
@@ -10,6 +11,7 @@ const HighlightPage: FC = () => {
       <div className="flex items-center gap-3 mb-4">
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Highlight</h1>
         <KilnLink path="/highlight" />
+        <LinesOfCode lines={30} />
       </div>
       <p className="text-gray-600 dark:text-gray-400 mb-8">
         Highlight text with a colored background to draw attention to specific content.

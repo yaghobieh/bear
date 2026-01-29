@@ -1,5 +1,5 @@
 import { FC, Children, cloneElement, isValidElement } from 'react';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 import type { ButtonGroupProps } from './ButtonGroup.types';
 
 /**

@@ -1,6 +1,6 @@
 import { FC, useState, useCallback } from 'react';
 import { CopyButtonProps } from './CopyButton.types';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 
 const CopyIcon: FC<{ className?: string }> = ({ className }) => (
   <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">

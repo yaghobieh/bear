@@ -20,7 +20,8 @@ export interface AlertProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'
   onClose?: () => void;
   /** Content of the alert */
   children?: ReactNode;
-  /** Test ID */
+  /** Unique identifier for testing */
   testId?: string;
+  /** HTML id attribute */
+  id?: string;
 }
-

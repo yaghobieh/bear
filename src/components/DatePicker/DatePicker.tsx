@@ -1,8 +1,8 @@
 import { FC, useState, useRef, useEffect, useCallback } from 'react';
 import { DatePickerProps } from './DatePicker.types';
 import { Calendar } from '../Calendar';
-import { cn } from '../../utils/cn';
-import { useBearStyles } from '../../hooks/useBearStyles';
+import { cn } from '@utils';
+import { useBearStyles } from '@hooks';
 import { formatDate } from './DatePicker.utils';
 
 export const DatePicker: FC<DatePickerProps> = ({

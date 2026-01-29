@@ -1,32 +1,19 @@
 import { forwardRef } from 'react';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 import type { EmberSize } from '../../types';
 import type { CardProps, CardHeaderProps, CardBodyProps, CardFooterProps } from './Card.types';
-
-const paddingClasses: Record<EmberSize | 'none', string> = {
-  none: '',
-  xs: 'bear-p-2',
-  sm: 'bear-p-3',
-  md: 'bear-p-4',
-  lg: 'bear-p-6',
-  xl: 'bear-p-8',
-};
-
-const radiusClasses: Record<string, string> = {
-  none: '',
-  sm: 'bear-rounded-sm',
-  md: 'bear-rounded-md',
-  lg: 'bear-rounded-lg',
-  xl: 'bear-rounded-xl',
-  '2xl': 'bear-rounded-2xl',
-};
-
-const variantClasses = {
-  elevated: 'bear-bg-white dark:bear-bg-gray-900 bear-shadow-md',
-  outlined: 'bear-bg-white dark:bear-bg-gray-900 bear-border bear-border-gray-200 dark:bear-border-gray-700',
-  filled: 'bear-bg-gray-100 dark:bear-bg-gray-800',
-  ghost: 'bear-bg-transparent',
-};
+import {
+  CARD_PADDING_CLASSES,
+  CARD_RADIUS_CLASSES,
+  CARD_VARIANT_CLASSES,
+  CARD_INTERACTIVE_CLASSES,
+  CARD_HEADER_CLASSES,
+  CARD_TITLE_CLASSES,
+  CARD_SUBTITLE_CLASSES,
+  CARD_BODY_CLASSES,
+  CARD_FOOTER_CLASSES,
+  CARD_FOOTER_DIVIDER_CLASSES,
+} from './Card.const';
 
 /**
  * Card component for containing content
@@ -41,8 +28,8 @@ const variantClasses = {
  * ```
  */
 export const Card = forwardRef<HTMLDivElement, CardProps>(
-  (
-    {
+  (props, ref) => {
+    const {
       variant = 'elevated',
       padding = 'none',
       interactive = false,
@@ -50,23 +37,26 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
       className,
       children,
       testId,
-      ...props
-    },
-    ref
-  ) => {
+      id,
+      ...rest
+    } = props;
+
     return (
       <div
         ref={ref}
+        id={id}
         className={cn(
+          'Bear-Card',
+          `Bear-Card--${variant}`,
           'bear-overflow-hidden',
-          variantClasses[variant],
-          paddingClasses[padding],
-          radiusClasses[radius],
-          interactive && 'bear-transition-all bear-duration-200 bear-cursor-pointer hover:bear-shadow-lg hover:bear-scale-[1.02]',
+          CARD_VARIANT_CLASSES[variant],
+          CARD_PADDING_CLASSES[padding as EmberSize | 'none'],
+          CARD_RADIUS_CLASSES[radius as keyof typeof CARD_RADIUS_CLASSES],
+          interactive && `Bear-Card--interactive ${CARD_INTERACTIVE_CLASSES}`,
           className
         )}
         data-testid={testId}
-        {...props}
+        {...rest}
       >
         {children}
       </div>
@@ -80,31 +70,30 @@ Card.displayName = 'Card';
  * Card Header
  */
 export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
-  ({ title, subtitle, action, className, children, ...props }, ref) => {
+  (props, ref) => {
+    const { title, subtitle, action, className, children, ...rest } = props;
+
     return (
       <div
         ref={ref}
-        className={cn(
-          'bear-flex bear-items-start bear-justify-between bear-p-4 bear-border-b bear-border-gray-200 dark:bear-border-gray-700',
-          className
-        )}
-        {...props}
+        className={cn('Bear-Card__header', CARD_HEADER_CLASSES, className)}
+        {...rest}
       >
-        <div className="bear-flex-1 bear-min-w-0">
+        <div className="Bear-Card__header-content bear-flex-1 bear-min-w-0">
           {title && (
-            <h3 className="bear-text-lg bear-font-semibold bear-text-gray-900 dark:bear-text-white bear-truncate">
+            <h3 className={cn('Bear-Card__title', CARD_TITLE_CLASSES)}>
               {title}
             </h3>
           )}
           {subtitle && (
-            <p className="bear-text-sm bear-text-gray-500 dark:bear-text-gray-400 bear-mt-1">
+            <p className={cn('Bear-Card__subtitle', CARD_SUBTITLE_CLASSES)}>
               {subtitle}
             </p>
           )}
           {children}
         </div>
         {action && (
-          <div className="bear-ml-4 bear-shrink-0">
+          <div className="Bear-Card__header-action bear-ml-4 bear-shrink-0">
             {action}
           </div>
         )}
@@ -119,12 +108,14 @@ CardHeader.displayName = 'CardHeader';
  * Card Body
  */
 export const CardBody = forwardRef<HTMLDivElement, CardBodyProps>(
-  ({ className, children, ...props }, ref) => {
+  (props, ref) => {
+    const { className, children, ...rest } = props;
+
     return (
       <div
         ref={ref}
-        className={cn('bear-p-4', className)}
-        {...props}
+        className={cn('Bear-Card__body', CARD_BODY_CLASSES, className)}
+        {...rest}
       >
         {children}
       </div>
@@ -138,16 +129,19 @@ CardBody.displayName = 'CardBody';
  * Card Footer
  */
 export const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
-  ({ divider = true, className, children, ...props }, ref) => {
+  (props, ref) => {
+    const { divider = true, className, children, ...rest } = props;
+
     return (
       <div
         ref={ref}
         className={cn(
-          'bear-p-4',
-          divider && 'bear-border-t bear-border-gray-200 dark:bear-border-gray-700',
+          'Bear-Card__footer',
+          CARD_FOOTER_CLASSES,
+          divider && CARD_FOOTER_DIVIDER_CLASSES,
           className
         )}
-        {...props}
+        {...rest}
       >
         {children}
       </div>
@@ -164,3 +158,4 @@ export const CardCompound = Object.assign(Card, {
   Footer: CardFooter,
 });
 
+export default Card;

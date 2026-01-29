@@ -1,25 +1,63 @@
-import { FC } from 'react';
-import { KILN_BASE_URL } from '@/constants/navigation.const';
+import { FC, useState } from 'react';
+
+const KILN_PORT = 6006;
 
 interface KilnLinkProps {
+  /** Component path in kiln (e.g., '/button', '/alert') */
   path: string;
 }
 
-export const KilnLink: FC<KilnLinkProps> = ({ path }) => (
-  <a
-    href={`${KILN_BASE_URL}${path}`}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="inline-flex items-center gap-1.5 text-sm text-pink-500 hover:text-pink-600 dark:text-pink-400 dark:hover:text-pink-300 transition-colors"
+/**
+ * Get the Kiln base URL dynamically based on current environment
+ */
+const getKilnBaseUrl = (): string => {
+  if (typeof window === 'undefined') {
+    return `http://localhost:${KILN_PORT}`;
+  }
+  const { protocol, hostname } = window.location;
+  return `${protocol}//${hostname}:${KILN_PORT}`;
+};
+
+const PlayIcon: FC<{ className?: string }> = ({ className }) => (
+  <svg 
+    width="16" 
+    height="16" 
+    viewBox="0 0 24 24" 
+    fill="currentColor" 
+    stroke="none" 
+    className={className}
+    aria-hidden="true"
   >
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
-      <polyline points="15 3 21 3 21 9" />
-      <line x1="10" y1="14" x2="21" y2="3" />
-    </svg>
-    See live story
-  </a>
+    <polygon points="5 3 19 12 5 21 5 3" />
+  </svg>
 );
 
-export default KilnLink;
+export const KilnLink: FC<KilnLinkProps> = (props) => {
+  const { path } = props;
+  const [hasPlayed, setHasPlayed] = useState(false);
 
+  const kilnUrl = `${getKilnBaseUrl()}${path}`;
+
+  const handleMouseEnter = () => {
+    if (!hasPlayed) {
+      setHasPlayed(true);
+    }
+  };
+
+  return (
+    <a
+      href={kilnUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      onMouseEnter={handleMouseEnter}
+      className="Bear-KilnLink inline-flex items-center justify-center w-8 h-8 rounded-full bg-pink-100 dark:bg-pink-900/30 text-pink-500 hover:bg-pink-200 dark:hover:bg-pink-900/50 hover:scale-110 transition-all"
+      title="Play live demo"
+    >
+      <PlayIcon 
+        className={hasPlayed ? '' : 'animate-pulse'} 
+      />
+    </a>
+  );
+};
+
+export default KilnLink;

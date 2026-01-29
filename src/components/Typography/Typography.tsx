@@ -1,5 +1,5 @@
 import { FC, ElementType } from 'react';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 import type { TypographyProps, TypographyVariant } from './Typography.types';
 
 const VARIANT_MAP: Record<TypographyVariant, ElementType> = {
@@ -105,18 +105,20 @@ export const Typography: FC<TypographyProps> = ({
   return (
     <Component
       className={cn(
+        'Bear-Typography',
+        `Bear-Typography--${variant}`,
         VARIANT_CLASSES[variant],
         weight && WEIGHT_CLASSES[weight],
         align && ALIGN_CLASSES[align],
         !isCustomColor && color && COLOR_CLASSES[color as keyof typeof COLOR_CLASSES],
         lineHeight && LINE_HEIGHT_CLASSES[lineHeight],
-        italic && 'bear-italic',
-        underline && 'bear-underline',
-        strikethrough && 'bear-line-through',
+        italic && 'Bear-Typography--italic bear-italic',
+        underline && 'Bear-Typography--underline bear-underline',
+        strikethrough && 'Bear-Typography--strikethrough bear-line-through',
         noWrap && 'bear-whitespace-nowrap',
         inline && 'bear-inline',
         paragraph && 'bear-mb-4',
-        truncate && !maxLines && 'bear-truncate',
+        truncate && !maxLines && 'Bear-Typography--truncate bear-truncate',
         truncate && maxLines && 'bear-overflow-hidden',
         className
       )}
@@ -138,4 +140,3 @@ export const Typography: FC<TypographyProps> = ({
 };
 
 export default Typography;
-

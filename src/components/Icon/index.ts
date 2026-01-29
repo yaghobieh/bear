@@ -37,6 +37,14 @@ export const PlusIcon = MiscIcons.PlusIcon;
 export const MinusIcon = MiscIcons.MinusIcon;
 export const XIcon = MiscIcons.XIcon;
 export const BearPawIcon = MiscIcons.BearPawIcon;
+export const HomeIcon = NavigationIcons.HomeIcon;
+export const InfoIcon = StatusIcons.InfoIcon;
+export const UserIcon = MiscIcons.UserIcon;
+export const UsersIcon = MiscIcons.UsersIcon;
+export const UserPlusIcon = MiscIcons.UserPlusIcon;
+export const UserMinusIcon = MiscIcons.UserMinusIcon;
+export const UserCheckIcon = MiscIcons.UserCheckIcon;
+export const UserXIcon = MiscIcons.UserXIcon;
 
 /**
  * BearIcons - All icons organized by category

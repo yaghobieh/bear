@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { ScrollAreaProps } from './ScrollArea.types';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 
 export const ScrollArea: FC<ScrollAreaProps> = ({
   children,

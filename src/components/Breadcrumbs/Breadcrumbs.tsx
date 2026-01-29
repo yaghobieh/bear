@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 import { BreadcrumbsProps, BreadcrumbItem } from './Breadcrumbs.types';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
+import { BREADCRUMBS_SIZE, BREADCRUMBS_ICON_SIZE, BREADCRUMBS_DEFAULTS } from './Breadcrumbs.const';
 
 const HomeIcon: FC<{ className?: string }> = ({ className }) => (
   <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -14,34 +15,36 @@ const ChevronIcon: FC<{ className?: string }> = ({ className }) => (
   </svg>
 );
 
-export const Breadcrumbs: FC<BreadcrumbsProps> = ({
-  items,
-  separator,
-  maxItems,
-  itemsBeforeCollapse = 1,
-  itemsAfterCollapse = 1,
-  className,
-  size = 'md',
-  showHomeIcon = false,
-}) => {
+export const Breadcrumbs: FC<BreadcrumbsProps> = (props) => {
+  const {
+    items,
+    separator,
+    maxItems,
+    itemsBeforeCollapse = BREADCRUMBS_DEFAULTS.ITEMS_BEFORE_COLLAPSE,
+    itemsAfterCollapse = BREADCRUMBS_DEFAULTS.ITEMS_AFTER_COLLAPSE,
+    className,
+    size = BREADCRUMBS_DEFAULTS.SIZE,
+    showHomeIcon = BREADCRUMBS_DEFAULTS.SHOW_HOME_ICON,
+    testId,
+    id,
+    'aria-label': ariaLabel = 'Breadcrumb',
+  } = props;
+
   const [expanded, setExpanded] = useState(false);
 
-  const sizeClasses = { sm: 'bear-text-xs', md: 'bear-text-sm', lg: 'bear-text-base' };
-  const iconSizes = { sm: 'bear-w-3 bear-h-3', md: 'bear-w-4 bear-h-4', lg: 'bear-w-5 bear-h-5' };
-
-  const renderSeparator = () => separator || <ChevronIcon className={cn(iconSizes[size], 'bear-text-zinc-500 bear-mx-2')} />;
+  const renderSeparator = () => separator || <ChevronIcon className={cn(BREADCRUMBS_ICON_SIZE[size], 'bear-text-zinc-500 bear-mx-2')} />;
 
   const renderItem = (item: BreadcrumbItem, index: number, isLast: boolean) => {
     const content = (
       <span className="bear-flex bear-items-center bear-gap-1">
-        {index === 0 && showHomeIcon && <HomeIcon className={iconSizes[size]} />}
+        {index === 0 && showHomeIcon && <HomeIcon className={BREADCRUMBS_ICON_SIZE[size]} />}
         {item.icon}
         {item.label}
       </span>
     );
 
     if (isLast) {
-      return <span className="bear-text-zinc-300 bear-font-medium">{content}</span>;
+      return <span className="bear-text-zinc-300 bear-font-medium" aria-current="page">{content}</span>;
     }
 
     if (item.href) {
@@ -54,7 +57,7 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({
 
     if (item.onClick) {
       return (
-        <button onClick={item.onClick} className="bear-text-zinc-400 hover:bear-text-pink-400 bear-transition-colors">
+        <button type="button" onClick={item.onClick} className="bear-text-zinc-400 hover:bear-text-pink-400 bear-transition-colors">
           {content}
         </button>
       );
@@ -73,23 +76,31 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({
   }
 
   return (
-    <nav className={cn('bear-flex bear-items-center bear-flex-wrap', sizeClasses[size], className)} aria-label="Breadcrumb">
-      {displayItems.map((item, index) => (
-        <span key={index} className="bear-flex bear-items-center">
-          {index > 0 && renderSeparator()}
-          {item === 'ellipsis' ? (
-            <button
-              onClick={() => setExpanded(true)}
-              className="bear-text-zinc-400 hover:bear-text-pink-400 bear-transition-colors bear-px-1"
-            >
-              ...
-            </button>
-          ) : (
-            renderItem(item, index, index === displayItems.length - 1)
-          )}
-        </span>
-      ))}
+    <nav
+      id={id}
+      data-testid={testId}
+      className={cn('bear-flex bear-items-center bear-flex-wrap', BREADCRUMBS_SIZE[size], className)}
+      aria-label={ariaLabel}
+    >
+      <ol className="bear-flex bear-items-center bear-flex-wrap bear-list-none bear-p-0 bear-m-0">
+        {displayItems.map((item, index) => (
+          <li key={index} className="bear-flex bear-items-center">
+            {index > 0 && <span aria-hidden="true">{renderSeparator()}</span>}
+            {item === 'ellipsis' ? (
+              <button
+                type="button"
+                onClick={() => setExpanded(true)}
+                className="bear-text-zinc-400 hover:bear-text-pink-400 bear-transition-colors bear-px-1"
+                aria-label="Show more breadcrumbs"
+              >
+                ...
+              </button>
+            ) : (
+              renderItem(item, index, index === displayItems.length - 1)
+            )}
+          </li>
+        ))}
+      </ol>
     </nav>
   );
 };
-

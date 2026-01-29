@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils';
 import type { ResponsiveProp } from '../../types';
 import type { GridCols, GridGap, GridFlow, GridProps, GridItemProps } from './Grid.types';
 

@@ -2,6 +2,7 @@ import { FC, useState } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
 import { KilnLink } from '@/components/KilnLink';
+import { LinesOfCode } from '@/components/LinesOfCode';
 import { Calendar } from '@forgedevstack/bear';
 
 const CalendarPage: FC = () => {
@@ -13,6 +14,7 @@ const CalendarPage: FC = () => {
       <div className="flex items-center gap-3 mb-4">
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Calendar</h1>
         <KilnLink path="/calendar" />
+        <LinesOfCode lines={180} />
       </div>
       <p className="text-gray-600 dark:text-gray-400 mb-8">
         Standalone calendar with customizable slots. Use with DatePicker or alone for date display and selection.

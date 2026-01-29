@@ -1,5 +1,7 @@
 import { ReactNode } from 'react';
 
+export type BreadcrumbSize = 'sm' | 'md' | 'lg';
+
 export interface BreadcrumbItem {
   label: string;
   href?: string;
@@ -14,7 +16,12 @@ export interface BreadcrumbsProps {
   itemsBeforeCollapse?: number;
   itemsAfterCollapse?: number;
   className?: string;
-  size?: 'sm' | 'md' | 'lg';
+  size?: BreadcrumbSize;
   showHomeIcon?: boolean;
+  /** Unique identifier for testing */
+  testId?: string;
+  /** HTML id attribute */
+  id?: string;
+  /** Accessible label for screen readers */
+  'aria-label'?: string;
 }
-

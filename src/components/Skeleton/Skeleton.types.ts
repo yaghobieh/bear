@@ -4,21 +4,32 @@ export type SkeletonVariant = 'text' | 'circular' | 'rectangular' | 'rounded';
 export type SkeletonAnimation = 'pulse' | 'wave' | 'none';
 
 export interface SkeletonProps extends HTMLAttributes<HTMLDivElement> {
-  /** The variant of the skeleton */
+  /** Variant type */
   variant?: SkeletonVariant;
   /** Animation type */
   animation?: SkeletonAnimation;
-  /** Width of the skeleton */
+  /** Width (number = px, string = any CSS unit) */
   width?: number | string;
-  /** Height of the skeleton */
+  /** Height (number = px, string = any CSS unit) */
   height?: number | string;
-  /** Number of skeleton lines to render (for text variant) */
+  /** Border radius for rounded variant */
+  borderRadius?: number | string;
+  /** Number of skeleton lines to show */
   count?: number;
-  /** Gap between skeleton lines */
+  /** Gap between lines when count > 1 */
   gap?: number | string;
-  /** Additional CSS class */
-  className?: string;
-  /** Test ID for testing */
+  /** Test ID */
   testId?: string;
 }
 
+export interface SkeletonTextProps extends Omit<SkeletonProps, 'variant'> {
+  /** Number of lines */
+  lines?: number;
+  /** Make last line shorter */
+  lastLineWidth?: number | string;
+}
+
+export interface SkeletonAvatarProps extends Omit<SkeletonProps, 'variant' | 'width' | 'height'> {
+  /** Size of avatar */
+  size?: 'sm' | 'md' | 'lg' | number;
+}

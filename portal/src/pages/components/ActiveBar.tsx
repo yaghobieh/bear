@@ -3,7 +3,7 @@ import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
 import { KilnLink } from '@/components/KilnLink';
 import { LinesOfCode } from '@/components/LinesOfCode';
-import { ActiveBar } from '@forgedevstack/bear';
+import { ActiveBar, type ActiveBarItem } from '@forgedevstack/bear';
 
 const ActiveBarPage: FC = () => {
   const [active1, setActive1] = useState('tab1');

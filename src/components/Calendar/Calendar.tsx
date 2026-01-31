@@ -3,7 +3,7 @@ import type { CalendarProps, CalendarDayProps, CalendarNavActions, HeaderLabelRF
 import { cn } from '@utils';
 import { useBearStyles } from '@hooks';
 import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon } from '../Icon';
-import { DEFAULT_WEEKDAYS, MONTHS, NUMBER, WEEKEND_LABELS } from './Calendar.const';
+import { CALENDAR_DROPDOWN_Z_INDEX, DEFAULT_WEEKDAYS, MONTHS, NUMBER, WEEKEND_LABELS } from './Calendar.const';
 import { buildCalendarGrid, isSameDay, isWeekendDay, reorderWeekdays } from './Calendar.utils';
 import { DefaultHeaderLabel } from './Calendar.helpers';
 
@@ -89,8 +89,9 @@ export const Calendar: FC<CalendarProps> = (props) => {
   const hasSelection = value != null;
 
   const rootClassName = inline
-    ? 'block w-full bg-white dark:bg-gray-900 rounded-xl shadow-none border border-zinc-200 dark:border-zinc-700 p-4 text-zinc-900 dark:text-zinc-100'
-    : 'absolute z-50 mt-2 bg-white dark:bg-gray-900 rounded-xl shadow-xl border border-zinc-200 dark:border-zinc-700 p-4 w-80 text-zinc-900 dark:text-zinc-100';
+    ? 'Bear-Calendar Bear-Calendar--inline bear-block bear-w-full bear-bg-white dark:bear-bg-zinc-900 bear-rounded-xl bear-shadow-none bear-border bear-border-zinc-200 dark:bear-border-zinc-700 bear-p-4 bear-text-zinc-900 dark:bear-text-zinc-100'
+    : `Bear-Calendar Bear-Calendar--dropdown bear-mt-2 bear-bg-white dark:bear-bg-zinc-900 bear-rounded-xl bear-shadow-xl bear-border bear-border-zinc-200 dark:bear-border-zinc-700 bear-p-4 bear-w-80 bear-text-zinc-900 dark:bear-text-zinc-100`;
+  const dropdownStyle = !inline ? { zIndex: CALENDAR_DROPDOWN_Z_INDEX } : undefined;
 
   const renderHeader = () => {
     if (slots.header) {
@@ -106,15 +107,15 @@ export const Calendar: FC<CalendarProps> = (props) => {
     const renderLabel: HeaderLabelRFC = slots.headerLabel || DefaultHeaderLabel;
 
     return (
-      <div className="flex items-center justify-between gap-1 mb-4">
-        <div className="flex items-center gap-0.5">
+      <div className="Bear-Calendar__header bear-flex bear-items-center bear-justify-between bear-gap-1 bear-mb-4">
+        <div className="Bear-Calendar__nav-left bear-flex bear-items-center bear-gap-0.5">
           {NavPrevY ? (
             NavPrevY({ onClick: handlePrevYear })
           ) : (
             <button
               type="button"
               onClick={handlePrevYear}
-              className="p-1.5 rounded text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+              className="Bear-Calendar__nav-btn bear-p-1.5 bear-rounded bear-text-zinc-500 dark:bear-text-zinc-400 hover:bear-bg-zinc-100 dark:hover:bear-bg-zinc-800 bear-transition-colors"
               aria-label="Previous year"
             >
               <ChevronsLeftIcon size={16} />
@@ -126,7 +127,7 @@ export const Calendar: FC<CalendarProps> = (props) => {
             <button
               type="button"
               onClick={handlePrev}
-              className="p-1.5 rounded text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+              className="Bear-Calendar__nav-btn bear-p-1.5 bear-rounded bear-text-zinc-500 dark:bear-text-zinc-400 hover:bear-bg-zinc-100 dark:hover:bear-bg-zinc-800 bear-transition-colors"
               aria-label="Previous month"
             >
               <ChevronLeftIcon size={16} />
@@ -136,14 +137,14 @@ export const Calendar: FC<CalendarProps> = (props) => {
 
         {renderLabel({ month: monthLabel, year })}
 
-        <div className="flex items-center gap-0.5">
+        <div className="Bear-Calendar__nav-right bear-flex bear-items-center bear-gap-0.5">
           {NavNext ? (
             NavNext({ onClick: handleNext })
           ) : (
             <button
               type="button"
               onClick={handleNext}
-              className="p-1.5 rounded text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+              className="Bear-Calendar__nav-btn bear-p-1.5 bear-rounded bear-text-zinc-500 dark:bear-text-zinc-400 hover:bear-bg-zinc-100 dark:hover:bear-bg-zinc-800 bear-transition-colors"
               aria-label="Next month"
             >
               <ChevronRightIcon size={16} />
@@ -155,7 +156,7 @@ export const Calendar: FC<CalendarProps> = (props) => {
             <button
               type="button"
               onClick={handleNextYear}
-              className="p-1.5 rounded text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+              className="Bear-Calendar__nav-btn bear-p-1.5 bear-rounded bear-text-zinc-500 dark:bear-text-zinc-400 hover:bear-bg-zinc-100 dark:hover:bear-bg-zinc-800 bear-transition-colors"
               aria-label="Next year"
             >
               <ChevronsRightIcon size={16} />
@@ -170,7 +171,7 @@ export const Calendar: FC<CalendarProps> = (props) => {
     if (slots.weekdays) return slots.weekdays({ days: weekdays });
     const Weekday = slots.weekday;
     return (
-      <div className="grid grid-cols-7 gap-1 mb-2">
+      <div className="Bear-Calendar__weekdays bear-grid bear-grid-cols-7 bear-gap-1 bear-mb-2">
         {weekdays.map((label) =>
           Weekday ? (
             <div key={label}>{Weekday({ label })}</div>
@@ -178,8 +179,8 @@ export const Calendar: FC<CalendarProps> = (props) => {
             <div
               key={label}
               className={cn(
-                'text-center text-xs font-medium uppercase',
-                WEEKEND_LABELS.includes(label as typeof WEEKEND_LABELS[number]) && 'text-red-500'
+                'Bear-Calendar__weekday bear-text-center bear-text-xs bear-font-medium bear-uppercase bear-text-zinc-500 dark:bear-text-zinc-400',
+                WEEKEND_LABELS.includes(label as typeof WEEKEND_LABELS[number]) && 'bear-text-red-500'
               )}
             >
               {label}
@@ -225,18 +226,18 @@ export const Calendar: FC<CalendarProps> = (props) => {
         onClick={handleClick}
         disabled={disabled}
         className={cn(
-          'w-8 h-8 rounded-full text-sm font-medium transition-colors flex items-center justify-center',
-          selected && 'bg-pink-500 text-white hover:bg-pink-600',
-          !selected && isToday && 'ring-2 ring-pink-500/50 bg-transparent',
+          'Bear-Calendar__day bear-w-8 bear-h-8 bear-rounded-full bear-text-sm bear-font-medium bear-transition-colors bear-flex bear-items-center bear-justify-center',
+          selected && 'Bear-Calendar__day--selected bear-bg-pink-500 bear-text-white hover:bear-bg-pink-600',
+          !selected && isToday && 'Bear-Calendar__day--today bear-ring-2 bear-ring-pink-500/50 bear-bg-transparent',
           !selected &&
             !isToday &&
             (isCurrentMonth
               ? isWeekend
-                ? 'text-red-500 dark:text-red-400 hover:bg-zinc-100 dark:hover:bg-zinc-800'
-                : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800'
-              : 'text-zinc-400 dark:text-zinc-600 hover:bg-zinc-50 dark:hover:bg-zinc-800/50'),
-          highlighted && !selected && 'bg-pink-500/15',
-          disabled && 'opacity-40 cursor-not-allowed'
+                ? 'Bear-Calendar__day--weekend bear-text-red-500 dark:bear-text-red-400 hover:bear-bg-zinc-100 dark:hover:bear-bg-zinc-800'
+                : 'bear-text-zinc-700 dark:bear-text-zinc-300 hover:bear-bg-zinc-100 dark:hover:bear-bg-zinc-800'
+              : 'Bear-Calendar__day--other bear-text-zinc-500 dark:bear-text-zinc-600 hover:bear-bg-zinc-50 dark:hover:bear-bg-zinc-800/50'),
+          highlighted && !selected && 'Bear-Calendar__day--highlighted bear-bg-pink-500/15',
+          disabled && 'Bear-Calendar__day--disabled bear-opacity-40 bear-cursor-not-allowed'
         )}
       >
         {day}
@@ -246,8 +247,8 @@ export const Calendar: FC<CalendarProps> = (props) => {
 
   const renderDays = () => {
     const cells = grid.map((cell, i) => renderDay(cell, i));
-    if (slots.daysGrid) return slots.daysGrid({ children: cells, className: 'grid grid-cols-7 gap-1' });
-    return <div className="grid grid-cols-7 gap-1">{cells}</div>;
+    if (slots.daysGrid) return slots.daysGrid({ children: cells, className: 'Bear-Calendar__grid bear-grid bear-grid-cols-7 bear-gap-1' });
+    return <div className="Bear-Calendar__grid bear-grid bear-grid-cols-7 bear-gap-1">{cells}</div>;
   };
 
   const renderFooter = () => {
@@ -260,14 +261,14 @@ export const Calendar: FC<CalendarProps> = (props) => {
       const Today = slots.todayButton;
       return slots.footer({
         children: (
-          <div className="flex justify-between gap-2 mt-4 pt-3 border-t border-zinc-200 dark:border-zinc-700">
+          <div className="Bear-Calendar__footer bear-flex bear-justify-between bear-gap-2 bear-mt-4 bear-pt-3 bear-border-t bear-border-zinc-200 dark:bear-border-zinc-700">
             {showClear && Clear ? Clear({ onClick: onClear!, hasSelection }) : showClear ? (
-              <button type="button" onClick={onClear} className="text-sm text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200">
+              <button type="button" onClick={onClear} className="Bear-Calendar__clear-btn bear-text-sm bear-text-zinc-500 dark:bear-text-zinc-400 hover:bear-text-zinc-700 dark:hover:bear-text-zinc-200 bear-transition-colors">
                 Clear
               </button>
             ) : <span />}
             {showToday && Today ? Today({ onClick: onToday }) : showToday ? (
-              <button type="button" onClick={onToday} className="text-sm text-pink-600 hover:text-pink-700 font-medium">
+              <button type="button" onClick={onToday} className="Bear-Calendar__today-btn bear-text-sm bear-text-pink-600 dark:bear-text-pink-400 hover:bear-text-pink-700 dark:hover:bear-text-pink-300 bear-font-medium">
                 Today
               </button>
             ) : null}
@@ -278,7 +279,7 @@ export const Calendar: FC<CalendarProps> = (props) => {
 
     if (slots.clearButton && slots.todayButton) {
       return (
-        <div className="flex justify-between gap-2 mt-4 pt-3 border-t border-zinc-200 dark:border-zinc-700">
+        <div className="Bear-Calendar__footer bear-flex bear-justify-between bear-gap-2 bear-mt-4 bear-pt-3 bear-border-t bear-border-zinc-200 dark:bear-border-zinc-700">
           {showClear && slots.clearButton({ onClick: onClear!, hasSelection })}
           {showToday && slots.todayButton({ onClick: onToday! })}
         </div>
@@ -286,16 +287,16 @@ export const Calendar: FC<CalendarProps> = (props) => {
     }
 
     return (
-      <div className="flex justify-between gap-2 mt-4 pt-3 border-t border-zinc-200 dark:border-zinc-700">
+      <div className="Bear-Calendar__footer bear-flex bear-justify-between bear-gap-2 bear-mt-4 bear-pt-3 bear-border-t bear-border-zinc-200 dark:bear-border-zinc-700">
         {showClear ? (
-          <button type="button" onClick={onClear} className="text-sm text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 transition-colors">
+          <button type="button" onClick={onClear} className="Bear-Calendar__clear-btn bear-text-sm bear-text-zinc-500 dark:bear-text-zinc-400 hover:bear-text-zinc-700 dark:hover:bear-text-zinc-200 bear-transition-colors">
             Clear
           </button>
         ) : (
           <span />
         )}
         {showToday ? (
-          <button type="button" onClick={onToday} className="text-sm text-pink-600 dark:text-pink-400 hover:text-pink-700 dark:hover:text-pink-300 font-medium transition-colors">
+          <button type="button" onClick={onToday} className="Bear-Calendar__today-btn bear-text-sm bear-text-pink-400 hover:bear-text-pink-300 bear-font-medium bear-transition-colors">
             Today
           </button>
         ) : null}
@@ -313,7 +314,8 @@ export const Calendar: FC<CalendarProps> = (props) => {
   );
 
   const rootCn = cn(rootClassName, className);
-  const rootStyle = Object.keys(mergedStyle).length ? mergedStyle : undefined;
+  const baseStyle = Object.keys(mergedStyle).length ? mergedStyle : undefined;
+  const rootStyle = dropdownStyle ? { ...baseStyle, ...dropdownStyle } : baseStyle;
   const root = slots.root ? slots.root({ children: content, className: rootCn }) : <div className={rootCn} style={rootStyle}>{content}</div>;
   return root;
 };

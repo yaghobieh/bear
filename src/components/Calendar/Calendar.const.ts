@@ -40,3 +40,6 @@ export const WEEKEND = {
 // Weekday labels for weekend detection (case variations)
 export const WEEKEND_LABELS = ['SUN', 'SAT', 'Sun', 'Sat'] as const;
 
+// Z-index for dropdown (above modals, drawers, etc.)
+export const CALENDAR_DROPDOWN_Z_INDEX = 9999;
+

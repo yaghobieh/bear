@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
+import { DatePicker } from '@forgedevstack/bear';
 
 const DatePickerPage: FC = () => {
   const [date, setDate] = useState<Date | null>(null);
@@ -9,7 +10,7 @@ const DatePickerPage: FC = () => {
     <div className="fade-in">
       <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">DatePicker</h1>
       <p className="text-gray-600 dark:text-gray-400 mb-8">
-        Allow users to select dates with an intuitive calendar interface.
+        Select dates with our Calendar component. Opens centered above other content.
       </p>
 
       <section className="mb-12">
@@ -23,46 +24,64 @@ const DatePickerPage: FC = () => {
 
       <ComponentPreview
         title="Basic"
-        description="Simple date picker with single date selection."
+        description="Opens our Calendar on click."
         code={`<DatePicker value={date} onChange={setDate} />`}
+        allowOverflow
       >
         <div className="w-full max-w-xs">
-          <input
-            type="date"
-            value={date?.toISOString().split('T')[0] || ''}
-            onChange={(e) => setDate(e.target.value ? new Date(e.target.value) : null)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bear-500 focus:border-bear-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white"
-          />
+          <DatePicker value={date} onChange={setDate} />
         </div>
       </ComponentPreview>
 
       <ComponentPreview
         title="Variants"
-        description="Different visual styles for the date picker."
-        code={`<DatePicker variant="outlined" />
+        description="Different visual styles."
+        code={`<DatePicker variant="default" />
 <DatePicker variant="filled" />
-<DatePicker variant="standard" />`}
+<DatePicker variant="outline" />`}
+        allowOverflow
       >
         <div className="flex flex-col gap-4 w-full max-w-xs">
-          <input type="date" className="w-full px-4 py-2 border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:text-white" placeholder="Outlined" />
-          <input type="date" className="w-full px-4 py-2 bg-gray-100 rounded-lg dark:bg-gray-700 dark:text-white" placeholder="Filled" />
-          <input type="date" className="w-full px-4 py-2 border-b-2 border-gray-300 dark:border-gray-600 dark:bg-transparent dark:text-white" placeholder="Standard" />
+          <DatePicker variant="default" />
+          <DatePicker variant="filled" />
+          <DatePicker variant="outline" />
         </div>
       </ComponentPreview>
 
       <ComponentPreview
         title="With Min/Max Dates"
+        allowOverflow
         description="Restrict date selection to a specific range."
-        code={`<DatePicker minDate={new Date()} maxDate={new Date('2025-12-31')} />`}
+        code={`<DatePicker
+  value={date}
+  onChange={setDate}
+  minDate={new Date()}
+  maxDate={new Date(new Date().getFullYear(), 11, 31)}
+/>`}
       >
         <div className="w-full max-w-xs">
-          <input
-            type="date"
-            min={new Date().toISOString().split('T')[0]}
-            max="2025-12-31"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bear-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white"
+          <DatePicker
+            value={date}
+            onChange={setDate}
+            minDate={new Date()}
+            maxDate={new Date(new Date().getFullYear(), 11, 31)}
           />
-          <p className="mt-2 text-sm text-gray-500">Only future dates until end of 2025</p>
+          <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">Only future dates until end of year</p>
+        </div>
+      </ComponentPreview>
+
+      <ComponentPreview
+        title="Custom Icon"
+        allowOverflow
+        description="Replace the calendar icon with a custom one."
+        code={`<DatePicker value={date} onChange={setDate} icon={<CustomIcon />} />`}
+      >
+        <div className="w-full max-w-xs">
+          <DatePicker
+            value={date}
+            onChange={setDate}
+            icon={<span className="text-pink-500">📅</span>}
+          />
         </div>
       </ComponentPreview>
 
@@ -84,8 +103,8 @@ const DatePickerPage: FC = () => {
               <tr><td className="px-4 py-3 font-mono text-bear-600">variant</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>outlined | filled | standard</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">outlined</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Visual style</td></tr>
               <tr><td className="px-4 py-3 font-mono text-bear-600">minDate</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>Date</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Minimum selectable date</td></tr>
               <tr><td className="px-4 py-3 font-mono text-bear-600">maxDate</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>Date</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Maximum selectable date</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">icon</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Custom icon to replace default calendar</td></tr>
               <tr><td className="px-4 py-3 font-mono text-bear-600">disabled</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Disable the picker</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">mode</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>single | range</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">single</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Selection mode</td></tr>
             </tbody>
           </table>
         </div>

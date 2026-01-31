@@ -4,14 +4,11 @@ import { ComponentPreview } from '@/components/ComponentPreview';
 import { KilnLink } from '@/components/KilnLink';
 import { LinesOfCode } from '@/components/LinesOfCode';
 import { SignPad, Card } from '@forgedevstack/bear';
-import { log } from 'console';
 
 const SignPadPage: FC = () => {
   const [basicSignature, setBasicSignature] = useState<string | null>(null);
   const [styledSignature, setStyledSignature] = useState<string | null>(null);
   const [formSignature, setFormSignature] = useState<string | null>(null);
-
-  console.log('BASIC SIGNATURE', basicSignature)
 
   return (
     <div className="fade-in">

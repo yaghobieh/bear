@@ -103,8 +103,8 @@ const Introduction: FC = () => {
     <div className="fade-in">
       <div className="text-center mb-16">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-pink-500/10 to-rose-500/10 border border-pink-500/20 text-pink-600 dark:text-pink-400 text-sm font-medium mb-6">
-          <span>🎉</span>
-          <span>v1.0.4 - Charts & Effects!</span>
+          <span>🚀</span>
+          <span>v1.0.6 — Form, PhoneInput, CreditInput, Cascader, NotificationCenter & CommandPalette</span>
         </div>
         
         <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
@@ -264,6 +264,18 @@ const Introduction: FC = () => {
             preview={
               <div className="w-28 h-7 bg-white dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 px-2 flex items-center">
                 <span className="text-[8px] text-gray-400">Type here...</span>
+              </div>
+            }
+          />
+          <ComponentExample
+            title="Form"
+            description="Form with validation"
+            path="/components/form"
+            preview={
+              <div className="space-y-2 w-full px-2">
+                <div className="w-full h-5 bg-gray-100 dark:bg-gray-700 rounded" />
+                <div className="w-full h-5 bg-gray-100 dark:bg-gray-700 rounded" />
+                <div className="w-12 h-5 bg-pink-500 rounded" />
               </div>
             }
           />

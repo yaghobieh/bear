@@ -31,5 +31,6 @@ export interface DatePickerProps {
   firstDayOfWeek?: number;
   size?: 'sm' | 'md' | 'lg';
   variant?: 'default' | 'filled' | 'outline';
-  leftIcon?: ReactNode;
+  /** Custom icon to replace the default calendar icon (ReactNode). */
+  icon?: ReactNode;
 }

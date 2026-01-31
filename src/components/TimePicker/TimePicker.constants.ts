@@ -1,6 +1,31 @@
 export const TIMEPICKER_HOURS_12H = 12;
 export const TIMEPICKER_HOURS_24H = 24;
 export const TIMEPICKER_MINUTES_DIVISOR = 60;
+export const TIMEPICKER_DEFAULT_BREAKPOINT = 768;
+
+/** Format constants */
+export const TIMEPICKER_FORMAT_12H = '12h';
+export const TIMEPICKER_FORMAT_24H = '24h';
+
+/** Dropdown variant constants */
+export const TIMEPICKER_VARIANT_AUTO = 'auto';
+export const TIMEPICKER_VARIANT_DIAL = 'dial';
+export const TIMEPICKER_VARIANT_COLUMNS = 'columns';
+
+/** Clock face constants */
+export const CLOCK_RADIUS = 80;
+export const CLOCK_CENTER = 100;
+export const CLOCK_HOURS_12 = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] as const;
+
+/** Default translation strings */
+export const TIMEPICKER_DEFAULT_TRANSLATIONS = {
+  selectTime: 'SELECT TIME',
+  hour: 'Hour',
+  minute: 'Minute',
+  period: 'Period',
+  cancel: 'CANCEL',
+  ok: 'OK',
+} as const;
 
 export const sizeClasses: Record<'sm' | 'md' | 'lg', string> = {
   sm: 'bear-py-1.5 bear-px-3 bear-text-sm',
@@ -21,7 +46,7 @@ export const TIMEPICKER_LABEL_CLASSES = 'Bear-TimePicker__label bear-block bear-
 
 export const TIMEPICKER_BUTTON_CLASSES = 'Bear-TimePicker__trigger bear-w-full bear-flex bear-items-center bear-justify-between bear-rounded-lg bear-border bear-text-left bear-transition-colors';
 
-export const TIMEPICKER_DROPDOWN_CLASSES = 'Bear-TimePicker__dropdown bear-absolute bear-z-50 bear-mt-1 bear-bg-white dark:bear-bg-zinc-800 bear-border bear-border-gray-200 dark:bear-border-zinc-700 bear-rounded-lg bear-shadow-xl bear-p-3 bear-w-64';
+export const TIMEPICKER_DROPDOWN_CLASSES = 'Bear-TimePicker__dropdown bear-absolute bear-z-[9999] bear-mt-1 bear-bg-white dark:bear-bg-zinc-800 bear-border bear-border-gray-200 dark:bear-border-zinc-700 bear-rounded-lg bear-shadow-xl bear-p-3 bear-w-64';
 
 export const TIMEPICKER_COLUMN_HEADER_CLASSES = 'Bear-TimePicker__column-header bear-text-xs bear-text-gray-500 dark:bear-text-zinc-500 bear-mb-1 bear-text-center';
 

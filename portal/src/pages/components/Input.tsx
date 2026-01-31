@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
+import { Input, BearIcons } from '@forgedevstack/bear';
 
 const InputPage: FC = () => {
   const [value, setValue] = useState('');
@@ -9,7 +10,7 @@ const InputPage: FC = () => {
     <div className="fade-in">
       <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Input</h1>
       <p className="text-gray-600 dark:text-gray-400 mb-8">
-        Text input field with various styles and validation states.
+        Text input field with changeable icons (leftAddon/rightAddon), validation states, and variants.
       </p>
 
       <section className="mb-12">
@@ -23,12 +24,10 @@ const InputPage: FC = () => {
         code={`<Input placeholder="Enter your name..." />`}
       >
         <div className="max-w-xs mx-auto">
-          <input
-            type="text"
+          <Input
             value={value}
             onChange={(e) => setValue(e.target.value)}
             placeholder="Enter your name..."
-            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-bear-500 focus:border-transparent transition-all"
           />
         </div>
       </ComponentPreview>
@@ -117,29 +116,20 @@ const InputPage: FC = () => {
       </ComponentPreview>
 
       <ComponentPreview
-        title="With Icons"
-        description="Input with start or end icons."
-        code={`<Input startIcon={<SearchIcon />} placeholder="Search..." />
-<Input endIcon={<ClearIcon />} placeholder="With clear button" />`}
+        title="With Icons (Changeable)"
+        description="Use leftAddon and rightAddon for custom icons. Icons are fully changeable."
+        code={`<Input leftAddon={<BearIcons.SearchIcon size={18} />} placeholder="Search..." />
+<Input rightAddon={<BearIcons.CalendarIcon size={18} />} placeholder="With calendar" />`}
       >
         <div className="flex flex-col gap-4 max-w-xs mx-auto">
-          <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">🔍</span>
-            <input
-              type="text"
-              placeholder="Search..."
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-            />
-          </div>
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="With clear button"
-              defaultValue="Some text"
-              className="w-full pl-4 pr-10 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-            />
-            <button className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">✕</button>
-          </div>
+          <Input
+            leftAddon={<BearIcons.SearchIcon size={18} />}
+            placeholder="Search..."
+          />
+          <Input
+            rightAddon={<BearIcons.CalendarIcon size={18} />}
+            placeholder="With calendar icon"
+          />
         </div>
       </ComponentPreview>
 
@@ -187,8 +177,8 @@ const InputPage: FC = () => {
               <tr><td className="px-4 py-3 font-mono text-bear-600">label</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Input label</td></tr>
               <tr><td className="px-4 py-3 font-mono text-bear-600">error</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Error state</td></tr>
               <tr><td className="px-4 py-3 font-mono text-bear-600">errorMessage</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Error message text</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">startIcon</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Icon at start</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">endIcon</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Icon at end</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">leftAddon</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Left icon/addon (changeable)</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">rightAddon</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Right icon/addon (changeable)</td></tr>
             </tbody>
           </table>
         </div>

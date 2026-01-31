@@ -8,6 +8,8 @@ interface ComponentPreviewProps {
   children: ReactNode;
   language?: string;
   defaultShowCode?: boolean;
+  /** When true, allows overflow (e.g. for dropdowns that need to extend outside). Default false. */
+  allowOverflow?: boolean;
 }
 
 // Icons
@@ -56,6 +58,7 @@ export const ComponentPreview: FC<ComponentPreviewProps> = ({
   children,
   language = 'tsx',
   defaultShowCode = false,
+  allowOverflow = false,
 }) => {
   const [showCode, setShowCode] = useState(defaultShowCode);
   const [expanded, setExpanded] = useState(false);
@@ -68,7 +71,7 @@ export const ComponentPreview: FC<ComponentPreviewProps> = ({
   }, [code]);
 
   return (
-    <div className="mb-8 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+    <div className={allowOverflow ? 'mb-8 rounded-xl border border-gray-200 dark:border-gray-700' : 'mb-8 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden'}>
       <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{title}</h3>
         {description && (

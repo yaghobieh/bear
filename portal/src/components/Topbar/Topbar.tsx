@@ -2,7 +2,7 @@ import { FC, useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useBear } from '@forgedevstack/bear';
 import { useSearch } from '@/hooks/useSearch';
-import { GITHUB_URL, NPM_URL, BEAR_VERSION, ADMIN_URL } from '@/constants/navigation.const';
+import { GITHUB_URL, NPM_URL, BEAR_VERSION } from '@/constants/navigation.const';
 import { TopbarProps } from './Topbar.types';
 import { BearIcons } from '@forgedevstack/bear';
 import { BearIcon, NpmIcon } from './Topbar.icons';
@@ -168,14 +168,12 @@ export const Topbar: FC<TopbarProps> = ({ onMenuClick, banner, onBannerVisibilit
               >
                 Icons
               </Link>
-              <a
-                href={ADMIN_URL}
-                target={ADMIN_URL.startsWith('http') ? '_blank' : undefined}
-                rel={ADMIN_URL.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="px-3 py-1.5 text-sm text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400 rounded-md transition-colors"
+              <span
+                className="px-3 py-1.5 text-sm text-gray-400 dark:text-gray-500 cursor-not-allowed select-none"
+                aria-disabled
               >
-                Admin
-              </a>
+                Templates
+              </span>
             </nav>
 
             <div className="hidden md:block w-px h-5 bg-gray-200 dark:bg-gray-700 mr-3" />

@@ -45,7 +45,6 @@ export const ToolbarColorPicker: FC<ToolbarColorPickerProps> = (props) => {
 
   return (
     <div ref={pickerRef} className="Bear-RichEditor__color-picker relative flex items-center">
-      {/* Main color button */}
       <button
         type="button"
         title={title}
@@ -66,7 +65,6 @@ export const ToolbarColorPicker: FC<ToolbarColorPickerProps> = (props) => {
         />
       </button>
 
-      {/* Apply last color button */}
       {lastColor && onApplyLast && (
         <button
           type="button"
@@ -84,13 +82,11 @@ export const ToolbarColorPicker: FC<ToolbarColorPickerProps> = (props) => {
         </button>
       )}
 
-      {/* Color popup */}
       {isOpen && (
         <div 
           className="Bear-RichEditor__color-menu absolute bottom-full left-0 mb-1 p-3 bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-lg shadow-xl min-w-[200px]"
           style={{ zIndex: 9999 }}
         >
-          {/* Recent colors */}
           {recentColors.length > 0 && (
             <div className="mb-3">
               <p className="text-xs text-gray-500 dark:text-gray-400 mb-1.5">Recent</p>
@@ -112,7 +108,6 @@ export const ToolbarColorPicker: FC<ToolbarColorPickerProps> = (props) => {
             </div>
           )}
 
-          {/* Color palette */}
           <div className="grid grid-cols-8 gap-1">
             {RICH_EDITOR_COLORS.map((color) => (
               <button
@@ -130,7 +125,6 @@ export const ToolbarColorPicker: FC<ToolbarColorPickerProps> = (props) => {
             ))}
           </div>
 
-          {/* Remove color */}
           <button
             type="button"
             onClick={() => handleSelect('')}

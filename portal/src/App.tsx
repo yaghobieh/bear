@@ -7,7 +7,7 @@ import { Sidebar } from './components/Sidebar';
 // Banner configuration — survey link points to main repo
 const BANNER_CONFIG = {
   id: 'bear-roadmap-2026',
-  message: '🚀 Influence Bear UI\'s 2026 roadmap! Take our latest Developer Survey',
+  message: '✨ Shape the future of Bear UI — Your voice shapes our 2026 roadmap. Share your vision with us.',
   link: 'https://github.com/yaghobieh/bear',
   linkText: 'Take the survey →',
 };
@@ -66,8 +66,13 @@ const PaginationPage = lazy(() => import('./pages/components/Pagination'));
 // Date & Time Components
 const CalendarPage = lazy(() => import('./pages/components/Calendar'));
 const DatePickerPage = lazy(() => import('./pages/components/DatePicker'));
-const DateTimePickerPage = lazy(() => import('./pages/components/DateTimePicker'));
 const TimePickerPage = lazy(() => import('./pages/components/TimePicker'));
+const PhoneInputPage = lazy(() => import('./pages/components/PhoneInput'));
+const CreditInputPage = lazy(() => import('./pages/components/CreditInput'));
+const CascaderPage = lazy(() => import('./pages/components/Cascader'));
+const FormPage = lazy(() => import('./pages/components/Form'));
+const NotificationCenterPage = lazy(() => import('./pages/components/NotificationCenter'));
+const CommandPalettePage = lazy(() => import('./pages/components/CommandPalette'));
 
 // Navigation Components (Additional)
 const BreadcrumbsPage = lazy(() => import('./pages/components/Breadcrumbs'));
@@ -138,6 +143,8 @@ const UseIntersectionObserverPage = lazy(() => import('./pages/hooks/UseIntersec
 // Utilities
 const IconsPage = lazy(() => import('./pages/Icons'));
 const HooksPage = lazy(() => import('./pages/Hooks'));
+const RoadmapPage = lazy(() => import('./pages/Roadmap'));
+const TemplatesPage = lazy(() => import('./pages/Templates'));
 
 // Fallback for lazy loading
 const PageLoader = () => (
@@ -258,8 +265,13 @@ function App() {
                 
                 <Route path="/components/calendar" element={<CalendarPage />} />
                 <Route path="/components/date-picker" element={<DatePickerPage />} />
-                <Route path="/components/date-time-picker" element={<DateTimePickerPage />} />
                 <Route path="/components/time-picker" element={<TimePickerPage />} />
+                <Route path="/components/phone-input" element={<PhoneInputPage />} />
+                <Route path="/components/credit-input" element={<CreditInputPage />} />
+                <Route path="/components/cascader" element={<CascaderPage />} />
+                <Route path="/components/form" element={<FormPage />} />
+                <Route path="/components/notification-center" element={<NotificationCenterPage />} />
+                <Route path="/components/command-palette" element={<CommandPalettePage />} />
                 
                 <Route path="/components/popover" element={<PopoverPage />} />
                 <Route path="/components/chip" element={<ChipPage />} />
@@ -315,6 +327,8 @@ function App() {
                 
                 <Route path="/icons" element={<IconsPage />} />
                 <Route path="/hooks" element={<HooksPage />} />
+                <Route path="/roadmap" element={<RoadmapPage />} />
+                <Route path="/templates" element={<TemplatesPage />} />
                 
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>

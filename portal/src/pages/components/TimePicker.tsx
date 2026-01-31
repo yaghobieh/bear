@@ -1,15 +1,17 @@
 import { FC, useState } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
+import { TimePicker } from '@forgedevstack/bear';
 
 const TimePickerPage: FC = () => {
-  const [time, setTime] = useState('12:00');
+  const [time, setTime] = useState<string | null>('12:00 PM');
+  const [time24, setTime24] = useState<string | null>('14:30');
 
   return (
     <div className="fade-in">
       <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">TimePicker</h1>
       <p className="text-gray-600 dark:text-gray-400 mb-8">
-        Allow users to select time values with an intuitive interface.
+        Select time with columns (scrollable hours/minutes/AM-PM) or dial (clock face). Use dropdownVariant and dropdownVariantBreakpoint for responsive layout.
       </p>
 
       <section className="mb-12">
@@ -22,47 +24,89 @@ const TimePickerPage: FC = () => {
       </section>
 
       <ComponentPreview
-        title="Basic"
-        description="Simple time picker."
+        title="Basic (Columns)"
+        description="Scrollable columns for hours, minutes, AM/PM."
         code={`<TimePicker value={time} onChange={setTime} />`}
+        allowOverflow
       >
         <div className="w-full max-w-xs">
-          <input
-            type="time"
-            value={time}
-            onChange={(e) => setTime(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bear-500 focus:border-bear-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white"
-          />
+          <TimePicker value={time ?? undefined} onChange={setTime} format="12h" />
         </div>
       </ComponentPreview>
 
       <ComponentPreview
-        title="12-Hour Format"
-        description="Time picker with AM/PM selection."
-        code={`<TimePicker use12HourFormat />`}
+        title="Dial Variant"
+        description="Clock face for hour selection."
+        code={`<TimePicker value={time} onChange={setTime} dropdownVariant="dial" />`}
+        allowOverflow
       >
-        <div className="flex gap-2 items-center">
-          <input
-            type="time"
-            className="px-4 py-2 border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:text-white"
-          />
-          <select className="px-3 py-2 border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:text-white">
-            <option>AM</option>
-            <option>PM</option>
-          </select>
+        <div className="w-full max-w-xs">
+          <TimePicker value={time ?? undefined} onChange={setTime} format="12h" dropdownVariant="dial" />
         </div>
       </ComponentPreview>
 
       <ComponentPreview
-        title="With Seconds"
-        description="Include seconds in time selection."
-        code={`<TimePicker showSeconds />`}
+        title="Auto (Responsive)"
+        description="Dial on wide screens, columns on narrow. Use dropdownVariantBreakpoint to change breakpoint."
+        code={`<TimePicker value={time} onChange={setTime} dropdownVariant="auto" dropdownVariantBreakpoint={768} />`}
+        allowOverflow
       >
         <div className="w-full max-w-xs">
-          <input
-            type="time"
-            step="1"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bear-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white"
+          <TimePicker value={time ?? undefined} onChange={setTime} format="12h" dropdownVariant="auto" dropdownVariantBreakpoint={768} />
+        </div>
+      </ComponentPreview>
+
+      <ComponentPreview
+        title="24-Hour Format"
+        description="24h format (columns only; dial is 12h)."
+        code={`<TimePicker value={time24} onChange={setTime24} format="24h" />`}
+        allowOverflow
+      >
+        <div className="w-full max-w-xs">
+          <TimePicker value={time24 ?? undefined} onChange={setTime24} format="24h" />
+        </div>
+      </ComponentPreview>
+
+      <ComponentPreview
+        title="Custom Icon"
+        description="Replace the clock icon with a custom one."
+        code={`<TimePicker value={time} onChange={setTime} icon={<CustomIcon />} />`}
+        allowOverflow
+      >
+        <div className="w-full max-w-xs">
+          <TimePicker value={time ?? undefined} onChange={setTime} icon={<span className="text-pink-500">🕐</span>} />
+        </div>
+      </ComponentPreview>
+
+      <ComponentPreview
+        title="Translations"
+        description="Replace SELECT TIME, CANCEL, OK, Hour, Minute, Period via translations prop."
+        code={`<TimePicker
+  value={time}
+  onChange={setTime}
+  translations={{
+    selectTime: 'CHOOSE TIME',
+    hour: 'Hrs',
+    minute: 'Min',
+    period: 'AM/PM',
+    cancel: 'Cancel',
+    ok: 'Confirm',
+  }}
+/>`}
+        allowOverflow
+      >
+        <div className="w-full max-w-xs">
+          <TimePicker
+            value={time ?? undefined}
+            onChange={setTime}
+            translations={{
+              selectTime: 'CHOOSE TIME',
+              hour: 'Hrs',
+              minute: 'Min',
+              period: 'AM/PM',
+              cancel: 'Cancel',
+              ok: 'Confirm',
+            }}
           />
         </div>
       </ComponentPreview>
@@ -80,11 +124,13 @@ const TimePickerPage: FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-              <tr><td className="px-4 py-3 font-mono text-bear-600">value</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Selected time (HH:mm format)</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">onChange</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>(time: string) =&gt; void</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Callback when time changes</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">variant</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>outlined | filled | standard</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">outlined</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Visual style</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">showSeconds</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Show seconds selector</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">use12HourFormat</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Use 12-hour format with AM/PM</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">value</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Selected time (e.g. &quot;02:30 PM&quot;)</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">onChange</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>(time: string | null) =&gt; void</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Callback when time changes</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">dropdownVariant</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>&apos;columns&apos; | &apos;dial&apos; | &apos;auto&apos;</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">columns</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Columns, dial, or auto (responsive)</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">dropdownVariantBreakpoint</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>number</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">768</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Breakpoint (px) for auto variant</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">format</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>&apos;12h&apos; | &apos;24h&apos;</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">12h</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Time format</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">icon</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Custom icon to replace default clock</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">translations</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>TimePickerTranslations</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">selectTime, hour, minute, period, cancel, ok</td></tr>
               <tr><td className="px-4 py-3 font-mono text-bear-600">disabled</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Disable the picker</td></tr>
             </tbody>
           </table>

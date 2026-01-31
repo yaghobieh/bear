@@ -20,15 +20,15 @@ export default defineStories({
     },
     {
       name: '12-Hour Format',
-      component: () => <TimePicker use12HourFormat />,
-      code: `<TimePicker use12HourFormat />`,
+      component: () => <TimePicker format="12h" />,
+      code: `<TimePicker format="12h" />`,
       description: 'AM/PM format',
     },
     {
-      name: 'With Seconds',
-      component: () => <TimePicker showSeconds />,
-      code: `<TimePicker showSeconds />`,
-      description: 'Include seconds',
+      name: 'Dial Variant',
+      component: () => <TimePicker dropdownVariant="dial" />,
+      code: `<TimePicker dropdownVariant="dial" />`,
+      description: 'Clock face dropdown',
     },
     {
       name: 'Disabled',

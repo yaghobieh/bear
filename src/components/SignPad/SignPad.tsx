@@ -189,7 +189,7 @@ export const SignPad: FC<SignPadProps> = (props) => {
       id={id}
       data-testid={testId}
       className={cn(
-        'Bear-SignPad',
+        'Bear-SignPad bear-max-w-full bear-w-full',
         SIGN_PAD_ROOT_CLASSES,
         disabled && 'Bear-SignPad--disabled bear-opacity-50',
         readOnly && 'Bear-SignPad--readonly',
@@ -199,7 +199,7 @@ export const SignPad: FC<SignPadProps> = (props) => {
     >
       <div
         className={cn(
-          'Bear-SignPad__canvas-wrapper',
+          'Bear-SignPad__canvas-wrapper bear-max-w-full bear-overflow-hidden',
           SIGN_PAD_CANVAS_WRAPPER_CLASSES,
           !disabled && !readOnly && SIGN_PAD_CANVAS_WRAPPER_HOVER,
           disabled && 'bear-cursor-not-allowed',
@@ -208,7 +208,7 @@ export const SignPad: FC<SignPadProps> = (props) => {
       >
         <canvas
           ref={canvasRef}
-          className="Bear-SignPad__canvas bear-block bear-rounded-lg"
+          className="Bear-SignPad__canvas bear-block bear-rounded-lg bear-max-w-full"
           style={{ width, height }}
           onMouseDown={startDrawing}
           onMouseMove={draw}

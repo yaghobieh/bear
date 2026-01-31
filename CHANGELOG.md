@@ -2,6 +2,26 @@
 
 All notable changes to Bear UI will be documented in this file.
 
+## [1.0.6] - 2026-01-29
+
+### Changed
+
+- **DateTimePicker**: Removed. Use DatePicker + TimePicker instead.
+- **DatePicker**: Calendar now renders in portal with high z-index (9999) above all elements; click-outside includes calendar area.
+- **TimePicker**: New dropdown variants – `dropdownVariant: 'columns' | 'dial' | 'auto'`; `dropdownVariantBreakpoint` for responsive layout (dial on wide screens, columns on narrow). Columns = scrollable hours/minutes/AM-PM; dial = clock face. CANCEL/OK buttons.
+- **Drawer**: Open/close slide animation (300ms); backdrop fades in/out.
+- **SignPad**: Responsive – max-w-full, overflow-hidden on canvas wrapper.
+- **Calendar**: Added `CALENDAR_DROPDOWN_Z_INDEX` constant (9999) for dropdown layering.
+
+### Portal
+
+- **Topbar**: Removed Admin link; added Templates (Coming soon, disabled).
+- **Roadmap**: New page with phases, status, and diagram.
+- **Templates**: New page (Coming soon, disabled).
+- **Navigation**: Removed DateTimePicker from nav; added Roadmap and Templates.
+
+---
+
 ## [1.0.5] - 2026-01-29
 
 ### Changed

@@ -8,7 +8,7 @@ import './styles/globals.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <BearProvider defaultMode="dark">
+    <BearProvider defaultMode="light">
       <BrowserRouter>
         <App />
       </BrowserRouter>

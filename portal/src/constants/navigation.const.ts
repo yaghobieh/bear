@@ -16,7 +16,7 @@ export interface NavGroup {
   items: NavItem[];
 }
 
-export const BEAR_VERSION = '1.0.5';
+export const BEAR_VERSION = '1.0.6';
 export const KILN_BASE_URL = 'http://localhost:6006';
 
 /** Main Bear UI repository */
@@ -34,6 +34,7 @@ export const NAVIGATION: NavGroup[] = [
       { path: '/installation', label: 'Installation' },
       { path: '/theming', label: 'Theming' },
       { path: '/typescript', label: 'TypeScript' },
+      { path: '/roadmap', label: 'Roadmap', badge: 'New' },
     ],
   },
   {
@@ -67,8 +68,11 @@ export const NAVIGATION: NavGroup[] = [
       { path: '/components/slider', label: 'Slider', kilnPath: '/slider' },
       { path: '/components/rating', label: 'Rating', kilnPath: '/rating' },
       { path: '/components/date-picker', label: 'DatePicker', badge: 'New', kilnPath: '/date-picker' },
-      { path: '/components/date-time-picker', label: 'DateTimePicker', kilnPath: '/date-time-picker' },
       { path: '/components/time-picker', label: 'TimePicker', kilnPath: '/time-picker' },
+      { path: '/components/phone-input', label: 'PhoneInput', badge: 'New', kilnPath: '/phone-input' },
+      { path: '/components/credit-input', label: 'CreditInput', badge: 'New', kilnPath: '/credit-input' },
+      { path: '/components/cascader', label: 'Cascader', badge: 'New', kilnPath: '/cascader' },
+      { path: '/components/form', label: 'Form', badge: 'New', kilnPath: '/form' },
       { path: '/components/color-picker', label: 'ColorPicker', kilnPath: '/color-picker' },
       { path: '/components/file-upload', label: 'FileUpload', kilnPath: '/file-upload' },
       { path: '/components/autocomplete', label: 'Autocomplete', kilnPath: '/autocomplete' },
@@ -118,6 +122,8 @@ export const NAVIGATION: NavGroup[] = [
       { path: '/components/modal', label: 'Modal', kilnPath: '/modal' },
       { path: '/components/drawer', label: 'Drawer', kilnPath: '/drawer' },
       { path: '/components/collapsible', label: 'Collapsible', kilnPath: '/collapsible' },
+      { path: '/components/notification-center', label: 'NotificationCenter', badge: 'New', kilnPath: '/notification-center' },
+      { path: '/components/command-palette', label: 'CommandPalette', badge: 'New', kilnPath: '/command-palette' },
     ],
   },
   {
@@ -173,6 +179,7 @@ export const NAVIGATION: NavGroup[] = [
     items: [
       { path: '/icons', label: 'Icons', badge: '300+' },
       { path: '/hooks', label: 'All Hooks' },
+      { path: '/templates', label: 'Templates', badge: 'Soon' },
       { path: '/components/kbd', label: 'Kbd', kilnPath: '/kbd' },
       { path: '/components/copy-button', label: 'CopyButton', kilnPath: '/copy-button' },
     ],
@@ -180,6 +187,7 @@ export const NAVIGATION: NavGroup[] = [
 ];
 
 export const VERSIONS = [
+  { value: '1.0.6', label: 'v1.0.6 (current)' },
   { value: '1.0.5', label: 'v1.0.5' },
   { value: '1.0.4', label: 'v1.0.4' },
   { value: '1.0.3', label: 'v1.0.3' },

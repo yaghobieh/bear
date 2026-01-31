@@ -151,7 +151,6 @@ export const SpeedDial = forwardRef<HTMLDivElement, SpeedDialProps>(
         onMouseLeave={openOnHover ? () => setIsOpen(false) : undefined}
         {...props}
       >
-        {/* Actions */}
         {isOpen && (
           <div className={cn(SPEED_DIAL_ACTIONS_CONTAINER, getActionsPosition())}>
             {actions.map((action, index) => (
@@ -188,7 +187,6 @@ export const SpeedDial = forwardRef<HTMLDivElement, SpeedDialProps>(
           </div>
         )}
 
-        {/* Main Button */}
         <button
           ref={ref as React.Ref<HTMLButtonElement>}
           type="button"

@@ -1,0 +1,73 @@
+---
+description: Bear UI component standards — types, constants, structure, BEM, translations, helpers
+alwaysApply: true
+---
+
+# Bear UI Component Standards
+
+## 1. Types and interfaces in .types.ts
+
+- All **types** and **interfaces** must live in `*.types.ts` files.
+- Sub-component props (e.g. `TimePickerColumnsProps`, `TimePickerDialProps`) belong in the **parent** component's `.types.ts`.
+- Example: `TimePicker/TimePicker.types.ts` exports `TimePickerProps`, `TimePickerColumnsProps`, `TimePickerDialProps`.
+
+## 2. Constants in .const.ts or .constants.ts
+
+- No magic numbers or string literals. Put them in const files.
+- **Format strings**: `TIMEPICKER_FORMAT_12H = '12h'`, `TIMEPICKER_FORMAT_24H = '24h'`.
+- **Numbers**: `CLOCK_RADIUS = 80`, `CLOCK_CENTER = 100`, `CLOCK_HOURS_12 = [12, 1, 2, ...]`.
+- **Default translations**: `DEFAULT_TRANSLATIONS = { selectTime: 'SELECT TIME', cancel: 'CANCEL', ok: 'OK', hour: 'Hour', minute: 'Minute', period: 'Period' }`.
+
+## 3. Component structure
+
+- **Main component** only at top level: `TimePicker/TimePicker.tsx`, `index.ts`.
+- **Sub-components** under `components/`:
+  - `TimePicker/components/TimePickerColumnsDropdown/TimePickerColumnsDropdown.tsx`
+  - `TimePicker/components/TimePickerColumnsDropdown/index.ts`
+  - `TimePicker/components/TimePickerDialDropdown/TimePickerDialDropdown.tsx`
+  - `TimePicker/components/TimePickerDialDropdown/index.ts`
+- Types for sub-components stay in the **main** `.types.ts` file.
+
+## 4. Helpers and SVG
+
+- Reusable SVGs (e.g. clock face) go in `helpers/` folder:
+  - `TimePicker/helpers/ClockFaceSvg.tsx`
+- Pure functions go in `*.utils.ts` or `utils/` if shared.
+
+## 5. BEM class naming
+
+- All components use **Bear-{ComponentName}** prefix.
+- BEM pattern: `Bear-TimePicker` (block), `Bear-TimePicker__title` (element), `Bear-TimePicker__item--active` (modifier).
+- Example (from Sidebar): `Bear-Sidebar`, `Bear-Sidebar__group`, `Bear-Sidebar__group-header`, `Bear-Sidebar__item`.
+- No generic classes for structure; use Bear- prefixed BEM.
+
+## 6. Translations via props
+
+- User-facing strings must be **replaceable via props**.
+- Add `translations?: Partial<Record<string, string>>` or specific props: `selectTimeLabel`, `cancelLabel`, `okLabel`, `hourLabel`, `minuteLabel`, `periodLabel`.
+- Provide **defaults** in constants; merge with props in component.
+- Example: `selectTimeLabel={translations?.selectTime ?? DEFAULT_TRANSLATIONS.selectTime}`.
+
+## 7. File layout per component
+
+```
+ComponentName/
+  ComponentName.tsx       # Main component
+  ComponentName.types.ts  # All types/interfaces
+  ComponentName.const.ts  # Constants, numbers, defaults
+  ComponentName.utils.ts  # Pure helpers (if needed)
+  index.ts                # Re-exports
+  components/             # Sub-components (optional)
+    SubComponent/
+      SubComponent.tsx
+      index.ts
+  helpers/                # Shared SVGs, helpers (optional)
+    SomeHelper.tsx
+```
+
+## 8. Applying to all components
+
+- **TimePicker** is the reference implementation for these standards.
+- When creating **new** components: follow this layout from the start.
+- When **refactoring** existing components: migrate incrementally—types first, then constants, then sub-components, then helpers.
+- Components to prioritize for migration: DatePicker, Calendar, Select, Modal, Drawer, Input, Button (those with sub-parts or many constants).

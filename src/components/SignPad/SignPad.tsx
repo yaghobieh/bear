@@ -98,6 +98,19 @@ export const SignPad: FC<SignPadProps> = (props) => {
     ctx.fillRect(0, 0, width, height);
   }, [width, height, backgroundColor, isDarkMode]);
 
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas || disabled || readOnly) return;
+
+    const preventTouch = (e: TouchEvent) => e.preventDefault();
+    canvas.addEventListener('touchstart', preventTouch, { passive: false });
+    canvas.addEventListener('touchmove', preventTouch, { passive: false });
+    return () => {
+      canvas.removeEventListener('touchstart', preventTouch);
+      canvas.removeEventListener('touchmove', preventTouch);
+    };
+  }, [disabled, readOnly]);
+
   const getPointFromEvent = useCallback((e: React.MouseEvent | React.TouchEvent): { x: number; y: number } => {
     const canvas = canvasRef.current;
     if (!canvas) return { x: 0, y: 0 };
@@ -122,7 +135,6 @@ export const SignPad: FC<SignPadProps> = (props) => {
 
   const startDrawing = useCallback((e: React.MouseEvent | React.TouchEvent) => {
     if (disabled || readOnly) return;
-
     const point = getPointFromEvent(e);
     setIsDrawing(true);
     setLastPoint(point);
@@ -130,7 +142,6 @@ export const SignPad: FC<SignPadProps> = (props) => {
 
   const draw = useCallback((e: React.MouseEvent | React.TouchEvent) => {
     if (!isDrawing || disabled || readOnly) return;
-
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d');
     if (!canvas || !ctx || !lastPoint) return;
@@ -200,6 +211,7 @@ export const SignPad: FC<SignPadProps> = (props) => {
       <div
         className={cn(
           'Bear-SignPad__canvas-wrapper bear-max-w-full bear-overflow-hidden',
+          'touch-none',
           SIGN_PAD_CANVAS_WRAPPER_CLASSES,
           !disabled && !readOnly && SIGN_PAD_CANVAS_WRAPPER_HOVER,
           disabled && 'bear-cursor-not-allowed',
@@ -208,8 +220,8 @@ export const SignPad: FC<SignPadProps> = (props) => {
       >
         <canvas
           ref={canvasRef}
-          className="Bear-SignPad__canvas bear-block bear-rounded-lg bear-max-w-full"
-          style={{ width, height }}
+          className="Bear-SignPad__canvas bear-block bear-rounded-lg bear-max-w-full touch-none"
+          style={{ width, height, touchAction: 'none' }}
           onMouseDown={startDrawing}
           onMouseMove={draw}
           onMouseUp={stopDrawing}

@@ -378,3 +378,35 @@ export type {
   CommandGroup,
   CommandPaletteTranslations,
 } from './CommandPalette';
+
+// SegmentedControl
+export { SegmentedControl } from './SegmentedControl';
+export type { SegmentedControlProps, SegmentedControlItem } from './SegmentedControl';
+
+// TagsInput
+export { TagsInput } from './TagsInput';
+export type { TagsInputProps } from './TagsInput';
+
+// BottomSheet
+export { BottomSheet } from './BottomSheet';
+export type { BottomSheetProps } from './BottomSheet';
+
+// SliderRange
+export { SliderRange } from './SliderRange';
+export type { SliderRangeProps, SliderRangeValue } from './SliderRange';
+
+// MentionsInput
+export { MentionsInput } from './MentionsInput';
+export type { MentionsInputProps, MentionOption } from './MentionsInput';
+
+// Kanban
+export { Kanban } from './Kanban';
+export type { KanbanProps, KanbanColumn, KanbanCard } from './Kanban';
+
+// EmojiPicker
+export { EmojiPicker, BEAR_EMOJIS } from './EmojiPicker';
+export type { EmojiPickerProps } from './EmojiPicker';
+
+// VirtualList
+export { VirtualList } from './VirtualList';
+export type { VirtualListProps } from './VirtualList';

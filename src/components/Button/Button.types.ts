@@ -11,6 +11,10 @@ export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement
   loading?: boolean;
   /** Whether button takes full width */
   fullWidth?: boolean;
+  /** Icon (shorthand for leftIcon or rightIcon based on iconPosition) */
+  icon?: ReactNode;
+  /** Position of icon when using icon prop (default: left) */
+  iconPosition?: 'left' | 'right';
   /** Icon to show before text */
   leftIcon?: ReactNode;
   /** Icon to show after text */

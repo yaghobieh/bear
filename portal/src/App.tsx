@@ -139,6 +139,18 @@ const UseThrottlePage = lazy(() => import('./pages/hooks/UseThrottle'));
 const UseLocalStoragePage = lazy(() => import('./pages/hooks/UseLocalStorage'));
 const UseKeyPressPage = lazy(() => import('./pages/hooks/UseKeyPress'));
 const UseIntersectionObserverPage = lazy(() => import('./pages/hooks/UseIntersectionObserver'));
+const UseDragDropPage = lazy(() => import('./pages/hooks/UseDragDrop'));
+const UseLazyLoadPage = lazy(() => import('./pages/hooks/UseLazyLoad'));
+
+// New v1.0.7 Components
+const SegmentedControlPage = lazy(() => import('./pages/components/SegmentedControl'));
+const TagsInputPage = lazy(() => import('./pages/components/TagsInput'));
+const BottomSheetPage = lazy(() => import('./pages/components/BottomSheet'));
+const SliderRangePage = lazy(() => import('./pages/components/SliderRange'));
+const MentionsInputPage = lazy(() => import('./pages/components/MentionsInput'));
+const KanbanPage = lazy(() => import('./pages/components/Kanban'));
+const EmojiPickerPage = lazy(() => import('./pages/components/EmojiPicker'));
+const VirtualListPage = lazy(() => import('./pages/components/VirtualList'));
 
 // Utilities
 const IconsPage = lazy(() => import('./pages/Icons'));
@@ -300,6 +312,14 @@ function App() {
                 <Route path="/components/active-bar" element={<ActiveBarPage />} />
                 <Route path="/components/rich-editor" element={<RichEditorPage />} />
                 <Route path="/components/sign-pad" element={<SignPadPage />} />
+                <Route path="/components/segmented-control" element={<SegmentedControlPage />} />
+                <Route path="/components/tags-input" element={<TagsInputPage />} />
+                <Route path="/components/bottom-sheet" element={<BottomSheetPage />} />
+                <Route path="/components/slider-range" element={<SliderRangePage />} />
+                <Route path="/components/mentions-input" element={<MentionsInputPage />} />
+                <Route path="/components/kanban" element={<KanbanPage />} />
+                <Route path="/components/emoji-picker" element={<EmojiPickerPage />} />
+                <Route path="/components/virtual-list" element={<VirtualListPage />} />
                 
                 {/* Charts & Graphs */}
                 <Route path="/components/chart" element={<ChartPage />} />
@@ -324,6 +344,8 @@ function App() {
                 <Route path="/hooks/use-local-storage" element={<UseLocalStoragePage />} />
                 <Route path="/hooks/use-key-press" element={<UseKeyPressPage />} />
                 <Route path="/hooks/use-intersection-observer" element={<UseIntersectionObserverPage />} />
+                <Route path="/hooks/use-drag-drop" element={<UseDragDropPage />} />
+                <Route path="/hooks/use-lazy-load" element={<UseLazyLoadPage />} />
                 
                 <Route path="/icons" element={<IconsPage />} />
                 <Route path="/hooks" element={<HooksPage />} />

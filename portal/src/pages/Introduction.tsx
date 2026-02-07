@@ -104,7 +104,7 @@ const Introduction: FC = () => {
       <div className="text-center mb-16">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-pink-500/10 to-rose-500/10 border border-pink-500/20 text-pink-600 dark:text-pink-400 text-sm font-medium mb-6">
           <span>🚀</span>
-          <span>v1.0.6 — Form, PhoneInput, CreditInput, Cascader, NotificationCenter & CommandPalette</span>
+          <span>v1.0.7 — RichEditor mobile toolbar, color picker fix, SignPad touch scroll fix, Kanban, EmojiPicker, VirtualList, useDragDrop, Button icon shorthand</span>
         </div>
         
         <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
@@ -379,6 +379,32 @@ const Introduction: FC = () => {
               </div>
             }
           />
+          <ComponentExample
+            title="Kanban"
+            description="Drag-and-drop board"
+            path="/components/kanban"
+            preview={
+              <div className="flex gap-2 w-full px-2">
+                <div className="flex-1 rounded bg-gray-100 dark:bg-gray-700 p-1 space-y-1">
+                  <div className="h-4 bg-white dark:bg-gray-600 rounded" />
+                  <div className="h-4 bg-white dark:bg-gray-600 rounded" />
+                </div>
+                <div className="flex-1 rounded bg-gray-100 dark:bg-gray-700 p-1">
+                  <div className="h-4 bg-white dark:bg-gray-600 rounded" />
+                </div>
+              </div>
+            }
+          />
+          <ComponentExample
+            title="EmojiPicker"
+            description="Curated emoji selector"
+            path="/components/emoji-picker"
+            preview={
+              <div className="flex gap-1 text-xl">
+                <span>😀</span><span>👍</span><span>❤️</span><span>✨</span>
+              </div>
+            }
+          />
         </div>
 
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-8 text-center">
@@ -419,7 +445,7 @@ const Introduction: FC = () => {
             'Spinner', 'DataTable', 'Carousel', 'List', 'Typography',
             'Divider', 'Paper', 'Grid', 'Flex', 'Container', 'SpeedDial',
             'TransferList', 'MultiSelect', 'Autocomplete', 'FAB', 'Link',
-            'RichEditor', 'SignPad', 'Chart', 'Gauge', 'Sparkline',
+            'RichEditor', 'SignPad', 'Kanban', 'EmojiPicker', 'Chart', 'Gauge', 'Sparkline',
           ].map((component) => (
             <span
               key={component}
@@ -447,6 +473,8 @@ const Introduction: FC = () => {
             { name: 'useLocalStorage', desc: 'Persist state', path: '/hooks/use-local-storage' },
             { name: 'useKeyPress', desc: 'Keyboard shortcuts', path: '/hooks/use-key-press' },
             { name: 'useIntersectionObserver', desc: 'Viewport detection', path: '/hooks/use-intersection-observer' },
+            { name: 'useDragDrop', desc: 'HTML5 drag and drop', path: '/hooks/use-drag-drop' },
+            { name: 'useLazyLoad', desc: 'Lazy load when in view', path: '/hooks/use-lazy-load' },
             { name: 'useSlide', desc: 'Slide animations', path: '/hooks/use-slide' },
             { name: 'useBounce', desc: 'Bounce effects', path: '/hooks/use-bounce' },
             { name: 'useFloat', desc: 'Floating animation', path: '/hooks/use-float' },

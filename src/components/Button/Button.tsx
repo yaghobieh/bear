@@ -32,8 +32,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       size = 'md',
       loading = false,
       fullWidth = false,
-      leftIcon,
-      rightIcon,
+      icon,
+      iconPosition = 'left',
+      leftIcon: leftIconProp,
+      rightIcon: rightIconProp,
       disabled,
       className,
       children,
@@ -45,6 +47,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const isDisabled = disabled || loading;
     const mergedStyle = useBearStyles(bis, style);
+    const leftIcon = leftIconProp ?? (icon && iconPosition === 'left' ? icon : undefined);
+    const rightIcon = rightIconProp ?? (icon && iconPosition === 'right' ? icon : undefined);
 
     return (
       <button

@@ -16,7 +16,7 @@ export interface NavGroup {
   items: NavItem[];
 }
 
-export const BEAR_VERSION = '1.0.6';
+export const BEAR_VERSION = '1.0.7';
 export const KILN_BASE_URL = 'http://localhost:6006';
 
 /** Main Bear UI repository */
@@ -34,7 +34,7 @@ export const NAVIGATION: NavGroup[] = [
       { path: '/installation', label: 'Installation' },
       { path: '/theming', label: 'Theming' },
       { path: '/typescript', label: 'TypeScript' },
-      { path: '/roadmap', label: 'Roadmap', badge: 'New' },
+      { path: '/roadmap', label: 'Roadmap' },
     ],
   },
   {
@@ -49,7 +49,7 @@ export const NAVIGATION: NavGroup[] = [
       { path: '/components/app-bar', label: 'AppBar', badge: 'Hot', kilnPath: '/app-bar' },
       { path: '/components/scroll-area', label: 'ScrollArea', kilnPath: '/scroll-area' },
       { path: '/components/sidebar', label: 'Sidebar', kilnPath: '/sidebar' },
-      { path: '/components/columns', label: 'Columns', badge: 'New', kilnPath: '/columns' },
+      { path: '/components/columns', label: 'Columns', kilnPath: '/columns' },
     ],
   },
   {
@@ -66,27 +66,31 @@ export const NAVIGATION: NavGroup[] = [
       { path: '/components/radio', label: 'Radio', kilnPath: '/radio' },
       { path: '/components/switch', label: 'Switch', kilnPath: '/switch' },
       { path: '/components/slider', label: 'Slider', kilnPath: '/slider' },
+      { path: '/components/slider-range', label: 'SliderRange', badge: 'New', kilnPath: '/slider-range' },
+      { path: '/components/segmented-control', label: 'SegmentedControl', badge: 'New', kilnPath: '/segmented-control' },
+      { path: '/components/tags-input', label: 'TagsInput', badge: 'New', kilnPath: '/tags-input' },
+      { path: '/components/mentions-input', label: 'MentionsInput', badge: 'New', kilnPath: '/mentions-input' },
       { path: '/components/rating', label: 'Rating', kilnPath: '/rating' },
-      { path: '/components/date-picker', label: 'DatePicker', badge: 'New', kilnPath: '/date-picker' },
+      { path: '/components/date-picker', label: 'DatePicker', kilnPath: '/date-picker' },
       { path: '/components/time-picker', label: 'TimePicker', kilnPath: '/time-picker' },
-      { path: '/components/phone-input', label: 'PhoneInput', badge: 'New', kilnPath: '/phone-input' },
-      { path: '/components/credit-input', label: 'CreditInput', badge: 'New', kilnPath: '/credit-input' },
-      { path: '/components/cascader', label: 'Cascader', badge: 'New', kilnPath: '/cascader' },
-      { path: '/components/form', label: 'Form', badge: 'New', kilnPath: '/form' },
+      { path: '/components/phone-input', label: 'PhoneInput', kilnPath: '/phone-input' },
+      { path: '/components/credit-input', label: 'CreditInput', kilnPath: '/credit-input' },
+      { path: '/components/cascader', label: 'Cascader', kilnPath: '/cascader' },
+      { path: '/components/form', label: 'Form', kilnPath: '/form' },
       { path: '/components/color-picker', label: 'ColorPicker', kilnPath: '/color-picker' },
       { path: '/components/file-upload', label: 'FileUpload', kilnPath: '/file-upload' },
       { path: '/components/autocomplete', label: 'Autocomplete', kilnPath: '/autocomplete' },
       { path: '/components/multi-select', label: 'MultiSelect', kilnPath: '/multi-select' },
       { path: '/components/transfer-list', label: 'Transfer List', kilnPath: '/transfer-list' },
-      { path: '/components/editable', label: 'Editable', badge: 'New', kilnPath: '/editable' },
+      { path: '/components/editable', label: 'Editable', kilnPath: '/editable' },
       { path: '/components/rich-editor', label: 'RichEditor', badge: 'Hot', kilnPath: '/rich-editor' },
-      { path: '/components/sign-pad', label: 'SignPad', badge: 'New', kilnPath: '/sign-pad' },
+      { path: '/components/sign-pad', label: 'SignPad', kilnPath: '/sign-pad' },
     ],
   },
   {
     title: 'Data Display',
     items: [
-      { path: '/components/calendar', label: 'Calendar', badge: 'New', kilnPath: '/calendar' },
+      { path: '/components/calendar', label: 'Calendar', kilnPath: '/calendar' },
       { path: '/components/typography', label: 'Typography', kilnPath: '/typography' },
       { path: '/components/em', label: 'Em', kilnPath: '/em' },
       { path: '/components/highlight', label: 'Highlight', kilnPath: '/highlight' },
@@ -96,7 +100,7 @@ export const NAVIGATION: NavGroup[] = [
       { path: '/components/badge', label: 'Badge', kilnPath: '/badge' },
       { path: '/components/chip', label: 'Chip', kilnPath: '/chip' },
       { path: '/components/card', label: 'Card', kilnPath: '/card' },
-      { path: '/components/hover-card', label: 'HoverCard', badge: 'New', kilnPath: '/hover-card' },
+      { path: '/components/hover-card', label: 'HoverCard', kilnPath: '/hover-card' },
       { path: '/components/list', label: 'List', kilnPath: '/list' },
       { path: '/components/data-table', label: 'DataTable', kilnPath: '/data-table' },
       { path: '/components/tree-view', label: 'TreeView', kilnPath: '/tree-view' },
@@ -108,6 +112,9 @@ export const NAVIGATION: NavGroup[] = [
       { path: '/components/image', label: 'Image', kilnPath: '/image' },
       { path: '/components/pagination', label: 'Pagination', kilnPath: '/pagination' },
       { path: '/components/empty-state', label: 'EmptyState', kilnPath: '/empty-state' },
+      { path: '/components/kanban', label: 'Kanban', badge: 'Hot', kilnPath: '/kanban' },
+      { path: '/components/virtual-list', label: 'VirtualList', badge: 'New', kilnPath: '/virtual-list' },
+      { path: '/components/emoji-picker', label: 'EmojiPicker', badge: 'New', kilnPath: '/emoji-picker' },
     ],
   },
   {
@@ -122,8 +129,9 @@ export const NAVIGATION: NavGroup[] = [
       { path: '/components/modal', label: 'Modal', kilnPath: '/modal' },
       { path: '/components/drawer', label: 'Drawer', kilnPath: '/drawer' },
       { path: '/components/collapsible', label: 'Collapsible', kilnPath: '/collapsible' },
-      { path: '/components/notification-center', label: 'NotificationCenter', badge: 'New', kilnPath: '/notification-center' },
-      { path: '/components/command-palette', label: 'CommandPalette', badge: 'New', kilnPath: '/command-palette' },
+      { path: '/components/notification-center', label: 'NotificationCenter', kilnPath: '/notification-center' },
+      { path: '/components/command-palette', label: 'CommandPalette', kilnPath: '/command-palette' },
+      { path: '/components/bottom-sheet', label: 'BottomSheet', badge: 'New', kilnPath: '/bottom-sheet' },
     ],
   },
   {
@@ -138,18 +146,18 @@ export const NAVIGATION: NavGroup[] = [
       { path: '/components/dropdown', label: 'Dropdown', kilnPath: '/dropdown' },
       { path: '/components/speed-dial', label: 'Speed Dial', kilnPath: '/speed-dial' },
       { path: '/components/bottom-navigation', label: 'BottomNavigation', kilnPath: '/bottom-navigation' },
-      { path: '/components/active-bar', label: 'ActiveBar', badge: 'New', kilnPath: '/active-bar' },
+      { path: '/components/active-bar', label: 'ActiveBar', kilnPath: '/active-bar' },
     ],
   },
   {
     title: 'Charts & Graphs',
     items: [
-      { path: '/components/chart', label: 'Chart', badge: 'New', kilnPath: '/chart' },
-      { path: '/components/bar-chart', label: 'BarChart', badge: 'New', kilnPath: '/bar-chart' },
-      { path: '/components/line-chart', label: 'LineChart', badge: 'New', kilnPath: '/line-chart' },
-      { path: '/components/pie-chart', label: 'PieChart', badge: 'New', kilnPath: '/pie-chart' },
-      { path: '/components/sparkline', label: 'Sparkline', badge: 'New', kilnPath: '/sparkline' },
-      { path: '/components/gauge', label: 'Gauge', badge: 'New', kilnPath: '/gauge' },
+      { path: '/components/chart', label: 'Chart', kilnPath: '/chart' },
+      { path: '/components/bar-chart', label: 'BarChart', kilnPath: '/bar-chart' },
+      { path: '/components/line-chart', label: 'LineChart', kilnPath: '/line-chart' },
+      { path: '/components/pie-chart', label: 'PieChart', kilnPath: '/pie-chart' },
+      { path: '/components/sparkline', label: 'Sparkline', kilnPath: '/sparkline' },
+      { path: '/components/gauge', label: 'Gauge', kilnPath: '/gauge' },
     ],
   },
   {
@@ -166,12 +174,14 @@ export const NAVIGATION: NavGroup[] = [
   {
     title: 'Hooks',
     items: [
-      { path: '/hooks/use-clipboard', label: 'useClipboard', badge: 'New' },
-      { path: '/hooks/use-debounce', label: 'useDebounce', badge: 'New' },
-      { path: '/hooks/use-throttle', label: 'useThrottle', badge: 'New' },
-      { path: '/hooks/use-local-storage', label: 'useLocalStorage', badge: 'New' },
-      { path: '/hooks/use-key-press', label: 'useKeyPress', badge: 'New' },
-      { path: '/hooks/use-intersection-observer', label: 'useIntersectionObserver', badge: 'New' },
+      { path: '/hooks/use-clipboard', label: 'useClipboard' },
+      { path: '/hooks/use-debounce', label: 'useDebounce' },
+      { path: '/hooks/use-throttle', label: 'useThrottle' },
+      { path: '/hooks/use-local-storage', label: 'useLocalStorage' },
+      { path: '/hooks/use-key-press', label: 'useKeyPress' },
+      { path: '/hooks/use-intersection-observer', label: 'useIntersectionObserver' },
+      { path: '/hooks/use-drag-drop', label: 'useDragDrop', badge: 'New' },
+      { path: '/hooks/use-lazy-load', label: 'useLazyLoad', badge: 'New' },
     ],
   },
   {
@@ -187,7 +197,8 @@ export const NAVIGATION: NavGroup[] = [
 ];
 
 export const VERSIONS = [
-  { value: '1.0.6', label: 'v1.0.6 (current)' },
+  { value: '1.0.7', label: 'v1.0.7 (current)' },
+  { value: '1.0.6', label: 'v1.0.6' },
   { value: '1.0.5', label: 'v1.0.5' },
   { value: '1.0.4', label: 'v1.0.4' },
   { value: '1.0.3', label: 'v1.0.3' },

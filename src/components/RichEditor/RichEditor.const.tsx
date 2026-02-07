@@ -55,6 +55,45 @@ export const RICH_EDITOR_COMPACT_TOOLBAR: ToolbarOption[] = [
   'more',
 ];
 
+// Mobile toolbar: minimal (paragraph, bold, italic, strike) + more for all options
+export const RICH_EDITOR_MOBILE_TOOLBAR: ToolbarOption[] = [
+  'headingDropdown',
+  'divider',
+  'bold',
+  'italic',
+  'strikethrough',
+  'divider',
+  'more',
+];
+
+// Items shown in "more" menu on mobile
+export const RICH_EDITOR_MOBILE_MORE_ITEMS: ToolbarOption[] = [
+  'underline',
+  'textColor',
+  'highlightColor',
+  'divider',
+  'alignLeft',
+  'alignCenter',
+  'alignRight',
+  'alignJustify',
+  'divider',
+  'bulletList',
+  'orderedList',
+  'divider',
+  'indent',
+  'outdent',
+  'divider',
+  'blockquote',
+  'code',
+  'link',
+  'image',
+  'divider',
+  'clearFormat',
+];
+
+// Breakpoint for mobile toolbar (px)
+export const RICH_EDITOR_MOBILE_BREAKPOINT = 640;
+
 // Simple toolbar configuration
 export const RICH_EDITOR_SIMPLE_TOOLBAR: ToolbarOption[] = [
   'bold',
@@ -69,7 +108,7 @@ export const RICH_EDITOR_SIMPLE_TOOLBAR: ToolbarOption[] = [
 // Using standard Tailwind classes for better portal compatibility
 export const RICH_EDITOR_ROOT_CLASSES = 'Bear-RichEditor rounded-lg border border-gray-200 dark:border-zinc-700 overflow-hidden bg-white dark:bg-zinc-900 shadow-sm';
 
-export const RICH_EDITOR_TOOLBAR_CLASSES = 'flex flex-wrap items-center gap-0.5 p-2 border-b border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-800';
+export const RICH_EDITOR_TOOLBAR_CLASSES = 'flex flex-wrap items-center gap-0.5 p-2 border-b border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-800 overflow-x-auto overflow-y-hidden';
 
 export const RICH_EDITOR_CONTENT_CLASSES = 'p-4 outline-none max-w-none text-gray-900 dark:text-gray-100 bg-white dark:bg-zinc-900 min-h-[100px]';
 

@@ -14,6 +14,9 @@ import {
 import {
   RICH_EDITOR_MIN_HEIGHT,
   RICH_EDITOR_DEFAULT_TOOLBAR,
+  RICH_EDITOR_MOBILE_TOOLBAR,
+  RICH_EDITOR_MOBILE_MORE_ITEMS,
+  RICH_EDITOR_MOBILE_BREAKPOINT,
   RICH_EDITOR_ROOT_CLASSES,
   RICH_EDITOR_TOOLBAR_CLASSES,
   RICH_EDITOR_CONTENT_CLASSES,
@@ -22,6 +25,7 @@ import {
   RICH_EDITOR_HEADING_OPTIONS,
   RICH_EDITOR_CONTENT_STYLES,
 } from './RichEditor.const';
+import { useMediaQuery } from '@hooks/useMediaQuery';
 import { ToolbarButton, ToolbarDropdown, ToolbarColorPicker, ToolbarMore } from './components';
 import {
   BoldIcon,
@@ -83,6 +87,8 @@ export const RichEditor: FC<RichEditorProps> = (props) => {
   } = props;
 
   const editorRef = useRef<HTMLDivElement>(null);
+  const isMobile = useMediaQuery(`(max-width: ${RICH_EDITOR_MOBILE_BREAKPOINT}px)`);
+  const activeToolbar = isMobile ? RICH_EDITOR_MOBILE_TOOLBAR : toolbar;
   const [activeFormats, setActiveFormats] = useState<Set<string>>(new Set());
   const [currentBlock, setCurrentBlock] = useState<string>('p');
   const [textColorValue, setTextColorValue] = useState<string>('#000000');
@@ -436,13 +442,12 @@ export const RichEditor: FC<RichEditorProps> = (props) => {
     }
 
     if (item === 'more') {
-      // Get remaining toolbar items not in the main toolbar
-      const moreItems: ToolbarOption[] = [
+      const moreItems: ToolbarOption[] = isMobile ? RICH_EDITOR_MOBILE_MORE_ITEMS : [
         'alignLeft', 'alignCenter', 'alignRight', 'alignJustify',
         'indent', 'outdent', 'blockquote', 'code', 'clearFormat',
       ];
       return (
-        <ToolbarMore key="more" disabled={disabled || readOnly}>
+        <ToolbarMore key="more" disabled={disabled || readOnly} isMobile={isMobile}>
           {moreItems.map((moreItem, idx) => renderToolbarItem(moreItem, idx + 1000))}
         </ToolbarMore>
       );
@@ -477,9 +482,9 @@ export const RichEditor: FC<RichEditorProps> = (props) => {
       )}
       {...rest}
     >
-      {toolbar.length > 0 && (
+      {activeToolbar.length > 0 && (
         <div className={cn('Bear-RichEditor__toolbar', RICH_EDITOR_TOOLBAR_CLASSES)}>
-          {toolbar.map((item, index) => renderToolbarItem(item, index))}
+          {activeToolbar.map((item, index) => renderToolbarItem(item, index))}
         </div>
       )}
 

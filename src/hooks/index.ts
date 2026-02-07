@@ -48,3 +48,9 @@ export type { UseKeyPressOptions, KeyFilter } from './useKeyPress';
 
 export { useIntersectionObserver, useInView } from './useIntersectionObserver';
 export type { UseIntersectionObserverOptions, UseIntersectionObserverReturn } from './useIntersectionObserver';
+
+export { useDragDrop } from './useDragDrop';
+export type { UseDragDropOptions, UseDragDropReturn, DragDropId } from './useDragDrop';
+
+export { useLazyLoad } from './useLazyLoad';
+export type { UseLazyLoadOptions, UseLazyLoadReturn } from './useLazyLoad';

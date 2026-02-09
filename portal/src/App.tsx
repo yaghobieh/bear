@@ -4,12 +4,12 @@ import { BearLoader } from './components/BearLoader';
 import { Topbar } from './components/Topbar/Topbar';
 import { Sidebar } from './components/Sidebar';
 
-// Banner configuration — survey link points to main repo
+// Banner configuration — promote ForgeStack CLI
 const BANNER_CONFIG = {
-  id: 'bear-roadmap-2026',
-  message: '✨ Shape the future of Bear UI — Your voice shapes our 2026 roadmap. Share your vision with us.',
-  link: 'https://github.com/yaghobieh/bear',
-  linkText: 'Take the survey →',
+  id: 'forge-cli-launch',
+  message: '🚀 New ForgeStack CLI is here! Create React projects with Bear, Compass, Synapse & more in seconds.',
+  link: 'https://www.npmjs.com/package/@forgedevstack/cli',
+  linkText: 'Try npx @forgedevstack/cli →',
 };
 
 // Lazy load pages - Getting Started
@@ -142,6 +142,13 @@ const UseIntersectionObserverPage = lazy(() => import('./pages/hooks/UseIntersec
 const UseDragDropPage = lazy(() => import('./pages/hooks/UseDragDrop'));
 const UseLazyLoadPage = lazy(() => import('./pages/hooks/UseLazyLoad'));
 
+// New v1.0.9 Hooks
+const UseOnlinePage = lazy(() => import('./pages/hooks/UseOnline'));
+const UseIdlePage = lazy(() => import('./pages/hooks/UseIdle'));
+const UseLongPressPage = lazy(() => import('./pages/hooks/UseLongPress'));
+const UseWebSocketPage = lazy(() => import('./pages/hooks/UseWebSocket'));
+const UsePageVisibilityPage = lazy(() => import('./pages/hooks/UsePageVisibility'));
+
 // New v1.0.7 Components
 const SegmentedControlPage = lazy(() => import('./pages/components/SegmentedControl'));
 const TagsInputPage = lazy(() => import('./pages/components/TagsInput'));
@@ -151,6 +158,19 @@ const MentionsInputPage = lazy(() => import('./pages/components/MentionsInput'))
 const KanbanPage = lazy(() => import('./pages/components/Kanban'));
 const EmojiPickerPage = lazy(() => import('./pages/components/EmojiPicker'));
 const VirtualListPage = lazy(() => import('./pages/components/VirtualList'));
+
+// New v1.0.8 Components
+const BackTopPage = lazy(() => import('./pages/components/BackTop'));
+const ConfettiPage = lazy(() => import('./pages/components/Confetti'));
+const TourPage = lazy(() => import('./pages/components/Tour'));
+const QRCodePage = lazy(() => import('./pages/components/QRCode'));
+
+// New v1.0.9 Components
+const JsonViewerPage = lazy(() => import('./pages/components/JsonViewer'));
+const DiffViewerPage = lazy(() => import('./pages/components/DiffViewer'));
+const ChatPage = lazy(() => import('./pages/components/ChatPage'));
+const FloatingChatPage = lazy(() => import('./pages/components/FloatingChatPage'));
+const TerminalPage = lazy(() => import('./pages/components/TerminalPage'));
 
 // Utilities
 const IconsPage = lazy(() => import('./pages/Icons'));
@@ -321,6 +341,19 @@ function App() {
                 <Route path="/components/emoji-picker" element={<EmojiPickerPage />} />
                 <Route path="/components/virtual-list" element={<VirtualListPage />} />
                 
+                {/* v1.0.8 Components */}
+                <Route path="/components/back-top" element={<BackTopPage />} />
+                <Route path="/components/confetti" element={<ConfettiPage />} />
+                <Route path="/components/tour" element={<TourPage />} />
+                <Route path="/components/qr-code" element={<QRCodePage />} />
+                
+                {/* v1.0.9 Components */}
+                <Route path="/components/json-viewer" element={<JsonViewerPage />} />
+                <Route path="/components/diff-viewer" element={<DiffViewerPage />} />
+                <Route path="/components/chat" element={<ChatPage />} />
+                <Route path="/components/floating-chat" element={<FloatingChatPage />} />
+                <Route path="/components/terminal" element={<TerminalPage />} />
+                
                 {/* Charts & Graphs */}
                 <Route path="/components/chart" element={<ChartPage />} />
                 <Route path="/components/bar-chart" element={<ChartPage />} />
@@ -346,6 +379,13 @@ function App() {
                 <Route path="/hooks/use-intersection-observer" element={<UseIntersectionObserverPage />} />
                 <Route path="/hooks/use-drag-drop" element={<UseDragDropPage />} />
                 <Route path="/hooks/use-lazy-load" element={<UseLazyLoadPage />} />
+                
+                {/* v1.0.9 Hooks */}
+                <Route path="/hooks/use-online" element={<UseOnlinePage />} />
+                <Route path="/hooks/use-idle" element={<UseIdlePage />} />
+                <Route path="/hooks/use-long-press" element={<UseLongPressPage />} />
+                <Route path="/hooks/use-websocket" element={<UseWebSocketPage />} />
+                <Route path="/hooks/use-page-visibility" element={<UsePageVisibilityPage />} />
                 
                 <Route path="/icons" element={<IconsPage />} />
                 <Route path="/hooks" element={<HooksPage />} />

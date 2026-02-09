@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import { cn } from '@utils';
-import type { EmberSize } from '../../types';
+import type { BearSize } from '../../types';
 import type { CardProps, CardHeaderProps, CardBodyProps, CardFooterProps } from './Card.types';
 import {
   CARD_PADDING_CLASSES,
@@ -50,7 +50,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
           `Bear-Card--${variant}`,
           'bear-overflow-hidden',
           CARD_VARIANT_CLASSES[variant],
-          CARD_PADDING_CLASSES[padding as EmberSize | 'none'],
+          CARD_PADDING_CLASSES[padding as BearSize | 'none'],
           CARD_RADIUS_CLASSES[radius as keyof typeof CARD_RADIUS_CLASSES],
           interactive && `Bear-Card--interactive ${CARD_INTERACTIVE_CLASSES}`,
           className

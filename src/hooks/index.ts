@@ -54,3 +54,29 @@ export type { UseDragDropOptions, UseDragDropReturn, DragDropId } from './useDra
 
 export { useLazyLoad } from './useLazyLoad';
 export type { UseLazyLoadOptions, UseLazyLoadReturn } from './useLazyLoad';
+
+// Component Customization Hook
+export { useBearComponent, useBC, BearComponentProvider, useBearComponentContext } from './useBearComponent';
+export type { UseBearComponentReturn, BearComponentContextValue } from './useBearComponent';
+
+// Mouse Spotlight Hook
+export { useSpotlight } from './useSpotlight';
+export type { UseSpotlightOptions, UseSpotlightReturn } from './useSpotlight';
+
+// Network & Connectivity Hooks
+export { useOnline } from './useOnline';
+export type { UseOnlineOptions, UseOnlineReturn } from './useOnline';
+
+export { useWebSocket } from './useWebSocket';
+export type { UseWebSocketOptions, UseWebSocketReturn, WebSocketStatus } from './useWebSocket';
+
+// User Activity Hooks
+export { useIdle } from './useIdle';
+export type { UseIdleOptions, UseIdleReturn } from './useIdle';
+
+export { usePageVisibility } from './usePageVisibility';
+export type { UsePageVisibilityOptions, UsePageVisibilityReturn } from './usePageVisibility';
+
+// Gesture Hooks
+export { useLongPress } from './useLongPress';
+export type { UseLongPressOptions, UseLongPressReturn } from './useLongPress';

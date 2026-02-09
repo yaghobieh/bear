@@ -1,8 +1,8 @@
-import type { EmberSize } from '../../types';
+import type { BearSize } from '../../types';
 
 export interface SpinnerProps {
   /** Spinner size */
-  size?: EmberSize;
+  size?: BearSize;
   /** Additional class names */
   className?: string;
   /** Spinner color (CSS color value) */

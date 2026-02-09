@@ -2,6 +2,89 @@
 
 All notable changes to Bear UI will be documented in this file.
 
+## [1.0.8] - 2026-02-08
+
+### Added
+
+- **useBearComponent / useBC Hook**: New hook for global component customization
+  - Register style overrides for any component: `useBearComponent('Button', { root: { borderRadius: '9999px' } })`
+  - Shorthand alias: `useBC('Button')`
+  - Includes `BearComponentProvider` for app-wide component styling
+  - Full TypeScript support with component-specific types
+
+- **useSpotlight Hook**: Mouse-follow spotlight effect for interactive elements
+  - Radial gradient that follows cursor position
+  - Configurable size, color, and enabled state
+  - Smooth opacity transitions
+
+- **Button Spotlight Effect**: New `spotlight` prop for mouse-follow hover effect
+  - Enable with `<Button spotlight>`
+  - Customize with `spotlightColor` and `spotlightSize` props
+  - Creates premium, interactive button experiences
+
+- **Button Variant Configuration**: New `variants` prop on BearProvider
+  - Configure colors per variant: `variants={{ Button: { primary: { bg: '#ec4899', bgHover: '#db2777' } } }}`
+  - Supports bg, bgHover, bgActive, bgDisabled, text, textDisabled, border, borderHover, ring
+
+### Changed
+
+- **BearProvider**: Enhanced theming with global component overrides
+  - New `components` prop for global component style overrides
+  - New `variants` prop for variant color configurations
+  - Deep merge for theme overrides (properly merges nested color scales)
+  - All color scales now set as CSS variables (primary, secondary, success, warning, danger, info, neutral with all shades 50-950)
+  - Typography, shadows, spacing, and border radius as CSS variables
+  - Added `registerComponent()` and `registerVariant()` methods to context
+
+- **Button**: Now uses CSS variables for full color customization
+  - Colors driven by `--bear-primary-500`, `--bear-btn-primary-bg`, etc.
+  - Text content now uses Typography component for consistency
+  - Component overrides applied from BearProvider context
+
+- **Portal Banner**: Updated to promote ForgeStack CLI launch
+
+### New CSS Variables
+
+```css
+/* Color scales (50-950 for each) */
+--bear-primary-{50-950}
+--bear-secondary-{50-950}
+--bear-success-{50-950}
+--bear-warning-{50-950}
+--bear-danger-{50-950}
+--bear-info-{50-950}
+--bear-neutral-{50-950}
+
+/* Button variant colors (optional overrides) */
+--bear-btn-{variant}-bg
+--bear-btn-{variant}-bg-hover
+--bear-btn-{variant}-bg-active
+--bear-btn-{variant}-text
+--bear-btn-{variant}-border
+--bear-btn-{variant}-ring
+```
+
+---
+
+## [1.0.7] - 2026-02-01
+
+### Added
+
+- **RichEditor**: Mobile toolbar with responsive positioning
+- **SignPad**: Fixed touch scroll on mobile devices
+- **Kanban**: New drag-and-drop kanban board component
+- **EmojiPicker**: New emoji selection component
+- **VirtualList**: Virtualized list for large datasets
+- **useDragDrop**: New hook for custom drag-and-drop interactions
+- **Button**: Icon shorthand prop (`icon` + `iconPosition`)
+
+### Fixed
+
+- **ColorPicker**: Touch interaction improvements
+- **SignPad**: Prevented page scroll while signing on mobile
+
+---
+
 ## [1.0.6] - 2026-01-29
 
 ### Changed

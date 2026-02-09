@@ -1,38 +1,7 @@
 import { FC, useState } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
-
-// Alert implementation
-const Alert: FC<{
-  severity?: 'success' | 'info' | 'warning' | 'error';
-  title?: string;
-  children: React.ReactNode;
-  closable?: boolean;
-  onClose?: () => void;
-}> = ({ severity = 'info', title, children, closable, onClose }) => {
-  const styles = {
-    success: { bg: 'bg-green-500/15', border: 'border-green-500/30', text: 'text-green-400', icon: '✓' },
-    info: { bg: 'bg-blue-500/15', border: 'border-blue-500/30', text: 'text-blue-400', icon: 'ℹ' },
-    warning: { bg: 'bg-yellow-500/15', border: 'border-yellow-500/30', text: 'text-yellow-400', icon: '⚠' },
-    error: { bg: 'bg-red-500/15', border: 'border-red-500/30', text: 'text-red-400', icon: '✕' },
-  };
-  const s = styles[severity];
-
-  return (
-    <div className={`p-4 rounded-lg border ${s.bg} ${s.border}`}>
-      <div className="flex gap-3">
-        <span className={`${s.text} text-lg`}>{s.icon}</span>
-        <div className="flex-1">
-          {title && <div className={`font-semibold ${s.text} mb-1`}>{title}</div>}
-          <div className={`${s.text} opacity-90`}>{children}</div>
-        </div>
-        {closable && (
-          <button onClick={onClose} className={`${s.text} hover:opacity-70`}>✕</button>
-        )}
-      </div>
-    </div>
-  );
-};
+import { Alert } from '@forgedevstack/bear';
 
 const AlertPage: FC = () => {
   const [visible, setVisible] = useState(true);

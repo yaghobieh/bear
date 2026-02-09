@@ -104,7 +104,7 @@ const Introduction: FC = () => {
       <div className="text-center mb-16">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-pink-500/10 to-rose-500/10 border border-pink-500/20 text-pink-600 dark:text-pink-400 text-sm font-medium mb-6">
           <span>🚀</span>
-          <span>v1.0.7 — RichEditor mobile toolbar, color picker fix, SignPad touch scroll fix, Kanban, EmojiPicker, VirtualList, useDragDrop, Button icon shorthand</span>
+          <span>v1.0.8 — Enhanced ThemeProvider, useBearComponent hook, Button spotlight effect, full CSS variable theming, variant color config</span>
         </div>
         
         <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">

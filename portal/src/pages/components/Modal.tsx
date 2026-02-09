@@ -1,9 +1,12 @@
 import { FC, useState } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
+import { Modal, Button } from '@forgedevstack/bear';
 
 const ModalPage: FC = () => {
-  const [open, setOpen] = useState(false);
+  const [basicOpen, setBasicOpen] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [sizeOpen, setSizeOpen] = useState(false);
 
   return (
     <div className="fade-in">
@@ -24,115 +27,118 @@ const ModalPage: FC = () => {
 
 <Button onClick={() => setOpen(true)}>Open Modal</Button>
 
-<Modal isOpen={open} onClose={() => setOpen(false)}>
-  <Modal.Header>Modal Title</Modal.Header>
-  <Modal.Body>Modal content goes here...</Modal.Body>
-  <Modal.Footer>
-    <Button onClick={() => setOpen(false)}>Close</Button>
-  </Modal.Footer>
+<Modal 
+  isOpen={open} 
+  onClose={() => setOpen(false)}
+  title="Welcome to Bear UI"
+  footer={
+    <>
+      <Button variant="ghost" onClick={() => setOpen(false)}>Cancel</Button>
+      <Button onClick={() => setOpen(false)}>Got it</Button>
+    </>
+  }
+>
+  <p>This is a basic modal with header and footer.</p>
 </Modal>`}
       >
         <div className="flex justify-center">
-          <button
-            onClick={() => setOpen(true)}
-            className="px-4 py-2 rounded-lg bg-bear-500 text-white hover:bg-bear-600 transition-colors"
+          <Button onClick={() => setBasicOpen(true)}>Open Modal</Button>
+          
+          <Modal 
+            isOpen={basicOpen} 
+            onClose={() => setBasicOpen(false)}
+            title="Welcome to Bear UI"
+            footer={
+              <>
+                <Button variant="ghost" onClick={() => setBasicOpen(false)}>Cancel</Button>
+                <Button onClick={() => setBasicOpen(false)}>Got it</Button>
+              </>
+            }
           >
-            Open Modal
-          </button>
-          {open && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center">
-              <div className="absolute inset-0 bg-black/50" onClick={() => setOpen(false)} />
-              <div className="relative bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-md w-full mx-4 animate-in fade-in zoom-in duration-200">
-                <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Modal Title</h3>
-                  <button onClick={() => setOpen(false)} className="text-gray-400 hover:text-gray-600 text-xl">×</button>
-                </div>
-                <div className="px-6 py-4">
-                  <p className="text-gray-600 dark:text-gray-400">This is the modal content. You can put any content here including forms, images, or text.</p>
-                </div>
-                <div className="flex justify-end gap-3 px-6 py-4 border-t border-gray-200 dark:border-gray-700">
-                  <button onClick={() => setOpen(false)} className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Cancel</button>
-                  <button onClick={() => setOpen(false)} className="px-4 py-2 rounded-lg bg-bear-500 text-white hover:bg-bear-600">Confirm</button>
-                </div>
-              </div>
-            </div>
-          )}
+            <p>This is a basic modal with header and footer sections.</p>
+            <p className="mt-2 text-gray-500">Click outside or press ESC to close.</p>
+          </Modal>
+        </div>
+      </ComponentPreview>
+
+      <ComponentPreview
+        title="Confirmation Modal"
+        description="Modal for confirming destructive actions."
+        code={`<Modal 
+  isOpen={open} 
+  onClose={handleClose}
+  title="Delete Item?"
+  footer={
+    <>
+      <Button variant="ghost">Cancel</Button>
+      <Button variant="danger">Delete</Button>
+    </>
+  }
+>
+  <p>Are you sure? This cannot be undone.</p>
+</Modal>`}
+      >
+        <div className="flex justify-center">
+          <Button variant="danger" onClick={() => setConfirmOpen(true)}>Delete Item</Button>
+          
+          <Modal 
+            isOpen={confirmOpen} 
+            onClose={() => setConfirmOpen(false)}
+            title="Delete Item?"
+            footer={
+              <>
+                <Button variant="ghost" onClick={() => setConfirmOpen(false)}>Cancel</Button>
+                <Button variant="danger" onClick={() => setConfirmOpen(false)}>Delete</Button>
+              </>
+            }
+          >
+            <p>Are you sure you want to delete this item?</p>
+            <p className="mt-2 text-red-500 text-sm">This action cannot be undone.</p>
+          </Modal>
         </div>
       </ComponentPreview>
 
       <ComponentPreview
         title="Sizes"
-        description="Different modal widths."
-        code={`<Modal size="sm">Small</Modal>
-<Modal size="md">Medium</Modal>
-<Modal size="lg">Large</Modal>
-<Modal size="full">Full width</Modal>`}
+        description="Modals come in different sizes."
+        code={`<Modal size="sm" isOpen={open}>...</Modal>
+<Modal size="md" isOpen={open}>...</Modal>
+<Modal size="lg" isOpen={open}>...</Modal>
+<Modal size="xl" isOpen={open}>...</Modal>
+<Modal size="full" isOpen={open}>...</Modal>`}
       >
-        <div className="flex gap-3 justify-center flex-wrap">
-          {[
-            { size: 'sm', width: '384px' },
-            { size: 'md', width: '512px' },
-            { size: 'lg', width: '768px' },
-            { size: 'xl', width: '1024px' },
-          ].map(({ size, width }) => (
-            <div key={size} className="text-center">
-              <div className="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded text-sm text-gray-600 dark:text-gray-400">
-                {size}: {width}
-              </div>
-            </div>
-          ))}
+        <div className="flex justify-center">
+          <Button onClick={() => setSizeOpen(true)}>Open Large Modal</Button>
+          
+          <Modal 
+            isOpen={sizeOpen} 
+            onClose={() => setSizeOpen(false)} 
+            size="lg"
+            title="Large Modal"
+            footer={<Button onClick={() => setSizeOpen(false)}>Close</Button>}
+          >
+            <p>This is a large modal. Use different sizes for different content needs.</p>
+            <p className="mt-4 text-gray-500">Available sizes: sm, md, lg, xl, full</p>
+          </Modal>
         </div>
       </ComponentPreview>
 
       <ComponentPreview
-        title="Centered"
-        description="Vertically centered modal."
-        code={`<Modal centered>
-  Centered content
+        title="Without Close Button"
+        description="Modal without the X button in header."
+        code={`<Modal 
+  isOpen={open} 
+  onClose={handleClose}
+  showCloseButton={false}
+  title="Important Notice"
+>
+  ...
 </Modal>`}
       >
-        <div className="relative h-32 bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden">
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="bg-white dark:bg-gray-700 rounded-lg shadow-lg p-4 text-sm text-gray-600 dark:text-gray-300">
-              Vertically centered
-            </div>
-          </div>
-        </div>
-      </ComponentPreview>
-
-      <ComponentPreview
-        title="Without Overlay Close"
-        description="Prevent closing by clicking backdrop."
-        code={`<Modal closeOnOverlay={false}>
-  Click X to close
-</Modal>`}
-      >
-        <div className="text-center py-4">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 rounded-lg">
-            <span>⚠️</span>
-            <span className="text-sm">Must click X or Cancel to close</span>
-          </div>
-        </div>
-      </ComponentPreview>
-
-      <ComponentPreview
-        title="Scrollable"
-        description="Modal with scrollable content."
-        code={`<Modal scrollBehavior="inside">
-  <Modal.Body>
-    {longContent}
-  </Modal.Body>
-</Modal>`}
-      >
-        <div className="max-w-xs mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
-          <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700 font-medium text-gray-900 dark:text-white">
-            Scrollable Content
-          </div>
-          <div className="h-24 overflow-y-auto px-4 py-3 text-sm text-gray-600 dark:text-gray-400">
-            <p className="mb-2">This content is scrollable when it exceeds the modal height.</p>
-            <p className="mb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <p className="mb-2">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            <p>Ut enim ad minim veniam, quis nostrud exercitation.</p>
+        <div className="flex justify-center gap-4">
+          <div className="text-center">
+            <p className="text-sm text-gray-500 mb-2">showCloseButton: false</p>
+            <p className="text-xs text-gray-400">The X button is hidden from the header</p>
           </div>
         </div>
       </ComponentPreview>
@@ -150,12 +156,14 @@ const ModalPage: FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-              <tr><td className="px-4 py-3 font-mono text-bear-600">isOpen</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Modal visibility</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">onClose</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>() =&gt; void</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Close handler</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">size</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>sm | md | lg | xl | full</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">md</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Modal width</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">centered</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">true</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Center vertically</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">closeOnOverlay</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">true</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Close on backdrop click</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">closeOnEsc</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">true</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Close on Escape key</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">isOpen</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">required</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Control visibility</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">onClose</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>() =&gt; void</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">required</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Close handler</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">title</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Modal title</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">footer</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Footer content</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">size</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>sm | md | lg | xl | full</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">md</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Modal size</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">showCloseButton</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">true</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Show X button</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">closeOnBackdrop</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">true</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Close on backdrop click</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">closeOnEscape</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">true</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Close on ESC key</td></tr>
             </tbody>
           </table>
         </div>

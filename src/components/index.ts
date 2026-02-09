@@ -54,6 +54,8 @@ export type { IconProps } from './Icon';
 export { 
   ChevronDownIcon,
   ChevronRightIcon,
+  ChevronUpIcon,
+  ChevronLeftIcon,
   MenuIcon,
   CloseIcon as XIcon,
 } from './Icon/icons/navigation';
@@ -410,3 +412,39 @@ export type { EmojiPickerProps } from './EmojiPicker';
 // VirtualList
 export { VirtualList } from './VirtualList';
 export type { VirtualListProps } from './VirtualList';
+
+// BackTop
+export { BackTop } from './BackTop';
+export type { BackTopProps } from './BackTop';
+
+// Confetti
+export { Confetti, useConfetti } from './Confetti';
+export type { ConfettiProps, UseConfettiReturn } from './Confetti';
+
+// Tour
+export { Tour, useTour } from './Tour';
+export type { TourProps, TourStep, TourPlacement, UseTourReturn } from './Tour';
+
+// QRCode
+export { QRCode } from './QRCode';
+export type { QRCodeProps } from './QRCode';
+
+// JsonViewer
+export { JsonViewer } from './JsonViewer';
+export type { JsonViewerProps, JsonViewerTheme } from './JsonViewer';
+
+// DiffViewer
+export { DiffViewer } from './DiffViewer';
+export type { DiffViewerProps, DiffViewMode, DiffLine, DiffStats } from './DiffViewer';
+
+// Chat
+export { Chat } from './Chat';
+export type { ChatProps, ChatMessage, ChatBubbleProps } from './Chat';
+
+// FloatingChat
+export { FloatingChat } from './FloatingChat';
+export type { FloatingChatProps } from './FloatingChat';
+
+// Terminal
+export { Terminal } from './Terminal';
+export type { TerminalProps, TerminalLine, TerminalLineType } from './Terminal';

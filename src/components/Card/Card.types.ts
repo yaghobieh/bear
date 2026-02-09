@@ -1,11 +1,11 @@
 import type { HTMLAttributes, ReactNode } from 'react';
-import type { EmberSize } from '../../types';
+import type { BearSize } from '../../types';
 
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
   /** Card variant */
   variant?: 'elevated' | 'outlined' | 'filled' | 'ghost';
   /** Padding size */
-  padding?: EmberSize | 'none';
+  padding?: BearSize | 'none';
   /** Whether card is interactive (adds hover effects) */
   interactive?: boolean;
   /** Border radius */

@@ -1,9 +1,12 @@
 import { FC, useState } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
+import { Switch } from '@forgedevstack/bear';
 
 const SwitchPage: FC = () => {
   const [checked, setChecked] = useState(false);
+  const [notifications, setNotifications] = useState(true);
+  const [darkMode, setDarkMode] = useState(false);
 
   return (
     <div className="fade-in">
@@ -22,115 +25,78 @@ const SwitchPage: FC = () => {
         description="Simple toggle switch."
         code={`const [checked, setChecked] = useState(false);
 
-<Switch checked={checked} onChange={setChecked} />`}
+<Switch checked={checked} onCheckedChange={setChecked} />`}
       >
         <div className="flex justify-center">
-          <button
-            role="switch"
-            aria-checked={checked}
-            onClick={() => setChecked(!checked)}
-            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-              checked ? 'bg-bear-500' : 'bg-gray-300 dark:bg-gray-600'
-            }`}
-          >
-            <span
-              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                checked ? 'translate-x-6' : 'translate-x-1'
-              }`}
-            />
-          </button>
+          <Switch checked={checked} onCheckedChange={setChecked} />
         </div>
       </ComponentPreview>
 
       <ComponentPreview
         title="With Label"
-        description="Switch with associated label."
-        code={`<Switch label="Enable notifications" />
-<Switch label="Dark mode" labelPlacement="start" />`}
+        description="Switch with label text."
+        code={`<Switch 
+  label="Enable notifications" 
+  checked={notifications} 
+  onCheckedChange={setNotifications} 
+/>`}
       >
-        <div className="flex flex-col gap-4 items-center">
-          <label className="flex items-center gap-3 cursor-pointer">
-            <button className="relative inline-flex h-6 w-11 items-center rounded-full bg-bear-500">
-              <span className="inline-block h-4 w-4 transform rounded-full bg-white translate-x-6" />
-            </button>
-            <span className="text-gray-700 dark:text-gray-300">Enable notifications</span>
-          </label>
-          <label className="flex items-center gap-3 cursor-pointer">
-            <span className="text-gray-700 dark:text-gray-300">Dark mode</span>
-            <button className="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-300 dark:bg-gray-600">
-              <span className="inline-block h-4 w-4 transform rounded-full bg-white translate-x-1" />
-            </button>
-          </label>
+        <div className="flex flex-col gap-4 items-start mx-auto max-w-xs">
+          <Switch 
+            label="Enable notifications" 
+            checked={notifications} 
+            onCheckedChange={setNotifications} 
+          />
+          <Switch 
+            label="Dark mode" 
+            checked={darkMode} 
+            onCheckedChange={setDarkMode} 
+          />
         </div>
       </ComponentPreview>
 
       <ComponentPreview
         title="Sizes"
-        description="Different switch sizes."
-        code={`<Switch size="sm" />
-<Switch size="md" />
-<Switch size="lg" />`}
+        description="Available switch sizes."
+        code={`<Switch size="sm" label="Small" />
+<Switch size="md" label="Medium" />
+<Switch size="lg" label="Large" />`}
       >
-        <div className="flex items-center justify-center gap-6">
-          <div className="text-center">
-            <button className="relative inline-flex h-4 w-8 items-center rounded-full bg-bear-500 mb-2">
-              <span className="inline-block h-3 w-3 transform rounded-full bg-white translate-x-4" />
-            </button>
-            <p className="text-xs text-gray-500">sm</p>
-          </div>
-          <div className="text-center">
-            <button className="relative inline-flex h-6 w-11 items-center rounded-full bg-bear-500 mb-2">
-              <span className="inline-block h-4 w-4 transform rounded-full bg-white translate-x-6" />
-            </button>
-            <p className="text-xs text-gray-500">md</p>
-          </div>
-          <div className="text-center">
-            <button className="relative inline-flex h-8 w-14 items-center rounded-full bg-bear-500 mb-2">
-              <span className="inline-block h-6 w-6 transform rounded-full bg-white translate-x-7" />
-            </button>
-            <p className="text-xs text-gray-500">lg</p>
-          </div>
+        <div className="flex flex-col gap-4 items-start mx-auto max-w-xs">
+          <Switch size="sm" label="Small switch" defaultChecked />
+          <Switch size="md" label="Medium switch" defaultChecked />
+          <Switch size="lg" label="Large switch" defaultChecked />
         </div>
       </ComponentPreview>
 
       <ComponentPreview
-        title="Colors"
-        description="Different color variants."
-        code={`<Switch color="primary" />
-<Switch color="secondary" />
-<Switch color="success" />
-<Switch color="warning" />`}
+        title="With Icons"
+        description="Switch with custom icons."
+        code={`<Switch 
+  label="Theme" 
+  checkedIcon={<span>🌙</span>}
+  uncheckedIcon={<span>☀️</span>}
+/>`}
       >
-        <div className="flex items-center justify-center gap-4">
-          {[
-            { color: 'bg-bear-500', label: 'primary' },
-            { color: 'bg-purple-500', label: 'secondary' },
-            { color: 'bg-green-500', label: 'success' },
-            { color: 'bg-amber-500', label: 'warning' },
-          ].map(({ color, label }) => (
-            <div key={label} className="text-center">
-              <button className={`relative inline-flex h-6 w-11 items-center rounded-full ${color} mb-2`}>
-                <span className="inline-block h-4 w-4 transform rounded-full bg-white translate-x-6" />
-              </button>
-              <p className="text-xs text-gray-500">{label}</p>
-            </div>
-          ))}
+        <div className="flex flex-col gap-4 items-start mx-auto max-w-xs">
+          <Switch 
+            label="Theme mode"
+            checkedIcon={<span>🌙</span>}
+            uncheckedIcon={<span>☀️</span>}
+            defaultChecked
+          />
         </div>
       </ComponentPreview>
 
       <ComponentPreview
         title="Disabled"
-        description="Disabled switch state."
-        code={`<Switch disabled />
-<Switch disabled checked />`}
+        description="Disabled switch states."
+        code={`<Switch label="Disabled off" disabled />
+<Switch label="Disabled on" disabled defaultChecked />`}
       >
-        <div className="flex items-center justify-center gap-6">
-          <button className="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-200 dark:bg-gray-700 opacity-50 cursor-not-allowed">
-            <span className="inline-block h-4 w-4 transform rounded-full bg-white translate-x-1" />
-          </button>
-          <button className="relative inline-flex h-6 w-11 items-center rounded-full bg-bear-300 opacity-50 cursor-not-allowed">
-            <span className="inline-block h-4 w-4 transform rounded-full bg-white translate-x-6" />
-          </button>
+        <div className="flex flex-col gap-4 items-start mx-auto max-w-xs">
+          <Switch label="Disabled off" disabled />
+          <Switch label="Disabled on" disabled defaultChecked />
         </div>
       </ComponentPreview>
 
@@ -147,11 +113,13 @@ const SwitchPage: FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-              <tr><td className="px-4 py-3 font-mono text-bear-600">checked</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Checked state</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">onChange</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>(checked: boolean) =&gt; void</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Change handler</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">size</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>sm | md | lg</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">md</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Switch size</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">color</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>primary | secondary | success | warning</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">primary</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Color variant</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">checked</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Controlled state</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">defaultChecked</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Initial state</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">onCheckedChange</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>(checked: boolean) =&gt; void</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Change handler</td></tr>
               <tr><td className="px-4 py-3 font-mono text-bear-600">label</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Label text</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">size</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>sm | md | lg</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">md</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Switch size</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">checkedIcon</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Icon when checked</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">uncheckedIcon</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Icon when unchecked</td></tr>
               <tr><td className="px-4 py-3 font-mono text-bear-600">disabled</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Disabled state</td></tr>
             </tbody>
           </table>

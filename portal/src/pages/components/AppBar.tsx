@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
+import { AppBar, Button, Avatar, Typography } from '@forgedevstack/bear';
 
 const AppBarPage: FC = () => {
   return (
@@ -13,7 +14,7 @@ const AppBarPage: FC = () => {
       <section className="mb-12">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Import</h2>
         <CodeBlock
-          code={`import { AppBar } from '@forgedevstack/bear';`}
+          code={`import { AppBar, Typography } from '@forgedevstack/bear';`}
           language="tsx"
           showLineNumbers={false}
         />
@@ -21,70 +22,117 @@ const AppBarPage: FC = () => {
 
       <ComponentPreview
         title="Basic"
-        description="Simple app bar with title and actions."
-        code={`<AppBar>
-  <h1>My App</h1>
-  <nav>...</nav>
-</AppBar>`}
+        description="Simple app bar with Typography for text."
+        code={`<AppBar
+  leftContent={<Typography variant="h6" color="#fff">My App</Typography>}
+  rightContent={<Button variant="ghost">Login</Button>}
+/>`}
       >
-        <div className="w-full bg-bear-600 text-white px-4 py-3 flex items-center justify-between rounded-lg">
-          <h1 className="text-lg font-semibold">My Application</h1>
-          <nav className="flex items-center gap-4">
-            <a href="#" className="hover:opacity-80">Home</a>
-            <a href="#" className="hover:opacity-80">About</a>
-            <a href="#" className="hover:opacity-80">Contact</a>
-          </nav>
+        <div className="w-full">
+          <AppBar
+            leftContent={<Typography variant="h6" color="#fff">My App</Typography>}
+            rightContent={<Button variant="ghost" size="sm">Login</Button>}
+          />
         </div>
       </ComponentPreview>
 
       <ComponentPreview
-        title="With Search"
-        description="Include a search input in the app bar."
-        code={`<AppBar>
-  <Logo />
-  <SearchInput />
-  <UserMenu />
-</AppBar>`}
+        title="With Navigation"
+        description="App bar with center navigation."
+        code={`<AppBar
+  leftContent={<Typography variant="h6" color="#fff">My App</Typography>}
+  centerContent={
+    <nav className="flex gap-4">
+      <Typography color="#fff" variant="body2">Home</Typography>
+      <Typography color="#fff" variant="body2">Products</Typography>
+    </nav>
+  }
+  rightContent={<Button>Get Started</Button>}
+/>`}
       >
-        <div className="w-full bg-white dark:bg-gray-800 shadow-md px-4 py-2 flex items-center justify-between rounded-lg">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-bear-500 rounded-lg" />
-            <span className="font-semibold text-gray-900 dark:text-white">Brand</span>
-          </div>
-          <div className="flex-1 max-w-md mx-4">
-            <input 
-              type="search" 
-              placeholder="Search..." 
-              className="w-full px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg text-sm dark:text-white"
-            />
-          </div>
-          <div className="flex items-center gap-3">
-            <button className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
-              <svg className="w-5 h-5 text-gray-600 dark:text-gray-300" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6z"/>
-              </svg>
-            </button>
-            <div className="w-8 h-8 bg-gray-300 dark:bg-gray-600 rounded-full" />
-          </div>
+        <div className="w-full">
+          <AppBar
+            leftContent={<Typography variant="h6" color="#fff" weight="bold">My App</Typography>}
+            centerContent={
+              <nav className="flex gap-6">
+                <Typography color="rgba(255,255,255,0.8)" variant="body2" className="hover:text-white cursor-pointer transition-colors">Home</Typography>
+                <Typography color="rgba(255,255,255,0.8)" variant="body2" className="hover:text-white cursor-pointer transition-colors">Products</Typography>
+                <Typography color="rgba(255,255,255,0.8)" variant="body2" className="hover:text-white cursor-pointer transition-colors">About</Typography>
+              </nav>
+            }
+            rightContent={<Button size="sm">Get Started</Button>}
+          />
         </div>
       </ComponentPreview>
 
       <ComponentPreview
-        title="Color Variants"
-        description="Different color schemes for the app bar."
-        code={`<AppBar color="primary">...</AppBar>
-<AppBar color="transparent">...</AppBar>`}
+        title="With Avatar"
+        description="App bar with user profile."
+        code={`<AppBar
+  leftContent={<Typography variant="h6" color="#fff">Dashboard</Typography>}
+  rightContent={<Avatar src="/avatar.jpg" size="sm" />}
+/>`}
       >
-        <div className="space-y-4">
-          <div className="w-full bg-bear-600 text-white px-4 py-3 flex items-center justify-between rounded-lg">
-            <span className="font-semibold">Primary</span>
-          </div>
-          <div className="w-full bg-gray-900 text-white px-4 py-3 flex items-center justify-between rounded-lg">
-            <span className="font-semibold">Dark</span>
-          </div>
-          <div className="w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-4 py-3 flex items-center justify-between rounded-lg">
-            <span className="font-semibold text-gray-900 dark:text-white">Light</span>
-          </div>
+        <div className="w-full">
+          <AppBar
+            leftContent={<Typography variant="h6" color="#fff" weight="bold">Dashboard</Typography>}
+            rightContent={<Avatar src="https://i.pravatar.cc/100?img=3" size="sm" />}
+          />
+        </div>
+      </ComponentPreview>
+
+      <ComponentPreview
+        title="Default Color (Light)"
+        description="Light colored app bar for light themes."
+        code={`<AppBar color="default">
+  ...
+</AppBar>`}
+      >
+        <div className="w-full">
+          <AppBar
+            color="default"
+            leftContent={<Typography variant="h6" weight="bold">Light AppBar</Typography>}
+            rightContent={<Button size="sm" variant="outline">Action</Button>}
+          />
+        </div>
+      </ComponentPreview>
+
+      <ComponentPreview
+        title="Dark Color"
+        description="Dark colored app bar."
+        code={`<AppBar color="dark">
+  ...
+</AppBar>`}
+      >
+        <div className="w-full">
+          <AppBar
+            color="dark"
+            leftContent={<Typography variant="h6" color="#fff" weight="bold">Dark AppBar</Typography>}
+            rightContent={<Button size="sm">Action</Button>}
+          />
+        </div>
+      </ComponentPreview>
+
+      <ComponentPreview
+        title="Transparent Variant"
+        description="Transparent app bar for hero sections."
+        code={`<AppBar variant="transparent" color="default">
+  ...
+</AppBar>`}
+      >
+        <div className="w-full bg-gradient-to-r from-pink-500 to-purple-600 rounded-lg p-1">
+          <AppBar
+            variant="transparent"
+            color="default"
+            leftContent={<Typography variant="h6" color="#fff" weight="bold">Brand</Typography>}
+            centerContent={
+              <nav className="flex gap-6">
+                <Typography color="rgba(255,255,255,0.9)" variant="body2">Features</Typography>
+                <Typography color="rgba(255,255,255,0.9)" variant="body2">Pricing</Typography>
+              </nav>
+            }
+            rightContent={<Button variant="outline" size="sm">Sign In</Button>}
+          />
         </div>
       </ComponentPreview>
 
@@ -101,9 +149,13 @@ const AppBarPage: FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-              <tr><td className="px-4 py-3 font-mono text-bear-600">children</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">App bar content</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">position</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>fixed | sticky | static</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">sticky</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Positioning behavior</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">color</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>primary | transparent | default</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">primary</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Color scheme</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">position</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>fixed | sticky | static | relative</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">sticky</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Position type</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">variant</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>default | transparent | blur</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">default</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Visual style</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">color</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>default | primary | dark</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">primary</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Color scheme</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">elevation</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">true</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Show shadow</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">leftContent</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Left section content</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">centerContent</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Center section content</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">rightContent</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Right section content</td></tr>
             </tbody>
           </table>
         </div>
@@ -113,4 +165,3 @@ const AppBarPage: FC = () => {
 };
 
 export default AppBarPage;
-

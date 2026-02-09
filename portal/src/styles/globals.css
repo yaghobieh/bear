@@ -125,6 +125,45 @@ body {
   font-family: 'IBM Plex Sans', system-ui, sans-serif;
   font-size: 14px;
   line-height: 1.6;
+  background-color: #f9fafb;
+  color: #111827;
+}
+
+.dark body,
+body.dark,
+html.dark body {
+  background-color: #09090b;
+  color: #fafafa;
+}
+
+/* Light mode styles for content area */
+.light-content {
+  background-color: #f9fafb;
+  color: #111827;
+}
+
+.dark .light-content {
+  background-color: #09090b;
+  color: #fafafa;
+}
+
+/* Props table light mode styling */
+.props-table {
+  color: #111827;
+  background-color: #ffffff;
+}
+
+.dark .props-table {
+  color: #fafafa;
+  background-color: #171717;
+}
+
+.props-table thead {
+  background-color: #f3f4f6;
+}
+
+.dark .props-table thead {
+  background-color: #262626;
 }
 
 /* Nav link active state */

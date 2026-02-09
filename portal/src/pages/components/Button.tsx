@@ -101,6 +101,68 @@ const [loading, setLoading] = useState(false);
         </div>
       </ComponentPreview>
 
+      <ComponentPreview
+        title="Spotlight Effect"
+        description="Add a mouse-follow spotlight hover effect for premium interactions. The spotlight follows the cursor position."
+        code={`// Basic spotlight
+<Button spotlight>Hover me!</Button>
+
+// Custom spotlight color and size
+<Button 
+  spotlight 
+  spotlightColor="rgba(255, 255, 255, 0.25)" 
+  spotlightSize={150}
+>
+  Custom Spotlight
+</Button>
+
+// Works with all variants
+<Button variant="secondary" spotlight>Secondary</Button>
+<Button variant="danger" spotlight>Danger</Button>`}
+      >
+        <div className="flex flex-wrap gap-4 justify-center">
+          <Button spotlight>Hover me!</Button>
+          <Button spotlight spotlightColor="rgba(255, 255, 255, 0.25)" spotlightSize={150}>
+            Custom Spotlight
+          </Button>
+          <Button variant="secondary" spotlight>Secondary</Button>
+          <Button variant="danger" spotlight>Danger</Button>
+        </div>
+      </ComponentPreview>
+
+      <ComponentPreview
+        title="Custom Variants"
+        description="Create your own button variants via BearProvider's customVariants prop. Define brand colors once, use everywhere!"
+        code={`// In your app's BearProvider
+<BearProvider
+  customVariants={{
+    brand: { bg: '#ec4899', bgHover: '#db2777', text: '#ffffff' },
+    ocean: { bg: '#0ea5e9', bgHover: '#0284c7', text: '#ffffff' },
+    forest: { bg: '#22c55e', bgHover: '#16a34a', text: '#ffffff' },
+    sunset: { bg: '#f97316', bgHover: '#ea580c', text: '#ffffff' },
+  }}
+>
+  <App />
+</BearProvider>
+
+// Then use anywhere in your app!
+<Button variant="brand">Brand</Button>
+<Button variant="ocean">Ocean</Button>
+<Button variant="forest">Forest</Button>
+<Button variant="sunset">Sunset</Button>
+
+// Add variants at runtime with useBearVariants hook
+const { addVariant } = useBearVariants();
+addVariant('custom', { bg: '#8b5cf6', text: '#fff' });`}
+      >
+        <div className="flex flex-wrap gap-4 justify-center">
+          <Button variant="brand">Brand</Button>
+          <Button variant="ocean">Ocean</Button>
+          <Button variant="forest">Forest</Button>
+          <Button variant="sunset">Sunset</Button>
+        </div>
+      </ComponentPreview>
+
       <section className="mb-12">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
           Props
@@ -155,6 +217,46 @@ const [loading, setLoading] = useState(false);
                 </td>
                 <td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td>
                 <td className="px-4 py-3 text-gray-600 dark:text-gray-400">Make button full width</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-mono text-bear-600">spotlight</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">
+                  <code>boolean</code>
+                </td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">Enable mouse-follow spotlight hover effect</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-mono text-bear-600">spotlightColor</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">
+                  <code>string</code>
+                </td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">rgba(255,255,255,0.35)</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">Color of the spotlight effect</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-mono text-bear-600">spotlightSize</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">
+                  <code>number</code>
+                </td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">150</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">Size of the spotlight in pixels</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-mono text-bear-600">leftIcon</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">
+                  <code>ReactNode</code>
+                </td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">Icon to show before text</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-mono text-bear-600">rightIcon</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">
+                  <code>ReactNode</code>
+                </td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">Icon to show after text</td>
               </tr>
             </tbody>
           </table>

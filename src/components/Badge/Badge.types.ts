@@ -1,11 +1,11 @@
 import type { HTMLAttributes } from 'react';
-import type { EmberSize, EmberVariant } from '../../types';
+import type { BearSize, BearVariant } from '../../types';
 
 export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   /** Badge variant */
-  variant?: EmberVariant | 'neutral';
+  variant?: BearVariant | 'neutral';
   /** Badge size */
-  size?: Exclude<EmberSize, 'xl'>;
+  size?: Exclude<BearSize, 'xl'>;
   /** Whether badge is pill shaped */
   pill?: boolean;
   /** Whether badge has a dot indicator */

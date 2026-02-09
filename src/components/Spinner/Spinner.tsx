@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import { cn } from '@utils';
-import type { EmberSize } from '../../types';
+import type { BearSize } from '../../types';
 import type { SpinnerProps } from './Spinner.types';
 
-const sizeClasses: Record<EmberSize, string> = {
+const sizeClasses: Record<BearSize, string> = {
   xs: 'bear-w-3 bear-h-3',
   sm: 'bear-w-4 bear-h-4',
   md: 'bear-w-6 bear-h-6',

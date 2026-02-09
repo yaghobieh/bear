@@ -1,16 +1,16 @@
-import type { EmberSize, EmberVariant } from '../../types';
+import type { BearSize, BearVariant } from '../../types';
 
 /** Dot size utility classes (bear-w-1.5 bear-h-1.5). */
 export const BADGE_DOT_SIZE_CLASSES = 'bear-w-1.5 bear-h-1.5';
 
-export const sizeClasses: Record<Exclude<EmberSize, 'xl'>, string> = {
+export const sizeClasses: Record<Exclude<BearSize, 'xl'>, string> = {
   xs: 'bear-px-1.5 bear-py-0.5 bear-text-[10px]',
   sm: 'bear-px-2 bear-py-0.5 bear-text-xs',
   md: 'bear-px-2.5 bear-py-1 bear-text-xs',
   lg: 'bear-px-3 bear-py-1.5 bear-text-sm',
 };
 
-export const variantClasses: Record<EmberVariant | 'neutral', string> = {
+export const variantClasses: Record<BearVariant | 'neutral', string> = {
   primary: 'bear-bg-bear-100 bear-text-bear-700 dark:bear-bg-bear-900/30 dark:bear-text-bear-400',
   secondary: 'bear-bg-forge-100 bear-text-forge-700 dark:bear-bg-forge-900/30 dark:bear-text-forge-400',
   success: 'bear-bg-green-100 bear-text-green-700 dark:bear-bg-green-900/30 dark:bear-text-green-400',
@@ -23,7 +23,7 @@ export const variantClasses: Record<EmberVariant | 'neutral', string> = {
   neutral: 'bear-bg-gray-100 bear-text-gray-600 dark:bear-bg-gray-800 dark:bear-text-gray-400',
 };
 
-export const dotVariantColors: Record<EmberVariant | 'neutral', string> = {
+export const dotVariantColors: Record<BearVariant | 'neutral', string> = {
   primary: 'bear-bg-bear-500',
   secondary: 'bear-bg-forge-500',
   success: 'bear-bg-green-500',

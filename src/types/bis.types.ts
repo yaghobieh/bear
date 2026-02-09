@@ -1,5 +1,5 @@
 /**
- * Bear Inner Style (bis) - MUI sx-like prop for inline styling
+ * Bear Inner Style (bis) - Powerful prop for inline styling
  * Use bis to override or extend component styles without className.
  */
 

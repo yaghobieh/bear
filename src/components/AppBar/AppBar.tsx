@@ -6,7 +6,7 @@ export const AppBar: FC<AppBarProps> = ({
   children,
   position = 'sticky',
   variant = 'default',
-  color = 'default',
+  color = 'primary',
   className,
   leftContent,
   rightContent,
@@ -21,33 +21,35 @@ export const AppBar: FC<AppBarProps> = ({
   };
 
   const variantClasses = {
-    default:
-      'bear-bg-white bear-text-gray-900 dark:bear-bg-zinc-900 dark:bear-text-white',
+    default: '',
     transparent: 'bear-bg-transparent',
-    blur:
-      'bear-bg-white/80 dark:bear-bg-zinc-900/80 bear-backdrop-blur-md',
+    blur: 'bear-backdrop-blur-md',
   };
 
   const colorClasses = {
-    default: '',
-    primary: 'bear-bg-bear-600 bear-text-white',
-    dark: 'bear-bg-black bear-text-white',
+    default: 'bear-bg-white bear-text-gray-900 dark:bear-bg-zinc-900 dark:bear-text-white',
+    primary: 'bear-bg-pink-600 bear-text-white',
+    dark: 'bear-bg-gray-900 bear-text-white dark:bear-bg-black',
   };
 
   const elevationClasses = elevation
-    ? 'bear-shadow-lg bear-border-b bear-border-gray-200 dark:bear-border-zinc-800'
+    ? 'bear-shadow-md bear-border-b bear-border-gray-200/10'
     : '';
 
   return (
     <header
       className={cn(
+        'Bear-AppBar',
         'bear-w-full bear-h-16 bear-px-4 bear-flex bear-items-center',
         positionClasses[position],
-        variant !== 'transparent' && variantClasses[variant],
+        variantClasses[variant],
         colorClasses[color],
         elevationClasses,
         className
       )}
+      style={{
+        backgroundColor: color === 'primary' ? 'var(--bear-primary-600)' : undefined,
+      }}
     >
       {children ?? (
         <>

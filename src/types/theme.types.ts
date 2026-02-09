@@ -135,6 +135,28 @@ export interface BearTheme {
   mode: 'light' | 'dark';
 }
 
+/**
+ * Variant color configuration for theming
+ */
+export interface VariantColors {
+  /** Base/default color */
+  main: string;
+  /** Lighter variant */
+  light: string;
+  /** Darker variant */
+  dark: string;
+  /** Contrast text color */
+  contrastText: string;
+  /** Hover state */
+  hover?: string;
+  /** Active/pressed state */
+  active?: string;
+  /** Disabled state */
+  disabled?: string;
+  /** Focus ring */
+  focusRing?: string;
+}
+
 export type DeepPartial<T> = {
   [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
 };
@@ -143,5 +165,69 @@ export type BearThemeOverride = DeepPartial<BearTheme>;
 
 /** Size variant for Bear components */
 export type BearSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+
+/** @deprecated Use BearSize instead */
+export type EmberSize = BearSize;
+
+/** Built-in variant types */
+export type BearVariant = 
+  | 'primary'
+  | 'secondary'
+  | 'success'
+  | 'warning'
+  | 'danger'
+  | 'info'
+  | 'ghost'
+  | 'outline'
+  | 'error';
+
+/** @deprecated Use BearVariant instead */
+export type EmberVariant = BearVariant;
+
+/**
+ * Custom variant configuration
+ * Define your own color variants for components
+ */
+export interface CustomVariant {
+  /** Main background color */
+  bg: string;
+  /** Hover background color */
+  bgHover?: string;
+  /** Active/pressed background color */
+  bgActive?: string;
+  /** Text color */
+  text?: string;
+  /** Border color (for outline variants) */
+  border?: string;
+  /** Focus ring color */
+  ring?: string;
+}
+
+/**
+ * Extended theme with custom variants
+ */
+export interface BearExtendedColors extends BearColors {
+  /** Custom color palettes - add your own! */
+  [key: string]: BearColorScale | { primary: string; secondary: string; tertiary: string } | { primary: string; secondary: string; muted: string; inverted: string } | { default: string; subtle: string; strong: string };
+}
+
+/**
+ * Custom variants map - lets you create custom button variants
+ * Example: { redBrand: { bg: '#ff0000', text: '#fff' } }
+ */
+export type CustomVariantsMap = Record<string, CustomVariant>;
+
+/**
+ * Responsive prop type - allows values per breakpoint
+ * @example { base: 2, md: 4, lg: 6 }
+ */
+export type ResponsiveProp<T> = T | {
+  base?: T;
+  sm?: T;
+  md?: T;
+  lg?: T;
+  xl?: T;
+  '2xl'?: T;
+};
 
 

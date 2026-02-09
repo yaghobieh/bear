@@ -1,8 +1,9 @@
-import { FC, ElementType } from 'react';
+import { FC, ElementType, useContext, useMemo, CSSProperties } from 'react';
 import { cn } from '@utils';
-import type { TypographyProps, TypographyVariant } from './Typography.types';
+import type { TypographyProps, BuiltInTypographyVariant, CustomTypography } from './Typography.types';
+import { BearContext } from '../../context/BearProvider';
 
-const VARIANT_MAP: Record<TypographyVariant, ElementType> = {
+const VARIANT_MAP: Record<BuiltInTypographyVariant, ElementType> = {
   h1: 'h1',
   h2: 'h2',
   h3: 'h3',
@@ -16,9 +17,10 @@ const VARIANT_MAP: Record<TypographyVariant, ElementType> = {
   caption: 'span',
   overline: 'span',
   code: 'code',
+  inherit: 'span',
 };
 
-const VARIANT_CLASSES: Record<TypographyVariant, string> = {
+const VARIANT_CLASSES: Record<BuiltInTypographyVariant, string> = {
   h1: 'bear-text-5xl bear-font-bold bear-tracking-tight',
   h2: 'bear-text-4xl bear-font-bold bear-tracking-tight',
   h3: 'bear-text-3xl bear-font-semibold',
@@ -32,6 +34,7 @@ const VARIANT_CLASSES: Record<TypographyVariant, string> = {
   caption: 'bear-text-xs',
   overline: 'bear-text-xs bear-uppercase bear-tracking-wider',
   code: 'bear-text-sm bear-font-mono bear-bg-gray-100 dark:bear-bg-gray-800 bear-px-1.5 bear-py-0.5 bear-rounded',
+  inherit: '', // Inherits all styles from parent
 };
 
 const WEIGHT_CLASSES = {
@@ -42,6 +45,16 @@ const WEIGHT_CLASSES = {
   semibold: 'bear-font-semibold',
   bold: 'bear-font-bold',
   extrabold: 'bear-font-extrabold',
+};
+
+const WEIGHT_VALUES: Record<string, number> = {
+  thin: 100,
+  light: 300,
+  normal: 400,
+  medium: 500,
+  semibold: 600,
+  bold: 700,
+  extrabold: 800,
 };
 
 const ALIGN_CLASSES = {
@@ -67,14 +80,25 @@ const LINE_HEIGHT_CLASSES = {
   loose: 'bear-leading-loose',
 };
 
+/** Built-in variant names */
+const BUILT_IN_VARIANTS: BuiltInTypographyVariant[] = [
+  'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+  'subtitle1', 'subtitle2', 'body1', 'body2',
+  'caption', 'overline', 'code', 'inherit'
+];
+
 /**
  * Typography component for consistent text styling
  * 
  * @example
  * ```tsx
+ * // Built-in variants
  * <Typography variant="h1">Heading 1</Typography>
  * <Typography variant="body1" color="secondary">Body text</Typography>
- * <Typography variant="caption" truncate maxLines={2}>Long text...</Typography>
+ * 
+ * // Custom variants (defined in BearProvider)
+ * <Typography variant="b250">Custom 25px text</Typography>
+ * <Typography variant="display1">Large display text</Typography>
  * ```
  */
 export const Typography: FC<TypographyProps> = ({
@@ -98,16 +122,52 @@ export const Typography: FC<TypographyProps> = ({
   testId,
   ...props
 }) => {
-  const Component = component || VARIANT_MAP[variant];
+  const context = useContext(BearContext);
+  
+  // Check if this is a built-in variant
+  const isBuiltIn = BUILT_IN_VARIANTS.includes(variant as BuiltInTypographyVariant);
+  
+  // Get custom typography config if it's a custom variant
+  const customTypo: CustomTypography | undefined = useMemo(() => {
+    if (isBuiltIn || !context?.customTypography) return undefined;
+    return context.customTypography[variant];
+  }, [isBuiltIn, context?.customTypography, variant]);
+  
+  // Determine the component to render
+  const Component: ElementType = useMemo(() => {
+    if (component) return component;
+    if (customTypo?.component) return customTypo.component;
+    if (isBuiltIn) return VARIANT_MAP[variant as BuiltInTypographyVariant];
+    return 'span';
+  }, [component, customTypo, isBuiltIn, variant]);
   
   const isCustomColor = color && !COLOR_CLASSES[color as keyof typeof COLOR_CLASSES];
+
+  // Build custom styles for custom variants
+  const customStyles: CSSProperties = useMemo(() => {
+    if (!customTypo) return {};
+    
+    const styles: CSSProperties = {};
+    if (customTypo.fontSize) styles.fontSize = customTypo.fontSize;
+    if (customTypo.lineHeight) styles.lineHeight = customTypo.lineHeight;
+    if (customTypo.letterSpacing) styles.letterSpacing = customTypo.letterSpacing;
+    if (customTypo.textTransform) styles.textTransform = customTypo.textTransform;
+    if (customTypo.fontFamily) styles.fontFamily = customTypo.fontFamily;
+    if (customTypo.fontWeight) {
+      styles.fontWeight = typeof customTypo.fontWeight === 'number' 
+        ? customTypo.fontWeight 
+        : WEIGHT_VALUES[customTypo.fontWeight] || 400;
+    }
+    
+    return styles;
+  }, [customTypo]);
 
   return (
     <Component
       className={cn(
         'Bear-Typography',
         `Bear-Typography--${variant}`,
-        VARIANT_CLASSES[variant],
+        isBuiltIn && VARIANT_CLASSES[variant as BuiltInTypographyVariant],
         weight && WEIGHT_CLASSES[weight],
         align && ALIGN_CLASSES[align],
         !isCustomColor && color && COLOR_CLASSES[color as keyof typeof COLOR_CLASSES],
@@ -123,6 +183,7 @@ export const Typography: FC<TypographyProps> = ({
         className
       )}
       style={{
+        ...customStyles,
         ...style,
         ...(isCustomColor && { color }),
         ...(truncate && maxLines && {

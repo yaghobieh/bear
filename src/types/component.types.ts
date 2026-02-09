@@ -1,84 +1,139 @@
 /**
- * Bear Component Types
- * Shared types used across all Bear components
+ * Bear Component Customization Types
+ * Allows global component style overrides across your entire app
  */
 
-import { ReactNode, CSSProperties } from 'react';
+import type { CSSProperties } from 'react';
 
-// Size variants
-export type EmberSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-// BearSize is exported from theme.types.ts
-
-// Color variants
-export type EmberVariant = 
-  | 'primary' 
-  | 'secondary' 
-  | 'success' 
-  | 'warning' 
-  | 'danger' 
-  | 'info' 
-  | 'ghost' 
-  | 'outline'
-  | 'error'; // Added error variant
-
-export type BearVariant = EmberVariant; // Alias for Bear
-
-import type { BisProp } from './bis.types';
-
-// Common props shared across components
-export interface EmberBaseProps {
-  /** Additional CSS class names */
-  className?: string;
-  /** Inline styles */
-  style?: CSSProperties;
-  /** Bear Inner Style - sx-like overrides (object or (theme) => object) */
-  bis?: BisProp;
-  /** Children elements */
-  children?: ReactNode;
-  /** Test ID for testing */
-  testId?: string;
+/**
+ * Base component style override structure
+ */
+export interface ComponentStyleOverride {
+  root?: CSSProperties;
+  [key: string]: CSSProperties | undefined;
 }
 
-// Disabled state
-export interface EmberDisableableProps {
-  /** Whether the component is disabled */
-  disabled?: boolean;
+/**
+ * Button component parts that can be styled
+ */
+export interface ButtonStyleOverrides extends ComponentStyleOverride {
+  text?: CSSProperties;
+  icon?: CSSProperties;
+  spinner?: CSSProperties;
+  spotlight?: CSSProperties;
 }
 
-// Loading state
-export interface EmberLoadingProps {
-  /** Whether the component is in loading state */
-  loading?: boolean;
+/**
+ * Input component parts that can be styled
+ */
+export interface InputStyleOverrides extends ComponentStyleOverride {
+  input?: CSSProperties;
+  label?: CSSProperties;
+  helper?: CSSProperties;
+  prefix?: CSSProperties;
+  suffix?: CSSProperties;
 }
 
-// Responsive props helper
-export type ResponsiveProp<T> = T | {
-  base?: T;
-  sm?: T;
-  md?: T;
-  lg?: T;
-  xl?: T;
-  '2xl'?: T;
-};
+/**
+ * Card component parts that can be styled
+ */
+export interface CardStyleOverrides extends ComponentStyleOverride {
+  header?: CSSProperties;
+  body?: CSSProperties;
+  footer?: CSSProperties;
+}
 
-// Polymorphic component helper
-export type AsProp<C extends React.ElementType> = {
-  as?: C;
-};
+/**
+ * Modal component parts that can be styled
+ */
+export interface ModalStyleOverrides extends ComponentStyleOverride {
+  overlay?: CSSProperties;
+  content?: CSSProperties;
+  header?: CSSProperties;
+  body?: CSSProperties;
+  footer?: CSSProperties;
+  closeButton?: CSSProperties;
+}
 
-export type PropsToOmit<C extends React.ElementType, P> = keyof (AsProp<C> & P);
+/**
+ * All component style overrides
+ */
+export interface BearComponentOverrides {
+  Button?: ButtonStyleOverrides;
+  Input?: InputStyleOverrides;
+  Card?: CardStyleOverrides;
+  Modal?: ModalStyleOverrides;
+  Typography?: ComponentStyleOverride;
+  Badge?: ComponentStyleOverride;
+  Avatar?: ComponentStyleOverride;
+  Alert?: ComponentStyleOverride;
+  Tooltip?: ComponentStyleOverride;
+  Select?: ComponentStyleOverride;
+  Checkbox?: ComponentStyleOverride;
+  Radio?: ComponentStyleOverride;
+  Switch?: ComponentStyleOverride;
+  Tabs?: ComponentStyleOverride;
+  Table?: ComponentStyleOverride;
+  Sidebar?: ComponentStyleOverride;
+  AppBar?: ComponentStyleOverride;
+  Drawer?: ComponentStyleOverride;
+  Menu?: ComponentStyleOverride;
+  Dropdown?: ComponentStyleOverride;
+  Spinner?: ComponentStyleOverride;
+  Progress?: ComponentStyleOverride;
+  Skeleton?: ComponentStyleOverride;
+  Toast?: ComponentStyleOverride;
+}
 
-export type PolymorphicComponentProp<
-  C extends React.ElementType,
-  Props = object
-> = React.PropsWithChildren<Props & AsProp<C>> &
-  Omit<React.ComponentPropsWithoutRef<C>, PropsToOmit<C, Props>>;
+/**
+ * Variant color configuration - allows overriding colors per variant
+ */
+export interface VariantColorConfig {
+  /** Background color */
+  bg?: string;
+  /** Background color on hover */
+  bgHover?: string;
+  /** Background color on active/press */
+  bgActive?: string;
+  /** Background color when disabled */
+  bgDisabled?: string;
+  /** Text/foreground color */
+  text?: string;
+  /** Text color when disabled */
+  textDisabled?: string;
+  /** Border color */
+  border?: string;
+  /** Border color on hover */
+  borderHover?: string;
+  /** Border color when disabled */
+  borderDisabled?: string;
+  /** Focus ring color */
+  ring?: string;
+}
 
-export type PolymorphicRef<C extends React.ElementType> =
-  React.ComponentPropsWithRef<C>['ref'];
+/**
+ * Button variants color configuration
+ */
+export interface ButtonVariantsConfig {
+  primary?: VariantColorConfig;
+  secondary?: VariantColorConfig;
+  success?: VariantColorConfig;
+  warning?: VariantColorConfig;
+  danger?: VariantColorConfig;
+  info?: VariantColorConfig;
+  ghost?: VariantColorConfig;
+  outline?: VariantColorConfig;
+  error?: VariantColorConfig;
+}
 
-export type PolymorphicComponentPropWithRef<
-  C extends React.ElementType,
-  Props = object
-> = PolymorphicComponentProp<C, Props> & { ref?: PolymorphicRef<C> };
-
+/**
+ * Extended theme with component overrides
+ */
+export interface BearComponentsConfig {
+  /** Global component style overrides */
+  components?: BearComponentOverrides;
+  /** Variant color configurations */
+  variants?: {
+    Button?: ButtonVariantsConfig;
+  };
+}

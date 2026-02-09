@@ -1,10 +1,10 @@
-import type { EmberSize } from '../../types';
+import type { BearSize } from '../../types';
 
 export type CardRadius = 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 export type CardVariant = 'elevated' | 'outlined' | 'filled' | 'ghost';
 
 // Padding classes
-export const CARD_PADDING_CLASSES: Record<EmberSize | 'none', string> = {
+export const CARD_PADDING_CLASSES: Record<BearSize | 'none', string> = {
   none: '',
   xs: 'bear-p-2',
   sm: 'bear-p-3',

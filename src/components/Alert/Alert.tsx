@@ -1,7 +1,7 @@
 import { FC, useState, ReactNode } from 'react';
 import { cn } from '@utils';
 import type { AlertProps, AlertSeverity } from './Alert.types';
-import { ALERT_SEVERITY_COLORS, ALERT_VARIANT_CLASSES, ALERT_DEFAULTS } from './Alert.const';
+import { ALERT_VARIANT_CLASSES, ALERT_DEFAULTS } from './Alert.const';
 
 // Default icons for each severity
 const DefaultIcons: Record<AlertSeverity, ReactNode> = {
@@ -73,8 +73,20 @@ export const Alert: FC<AlertProps> = (props) => {
   
   if (!visible) return null;
 
-  const colors = ALERT_SEVERITY_COLORS[severity];
   const isFilled = variant === 'filled';
+
+  // Get colors based on severity - uses CSS variables for theme support
+  const getColors = () => {
+    const colorMap = {
+      success: { bg: 'var(--bear-success-50)', border: 'var(--bear-success-500)', text: 'var(--bear-success-800)', icon: 'var(--bear-success-600)' },
+      info: { bg: 'var(--bear-info-50)', border: 'var(--bear-info-500)', text: 'var(--bear-info-800)', icon: 'var(--bear-info-600)' },
+      warning: { bg: 'var(--bear-warning-50)', border: 'var(--bear-warning-500)', text: 'var(--bear-warning-800)', icon: 'var(--bear-warning-600)' },
+      error: { bg: 'var(--bear-danger-50)', border: 'var(--bear-danger-500)', text: 'var(--bear-danger-800)', icon: 'var(--bear-danger-600)' },
+    };
+    return colorMap[severity];
+  };
+  
+  const colors = getColors();
 
   const handleClose = () => {
     setVisible(false);

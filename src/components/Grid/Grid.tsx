@@ -85,8 +85,8 @@ export const Grid = forwardRef<HTMLDivElement, GridProps>(
         ref={ref}
         className={cn(
           'bear-grid',
-          colsValue !== undefined && colClasses[colsValue],
-          gapValue !== undefined && gapClasses[gapValue],
+          colsValue !== undefined && colClasses[colsValue as GridCols | 'none'],
+          gapValue !== undefined && gapClasses[gapValue as GridGap],
           rowGapValue !== undefined && `bear-gap-y-${rowGapValue}`,
           colGapValue !== undefined && `bear-gap-x-${colGapValue}`,
           flow && flowClasses[flow],

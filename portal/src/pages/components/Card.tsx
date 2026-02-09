@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
+import { Card, CardHeader, CardBody, CardFooter, Button, Avatar } from '@forgedevstack/bear';
 
 const CardPage: FC = () => {
   return (
@@ -12,135 +13,160 @@ const CardPage: FC = () => {
 
       <section className="mb-12">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Import</h2>
-        <CodeBlock code={`import { Card } from '@forgedevstack/bear';`} language="tsx" showLineNumbers={false} />
+        <CodeBlock code={`import { Card, CardHeader, CardBody, CardFooter } from '@forgedevstack/bear';`} language="tsx" showLineNumbers={false} />
       </section>
 
       <ComponentPreview
         title="Basic Card"
         description="Simple card with content."
         code={`<Card>
-  <Card.Body>
+  <CardBody>
     <p>Simple card content</p>
-  </Card.Body>
+  </CardBody>
 </Card>`}
       >
         <div className="max-w-sm mx-auto">
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
-            <p className="text-gray-600 dark:text-gray-400">This is a simple card with just content. Cards are flexible containers for any type of content.</p>
-          </div>
+          <Card>
+            <CardBody>
+              <p>This is a simple card with just content. Cards are flexible containers for any type of content.</p>
+            </CardBody>
+          </Card>
         </div>
       </ComponentPreview>
 
       <ComponentPreview
-        title="With Header & Footer"
-        description="Card with header, body, and footer sections."
+        title="With Header and Footer"
+        description="Card with header and footer sections."
         code={`<Card>
-  <Card.Header>Card Title</Card.Header>
-  <Card.Body>Card content...</Card.Body>
-  <Card.Footer>
+  <CardHeader title="Card Title" subtitle="Subtitle text" />
+  <CardBody>
+    <p>Card content goes here...</p>
+  </CardBody>
+  <CardFooter>
     <Button>Action</Button>
-  </Card.Footer>
+  </CardFooter>
 </Card>`}
       >
         <div className="max-w-sm mx-auto">
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
-            <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Card Title</h3>
-            </div>
-            <div className="px-6 py-4">
-              <p className="text-gray-600 dark:text-gray-400">This is the card body content. You can put any content here.</p>
-            </div>
-            <div className="px-6 py-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50">
-              <button className="px-4 py-2 bg-bear-500 text-white rounded-lg hover:bg-bear-600 transition-colors">
-                Action
-              </button>
-            </div>
-          </div>
+          <Card>
+            <CardHeader title="Card Title" subtitle="A helpful subtitle" />
+            <CardBody>
+              <p>This card has a header, body, and footer sections. Use them to organize your content.</p>
+            </CardBody>
+            <CardFooter>
+              <Button size="sm">Learn More</Button>
+            </CardFooter>
+          </Card>
         </div>
       </ComponentPreview>
 
       <ComponentPreview
-        title="With Image"
-        description="Card with media content."
-        code={`<Card>
-  <Card.Image src="/image.jpg" alt="Cover" />
-  <Card.Body>
-    <Card.Title>Image Card</Card.Title>
-    <p>Card with image content.</p>
-  </Card.Body>
-</Card>`}
+        title="Variants"
+        description="Different card styles."
+        code={`<Card variant="elevated">Elevated</Card>
+<Card variant="outlined">Outlined</Card>
+<Card variant="filled">Filled</Card>
+<Card variant="ghost">Ghost</Card>`}
       >
-        <div className="max-w-sm mx-auto">
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
-            <div className="h-48 bg-gradient-to-br from-bear-400 to-purple-500" />
-            <div className="p-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Image Card</h3>
-              <p className="text-gray-600 dark:text-gray-400">Card with a beautiful gradient image at the top.</p>
-            </div>
-          </div>
+        <div className="grid grid-cols-2 gap-4 max-w-lg mx-auto">
+          <Card variant="elevated">
+            <CardBody>
+              <p className="font-medium">Elevated</p>
+              <p className="text-sm text-gray-500">With shadow</p>
+            </CardBody>
+          </Card>
+          <Card variant="outlined">
+            <CardBody>
+              <p className="font-medium">Outlined</p>
+              <p className="text-sm text-gray-500">With border</p>
+            </CardBody>
+          </Card>
+          <Card variant="filled">
+            <CardBody>
+              <p className="font-medium">Filled</p>
+              <p className="text-sm text-gray-500">Solid background</p>
+            </CardBody>
+          </Card>
+          <Card variant="ghost">
+            <CardBody>
+              <p className="font-medium">Ghost</p>
+              <p className="text-sm text-gray-500">Minimal style</p>
+            </CardBody>
+          </Card>
         </div>
       </ComponentPreview>
 
       <ComponentPreview
         title="Interactive Card"
-        description="Hoverable card for clickable items."
-        code={`<Card hoverable onClick={() => {}}>
-  <Card.Body>Click me!</Card.Body>
-</Card>`}
-      >
-        <div className="grid grid-cols-2 gap-4 max-w-md mx-auto">
-          {[1, 2].map(i => (
-            <div
-              key={i}
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 cursor-pointer hover:shadow-lg hover:-translate-y-1 transition-all"
-            >
-              <div className="w-10 h-10 rounded-lg bg-bear-100 dark:bg-bear-900/30 text-bear-600 dark:text-bear-400 flex items-center justify-center mb-3">
-                {i === 1 ? '📦' : '🚀'}
-              </div>
-              <h4 className="font-medium text-gray-900 dark:text-white mb-1">
-                {i === 1 ? 'Feature One' : 'Feature Two'}
-              </h4>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Hover to see the interactive effect
-              </p>
-            </div>
-          ))}
-        </div>
-      </ComponentPreview>
-
-      <ComponentPreview
-        title="Outlined"
-        description="Card with border instead of shadow."
-        code={`<Card variant="outlined">
-  <Card.Body>Outlined card</Card.Body>
+        description="Cards with hover effects."
+        code={`<Card interactive onClick={() => {}}>
+  <CardBody>
+    <h3>Click me!</h3>
+  </CardBody>
 </Card>`}
       >
         <div className="max-w-sm mx-auto">
-          <div className="bg-white dark:bg-gray-800 rounded-xl border-2 border-gray-200 dark:border-gray-700 p-6">
-            <p className="text-gray-600 dark:text-gray-400">This card uses a border instead of a shadow for a flatter appearance.</p>
-          </div>
+          <Card interactive onClick={() => alert('Card clicked!')}>
+            <CardBody>
+              <h3 className="font-semibold text-lg mb-2">Interactive Card</h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm">
+                Click this card to trigger an action. Great for navigation.
+              </p>
+            </CardBody>
+          </Card>
         </div>
       </ComponentPreview>
 
       <ComponentPreview
-        title="Horizontal Layout"
-        description="Card with horizontal content arrangement."
-        code={`<Card direction="horizontal">
-  <Card.Image src="/image.jpg" width={200} />
-  <Card.Body>
-    <Card.Title>Horizontal Card</Card.Title>
-    <p>Content beside the image.</p>
-  </Card.Body>
+        title="Profile Card"
+        description="Card styled for user profiles."
+        code={`<Card>
+  <CardBody className="text-center">
+    <Avatar src="..." size="xl" />
+    <h3>John Doe</h3>
+    <p>Software Engineer</p>
+  </CardBody>
 </Card>`}
       >
-        <div className="max-w-lg mx-auto">
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden flex">
-            <div className="w-32 h-32 bg-gradient-to-br from-green-400 to-blue-500 flex-shrink-0" />
-            <div className="p-4 flex flex-col justify-center">
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Horizontal Card</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Content arranged horizontally next to the image.</p>
-            </div>
-          </div>
+        <div className="max-w-xs mx-auto">
+          <Card>
+            <CardBody className="text-center">
+              <Avatar src="https://i.pravatar.cc/100?img=3" size="xl" className="mx-auto mb-4" />
+              <h3 className="font-semibold text-lg">John Doe</h3>
+              <p className="text-gray-500 text-sm">Software Engineer</p>
+              <div className="mt-4 flex justify-center gap-2">
+                <Button size="sm" variant="outline">Follow</Button>
+                <Button size="sm">Message</Button>
+              </div>
+            </CardBody>
+          </Card>
+        </div>
+      </ComponentPreview>
+
+      <ComponentPreview
+        title="Card with Action in Header"
+        description="Header with action button."
+        code={`<Card>
+  <CardHeader 
+    title="Settings" 
+    action={<Button size="sm" variant="ghost">Edit</Button>} 
+  />
+  <CardBody>...</CardBody>
+</Card>`}
+      >
+        <div className="max-w-sm mx-auto">
+          <Card>
+            <CardHeader 
+              title="Settings" 
+              subtitle="Manage your preferences"
+              action={<Button size="sm" variant="ghost">Edit</Button>} 
+            />
+            <CardBody>
+              <p className="text-gray-600 dark:text-gray-400">
+                Configure your application settings here.
+              </p>
+            </CardBody>
+          </Card>
         </div>
       </ComponentPreview>
 
@@ -157,10 +183,10 @@ const CardPage: FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-              <tr><td className="px-4 py-3 font-mono text-bear-600">variant</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>elevated | outlined | flat</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">elevated</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Card style variant</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">hoverable</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Enable hover effect</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">direction</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>vertical | horizontal</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">vertical</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Content direction</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">padding</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>none | sm | md | lg</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">md</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Content padding</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">variant</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>elevated | outlined | filled | ghost</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">elevated</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Visual style</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">padding</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>xs | sm | md | lg | xl | none</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">md</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Card padding</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">radius</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>sm | md | lg | xl | 2xl | none</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">lg</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Border radius</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">interactive</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Hover effects</td></tr>
             </tbody>
           </table>
         </div>

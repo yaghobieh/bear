@@ -1,32 +1,42 @@
 import { forwardRef } from 'react';
-import { HighlightProps } from './Highlight.types';
+import { cn } from '@utils';
+import type { HighlightProps } from './Highlight.types';
+import { HIGHLIGHT_COLOR_CLASSES, DEFAULT_COLOR } from './Highlight.const';
 
-const colorClasses: Record<string, string> = {
-  yellow: 'bg-yellow-200 dark:bg-yellow-500/30',
-  pink: 'bg-pink-200 dark:bg-pink-500/30',
-  blue: 'bg-blue-200 dark:bg-blue-500/30',
-  green: 'bg-green-200 dark:bg-green-500/30',
-  purple: 'bg-purple-200 dark:bg-purple-500/30',
-  orange: 'bg-orange-200 dark:bg-orange-500/30',
-};
+/**
+ * Highlight - Inline text highlight with theme-aware colors.
+ * 'primary' color uses BearProvider's primary palette.
+ */
+export const Highlight = forwardRef<HTMLSpanElement, HighlightProps>(
+  (props, ref) => {
+    const {
+      children,
+      color = DEFAULT_COLOR,
+      animated = false,
+      className,
+      testId,
+      ...rest
+    } = props;
 
-export const Highlight = forwardRef<HTMLSpanElement, HighlightProps>(({
-  children,
-  color = 'yellow',
-  animated = false,
-  className = '',
-  ...props
-}, ref) => {
-  return (
-    <span
-      ref={ref}
-      className={`bear-highlight px-1 rounded ${colorClasses[color]} ${animated ? 'animate-pulse' : ''} ${className}`.trim()}
-      {...props}
-    >
-      {children}
-    </span>
-  );
-});
+    const colorCls = HIGHLIGHT_COLOR_CLASSES[color] ?? HIGHLIGHT_COLOR_CLASSES[DEFAULT_COLOR];
+
+    return (
+      <span
+        ref={ref}
+        className={cn(
+          'Bear-Highlight',
+          'bear-px-1 bear-rounded',
+          colorCls,
+          animated && 'bear-animate-pulse',
+          className,
+        )}
+        data-testid={testId}
+        {...rest}
+      >
+        {children}
+      </span>
+    );
+  }
+);
 
 Highlight.displayName = 'Highlight';
-

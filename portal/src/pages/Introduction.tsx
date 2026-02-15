@@ -104,7 +104,7 @@ const Introduction: FC = () => {
       <div className="text-center mb-16">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-pink-500/10 to-rose-500/10 border border-pink-500/20 text-pink-600 dark:text-pink-400 text-sm font-medium mb-6">
           <span>🚀</span>
-          <span>v1.0.8 — Enhanced ThemeProvider, useBearComponent hook, Button spotlight effect, full CSS variable theming, variant color config</span>
+          <span>v1.0.9 — Masonry, Watermark, Marquee, CountdownTimer, Spotlight, Typewriter, Dock, GradientText + Map, CodeEditor, Cropper & more</span>
         </div>
         
         <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
@@ -323,6 +323,40 @@ const Introduction: FC = () => {
                 <div className="w-3 h-5 bg-blue-500 rounded-t" />
                 <div className="w-3 h-8 bg-emerald-500 rounded-t" />
                 <div className="w-3 h-3 bg-amber-500 rounded-t" />
+              </div>
+            }
+          />
+          <ComponentExample
+            title="Map"
+            description="Interactive map with markers"
+            path="/components/map"
+            preview={
+              <div className="w-24 h-16 rounded bg-gradient-to-br from-blue-100 to-green-100 dark:from-blue-900/40 dark:to-green-900/40 relative overflow-hidden border border-gray-200 dark:border-gray-600">
+                <svg width="12" height="16" viewBox="0 0 32 42" className="absolute top-1 left-8">
+                  <path d="M16 0C7.16 0 0 7.16 0 16c0 12 16 26 16 26s16-14 16-26C32 7.16 24.84 0 16 0z" fill="#ec4899"/>
+                  <circle cx="16" cy="15" r="6" fill="white"/>
+                </svg>
+                <div className="absolute bottom-0 left-0 right-0 h-2 bg-gray-200/50 dark:bg-gray-700/50" />
+              </div>
+            }
+          />
+          <ComponentExample
+            title="CodeEditor"
+            description="Syntax-highlighted editor"
+            path="/components/code-editor"
+            preview={
+              <div className="w-24 h-14 bg-gray-900 rounded text-[6px] p-1 font-mono">
+                <span className="text-purple-400">const</span> <span className="text-blue-400">x</span> <span className="text-gray-400">=</span> <span className="text-green-400">42</span>
+              </div>
+            }
+          />
+          <ComponentExample
+            title="Cropper"
+            description="Image crop & rotate"
+            path="/components/cropper"
+            preview={
+              <div className="w-20 h-14 bg-gray-200 dark:bg-gray-700 rounded relative">
+                <div className="absolute inset-1 border-2 border-dashed border-pink-500 rounded" />
               </div>
             }
           />

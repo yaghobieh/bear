@@ -80,3 +80,11 @@ export type { UsePageVisibilityOptions, UsePageVisibilityReturn } from './usePag
 // Gesture Hooks
 export { useLongPress } from './useLongPress';
 export type { UseLongPressOptions, UseLongPressReturn } from './useLongPress';
+
+// Animation Hooks
+export { useAnimate } from './useAnimate';
+export type { UseAnimateOptions, UseAnimateReturn, AnimationPreset, AnimationKeyframe } from './useAnimate';
+
+// Responsive Hooks
+export { useResponsive, useResponsiveProps } from './useResponsive';
+export type { ResponsiveProp } from './useResponsive';

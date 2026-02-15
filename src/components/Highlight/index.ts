@@ -1,3 +1,2 @@
 export { Highlight } from './Highlight';
-export type { HighlightProps } from './Highlight.types';
-
+export type { HighlightProps, HighlightColor } from './Highlight.types';

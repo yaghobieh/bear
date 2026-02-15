@@ -286,6 +286,47 @@
   }
 }
 
+/* Marquee Gradient Masks */
+.Bear-Marquee--gradient-h {
+  mask-image: linear-gradient(to right, transparent, black var(--bear-marquee-gradient-w, 40px), black calc(100% - var(--bear-marquee-gradient-w, 40px)), transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black var(--bear-marquee-gradient-w, 40px), black calc(100% - var(--bear-marquee-gradient-w, 40px)), transparent);
+}
+.Bear-Marquee--gradient-v {
+  mask-image: linear-gradient(to bottom, transparent, black var(--bear-marquee-gradient-w, 40px), black calc(100% - var(--bear-marquee-gradient-w, 40px)), transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black var(--bear-marquee-gradient-w, 40px), black calc(100% - var(--bear-marquee-gradient-w, 40px)), transparent);
+}
+
+/* Marquee Keyframes */
+@keyframes bear-marquee-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+@keyframes bear-marquee-right {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+@keyframes bear-marquee-up {
+  from { transform: translateY(0); }
+  to { transform: translateY(-100%); }
+}
+@keyframes bear-marquee-down {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
+}
+
+/* Gradient Text Keyframes */
+@keyframes bear-gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Typewriter Cursor Blink */
+@keyframes bear-cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
 /* Animation Classes */
 .animate-grow-up {
   animation: grow-up 0.5s ease-out forwards;

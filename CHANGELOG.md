@@ -2,9 +2,265 @@
 
 All notable changes to Bear UI will be documented in this file.
 
-## [1.0.8] - 2026-02-08
+## [1.0.9] - 2026-02-15
 
 ### Added
+
+#### New Components (Batch 2)
+- **Masonry**: Pinterest-style masonry grid layout
+  - Responsive column breakpoints (base, sm, md, lg, xl)
+  - Configurable gap, auto-balancing across columns
+  - Lightweight, zero-dependency
+
+- **Watermark**: Overlay watermark text/image on content
+  - Multi-line text support
+  - Rotation, opacity, font customization
+  - Tamper prevention via MutationObserver
+  - Image watermark support
+
+- **Marquee**: Infinite scrolling content
+  - Horizontal and vertical directions
+  - Pause on hover/click
+  - Gradient edge fade
+  - Configurable speed and gap
+
+- **CountdownTimer**: Visual countdown with days/hours/min/sec
+  - 4 variants: default, card, flip, minimal
+  - 4 sizes: sm, md, lg, xl
+  - Duration or target date mode
+  - onComplete/onTick callbacks
+  - Custom render function
+
+- **Spotlight**: macOS-style search overlay (Cmd+K)
+  - Grouped actions with icons and descriptions
+  - Search highlighting
+  - Arrow key navigation
+  - Custom filter function
+  - Theme-aware via CSS variables
+
+- **Typewriter**: Animated typing text effect
+  - Multi-text looping
+  - Customizable type/delete speed
+  - Cursor with blink animation
+  - onComplete/onWordComplete callbacks
+  - Polymorphic HTML tag
+
+- **Dock**: macOS-style dock bar with magnification
+  - Hover magnification with configurable distance
+  - 4 positions: top, bottom, left, right
+  - Badges, active states, tooltips
+  - Glassmorphism backdrop
+
+- **GradientText**: Text with gradient colors
+  - 10 built-in presets (primary, sunset, ocean, forest, fire, purple, neon, candy, aurora, midnight)
+  - Custom color arrays
+  - 8 gradient directions
+  - Animated gradient shift
+  - Theme-aware primary preset
+
+#### New Components (Batch 1)
+- **Map**: Interactive map component with markers, zoom, and tile providers
+  - OpenStreetMap, CartoDB Light/Dark, Stamen Terrain providers
+  - Custom markers with labels, popups, icons, and colors
+  - Drag, scroll zoom, double-click zoom
+  - Controlled and uncontrolled viewport
+  - Full theme support (light/dark)
+
+- **CodeEditor**: Syntax-highlighted code editor with line numbers
+  - 14 languages (TypeScript, JavaScript, Python, HTML, CSS, JSON, SQL, Shell...)
+  - Dark and light themes (Catppuccin-inspired)
+  - Auto-indent, auto-close brackets, tab handling
+  - Read-only mode, word wrap, custom fonts
+  - Zero dependencies
+
+- **Cropper**: Image cropping component
+  - Aspect ratio presets (free, 1:1, 4:3, 16:9, etc.)
+  - Rectangle and circle crop shapes
+  - Zoom and rotation sliders
+  - Rule-of-thirds grid overlay
+  - Drag handles for precise cropping
+  - Outputs cropped image as data URL
+
+- **Transition**: Declarative enter/leave transition wrapper
+  - 11 built-in presets (fade, slide-up/down/left/right, scale, rotate, flip, collapse)
+  - Custom enter/leave styles
+  - Unmount on hide option
+  - Enter/leave lifecycle callbacks
+
+- **Motion**: Framer Motion-inspired animation component
+  - initial, animate, exit states
+  - whileHover, whileTap interactions
+  - Custom transition duration, delay, easing
+  - In-view trigger support
+
+#### Enhanced Components
+- **Carousel**: Major enhancements
+  - New transitions: `fade`, `zoom`, `flip` (in addition to `slide`)
+  - New indicator styles: `thumbnails`, `numbers`, `bars`, `dots`
+  - Progress bar for auto-play
+  - Slide counter display
+  - Keyboard navigation (arrow keys)
+  - Mouse drag to navigate
+  - Custom active color
+  - Transition duration control
+
+#### New Hooks
+- **useAnimate**: Programmatic Web Animations API hook
+  - 25+ built-in presets (fadeIn, bounceIn, shake, rubberBand, tada, wobble, jello...)
+  - Play, pause, cancel, reverse controls
+  - Custom keyframe support
+  - isPlaying / isFinished state
+
+- **useResponsive**: Resolves responsive prop values based on viewport
+  - `useResponsive({ base: 1, md: 2, lg: 4 })` returns correct value
+  - `useResponsiveProps` for resolving multiple props at once
+
+#### New Utilities
+- **createSlots**: Composable slot-based component pattern
+  - Named sub-components (like Radix UI)
+  - Required/multiple slot configuration
+  - Context-based slot distribution
+
+### Changed
+- Carousel now supports `transition`, `indicator`, `thumbnails`, `keyboard`, `draggable`, `showProgress`, `showCounter`, `activeColor` props
+- Updated portal documentation with new component pages
+
+---
+
+## [1.0.8] - 2026-02-09
+
+### Added
+
+#### New Components
+- **JsonViewer**: Pretty-print and explore JSON data
+  - Expandable/collapsible nodes with depth control
+  - Data type indicators and syntax highlighting
+  - Copy button and value click callbacks
+  - Theme-aware light/dark mode support
+
+- **DiffViewer**: Compare and visualize text/code differences
+  - Split and unified view modes
+  - Line numbers and diff statistics
+  - Addition/deletion highlighting
+  - Theme-aware colors
+
+- **Chat**: Full-featured chat interface
+  - Message bubbles with avatars and timestamps
+  - Typing indicator animation
+  - Message status (sending, sent, delivered, read)
+  - User/bot/system message types
+  - Loading states and disabled input
+
+- **FloatingChat**: Chat widget bubble
+  - Floating action button with badge count
+  - Animated open/close transitions
+  - Customizable position (bottom-left/right)
+  - Welcome message and powered-by footer
+  - Controlled and uncontrolled modes
+
+- **Terminal**: Console/terminal emulator
+  - Multi-theme support (dark, light, matrix)
+  - Command history with up/down navigation
+  - Customizable prompt (user@host:path$)
+  - Line types: input, output, error, success, warning, info, system
+  - Loading indicator and read-only mode
+
+#### New Hooks
+- **useOnline**: Detect online/offline network status
+- **useIdle**: Detect user inactivity with configurable timeout
+- **useLongPress**: Long press gesture detection
+- **useWebSocket**: WebSocket connection with auto-reconnect
+- **usePageVisibility**: Detect tab visibility changes
+
+### Documentation
+
+- Added documentation pages for all new v1.0.9 components (JsonViewer, DiffViewer, Chat, FloatingChat, Terminal)
+- Added documentation pages for all new v1.0.9 hooks (useOnline, useIdle, useLongPress, useWebSocket, usePageVisibility)
+- Updated sidebar navigation with new "Developer" and "Chat" component groups
+
+## [1.0.8] - 2026-02-09
+
+### Added
+
+- **Portal Documentation Improvements**: Better light/dark mode table styling for all component pages
+  - Props tables now have proper light mode text colors
+  - Added theme-aware background colors for table headers and body
+  - Prop names highlighted in pink for better visibility
+
+- **BackTop Component**: Scroll to top button with customizable visibility threshold
+  - Built on Bear's `Button` component for consistent styling and theming
+  - All Button variants supported (primary, secondary, ghost, etc.)
+  - Includes spotlight hover effect from Button
+  - Configurable size, position, and animation
+  - Custom content support
+
+- **Confetti Component**: Celebration confetti effect 🎉
+  - `useConfetti` hook for programmatic control
+  - Customizable colors, count, origin, spread, and velocity
+  - Auto-hide with duration and onComplete callback
+
+- **Tour Component**: Feature tour/onboarding walkthrough
+  - Step-by-step guided tours with spotlight effect
+  - Flexible placement options (12 positions)
+  - `useTour` hook for programmatic control
+  - Customizable buttons, indicators, and callbacks
+
+- **QRCode Component**: QR code generator
+  - Multiple error correction levels (L, M, Q, H)
+  - Custom colors and transparent backgrounds
+  - Center logo/image support
+  - SVG-based for crisp rendering at any size
+
+- **Custom Typography Variants**: Create your own typography like "b250", "display1"!
+  - Define in BearProvider: `customTypography={{ b250: { fontSize: '25px', fontWeight: 'bold' } }}`
+  - Use anywhere: `<Typography variant="b250">Custom text</Typography>`
+  - Runtime support: `addTypography('promo', { fontSize: '28px' })`
+  - Query functions: `hasTypography('b250')`, `getTypography('b250')`
+
+- **Simple Color Theming**: Pass a color string instead of a full color scale!
+  - `theme={{ colors: { primary: '#3b82f6' } }}` - auto-generates full 50-950 scale
+  - `theme={{ colors: { primary: 'blue' } }}` - named colors work too!
+  - Supported named colors: red, blue, green, yellow, orange, purple, pink, cyan, teal, indigo, violet, rose, amber, lime, emerald, sky, slate, gray, zinc, neutral, stone
+
+- **Custom Variants System**: Create your own button variants!
+  - Define custom variants in BearProvider: `customVariants={{ redBrand: { bg: '#dc2626', bgHover: '#b91c1c', text: '#fff' } }}`
+  - Use anywhere: `<Button variant="redBrand">Click me</Button>`
+  - Add variants at runtime: `addVariant('myBrand', { bg: '#...', text: '#fff' })`
+  - Check if variant exists: `hasVariant('myBrand')`
+  - Get variant config: `getVariant('myBrand')`
+
+- **useBearVariants Hook**: Work with custom variants programmatically
+  - `const { customVariants, hasVariant, getVariant, addVariant } = useBearVariants()`
+
+- **BearContext Export**: Context now exported for advanced use cases
+
+### Changed
+
+- **Button**: Now supports custom variants alongside built-in variants
+  - Variant prop accepts any string (with TypeScript autocomplete for built-in)
+  - Custom variants get automatic hover states via CSS brightness filter
+  - Custom variant CSS variables: `--bear-{variantName}-bg`, `--bear-{variantName}-text`, etc.
+
+- **Type Naming**: Renamed `EmberSize` → `BearSize`, `EmberVariant` → `BearVariant`
+  - Old names still exported as deprecated aliases for backward compatibility
+
+- **Default Primary Color**: Changed from amber (#f97316) to Bear's signature pink (#ec4899)
+
+### Fixed
+
+- TypeScript build errors in Grid, Flex, useBearComponent, and BearProvider
+- Deep merge type safety improvements
+- **Alert Component**: Now uses CSS variables for theme-aware colors (`--bear-success-*`, `--bear-danger-*`, etc.)
+- **BottomSheet Component**: Now properly supports light/dark themes
+- **Drawer Component**: Now properly supports light/dark themes
+- **BackTop Component**: Theme-aware colors using CSS variables
+
+### Documentation
+
+- **Enhanced Theming Page**: Complete guide with simple color strings, custom variants, and useBear hook
+- **Updated Component Pages**: All pages now use real Bear components instead of mock HTML
+  - Accordion, AppBar, Avatar, Card, Checkbox, Modal, Switch updated with correct component APIs
+  - Live examples now actually render Bear components
 
 - **useBearComponent / useBC Hook**: New hook for global component customization
   - Register style overrides for any component: `useBearComponent('Button', { root: { borderRadius: '9999px' } })`

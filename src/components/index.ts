@@ -109,6 +109,8 @@ export type { RadioProps, RadioGroupProps } from './Radio';
 
 export { MultiSelect } from './MultiSelect';
 export type { MultiSelectProps, MultiSelectOption } from './MultiSelect';
+export { NavigableSelect } from './NavigableSelect';
+export type { NavigableSelectProps, NavigableSelectOption, NavigableSelectSize } from './NavigableSelect';
 
 export { Autocomplete } from './Autocomplete';
 export type { AutocompleteProps, AutocompleteOption } from './Autocomplete';
@@ -121,7 +123,7 @@ export { DataTable, createColumns } from './DataTable';
 export type { DataTableProps, DataTableColumn } from './DataTable';
 
 export { Carousel } from './Carousel';
-export type { CarouselProps } from './Carousel';
+export type { CarouselProps, CarouselTransition, CarouselIndicator } from './Carousel';
 
 export { Accordion, AccordionItem } from './Accordion';
 export type { AccordionProps, AccordionItemProps } from './Accordion';
@@ -448,3 +450,51 @@ export type { FloatingChatProps } from './FloatingChat';
 // Terminal
 export { Terminal } from './Terminal';
 export type { TerminalProps, TerminalLine, TerminalLineType } from './Terminal';
+
+// Map
+export { Map } from './Map';
+export type { MapProps, MapMarker, MapViewport, MapTileProvider } from './Map';
+
+// CodeEditor
+export { CodeEditor } from './CodeEditor';
+export type { CodeEditorProps, CodeEditorLanguage, CodeEditorTheme, SyntaxToken, TokenType } from './CodeEditor';
+
+// Cropper
+export { Cropper } from './Cropper';
+export type { CropperProps, CropArea, AspectRatioPreset, CropShape } from './Cropper';
+
+// Transition & Motion (Animation)
+export { Transition, Motion } from './Transition';
+export type { TransitionProps, MotionProps, TransitionName } from './Transition';
+
+// Masonry
+export { Masonry } from './Masonry';
+export type { MasonryProps } from './Masonry';
+
+// Watermark
+export { Watermark } from './Watermark';
+export type { WatermarkProps } from './Watermark';
+
+// Marquee
+export { Marquee } from './Marquee';
+export type { MarqueeProps, MarqueeDirection } from './Marquee';
+
+// CountdownTimer
+export { CountdownTimer } from './CountdownTimer';
+export type { CountdownTimerProps, CountdownTime, CountdownTimerVariant, CountdownTimerSize } from './CountdownTimer';
+
+// Spotlight
+export { Spotlight } from './Spotlight';
+export type { SpotlightProps, SpotlightAction } from './Spotlight';
+
+// Typewriter
+export { Typewriter } from './Typewriter';
+export type { TypewriterProps } from './Typewriter';
+
+// Dock
+export { Dock } from './Dock';
+export type { DockProps, DockItem, DockPosition } from './Dock';
+
+// GradientText
+export { GradientText } from './GradientText';
+export type { GradientTextProps, GradientPreset, GradientDirection } from './GradientText';

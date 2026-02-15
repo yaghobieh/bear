@@ -159,7 +159,7 @@ const KanbanPage = lazy(() => import('./pages/components/Kanban'));
 const EmojiPickerPage = lazy(() => import('./pages/components/EmojiPicker'));
 const VirtualListPage = lazy(() => import('./pages/components/VirtualList'));
 
-// New v1.0.8 Components
+// New v1.0.8+ Components
 const BackTopPage = lazy(() => import('./pages/components/BackTop'));
 const ConfettiPage = lazy(() => import('./pages/components/Confetti'));
 const TourPage = lazy(() => import('./pages/components/Tour'));
@@ -171,6 +171,23 @@ const DiffViewerPage = lazy(() => import('./pages/components/DiffViewer'));
 const ChatPage = lazy(() => import('./pages/components/ChatPage'));
 const FloatingChatPage = lazy(() => import('./pages/components/FloatingChatPage'));
 const TerminalPage = lazy(() => import('./pages/components/TerminalPage'));
+
+// New v1.0.9 - Map, CodeEditor, Cropper, Carousel, Animation
+const MapPage = lazy(() => import('./pages/components/MapPage'));
+const CodeEditorPage = lazy(() => import('./pages/components/CodeEditorPage'));
+const CropperPage = lazy(() => import('./pages/components/CropperPage'));
+const TransitionPage = lazy(() => import('./pages/components/TransitionPage'));
+
+// New v1.0.9+ Components - Masonry, Watermark, Marquee, etc.
+const MasonryPage = lazy(() => import('./pages/components/MasonryPage'));
+const WatermarkPage = lazy(() => import('./pages/components/WatermarkPage'));
+const MarqueePage = lazy(() => import('./pages/components/MarqueePage'));
+const CountdownTimerPage = lazy(() => import('./pages/components/CountdownTimerPage'));
+const SpotlightPage = lazy(() => import('./pages/components/SpotlightPage'));
+const TypewriterPage = lazy(() => import('./pages/components/TypewriterPage'));
+const DockPage = lazy(() => import('./pages/components/DockPage'));
+const GradientTextPage = lazy(() => import('./pages/components/GradientTextPage'));
+const NavigableSelectPage = lazy(() => import('./pages/components/NavigableSelectPage'));
 
 // Utilities
 const IconsPage = lazy(() => import('./pages/Icons'));
@@ -353,6 +370,21 @@ function App() {
                 <Route path="/components/chat" element={<ChatPage />} />
                 <Route path="/components/floating-chat" element={<FloatingChatPage />} />
                 <Route path="/components/terminal" element={<TerminalPage />} />
+                
+                {/* v1.0.9 - Media & Animation */}
+                <Route path="/components/map" element={<MapPage />} />
+                <Route path="/components/code-editor" element={<CodeEditorPage />} />
+                <Route path="/components/cropper" element={<CropperPage />} />
+                <Route path="/components/transition" element={<TransitionPage />} />
+                <Route path="/components/masonry" element={<MasonryPage />} />
+                <Route path="/components/watermark" element={<WatermarkPage />} />
+                <Route path="/components/marquee" element={<MarqueePage />} />
+                <Route path="/components/countdown-timer" element={<CountdownTimerPage />} />
+                <Route path="/components/spotlight" element={<SpotlightPage />} />
+                <Route path="/components/typewriter" element={<TypewriterPage />} />
+                <Route path="/components/dock" element={<DockPage />} />
+                <Route path="/components/gradient-text" element={<GradientTextPage />} />
+                <Route path="/components/navigable-select" element={<NavigableSelectPage />} />
                 
                 {/* Charts & Graphs */}
                 <Route path="/components/chart" element={<ChartPage />} />

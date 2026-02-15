@@ -16,18 +16,20 @@ export interface NavGroup {
   items: NavItem[];
 }
 
-export const BEAR_VERSION = '1.0.8';
+export const BEAR_VERSION = '1.0.9';
 export const KILN_BASE_URL = 'http://localhost:6006';
 
 /** Main Bear UI repository */
 export const GITHUB_URL = 'https://github.com/yaghobieh/bear';
 export const NPM_URL = 'https://www.npmjs.com/package/@forgedevstack/bear';
+export const CLI_NPM_URL = 'https://www.npmjs.com/package/@forgedevstack/forge-cli';
+export const FORGESTACK_URL = 'https://forgedevstack.com';
 
-/** CMS Admin (Pages, Users). In dev set VITE_ADMIN_URL=http://localhost:3001/admin when admin runs on port 3001. */
+/** CMS Admin */
 export const ADMIN_URL = import.meta.env?.VITE_ADMIN_URL ?? '/admin';
 
 export const NAVIGATION: NavGroup[] = [
-  // Getting Started - always visible
+  // Getting Started
   {
     title: 'Getting Started',
     items: [
@@ -40,21 +42,59 @@ export const NAVIGATION: NavGroup[] = [
     ],
   },
 
-  // Components - nested structure
+  // Layout — all layout-related together
+  {
+    title: 'Layout',
+    items: [
+      {
+        path: '/components/flex',
+        label: 'Flex & Grid',
+        children: [
+          { path: '/components/flex', label: 'Flex' },
+          { path: '/components/grid', label: 'Grid' },
+          { path: '/components/columns', label: 'Columns' },
+          { path: '/components/masonry', label: 'Masonry', badge: 'New' },
+        ],
+      },
+      {
+        path: '/components/container',
+        label: 'Structure',
+        children: [
+          { path: '/components/container', label: 'Container' },
+          { path: '/components/box', label: 'Box' },
+          { path: '/components/paper', label: 'Paper' },
+          { path: '/components/divider', label: 'Divider' },
+          { path: '/components/scroll-area', label: 'ScrollArea' },
+        ],
+      },
+      {
+        path: '/components/app-bar',
+        label: 'Page Layout',
+        badge: 'Hot',
+        children: [
+          { path: '/components/app-bar', label: 'AppBar', badge: 'Hot' },
+          { path: '/components/sidebar', label: 'Sidebar' },
+          { path: '/components/dock', label: 'Dock', badge: 'New' },
+        ],
+      },
+    ],
+  },
+
+  // Components
   {
     title: 'Components',
     items: [
       // Button family
-      { 
-        path: '/components/button', 
-        label: 'Button', 
+      {
+        path: '/components/button',
+        label: 'Button',
         children: [
           { path: '/components/button', label: 'Button' },
           { path: '/components/button-group', label: 'ButtonGroup' },
           { path: '/components/fab', label: 'FAB' },
           { path: '/components/speed-dial', label: 'SpeedDial' },
           { path: '/components/copy-button', label: 'CopyButton' },
-          { path: '/components/back-top', label: 'BackTop', badge: 'New' },
+          { path: '/components/back-top', label: 'BackTop' },
         ],
       },
       // Input family
@@ -67,8 +107,8 @@ export const NAVIGATION: NavGroup[] = [
           { path: '/components/otp-input', label: 'OTPInput' },
           { path: '/components/phone-input', label: 'PhoneInput' },
           { path: '/components/credit-input', label: 'CreditInput' },
-          { path: '/components/tags-input', label: 'TagsInput', badge: 'New' },
-          { path: '/components/mentions-input', label: 'MentionsInput', badge: 'New' },
+          { path: '/components/tags-input', label: 'TagsInput' },
+          { path: '/components/mentions-input', label: 'MentionsInput' },
           { path: '/components/autocomplete', label: 'Autocomplete' },
         ],
       },
@@ -79,6 +119,7 @@ export const NAVIGATION: NavGroup[] = [
         children: [
           { path: '/components/select', label: 'Select' },
           { path: '/components/multi-select', label: 'MultiSelect' },
+          { path: '/components/navigable-select', label: 'NavigableSelect', badge: 'New' },
           { path: '/components/cascader', label: 'Cascader' },
           { path: '/components/transfer-list', label: 'TransferList' },
         ],
@@ -92,9 +133,9 @@ export const NAVIGATION: NavGroup[] = [
           { path: '/components/radio', label: 'Radio' },
           { path: '/components/switch', label: 'Switch' },
           { path: '/components/slider', label: 'Slider' },
-          { path: '/components/slider-range', label: 'SliderRange', badge: 'New' },
+          { path: '/components/slider-range', label: 'SliderRange' },
           { path: '/components/rating', label: 'Rating' },
-          { path: '/components/segmented-control', label: 'SegmentedControl', badge: 'New' },
+          { path: '/components/segmented-control', label: 'SegmentedControl' },
         ],
       },
       // Pickers
@@ -105,10 +146,10 @@ export const NAVIGATION: NavGroup[] = [
           { path: '/components/date-picker', label: 'DatePicker' },
           { path: '/components/time-picker', label: 'TimePicker' },
           { path: '/components/color-picker', label: 'ColorPicker' },
-          { path: '/components/emoji-picker', label: 'EmojiPicker', badge: 'New' },
+          { path: '/components/emoji-picker', label: 'EmojiPicker' },
         ],
       },
-      // Rich editors
+      // Editors
       {
         path: '/components/rich-editor',
         label: 'Editors',
@@ -119,10 +160,9 @@ export const NAVIGATION: NavGroup[] = [
           { path: '/components/sign-pad', label: 'SignPad' },
         ],
       },
-      // Form
       { path: '/components/form', label: 'Form' },
       { path: '/components/file-upload', label: 'FileUpload' },
-      // Card family
+      // Card
       {
         path: '/components/card',
         label: 'Card',
@@ -131,18 +171,19 @@ export const NAVIGATION: NavGroup[] = [
           { path: '/components/hover-card', label: 'HoverCard' },
         ],
       },
-      // Modal family
+      // Overlay
       {
         path: '/components/modal',
-        label: 'Modal',
+        label: 'Overlay',
         children: [
           { path: '/components/modal', label: 'Modal' },
           { path: '/components/drawer', label: 'Drawer' },
-          { path: '/components/bottom-sheet', label: 'BottomSheet', badge: 'New' },
+          { path: '/components/bottom-sheet', label: 'BottomSheet' },
           { path: '/components/command-palette', label: 'CommandPalette' },
+          { path: '/components/spotlight', label: 'Spotlight', badge: 'New' },
         ],
       },
-      // Popover family
+      // Tooltip
       {
         path: '/components/tooltip',
         label: 'Tooltip',
@@ -151,17 +192,17 @@ export const NAVIGATION: NavGroup[] = [
           { path: '/components/popover', label: 'Popover' },
         ],
       },
-      // Alert family
+      // Feedback
       {
         path: '/components/alert',
-        label: 'Alert',
+        label: 'Feedback',
         children: [
           { path: '/components/alert', label: 'Alert' },
           { path: '/components/toast', label: 'Toast' },
           { path: '/components/notification-center', label: 'NotificationCenter' },
         ],
       },
-      // Loading family
+      // Loading
       {
         path: '/components/spinner',
         label: 'Loading',
@@ -172,20 +213,14 @@ export const NAVIGATION: NavGroup[] = [
           { path: '/components/bear-loader', label: 'BearLoader' },
         ],
       },
-      // Navigation family
+      // Navigation
       {
         path: '/components/tabs',
-        label: 'Tabs',
+        label: 'Navigation',
         children: [
           { path: '/components/tabs', label: 'Tabs' },
           { path: '/components/accordion', label: 'Accordion' },
           { path: '/components/collapsible', label: 'Collapsible' },
-        ],
-      },
-      {
-        path: '/components/menu',
-        label: 'Menu',
-        children: [
           { path: '/components/menu', label: 'Menu' },
           { path: '/components/dropdown', label: 'Dropdown' },
           { path: '/components/breadcrumbs', label: 'Breadcrumbs' },
@@ -194,25 +229,7 @@ export const NAVIGATION: NavGroup[] = [
           { path: '/components/active-bar', label: 'ActiveBar' },
         ],
       },
-      // Layout family
-      {
-        path: '/components/app-bar',
-        label: 'Layout',
-        badge: 'Hot',
-        children: [
-          { path: '/components/app-bar', label: 'AppBar', badge: 'Hot' },
-          { path: '/components/sidebar', label: 'Sidebar' },
-          { path: '/components/container', label: 'Container' },
-          { path: '/components/box', label: 'Box' },
-          { path: '/components/grid', label: 'Grid' },
-          { path: '/components/flex', label: 'Flex' },
-          { path: '/components/columns', label: 'Columns' },
-          { path: '/components/paper', label: 'Paper' },
-          { path: '/components/divider', label: 'Divider' },
-          { path: '/components/scroll-area', label: 'ScrollArea' },
-        ],
-      },
-      // Typography family
+      // Typography
       {
         path: '/components/typography',
         label: 'Typography',
@@ -223,9 +240,11 @@ export const NAVIGATION: NavGroup[] = [
           { path: '/components/em', label: 'Em' },
           { path: '/components/highlight', label: 'Highlight' },
           { path: '/components/mark', label: 'Mark' },
+          { path: '/components/gradient-text', label: 'GradientText', badge: 'New' },
+          { path: '/components/typewriter', label: 'Typewriter', badge: 'New' },
         ],
       },
-      // Avatar family
+      // Avatar / Identity
       {
         path: '/components/avatar',
         label: 'Avatar',
@@ -235,32 +254,68 @@ export const NAVIGATION: NavGroup[] = [
           { path: '/components/chip', label: 'Chip' },
         ],
       },
-      // Data display
+      // Data
       {
         path: '/components/data-table',
-        label: 'Table',
+        label: 'Data',
         children: [
           { path: '/components/data-table', label: 'DataTable' },
           { path: '/components/list', label: 'List' },
           { path: '/components/tree-view', label: 'TreeView' },
-          { path: '/components/virtual-list', label: 'VirtualList', badge: 'New' },
+          { path: '/components/virtual-list', label: 'VirtualList' },
           { path: '/components/kanban', label: 'Kanban', badge: 'Hot' },
         ],
       },
-      // Other display
+      // Misc
       { path: '/components/calendar', label: 'Calendar' },
-      { path: '/components/carousel', label: 'Carousel' },
-      { path: '/components/image', label: 'Image' },
       { path: '/components/empty-state', label: 'EmptyState' },
       { path: '/components/pagination', label: 'Pagination' },
       { path: '/components/statistic', label: 'Statistic' },
       { path: '/components/timeline', label: 'Timeline' },
       { path: '/components/link', label: 'Link' },
-      // Special
-      { path: '/components/qr-code', label: 'QRCode', badge: 'New' },
-      { path: '/components/confetti', label: 'Confetti', badge: 'New' },
-      { path: '/components/tour', label: 'Tour', badge: 'New' },
-      // Developer Tools
+      { path: '/components/image', label: 'Image' },
+    ],
+  },
+
+  // Advanced — special / complex components
+  {
+    title: 'Advanced',
+    items: [
+      // Media
+      {
+        path: '/components/map',
+        label: 'Media',
+        badge: 'New',
+        children: [
+          { path: '/components/map', label: 'Map', badge: 'New' },
+          { path: '/components/code-editor', label: 'CodeEditor', badge: 'New' },
+          { path: '/components/cropper', label: 'Cropper', badge: 'New' },
+          { path: '/components/carousel', label: 'Carousel' },
+        ],
+      },
+      // Animation
+      {
+        path: '/components/transition',
+        label: 'Animation',
+        badge: 'New',
+        children: [
+          { path: '/components/transition', label: 'Transition', badge: 'New' },
+          { path: '/components/marquee', label: 'Marquee', badge: 'New' },
+          { path: '/components/confetti', label: 'Confetti' },
+          { path: '/components/countdown-timer', label: 'CountdownTimer', badge: 'New' },
+        ],
+      },
+      // Utility
+      {
+        path: '/components/watermark',
+        label: 'Utility',
+        children: [
+          { path: '/components/watermark', label: 'Watermark', badge: 'New' },
+          { path: '/components/qr-code', label: 'QRCode' },
+          { path: '/components/tour', label: 'Tour' },
+        ],
+      },
+      // Developer
       {
         path: '/components/json-viewer',
         label: 'Developer',
@@ -308,19 +363,19 @@ export const NAVIGATION: NavGroup[] = [
       { path: '/hooks/use-local-storage', label: 'useLocalStorage' },
       { path: '/hooks/use-key-press', label: 'useKeyPress' },
       { path: '/hooks/use-intersection-observer', label: 'useIntersectionObserver' },
-      { path: '/hooks/use-drag-drop', label: 'useDragDrop', badge: 'New' },
-      { path: '/hooks/use-lazy-load', label: 'useLazyLoad', badge: 'New' },
+      { path: '/hooks/use-drag-drop', label: 'useDragDrop' },
+      { path: '/hooks/use-lazy-load', label: 'useLazyLoad' },
       { path: '/hooks/use-bounce', label: 'useBounce' },
       { path: '/hooks/use-float', label: 'useFloat' },
       { path: '/hooks/use-parallax', label: 'useParallax' },
       { path: '/hooks/use-pulse', label: 'usePulse' },
       { path: '/hooks/use-shake', label: 'useShake' },
       { path: '/hooks/use-slide', label: 'useSlide' },
-      { path: '/hooks/use-online', label: 'useOnline', badge: 'New' },
-      { path: '/hooks/use-idle', label: 'useIdle', badge: 'New' },
-      { path: '/hooks/use-long-press', label: 'useLongPress', badge: 'New' },
-      { path: '/hooks/use-websocket', label: 'useWebSocket', badge: 'New' },
-      { path: '/hooks/use-page-visibility', label: 'usePageVisibility', badge: 'New' },
+      { path: '/hooks/use-online', label: 'useOnline' },
+      { path: '/hooks/use-idle', label: 'useIdle' },
+      { path: '/hooks/use-long-press', label: 'useLongPress' },
+      { path: '/hooks/use-websocket', label: 'useWebSocket' },
+      { path: '/hooks/use-page-visibility', label: 'usePageVisibility' },
     ],
   },
 
@@ -343,4 +398,96 @@ export const VERSIONS = [
   { value: '1.0.3', label: 'v1.0.3' },
   { value: '1.0.2', label: 'v1.0.2' },
   { value: '1.0.0', label: 'v1.0.0' },
+];
+
+/** Editor + site-wide theme presets */
+export interface ThemePreset {
+  id: string;
+  name: string;
+  /** Whether this preset forces dark mode */
+  dark: boolean;
+  /** Primary accent color used for buttons, links, etc. */
+  primary: string;
+  /** Editor colors */
+  colors: {
+    bg: string;
+    text: string;
+    keyword: string;
+    string: string;
+    comment: string;
+    function: string;
+    number: string;
+    operator: string;
+    lineNumber: string;
+    selection: string;
+  };
+}
+
+export const THEME_PRESETS: ThemePreset[] = [
+  {
+    id: 'bear',
+    name: 'Bear',
+    dark: true,
+    primary: '#cba6f7',
+    colors: {
+      bg: '#1e1e2e', text: '#cdd6f4', keyword: '#cba6f7', string: '#a6e3a1',
+      comment: '#6c7086', function: '#89b4fa', number: '#fab387', operator: '#89dceb',
+      lineNumber: '#585b70', selection: '#45475a',
+    },
+  },
+  {
+    id: 'bear-light',
+    name: 'Bear Light',
+    dark: false,
+    primary: '#ec4899',
+    colors: {
+      bg: '#eff1f5', text: '#4c4f69', keyword: '#8839ef', string: '#40a02b',
+      comment: '#9ca0b0', function: '#1e66f5', number: '#fe640b', operator: '#179299',
+      lineNumber: '#9ca0b0', selection: '#ccd0da',
+    },
+  },
+  {
+    id: 'dracula',
+    name: 'Dracula',
+    dark: true,
+    primary: '#ff79c6',
+    colors: {
+      bg: '#282a36', text: '#f8f8f2', keyword: '#ff79c6', string: '#f1fa8c',
+      comment: '#6272a4', function: '#50fa7b', number: '#bd93f9', operator: '#ff79c6',
+      lineNumber: '#6272a4', selection: '#44475a',
+    },
+  },
+  {
+    id: 'atom',
+    name: 'Atom One Dark',
+    dark: true,
+    primary: '#61afef',
+    colors: {
+      bg: '#282c34', text: '#abb2bf', keyword: '#c678dd', string: '#98c379',
+      comment: '#5c6370', function: '#61afef', number: '#d19a66', operator: '#56b6c2',
+      lineNumber: '#4b5263', selection: '#3e4451',
+    },
+  },
+  {
+    id: 'sublime',
+    name: 'Sublime',
+    dark: true,
+    primary: '#f92672',
+    colors: {
+      bg: '#272822', text: '#f8f8f2', keyword: '#f92672', string: '#e6db74',
+      comment: '#75715e', function: '#a6e22e', number: '#ae81ff', operator: '#f92672',
+      lineNumber: '#75715e', selection: '#49483e',
+    },
+  },
+  {
+    id: 'webstorm',
+    name: 'WebStorm',
+    dark: true,
+    primary: '#cc7832',
+    colors: {
+      bg: '#2b2b2b', text: '#a9b7c6', keyword: '#cc7832', string: '#6a8759',
+      comment: '#808080', function: '#ffc66d', number: '#6897bb', operator: '#cc7832',
+      lineNumber: '#606366', selection: '#214283',
+    },
+  },
 ];

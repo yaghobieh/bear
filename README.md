@@ -62,6 +62,7 @@ function App() {
 - `Container` - Responsive container with max-width constraints
 - `Flex` - Flexible box layout component
 - `Grid` / `GridItem` - CSS Grid layout system
+- `ResizablePanel` - Two-pane resizable layout with draggable divider (horizontal/vertical)
 
 ### UI Components
 
@@ -70,7 +71,7 @@ function App() {
 - `Badge` - Status indicators and labels
 - `Paper` - Elevated surface component
 - `Divider` - Visual separator
-- `Typography` - Text styling component
+- `Typography` - Text styling with gradient text and typewriter effect
 - `Link` - Styled link component
 
 ### Form Components
@@ -120,6 +121,7 @@ function App() {
 - `Avatar` / `AvatarGroup` - User avatar display
 - `Chip` - Compact element for input, attribute, or action
 - `TreeView` - Hierarchical tree structure
+- `FileTree` - File/folder tree with selection and expand/collapse
 - `Timeline` - Timeline component
 - `Statistic` - Statistical display
 - `EmptyState` - Empty state placeholder
@@ -153,7 +155,15 @@ import { Button } from '@forgedevstack/bear';
 <Button variant="secondary">Secondary</Button>
 <Button variant="outline">Outline</Button>
 <Button variant="ghost">Ghost</Button>
+
+// With icon (icon size matches text)
+<Button variant="primary" leftIcon={<PlayIcon />}>View Demos</Button>
+
+// Button label using Typography variant (h1, h2, body1, etc.)
+<Button variant="primary" textVariant="subtitle1">Heading-style label</Button>
 ```
+
+**Custom variants** (via `BearProvider`): pass `customVariants={{ myBrand: { bg: '#...', text: '#fff' } }}` and use `<Button variant="myBrand">`. Use `customTypography` for custom text styles and set `textVariant` on Button to use them.
 
 ### Card
 

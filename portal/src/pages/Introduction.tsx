@@ -4,7 +4,7 @@ import { CodeBlock } from '@/components/CodeBlock';
 import { GITHUB_URL } from '@/constants/navigation.const';
 import { GridTable, ColumnDefinition } from '@forgedevstack/grid-table';
 import '@forgedevstack/grid-table/grid-table.css';
-import { BearIcons, CheckIcon, XIcon } from '@forgedevstack/bear';
+import { BearIcons, CheckIcon, XIcon, Typography } from '@forgedevstack/bear';
 
 // Use Bear icons
 const ArrowRightIcon = BearIcons.ArrowRightIcon;
@@ -104,12 +104,13 @@ const Introduction: FC = () => {
       <div className="text-center mb-16">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-pink-500/10 to-rose-500/10 border border-pink-500/20 text-pink-600 dark:text-pink-400 text-sm font-medium mb-6">
           <span>🚀</span>
-          <span>v1.0.9 — Masonry, Watermark, Marquee, CountdownTimer, Spotlight, Typewriter, Dock, GradientText + Map, CodeEditor, Cropper & more</span>
+          <span>1.1.0 — ResizablePanel, FileTree, ResizableTextarea, Typography gradient & typewriter + Map, CodeEditor, Cropper, Masonry, Watermark, Marquee, Spotlight, Dock, GradientText & more</span>
         </div>
         
         <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-          Build beautiful React apps<br />
-          <span className="text-bear-500">with Bear UI</span>
+          Build beautiful React apps
+          <br />
+          <Typography variant="h1" component="span" className="text-bear-500 !text-4xl md:!text-5xl !font-bold" typewriter={{ texts: ['with Bear UI', 'with Tailwind', 'with TypeScript'], loop: true, cursor: true }} />
         </h1>
         
         <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-8">

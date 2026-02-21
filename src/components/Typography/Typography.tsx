@@ -1,91 +1,21 @@
 import { FC, ElementType, useContext, useMemo, CSSProperties } from 'react';
-import { cn } from '@utils';
 import type { TypographyProps, BuiltInTypographyVariant, CustomTypography } from './Typography.types';
 import { BearContext } from '../../context/BearProvider';
-
-const VARIANT_MAP: Record<BuiltInTypographyVariant, ElementType> = {
-  h1: 'h1',
-  h2: 'h2',
-  h3: 'h3',
-  h4: 'h4',
-  h5: 'h5',
-  h6: 'h6',
-  subtitle1: 'h6',
-  subtitle2: 'h6',
-  body1: 'p',
-  body2: 'p',
-  caption: 'span',
-  overline: 'span',
-  code: 'code',
-  inherit: 'span',
-};
-
-const VARIANT_CLASSES: Record<BuiltInTypographyVariant, string> = {
-  h1: 'bear-text-5xl bear-font-bold bear-tracking-tight',
-  h2: 'bear-text-4xl bear-font-bold bear-tracking-tight',
-  h3: 'bear-text-3xl bear-font-semibold',
-  h4: 'bear-text-2xl bear-font-semibold',
-  h5: 'bear-text-xl bear-font-medium',
-  h6: 'bear-text-lg bear-font-medium',
-  subtitle1: 'bear-text-lg bear-font-normal',
-  subtitle2: 'bear-text-base bear-font-medium',
-  body1: 'bear-text-base bear-font-normal',
-  body2: 'bear-text-sm bear-font-normal',
-  caption: 'bear-text-xs',
-  overline: 'bear-text-xs bear-uppercase bear-tracking-wider',
-  code: 'bear-text-sm bear-font-mono bear-bg-gray-100 dark:bear-bg-gray-800 bear-px-1.5 bear-py-0.5 bear-rounded',
-  inherit: '', // Inherits all styles from parent
-};
-
-const WEIGHT_CLASSES = {
-  thin: 'bear-font-thin',
-  light: 'bear-font-light',
-  normal: 'bear-font-normal',
-  medium: 'bear-font-medium',
-  semibold: 'bear-font-semibold',
-  bold: 'bear-font-bold',
-  extrabold: 'bear-font-extrabold',
-};
-
-const WEIGHT_VALUES: Record<string, number> = {
-  thin: 100,
-  light: 300,
-  normal: 400,
-  medium: 500,
-  semibold: 600,
-  bold: 700,
-  extrabold: 800,
-};
-
-const ALIGN_CLASSES = {
-  left: 'bear-text-left',
-  center: 'bear-text-center',
-  right: 'bear-text-right',
-  justify: 'bear-text-justify',
-};
-
-const COLOR_CLASSES = {
-  primary: 'bear-text-gray-900 dark:bear-text-gray-100',
-  secondary: 'bear-text-gray-600 dark:bear-text-gray-400',
-  muted: 'bear-text-gray-400 dark:bear-text-gray-500',
-  success: 'bear-text-green-600 dark:bear-text-green-400',
-  danger: 'bear-text-red-600 dark:bear-text-red-400',
-  warning: 'bear-text-amber-600 dark:bear-text-amber-400',
-};
-
-const LINE_HEIGHT_CLASSES = {
-  tight: 'bear-leading-tight',
-  normal: 'bear-leading-normal',
-  relaxed: 'bear-leading-relaxed',
-  loose: 'bear-leading-loose',
-};
-
-/** Built-in variant names */
-const BUILT_IN_VARIANTS: BuiltInTypographyVariant[] = [
-  'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-  'subtitle1', 'subtitle2', 'body1', 'body2',
-  'caption', 'overline', 'code', 'inherit'
-];
+import { GradientText } from '../GradientText/GradientText';
+import { Typewriter } from '../Typewriter/Typewriter';
+import {
+  DEFAULT_VARIANT,
+  DEFAULT_COLOR,
+  VARIANT_MAP,
+  VARIANT_CLASSES,
+  WEIGHT_CLASSES,
+  WEIGHT_VALUES,
+  ALIGN_CLASSES,
+  COLOR_CLASSES,
+  LINE_HEIGHT_CLASSES,
+  BUILT_IN_VARIANTS,
+} from './Typography.const';
+import { cn } from '@utils';
 
 /**
  * Typography component for consistent text styling
@@ -101,12 +31,13 @@ const BUILT_IN_VARIANTS: BuiltInTypographyVariant[] = [
  * <Typography variant="display1">Large display text</Typography>
  * ```
  */
-export const Typography: FC<TypographyProps> = ({
-  variant = 'body1',
-  component,
-  align,
-  weight,
-  color = 'primary',
+export const Typography: FC<TypographyProps> = (props) => {
+  const {
+    variant = DEFAULT_VARIANT,
+    component,
+    align,
+    weight,
+    color = DEFAULT_COLOR,
   truncate = false,
   maxLines,
   italic = false,
@@ -116,12 +47,14 @@ export const Typography: FC<TypographyProps> = ({
   inline = false,
   paragraph = false,
   lineHeight,
+  gradient,
+  typewriter,
   children,
   className,
   style,
   testId,
-  ...props
-}) => {
+    ...rest
+  } = props;
   const context = useContext(BearContext);
   
   // Check if this is a built-in variant
@@ -141,7 +74,7 @@ export const Typography: FC<TypographyProps> = ({
     return 'span';
   }, [component, customTypo, isBuiltIn, variant]);
   
-  const isCustomColor = color && !COLOR_CLASSES[color as keyof typeof COLOR_CLASSES];
+  const isCustomColor = color && !(color in COLOR_CLASSES);
 
   // Build custom styles for custom variants
   const customStyles: CSSProperties = useMemo(() => {
@@ -162,6 +95,28 @@ export const Typography: FC<TypographyProps> = ({
     return styles;
   }, [customTypo]);
 
+  const innerContent = typewriter ? (
+    <Typewriter
+      text={typewriter.texts}
+      loop={typewriter.loop ?? true}
+      speed={typewriter.speed}
+      deleteSpeed={typewriter.deleteSpeed}
+      cursor={typewriter.cursor ?? true}
+      cursorChar={typewriter.cursorChar}
+      as="span"
+    />
+  ) : (
+    children
+  );
+
+  const wrappedContent = gradient && (Array.isArray(gradient) && gradient.length >= 2) ? (
+    <GradientText colors={gradient as [string, string]} className={inline ? 'bear-inline' : undefined}>
+      {innerContent}
+    </GradientText>
+  ) : (
+    innerContent
+  );
+
   return (
     <Component
       className={cn(
@@ -170,7 +125,7 @@ export const Typography: FC<TypographyProps> = ({
         isBuiltIn && VARIANT_CLASSES[variant as BuiltInTypographyVariant],
         weight && WEIGHT_CLASSES[weight],
         align && ALIGN_CLASSES[align],
-        !isCustomColor && color && COLOR_CLASSES[color as keyof typeof COLOR_CLASSES],
+        !isCustomColor && color && COLOR_CLASSES[color],
         lineHeight && LINE_HEIGHT_CLASSES[lineHeight],
         italic && 'Bear-Typography--italic bear-italic',
         underline && 'Bear-Typography--underline bear-underline',
@@ -193,9 +148,9 @@ export const Typography: FC<TypographyProps> = ({
         }),
       }}
       data-testid={testId}
-      {...props}
+      {...rest}
     >
-      {children}
+      {wrappedContent}
     </Component>
   );
 };

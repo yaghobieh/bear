@@ -16,7 +16,7 @@ export interface NavGroup {
   items: NavItem[];
 }
 
-export const BEAR_VERSION = '1.0.9';
+export const BEAR_VERSION = '1.1.0';
 export const KILN_BASE_URL = 'http://localhost:6006';
 
 /** Main Bear UI repository */
@@ -65,6 +65,7 @@ export const NAVIGATION: NavGroup[] = [
           { path: '/components/paper', label: 'Paper' },
           { path: '/components/divider', label: 'Divider' },
           { path: '/components/scroll-area', label: 'ScrollArea' },
+          { path: '/components/resizable-panel', label: 'ResizablePanel', badge: 'New' },
         ],
       },
       {
@@ -103,6 +104,7 @@ export const NAVIGATION: NavGroup[] = [
         label: 'Input',
         children: [
           { path: '/components/input', label: 'Input' },
+          { path: '/components/resizable-textarea', label: 'ResizableTextarea', badge: 'New' },
           { path: '/components/number-input', label: 'NumberInput' },
           { path: '/components/otp-input', label: 'OTPInput' },
           { path: '/components/phone-input', label: 'PhoneInput' },
@@ -262,6 +264,7 @@ export const NAVIGATION: NavGroup[] = [
           { path: '/components/data-table', label: 'DataTable' },
           { path: '/components/list', label: 'List' },
           { path: '/components/tree-view', label: 'TreeView' },
+          { path: '/components/file-tree', label: 'FileTree', badge: 'New' },
           { path: '/components/virtual-list', label: 'VirtualList' },
           { path: '/components/kanban', label: 'Kanban', badge: 'Hot' },
         ],
@@ -383,13 +386,14 @@ export const NAVIGATION: NavGroup[] = [
   {
     title: 'Resources',
     items: [
-      { path: '/templates', label: 'Templates', badge: 'Soon' },
+      { path: '/templates', label: 'Templates' },
     ],
   },
 ];
 
 export const VERSIONS = [
-  { value: '1.0.9', label: 'v1.0.9 (current)' },
+  { value: '1.1.0', label: 'v1.1.0 (current)' },
+  { value: '1.0.9', label: 'v1.0.9' },
   { value: '1.0.8', label: 'v1.0.8' },
   { value: '1.0.7', label: 'v1.0.7' },
   { value: '1.0.6', label: 'v1.0.6' },

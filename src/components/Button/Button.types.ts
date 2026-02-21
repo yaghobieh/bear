@@ -1,6 +1,7 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import type { BearSize, BearVariant } from '../../types';
 import type { BisProp } from '../../types/bis.types';
+import type { TypographyVariant } from '../Typography/Typography.types';
 
 export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'style'> {
   /**
@@ -31,6 +32,12 @@ export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement
   leftIcon?: ReactNode;
   /** Icon to show after text */
   rightIcon?: ReactNode;
+  /**
+   * Typography variant for the button label (e.g. h1, h2, body1).
+   * Use with BearProvider customTypography to add your own variants.
+   * @default 'inherit'
+   */
+  textVariant?: TypographyVariant;
   /** Enable mouse-follow spotlight hover effect */
   spotlight?: boolean;
   /** Spotlight color (default: rgba(255, 255, 255, 0.15)) */

@@ -51,6 +51,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       iconPosition = 'left',
       leftIcon: leftIconProp,
       rightIcon: rightIconProp,
+      textVariant = 'inherit',
       spotlight = false,
       spotlightColor = 'rgba(255, 255, 255, 0.35)',
       spotlightSize = 150,
@@ -217,15 +218,15 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           )}
         >
           {leftIcon && (
-            <span className="Bear-Button__icon Bear-Button__icon--left bear-inline-flex bear-shrink-0">
+            <span className="Bear-Button__icon Bear-Button__icon--left bear-inline-flex bear-shrink-0 [&_svg]:bear-w-[1em] [&_svg]:bear-h-[1em] [&_svg]:bear-min-w-[1em]">
               {leftIcon}
             </span>
           )}
-          <Typography variant="inherit" className="Bear-Button__text">
+          <Typography variant={textVariant} className="Bear-Button__text">
             {children}
           </Typography>
           {rightIcon && (
-            <span className="Bear-Button__icon Bear-Button__icon--right bear-inline-flex bear-shrink-0">
+            <span className="Bear-Button__icon Bear-Button__icon--right bear-inline-flex bear-shrink-0 [&_svg]:bear-w-[1em] [&_svg]:bear-h-[1em] [&_svg]:bear-min-w-[1em]">
               {rightIcon}
             </span>
           )}

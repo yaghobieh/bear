@@ -16,7 +16,7 @@ export interface NavGroup {
   items: NavItem[];
 }
 
-export const BEAR_VERSION = '1.1.0';
+export const BEAR_VERSION = '1.1.1';
 export const KILN_BASE_URL = 'http://localhost:6006';
 
 /** Main Bear UI repository */
@@ -392,7 +392,7 @@ export const NAVIGATION: NavGroup[] = [
 ];
 
 export const VERSIONS = [
-  { value: '1.1.0', label: 'v1.1.0 (current)' },
+  { value: '1.1.1', label: 'v1.1.1 (current)' },
   { value: '1.0.9', label: 'v1.0.9' },
   { value: '1.0.8', label: 'v1.0.8' },
   { value: '1.0.7', label: 'v1.0.7' },

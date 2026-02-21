@@ -198,6 +198,9 @@ export type { ChipProps } from './Chip';
 export { TreeView } from './TreeView';
 export type { TreeViewProps, TreeNode } from './TreeView';
 
+export { FileTree } from './FileTree';
+export type { FileTreeProps, FileTreeNode } from './FileTree';
+
 export { Timeline } from './Timeline';
 export type { TimelineProps, TimelineItem } from './Timeline';
 
@@ -226,6 +229,12 @@ export type { ColorPickerProps } from './ColorPicker';
 // Utility
 export { ScrollArea } from './ScrollArea';
 export type { ScrollAreaProps } from './ScrollArea';
+
+export { ResizablePanel } from './ResizablePanel';
+export type { ResizablePanelProps } from './ResizablePanel';
+
+export { ResizableTextarea } from './ResizableTextarea';
+export type { ResizableTextareaProps } from './ResizableTextarea';
 
 export { Collapsible } from './Collapsible';
 export type { CollapsibleProps } from './Collapsible';

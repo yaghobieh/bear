@@ -455,10 +455,10 @@ export const Topbar: FC<TopbarProps> = ({ onMenuClick, banner, onBannerVisibilit
                 Bear UI v{BEAR_VERSION}
               </h2>
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-                New in this version: Map, CodeEditor, Cropper, Masonry, Watermark, Marquee, CountdownTimer, Spotlight, Typewriter, Dock, GradientText, NavigableSelect, Animation system, Slots pattern, Responsive variants, and more.
+                1.1.0: ResizablePanel, FileTree, ResizableTextarea, Typography gradient & typewriter, Button textVariant, custom variants via BearProvider. Plus Map, CodeEditor, Cropper, Masonry, Watermark, Marquee, CountdownTimer, Spotlight, Typewriter, Dock, GradientText, NavigableSelect, and more.
               </p>
               <div className="flex flex-wrap items-center justify-center gap-1.5 mb-4">
-                {['Map', 'CodeEditor', 'Masonry', 'Dock', 'Spotlight', 'Typewriter', 'GradientText'].map((c) => (
+                {['ResizablePanel', 'FileTree', 'ResizableTextarea', 'Typography gradient', 'GradientText', 'Map', 'CodeEditor', 'Spotlight'].map((c) => (
                   <span key={c} className="px-2 py-0.5 text-[10px] font-medium bg-pink-50 dark:bg-pink-900/20 text-pink-600 dark:text-pink-400 rounded-full">
                     {c}
                   </span>

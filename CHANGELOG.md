@@ -2,6 +2,29 @@
 
 All notable changes to Bear UI will be documented in this file.
 
+## [1.1.0] - 2026-02-07
+
+### Added
+
+- **ResizablePanel**: Two-pane resizable layout with draggable divider. Horizontal/vertical, min/max size, dark mode support.
+- **FileTree**: File/folder tree component built on TreeView. Selection, expand/collapse, icons.
+- **ResizableTextarea**: Textarea with optional resizable height via drag handle. Min/max height, light/dark theme.
+- **Typography**
+  - **`gradient` prop**: Wrap content in gradient text (e.g. `gradient={['#22c55e', '#16a34a']}`).
+  - **`typewriter` prop**: Typewriter effect with configurable texts, loop, speed, cursor (grid-table portal style).
+- **Button**
+  - **Icon size**: Icons in buttons now scale to match the label text (1em). SVG icons inside `leftIcon`/`rightIcon` are sized via `[&_svg]:bear-w-[1em] [&_svg]:bear-h-[1em]`.
+  - **`textVariant` prop**: Button label can use Typography variants (e.g. `h1`, `body1`). Use with `BearProvider` `customTypography` to apply your own text styles.
+- **Custom variants via provider**: You can register custom Button (and typography) variants via `BearProvider`:
+  - `customVariants` – add custom color variants and use them as `<Button variant="myBrand">`.
+  - `customTypography` – add custom text styles and use them as `<Typography variant="myStyle">` or `<Button textVariant="myStyle">`.
+  - See README and BearProvider JSDoc for examples.
+
+### Changed
+
+- Button label now renders with Typography using the new `textVariant` prop (default `inherit`), so you can align button text with your design system.
+- Typography and ResizablePanel use constants in `.const.ts` and props destructuring (`const {} = props`). Import order convention: `@utils` last (see .cursor rules).
+
 ## [1.0.9] - 2026-02-15
 
 ### Added

@@ -4,12 +4,12 @@ import { BearLoader } from './components/BearLoader';
 import { Topbar } from './components/Topbar/Topbar';
 import { Sidebar } from './components/Sidebar';
 
-// Banner configuration — promote ForgeStack CLI
+// Banner configuration — promote ForgeStack CLI templates
 const BANNER_CONFIG = {
-  id: 'forge-cli-launch',
-  message: '🚀 New ForgeStack CLI is here! Create React projects with Bear, Compass, Synapse & more in seconds.',
-  link: 'https://www.npmjs.com/package/@forgedevstack/cli',
-  linkText: 'Try npx @forgedevstack/cli →',
+  id: 'forge-cli-templates',
+  message: '🚀 ForgeStack CLI — Use templates to start fast. Create React apps with Bear, Compass, Synapse in seconds.',
+  link: '/templates',
+  linkText: 'Try npx create-forge my-app --template react →',
 };
 
 // Lazy load pages - Getting Started
@@ -93,6 +93,9 @@ const StatisticPage = lazy(() => import('./pages/components/Statistic'));
 const EmptyStatePage = lazy(() => import('./pages/components/EmptyState'));
 const ImagePage = lazy(() => import('./pages/components/Image'));
 const ScrollAreaPage = lazy(() => import('./pages/components/ScrollArea'));
+const ResizablePanelPage = lazy(() => import('./pages/components/ResizablePanelPage'));
+const ResizableTextareaPage = lazy(() => import('./pages/components/ResizableTextareaPage'));
+const FileTreePage = lazy(() => import('./pages/components/FileTreePage'));
 const CollapsiblePage = lazy(() => import('./pages/components/Collapsible'));
 const SidebarPage = lazy(() => import('./pages/components/Sidebar'));
 const ColumnsPage = lazy(() => import('./pages/components/Columns'));
@@ -334,6 +337,9 @@ function App() {
                 <Route path="/components/empty-state" element={<EmptyStatePage />} />
                 <Route path="/components/image" element={<ImagePage />} />
                 <Route path="/components/scroll-area" element={<ScrollAreaPage />} />
+                <Route path="/components/resizable-panel" element={<ResizablePanelPage />} />
+                <Route path="/components/file-tree" element={<FileTreePage />} />
+                <Route path="/components/resizable-textarea" element={<ResizableTextareaPage />} />
                 <Route path="/components/collapsible" element={<CollapsiblePage />} />
                 <Route path="/components/kbd" element={<KbdPage />} />
                 <Route path="/components/copy-button" element={<CopyButtonPage />} />

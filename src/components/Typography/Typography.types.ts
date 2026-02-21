@@ -68,6 +68,23 @@ export interface TypographyProps extends HTMLAttributes<HTMLElement> {
   paragraph?: boolean;
   /** Custom line height */
   lineHeight?: 'tight' | 'normal' | 'relaxed' | 'loose';
+  /**
+   * Gradient text (grid-table portal style). Wraps content in GradientText with these colors.
+   * @example gradient={['#22c55e', '#16a34a']}
+   */
+  gradient?: [string, string] | string[];
+  /**
+   * Typewriter effect (grid-table portal style). Cycles through texts with typing animation.
+   * When set, children are ignored and typewriter texts are used.
+   */
+  typewriter?: {
+    texts: string[];
+    loop?: boolean;
+    speed?: number;
+    deleteSpeed?: number;
+    cursor?: boolean;
+    cursorChar?: string;
+  };
   /** Content */
   children?: ReactNode;
   /** Test ID */

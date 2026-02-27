@@ -35,6 +35,19 @@ export interface InputStyleOverrides extends ComponentStyleOverride {
 }
 
 /**
+ * FormField component parts that can be styled
+ */
+export interface FormFieldStyleOverrides extends ComponentStyleOverride {
+  input?: CSSProperties;
+  label?: CSSProperties;
+  helper?: CSSProperties;
+  addon?: CSSProperties;
+  outlined?: CSSProperties;
+  filled?: CSSProperties;
+  standard?: CSSProperties;
+}
+
+/**
  * Card component parts that can be styled
  */
 export interface CardStyleOverrides extends ComponentStyleOverride {
@@ -61,6 +74,7 @@ export interface ModalStyleOverrides extends ComponentStyleOverride {
 export interface BearComponentOverrides {
   Button?: ButtonStyleOverrides;
   Input?: InputStyleOverrides;
+  FormField?: FormFieldStyleOverrides;
   Card?: CardStyleOverrides;
   Modal?: ModalStyleOverrides;
   Typography?: ComponentStyleOverride;

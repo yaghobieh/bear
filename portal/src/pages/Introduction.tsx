@@ -104,7 +104,7 @@ const Introduction: FC = () => {
       <div className="text-center mb-16">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-pink-500/10 to-rose-500/10 border border-pink-500/20 text-pink-600 dark:text-pink-400 text-sm font-medium mb-6">
           <span>🚀</span>
-          <span>1.1.1 — ResizablePanel, FileTree, ResizableTextarea, Typography gradient & typewriter + Map, CodeEditor, Cropper, Masonry, Watermark, Marquee, Spotlight, Dock, GradientText & more</span>
+          <span>1.1.2 — FormField, AspectRatio, PasswordInput upgrades (shift indicator + custom icons), AlertDialog, InputGroup, Store redesign, Component API docs, alerts dropdown, cookie preferences, Spanish translations + all 1.1.1 features</span>
         </div>
         
         <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">

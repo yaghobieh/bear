@@ -22,6 +22,8 @@ export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement
   size?: BearSize;
   /** Whether button is in loading state */
   loading?: boolean;
+  /** Text to display while loading (replaces children during loading) */
+  loadingText?: string;
   /** Whether button takes full width */
   fullWidth?: boolean;
   /** Icon (shorthand for leftIcon or rightIcon based on iconPosition) */

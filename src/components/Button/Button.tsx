@@ -5,7 +5,7 @@ import { Typography } from '../Typography';
 import { useBearStyles } from '@hooks';
 import { BearContext } from '../../context/BearProvider';
 import type { ButtonProps } from './Button.types';
-import { BUTTON_SIZE, BUTTON_VARIANT, VARIANT_DEFAULTS } from './Button.constants';
+import { BUTTON_SIZE, BUTTON_ICON_SIZE, BUTTON_VARIANT, VARIANT_DEFAULTS } from './Button.constants';
 import type { BearVariant } from '../../types';
 
 /** Check if variant is a built-in variant */
@@ -46,6 +46,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       variant = 'primary',
       size = 'md',
       loading = false,
+      loadingText,
       fullWidth = false,
       icon,
       iconPosition = 'left',
@@ -165,6 +166,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         ref={setRefs}
         disabled={isDisabled}
+        aria-busy={loading || undefined}
         style={dynamicStyles}
         className={cn(
           'Bear-Button',
@@ -208,7 +210,17 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         )}
 
         {loading && (
-          <Spinner size={size === 'xs' ? 'xs' : 'sm'} className="Bear-Button__spinner bear-absolute" />
+          <span className={cn(
+            'Bear-Button__loading bear-inline-flex bear-items-center bear-gap-2 bear-relative bear-z-10',
+            !loadingText && 'bear-absolute'
+          )}>
+            <Spinner size={size === 'xs' ? 'xs' : 'sm'} className="Bear-Button__spinner" />
+            {loadingText && (
+              <Typography variant={textVariant} className="Bear-Button__text">
+                {loadingText}
+              </Typography>
+            )}
+          </span>
         )}
 
         <span 
@@ -218,7 +230,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           )}
         >
           {leftIcon && (
-            <span className="Bear-Button__icon Bear-Button__icon--left bear-inline-flex bear-shrink-0 [&_svg]:bear-w-[1em] [&_svg]:bear-h-[1em] [&_svg]:bear-min-w-[1em]">
+            <span className={cn('Bear-Button__icon Bear-Button__icon--left bear-inline-flex bear-shrink-0', BUTTON_ICON_SIZE[size])}>
               {leftIcon}
             </span>
           )}
@@ -226,7 +238,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             {children}
           </Typography>
           {rightIcon && (
-            <span className="Bear-Button__icon Bear-Button__icon--right bear-inline-flex bear-shrink-0 [&_svg]:bear-w-[1em] [&_svg]:bear-h-[1em] [&_svg]:bear-min-w-[1em]">
+            <span className={cn('Bear-Button__icon Bear-Button__icon--right bear-inline-flex bear-shrink-0', BUTTON_ICON_SIZE[size])}>
               {rightIcon}
             </span>
           )}

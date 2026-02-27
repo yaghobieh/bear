@@ -1,6 +1,6 @@
 {
   "name": "@forgedevstack/bear",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Strong, reliable React UI components. Tailwind-powered, zero config required. The protective force of ForgeStack.",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -43,7 +43,6 @@
     "build:css": "tailwindcss -i ./src/styles/main.css -o ./dist/styles.css --minify",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "test": "vitest",
-    "kiln": "kiln dev",
     "portal": "cd portal && npm run dev",
     "portal:install": "cd portal && npm install",
     "portal:build": "cd portal && npm run build",
@@ -54,7 +53,6 @@
     "react-dom": ">=18.0.0"
   },
   "devDependencies": {
-    "@forgedevstack/kiln": "file:../kiln",
     "@types/node": "^22.10.7",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",

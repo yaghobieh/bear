@@ -1,6 +1,5 @@
 import { type ChangeEvent, FC, useState, useMemo } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
-import { KilnLink } from '@/components/KilnLink';
 import { LinesOfCode } from '@/components/LinesOfCode';
 import { Input, BearIcons, Typography } from '@forgedevstack/bear';
 
@@ -78,7 +77,6 @@ const Icons: FC = () => {
         <Typography variant="h1" className="bear-text-gray-900 dark:bear-text-white">
           Icons
         </Typography>
-        <KilnLink path="/icons" />
         <LinesOfCode lines={350} />
       </div>
       

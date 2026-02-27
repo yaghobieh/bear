@@ -7,8 +7,8 @@ export interface NavItem {
   label: string;
   icon?: string;
   badge?: string;
-  kilnPath?: string;
   children?: NavItem[];
+  external?: boolean;
 }
 
 export interface NavGroup {
@@ -16,8 +16,7 @@ export interface NavGroup {
   items: NavItem[];
 }
 
-export const BEAR_VERSION = '1.1.1';
-export const KILN_BASE_URL = 'http://localhost:6006';
+export const BEAR_VERSION = '1.1.2';
 
 /** Main Bear UI repository */
 export const GITHUB_URL = 'https://github.com/yaghobieh/bear';
@@ -29,7 +28,6 @@ export const FORGESTACK_URL = 'https://forgedevstack.com';
 export const ADMIN_URL = import.meta.env?.VITE_ADMIN_URL ?? '/admin';
 
 export const NAVIGATION: NavGroup[] = [
-  // Getting Started
   {
     title: 'Getting Started',
     items: [
@@ -42,50 +40,39 @@ export const NAVIGATION: NavGroup[] = [
     ],
   },
 
-  // Layout — all layout-related together
+  // Components
   {
-    title: 'Layout',
+    title: 'Components',
     items: [
+      // Layout
       {
         path: '/components/flex',
-        label: 'Flex & Grid',
+        label: 'Layout',
         children: [
           { path: '/components/flex', label: 'Flex' },
           { path: '/components/grid', label: 'Grid' },
           { path: '/components/columns', label: 'Columns' },
           { path: '/components/masonry', label: 'Masonry', badge: 'New' },
-        ],
-      },
-      {
-        path: '/components/container',
-        label: 'Structure',
-        children: [
           { path: '/components/container', label: 'Container' },
           { path: '/components/box', label: 'Box' },
           { path: '/components/paper', label: 'Paper' },
           { path: '/components/divider', label: 'Divider' },
           { path: '/components/scroll-area', label: 'ScrollArea' },
-          { path: '/components/resizable-panel', label: 'ResizablePanel', badge: 'New' },
+          { path: '/components/resizable-panel', label: 'ResizablePanel' },
+          { path: '/components/aspect-ratio', label: 'AspectRatio', badge: 'New' },
         ],
       },
+      // Page Layout
       {
         path: '/components/app-bar',
         label: 'Page Layout',
-        badge: 'Hot',
         children: [
-          { path: '/components/app-bar', label: 'AppBar', badge: 'Hot' },
+          { path: '/components/app-bar', label: 'AppBar' },
           { path: '/components/sidebar', label: 'Sidebar' },
-          { path: '/components/dock', label: 'Dock', badge: 'New' },
+          { path: '/components/dock', label: 'Dock' },
         ],
       },
-    ],
-  },
-
-  // Components
-  {
-    title: 'Components',
-    items: [
-      // Button family
+      // Button
       {
         path: '/components/button',
         label: 'Button',
@@ -98,13 +85,16 @@ export const NAVIGATION: NavGroup[] = [
           { path: '/components/back-top', label: 'BackTop' },
         ],
       },
-      // Input family
+      // Input
       {
         path: '/components/input',
         label: 'Input',
         children: [
           { path: '/components/input', label: 'Input' },
-          { path: '/components/resizable-textarea', label: 'ResizableTextarea', badge: 'New' },
+          { path: '/components/form-field', label: 'FormField', badge: 'New' },
+          { path: '/components/password-input', label: 'PasswordInput', badge: 'New' },
+          { path: '/components/input-group', label: 'InputGroup', badge: 'New' },
+          { path: '/components/resizable-textarea', label: 'ResizableTextarea' },
           { path: '/components/number-input', label: 'NumberInput' },
           { path: '/components/otp-input', label: 'OTPInput' },
           { path: '/components/phone-input', label: 'PhoneInput' },
@@ -114,19 +104,19 @@ export const NAVIGATION: NavGroup[] = [
           { path: '/components/autocomplete', label: 'Autocomplete' },
         ],
       },
-      // Select family
+      // Select
       {
         path: '/components/select',
         label: 'Select',
         children: [
           { path: '/components/select', label: 'Select' },
           { path: '/components/multi-select', label: 'MultiSelect' },
-          { path: '/components/navigable-select', label: 'NavigableSelect', badge: 'New' },
+          { path: '/components/navigable-select', label: 'NavigableSelect' },
           { path: '/components/cascader', label: 'Cascader' },
           { path: '/components/transfer-list', label: 'TransferList' },
         ],
       },
-      // Form controls
+      // Form Controls
       {
         path: '/components/checkbox',
         label: 'Form Controls',
@@ -155,9 +145,8 @@ export const NAVIGATION: NavGroup[] = [
       {
         path: '/components/rich-editor',
         label: 'Editors',
-        badge: 'Hot',
         children: [
-          { path: '/components/rich-editor', label: 'RichEditor', badge: 'Hot' },
+          { path: '/components/rich-editor', label: 'RichEditor' },
           { path: '/components/editable', label: 'Editable' },
           { path: '/components/sign-pad', label: 'SignPad' },
         ],
@@ -179,10 +168,11 @@ export const NAVIGATION: NavGroup[] = [
         label: 'Overlay',
         children: [
           { path: '/components/modal', label: 'Modal' },
+          { path: '/components/alert-dialog', label: 'AlertDialog', badge: 'New' },
           { path: '/components/drawer', label: 'Drawer' },
           { path: '/components/bottom-sheet', label: 'BottomSheet' },
           { path: '/components/command-palette', label: 'CommandPalette' },
-          { path: '/components/spotlight', label: 'Spotlight', badge: 'New' },
+          { path: '/components/spotlight', label: 'Spotlight' },
         ],
       },
       // Tooltip
@@ -242,14 +232,14 @@ export const NAVIGATION: NavGroup[] = [
           { path: '/components/em', label: 'Em' },
           { path: '/components/highlight', label: 'Highlight' },
           { path: '/components/mark', label: 'Mark' },
-          { path: '/components/gradient-text', label: 'GradientText', badge: 'New' },
-          { path: '/components/typewriter', label: 'Typewriter', badge: 'New' },
+          { path: '/components/gradient-text', label: 'GradientText' },
+          { path: '/components/typewriter', label: 'Typewriter' },
         ],
       },
       // Avatar / Identity
       {
         path: '/components/avatar',
-        label: 'Avatar',
+        label: 'Avatar & Identity',
         children: [
           { path: '/components/avatar', label: 'Avatar' },
           { path: '/components/badge', label: 'Badge' },
@@ -259,14 +249,14 @@ export const NAVIGATION: NavGroup[] = [
       // Data
       {
         path: '/components/data-table',
-        label: 'Data',
+        label: 'Data Display',
         children: [
           { path: '/components/data-table', label: 'DataTable' },
           { path: '/components/list', label: 'List' },
           { path: '/components/tree-view', label: 'TreeView' },
-          { path: '/components/file-tree', label: 'FileTree', badge: 'New' },
+          { path: '/components/file-tree', label: 'FileTree' },
           { path: '/components/virtual-list', label: 'VirtualList' },
-          { path: '/components/kanban', label: 'Kanban', badge: 'Hot' },
+          { path: '/components/kanban', label: 'Kanban' },
         ],
       },
       // Misc
@@ -280,63 +270,54 @@ export const NAVIGATION: NavGroup[] = [
     ],
   },
 
-  // Advanced — special / complex components
+  // Advanced
   {
     title: 'Advanced',
     items: [
-      // Media
       {
         path: '/components/map',
         label: 'Media',
-        badge: 'New',
         children: [
-          { path: '/components/map', label: 'Map', badge: 'New' },
-          { path: '/components/code-editor', label: 'CodeEditor', badge: 'New' },
-          { path: '/components/cropper', label: 'Cropper', badge: 'New' },
+          { path: '/components/map', label: 'Map' },
+          { path: '/components/code-editor', label: 'CodeEditor' },
+          { path: '/components/cropper', label: 'Cropper' },
           { path: '/components/carousel', label: 'Carousel' },
         ],
       },
-      // Animation
       {
         path: '/components/transition',
         label: 'Animation',
-        badge: 'New',
         children: [
-          { path: '/components/transition', label: 'Transition', badge: 'New' },
-          { path: '/components/marquee', label: 'Marquee', badge: 'New' },
+          { path: '/components/transition', label: 'Transition' },
+          { path: '/components/marquee', label: 'Marquee' },
           { path: '/components/confetti', label: 'Confetti' },
-          { path: '/components/countdown-timer', label: 'CountdownTimer', badge: 'New' },
+          { path: '/components/countdown-timer', label: 'CountdownTimer' },
         ],
       },
-      // Utility
       {
         path: '/components/watermark',
         label: 'Utility',
         children: [
-          { path: '/components/watermark', label: 'Watermark', badge: 'New' },
+          { path: '/components/watermark', label: 'Watermark' },
           { path: '/components/qr-code', label: 'QRCode' },
           { path: '/components/tour', label: 'Tour' },
         ],
       },
-      // Developer
       {
         path: '/components/json-viewer',
         label: 'Developer',
-        badge: 'New',
         children: [
-          { path: '/components/json-viewer', label: 'JsonViewer', badge: 'New' },
-          { path: '/components/diff-viewer', label: 'DiffViewer', badge: 'New' },
-          { path: '/components/terminal', label: 'Terminal', badge: 'New' },
+          { path: '/components/json-viewer', label: 'JsonViewer' },
+          { path: '/components/diff-viewer', label: 'DiffViewer' },
+          { path: '/components/terminal', label: 'Terminal' },
         ],
       },
-      // Chat
       {
         path: '/components/chat',
         label: 'Chat',
-        badge: 'New',
         children: [
-          { path: '/components/chat', label: 'Chat', badge: 'New' },
-          { path: '/components/floating-chat', label: 'FloatingChat', badge: 'New' },
+          { path: '/components/chat', label: 'Chat' },
+          { path: '/components/floating-chat', label: 'FloatingChat' },
         ],
       },
     ],
@@ -352,6 +333,87 @@ export const NAVIGATION: NavGroup[] = [
       { path: '/components/pie-chart', label: 'PieChart' },
       { path: '/components/sparkline', label: 'Sparkline' },
       { path: '/components/gauge', label: 'Gauge' },
+    ],
+  },
+
+  // Component API
+  {
+    title: 'Component API',
+    items: [
+      { path: '/api/overview', label: 'Overview' },
+      {
+        path: '/api/inputs',
+        label: 'Inputs',
+        children: [
+          { path: '/api/input', label: 'Input API' },
+          { path: '/api/form-field', label: 'FormField API', badge: 'New' },
+          { path: '/api/password-input', label: 'PasswordInput API', badge: 'New' },
+          { path: '/api/select', label: 'Select API' },
+          { path: '/api/checkbox', label: 'Checkbox API' },
+          { path: '/api/switch', label: 'Switch API' },
+          { path: '/api/slider', label: 'Slider API' },
+        ],
+      },
+      {
+        path: '/api/display',
+        label: 'Display',
+        children: [
+          { path: '/api/button', label: 'Button API' },
+          { path: '/api/typography', label: 'Typography API' },
+          { path: '/api/card', label: 'Card API' },
+          { path: '/api/avatar', label: 'Avatar API' },
+          { path: '/api/badge', label: 'Badge API' },
+          { path: '/api/alert', label: 'Alert API' },
+        ],
+      },
+      {
+        path: '/api/layout',
+        label: 'Layout',
+        children: [
+          { path: '/api/grid', label: 'Grid API' },
+          { path: '/api/flex', label: 'Flex API' },
+          { path: '/api/container', label: 'Container API' },
+          { path: '/api/app-bar', label: 'AppBar API' },
+          { path: '/api/sidebar', label: 'Sidebar API' },
+        ],
+      },
+      {
+        path: '/api/overlay',
+        label: 'Overlay',
+        children: [
+          { path: '/api/modal', label: 'Modal API' },
+          { path: '/api/drawer', label: 'Drawer API' },
+          { path: '/api/tooltip', label: 'Tooltip API' },
+          { path: '/api/alert-dialog', label: 'AlertDialog API', badge: 'New' },
+        ],
+      },
+    ],
+  },
+
+  // Theming & Customization
+  {
+    title: 'Theming & Customization',
+    items: [
+      { path: '/customization/overview', label: 'Overview' },
+      { path: '/customization/palette', label: 'Palette' },
+      { path: '/customization/typography', label: 'Typography' },
+      { path: '/customization/spacing', label: 'Spacing' },
+      { path: '/customization/breakpoints', label: 'Breakpoints' },
+      { path: '/customization/z-index', label: 'z-index' },
+      { path: '/customization/dark-mode', label: 'Dark Mode' },
+      { path: '/customization/css-variables', label: 'CSS Variables' },
+      { path: '/customization/custom-components', label: 'Custom Components' },
+    ],
+  },
+
+  // Guides
+  {
+    title: 'Guides',
+    items: [
+      { path: '/guides/responsive-ui', label: 'Responsive UI' },
+      { path: '/guides/minimize-bundle', label: 'Minimize Bundle Size' },
+      { path: '/guides/server-rendering', label: 'Server Rendering' },
+      { path: '/guides/accessibility', label: 'Accessibility' },
     ],
   },
 
@@ -382,17 +444,18 @@ export const NAVIGATION: NavGroup[] = [
     ],
   },
 
-  // Resources
+  // Store
   {
-    title: 'Resources',
+    title: 'Store',
     items: [
-      { path: '/templates', label: 'Templates' },
+      { path: '/store', label: 'Templates & Themes' },
     ],
   },
 ];
 
 export const VERSIONS = [
-  { value: '1.1.1', label: 'v1.1.1 (current)' },
+  { value: '1.1.2', label: 'v1.1.2 (current)' },
+  { value: '1.1.1', label: 'v1.1.1' },
   { value: '1.0.9', label: 'v1.0.9' },
   { value: '1.0.8', label: 'v1.0.8' },
   { value: '1.0.7', label: 'v1.0.7' },
@@ -408,11 +471,8 @@ export const VERSIONS = [
 export interface ThemePreset {
   id: string;
   name: string;
-  /** Whether this preset forces dark mode */
   dark: boolean;
-  /** Primary accent color used for buttons, links, etc. */
   primary: string;
-  /** Editor colors */
   colors: {
     bg: string;
     text: string;

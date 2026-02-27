@@ -1,0 +1,2 @@
+export { ClearIcon } from './ClearIcon';
+

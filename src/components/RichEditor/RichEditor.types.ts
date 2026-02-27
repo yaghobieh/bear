@@ -25,6 +25,10 @@ export interface RichEditorProps extends Omit<HTMLAttributes<HTMLDivElement>, 'o
   id?: string;
   /** Enable image paste support */
   allowImagePaste?: boolean;
+  /** Show live character count (plain-text length, HTML tags excluded) */
+  showCharCount?: boolean;
+  /** Max chars for counter display */
+  charCountMax?: number;
 }
 
 export type ToolbarOption = 

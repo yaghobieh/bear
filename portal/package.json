@@ -1,6 +1,6 @@
 {
   "name": "bear-portal",
-  "version": "1.0.9",
+  "version": "1.1.2",
   "private": true,
   "type": "module",
   "dependencies": {

@@ -26,6 +26,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Ensure Rollup Linux optional dependency
+        run: |
+          ROLLUP_VERSION=$(node -p "require('./node_modules/rollup/package.json').version")
+          npm install --no-save "@rollup/rollup-linux-x64-gnu@${ROLLUP_VERSION}"
+
       - name: Build library
         run: npm run build
 
@@ -59,7 +64,11 @@ jobs:
           node-version: 20
 
       - name: Install & build Bear
-        run: npm ci && npm run build
+        run: |
+          npm ci
+          ROLLUP_VERSION=$(node -p "require('./node_modules/rollup/package.json').version")
+          npm install --no-save "@rollup/rollup-linux-x64-gnu@${ROLLUP_VERSION}"
+          npm run build
 
       - name: Install & build portal
         run: npm run portal:install && npm run portal:build

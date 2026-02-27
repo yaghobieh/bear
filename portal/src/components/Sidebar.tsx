@@ -239,7 +239,7 @@ const CollapsibleGroup: FC<CollapsibleGroupProps> = ({
 
 export const Sidebar: FC<SidebarProps> = ({ isOpen = true, onClose, topOffset = 104 }) => {
   const isMobile = useIsMobile();
-  const [searchQuery, setSearchQuery] = useState('');
+  const searchQuery = '';
 
   const handleItemClick = useCallback(() => {
     if (isMobile && onClose) {
@@ -272,32 +272,6 @@ export const Sidebar: FC<SidebarProps> = ({ isOpen = true, onClose, topOffset = 
       >
         {/* Header */}
         <div className="p-3 space-y-2 border-b border-gray-100 dark:border-gray-800">
-          {/* Search */}
-          <div className="relative">
-            <BearIcons.SearchIcon 
-              size={14} 
-              className="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400" 
-            />
-            <input
-              type="text"
-              placeholder="Search..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-8 pr-8 py-1.5 text-sm rounded border border-gray-200 dark:border-gray-700 
-                bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300
-                placeholder:text-gray-400
-                focus:outline-none focus:ring-1 focus:ring-pink-500 focus:border-pink-500"
-            />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery('')}
-                className="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
-              >
-                <BearIcons.XIcon size={12} className="text-gray-400" />
-              </button>
-            )}
-          </div>
-          
           {/* Version */}
           <select
             value={BEAR_VERSION}
@@ -324,19 +298,6 @@ export const Sidebar: FC<SidebarProps> = ({ isOpen = true, onClose, topOffset = 
               />
             ))}
           </nav>
-          
-          {/* No results */}
-          {searchQuery && NAVIGATION.every(g => 
-            g.items.every(item => {
-              const matchesSelf = !item.label.toLowerCase().includes(searchQuery.toLowerCase());
-              const matchesChild = !item.children?.some(c => c.label.toLowerCase().includes(searchQuery.toLowerCase()));
-              return matchesSelf && matchesChild;
-            })
-          ) && (
-            <div className="text-center py-8 text-gray-400">
-              <p className="text-sm">No results found</p>
-            </div>
-          )}
         </div>
       </aside>
 

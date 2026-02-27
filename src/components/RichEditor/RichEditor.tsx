@@ -83,6 +83,8 @@ export const RichEditor: FC<RichEditorProps> = (props) => {
     testId,
     id,
     allowImagePaste = true,
+    showCharCount = false,
+    charCountMax,
     ...rest
   } = props;
 
@@ -91,6 +93,7 @@ export const RichEditor: FC<RichEditorProps> = (props) => {
   const activeToolbar = isMobile ? RICH_EDITOR_MOBILE_TOOLBAR : toolbar;
   const [activeFormats, setActiveFormats] = useState<Set<string>>(new Set());
   const [currentBlock, setCurrentBlock] = useState<string>('p');
+  const [charCount, setCharCount] = useState(0);
   const [textColorValue, setTextColorValue] = useState<string>('#000000');
   const [highlightColorValue, setHighlightColorValue] = useState<string>('#fef08a');
   const [recentTextColors, setRecentTextColors] = useState<string[]>([]);
@@ -132,11 +135,12 @@ export const RichEditor: FC<RichEditorProps> = (props) => {
   }, []);
 
   const handleInput = useCallback(() => {
-    if (editorRef.current && onChange) {
-      onChange(editorRef.current.innerHTML);
+    if (editorRef.current) {
+      if (onChange) onChange(editorRef.current.innerHTML);
+      if (showCharCount) setCharCount(editorRef.current.textContent?.length ?? 0);
     }
     updateActiveFormats();
-  }, [onChange, updateActiveFormats]);
+  }, [onChange, updateActiveFormats, showCharCount]);
 
   const handleFormat = useCallback((format: ToolbarOption) => {
     if (disabled || readOnly) return;
@@ -509,6 +513,17 @@ export const RichEditor: FC<RichEditorProps> = (props) => {
           overflowY: maxHeight ? 'auto' : undefined,
         }}
       />
+
+      {showCharCount && charCountMax != null && (
+        <div
+          className={cn(
+            'Bear-RichEditor__char-count bear-text-xs bear-tabular-nums bear-px-3 bear-py-1.5 bear-text-right bear-border-t bear-border-gray-200 dark:bear-border-gray-700',
+            charCount > charCountMax ? 'bear-text-red-500' : 'bear-text-gray-400 dark:bear-text-gray-500'
+          )}
+        >
+          {charCount}/{charCountMax}
+        </div>
+      )}
     </div>
   );
 };

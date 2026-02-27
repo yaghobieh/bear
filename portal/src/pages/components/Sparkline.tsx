@@ -1,5 +1,4 @@
 import { Sparkline } from '@forgedevstack/bear';
-import { KilnLink } from '../../components/KilnLink';
 import { LinesOfCode } from '../../components/LinesOfCode';
 
 const generateRandomData = (count: number) =>
@@ -15,7 +14,6 @@ export default function SparklinePage() {
       <section>
         <div className="flex items-center gap-3 mb-4">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Sparkline</h1>
-          <KilnLink path="/sparkline" />
           <LinesOfCode lines={75} />
         </div>
         <p className="text-gray-600 dark:text-slate-400 text-lg">

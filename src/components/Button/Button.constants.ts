@@ -8,6 +8,14 @@ export const BUTTON_SIZE: Record<BearSize, string> = {
   xl: 'bear-px-6 bear-py-3 bear-text-lg bear-gap-2.5',
 };
 
+export const BUTTON_ICON_SIZE: Record<BearSize, string> = {
+  xs: '[&_svg]:bear-w-3 [&_svg]:bear-h-3',
+  sm: '[&_svg]:bear-w-4 [&_svg]:bear-h-4',
+  md: '[&_svg]:bear-w-5 [&_svg]:bear-h-5',
+  lg: '[&_svg]:bear-w-5 [&_svg]:bear-h-5',
+  xl: '[&_svg]:bear-w-6 [&_svg]:bear-h-6',
+};
+
 /**
  * Button variants using CSS variables for full customization
  * Colors can be overridden via:

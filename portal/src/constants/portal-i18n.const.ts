@@ -1,0 +1,78 @@
+export type PortalLanguage = 'en' | 'es';
+
+export const PORTAL_LANGUAGE_KEY = 'bear-portal-language';
+export const PORTAL_LANGUAGE_EVENT = 'bear-portal-language-change';
+
+export const PORTAL_TEXT = {
+  en: {
+    searchPlaceholder: 'Search...',
+    searchPanelPlaceholder: 'Search components, hooks, guides...',
+    notifications: 'Notifications',
+    newComponents: 'New components',
+    viewDocs: 'View docs',
+    settings: 'Settings',
+    appearance: 'Appearance',
+    light: 'Light',
+    dark: 'Dark',
+    themePresets: 'Theme Presets',
+    language: 'Language',
+    editColorsFonts: 'Edit Colors & Fonts',
+    cssVariables: 'CSS Variables',
+    cookiePreferences: 'Cookie Preferences',
+    acceptCookies: 'Accept cookies',
+    rejectCookies: 'Reject',
+    themeApplied: 'Theme applied',
+    clickForCode: 'Click for code',
+    copy: 'Copy',
+    close: 'Close',
+    getStarted: 'Get Started',
+    cookieBannerTitle: 'Cookie preferences',
+    cookieBannerBody:
+      'We use cookies to improve docs performance and remember your portal preferences.',
+    storeTitle: 'Premium templates to kickstart your project',
+    storeSubtitle:
+      'A collection of templates and starter kits for Bear UI. Payments are disabled; all templates are available for preview and setup.',
+    browseItems: 'Browse items',
+    livePreview: 'Live preview',
+    openStore: 'Open store',
+    free: 'Free',
+    cliCommand: 'CLI command',
+    runInTerminal: 'Run in your terminal, or use Copy command below.',
+  },
+  es: {
+    searchPlaceholder: 'Buscar...',
+    searchPanelPlaceholder: 'Buscar componentes, hooks y guías...',
+    notifications: 'Notificaciones',
+    newComponents: 'Nuevos componentes',
+    viewDocs: 'Ver documentación',
+    settings: 'Configuración',
+    appearance: 'Apariencia',
+    light: 'Claro',
+    dark: 'Oscuro',
+    themePresets: 'Temas predefinidos',
+    language: 'Idioma',
+    editColorsFonts: 'Editar colores y fuentes',
+    cssVariables: 'Variables CSS',
+    cookiePreferences: 'Preferencias de cookies',
+    acceptCookies: 'Aceptar cookies',
+    rejectCookies: 'Rechazar',
+    themeApplied: 'Tema aplicado',
+    clickForCode: 'Haz clic para ver código',
+    copy: 'Copiar',
+    close: 'Cerrar',
+    getStarted: 'Comenzar',
+    cookieBannerTitle: 'Preferencias de cookies',
+    cookieBannerBody:
+      'Usamos cookies para mejorar el rendimiento de la documentación y guardar tus preferencias del portal.',
+    storeTitle: 'Plantillas premium para acelerar tu proyecto',
+    storeSubtitle:
+      'Una colección de plantillas y kits de inicio para Bear UI. Los pagos están desactivados; todas las plantillas se pueden previsualizar y configurar.',
+    browseItems: 'Explorar plantillas',
+    livePreview: 'Vista previa',
+    openStore: 'Abrir tienda',
+    free: 'Gratis',
+    cliCommand: 'Comando CLI',
+    runInTerminal: 'Ejecútalo en tu terminal o usa Copiar comando abajo.',
+  },
+} as const;
+

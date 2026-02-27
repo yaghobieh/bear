@@ -507,3 +507,23 @@ export type { DockProps, DockItem, DockPosition } from './Dock';
 // GradientText
 export { GradientText } from './GradientText';
 export type { GradientTextProps, GradientPreset, GradientDirection } from './GradientText';
+
+// PasswordInput
+export { PasswordInput } from './PasswordInput';
+export type { PasswordInputProps } from './PasswordInput';
+
+// AlertDialog
+export { AlertDialog } from './AlertDialog';
+export type { AlertDialogProps } from './AlertDialog';
+
+// InputGroup
+export { InputGroup } from './InputGroup';
+export type { InputGroupProps } from './InputGroup';
+
+// FormField
+export { FormField } from './FormField';
+export type { FormFieldProps } from './FormField';
+
+// AspectRatio
+export { AspectRatio } from './AspectRatio';
+export type { AspectRatioProps } from './AspectRatio';

@@ -1,7 +1,6 @@
 import { FC, useState } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
-import { KilnLink } from '@/components/KilnLink';
 import { LinesOfCode } from '@/components/LinesOfCode';
 import { Sidebar as BearSidebar } from '@forgedevstack/bear';
 
@@ -63,7 +62,6 @@ const SidebarPage: FC = () => {
     <div className="fade-in">
       <div className="flex items-center gap-3 mb-4">
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Sidebar</h1>
-        <KilnLink path="/sidebar" />
         <LinesOfCode lines={110} />
       </div>
       <p className="text-gray-600 dark:text-gray-400 mb-8">

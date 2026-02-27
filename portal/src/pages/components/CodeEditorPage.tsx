@@ -1,6 +1,5 @@
 import { useState, useMemo } from 'react';
 import { CodeEditor, Typography, Card, CardBody, Button } from '@forgedevstack/bear';
-import { KilnLink } from '@/components/KilnLink';
 import { LinesOfCode } from '@/components/LinesOfCode';
 import { THEME_PRESETS, ThemePreset } from '@/constants/navigation.const';
 
@@ -77,10 +76,9 @@ export default function CodeEditorPage() {
 
   return (
     <div className="fade-in">
-      {/* Title row — same pattern as Highlight: Title + KilnLink + LinesOfCode */}
+      {/* Title row — same pattern as Highlight: Title + LinesOfCode */}
       <div className="flex items-center gap-3 mb-4">
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">CodeEditor</h1>
-        <KilnLink path="/code-editor" />
         <LinesOfCode lines={lineCount} />
       </div>
 

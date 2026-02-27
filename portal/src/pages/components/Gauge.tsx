@@ -1,5 +1,4 @@
 import { Gauge } from '@forgedevstack/bear';
-import { KilnLink } from '../../components/KilnLink';
 import { LinesOfCode } from '../../components/LinesOfCode';
 
 export default function GaugePage() {
@@ -8,7 +7,6 @@ export default function GaugePage() {
       <section>
         <div className="flex items-center gap-3 mb-4">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Gauge</h1>
-          <KilnLink path="/gauge" />
           <LinesOfCode lines={160} />
         </div>
         <p className="text-gray-600 dark:text-slate-400 text-lg">

@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, useCallback, useRef } from 'react';
+import { FC, useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { cn } from '@utils';
 import type { TypewriterProps } from './Typewriter.types';
 import {
@@ -35,14 +35,20 @@ export const Typewriter: FC<TypewriterProps> = (props) => {
     testId,
   } = props;
 
-  const texts = Array.isArray(text) ? text : [text];
+  const texts = useMemo(() => (Array.isArray(text) ? text : [text]), [text]);
   const [displayed, setDisplayed] = useState('');
   const [textIndex, setTextIndex] = useState(INITIAL_TEXT_INDEX);
   const [charIndex, setCharIndex] = useState(INITIAL_CHAR_INDEX);
   const [isDeleting, setIsDeleting] = useState(false);
   const [cursorVisible, setCursorVisible] = useState(true);
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
-  const startedRef = useRef(false);
+  const textIndexRef = useRef(textIndex);
+  const charIndexRef = useRef(charIndex);
+  const isDeletingRef = useRef(isDeleting);
+
+  textIndexRef.current = textIndex;
+  charIndexRef.current = charIndex;
+  isDeletingRef.current = isDeleting;
 
   // Cursor blink via CSS animation class (keyframe in main.css)
   useEffect(() => {
@@ -52,15 +58,20 @@ export const Typewriter: FC<TypewriterProps> = (props) => {
   }, [cursor, cursorBlinkSpeed]);
 
   const type = useCallback(() => {
-    const currentText = texts[textIndex];
+    const ti = textIndexRef.current;
+    const ci = charIndexRef.current;
+    const deleting = isDeletingRef.current;
+    const currentText = texts[ti];
 
-    if (!isDeleting) {
-      if (charIndex < currentText.length) {
-        setDisplayed(currentText.slice(0, charIndex + 1));
-        setCharIndex((c) => c + 1);
+    if (!deleting) {
+      if (ci < currentText.length) {
+        const next = ci + 1;
+        setDisplayed(currentText.slice(0, next));
+        setCharIndex(next);
+        charIndexRef.current = next;
         timerRef.current = setTimeout(type, speed);
       } else {
-        onWordComplete?.(textIndex);
+        onWordComplete?.(ti);
 
         if (texts.length === 1 && !loop) {
           onComplete?.();
@@ -69,51 +80,50 @@ export const Typewriter: FC<TypewriterProps> = (props) => {
 
         timerRef.current = setTimeout(() => {
           setIsDeleting(true);
+          isDeletingRef.current = true;
           type();
         }, deleteDelay);
       }
     } else {
-      if (charIndex > 0) {
-        setCharIndex((c) => c - 1);
-        setDisplayed(currentText.slice(0, charIndex - 1));
+      if (ci > 0) {
+        const next = ci - 1;
+        setCharIndex(next);
+        charIndexRef.current = next;
+        setDisplayed(currentText.slice(0, next));
         timerRef.current = setTimeout(type, deleteSpeed);
       } else {
         setIsDeleting(false);
-        const nextIndex = textIndex + 1;
+        isDeletingRef.current = false;
+        const nextIndex = ti + 1;
 
         if (nextIndex >= texts.length) {
           if (loop) {
             setTextIndex(INITIAL_TEXT_INDEX);
+            textIndexRef.current = INITIAL_TEXT_INDEX;
+            setCharIndex(INITIAL_CHAR_INDEX);
+            charIndexRef.current = INITIAL_CHAR_INDEX;
             timerRef.current = setTimeout(type, speed);
           } else {
             onComplete?.();
           }
         } else {
           setTextIndex(nextIndex);
+          textIndexRef.current = nextIndex;
+          setCharIndex(INITIAL_CHAR_INDEX);
+          charIndexRef.current = INITIAL_CHAR_INDEX;
           timerRef.current = setTimeout(type, speed);
         }
       }
     }
-  }, [texts, textIndex, charIndex, isDeleting, speed, deleteSpeed, deleteDelay, loop, onComplete, onWordComplete]);
+  }, [texts, speed, deleteSpeed, deleteDelay, loop, onComplete, onWordComplete]);
 
+  // Start typing after startDelay. No guard so React Strict Mode re-run still schedules.
   useEffect(() => {
-    if (startedRef.current) return;
-    startedRef.current = true;
     timerRef.current = setTimeout(type, startDelay);
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Re-run type when isDeleting or textIndex changes
-  useEffect(() => {
-    if (!startedRef.current) return;
-    if (timerRef.current) clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(type, isDeleting ? deleteSpeed : speed);
-    return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
-    };
-  }, [isDeleting, textIndex]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Tag

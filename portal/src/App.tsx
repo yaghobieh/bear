@@ -192,11 +192,42 @@ const DockPage = lazy(() => import('./pages/components/DockPage'));
 const GradientTextPage = lazy(() => import('./pages/components/GradientTextPage'));
 const NavigableSelectPage = lazy(() => import('./pages/components/NavigableSelectPage'));
 
+// v1.1.2 Components
+const PasswordInputPage = lazy(() => import('./pages/components/PasswordInput'));
+const AlertDialogPage = lazy(() => import('./pages/components/AlertDialog'));
+const InputGroupPage = lazy(() => import('./pages/components/InputGroup'));
+const FormFieldPage = lazy(() => import('./pages/components/FormFieldPage'));
+const AspectRatioPage = lazy(() => import('./pages/components/AspectRatioPage'));
+
+// Guides
+const ResponsiveUiPage = lazy(() => import('./pages/guides/ResponsiveUi'));
+const MinimizeBundlePage = lazy(() => import('./pages/guides/MinimizeBundle'));
+const ServerRenderingPage = lazy(() => import('./pages/guides/ServerRendering'));
+const AccessibilityPage = lazy(() => import('./pages/guides/Accessibility'));
+
+// API
+const ApiOverviewPage = lazy(() => import('./pages/api/Overview'));
+const ApiComponentPage = lazy(() => import('./pages/api/ComponentApi'));
+
+// Store
+const StorePage = lazy(() => import('./pages/Store'));
+
 // Utilities
 const IconsPage = lazy(() => import('./pages/Icons'));
 const HooksPage = lazy(() => import('./pages/Hooks'));
 const RoadmapPage = lazy(() => import('./pages/Roadmap'));
 const TemplatesPage = lazy(() => import('./pages/Templates'));
+
+// Customization
+const CustomizationOverviewPage = lazy(() => import('./pages/customization/Overview'));
+const CustomizationPalettePage = lazy(() => import('./pages/customization/Palette'));
+const CustomizationTypographyPage = lazy(() => import('./pages/customization/TypographyCustomization'));
+const CustomizationSpacingPage = lazy(() => import('./pages/customization/Spacing'));
+const CustomizationBreakpointsPage = lazy(() => import('./pages/customization/Breakpoints'));
+const CustomizationZIndexPage = lazy(() => import('./pages/customization/ZIndex'));
+const CustomizationDarkModePage = lazy(() => import('./pages/customization/DarkMode'));
+const CustomizationCssVariablesPage = lazy(() => import('./pages/customization/CssVariables'));
+const CustomizationCustomComponentsPage = lazy(() => import('./pages/customization/CustomComponents'));
 
 // Fallback for lazy loading
 const PageLoader = () => (
@@ -239,19 +270,42 @@ function App() {
   }
 
   return (
+    <PortalLayout
+      sidebarOpen={sidebarOpen}
+      setSidebarOpen={setSidebarOpen}
+      topOffset={topOffset}
+      onBannerVisibilityChange={handleBannerVisibilityChange}
+    />
+  );
+}
+
+interface PortalLayoutProps {
+  sidebarOpen: boolean;
+  setSidebarOpen: (open: boolean) => void;
+  topOffset: number;
+  onBannerVisibilityChange: (visible: boolean) => void;
+}
+
+function PortalLayout({
+  sidebarOpen,
+  setSidebarOpen,
+  topOffset,
+  onBannerVisibilityChange,
+}: PortalLayoutProps) {
+  return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
       <Topbar
         onMenuClick={() => setSidebarOpen(!sidebarOpen)}
         banner={BANNER_CONFIG}
-        onBannerVisibilityChange={handleBannerVisibilityChange}
+        onBannerVisibilityChange={onBannerVisibilityChange}
       />
 
-      <div 
+      <div
         className="flex"
         style={{ paddingTop: `${topOffset}px` }}
       >
-        <Sidebar 
-          isOpen={sidebarOpen} 
+        <Sidebar
+          isOpen={sidebarOpen}
           onClose={() => setSidebarOpen(false)}
           topOffset={topOffset}
         />
@@ -275,6 +329,8 @@ function App() {
                 <Route path="/components/button-group" element={<ButtonGroupPage />} />
                 <Route path="/components/fab" element={<FabPage />} />
                 <Route path="/components/input" element={<InputPage />} />
+                <Route path="/components/form-field" element={<FormFieldPage />} />
+                <Route path="/components/aspect-ratio" element={<AspectRatioPage />} />
                 <Route path="/components/select" element={<SelectPage />} />
                 <Route path="/components/checkbox" element={<CheckboxPage />} />
                 <Route path="/components/radio" element={<RadioPage />} />
@@ -392,6 +448,11 @@ function App() {
                 <Route path="/components/gradient-text" element={<GradientTextPage />} />
                 <Route path="/components/navigable-select" element={<NavigableSelectPage />} />
                 
+                {/* v1.1.2 Components */}
+                <Route path="/components/password-input" element={<PasswordInputPage />} />
+                <Route path="/components/alert-dialog" element={<AlertDialogPage />} />
+                <Route path="/components/input-group" element={<InputGroupPage />} />
+                
                 {/* Charts & Graphs */}
                 <Route path="/components/chart" element={<ChartPage />} />
                 <Route path="/components/bar-chart" element={<ChartPage />} />
@@ -429,6 +490,28 @@ function App() {
                 <Route path="/hooks" element={<HooksPage />} />
                 <Route path="/roadmap" element={<RoadmapPage />} />
                 <Route path="/templates" element={<TemplatesPage />} />
+                <Route path="/store" element={<StorePage />} />
+                
+                {/* Guides */}
+                <Route path="/guides/responsive-ui" element={<ResponsiveUiPage />} />
+                <Route path="/guides/minimize-bundle" element={<MinimizeBundlePage />} />
+                <Route path="/guides/server-rendering" element={<ServerRenderingPage />} />
+                <Route path="/guides/accessibility" element={<AccessibilityPage />} />
+                
+                {/* API */}
+                <Route path="/api/overview" element={<ApiOverviewPage />} />
+                <Route path="/api/:slug" element={<ApiComponentPage />} />
+                
+                {/* Customization */}
+                <Route path="/customization/overview" element={<CustomizationOverviewPage />} />
+                <Route path="/customization/palette" element={<CustomizationPalettePage />} />
+                <Route path="/customization/typography" element={<CustomizationTypographyPage />} />
+                <Route path="/customization/spacing" element={<CustomizationSpacingPage />} />
+                <Route path="/customization/breakpoints" element={<CustomizationBreakpointsPage />} />
+                <Route path="/customization/z-index" element={<CustomizationZIndexPage />} />
+                <Route path="/customization/dark-mode" element={<CustomizationDarkModePage />} />
+                <Route path="/customization/css-variables" element={<CustomizationCssVariablesPage />} />
+                <Route path="/customization/custom-components" element={<CustomizationCustomComponentsPage />} />
                 
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>

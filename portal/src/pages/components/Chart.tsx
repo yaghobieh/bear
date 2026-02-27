@@ -1,5 +1,4 @@
 import { Chart, BarChart, LineChart, PieChart } from '@forgedevstack/bear';
-import { KilnLink } from '../../components/KilnLink';
 import { LinesOfCode } from '../../components/LinesOfCode';
 
 const sampleData = [
@@ -17,7 +16,6 @@ export default function ChartPage() {
       <section>
         <div className="flex items-center gap-3 mb-4">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Chart</h1>
-          <KilnLink path="/chart" />
           <LinesOfCode lines={220} />
         </div>
         <p className="text-gray-600 dark:text-slate-400 text-lg">

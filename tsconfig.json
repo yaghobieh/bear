@@ -17,6 +17,7 @@
     "noFallthroughCasesInSwitch": true,
     "declaration": true,
     "declarationDir": "./dist",
+    "typeRoots": ["./node_modules/@types"],
     "baseUrl": ".",
     "paths": {
       "@utils": ["./src/utils"],
@@ -28,5 +29,5 @@
     }
   },
   "include": ["src"],
-  "exclude": ["node_modules", "dist", "src/**/*.kiln.tsx", "src/**/*.story.tsx", "src/**/*.stories.tsx"]
+  "exclude": ["node_modules", "dist", "portal", "src/**/*.kiln.tsx", "src/**/*.story.tsx", "src/**/*.stories.tsx"]
 }

@@ -31,6 +31,7 @@ const ButtonGroupPage = lazy(() => import('./pages/components/ButtonGroup'));
 const FabPage = lazy(() => import('./pages/components/Fab'));
 const InputPage = lazy(() => import('./pages/components/Input'));
 const SelectPage = lazy(() => import('./pages/components/Select'));
+const TreeSelectPage = lazy(() => import('./pages/components/TreeSelectPage'));
 const CheckboxPage = lazy(() => import('./pages/components/Checkbox'));
 const RadioPage = lazy(() => import('./pages/components/Radio'));
 const SwitchPage = lazy(() => import('./pages/components/Switch'));
@@ -57,6 +58,7 @@ const SpinnerPage = lazy(() => import('./pages/components/Spinner'));
 const ProgressPage = lazy(() => import('./pages/components/Progress'));
 const BearLoaderPage = lazy(() => import('./pages/components/BearLoaderPage'));
 const ModalPage = lazy(() => import('./pages/components/Modal'));
+const ContextMenuPage = lazy(() => import('./pages/components/ContextMenuPage'));
 const DrawerPage = lazy(() => import('./pages/components/Drawer'));
 
 // New Components
@@ -66,6 +68,7 @@ const PaginationPage = lazy(() => import('./pages/components/Pagination'));
 // Date & Time Components
 const CalendarPage = lazy(() => import('./pages/components/Calendar'));
 const DatePickerPage = lazy(() => import('./pages/components/DatePicker'));
+const DateRangePickerPage = lazy(() => import('./pages/components/DateRangePicker'));
 const TimePickerPage = lazy(() => import('./pages/components/TimePicker'));
 const PhoneInputPage = lazy(() => import('./pages/components/PhoneInput'));
 const CreditInputPage = lazy(() => import('./pages/components/CreditInput'));
@@ -92,6 +95,7 @@ const ColorPickerPage = lazy(() => import('./pages/components/ColorPicker'));
 const StatisticPage = lazy(() => import('./pages/components/Statistic'));
 const EmptyStatePage = lazy(() => import('./pages/components/EmptyState'));
 const ImagePage = lazy(() => import('./pages/components/Image'));
+const ImageGalleryPage = lazy(() => import('./pages/components/ImageGalleryPage'));
 const ScrollAreaPage = lazy(() => import('./pages/components/ScrollArea'));
 const ResizablePanelPage = lazy(() => import('./pages/components/ResizablePanelPage'));
 const ResizableTextareaPage = lazy(() => import('./pages/components/ResizableTextareaPage'));
@@ -192,12 +196,34 @@ const DockPage = lazy(() => import('./pages/components/DockPage'));
 const GradientTextPage = lazy(() => import('./pages/components/GradientTextPage'));
 const NavigableSelectPage = lazy(() => import('./pages/components/NavigableSelectPage'));
 
-// v1.1.2 Components
+// v1.1.3 Components
 const PasswordInputPage = lazy(() => import('./pages/components/PasswordInput'));
 const AlertDialogPage = lazy(() => import('./pages/components/AlertDialog'));
 const InputGroupPage = lazy(() => import('./pages/components/InputGroup'));
 const FormFieldPage = lazy(() => import('./pages/components/FormFieldPage'));
 const AspectRatioPage = lazy(() => import('./pages/components/AspectRatioPage'));
+
+// v1.1.3 New Components
+const NumberFormatterPage = lazy(() => import('./pages/components/NumberFormatterPage'));
+const InfiniteScrollPage = lazy(() => import('./pages/components/InfiniteScrollPage'));
+const ColorSwatchPage = lazy(() => import('./pages/components/ColorSwatchPage'));
+const SplitButtonPage = lazy(() => import('./pages/components/SplitButtonPage'));
+
+// v1.1.3 New Components (batch 2)
+const PopconfirmPage = lazy(() => import('./pages/components/PopconfirmPage'));
+const ResultPage = lazy(() => import('./pages/components/ResultPage'));
+const DescriptionsPage = lazy(() => import('./pages/components/DescriptionsPage'));
+const AnchorPage = lazy(() => import('./pages/components/AnchorPage'));
+const AffixPage = lazy(() => import('./pages/components/AffixPage'));
+const RingProgressPage = lazy(() => import('./pages/components/RingProgressPage'));
+const SpoilerPage = lazy(() => import('./pages/components/SpoilerPage'));
+const LoadingOverlayPage = lazy(() => import('./pages/components/LoadingOverlayPage'));
+const BlockquotePage = lazy(() => import('./pages/components/BlockquotePage'));
+const IndicatorPage = lazy(() => import('./pages/components/IndicatorPage'));
+const CheckboxCardPage = lazy(() => import('./pages/components/CheckboxCardPage'));
+const RadioCardPage = lazy(() => import('./pages/components/RadioCardPage'));
+const ActionIconPage = lazy(() => import('./pages/components/ActionIconPage'));
+const FieldsetPage = lazy(() => import('./pages/components/FieldsetPage'));
 
 // Guides
 const ResponsiveUiPage = lazy(() => import('./pages/guides/ResponsiveUi'));
@@ -332,6 +358,7 @@ function PortalLayout({
                 <Route path="/components/form-field" element={<FormFieldPage />} />
                 <Route path="/components/aspect-ratio" element={<AspectRatioPage />} />
                 <Route path="/components/select" element={<SelectPage />} />
+                <Route path="/components/tree-select" element={<TreeSelectPage />} />
                 <Route path="/components/checkbox" element={<CheckboxPage />} />
                 <Route path="/components/radio" element={<RadioPage />} />
                 <Route path="/components/switch" element={<SwitchPage />} />
@@ -358,6 +385,7 @@ function PortalLayout({
                 <Route path="/components/progress" element={<ProgressPage />} />
                 <Route path="/components/bear-loader" element={<BearLoaderPage />} />
                 <Route path="/components/modal" element={<ModalPage />} />
+                <Route path="/components/context-menu" element={<ContextMenuPage />} />
                 <Route path="/components/drawer" element={<DrawerPage />} />
                 
                 <Route path="/components/link" element={<LinkPage />} />
@@ -373,6 +401,7 @@ function PortalLayout({
                 
                 <Route path="/components/calendar" element={<CalendarPage />} />
                 <Route path="/components/date-picker" element={<DatePickerPage />} />
+                <Route path="/components/date-range-picker" element={<DateRangePickerPage />} />
                 <Route path="/components/time-picker" element={<TimePickerPage />} />
                 <Route path="/components/phone-input" element={<PhoneInputPage />} />
                 <Route path="/components/credit-input" element={<CreditInputPage />} />
@@ -392,6 +421,11 @@ function PortalLayout({
                 <Route path="/components/statistic" element={<StatisticPage />} />
                 <Route path="/components/empty-state" element={<EmptyStatePage />} />
                 <Route path="/components/image" element={<ImagePage />} />
+                <Route path="/components/image-gallery" element={<ImageGalleryPage />} />
+                <Route path="/components/number-formatter" element={<NumberFormatterPage />} />
+                <Route path="/components/infinite-scroll" element={<InfiniteScrollPage />} />
+                <Route path="/components/color-swatch" element={<ColorSwatchPage />} />
+                <Route path="/components/split-button" element={<SplitButtonPage />} />
                 <Route path="/components/scroll-area" element={<ScrollAreaPage />} />
                 <Route path="/components/resizable-panel" element={<ResizablePanelPage />} />
                 <Route path="/components/file-tree" element={<FileTreePage />} />
@@ -448,10 +482,24 @@ function PortalLayout({
                 <Route path="/components/gradient-text" element={<GradientTextPage />} />
                 <Route path="/components/navigable-select" element={<NavigableSelectPage />} />
                 
-                {/* v1.1.2 Components */}
+                {/* v1.1.3 Components */}
                 <Route path="/components/password-input" element={<PasswordInputPage />} />
                 <Route path="/components/alert-dialog" element={<AlertDialogPage />} />
                 <Route path="/components/input-group" element={<InputGroupPage />} />
+                <Route path="/components/popconfirm" element={<PopconfirmPage />} />
+                <Route path="/components/result" element={<ResultPage />} />
+                <Route path="/components/descriptions" element={<DescriptionsPage />} />
+                <Route path="/components/anchor" element={<AnchorPage />} />
+                <Route path="/components/affix" element={<AffixPage />} />
+                <Route path="/components/ring-progress" element={<RingProgressPage />} />
+                <Route path="/components/spoiler" element={<SpoilerPage />} />
+                <Route path="/components/loading-overlay" element={<LoadingOverlayPage />} />
+                <Route path="/components/blockquote" element={<BlockquotePage />} />
+                <Route path="/components/indicator" element={<IndicatorPage />} />
+                <Route path="/components/checkbox-card" element={<CheckboxCardPage />} />
+                <Route path="/components/radio-card" element={<RadioCardPage />} />
+                <Route path="/components/action-icon" element={<ActionIconPage />} />
+                <Route path="/components/fieldset" element={<FieldsetPage />} />
                 
                 {/* Charts & Graphs */}
                 <Route path="/components/chart" element={<ChartPage />} />

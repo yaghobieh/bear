@@ -104,7 +104,7 @@ const Introduction: FC = () => {
       <div className="text-center mb-16">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-pink-500/10 to-rose-500/10 border border-pink-500/20 text-pink-600 dark:text-pink-400 text-sm font-medium mb-6">
           <span>🚀</span>
-          <span>1.1.2 — FormField, AspectRatio, PasswordInput upgrades (shift indicator + custom icons), AlertDialog, InputGroup, Store redesign, Component API docs, alerts dropdown, cookie preferences, Spanish translations + all 1.1.1 features</span>
+          <span>1.1.4 — DateRangePicker, TreeSelect, SplitButton, ImageGallery, ContextMenu, NumberFormatter, InfiniteScroll, ColorSwatch, @BearInclude PostCSS plugin, modular CSS + all fixes</span>
         </div>
         
         <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
@@ -489,6 +489,8 @@ const Introduction: FC = () => {
             'Divider', 'Paper', 'Grid', 'Flex', 'Container', 'SpeedDial',
             'TransferList', 'MultiSelect', 'Autocomplete', 'FAB', 'Link',
             'RichEditor', 'SignPad', 'Kanban', 'EmojiPicker', 'Chart', 'Gauge', 'Sparkline',
+            'DateRangePicker', 'TreeSelect', 'SplitButton', 'ImageGallery', 'ContextMenu',
+            'NumberFormatter', 'InfiniteScroll', 'ColorSwatch',
           ].map((component) => (
             <span
               key={component}
@@ -542,7 +544,7 @@ const Introduction: FC = () => {
         </div>
       </div>
 
-      <div>
+      <div className="mb-16">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
           Quick Example
         </h2>
@@ -568,6 +570,97 @@ function App() {
           language="tsx"
           title="App.tsx"
         />
+      </div>
+
+      <div className="mb-16">
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 text-center">
+          Modular Styles with @BearInclude
+        </h2>
+        <p className="text-center text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
+          Import only the CSS you need. Use the Bear PostCSS plugin for modular, tree-shaken styles
+          in your CSS or SCSS — or import individual modules directly.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div className="p-5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50">
+            <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+              <span className="w-6 h-6 rounded-full bg-pink-100 dark:bg-pink-900/30 text-pink-500 flex items-center justify-center text-xs font-bold">1</span>
+              All styles at once
+            </h3>
+            <CodeBlock
+              code={`/* styles.css or styles.scss */
+@BearIncludeAll;
+
+/* Replaces: import '@forgedevstack/bear/styles.css' */`}
+              language="css"
+              showLineNumbers={false}
+            />
+          </div>
+
+          <div className="p-5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50">
+            <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+              <span className="w-6 h-6 rounded-full bg-pink-100 dark:bg-pink-900/30 text-pink-500 flex items-center justify-center text-xs font-bold">2</span>
+              Pick individual modules
+            </h3>
+            <CodeBlock
+              code={`/* Only import what you need */
+@BearInclude 'base';
+@BearInclude 'buttons';
+@BearInclude 'alerts';
+@BearInclude 'effects';
+@BearInclude 'marquee';`}
+              language="css"
+              showLineNumbers={false}
+            />
+          </div>
+        </div>
+
+        <div className="p-5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 mb-6">
+          <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+            <span className="w-6 h-6 rounded-full bg-pink-100 dark:bg-pink-900/30 text-pink-500 flex items-center justify-center text-xs font-bold">3</span>
+            Direct CSS imports (no plugin needed)
+          </h3>
+          <CodeBlock
+            code={`/* Import modules directly in JS/TS */
+import '@forgedevstack/bear/styles.css';          /* all styles */
+import '@forgedevstack/bear/styles/base.css';     /* base only */
+import '@forgedevstack/bear/styles/buttons.css';  /* buttons only */
+import '@forgedevstack/bear/styles/alerts.css';   /* alerts only */
+import '@forgedevstack/bear/styles/effects.css';  /* effects only */
+import '@forgedevstack/bear/styles/marquee.css';  /* marquee only */`}
+            language="tsx"
+            showLineNumbers={false}
+          />
+        </div>
+
+        <div className="p-5 rounded-xl bg-bear-50 dark:bg-bear-900/20 border border-bear-200 dark:border-bear-800">
+          <h3 className="text-sm font-semibold text-bear-800 dark:text-bear-200 mb-3">
+            Setup: Add the PostCSS plugin
+          </h3>
+          <CodeBlock
+            code={`// postcss.config.js
+module.exports = {
+  plugins: [
+    require('@forgedevstack/bear/postcss'),
+    // ... other plugins (autoprefixer, tailwindcss, etc.)
+  ],
+};`}
+            language="javascript"
+            showLineNumbers={false}
+          />
+          <p className="text-xs text-bear-700 dark:text-bear-300 mt-3">
+            After adding the plugin, use <code className="px-1 py-0.5 bg-bear-100 dark:bg-bear-900/40 rounded text-xs">@BearIncludeAll</code> or <code className="px-1 py-0.5 bg-bear-100 dark:bg-bear-900/40 rounded text-xs">@BearInclude 'module'</code> directives in any CSS/SCSS file.
+          </p>
+        </div>
+
+        <div className="mt-6 text-center">
+          <Link 
+            to="/installation" 
+            className="inline-flex items-center gap-2 text-sm text-pink-600 dark:text-pink-400 hover:underline"
+          >
+            Full installation guide <ArrowRightIcon size={14} />
+          </Link>
+        </div>
       </div>
     </div>
   );

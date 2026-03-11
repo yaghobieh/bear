@@ -9,6 +9,9 @@ export { Grid, GridItem, GridCompound } from './Grid';
 export type { GridProps, GridItemProps } from './Grid';
 
 // UI Components
+export { ActionIcon } from './ActionIcon';
+export type { ActionIconProps } from './ActionIcon';
+
 export { Button } from './Button';
 export type { ButtonProps } from './Button';
 
@@ -104,8 +107,14 @@ export type { SwitchProps } from './Switch';
 export { Checkbox } from './Checkbox';
 export type { CheckboxProps } from './Checkbox';
 
+export { CheckboxCard, CheckboxCardGroup } from './CheckboxCard';
+export type { CheckboxCardProps, CheckboxCardGroupProps } from './CheckboxCard';
+
 export { Radio, RadioGroup } from './Radio';
 export type { RadioProps, RadioGroupProps } from './Radio';
+
+export { RadioCard, RadioCardGroup } from './RadioCard';
+export type { RadioCardProps, RadioCardGroupProps } from './RadioCard';
 
 export { MultiSelect } from './MultiSelect';
 export type { MultiSelectProps, MultiSelectOption } from './MultiSelect';
@@ -524,6 +533,82 @@ export type { InputGroupProps } from './InputGroup';
 export { FormField } from './FormField';
 export type { FormFieldProps } from './FormField';
 
+// Fieldset
+export { Fieldset } from './Fieldset';
+export type { FieldsetProps } from './Fieldset';
+
 // AspectRatio
 export { AspectRatio } from './AspectRatio';
 export type { AspectRatioProps } from './AspectRatio';
+
+// DateRangePicker
+export { DateRangePicker } from './DateRangePicker';
+export type { DateRangePickerProps, DateRange, DateRangePreset } from './DateRangePicker';
+
+// TreeSelect
+export { TreeSelect } from './TreeSelect';
+export type { TreeSelectProps, TreeNode as TreeSelectNode } from './TreeSelect';
+
+// ImageGallery
+export { ImageGallery } from './ImageGallery';
+export type { ImageGalleryProps, GalleryImage } from './ImageGallery';
+
+// ContextMenu
+export { ContextMenu } from './ContextMenu';
+export type { ContextMenuProps, ContextMenuEntry, ContextMenuItem, ContextMenuDivider } from './ContextMenu';
+
+// NumberFormatter
+export { NumberFormatter } from './NumberFormatter';
+export type { NumberFormatterProps, NumberFormatStyle } from './NumberFormatter';
+
+// InfiniteScroll
+export { InfiniteScroll } from './InfiniteScroll';
+export type { InfiniteScrollProps } from './InfiniteScroll';
+
+// ColorSwatch
+export { ColorSwatch, ColorSwatchGroup } from './ColorSwatch';
+export type { ColorSwatchProps, ColorSwatchGroupProps, SwatchSize } from './ColorSwatch';
+
+// SplitButton
+export { SplitButton } from './SplitButton';
+export type { SplitButtonProps, SplitButtonOption } from './SplitButton';
+
+// Popconfirm
+export { Popconfirm } from './Popconfirm';
+export type { PopconfirmProps, PopconfirmPlacement } from './Popconfirm';
+
+// Result
+export { Result } from './Result';
+export type { ResultProps, ResultStatus } from './Result';
+
+// Descriptions
+export { Descriptions } from './Descriptions';
+export type { DescriptionsProps, DescriptionItem } from './Descriptions';
+
+// Anchor
+export { Anchor } from './Anchor';
+export type { AnchorProps, AnchorLink } from './Anchor';
+
+// Affix
+export { Affix } from './Affix';
+export type { AffixProps, AffixPosition } from './Affix';
+
+// RingProgress
+export { RingProgress } from './RingProgress';
+export type { RingProgressProps, RingProgressSection } from './RingProgress';
+
+// Spoiler
+export { Spoiler } from './Spoiler';
+export type { SpoilerProps } from './Spoiler';
+
+// LoadingOverlay
+export { LoadingOverlay } from './LoadingOverlay';
+export type { LoadingOverlayProps } from './LoadingOverlay';
+
+// Blockquote
+export { Blockquote } from './Blockquote';
+export type { BlockquoteProps, BlockquoteColor } from './Blockquote';
+
+// Indicator
+export { Indicator } from './Indicator';
+export type { IndicatorProps, IndicatorPosition } from './Indicator';

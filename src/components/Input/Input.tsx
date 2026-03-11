@@ -1,8 +1,10 @@
-import { FC, forwardRef, useContext } from 'react';
+import { FC, forwardRef, useContext, useState, useCallback, useRef, useEffect } from 'react';
 import { cn } from '@utils';
 import type { InputProps } from './Input.types';
 import { BearContext } from '../../context/BearProvider';
 import { ClearIcon } from './components/ClearIcon';
+import { applyAutoFormat } from './Input.utils';
+import { validateFieldValue } from '../Form/Form.utils';
 
 const sizeClasses = {
   sm: 'bear-h-8 bear-text-sm bear-px-3',
@@ -15,7 +17,7 @@ export const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
     {
       label,
       helperText,
-      error,
+      error: errorProp,
       success,
       size = 'md',
       leftAddon,
@@ -25,11 +27,17 @@ export const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
       onClear,
       showCharCount = false,
       charCountMax,
+      autoFormat,
+      validation,
+      validateOnBlur,
+      validateOnChange = false,
       className,
       disabled,
       value,
       defaultValue,
       maxLength,
+      onChange,
+      onBlur,
       ...props
     },
     ref
@@ -43,6 +51,12 @@ export const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
     const prefixStyle = componentStyles?.prefix;
     const suffixStyle = componentStyles?.suffix;
 
+    const [internalError, setInternalError] = useState<string | null>(null);
+    const validationPending = useRef(false);
+
+    const shouldValidateOnBlur = validation ? (validateOnBlur ?? true) : false;
+
+    const error = errorProp || internalError;
     const hasError = Boolean(error);
     const hasSuccess = Boolean(success) && !hasError;
     const charMax = charCountMax ?? maxLength;
@@ -51,6 +65,46 @@ export const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
     const showClear = clearable && !disabled && currentLen > 0;
 
     const feedbackMessage = error || success || helperText;
+
+    const runValidation = useCallback(async (val: unknown) => {
+      if (!validation) return;
+      validationPending.current = true;
+      const result = await validateFieldValue(val, validation);
+      validationPending.current = false;
+      setInternalError(result);
+    }, [validation]);
+
+    useEffect(() => {
+      if (errorProp) {
+        setInternalError(null);
+      }
+    }, [errorProp]);
+
+    const handleChange = useCallback(
+      (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (autoFormat) {
+          const formatted = applyAutoFormat(e.target.value, autoFormat);
+          if (formatted !== e.target.value) {
+            e.target.value = formatted;
+          }
+        }
+        onChange?.(e);
+        if (validateOnChange && validation) {
+          runValidation(e.target.value);
+        }
+      },
+      [autoFormat, onChange, validateOnChange, validation, runValidation]
+    );
+
+    const handleBlur = useCallback(
+      (e: React.FocusEvent<HTMLInputElement>) => {
+        onBlur?.(e);
+        if (shouldValidateOnBlur && validation) {
+          runValidation(e.target.value);
+        }
+      },
+      [onBlur, shouldValidateOnBlur, validation, runValidation]
+    );
 
     return (
       <div className={cn('Bear-Input bear-flex bear-flex-col bear-gap-1.5', fullWidth && 'bear-w-full')} style={rootStyle}>
@@ -74,6 +128,8 @@ export const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
             defaultValue={defaultValue}
             maxLength={maxLength}
             aria-invalid={hasError || undefined}
+            onChange={handleChange}
+            onBlur={handleBlur}
             className={cn(
               'Bear-Input__field',
               'bear-w-full bear-rounded-lg bear-border bear-outline-none bear-transition-all bear-duration-200',

@@ -2,6 +2,54 @@
 
 All notable changes to Bear UI will be documented in this file.
 
+## [1.1.4] - 2026-02-24
+
+### New Components
+
+- **DateRangePicker**: Two-calendar range picker with preset ranges (Today, Last 7 days, Last 30 days, This month, Last month), clearable selection, min/max date constraints, and three sizes.
+- **TreeSelect**: Hierarchical dropdown selector with expandable tree nodes, single or multi-select, search filtering, tags for selected values, and keyboard-accessible expand/collapse.
+- **ImageGallery / Lightbox**: Responsive image grid with configurable columns and gap. Click-to-open full-screen lightbox with keyboard navigation (Arrow keys, Escape), image counter, and captions.
+- **ContextMenu**: Right-click context menus with nested submenus, keyboard shortcut labels, icons, danger items, and dividers. Auto-closes on click outside or Escape.
+- **NumberFormatter**: Locale-aware number display supporting decimal, currency, percent, compact, and unit styles via `Intl.NumberFormat`. Optional animated value transitions with eased interpolation.
+- **InfiniteScroll**: Scroll-to-load wrapper using `IntersectionObserver` sentinel. Supports auto and manual modes, inverse scroll (chat-like), customizable loader/end-message, and configurable threshold.
+- **ColorSwatch / ColorSwatchGroup**: Individual color swatch circles with check marks and optional labels. Group component for palette selection — supports single and multi-select, configurable grid columns, four sizes.
+- **SplitButton**: Primary action button with a dropdown arrow for secondary actions. Four variants (primary, secondary, outline, danger), loading state, and left/right dropdown alignment.
+- **Popconfirm**: Inline confirmation popover with title, description, confirm/cancel buttons, four placement options, and a danger variant for destructive actions (~120 LOC).
+- **Result**: Full-page feedback component for success, error, info, warning, 404, 403, 500 statuses with SVG icons, title/subtitle Typography, and extra action slots (~130 LOC).
+- **Descriptions**: Key-value detail display with horizontal/vertical layouts, bordered/unbordered modes, configurable columns, and three sizes (~160 LOC).
+- **Anchor**: Scroll-spy sidebar navigation using IntersectionObserver, smooth scrolling, nested links with indent, and active indicator bar (~140 LOC).
+- **Affix**: Sticky positioning wrapper that fixes children to the viewport on scroll, supports top/bottom position and configurable offset (~65 LOC).
+- **RingProgress**: SVG circular progress indicator with multiple colored sections, round caps, configurable size/thickness, and center label slot (~100 LOC).
+- **Spoiler**: Show/hide content with smooth CSS transition, "Show more / Show less" toggle, configurable max height, and custom labels (~85 LOC).
+- **LoadingOverlay**: Semi-transparent overlay with spinner, configurable opacity/blur/zIndex, optional label, and smooth fade transition (~90 LOC).
+- **Blockquote**: Styled quotation block with colored left border, optional icon, five color variants (default, primary, success, warning, error), and citation (~70 LOC).
+- **Indicator**: Positioned dot/badge on any element with 9 positions, optional label, processing pulse animation, custom color/size, and border ring (~110 LOC).
+- **CheckboxCard / CheckboxCardGroup**: Checkbox rendered as selectable cards with icon, description, three sizes, three variants, and group management for multi-selection (~180 LOC).
+- **RadioCard / RadioCardGroup**: Radio rendered as selectable cards with radio indicator, React context for group management, three variants, and three sizes (~175 LOC).
+- **ActionIcon**: Icon-only square button with five variants, five colors, five sizes, loading spinner, disabled state, and configurable radius (~95 LOC).
+- **Fieldset**: Semantic `<fieldset>` with `<legend>`, description via Typography, three variants (default, filled, unstyled), disabled state, and radius options (~65 LOC).
+
+### Fixed
+
+- **SignPad**: Canvas now fills 100% of its container width using `ResizeObserver`. Drawing works correctly at any size. Replaced `useState` for `lastPoint` with `useRef` to prevent stale closures during drawing. Removed fixed `width`/`height` CSS dimensions — canvas CSS width is always 100%, height is configurable via the `height` prop.
+- **TimePicker (Dial Variant)**: Selecting an hour now auto-switches to minute mode (like Material UI). Replaced confusing arrow mode-switch buttons with clickable "HH" / "MM" labels in the time display — click the hour or minute portion to switch modes. Active mode is visually highlighted. Added invisible hit-area circles on clock face for consistent click targets.
+- **ColorPicker**: Theme-aware popup — supports both light and dark mode with proper background, border, and text colors. Extracted all constants (presets, sizes, classes) to `ColorPicker.const.ts`. Replaced inline `sizeClasses` object with shared constant. Improved popup appearance with rounded corners and smooth entry animation.
+
+### Added
+
+- **Input `autoFormat` prop**: Auto-format text on change using Anvil string utils. Supports `'capitalize'`, `'uppercase'`, `'lowercase'`, `'titleCase'`, `'sentenceCase'`, or `'none'`. Format functions imported from `@forgedevstack/anvil`.
+- **Input `validation` prop**: Inline validation using Bear's `ValidationRule` type (reuses Form validation). Supports `validateOnBlur` (default `true` when validation is set) and `validateOnChange` for real-time validation. Displays validation errors below the input.
+- **Anvil `uppercase()` and `lowercase()`**: Added two new string utility functions to `@forgedevstack/anvil` — `uppercase(str)` and `lowercase(str)`.
+- **PostCSS Plugin** (`@forgedevstack/bear/postcss`): Enables `@BearIncludeAll;` directive to inject all Bear styles, and `@BearInclude 'base';` / `'buttons'` / `'alerts'` / `'effects'` / `'marquee'` for modular style imports. Works in CSS and SCSS.
+- **Modular CSS exports**: Individual CSS modules available at `@forgedevstack/bear/styles/base.css`, `./styles/buttons.css`, `./styles/alerts.css`, `./styles/effects.css`, `./styles/marquee.css`.
+
+### Changed
+
+- **Build**: Enabled esbuild minification for smaller output. Added `@forgedevstack/anvil` to Rollup externals (prevents bundling Anvil into Bear). Added `build:modules` script to copy PostCSS plugin and modular CSS files to dist.
+- **CSS Architecture**: Split `main.css` into five modular files (`_base.css`, `_buttons.css`, `_alerts.css`, `_effects.css`, `_marquee.css`). `main.css` now imports all modules. Existing `styles.css` import remains fully backward-compatible.
+
+---
+
 ## [1.1.0] - 2026-02-07
 
 ### Added

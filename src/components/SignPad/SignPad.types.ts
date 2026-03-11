@@ -3,9 +3,9 @@ import { HTMLAttributes } from 'react';
 export interface SignPadProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
   /** Callback when signature changes - receives base64 image data */
   onChange?: (signature: string | null) => void;
-  /** Width of the canvas */
+  /** Canvas resolution width (internal pixels). CSS width is always 100% of container. */
   width?: number;
-  /** Height of the canvas */
+  /** Canvas resolution height (internal pixels). Also sets the CSS height. */
   height?: number;
   /** Stroke color */
   strokeColor?: string;
@@ -36,4 +36,3 @@ export interface SignPadProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onCh
   /** Unique ID */
   id?: string;
 }
-

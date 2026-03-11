@@ -16,7 +16,7 @@ export interface NavGroup {
   items: NavItem[];
 }
 
-export const BEAR_VERSION = '1.1.2';
+export const BEAR_VERSION = '1.1.4';
 
 /** Main Bear UI repository */
 export const GITHUB_URL = 'https://github.com/yaghobieh/bear';
@@ -82,6 +82,8 @@ export const NAVIGATION: NavGroup[] = [
           { path: '/components/fab', label: 'FAB' },
           { path: '/components/speed-dial', label: 'SpeedDial' },
           { path: '/components/copy-button', label: 'CopyButton' },
+          { path: '/components/split-button', label: 'SplitButton', badge: 'New' },
+          { path: '/components/action-icon', label: 'ActionIcon', badge: 'New' },
           { path: '/components/back-top', label: 'BackTop' },
         ],
       },
@@ -110,6 +112,7 @@ export const NAVIGATION: NavGroup[] = [
         label: 'Select',
         children: [
           { path: '/components/select', label: 'Select' },
+          { path: '/components/tree-select', label: 'TreeSelect', badge: 'New' },
           { path: '/components/multi-select', label: 'MultiSelect' },
           { path: '/components/navigable-select', label: 'NavigableSelect' },
           { path: '/components/cascader', label: 'Cascader' },
@@ -122,7 +125,9 @@ export const NAVIGATION: NavGroup[] = [
         label: 'Form Controls',
         children: [
           { path: '/components/checkbox', label: 'Checkbox' },
+          { path: '/components/checkbox-card', label: 'CheckboxCard', badge: 'New' },
           { path: '/components/radio', label: 'Radio' },
+          { path: '/components/radio-card', label: 'RadioCard', badge: 'New' },
           { path: '/components/switch', label: 'Switch' },
           { path: '/components/slider', label: 'Slider' },
           { path: '/components/slider-range', label: 'SliderRange' },
@@ -136,8 +141,10 @@ export const NAVIGATION: NavGroup[] = [
         label: 'Pickers',
         children: [
           { path: '/components/date-picker', label: 'DatePicker' },
+          { path: '/components/date-range-picker', label: 'DateRangePicker', badge: 'New' },
           { path: '/components/time-picker', label: 'TimePicker' },
           { path: '/components/color-picker', label: 'ColorPicker' },
+          { path: '/components/color-swatch', label: 'ColorSwatch', badge: 'New' },
           { path: '/components/emoji-picker', label: 'EmojiPicker' },
         ],
       },
@@ -151,6 +158,7 @@ export const NAVIGATION: NavGroup[] = [
           { path: '/components/sign-pad', label: 'SignPad' },
         ],
       },
+      { path: '/components/fieldset', label: 'Fieldset', badge: 'New' },
       { path: '/components/form', label: 'Form' },
       { path: '/components/file-upload', label: 'FileUpload' },
       // Card
@@ -169,6 +177,7 @@ export const NAVIGATION: NavGroup[] = [
         children: [
           { path: '/components/modal', label: 'Modal' },
           { path: '/components/alert-dialog', label: 'AlertDialog', badge: 'New' },
+          { path: '/components/context-menu', label: 'ContextMenu', badge: 'New' },
           { path: '/components/drawer', label: 'Drawer' },
           { path: '/components/bottom-sheet', label: 'BottomSheet' },
           { path: '/components/command-palette', label: 'CommandPalette' },
@@ -182,6 +191,7 @@ export const NAVIGATION: NavGroup[] = [
         children: [
           { path: '/components/tooltip', label: 'Tooltip' },
           { path: '/components/popover', label: 'Popover' },
+          { path: '/components/popconfirm', label: 'Popconfirm', badge: 'New' },
         ],
       },
       // Feedback
@@ -201,8 +211,10 @@ export const NAVIGATION: NavGroup[] = [
         children: [
           { path: '/components/spinner', label: 'Spinner' },
           { path: '/components/progress', label: 'Progress' },
+          { path: '/components/ring-progress', label: 'RingProgress', badge: 'New' },
           { path: '/components/skeleton', label: 'Skeleton' },
           { path: '/components/bear-loader', label: 'BearLoader' },
+          { path: '/components/loading-overlay', label: 'LoadingOverlay', badge: 'New' },
         ],
       },
       // Navigation
@@ -216,6 +228,7 @@ export const NAVIGATION: NavGroup[] = [
           { path: '/components/menu', label: 'Menu' },
           { path: '/components/dropdown', label: 'Dropdown' },
           { path: '/components/breadcrumbs', label: 'Breadcrumbs' },
+          { path: '/components/anchor', label: 'Anchor', badge: 'New' },
           { path: '/components/stepper', label: 'Stepper' },
           { path: '/components/bottom-navigation', label: 'BottomNavigation' },
           { path: '/components/active-bar', label: 'ActiveBar' },
@@ -228,6 +241,8 @@ export const NAVIGATION: NavGroup[] = [
         children: [
           { path: '/components/typography', label: 'Typography' },
           { path: '/components/code-block', label: 'CodeBlock' },
+          { path: '/components/blockquote', label: 'Blockquote', badge: 'New' },
+          { path: '/components/spoiler', label: 'Spoiler', badge: 'New' },
           { path: '/components/kbd', label: 'Kbd' },
           { path: '/components/em', label: 'Em' },
           { path: '/components/highlight', label: 'Highlight' },
@@ -243,6 +258,7 @@ export const NAVIGATION: NavGroup[] = [
         children: [
           { path: '/components/avatar', label: 'Avatar' },
           { path: '/components/badge', label: 'Badge' },
+          { path: '/components/indicator', label: 'Indicator', badge: 'New' },
           { path: '/components/chip', label: 'Chip' },
         ],
       },
@@ -256,12 +272,16 @@ export const NAVIGATION: NavGroup[] = [
           { path: '/components/tree-view', label: 'TreeView' },
           { path: '/components/file-tree', label: 'FileTree' },
           { path: '/components/virtual-list', label: 'VirtualList' },
+          { path: '/components/infinite-scroll', label: 'InfiniteScroll', badge: 'New' },
           { path: '/components/kanban', label: 'Kanban' },
+          { path: '/components/descriptions', label: 'Descriptions', badge: 'New' },
+          { path: '/components/number-formatter', label: 'NumberFormatter', badge: 'New' },
         ],
       },
       // Misc
       { path: '/components/calendar', label: 'Calendar' },
       { path: '/components/empty-state', label: 'EmptyState' },
+      { path: '/components/result', label: 'Result', badge: 'New' },
       { path: '/components/pagination', label: 'Pagination' },
       { path: '/components/statistic', label: 'Statistic' },
       { path: '/components/timeline', label: 'Timeline' },
@@ -279,6 +299,7 @@ export const NAVIGATION: NavGroup[] = [
         label: 'Media',
         children: [
           { path: '/components/map', label: 'Map' },
+          { path: '/components/image-gallery', label: 'ImageGallery', badge: 'New' },
           { path: '/components/code-editor', label: 'CodeEditor' },
           { path: '/components/cropper', label: 'Cropper' },
           { path: '/components/carousel', label: 'Carousel' },
@@ -299,6 +320,7 @@ export const NAVIGATION: NavGroup[] = [
         label: 'Utility',
         children: [
           { path: '/components/watermark', label: 'Watermark' },
+          { path: '/components/affix', label: 'Affix', badge: 'New' },
           { path: '/components/qr-code', label: 'QRCode' },
           { path: '/components/tour', label: 'Tour' },
         ],
@@ -454,7 +476,9 @@ export const NAVIGATION: NavGroup[] = [
 ];
 
 export const VERSIONS = [
-  { value: '1.1.2', label: 'v1.1.2 (current)' },
+  { value: '1.1.4', label: 'v1.1.4 (current)' },
+  { value: '1.1.3', label: 'v1.1.3' },
+  { value: '1.1.2', label: 'v1.1.2' },
   { value: '1.1.1', label: 'v1.1.1' },
   { value: '1.0.9', label: 'v1.0.9' },
   { value: '1.0.8', label: 'v1.0.8' },

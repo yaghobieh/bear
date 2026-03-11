@@ -1,6 +1,6 @@
 {
   "name": "@forgedevstack/bear",
-  "version": "1.1.2",
+  "version": "1.1.4",
   "description": "Strong, reliable React UI components. Tailwind-powered, zero config required. The protective force of ForgeStack.",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -32,15 +32,22 @@
       "import": "./dist/utils/index.js",
       "require": "./dist/utils/index.cjs"
     },
-    "./styles.css": "./dist/styles.css"
+    "./styles.css": "./dist/styles.css",
+    "./styles/base.css": "./dist/styles/_base.css",
+    "./styles/buttons.css": "./dist/styles/_buttons.css",
+    "./styles/alerts.css": "./dist/styles/_alerts.css",
+    "./styles/effects.css": "./dist/styles/_effects.css",
+    "./styles/marquee.css": "./dist/styles/_marquee.css",
+    "./postcss": "./dist/postcss/bear-plugin.cjs"
   },
   "files": [
     "dist"
   ],
   "scripts": {
     "dev": "vite build --watch",
-    "build": "tsc && vite build && npm run build:css",
+    "build": "tsc && vite build && npm run build:css && npm run build:modules",
     "build:css": "tailwindcss -i ./src/styles/main.css -o ./dist/styles.css --minify",
+    "build:modules": "cp -r src/styles dist/styles && cp -r src/postcss dist/postcss",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "test": "vitest",
     "portal": "cd portal && npm run dev",
@@ -96,4 +103,3 @@
     "url": "https://github.com/yaghobieh/bear/issues"
   }
 }
-

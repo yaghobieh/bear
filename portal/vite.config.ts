@@ -10,6 +10,7 @@ export default defineConfig({
       '@utils': resolve(__dirname, '../src/utils'),
       '@hooks': resolve(__dirname, '../src/hooks'),
       '@context': resolve(__dirname, '../src/context'),
+      vue: resolve(__dirname, './src/vue-stub.ts'),
     },
   },
   server: {

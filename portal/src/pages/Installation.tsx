@@ -142,6 +142,110 @@ module.exports = {
         />
       </section>
 
+      <section className="mb-12">
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+          Modular Styles with @BearInclude
+        </h2>
+        <p className="text-gray-600 dark:text-gray-400 mb-6">
+          Bear UI ships a PostCSS plugin that lets you include styles using CSS directives — no JavaScript import needed.
+          This gives you full control over which style modules are loaded, reducing your CSS bundle size.
+        </p>
+
+        <div className="space-y-6">
+          <div>
+            <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-3">
+              1. Add the PostCSS plugin
+            </h3>
+            <CodeBlock
+              code={`// postcss.config.js
+module.exports = {
+  plugins: [
+    require('@forgedevstack/bear/postcss'),
+    require('autoprefixer'),
+    // ... other plugins
+  ],
+};`}
+              language="javascript"
+              title="postcss.config.js"
+            />
+          </div>
+
+          <div>
+            <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-3">
+              2a. Include all Bear styles
+            </h3>
+            <p className="text-gray-600 dark:text-gray-400 mb-3">
+              Use <code className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-800 rounded text-sm">@BearIncludeAll;</code> to inject the full stylesheet.
+              This replaces the <code className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-800 rounded text-sm">import '@forgedevstack/bear/styles.css'</code> approach.
+            </p>
+            <CodeBlock
+              code={`/* app.css or app.scss */
+@BearIncludeAll;
+
+/* Your custom styles below */
+.my-component {
+  color: var(--bear-primary);
+}`}
+              language="css"
+              title="app.css"
+            />
+          </div>
+
+          <div>
+            <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-3">
+              2b. Include individual modules
+            </h3>
+            <p className="text-gray-600 dark:text-gray-400 mb-3">
+              Pick only the modules you need for a smaller CSS footprint.
+            </p>
+            <CodeBlock
+              code={`/* app.css — only base + buttons */
+@BearInclude 'base';
+@BearInclude 'buttons';
+
+/* Available modules:
+ *   'base'     — resets, layout, typography, utilities
+ *   'buttons'  — button styles and variants
+ *   'alerts'   — alert and notification styles
+ *   'effects'  — animations, transitions, effects
+ *   'marquee'  — marquee / scrolling text
+ */`}
+              language="css"
+              title="app.css"
+            />
+          </div>
+
+          <div>
+            <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-3">
+              Alternative: Direct JS/TS imports
+            </h3>
+            <p className="text-gray-600 dark:text-gray-400 mb-3">
+              If you prefer not to use the PostCSS plugin, you can import CSS modules directly in JavaScript or TypeScript:
+            </p>
+            <CodeBlock
+              code={`// Import everything
+import '@forgedevstack/bear/styles.css';
+
+// Or import individual modules
+import '@forgedevstack/bear/styles/base.css';
+import '@forgedevstack/bear/styles/buttons.css';
+import '@forgedevstack/bear/styles/alerts.css';
+import '@forgedevstack/bear/styles/effects.css';
+import '@forgedevstack/bear/styles/marquee.css';`}
+              language="tsx"
+              title="main.tsx"
+            />
+          </div>
+
+          <div className="p-4 rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800">
+            <p className="text-sm text-amber-800 dark:text-amber-200">
+              <strong>Note:</strong> The <code className="px-1 py-0.5 bg-amber-100 dark:bg-amber-900/40 rounded text-xs">base</code> module 
+              is required for all components to render correctly. Always include it when using individual modules.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <section className="p-6 rounded-xl bg-bear-50 dark:bg-bear-900/20 border border-bear-200 dark:border-bear-800">
         <h2 className="text-lg font-semibold text-bear-800 dark:text-bear-200 mb-2">
           Next Steps

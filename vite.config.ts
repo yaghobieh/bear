@@ -18,6 +18,7 @@ export default defineConfig({
     },
   },
   build: {
+    minify: 'esbuild',
     lib: {
       entry: {
         index: resolve(__dirname, 'src/index.ts'),
@@ -29,7 +30,7 @@ export default defineConfig({
       formats: ['es', 'cjs'],
     },
     rollupOptions: {
-      external: ['react', 'react-dom', 'react/jsx-runtime'],
+      external: ['react', 'react-dom', 'react/jsx-runtime', '@forgedevstack/anvil'],
       output: {
         preserveModules: true,
         preserveModulesRoot: 'src',

@@ -1,0 +1,14 @@
+@layer components {
+  .bear-alert-filled-success {
+    background-color: var(--bear-success-500);
+  }
+  .bear-alert-filled-info {
+    background-color: var(--bear-info-500);
+  }
+  .bear-alert-filled-warning {
+    background-color: var(--bear-warning-500);
+  }
+  .bear-alert-filled-error {
+    background-color: var(--bear-danger-500);
+  }
+}

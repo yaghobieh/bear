@@ -1,4 +1,13 @@
 import type { InputHTMLAttributes, ReactNode } from 'react';
+import type { ValidationRule } from '../Form/Form.types';
+
+export type AutoFormatType =
+  | 'capitalize'
+  | 'uppercase'
+  | 'lowercase'
+  | 'titleCase'
+  | 'sentenceCase'
+  | 'none';
 
 export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
   /** Input label */
@@ -25,5 +34,12 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
   showCharCount?: boolean;
   /** Max chars for counter display (alternative to maxLength when you don't want native enforcement) */
   charCountMax?: number;
+  /** Auto-format text on change using Anvil string utils */
+  autoFormat?: AutoFormatType;
+  /** Validation rules (reuses Form's ValidationRule) */
+  validation?: ValidationRule;
+  /** Run validation on blur (default true when validation is set) */
+  validateOnBlur?: boolean;
+  /** Run validation on change */
+  validateOnChange?: boolean;
 }
-

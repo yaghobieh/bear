@@ -3,7 +3,6 @@ import { cn } from '@utils';
 import { Button } from '../Button';
 import type { SignPadProps } from './SignPad.types';
 import {
-  SIGN_PAD_DEFAULT_WIDTH,
   SIGN_PAD_DEFAULT_HEIGHT,
   SIGN_PAD_DEFAULT_STROKE_WIDTH,
   SIGN_PAD_DEFAULT_PLACEHOLDER,
@@ -24,22 +23,20 @@ import {
 
 /**
  * SignPad - Digital signature capture component
- * 
+ *
+ * Canvas fills 100% of its container width. Height is configurable.
+ * Uses ResizeObserver so drawing works correctly at any size.
+ *
  * @example
  * ```tsx
- * const [signature, setSignature] = useState<string | null>(null);
- * 
- * <SignPad
- *   onChange={setSignature}
- *   placeholder="Sign here"
- * />
+ * <SignPad onChange={setSignature} placeholder="Sign here" />
  * ```
  */
 export const SignPad: FC<SignPadProps> = (props) => {
   const {
     onChange,
-    width = SIGN_PAD_DEFAULT_WIDTH,
-    height = SIGN_PAD_DEFAULT_HEIGHT,
+    width: widthProp,
+    height: heightProp = SIGN_PAD_DEFAULT_HEIGHT,
     strokeColor: strokeColorProp,
     strokeWidth = SIGN_PAD_DEFAULT_STROKE_WIDTH,
     backgroundColor: backgroundColorProp,
@@ -59,49 +56,64 @@ export const SignPad: FC<SignPadProps> = (props) => {
   } = props;
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [isDrawing, setIsDrawing] = useState(false);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const lastPointRef = useRef<{ x: number; y: number } | null>(null);
+  const isDrawingRef = useRef(false);
+
   const [hasSignature, setHasSignature] = useState(false);
-  const [lastPoint, setLastPoint] = useState<{ x: number; y: number } | null>(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
-  // Detect dark mode
   useEffect(() => {
     const checkDarkMode = () => {
-      const isDark = document.documentElement.classList.contains('dark');
-      setIsDarkMode(isDark);
+      setIsDarkMode(document.documentElement.classList.contains('dark'));
     };
-
     checkDarkMode();
-    
-    // Watch for class changes on html element
     const observer = new MutationObserver(checkDarkMode);
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-    
     return () => observer.disconnect();
   }, []);
 
-  // Resolve stroke color and background based on dark mode
   const strokeColor = strokeColorProp || (isDarkMode ? SIGN_PAD_STROKE_DARK : SIGN_PAD_STROKE_LIGHT);
   const backgroundColor = backgroundColorProp || (isDarkMode ? SIGN_PAD_BG_DARK : SIGN_PAD_BG_LIGHT);
 
+  const fillCanvas = useCallback(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext('2d');
+    if (!canvas || !ctx) return;
+    ctx.fillStyle = backgroundColor === 'transparent' ? 'rgba(0,0,0,0)' : backgroundColor;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }, [backgroundColor]);
+
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    const wrapper = wrapperRef.current;
+    if (!canvas || !wrapper) return;
 
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    const syncSize = () => {
+      const rect = wrapper.getBoundingClientRect();
+      const w = widthProp ?? Math.round(rect.width);
+      const h = heightProp;
+      if (canvas.width !== w || canvas.height !== h) {
+        canvas.width = w;
+        canvas.height = h;
+        fillCanvas();
+      }
+    };
 
-    canvas.width = width;
-    canvas.height = height;
+    syncSize();
 
-    ctx.fillStyle = backgroundColor;
-    ctx.fillRect(0, 0, width, height);
-  }, [width, height, backgroundColor, isDarkMode]);
+    const ro = new ResizeObserver(syncSize);
+    ro.observe(wrapper);
+    return () => ro.disconnect();
+  }, [widthProp, heightProp, fillCanvas]);
+
+  useEffect(() => {
+    fillCanvas();
+  }, [fillCanvas, isDarkMode]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas || disabled || readOnly) return;
-
     const preventTouch = (e: TouchEvent) => e.preventDefault();
     canvas.addEventListener('touchstart', preventTouch, { passive: false });
     canvas.addEventListener('touchmove', preventTouch, { passive: false });
@@ -114,7 +126,6 @@ export const SignPad: FC<SignPadProps> = (props) => {
   const getPointFromEvent = useCallback((e: React.MouseEvent | React.TouchEvent): { x: number; y: number } => {
     const canvas = canvasRef.current;
     if (!canvas) return { x: 0, y: 0 };
-
     const rect = canvas.getBoundingClientRect();
     const scaleX = canvas.width / rect.width;
     const scaleY = canvas.height / rect.height;
@@ -126,7 +137,6 @@ export const SignPad: FC<SignPadProps> = (props) => {
         y: (touch.clientY - rect.top) * scaleY,
       };
     }
-
     return {
       x: (e.clientX - rect.left) * scaleX,
       y: (e.clientY - rect.top) * scaleY,
@@ -136,20 +146,20 @@ export const SignPad: FC<SignPadProps> = (props) => {
   const startDrawing = useCallback((e: React.MouseEvent | React.TouchEvent) => {
     if (disabled || readOnly) return;
     const point = getPointFromEvent(e);
-    setIsDrawing(true);
-    setLastPoint(point);
+    isDrawingRef.current = true;
+    lastPointRef.current = point;
   }, [disabled, readOnly, getPointFromEvent]);
 
   const draw = useCallback((e: React.MouseEvent | React.TouchEvent) => {
-    if (!isDrawing || disabled || readOnly) return;
+    if (!isDrawingRef.current || disabled || readOnly) return;
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d');
-    if (!canvas || !ctx || !lastPoint) return;
+    const lp = lastPointRef.current;
+    if (!canvas || !ctx || !lp) return;
 
     const point = getPointFromEvent(e);
-
     ctx.beginPath();
-    ctx.moveTo(lastPoint.x, lastPoint.y);
+    ctx.moveTo(lp.x, lp.y);
     ctx.lineTo(point.x, point.y);
     ctx.strokeStyle = strokeColor;
     ctx.lineWidth = strokeWidth;
@@ -157,40 +167,35 @@ export const SignPad: FC<SignPadProps> = (props) => {
     ctx.lineJoin = 'round';
     ctx.stroke();
 
-    setLastPoint(point);
+    lastPointRef.current = point;
     setHasSignature(true);
-  }, [isDrawing, disabled, readOnly, lastPoint, strokeColor, strokeWidth, getPointFromEvent]);
+  }, [disabled, readOnly, strokeColor, strokeWidth, getPointFromEvent]);
 
   const stopDrawing = useCallback(() => {
-    if (isDrawing && hasSignature) {
+    if (isDrawingRef.current) {
       const canvas = canvasRef.current;
       if (canvas && onChange) {
         const data = canvas.toDataURL(outputFormat, outputQuality);
         onChange(data);
       }
     }
-    
-    setIsDrawing(false);
-    setLastPoint(null);
-  }, [isDrawing, hasSignature, onChange, outputFormat, outputQuality]);
+    isDrawingRef.current = false;
+    lastPointRef.current = null;
+  }, [onChange, outputFormat, outputQuality]);
 
   const handleClear = useCallback(() => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d');
     if (!canvas || !ctx) return;
-
-    ctx.fillStyle = backgroundColor === 'transparent' ? 'rgba(0,0,0,0)' : backgroundColor;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
+    fillCanvas();
     setHasSignature(false);
     onChange?.(null);
-  }, [backgroundColor, onChange]);
+  }, [fillCanvas, onChange]);
 
   const handleSave = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas || !hasSignature) return;
-
     const data = canvas.toDataURL(outputFormat, outputQuality);
     onChange?.(data);
   }, [hasSignature, onChange, outputFormat, outputQuality]);
@@ -200,7 +205,7 @@ export const SignPad: FC<SignPadProps> = (props) => {
       id={id}
       data-testid={testId}
       className={cn(
-        'Bear-SignPad bear-max-w-full bear-w-full',
+        'Bear-SignPad bear-w-full',
         SIGN_PAD_ROOT_CLASSES,
         disabled && 'Bear-SignPad--disabled bear-opacity-50',
         readOnly && 'Bear-SignPad--readonly',
@@ -209,8 +214,9 @@ export const SignPad: FC<SignPadProps> = (props) => {
       {...rest}
     >
       <div
+        ref={wrapperRef}
         className={cn(
-          'Bear-SignPad__canvas-wrapper bear-max-w-full bear-overflow-hidden',
+          'Bear-SignPad__canvas-wrapper bear-w-full bear-overflow-hidden',
           'touch-none',
           SIGN_PAD_CANVAS_WRAPPER_CLASSES,
           !disabled && !readOnly && SIGN_PAD_CANVAS_WRAPPER_HOVER,
@@ -220,8 +226,8 @@ export const SignPad: FC<SignPadProps> = (props) => {
       >
         <canvas
           ref={canvasRef}
-          className="Bear-SignPad__canvas bear-block bear-rounded-lg bear-max-w-full touch-none"
-          style={{ width, height, touchAction: 'none' }}
+          className="Bear-SignPad__canvas bear-block bear-rounded-lg bear-w-full touch-none"
+          style={{ height: heightProp, touchAction: 'none' }}
           onMouseDown={startDrawing}
           onMouseMove={draw}
           onMouseUp={stopDrawing}
@@ -244,22 +250,12 @@ export const SignPad: FC<SignPadProps> = (props) => {
       {(showClear || showSave) && (
         <div className={cn('Bear-SignPad__actions', SIGN_PAD_ACTIONS_CLASSES)}>
           {showClear && (
-            <Button
-              size="sm"
-              variant="ghost"
-              onClick={handleClear}
-              disabled={disabled || !hasSignature}
-            >
+            <Button size="sm" variant="ghost" onClick={handleClear} disabled={disabled || !hasSignature}>
               {clearText}
             </Button>
           )}
           {showSave && (
-            <Button
-              size="sm"
-              variant="primary"
-              onClick={handleSave}
-              disabled={disabled || !hasSignature}
-            >
+            <Button size="sm" variant="primary" onClick={handleSave} disabled={disabled || !hasSignature}>
               {saveText}
             </Button>
           )}

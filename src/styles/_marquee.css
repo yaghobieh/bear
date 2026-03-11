@@ -1,0 +1,25 @@
+.Bear-Marquee--gradient-h {
+  mask-image: linear-gradient(to right, transparent, black var(--bear-marquee-gradient-w, 40px), black calc(100% - var(--bear-marquee-gradient-w, 40px)), transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black var(--bear-marquee-gradient-w, 40px), black calc(100% - var(--bear-marquee-gradient-w, 40px)), transparent);
+}
+.Bear-Marquee--gradient-v {
+  mask-image: linear-gradient(to bottom, transparent, black var(--bear-marquee-gradient-w, 40px), black calc(100% - var(--bear-marquee-gradient-w, 40px)), transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black var(--bear-marquee-gradient-w, 40px), black calc(100% - var(--bear-marquee-gradient-w, 40px)), transparent);
+}
+
+@keyframes bear-marquee-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+@keyframes bear-marquee-right {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+@keyframes bear-marquee-up {
+  from { transform: translateY(0); }
+  to { transform: translateY(-100%); }
+}
+@keyframes bear-marquee-down {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
+}

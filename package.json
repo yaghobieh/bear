@@ -1,6 +1,10 @@
 {
   "name": "@forgedevstack/bear",
+<<<<<<< HEAD
   "version": "1.1.4",
+=======
+  "version": "1.1.3",
+>>>>>>> c2d1e6a835a939276d0e7a02d05f1738c6750df5
   "description": "Strong, reliable React UI components. Tailwind-powered, zero config required. The protective force of ForgeStack.",
   "type": "module",
   "main": "./dist/index.cjs",

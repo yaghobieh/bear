@@ -3,4 +3,7 @@ dist
 demo
 portal/dist
 portal/node_modules
+portal/.npmrc
 cms/*
+.npmrc
+articles/*

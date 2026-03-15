@@ -1,5 +1,5 @@
 {
-  "installCommand": "npm portal:install",
+  "installCommand": "npm run portal:install",
   "buildCommand": "npm run portal:build",
   "outputDirectory": "portal/dist",
   "rewrites": [

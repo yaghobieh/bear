@@ -3,32 +3,15 @@ import { cn } from '@utils';
 import type { CountdownTimerProps, CountdownTime } from './CountdownTimer.types';
 import {
   MS_PER_SECOND,
-  MS_PER_MINUTE,
-  MS_PER_HOUR,
-  MS_PER_DAY,
   DEFAULT_LABELS,
   DEFAULT_SEPARATOR,
-  PAD_LENGTH,
   SIZE_DIGIT_CLASSES,
   SIZE_LABEL_CLASSES,
   SIZE_GAP_CLASSES,
   SEPARATOR_MARGIN,
   UPDATE_INTERVAL,
 } from './CountdownTimer.const';
-
-const pad = (n: number): string => String(n).padStart(PAD_LENGTH, '0');
-
-const calcRemaining = (target: number, now: number): CountdownTime => {
-  const diff = Math.max(0, target - now);
-  return {
-    days: Math.floor(diff / MS_PER_DAY),
-    hours: Math.floor((diff % MS_PER_DAY) / MS_PER_HOUR),
-    minutes: Math.floor((diff % MS_PER_HOUR) / MS_PER_MINUTE),
-    seconds: Math.floor((diff % MS_PER_MINUTE) / MS_PER_SECOND),
-    totalSeconds: Math.floor(diff / MS_PER_SECOND),
-    isComplete: diff <= 0,
-  };
-};
+import { pad, calcRemaining } from './CountdownTimer.utils';
 
 /**
  * CountdownTimer - Visual countdown with days/hours/minutes/seconds.

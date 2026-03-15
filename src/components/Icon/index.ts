@@ -17,6 +17,7 @@ import * as StatusIcons from './icons/status';
 import * as MediaIcons from './icons/media';
 import * as EditorIcons from './icons/editor';
 import * as MiscIcons from './icons/misc';
+import * as BearCategoryIcons from './icons/bear';
 
 // Export commonly used icons directly for convenience
 export const CheckIcon = StatusIcons.CheckIcon;
@@ -45,6 +46,14 @@ export const UserPlusIcon = MiscIcons.UserPlusIcon;
 export const UserMinusIcon = MiscIcons.UserMinusIcon;
 export const UserCheckIcon = MiscIcons.UserCheckIcon;
 export const UserXIcon = MiscIcons.UserXIcon;
+export const HoneycombIcon = BearCategoryIcons.HoneycombIcon;
+export const ClawIcon = BearCategoryIcons.ClawIcon;
+export const ForestIcon = BearCategoryIcons.ForestIcon;
+export const DenIcon = BearCategoryIcons.DenIcon;
+export const SalmonIcon = BearCategoryIcons.SalmonIcon;
+export const CampfireIcon = BearCategoryIcons.CampfireIcon;
+export const PineTreeIcon = BearCategoryIcons.PineTreeIcon;
+export const MountainIcon = BearCategoryIcons.MountainIcon;
 
 /**
  * BearIcons - All icons organized by category
@@ -72,8 +81,8 @@ export const BearIcons = {
   ...MediaIcons,
   ...EditorIcons,
   ...MiscIcons,
-  
-  // Category-based access
+  ...BearCategoryIcons,
+
   Action: ActionIcons,
   Navigation: NavigationIcons,
   Content: ContentIcons,
@@ -82,6 +91,7 @@ export const BearIcons = {
   Media: MediaIcons,
   Editor: EditorIcons,
   Misc: MiscIcons,
+  Bear: BearCategoryIcons,
 };
 
 // Default export for convenience

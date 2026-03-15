@@ -1,45 +1,14 @@
-import { forwardRef, useRef, useState, useCallback, useMemo, useContext } from 'react';
+import { forwardRef, useMemo, useContext, useCallback } from 'react';
 import { cn } from '@utils';
 import { Spinner } from '../Spinner';
 import { Typography } from '../Typography';
 import { useBearStyles } from '@hooks';
 import { BearContext } from '../../context/BearProvider';
 import type { ButtonProps } from './Button.types';
-import { BUTTON_SIZE, BUTTON_ICON_SIZE, BUTTON_VARIANT, VARIANT_DEFAULTS } from './Button.constants';
-import type { BearVariant } from '../../types';
+import { BUTTON_SIZE, BUTTON_ICON_SIZE, BUTTON_ICON_ONLY_SIZE, BUTTON_VARIANT, VARIANT_DEFAULTS } from './Button.constants';
+import { isBuiltInVariant } from './Button.utils';
+import { useSpotlight } from './useSpotlight';
 
-/** Check if variant is a built-in variant */
-const isBuiltInVariant = (variant: string): variant is BearVariant => {
-  return variant in BUTTON_VARIANT;
-};
-
-/**
- * Button component with multiple variants, sizes, states, and effects.
- * 
- * Features:
- * - Fully themeable via BearProvider
- * - Mouse-follow spotlight hover effect
- * - CSS variable-based colors for easy customization
- * - Component overrides via useBearComponent
- * 
- * @example
- * ```tsx
- * // Basic usage
- * <Button variant="primary" size="md">
- *   Click me
- * </Button>
- * 
- * // With spotlight hover effect
- * <Button variant="primary" spotlight>
- *   Hover me
- * </Button>
- * 
- * // With icons
- * <Button variant="outline" leftIcon={<Icon />}>
- *   With Icon
- * </Button>
- * ```
- */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (props, ref) => {
     const {
@@ -53,6 +22,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       leftIcon: leftIconProp,
       rightIcon: rightIconProp,
       textVariant = 'inherit',
+      iconOnly = false,
       spotlight = false,
       spotlightColor = 'rgba(255, 255, 255, 0.35)',
       spotlightSize = 150,
@@ -73,57 +43,23 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const leftIcon = leftIconProp ?? (icon && iconPosition === 'left' ? icon : undefined);
     const rightIcon = rightIconProp ?? (icon && iconPosition === 'right' ? icon : undefined);
 
-    // Get component overrides and custom variants from context
     const context = useContext(BearContext);
     const componentStyles = context?.components?.Button?.root || {};
     const customVariants = context?.customVariants || {};
-    
-    // Check if using a custom variant
+
     const isCustomVariant = !isBuiltInVariant(variant) && variant in customVariants;
     const customVariantConfig = isCustomVariant ? customVariants[variant] : null;
 
-    // Spotlight state
-    const buttonRef = useRef<HTMLButtonElement | null>(null);
-    const [spotlightPos, setSpotlightPos] = useState({ x: -1000, y: -1000 });
-    const [isHovered, setIsHovered] = useState(false);
+    const { spotlightRef, position, isHovered, handlers } = useSpotlight({
+      enabled: spotlight,
+      onMouseMove,
+      onMouseEnter,
+      onMouseLeave,
+    });
 
-    const handleMouseMove = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-      if (spotlight && buttonRef.current) {
-        const rect = buttonRef.current.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        setSpotlightPos({ x, y });
-      }
-      onMouseMove?.(e);
-    }, [spotlight, onMouseMove]);
-
-    const handleMouseEnter = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-      if (spotlight) {
-        setIsHovered(true);
-        // Set initial position on enter
-        if (buttonRef.current) {
-          const rect = buttonRef.current.getBoundingClientRect();
-          setSpotlightPos({
-            x: e.clientX - rect.left,
-            y: e.clientY - rect.top,
-          });
-        }
-      }
-      onMouseEnter?.(e);
-    }, [spotlight, onMouseEnter]);
-
-    const handleMouseLeave = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-      setIsHovered(false);
-      setSpotlightPos({ x: -1000, y: -1000 });
-      onMouseLeave?.(e);
-    }, [onMouseLeave]);
-
-    // Get variant colors from CSS variables or defaults
     const variantColors = VARIANT_DEFAULTS[variant as keyof typeof VARIANT_DEFAULTS] || VARIANT_DEFAULTS.primary;
 
-    // Build dynamic styles based on variant (built-in or custom)
     const dynamicStyles = useMemo(() => {
-      // Custom variant styling
       if (isCustomVariant && customVariantConfig) {
         return {
           backgroundColor: `var(--bear-${variant}-bg, ${customVariantConfig.bg})`,
@@ -134,14 +70,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           ...mergedStyle,
         } as React.CSSProperties;
       }
-      
-      // Built-in variant styling
+
       const styles: React.CSSProperties = {
         backgroundColor: `var(--bear-btn-${variant}-bg, ${variantColors.bg})`,
-        color: variant === 'outline' || variant === 'ghost' 
+        color: variant === 'outline' || variant === 'ghost'
           ? `var(--bear-btn-${variant}-text, ${variantColors.text || 'inherit'})`
           : 'white',
-        borderColor: variant === 'outline' 
+        borderColor: variant === 'outline'
           ? `var(--bear-btn-${variant}-border, ${variantColors.border || variantColors.bg})`
           : undefined,
         '--bear-ring-color': `var(--bear-btn-${variant}-ring, ${variantColors.ring})`,
@@ -152,15 +87,14 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       return styles;
     }, [variant, variantColors, componentStyles, mergedStyle, isCustomVariant, customVariantConfig]);
 
-    // Combine refs
     const setRefs = useCallback((node: HTMLButtonElement | null) => {
-      buttonRef.current = node;
+      spotlightRef.current = node;
       if (typeof ref === 'function') {
         ref(node);
       } else if (ref) {
         ref.current = node;
       }
-    }, [ref]);
+    }, [ref, spotlightRef]);
 
     return (
       <button
@@ -171,9 +105,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(
           'Bear-Button',
           'bear-inline-flex bear-items-center bear-justify-center bear-font-medium bear-rounded-lg bear-transition-all bear-duration-200 bear-outline-none bear-relative bear-overflow-hidden',
-          BUTTON_SIZE[size],
-          // Use built-in variant classes or custom variant base classes
-          isBuiltInVariant(variant) 
+          iconOnly ? BUTTON_ICON_ONLY_SIZE[size] : BUTTON_SIZE[size],
+          iconOnly && 'bear-rounded-lg',
+          isBuiltInVariant(variant)
             ? BUTTON_VARIANT[variant]
             : `bear-btn-custom bear-text-white focus:bear-ring-2 focus:bear-ring-offset-2 disabled:bear-opacity-50 disabled:bear-cursor-not-allowed hover:bear-brightness-110 active:bear-brightness-95`,
           fullWidth && 'bear-w-full',
@@ -181,29 +115,25 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           className
         )}
         data-testid={testId}
-        onMouseMove={handleMouseMove}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        onMouseMove={handlers.handleMouseMove}
+        onMouseEnter={handlers.handleMouseEnter}
+        onMouseLeave={handlers.handleMouseLeave}
         {...rest}
       >
-        {/* Spotlight overlay - follows mouse cursor */}
         {spotlight && (
           <span
-            className="Bear-Button__spotlight"
+            className={cn(
+              'Bear-Button__spotlight',
+              'bear-absolute bear-left-0 bear-top-0 bear-rounded-full bear-pointer-events-none bear-z-[1]',
+              'bear-transition-opacity bear-duration-150 bear-ease-out',
+              isHovered ? 'bear-opacity-100' : 'bear-opacity-0',
+            )}
             aria-hidden="true"
             style={{
-              position: 'absolute',
-              pointerEvents: 'none',
-              left: 0,
-              top: 0,
               width: spotlightSize,
               height: spotlightSize,
-              borderRadius: '50%',
               background: `radial-gradient(circle at center, ${spotlightColor} 0%, transparent 70%)`,
-              opacity: isHovered ? 1 : 0,
-              transform: `translate(${spotlightPos.x - spotlightSize / 2}px, ${spotlightPos.y - spotlightSize / 2}px)`,
-              transition: 'opacity 0.15s ease-out',
-              zIndex: 1,
+              transform: `translate(${position.x - spotlightSize / 2}px, ${position.y - spotlightSize / 2}px)`,
               mixBlendMode: 'overlay',
             }}
           />
@@ -223,7 +153,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           </span>
         )}
 
-        <span 
+        <span
           className={cn(
             'Bear-Button__content bear-inline-flex bear-items-center bear-gap-inherit bear-relative bear-z-10',
             loading && 'bear-invisible'

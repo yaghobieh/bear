@@ -9,7 +9,9 @@ export interface TabsContextValue {
 export interface TabsProps {
   /** Tab panels */
   children: ReactNode;
-  /** Default active tab */
+  /** Controlled active tab (when set, defaultTab is ignored) */
+  value?: string;
+  /** Default active tab (uncontrolled) */
   defaultTab: string;
   /** Visual variant */
   variant?: 'line' | 'pills' | 'enclosed';

@@ -1,5 +1,6 @@
-import { FC, useState, useRef, useEffect } from 'react';
+import { FC, useState, useRef, useCallback } from 'react';
 import { cn } from '@utils';
+import { useClickOutside } from '@hooks';
 import { ChevronDownIcon, CheckIcon } from '../Icon';
 import type { SelectProps } from './Select.types';
 
@@ -27,16 +28,8 @@ export const Select: FC<SelectProps> = ({
 
   const selectedOption = options.find((opt) => opt.value === value);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  const closeDropdown = useCallback(() => setIsOpen(false), []);
+  useClickOutside(selectRef, closeDropdown);
 
   const handleSelect = (optionValue: string) => {
     onChange?.(optionValue);

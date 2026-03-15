@@ -12,18 +12,7 @@ import {
   ACTIVE_LINK_CLASSES,
   NESTED_LINK_INDENT,
 } from './Anchor.const';
-
-function collectIds(links: AnchorLink[]): string[] {
-  const ids: string[] = [];
-  const walk = (items: AnchorLink[]) => {
-    items.forEach((item) => {
-      ids.push(item.id);
-      if (item.children?.length) walk(item.children);
-    });
-  };
-  walk(links);
-  return ids;
-}
+import { collectIds } from './Anchor.utils';
 
 export const Anchor: FC<AnchorProps> = (props) => {
   const {

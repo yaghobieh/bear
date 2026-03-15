@@ -3,6 +3,8 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { BearLoader } from './components/BearLoader';
 import { Topbar } from './components/Topbar/Topbar';
 import { Sidebar } from './components/Sidebar';
+import { PageBreadcrumbs } from './components/PageBreadcrumbs';
+import { DocPageNav } from './components/DocPageNav';
 
 // Banner configuration — promote ForgeStack CLI templates
 const BANNER_CONFIG = {
@@ -225,6 +227,10 @@ const RadioCardPage = lazy(() => import('./pages/components/RadioCardPage'));
 const ActionIconPage = lazy(() => import('./pages/components/ActionIconPage'));
 const FieldsetPage = lazy(() => import('./pages/components/FieldsetPage'));
 
+// New library components
+const PageNavPage = lazy(() => import('./pages/components/PageNavPage'));
+const PropsPlaygroundPage = lazy(() => import('./pages/components/PropsPlaygroundPage'));
+
 // Guides
 const ResponsiveUiPage = lazy(() => import('./pages/guides/ResponsiveUi'));
 const MinimizeBundlePage = lazy(() => import('./pages/guides/MinimizeBundle'));
@@ -338,6 +344,7 @@ function PortalLayout({
 
         <main className="flex-1 min-w-0">
           <div className="max-w-4xl mx-auto px-6 py-8">
+            <PageBreadcrumbs />
             <Suspense fallback={<PageLoader />}>
               <Routes>
                 <Route path="/" element={<IntroductionPage />} />
@@ -500,6 +507,8 @@ function PortalLayout({
                 <Route path="/components/radio-card" element={<RadioCardPage />} />
                 <Route path="/components/action-icon" element={<ActionIconPage />} />
                 <Route path="/components/fieldset" element={<FieldsetPage />} />
+                <Route path="/components/page-nav" element={<PageNavPage />} />
+                <Route path="/components/props-playground" element={<PropsPlaygroundPage />} />
                 
                 {/* Charts & Graphs */}
                 <Route path="/components/chart" element={<ChartPage />} />
@@ -564,6 +573,7 @@ function PortalLayout({
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </Suspense>
+            <DocPageNav />
           </div>
         </main>
       </div>

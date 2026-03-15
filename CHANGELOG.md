@@ -2,6 +2,22 @@
 
 All notable changes to Bear UI will be documented in this file.
 
+## [1.1.5] - 2026-02-24
+
+### Portal Enhancements
+
+- **Sidebar Search**: Live component filter in the sidebar — type to instantly find any component, hook, or page. Auto-expands matching groups.
+- **Copy Import Button**: One-click "Copy import" on every component documentation page — copies `import { ComponentName } from '@forgedevstack/bear'`.
+- **Breadcrumbs**: Navigation breadcrumbs on component and documentation pages for better context and back-navigation.
+- **Accessibility Docs**: New documentation page covering focus management, ARIA attributes, keyboard navigation, and color contrast guidelines.
+
+### Documentation
+
+- **CONTRIBUTING.md**: New contributor guide covering branch workflow, how to add components (types, const, tsx, index), coding rules, and portal development.
+- **README Comparison Table**: Added feature comparison vs MUI, Ant Design, and Chakra UI with bundle size, Tailwind integration, dark mode, and TypeScript coverage.
+
+---
+
 ## [1.1.4] - 2026-02-24
 
 ### New Components

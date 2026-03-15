@@ -9,9 +9,9 @@ const sizeClasses = {
 };
 
 const colorClasses = {
-  default: 'bear-bg-pink-500',
+  default: 'bear-bg-bear-500',
   success: 'bear-bg-green-500',
-  warning: 'bear-bg-yellow-500',
+  warning: 'bear-bg-amber-500',
   danger: 'bear-bg-red-500',
   info: 'bear-bg-blue-500',
 };

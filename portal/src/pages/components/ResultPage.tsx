@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
+import { CopyImport } from '@/components/CopyImport';
 import { LinesOfCode } from '@/components/LinesOfCode';
 import { ComponentPreview } from '@/components/ComponentPreview';
 import { Result, Button } from '@forgedevstack/bear';
@@ -11,6 +12,7 @@ const ResultPage: FC = () => {
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Result</h1>
         <span className="px-2 py-0.5 text-xs font-medium bg-bear-100 dark:bg-bear-900/30 text-bear-700 dark:text-bear-300 rounded-md">New</span>
         <LinesOfCode lines={130} />
+        <CopyImport componentName="Result" />
       </div>
       <p className="text-gray-600 dark:text-gray-400 mb-8">
         Full-page feedback for operation results — success, error, 404, 403, 500, and more. Display a status icon, title, subtitle, and extra action buttons.
@@ -20,6 +22,36 @@ const ResultPage: FC = () => {
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Import</h2>
         <CodeBlock code={`import { Result } from '@forgedevstack/bear';`} language="tsx" showLineNumbers={false} />
       </section>
+
+      <ComponentPreview
+        title="Live props"
+        description="Change status, title, and subtitle below to see the Result update in real time."
+        code={`<Result status="success" title="Done" subtitle="Operation completed." />`}
+        editableProps={{
+          status: {
+            type: 'select',
+            default: 'success',
+            options: [
+              { value: 'success', label: 'Success' },
+              { value: 'error', label: 'Error' },
+              { value: 'info', label: 'Info' },
+              { value: 'warning', label: 'Warning' },
+              { value: '404', label: '404' },
+              { value: '403', label: '403' },
+              { value: '500', label: '500' },
+            ],
+          },
+          title: { type: 'string', default: 'Operation Complete', placeholder: 'Title' },
+          subtitle: { type: 'string', default: 'Your changes have been saved.', placeholder: 'Subtitle' },
+        }}
+        render={(props) => (
+          <Result
+            status={props.status as 'success' | 'error' | 'info' | 'warning' | '404' | '403' | '500'}
+            title={String(props.title ?? '')}
+            subtitle={String(props.subtitle ?? '')}
+          />
+        )}
+      />
 
       <ComponentPreview
         title="Success"

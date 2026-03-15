@@ -103,12 +103,11 @@ export const Tooltip: FC<TooltipProps> = ({
             ref={tooltipRef}
             role="tooltip"
             style={{
-              position: 'fixed',
               left: coords.x,
               top: coords.y,
-              zIndex: 9999,
             }}
             className={cn(
+              'bear-fixed bear-z-[9999]',
               'Bear-Tooltip',
               `Bear-Tooltip--${position}`,
               'bear-px-3 bear-py-2 bear-rounded-lg',

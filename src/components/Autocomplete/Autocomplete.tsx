@@ -1,16 +1,7 @@
 import { FC, useState, useRef, useEffect, KeyboardEvent, ChangeEvent } from 'react';
 import { cn } from '@utils';
 import type { AutocompleteOption, AutocompleteProps } from './Autocomplete.types';
-
-const defaultFilter = (options: AutocompleteOption[], inputValue: string) => {
-  const lower = inputValue.toLowerCase();
-  return options.filter(
-    (opt) =>
-      opt.label.toLowerCase().includes(lower) ||
-      opt.value.toLowerCase().includes(lower) ||
-      opt.description?.toLowerCase().includes(lower)
-  );
-};
+import { defaultFilter } from './Autocomplete.utils';
 
 /**
  * Autocomplete - Text input with suggestions

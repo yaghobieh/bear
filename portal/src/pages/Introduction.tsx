@@ -104,7 +104,7 @@ const Introduction: FC = () => {
       <div className="text-center mb-16">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-pink-500/10 to-rose-500/10 border border-pink-500/20 text-pink-600 dark:text-pink-400 text-sm font-medium mb-6">
           <span>🚀</span>
-          <span>1.1.4 — DateRangePicker, TreeSelect, SplitButton, ImageGallery, ContextMenu, NumberFormatter, InfiniteScroll, ColorSwatch, @BearInclude PostCSS plugin, modular CSS + all fixes</span>
+          <span>1.1.5 — DateRangePicker, TreeSelect, SplitButton, ImageGallery, ContextMenu, NumberFormatter, InfiniteScroll, ColorSwatch, @BearInclude PostCSS plugin, modular CSS + all fixes</span>
         </div>
         
         <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">

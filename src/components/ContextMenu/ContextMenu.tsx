@@ -5,9 +5,7 @@ import {
   MENU_CLASSES, ITEM_CLASSES, ITEM_DISABLED_CLASSES, ITEM_DANGER_CLASSES,
   DIVIDER_CLASSES, ICON_CLASSES, SHORTCUT_CLASSES, SUB_INDICATOR_CLASSES, SUB_MENU_OFFSET,
 } from './ContextMenu.const';
-
-const isDivider = (entry: ContextMenuEntry): entry is { id: string; type: 'divider' } =>
-  'type' in entry && entry.type === 'divider';
+import { isDivider } from './ContextMenu.utils';
 
 const MenuList: FC<{
   items: ContextMenuEntry[];

@@ -470,8 +470,7 @@ export const Topbar: FC<TopbarProps> = ({ onMenuClick, banner, onBannerVisibilit
               <BearIcon size={56} />
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white mt-4 mb-2">Bear UI v{BEAR_VERSION}</h2>
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-                1.1.4: SignPad responsive canvas, TimePicker dial auto-switch, ColorPicker theme-aware popup, Input autoFormat & inline validation, @BearInclude PostCSS plugin, modular CSS imports, esbuild minification.
-                Also includes 1.1.2: FormField, AspectRatio, PasswordInput, AlertDialog, InputGroup, Store redesign, Component API docs + all 1.1.1 and earlier features.
+                1.1.5: Sidebar search, Copy import button, Breadcrumbs, Accessibility docs, CONTRIBUTING.md, README comparison table.
               </p>
               <div className="flex flex-wrap items-center justify-center gap-1.5 mb-4">
                 {['FormField', 'AspectRatio', 'PasswordInput+', 'AlertDialog', 'InputGroup', 'Store v2', 'Component API', 'ES i18n'].map((c) => (

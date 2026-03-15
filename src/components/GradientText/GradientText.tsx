@@ -48,14 +48,12 @@ export const GradientText: FC<GradientTextProps> = (props) => {
       className={cn(
         'Bear-GradientText',
         'bear-inline-block',
+        'bear-bg-clip-text bear-text-transparent',
         animate && 'Bear-GradientText--animated',
         className,
       )}
       style={{
         background: gradientCSS,
-        backgroundClip: 'text',
-        WebkitBackgroundClip: 'text',
-        WebkitTextFillColor: 'transparent',
         fontWeight: WEIGHT_MAP[weight] ?? DEFAULT_WEIGHT,
         ...(animate && {
           backgroundSize: ANIMATED_BG_SIZE,

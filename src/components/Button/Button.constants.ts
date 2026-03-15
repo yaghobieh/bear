@@ -8,6 +8,14 @@ export const BUTTON_SIZE: Record<BearSize, string> = {
   xl: 'bear-px-6 bear-py-3 bear-text-lg bear-gap-2.5',
 };
 
+export const BUTTON_ICON_ONLY_SIZE: Record<BearSize, string> = {
+  xs: 'bear-w-6 bear-h-6 bear-p-0',
+  sm: 'bear-w-8 bear-h-8 bear-p-0',
+  md: 'bear-w-10 bear-h-10 bear-p-0',
+  lg: 'bear-w-12 bear-h-12 bear-p-0',
+  xl: 'bear-w-14 bear-h-14 bear-p-0',
+};
+
 export const BUTTON_ICON_SIZE: Record<BearSize, string> = {
   xs: '[&_svg]:bear-w-3 [&_svg]:bear-h-3',
   sm: '[&_svg]:bear-w-4 [&_svg]:bear-h-4',

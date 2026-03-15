@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
+import { CopyImport } from '@/components/CopyImport';
 import { LinesOfCode } from '@/components/LinesOfCode';
 import { LoadingOverlay, Button } from '@forgedevstack/bear';
 
@@ -13,6 +14,7 @@ const LoadingOverlayPage: FC = () => {
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">LoadingOverlay</h1>
         <span className="px-2 py-0.5 text-xs font-medium bg-bear-100 dark:bg-bear-900/30 text-bear-700 dark:text-bear-300 rounded-md">New</span>
         <LinesOfCode lines={90} />
+        <CopyImport componentName="LoadingOverlay" />
       </div>
       <p className="text-gray-600 dark:text-gray-400 mb-8">
         Semi-transparent overlay with a spinner, placed over any container to indicate loading. Configurable opacity, blur, label, and loader.
@@ -22,6 +24,25 @@ const LoadingOverlayPage: FC = () => {
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Import</h2>
         <CodeBlock code={`import { LoadingOverlay } from '@forgedevstack/bear';`} language="tsx" showLineNumbers={false} />
       </section>
+
+      <ComponentPreview
+        title="Live props"
+        description="Toggle visible and change the label below to see the LoadingOverlay update in real time."
+        code={`<LoadingOverlay visible={true} label="Loading..." />`}
+        editableProps={{
+          visible: { type: 'boolean', default: true },
+          label: { type: 'string', default: 'Loading...', placeholder: 'Label' },
+        }}
+        render={(props) => (
+          <div className="relative h-40 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+            <LoadingOverlay
+              visible={props.visible === true}
+              label={String(props.label || 'Loading...')}
+            />
+            <p className="text-gray-700 dark:text-gray-300">Content under the overlay.</p>
+          </div>
+        )}
+      />
 
       <ComponentPreview
         title="Basic"

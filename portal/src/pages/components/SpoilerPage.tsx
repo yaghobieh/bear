@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
+import { CopyImport } from '@/components/CopyImport';
 import { LinesOfCode } from '@/components/LinesOfCode';
 import { ComponentPreview } from '@/components/ComponentPreview';
 import { Spoiler } from '@forgedevstack/bear';
@@ -13,6 +14,7 @@ const SpoilerPage: FC = () => {
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Spoiler</h1>
         <span className="px-2 py-0.5 text-xs font-medium bg-bear-100 dark:bg-bear-900/30 text-bear-700 dark:text-bear-300 rounded-md">New</span>
         <LinesOfCode lines={85} />
+        <CopyImport componentName="Spoiler" />
       </div>
       <p className="text-gray-600 dark:text-gray-400 mb-8">
         Truncates content to a max height with a "Show more / Show less" toggle. Smooth CSS transition for expand/collapse.
@@ -22,6 +24,26 @@ const SpoilerPage: FC = () => {
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Import</h2>
         <CodeBlock code={`import { Spoiler } from '@forgedevstack/bear';`} language="tsx" showLineNumbers={false} />
       </section>
+
+      <ComponentPreview
+        title="Live props"
+        description="Change max height and button labels below to see the Spoiler update in real time."
+        code={`<Spoiler maxHeight={80} showLabel="Show" hideLabel="Hide">...</Spoiler>`}
+        editableProps={{
+          maxHeight: { type: 'number', default: 80, min: 40, max: 200 },
+          showLabel: { type: 'string', default: 'Show more', placeholder: 'Show label' },
+          hideLabel: { type: 'string', default: 'Show less', placeholder: 'Hide label' },
+        }}
+        render={(props) => (
+          <Spoiler
+            maxHeight={Number(props.maxHeight) || 80}
+            showLabel={String(props.showLabel ?? 'Show more')}
+            hideLabel={String(props.hideLabel ?? 'Show less')}
+          >
+            <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">{LONG_TEXT}</p>
+          </Spoiler>
+        )}
+      />
 
       <ComponentPreview
         title="Basic"

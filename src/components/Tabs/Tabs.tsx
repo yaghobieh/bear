@@ -21,19 +21,22 @@ const TabsContext = createContext<TabsContextValue | null>(null);
  */
 export const Tabs: FC<TabsProps> = ({
   children,
+  value,
   defaultTab,
   variant = 'line',
   onChange,
   className,
   testId,
 }) => {
-  const [activeTab, setActiveTabState] = useState(defaultTab);
-  
+  const [internalTab, setInternalTab] = useState(defaultTab);
+  const isControlled = value !== undefined;
+  const activeTab = isControlled ? value : internalTab;
+
   const setActiveTab = (id: string) => {
-    setActiveTabState(id);
+    if (!isControlled) setInternalTab(id);
     onChange?.(id);
   };
-  
+
   return (
     <TabsContext.Provider value={{ activeTab, setActiveTab, variant }}>
       <div className={cn('Bear-Tabs', className)} data-testid={testId}>

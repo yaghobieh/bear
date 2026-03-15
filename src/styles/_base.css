@@ -46,11 +46,15 @@
 
 /* Base component layer */
 @layer components {
-  .bear-focus-ring {
-    @apply focus:outline-none focus:ring-2 focus:ring-pink-500/50 focus:ring-offset-2;
+  .bear-focus-ring:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(236, 72, 153, 0.5);
+    box-shadow: 0 0 0 2px var(--bear-primary-500, rgba(236, 72, 153, 0.5)), 0 0 0 4px #fff;
   }
 
   .bear-transition {
-    @apply transition-all duration-200 ease-in-out;
+    transition-property: all;
+    transition-duration: 200ms;
+    transition-timing-function: ease-in-out;
   }
 }

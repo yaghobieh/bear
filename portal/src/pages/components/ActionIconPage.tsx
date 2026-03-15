@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
+import { CopyImport } from '@/components/CopyImport';
 import { LinesOfCode } from '@/components/LinesOfCode';
 import { ActionIcon } from '@forgedevstack/bear';
 
@@ -29,6 +30,7 @@ const ActionIconPage: FC = () => {
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">ActionIcon</h1>
         <span className="px-2 py-0.5 text-xs font-medium bg-bear-100 dark:bg-bear-900/30 text-bear-700 dark:text-bear-300 rounded-md">New</span>
         <LinesOfCode lines={95} />
+        <CopyImport componentName="ActionIcon" />
       </div>
       <p className="text-gray-600 dark:text-gray-400 mb-8">
         Icon-only square button for actions like edit, delete, or toggle. Five variants, five colors, five sizes with loading and disabled states.
@@ -38,6 +40,57 @@ const ActionIconPage: FC = () => {
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Import</h2>
         <CodeBlock code={`import { ActionIcon } from '@forgedevstack/bear';`} language="tsx" showLineNumbers={false} />
       </section>
+
+      <ComponentPreview
+        title="Live props"
+        description="Change variant, color, size, and disabled below to see the ActionIcon update in real time."
+        code={`<ActionIcon variant="filled" color="primary" size="md"><Icon /></ActionIcon>`}
+        editableProps={{
+          variant: {
+            type: 'select',
+            default: 'filled',
+            options: [
+              { value: 'default', label: 'Default' },
+              { value: 'filled', label: 'Filled' },
+              { value: 'outline', label: 'Outline' },
+              { value: 'subtle', label: 'Subtle' },
+              { value: 'transparent', label: 'Transparent' },
+            ],
+          },
+          color: {
+            type: 'select',
+            default: 'primary',
+            options: [
+              { value: 'primary', label: 'Primary' },
+              { value: 'success', label: 'Success' },
+              { value: 'warning', label: 'Warning' },
+              { value: 'error', label: 'Error' },
+            ],
+          },
+          size: {
+            type: 'select',
+            default: 'md',
+            options: [
+              { value: 'xs', label: 'XS' },
+              { value: 'sm', label: 'SM' },
+              { value: 'md', label: 'MD' },
+              { value: 'lg', label: 'LG' },
+              { value: 'xl', label: 'XL' },
+            ],
+          },
+          disabled: { type: 'boolean', default: false },
+        }}
+        render={(props) => (
+          <ActionIcon
+            variant={props.variant as 'default' | 'filled' | 'outline' | 'subtle' | 'transparent'}
+            color={props.color as 'primary' | 'success' | 'warning' | 'error'}
+            size={props.size as 'xs' | 'sm' | 'md' | 'lg' | 'xl'}
+            disabled={props.disabled === true}
+          >
+            <HeartSvg />
+          </ActionIcon>
+        )}
+      />
 
       <ComponentPreview
         title="Variants"

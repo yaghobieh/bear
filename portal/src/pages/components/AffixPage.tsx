@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
+import { CopyImport } from '@/components/CopyImport';
 import { LinesOfCode } from '@/components/LinesOfCode';
 import { ComponentPreview } from '@/components/ComponentPreview';
 
@@ -10,6 +11,7 @@ const AffixPage: FC = () => {
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Affix</h1>
         <span className="px-2 py-0.5 text-xs font-medium bg-bear-100 dark:bg-bear-900/30 text-bear-700 dark:text-bear-300 rounded-md">New</span>
         <LinesOfCode lines={65} />
+        <CopyImport componentName="Affix" />
       </div>
       <p className="text-gray-600 dark:text-gray-400 mb-8">
         Sticky positioning wrapper — fixes an element to the viewport when scrolled past a threshold. Useful for sticky headers, navigation, or action buttons.

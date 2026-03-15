@@ -1,7 +1,10 @@
 import type { ReactElement } from 'react';
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { cn } from '@utils';
+import { useResizeObserver } from '@hooks';
 import type { VirtualListProps } from './VirtualList.types';
+
+const FALLBACK_HEIGHT = 300;
 
 export function VirtualList<T>({
   items,
@@ -13,10 +16,13 @@ export function VirtualList<T>({
   className,
 }: VirtualListProps<T>): ReactElement {
   const [scrollTop, setScrollTop] = useState(0);
-  const [containerHeight, setContainerHeight] = useState(
-    typeof height === 'number' ? height : 300
-  );
   const containerRef = useRef<HTMLDivElement>(null);
+  const { height: observedHeight } = useResizeObserver(containerRef, {
+    enabled: typeof height === 'string',
+  });
+
+  const containerHeight =
+    typeof height === 'number' ? height : (observedHeight > 0 ? observedHeight : FALLBACK_HEIGHT);
 
   const totalHeight = items.length * itemHeight;
   const startIndex = Math.max(0, Math.floor(scrollTop / itemHeight) - overscan);
@@ -32,20 +38,6 @@ export function VirtualList<T>({
       setScrollTop(containerRef.current.scrollTop);
     }
   }, []);
-
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    if (typeof height === 'string') {
-      const ro = new ResizeObserver((entries) => {
-        for (const e of entries) {
-          setContainerHeight(e.contentRect.height);
-        }
-      });
-      ro.observe(el);
-      return () => ro.disconnect();
-    }
-  }, [height]);
 
   return (
     <div

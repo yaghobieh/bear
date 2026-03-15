@@ -1,21 +1,7 @@
 import { FC, useMemo } from 'react';
 import { cn } from '@utils';
 import { ChartProps, BarChartProps, LineChartProps, PieChartProps } from './Chart.types';
-
-const DEFAULT_COLORS = [
-  '#ec4899', // pink
-  '#8b5cf6', // purple
-  '#3b82f6', // blue
-  '#10b981', // emerald
-  '#f59e0b', // amber
-  '#ef4444', // red
-  '#06b6d4', // cyan
-  '#84cc16', // lime
-];
-
-const getColor = (index: number, customColor?: string) => {
-  return customColor || DEFAULT_COLORS[index % DEFAULT_COLORS.length];
-};
+import { getChartColor } from './Chart.utils';
 
 /**
  * BarChart Component
@@ -41,7 +27,7 @@ export const BarChart: FC<BarChartProps> = ({
         <div className="flex items-end justify-between h-full gap-2">
           {data.map((item, i) => {
             const barHeight = (item.value / maxValue) * 100;
-            const barColor = getColor(i, item.color || color);
+            const barColor = getChartColor(i, item.color || color);
             
             return (
               <div key={i} className="flex-1 flex flex-col items-center gap-1">
@@ -77,7 +63,7 @@ export const BarChart: FC<BarChartProps> = ({
         <div className="flex flex-col justify-between h-full gap-2">
           {data.map((item, i) => {
             const barWidth = (item.value / maxValue) * 100;
-            const barColor = getColor(i, item.color || color);
+            const barColor = getChartColor(i, item.color || color);
             
             return (
               <div key={i} className="flex-1 flex items-center gap-2">
@@ -246,7 +232,7 @@ export const PieChart: FC<PieChartProps> = ({
       const slice = {
         startAngle: currentAngle,
         endAngle: currentAngle + angle,
-        color: getColor(i, item.color),
+        color: getChartColor(i, item.color),
         ...item,
       };
       currentAngle += angle + padAngle;
@@ -305,7 +291,7 @@ export const PieChart: FC<PieChartProps> = ({
             <div key={i} className="flex items-center gap-2">
               <div
                 className="w-3 h-3 rounded-full"
-                style={{ backgroundColor: getColor(i, item.color) }}
+                style={{ backgroundColor: getChartColor(i, item.color) }}
               />
               <span className="text-sm text-gray-600 dark:text-slate-300">
                 {item.label}

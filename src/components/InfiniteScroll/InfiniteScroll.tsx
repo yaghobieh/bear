@@ -2,7 +2,7 @@ import { FC, useRef, useEffect, useCallback } from 'react';
 import { cn } from '@utils';
 import type { InfiniteScrollProps } from './InfiniteScroll.types';
 import {
-  DEFAULT_THRESHOLD, SENTINEL_HEIGHT,
+  DEFAULT_THRESHOLD,
   ROOT_CLASSES, LOADER_CLASSES, END_CLASSES,
   MANUAL_BTN_CLASSES, SPINNER_CLASSES,
 } from './InfiniteScroll.const';
@@ -48,11 +48,11 @@ export const InfiniteScroll: FC<InfiniteScrollProps> = (props) => {
 
   const content = (
     <>
-      {inverse && hasMore && !manual && <div ref={sentinelRef} style={{ height: SENTINEL_HEIGHT }} />}
+      {inverse && hasMore && !manual && <div ref={sentinelRef} className="bear-h-px" />}
       {inverse && loading && (loader ?? defaultLoader)}
       {children}
       {!inverse && loading && (loader ?? defaultLoader)}
-      {!inverse && hasMore && !manual && <div ref={sentinelRef} style={{ height: SENTINEL_HEIGHT }} />}
+      {!inverse && hasMore && !manual && <div ref={sentinelRef} className="bear-h-px" />}
       {hasMore && manual && !loading && (
         <button type="button" onClick={handleLoadMore} className={MANUAL_BTN_CLASSES}>{loadMoreLabel}</button>
       )}

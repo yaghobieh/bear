@@ -284,6 +284,25 @@ const buttonProps: ButtonProps = {
 <Button {...buttonProps} />
 ```
 
+## How Bear Compares
+
+| Feature | Bear UI | MUI | Ant Design | Chakra UI |
+|---------|---------|-----|------------|-----------|
+| **Tailwind CSS native** | Yes | No | No | Partial (v3) |
+| **Bundle (tree-shaken)** | ~18 kB | ~80 kB | ~120 kB | ~45 kB |
+| **Dark mode** | `dark:` variants, zero JS | Runtime theme swap | CSS vars + config | ColorMode context |
+| **TypeScript** | 100 % | 100 % | 100 % | 100 % |
+| **Components** | 60+ | 50+ | 60+ | 30+ |
+| **Theming** | BearProvider + Tailwind | Emotion/styled | Less/CSS vars | Styled System |
+| **Modular CSS** | `@BearInclude` PostCSS | N/A | N/A | N/A |
+| **React 18 / 19** | Yes | Yes | Yes | Yes |
+| **Zero runtime CSS-in-JS** | Yes | No (Emotion) | No (Less) | No (Emotion) |
+| **Built-in i18n** | Portal (en/es) | MUI X | ConfigProvider | N/A |
+
+## Contributing
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines on adding components, coding rules, and the portal development workflow.
+
 ## License
 
 MIT

@@ -194,14 +194,13 @@ export const Tour: FC<TourProps> = ({
       {/* Spotlight */}
       {targetRect && (
         <div
-          className="Bear-Tour__spotlight bear-fixed bear-pointer-events-none"
+          className="Bear-Tour__spotlight bear-fixed bear-pointer-events-none bear-rounded-lg"
           style={{
             zIndex: TOUR_Z_INDEX.SPOTLIGHT,
             top: targetRect.top - spotlightPadding,
             left: targetRect.left - spotlightPadding,
             width: targetRect.width + spotlightPadding * 2,
             height: targetRect.height + spotlightPadding * 2,
-            borderRadius: 8,
             boxShadow: `0 0 0 9999px ${maskColor}`,
             opacity: maskOpacity,
             transition: animated ? 'all 0.3s ease' : 'none',

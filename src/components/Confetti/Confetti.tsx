@@ -121,21 +121,24 @@ export const Confetti: FC<ConfettiProps> = ({
   // Render shape
   const renderShape = (piece: ConfettiPiece) => {
     const style = {
-      position: 'absolute' as const,
       left: `${piece.x}%`,
       top: `${piece.y}%`,
       width: piece.size,
       height: piece.size,
       transform: `rotate(${piece.rotation}deg)`,
       backgroundColor: piece.shape !== 'triangle' ? piece.color : 'transparent',
-      borderRadius: piece.shape === 'circle' ? '50%' : 0,
       borderLeft: piece.shape === 'triangle' ? `${piece.size / 2}px solid transparent` : undefined,
       borderRight: piece.shape === 'triangle' ? `${piece.size / 2}px solid transparent` : undefined,
       borderBottom: piece.shape === 'triangle' ? `${piece.size}px solid ${piece.color}` : undefined,
-      opacity: 0.9,
     };
 
-    return <div key={piece.id} style={style} />;
+    return (
+      <div
+        key={piece.id}
+        className={cn('bear-absolute bear-opacity-90', piece.shape === 'circle' && 'bear-rounded-full')}
+        style={style}
+      />
+    );
   };
 
   if (!isVisible || pieces.length === 0) return null;
@@ -144,10 +147,9 @@ export const Confetti: FC<ConfettiProps> = ({
     <div
       className={cn(
         'Bear-Confetti',
-        'bear-fixed bear-inset-0 bear-pointer-events-none bear-overflow-hidden',
+        'bear-fixed bear-inset-0 bear-pointer-events-none bear-overflow-hidden bear-z-[99999]',
         className
       )}
-      style={{ zIndex: 99999 }}
       data-testid={testId}
     >
       {pieces.map(renderShape)}

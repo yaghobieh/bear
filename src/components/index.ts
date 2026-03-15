@@ -612,3 +612,11 @@ export type { BlockquoteProps, BlockquoteColor } from './Blockquote';
 // Indicator
 export { Indicator } from './Indicator';
 export type { IndicatorProps, IndicatorPosition } from './Indicator';
+
+// PageNav
+export { PageNav } from './PageNav';
+export type { PageNavProps, PageNavItem } from './PageNav';
+
+// PropsPlayground
+export { PropsPlayground } from './PropsPlayground';
+export type { PropsPlaygroundProps, PropsConfig, PropValues, PropControlConfig, PropControlOption, PropControlType } from './PropsPlayground';

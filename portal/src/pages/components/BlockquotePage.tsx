@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
+import { CopyImport } from '@/components/CopyImport';
 import { LinesOfCode } from '@/components/LinesOfCode';
 import { Blockquote } from '@forgedevstack/bear';
 
@@ -11,6 +12,7 @@ const BlockquotePage: FC = () => {
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Blockquote</h1>
         <span className="px-2 py-0.5 text-xs font-medium bg-bear-100 dark:bg-bear-900/30 text-bear-700 dark:text-bear-300 rounded-md">New</span>
         <LinesOfCode lines={70} />
+        <CopyImport componentName="Blockquote" />
       </div>
       <p className="text-gray-600 dark:text-gray-400 mb-8">
         Styled quotation block with a colored left border, optional icon, and citation. Five color variants for different contexts.
@@ -20,6 +22,34 @@ const BlockquotePage: FC = () => {
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Import</h2>
         <CodeBlock code={`import { Blockquote } from '@forgedevstack/bear';`} language="tsx" showLineNumbers={false} />
       </section>
+
+      <ComponentPreview
+        title="Live props"
+        description="Change color and citation below to see the Blockquote update in real time."
+        code={`<Blockquote color="primary" cite="— Author">Quote text.</Blockquote>`}
+        editableProps={{
+          color: {
+            type: 'select',
+            default: 'primary',
+            options: [
+              { value: 'primary', label: 'Primary' },
+              { value: 'success', label: 'Success' },
+              { value: 'warning', label: 'Warning' },
+              { value: 'error', label: 'Error' },
+            ],
+          },
+          cite: { type: 'string', default: '— Albert Einstein', placeholder: 'Citation' },
+          quote: { type: 'string', default: 'Imagination is more important than knowledge.', placeholder: 'Quote text' },
+        }}
+        render={(props) => (
+          <Blockquote
+            color={props.color as 'primary' | 'success' | 'warning' | 'error'}
+            cite={String(props.cite ?? '')}
+          >
+            {String(props.quote ?? '')}
+          </Blockquote>
+        )}
+      />
 
       <ComponentPreview
         title="Basic"

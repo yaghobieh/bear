@@ -1,19 +1,12 @@
 import { FC, useState, useRef, useEffect, useCallback, KeyboardEvent, ChangeEvent } from 'react';
 import { cn } from '@utils';
 import type { MentionsInputProps, MentionOption } from './MentionsInput.types';
+import { defaultFilter } from './MentionsInput.utils';
 
 const sizeClasses = {
   sm: 'bear-h-8 bear-text-sm bear-px-3',
   md: 'bear-h-10 bear-text-base bear-px-4',
   lg: 'bear-h-12 bear-text-lg bear-px-5',
-};
-
-const defaultFilter = (options: MentionOption[], query: string) => {
-  const lower = query.toLowerCase();
-  return options.filter(
-    (opt) =>
-      opt.value.toLowerCase().includes(lower) || String(opt.label).toLowerCase().includes(lower)
-  );
 };
 
 export const MentionsInput: FC<MentionsInputProps> = ({

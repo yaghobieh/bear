@@ -113,7 +113,7 @@ export const BackTop: FC<BackTopProps> = ({
       className={cn(
         'Bear-BackTop',
         '!bear-rounded-full !bear-p-0',
-        '!bear-fixed !bear-shadow-lg',
+        '!bear-fixed !bear-shadow-lg bear-z-[9999]',
         animated && 'bear-transition-all bear-duration-300 bear-ease-out',
         visible 
           ? 'bear-opacity-100 bear-translate-y-0 bear-scale-100' 
@@ -126,7 +126,6 @@ export const BackTop: FC<BackTopProps> = ({
         width: sizeConfig.width,
         height: sizeConfig.height,
         minWidth: sizeConfig.width,
-        zIndex: 9999,
       }}
       onClick={scrollToTop}
       aria-label="Scroll to top"

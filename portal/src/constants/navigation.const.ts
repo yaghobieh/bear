@@ -14,9 +14,10 @@ export interface NavItem {
 export interface NavGroup {
   title: string;
   items: NavItem[];
+  icon?: string;
 }
 
-export const BEAR_VERSION = '1.1.4';
+export const BEAR_VERSION = '1.1.5';
 
 /** Main Bear UI repository */
 export const GITHUB_URL = 'https://github.com/yaghobieh/bear';
@@ -30,12 +31,13 @@ export const ADMIN_URL = import.meta.env?.VITE_ADMIN_URL ?? '/admin';
 export const NAVIGATION: NavGroup[] = [
   {
     title: 'Getting Started',
+    icon: 'RocketIcon',
     items: [
       { path: '/', label: 'Introduction' },
       { path: '/installation', label: 'Installation' },
       { path: '/theming', label: 'Theming' },
       { path: '/typescript', label: 'TypeScript' },
-      { path: '/icons', label: 'Icons', badge: '300+' },
+      { path: '/icons', label: 'Icons', badge: 'icons' },
       { path: '/roadmap', label: 'Roadmap' },
     ],
   },
@@ -43,6 +45,7 @@ export const NAVIGATION: NavGroup[] = [
   // Components
   {
     title: 'Components',
+    icon: 'LayersIcon',
     items: [
       // Layout
       {
@@ -232,6 +235,7 @@ export const NAVIGATION: NavGroup[] = [
           { path: '/components/stepper', label: 'Stepper' },
           { path: '/components/bottom-navigation', label: 'BottomNavigation' },
           { path: '/components/active-bar', label: 'ActiveBar' },
+          { path: '/components/page-nav', label: 'PageNav', badge: 'New' },
         ],
       },
       // Typography
@@ -293,6 +297,7 @@ export const NAVIGATION: NavGroup[] = [
   // Advanced
   {
     title: 'Advanced',
+    icon: 'ZapIcon',
     items: [
       {
         path: '/components/map',
@@ -332,6 +337,7 @@ export const NAVIGATION: NavGroup[] = [
           { path: '/components/json-viewer', label: 'JsonViewer' },
           { path: '/components/diff-viewer', label: 'DiffViewer' },
           { path: '/components/terminal', label: 'Terminal' },
+          { path: '/components/props-playground', label: 'PropsPlayground', badge: 'New' },
         ],
       },
       {
@@ -348,6 +354,7 @@ export const NAVIGATION: NavGroup[] = [
   // Charts
   {
     title: 'Charts',
+    icon: 'BarChartIcon',
     items: [
       { path: '/components/chart', label: 'Chart' },
       { path: '/components/bar-chart', label: 'BarChart' },
@@ -361,6 +368,7 @@ export const NAVIGATION: NavGroup[] = [
   // Component API
   {
     title: 'Component API',
+    icon: 'CodeIcon',
     items: [
       { path: '/api/overview', label: 'Overview' },
       {
@@ -415,6 +423,7 @@ export const NAVIGATION: NavGroup[] = [
   // Theming & Customization
   {
     title: 'Theming & Customization',
+    icon: 'PaletteIcon',
     items: [
       { path: '/customization/overview', label: 'Overview' },
       { path: '/customization/palette', label: 'Palette' },
@@ -431,6 +440,7 @@ export const NAVIGATION: NavGroup[] = [
   // Guides
   {
     title: 'Guides',
+    icon: 'BookOpenIcon',
     items: [
       { path: '/guides/responsive-ui', label: 'Responsive UI' },
       { path: '/guides/minimize-bundle', label: 'Minimize Bundle Size' },
@@ -442,6 +452,7 @@ export const NAVIGATION: NavGroup[] = [
   // Hooks
   {
     title: 'Hooks',
+    icon: 'AnchorIcon',
     items: [
       { path: '/hooks', label: 'Overview' },
       { path: '/hooks/use-clipboard', label: 'useClipboard' },
@@ -469,6 +480,7 @@ export const NAVIGATION: NavGroup[] = [
   // Store
   {
     title: 'Store',
+    icon: 'ShoppingBagIcon',
     items: [
       { path: '/store', label: 'Templates & Themes' },
     ],
@@ -476,7 +488,8 @@ export const NAVIGATION: NavGroup[] = [
 ];
 
 export const VERSIONS = [
-  { value: '1.1.4', label: 'v1.1.4 (current)' },
+  { value: '1.1.5', label: 'v1.1.5 (current)' },
+  { value: '1.1.4', label: 'v1.1.4' },
   { value: '1.1.3', label: 'v1.1.3' },
   { value: '1.1.2', label: 'v1.1.2' },
   { value: '1.1.1', label: 'v1.1.1' },

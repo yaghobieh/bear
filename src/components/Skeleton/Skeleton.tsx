@@ -6,21 +6,10 @@ import {
   SKELETON_VARIANT_CLASSES,
   SKELETON_ANIMATION_CLASSES,
   SKELETON_BG_CLASSES,
-  SKELETON_WAVE_STYLES,
   SKELETON_TEXT_HEIGHT,
   SKELETON_AVATAR_SIZES,
 } from './Skeleton.const';
-
-// Inject wave animation styles
-const injectStyles = () => {
-  const styleId = 'bear-skeleton-styles';
-  if (typeof document !== 'undefined' && !document.getElementById(styleId)) {
-    const style = document.createElement('style');
-    style.id = styleId;
-    style.textContent = SKELETON_WAVE_STYLES;
-    document.head.appendChild(style);
-  }
-};
+import { injectStyles } from './Skeleton.utils';
 
 /**
  * Skeleton - Loading placeholder with animation

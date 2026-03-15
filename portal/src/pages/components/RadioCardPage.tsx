@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
+import { CopyImport } from '@/components/CopyImport';
 import { LinesOfCode } from '@/components/LinesOfCode';
 import { RadioCard, RadioCardGroup } from '@forgedevstack/bear';
 
@@ -13,6 +14,7 @@ const RadioCardPage: FC = () => {
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">RadioCard</h1>
         <span className="px-2 py-0.5 text-xs font-medium bg-bear-100 dark:bg-bear-900/30 text-bear-700 dark:text-bear-300 rounded-md">New</span>
         <LinesOfCode lines={175} />
+        <CopyImport componentName="RadioCard" />
       </div>
       <p className="text-gray-600 dark:text-gray-400 mb-8">
         Radio rendered as a selectable card — only one can be selected per group. Ideal for plan selection, size picking, or any single-choice UI.
@@ -22,6 +24,25 @@ const RadioCardPage: FC = () => {
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Import</h2>
         <CodeBlock code={`import { RadioCard, RadioCardGroup } from '@forgedevstack/bear';`} language="tsx" showLineNumbers={false} />
       </section>
+
+      <ComponentPreview
+        title="Live props"
+        description="Change label and description below to see the RadioCard update in real time."
+        code={`<RadioCard value="pro" label="Pro" description="$19/mo" />`}
+        editableProps={{
+          label: { type: 'string', default: 'Pro', placeholder: 'Label' },
+          description: { type: 'string', default: '$19/month', placeholder: 'Description' },
+        }}
+        render={(props) => (
+          <RadioCardGroup value="pro" onChange={() => {}}>
+            <RadioCard
+              value="pro"
+              label={String(props.label ?? 'Pro')}
+              description={String(props.description ?? '')}
+            />
+          </RadioCardGroup>
+        )}
+      />
 
       <ComponentPreview
         title="Plan Selection"

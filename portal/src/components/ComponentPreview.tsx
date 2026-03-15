@@ -1,55 +1,31 @@
-import { FC, ReactNode, useState, useCallback } from 'react';
+import { FC, ReactNode, useState, useCallback, useMemo } from 'react';
 import { CodeBlock } from './CodeBlock';
+import { LivePropsBlock } from './LivePropsBlock/LivePropsBlock';
+import { Button, BearIcons } from '@forgedevstack/bear';
+import type { EditablePropsConfig, LiveProps } from './PropsControls/PropsControls.types';
 
 interface ComponentPreviewProps {
   title: string;
   description?: string;
   code: string;
-  children: ReactNode;
+  children?: ReactNode;
   language?: string;
   defaultShowCode?: boolean;
   /** When true, allows overflow (e.g. for dropdowns that need to extend outside). Default false. */
   allowOverflow?: boolean;
+  /** Optional: config for live prop controls. When set, use `render` instead of `children`. */
+  editableProps?: EditablePropsConfig;
+  /** Optional: render the preview with live prop values. Use with `editableProps`. */
+  render?: (props: LiveProps) => ReactNode;
 }
 
-// Icons
-const CodeIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <polyline points="16 18 22 12 16 6" />
-    <polyline points="8 6 2 12 8 18" />
-  </svg>
-);
-
-const CopyIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-  </svg>
-);
-
-const CheckIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <polyline points="20 6 9 17 4 12" />
-  </svg>
-);
-
-const ExpandIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <polyline points="15 3 21 3 21 9" />
-    <polyline points="9 21 3 21 3 15" />
-    <line x1="21" y1="3" x2="14" y2="10" />
-    <line x1="3" y1="21" x2="10" y2="14" />
-  </svg>
-);
-
-const CollapseIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <polyline points="4 14 10 14 10 20" />
-    <polyline points="20 10 14 10 14 4" />
-    <line x1="14" y1="10" x2="21" y2="3" />
-    <line x1="3" y1="21" x2="10" y2="14" />
-  </svg>
-);
+function getDefaultLiveProps(config: EditablePropsConfig): LiveProps {
+  const out: LiveProps = {};
+  for (const [key, spec] of Object.entries(config)) {
+    out[key] = spec.default;
+  }
+  return out;
+}
 
 export const ComponentPreview: FC<ComponentPreviewProps> = ({
   title,
@@ -59,16 +35,26 @@ export const ComponentPreview: FC<ComponentPreviewProps> = ({
   language = 'tsx',
   defaultShowCode = false,
   allowOverflow = false,
+  editableProps,
+  render,
 }) => {
   const [showCode, setShowCode] = useState(defaultShowCode);
   const [expanded, setExpanded] = useState(false);
   const [copied, setCopied] = useState(false);
+  const defaultProps = useMemo(
+    () => (editableProps ? getDefaultLiveProps(editableProps) : {}),
+    [editableProps]
+  );
+  const [liveProps, setLiveProps] = useState<LiveProps>(defaultProps);
 
   const handleCopy = useCallback(async () => {
     await navigator.clipboard.writeText(code);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   }, [code]);
+
+  const hasLiveProps = Boolean(editableProps && render);
+  const previewContent = hasLiveProps ? render!(liveProps) : children;
 
   return (
     <div className={allowOverflow ? 'mb-8 rounded-xl border border-gray-200 dark:border-gray-700' : 'mb-8 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden'}>
@@ -79,47 +65,57 @@ export const ComponentPreview: FC<ComponentPreviewProps> = ({
         )}
       </div>
 
+      {hasLiveProps && editableProps && (
+        <div className="px-4 pt-2 pb-1">
+          <LivePropsBlock
+            config={editableProps}
+            values={liveProps}
+            onChange={setLiveProps}
+            onReset={() => setLiveProps(defaultProps)}
+            defaultCollapsed={false}
+          />
+        </div>
+      )}
+
       <div className="p-8 bg-white dark:bg-gray-900 flex items-center justify-center min-h-[200px]">
-        <div className="w-full">{children}</div>
+        <div className="w-full">{previewContent}</div>
       </div>
 
       <div className="border-t border-gray-200 dark:border-gray-700">
         <div className="flex items-center justify-between px-4 py-2 bg-gray-50 dark:bg-gray-800/50">
-          <button
+          <Button
+            variant="ghost"
+            size="sm"
             onClick={() => setShowCode(!showCode)}
-            className="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
+            leftIcon={<BearIcons.CodeIcon size={16} />}
           >
-            <CodeIcon />
             {showCode ? 'Hide code' : 'View code'}
-          </button>
+          </Button>
 
           {showCode && (
             <div className="flex items-center gap-1">
-              <button
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={() => setExpanded(!expanded)}
-                className="flex items-center gap-1.5 px-2 py-1 text-xs text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors rounded hover:bg-gray-100 dark:hover:bg-gray-700"
                 title={expanded ? 'Collapse' : 'Expand'}
+                leftIcon={expanded ? <BearIcons.FullscreenExitIcon size={14} /> : <BearIcons.FullscreenIcon size={14} />}
               >
-                {expanded ? <CollapseIcon /> : <ExpandIcon />}
                 <span className="hidden sm:inline">{expanded ? 'Collapse' : 'Expand'}</span>
-              </button>
+              </Button>
 
-              <button
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={handleCopy}
-                className="flex items-center gap-1.5 px-2 py-1 text-xs text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors rounded hover:bg-gray-100 dark:hover:bg-gray-700"
+                leftIcon={copied ? <BearIcons.CheckIcon size={14} /> : <BearIcons.CopyIcon size={14} />}
               >
                 {copied ? (
-                  <>
-                    <CheckIcon />
-                    <span className="text-green-600 dark:text-green-400">Copied!</span>
-                  </>
+                  <span className="text-green-600 dark:text-green-400">Copied!</span>
                 ) : (
-                  <>
-                    <CopyIcon />
-                    <span className="hidden sm:inline">Copy code</span>
-                  </>
+                  <span className="hidden sm:inline">Copy code</span>
                 )}
-              </button>
+              </Button>
             </div>
           )}
         </div>

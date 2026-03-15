@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
-import { Button } from '@forgedevstack/bear'
+import { Button, BearIcons } from '@forgedevstack/bear'
 
 const ButtonPage: FC = () => {
   const [loading, setLoading] = useState(false);
@@ -30,6 +30,45 @@ const ButtonPage: FC = () => {
           showLineNumbers={false}
         />
       </section>
+
+      <ComponentPreview
+        title="Live props"
+        description="Change props below to see the Button update in real time."
+        code={`<Button variant="primary" size="md" disabled={false}>Click me</Button>`}
+        editableProps={{
+          variant: {
+            type: 'select',
+            default: 'primary',
+            options: [
+              { value: 'primary', label: 'Primary' },
+              { value: 'secondary', label: 'Secondary' },
+              { value: 'outline', label: 'Outline' },
+              { value: 'ghost', label: 'Ghost' },
+              { value: 'danger', label: 'Danger' },
+            ],
+          },
+          size: {
+            type: 'select',
+            default: 'md',
+            options: [
+              { value: 'sm', label: 'Small' },
+              { value: 'md', label: 'Medium' },
+              { value: 'lg', label: 'Large' },
+            ],
+          },
+          disabled: { type: 'boolean', default: false },
+          label: { type: 'string', default: 'Click me', placeholder: 'Button label' },
+        }}
+        render={(props) => (
+          <Button
+            variant={props.variant as 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger'}
+            size={props.size as 'sm' | 'md' | 'lg'}
+            disabled={props.disabled === true}
+          >
+            {String(props.label ?? 'Click me')}
+          </Button>
+        )}
+      />
 
       <ComponentPreview
         title="Variants"
@@ -127,6 +166,41 @@ const [loading, setLoading] = useState(false);
           </Button>
           <Button variant="secondary" spotlight>Secondary</Button>
           <Button variant="danger" spotlight>Danger</Button>
+        </div>
+      </ComponentPreview>
+
+      <ComponentPreview
+        title="Icon Only"
+        description="Square icon buttons with consistent sizing. Great for toolbars, close buttons, and compact actions."
+        code={`<Button iconOnly size="sm" variant="ghost">
+  <BearIcons.CloseIcon size={16} />
+</Button>
+<Button iconOnly size="md" variant="outline">
+  <BearIcons.SearchIcon size={18} />
+</Button>
+<Button iconOnly size="lg" variant="primary">
+  <BearIcons.PlusIcon size={20} />
+</Button>`}
+      >
+        <div className="flex flex-wrap items-center gap-4 justify-center">
+          <Button iconOnly size="sm" variant="ghost">
+            <BearIcons.CloseIcon size={16} />
+          </Button>
+          <Button iconOnly size="sm" variant="outline">
+            <BearIcons.SearchIcon size={16} />
+          </Button>
+          <Button iconOnly size="md" variant="ghost">
+            <BearIcons.SettingsIcon size={18} />
+          </Button>
+          <Button iconOnly size="md" variant="outline">
+            <BearIcons.EditIcon size={18} />
+          </Button>
+          <Button iconOnly size="lg" variant="primary">
+            <BearIcons.PlusIcon size={20} />
+          </Button>
+          <Button iconOnly size="lg" variant="danger">
+            <BearIcons.CloseIcon size={20} />
+          </Button>
         </div>
       </ComponentPreview>
 
@@ -241,6 +315,14 @@ addVariant('custom', { bg: '#8b5cf6', text: '#fff' });`}
                 </td>
                 <td className="px-4 py-3 text-gray-600 dark:text-gray-400">150</td>
                 <td className="px-4 py-3 text-gray-600 dark:text-gray-400">Size of the spotlight in pixels</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-mono text-bear-600">iconOnly</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">
+                  <code>boolean</code>
+                </td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">Render as a square icon button with no text padding</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-mono text-bear-600">leftIcon</td>

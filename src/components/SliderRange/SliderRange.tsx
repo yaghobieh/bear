@@ -23,10 +23,7 @@ const COLOR_STYLES: Record<BearVariant, { track: string; thumb: string }> = {
   outline: { track: 'bear-bg-gray-600', thumb: 'bear-bg-white dark:bear-bg-gray-200 bear-border-gray-600 dark:bear-border-gray-400' },
 };
 
-const stepValue = (raw: number, min: number, max: number, step: number) => {
-  const v = Math.round(raw / step) * step;
-  return Math.max(min, Math.min(max, v));
-};
+import { stepValue } from './SliderRange.utils';
 
 export const SliderRange: FC<SliderRangeProps> = ({
   value: controlledValue,

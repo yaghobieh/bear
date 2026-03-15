@@ -46,6 +46,7 @@ export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement
   spotlightColor?: string;
   /** Spotlight size in pixels (default: 120) */
   spotlightSize?: number;
+  iconOnly?: boolean;
   /** Test ID for testing */
   testId?: string;
   /** Bear Inner Style - sx-like overrides */

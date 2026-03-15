@@ -7,6 +7,8 @@ export {
   usePrefersDark,
 } from './useMediaQuery';
 export { useClickOutside } from './useClickOutside';
+export { useResizeObserver } from './useResizeObserver';
+export type { UseResizeObserverOptions, UseResizeObserverReturn } from './useResizeObserver';
 export { useDisclosure } from './useDisclosure';
 export { useBearStyles } from './useBearStyles';
 export { bearStyled } from './bearStyled';

@@ -1,5 +1,6 @@
 import { FC, useState, useRef, useCallback, useEffect, cloneElement, isValidElement, ReactElement } from 'react';
 import { cn } from '@utils';
+import { useClickOutside } from '@hooks';
 import type { DropdownProps, DropdownItem } from './Dropdown.types';
 
 const SIZE_CLASSES = {
@@ -93,19 +94,11 @@ export const Dropdown: FC<DropdownProps> = ({
     }
   }, [closeOnSelect, close]);
 
-  // Click outside handler
-  useEffect(() => {
-    if (!closeOnClickOutside || !isOpen) return;
-
-    const handleClickOutside = (e: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
-        close();
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+  const handleClickOutside = useCallback(() => {
+    if (isOpen && closeOnClickOutside) close();
   }, [isOpen, closeOnClickOutside, close]);
+
+  useClickOutside(containerRef, handleClickOutside);
 
   // Keyboard navigation
   useEffect(() => {

@@ -217,7 +217,7 @@ export const SignPad: FC<SignPadProps> = (props) => {
         ref={wrapperRef}
         className={cn(
           'Bear-SignPad__canvas-wrapper bear-w-full bear-overflow-hidden',
-          'touch-none',
+          'bear-touch-none',
           SIGN_PAD_CANVAS_WRAPPER_CLASSES,
           !disabled && !readOnly && SIGN_PAD_CANVAS_WRAPPER_HOVER,
           disabled && 'bear-cursor-not-allowed',
@@ -226,8 +226,8 @@ export const SignPad: FC<SignPadProps> = (props) => {
       >
         <canvas
           ref={canvasRef}
-          className="Bear-SignPad__canvas bear-block bear-rounded-lg bear-w-full touch-none"
-          style={{ height: heightProp, touchAction: 'none' }}
+          className="Bear-SignPad__canvas bear-block bear-rounded-lg bear-w-full bear-touch-none"
+          style={{ height: heightProp }}
           onMouseDown={startDrawing}
           onMouseMove={draw}
           onMouseUp={stopDrawing}

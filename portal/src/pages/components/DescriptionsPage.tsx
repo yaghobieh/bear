@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
+import { CopyImport } from '@/components/CopyImport';
 import { LinesOfCode } from '@/components/LinesOfCode';
 import { ComponentPreview } from '@/components/ComponentPreview';
 import { Descriptions } from '@forgedevstack/bear';
@@ -20,6 +21,7 @@ const DescriptionsPage: FC = () => {
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Descriptions</h1>
         <span className="px-2 py-0.5 text-xs font-medium bg-bear-100 dark:bg-bear-900/30 text-bear-700 dark:text-bear-300 rounded-md">New</span>
         <LinesOfCode lines={160} />
+        <CopyImport componentName="Descriptions" />
       </div>
       <p className="text-gray-600 dark:text-gray-400 mb-8">
         Key-value detail display for showing structured information — user profiles, order details, system info. Supports bordered, horizontal/vertical layouts.

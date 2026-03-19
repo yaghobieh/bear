@@ -6,10 +6,16 @@ import { ClearIcon } from './components/ClearIcon';
 import { applyAutoFormat } from './Input.utils';
 import { validateFieldValue } from '../Form/Form.utils';
 
-const sizeClasses = {
-  sm: 'bear-h-8 bear-text-sm bear-px-3',
-  md: 'bear-h-10 bear-text-base bear-px-4',
-  lg: 'bear-h-12 bear-text-lg bear-px-5',
+const wrapperHeightClasses = {
+  sm: 'bear-h-8',
+  md: 'bear-h-10',
+  lg: 'bear-h-12',
+};
+
+const inputTextClasses = {
+  sm: 'bear-text-sm bear-px-3',
+  md: 'bear-text-base bear-px-4',
+  lg: 'bear-text-lg bear-px-5',
 };
 
 export const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
@@ -20,6 +26,7 @@ export const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
       error: errorProp,
       success,
       size = 'md',
+      InputProps,
       leftAddon,
       rightAddon,
       fullWidth = false,
@@ -64,6 +71,8 @@ export const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
     const isOverLimit = charMax != null && currentLen > charMax;
     const showClear = clearable && !disabled && currentLen > 0;
 
+    const startSlot = InputProps?.startAdornment ?? leftAddon;
+    const endSlot = InputProps?.endAdornment ?? rightAddon;
     const feedbackMessage = error || success || helperText;
 
     const runValidation = useCallback(async (val: unknown) => {
@@ -109,15 +118,40 @@ export const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className={cn('Bear-Input bear-flex bear-flex-col bear-gap-1.5', fullWidth && 'bear-w-full')} style={rootStyle}>
         {label && (
-          <label className="Bear-Input__label bear-text-sm bear-font-medium bear-text-gray-700 dark:bear-text-gray-300" style={labelStyle}>
+          <label className="Bear-Input__label bear-text-sm bear-font-medium" style={{ color: 'var(--bear-text-secondary)', ...labelStyle }}>
             {label}
           </label>
         )}
 
-        <div className="Bear-Input__wrapper bear-relative bear-flex bear-items-center">
-          {leftAddon && (
-            <div className="Bear-Input__addon Bear-Input__addon--left bear-absolute bear-left-3 bear-text-gray-500 dark:bear-text-gray-400" style={prefixStyle}>
-              {leftAddon}
+        <div
+          className={cn(
+            'Bear-Input__wrapper bear-flex bear-items-center bear-rounded-lg bear-border bear-overflow-hidden bear-transition-all bear-duration-200',
+            'focus-within:bear-ring-2 focus-within:bear-ring-offset-2',
+            'focus-within:bear-ring-offset-[var(--bear-bg-primary)]',
+            hasError
+              ? 'Bear-Input__wrapper--error bear-border-red-500 focus-within:bear-ring-red-500'
+              : hasSuccess
+                ? 'Bear-Input__wrapper--success bear-border-green-500 focus-within:bear-ring-green-500'
+                : 'focus-within:bear-border-bear-500 focus-within:bear-ring-bear-500 dark:focus-within:bear-border-bear-500 dark:focus-within:bear-ring-bear-500',
+            disabled && 'bear-opacity-50 bear-cursor-not-allowed',
+            wrapperHeightClasses[size]
+          )}
+          style={{
+            backgroundColor: 'var(--bear-bg-primary)',
+            borderColor: hasError ? undefined : hasSuccess ? undefined : 'var(--bear-border-default)',
+          }}
+        >
+          {startSlot && (
+            <div
+              className="Bear-Input__addon Bear-Input__addon--left bear-flex bear-items-center bear-self-stretch bear-shrink-0 bear-px-3 bear-text-sm bear-font-medium bear-select-none bear-pointer-events-none"
+              style={{
+                backgroundColor: 'var(--bear-bg-tertiary)',
+                borderRight: '1px solid var(--bear-border-default)',
+                color: 'var(--bear-text-secondary)',
+                ...prefixStyle,
+              }}
+            >
+              {startSlot}
             </div>
           )}
 
@@ -132,35 +166,38 @@ export const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
             onBlur={handleBlur}
             className={cn(
               'Bear-Input__field',
-              'bear-w-full bear-rounded-lg bear-border bear-outline-none bear-transition-all bear-duration-200',
-              'bear-bg-white bear-text-gray-900 placeholder:bear-text-gray-400',
-              'bear-border-gray-300 focus:bear-ring-2 focus:bear-ring-offset-2 focus:bear-ring-offset-white',
-              'dark:bear-bg-gray-800 dark:bear-text-white dark:placeholder:bear-text-gray-500 dark:bear-border-gray-600 dark:focus:bear-ring-offset-gray-900',
-              hasError
-                ? 'Bear-Input__field--error bear-border-red-500 focus:bear-ring-red-500'
-                : hasSuccess
-                  ? 'Bear-Input__field--success bear-border-green-500 focus:bear-ring-green-500'
-                  : 'focus:bear-border-bear-500 focus:bear-ring-bear-500 dark:focus:bear-border-bear-500 dark:focus:bear-ring-bear-500',
-              disabled && 'Bear-Input__field--disabled bear-opacity-50 bear-cursor-not-allowed',
-              leftAddon && 'bear-pl-10',
-              (rightAddon || showClear) && 'bear-pr-10',
-              sizeClasses[size],
+              'bear-flex-1 bear-min-w-0 bear-h-full bear-border-0 bear-outline-none bear-bg-transparent',
+              'placeholder:opacity-100 placeholder:[color:var(--bear-text-muted)]',
+              inputTextClasses[size],
               className
             )}
-            style={inputStyle}
+            style={{
+              color: 'var(--bear-text-primary)',
+              ...inputStyle,
+            }}
             {...props}
           />
 
-          {showClear && !rightAddon && (
-            <div className="Bear-Input__addon Bear-Input__addon--right bear-absolute bear-right-3 bear-text-gray-500 dark:bear-text-gray-400" style={suffixStyle}>
+          {showClear && (
+            <div
+              className="Bear-Input__clear bear-flex bear-items-center bear-self-stretch bear-shrink-0 bear-px-2 bear-cursor-pointer"
+              style={{ color: 'var(--bear-text-muted)' }}
+            >
               <ClearIcon onClick={onClear} />
             </div>
           )}
 
-          {rightAddon && (
-            <div className="Bear-Input__addon Bear-Input__addon--right bear-absolute bear-right-3 bear-flex bear-items-center bear-gap-1.5 bear-text-gray-500 dark:bear-text-gray-400" style={suffixStyle}>
-              {showClear && <ClearIcon onClick={onClear} />}
-              {rightAddon}
+          {endSlot && (
+            <div
+              className="Bear-Input__addon Bear-Input__addon--right bear-flex bear-items-center bear-self-stretch bear-shrink-0 bear-px-3 bear-gap-1.5"
+              style={{
+                backgroundColor: 'var(--bear-bg-tertiary)',
+                borderLeft: '1px solid var(--bear-border-default)',
+                color: 'var(--bear-text-secondary)',
+                ...suffixStyle,
+              }}
+            >
+              {endSlot}
             </div>
           )}
         </div>
@@ -170,11 +207,13 @@ export const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
             <p
               className={cn(
                 'Bear-Input__helper bear-text-sm bear-flex-1',
-                hasError ? 'Bear-Input__helper--error bear-text-red-500'
-                  : hasSuccess ? 'Bear-Input__helper--success bear-text-green-500'
-                  : 'bear-text-gray-500 dark:bear-text-gray-400'
+                hasError && 'Bear-Input__helper--error bear-text-red-500',
+                hasSuccess && 'Bear-Input__helper--success bear-text-green-500'
               )}
-              style={helperStyle}
+              style={{
+                ...(hasError || hasSuccess ? {} : { color: 'var(--bear-text-muted)' }),
+                ...helperStyle,
+              }}
             >
               {feedbackMessage}
             </p>
@@ -184,8 +223,9 @@ export const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
             <span
               className={cn(
                 'Bear-Input__char-count bear-text-xs bear-tabular-nums bear-shrink-0',
-                isOverLimit ? 'bear-text-red-500' : 'bear-text-gray-400 dark:bear-text-gray-500'
+                isOverLimit && 'bear-text-red-500'
               )}
+              style={!isOverLimit ? { color: 'var(--bear-text-muted)' } : undefined}
             >
               {currentLen}/{charMax}
             </span>

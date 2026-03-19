@@ -9,6 +9,11 @@ export type AutoFormatType =
   | 'sentenceCase'
   | 'none';
 
+export interface InputPropsInput {
+  startAdornment?: ReactNode;
+  endAdornment?: ReactNode;
+}
+
 export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
   /** Input label */
   label?: string;
@@ -20,9 +25,11 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
   success?: string;
   /** Input size */
   size?: 'sm' | 'md' | 'lg';
-  /** Left addon */
+  /** Start/end slots (takes precedence over leftAddon/rightAddon when set) */
+  InputProps?: InputPropsInput;
+  /** Left addon (legacy; use InputProps.startAdornment for start slot) */
   leftAddon?: ReactNode;
-  /** Right addon */
+  /** Right addon (legacy; use InputProps.endAdornment for end slot) */
   rightAddon?: ReactNode;
   /** Whether input is full width */
   fullWidth?: boolean;

@@ -1,11 +1,5 @@
-import { FC, SVGAttributes } from 'react';
-
-export interface BearLogoProps extends SVGAttributes<SVGElement> {
-  /** Logo size in pixels */
-  size?: number;
-  /** Whether to show animated sparkle */
-  animated?: boolean;
-}
+import { FC } from 'react';
+import type { BearLogoProps } from './BearLogo.types';
 
 /**
  * BearLogo - Lotso-inspired pink teddy bear logo from Toy Story

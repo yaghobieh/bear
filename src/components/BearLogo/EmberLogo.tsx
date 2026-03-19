@@ -1,14 +1,6 @@
 import { FC } from 'react';
 import { cn } from '@utils';
-
-export interface EmberLogoProps {
-  /** Logo size in pixels */
-  size?: number;
-  /** Additional class names */
-  className?: string;
-  /** Whether to animate the logo */
-  animated?: boolean;
-}
+import type { EmberLogoProps } from './BearLogo.types';
 
 /**
  * Ember Logo Component

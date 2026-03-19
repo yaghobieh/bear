@@ -1,6 +1,47 @@
 import { FC, useState, useRef, useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { PopoverProps } from './Popover.types';
 import { cn } from '@utils';
+
+const Z_INDEX = 10000;
+
+function getPlacementStyles(placement: string, rect: DOMRect, offset: number): React.CSSProperties {
+  const base: React.CSSProperties = { position: 'fixed' as const, zIndex: Z_INDEX };
+  const vertical = placement.split('-')[0];
+  const hasStart = placement.includes('start');
+  const hasEnd = placement.includes('end');
+
+  if (vertical === 'bottom') {
+    base.top = rect.bottom + offset;
+    if (hasStart) base.left = rect.left;
+    else if (hasEnd) base.left = rect.right;
+    else base.left = rect.left + rect.width / 2;
+  } else if (vertical === 'top') {
+    base.bottom = window.innerHeight - rect.top + offset;
+    if (hasStart) base.left = rect.left;
+    else if (hasEnd) base.left = rect.right;
+    else base.left = rect.left + rect.width / 2;
+  } else if (vertical === 'left') {
+    base.right = window.innerWidth - rect.left + offset;
+    if (hasStart) base.top = rect.top;
+    else if (hasEnd) base.bottom = window.innerHeight - rect.bottom;
+    else base.top = rect.top + rect.height / 2;
+  } else {
+    base.left = rect.right + offset;
+    if (hasStart) base.top = rect.top;
+    else if (hasEnd) base.bottom = window.innerHeight - rect.bottom;
+    else base.top = rect.top + rect.height / 2;
+  }
+
+  if (vertical === 'bottom' || vertical === 'top') {
+    if (!hasStart && !hasEnd) base.transform = 'translateX(-50%)';
+    else if (hasEnd) base.transform = 'translateX(-100%)';
+  } else {
+    if (!hasStart && !hasEnd) base.transform = 'translateY(-50%)';
+    else if (hasEnd) base.transform = 'translateY(-100%)';
+  }
+  return base;
+}
 
 export const Popover: FC<PopoverProps> = ({
   children,
@@ -17,6 +58,7 @@ export const Popover: FC<PopoverProps> = ({
   offset = 8,
 }) => {
   const [internalOpen, setInternalOpen] = useState(false);
+  const [position, setPosition] = useState<React.CSSProperties>({});
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -27,11 +69,19 @@ export const Popover: FC<PopoverProps> = ({
   }, [onOpenChange]);
 
   useEffect(() => {
+    if (isOpen && containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      setPosition(getPlacementStyles(placement, rect, offset));
+    }
+  }, [isOpen, placement, offset]);
+
+  useEffect(() => {
     if (!closeOnClickOutside) return;
     const handleClickOutside = (e: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
-        setIsOpen(false);
-      }
+      const target = e.target as Node;
+      if (containerRef.current?.contains(target)) return;
+      if (contentRef.current?.contains(target)) return;
+      setIsOpen(false);
     };
     if (isOpen) document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
@@ -58,21 +108,6 @@ export const Popover: FC<PopoverProps> = ({
     if (trigger === 'hover') setIsOpen(false);
   };
 
-  const placementStyles: Record<string, string> = {
-    'top': 'bear-bottom-full bear-left-1/2 -bear-translate-x-1/2 bear-mb-2',
-    'top-start': 'bear-bottom-full bear-left-0 bear-mb-2',
-    'top-end': 'bear-bottom-full bear-right-0 bear-mb-2',
-    'bottom': 'bear-top-full bear-left-1/2 -bear-translate-x-1/2 bear-mt-2',
-    'bottom-start': 'bear-top-full bear-left-0 bear-mt-2',
-    'bottom-end': 'bear-top-full bear-right-0 bear-mt-2',
-    'left': 'bear-right-full bear-top-1/2 -bear-translate-y-1/2 bear-mr-2',
-    'left-start': 'bear-right-full bear-top-0 bear-mr-2',
-    'left-end': 'bear-right-full bear-bottom-0 bear-mr-2',
-    'right': 'bear-left-full bear-top-1/2 -bear-translate-y-1/2 bear-ml-2',
-    'right-start': 'bear-left-full bear-top-0 bear-ml-2',
-    'right-end': 'bear-left-full bear-bottom-0 bear-ml-2',
-  };
-
   const arrowStyles: Record<string, string> = {
     'top': 'bear-top-full bear-left-1/2 -bear-translate-x-1/2 bear-border-t-zinc-700 bear-border-x-transparent bear-border-b-transparent',
     'bottom': 'bear-bottom-full bear-left-1/2 -bear-translate-x-1/2 bear-border-b-zinc-700 bear-border-x-transparent bear-border-t-transparent',
@@ -81,6 +116,27 @@ export const Popover: FC<PopoverProps> = ({
   };
 
   const arrowDirection = placement.split('-')[0];
+
+  const portalContent =
+    isOpen &&
+    typeof document !== 'undefined' &&
+    createPortal(
+      <div
+        ref={contentRef}
+        data-bear-popover
+        className={cn(
+          'bear-bg-zinc-800 bear-border bear-border-zinc-700 bear-rounded-lg bear-shadow-xl bear-p-3',
+          contentClassName
+        )}
+        style={position}
+      >
+        {content}
+        {arrow && (
+          <div className={cn('bear-absolute bear-w-0 bear-h-0 bear-border-8', arrowStyles[arrowDirection])} />
+        )}
+      </div>,
+      document.body
+    );
 
   return (
     <div
@@ -92,26 +148,7 @@ export const Popover: FC<PopoverProps> = ({
       <div onClick={handleTriggerClick} className="bear-cursor-pointer">
         {children}
       </div>
-      {isOpen && (
-        <div
-          ref={contentRef}
-          className={cn(
-            'bear-absolute bear-z-50 bear-bg-zinc-800 bear-border bear-border-zinc-700 bear-rounded-lg bear-shadow-xl bear-p-3',
-            placementStyles[placement],
-            contentClassName
-          )}
-          style={{ marginTop: placement.startsWith('bottom') ? offset : undefined, marginBottom: placement.startsWith('top') ? offset : undefined }}
-        >
-          {content}
-          {arrow && (
-            <div className={cn(
-              'bear-absolute bear-w-0 bear-h-0 bear-border-8',
-              arrowStyles[arrowDirection]
-            )} />
-          )}
-        </div>
-      )}
+      {portalContent}
     </div>
   );
 };
-

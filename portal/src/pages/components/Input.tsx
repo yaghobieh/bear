@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
-import { Input, BearIcons } from '@forgedevstack/bear';
+import { Input, Button, BearIcons } from '@forgedevstack/bear';
 
 const InputPage: FC = () => {
   const [value, setValue] = useState('');
@@ -16,14 +16,17 @@ const InputPage: FC = () => {
 
   return (
     <div className="fade-in">
-      <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Input</h1>
+      <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Input / TextField</h1>
       <p className="text-gray-600 dark:text-gray-400 mb-8">
-        Text input field with changeable icons (leftAddon/rightAddon), validation states, auto-formatting, and inline validation.
+        Text input field. Use <code className="bear-px-1 bear-py-0.5 bear-rounded bear-bg-gray-200 dark:bear-bg-zinc-700 bear-text-sm">Input</code> or <code className="bear-px-1 bear-py-0.5 bear-rounded bear-bg-gray-200 dark:bear-bg-zinc-700 bear-text-sm">TextField</code> (alias). Supports <code className="bear-px-1 bear-py-0.5 bear-rounded bear-bg-gray-200 dark:bear-bg-zinc-700 bear-text-sm">InputProps.startAdornment</code> / <code className="bear-px-1 bear-py-0.5 bear-rounded bear-bg-gray-200 dark:bear-bg-zinc-700 bear-text-sm">endAdornment</code> for start/end slots (any ReactNode), leftAddon/rightAddon, validation, and auto-formatting.
       </p>
 
       <section className="mb-12">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Import</h2>
-        <CodeBlock code={`import { Input } from '@forgedevstack/bear';`} language="tsx" showLineNumbers={false} />
+        <CodeBlock code={`import { Input, TextField, Button, BearIcons } from '@forgedevstack/bear';`} language="tsx" showLineNumbers={false} />
+        <p className="mt-3 text-sm text-gray-500 dark:text-gray-400">
+          API docs: <a href="/api/input" className="text-pink-600 dark:text-pink-400 hover:underline">Input API</a>, <a href="/api/text-field" className="text-pink-600 dark:text-pink-400 hover:underline">TextField API</a>.
+        </p>
       </section>
 
       <ComponentPreview
@@ -231,6 +234,36 @@ const InputPage: FC = () => {
       </ComponentPreview>
 
       <ComponentPreview
+        title="InputProps — startAdornment / endAdornment"
+        description="Use InputProps.startAdornment and endAdornment for prefix/suffix (e.g. URL prefix, icon button). Pass any ReactNode; no separate component required."
+        code={`<Input
+  placeholder="input search text"
+  InputProps={{
+    startAdornment: <span className="bear-text-gray-500 dark:bear-text-gray-400">https://</span>,
+    endAdornment: (
+      <Button variant="ghost" iconOnly size="sm">
+        <BearIcons.SearchIcon size={18} />
+      </Button>
+    ),
+  }}
+/>`}
+      >
+        <div className="max-w-sm mx-auto">
+          <Input
+            placeholder="input search text"
+            InputProps={{
+              startAdornment: <span className="bear-text-gray-500 dark:bear-text-gray-400">https://</span>,
+              endAdornment: (
+                <Button variant="ghost" iconOnly size="sm">
+                  <BearIcons.SearchIcon size={18} />
+                </Button>
+              ),
+            }}
+          />
+        </div>
+      </ComponentPreview>
+
+      <ComponentPreview
         title="With Icons (Changeable)"
         description="Use leftAddon and rightAddon for custom icons. Icons are fully changeable."
         code={`<Input leftAddon={<BearIcons.SearchIcon size={18} />} placeholder="Search..." />
@@ -316,8 +349,9 @@ const InputPage: FC = () => {
               <tr><td className="px-4 py-3 font-mono text-bear-600">error</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Error message (also sets error border)</td></tr>
               <tr><td className="px-4 py-3 font-mono text-bear-600">success</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Success message (green helper text)</td></tr>
               <tr><td className="px-4 py-3 font-mono text-bear-600">helperText</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Helper text below input</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">leftAddon</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Left icon/addon (changeable)</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">rightAddon</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Right icon/addon (changeable)</td></tr>
+              <tr className="bg-green-50 dark:bg-green-900/20"><td className="px-4 py-3 font-mono text-bear-600">InputProps</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>{'{ startAdornment?, endAdornment? }'}</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Start/end slots (ReactNode); takes precedence over leftAddon/rightAddon when set</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">leftAddon</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Left icon/addon (legacy; use InputProps.startAdornment for start slot)</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">rightAddon</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Right icon/addon (legacy; use InputProps.endAdornment for end slot)</td></tr>
               <tr><td className="px-4 py-3 font-mono text-bear-600">clearable</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Show clear (X) button when input has value</td></tr>
               <tr><td className="px-4 py-3 font-mono text-bear-600">showCharCount</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Show live character count</td></tr>
               <tr><td className="px-4 py-3 font-mono text-bear-600">charCountMax</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>number</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Max chars for counter display</td></tr>

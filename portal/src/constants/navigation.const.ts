@@ -17,7 +17,7 @@ export interface NavGroup {
   icon?: string;
 }
 
-export const BEAR_VERSION = '1.1.5';
+export const BEAR_VERSION = '1.1.9';
 
 /** Main Bear UI repository */
 export const GITHUB_URL = 'https://github.com/yaghobieh/bear';
@@ -264,6 +264,7 @@ export const NAVIGATION: NavGroup[] = [
           { path: '/components/badge', label: 'Badge' },
           { path: '/components/indicator', label: 'Indicator', badge: 'New' },
           { path: '/components/chip', label: 'Chip' },
+          { path: '/components/biometric', label: 'Biometric', badge: 'New' },
         ],
       },
       // Data
@@ -488,7 +489,8 @@ export const NAVIGATION: NavGroup[] = [
 ];
 
 export const VERSIONS = [
-  { value: '1.1.5', label: 'v1.1.5 (current)' },
+  { value: '1.1.9', label: 'v1.1.9 (current)' },
+  { value: '1.1.5', label: 'v1.1.5' },
   { value: '1.1.4', label: 'v1.1.4' },
   { value: '1.1.3', label: 'v1.1.3' },
   { value: '1.1.2', label: 'v1.1.2' },

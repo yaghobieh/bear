@@ -104,7 +104,7 @@ const Introduction: FC = () => {
       <div className="text-center mb-16">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-pink-500/10 to-rose-500/10 border border-pink-500/20 text-pink-600 dark:text-pink-400 text-sm font-medium mb-6">
           <span>🚀</span>
-          <span>1.1.5 — DateRangePicker, TreeSelect, SplitButton, ImageGallery, ContextMenu, NumberFormatter, InfiniteScroll, ColorSwatch, @BearInclude PostCSS plugin, modular CSS + all fixes</span>
+          <span>1.1.9 — Input InputProps.startAdornment/endAdornment, Tabs maxVisibleTabs + overflow dropdown, wrap</span>
         </div>
         
         <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
@@ -569,6 +569,32 @@ function App() {
 }`}
           language="tsx"
           title="App.tsx"
+        />
+      </div>
+
+      <div className="mb-16">
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+          Input / TextField (start/end slots)
+        </h2>
+        <p className="text-gray-600 dark:text-gray-400 mb-4 max-w-2xl">
+          Use <code className="px-1 py-0.5 rounded bg-gray-200 dark:bg-gray-700 text-sm">Input</code> or <code className="px-1 py-0.5 rounded bg-gray-200 dark:bg-gray-700 text-sm">TextField</code> with <code className="px-1 py-0.5 rounded bg-gray-200 dark:bg-gray-700 text-sm">InputProps.startAdornment</code> and <code className="px-1 py-0.5 rounded bg-gray-200 dark:bg-gray-700 text-sm">endAdornment</code> for prefix/suffix (e.g. URL prefix, search icon button). Pass any ReactNode. See <a href="/components/input" className="text-pink-600 dark:text-pink-400 hover:underline">Input</a> and <a href="/api/input" className="text-pink-600 dark:text-pink-400 hover:underline">Input API</a>.
+        </p>
+        <CodeBlock
+          code={`import { Input, TextField, Button, BearIcons } from '@forgedevstack/bear';
+
+<Input
+  placeholder="input search text"
+  InputProps={{
+    startAdornment: <span className="bear-text-gray-500 dark:bear-text-gray-400">https://</span>,
+    endAdornment: (
+      <Button variant="ghost" iconOnly size="sm">
+        <BearIcons.SearchIcon size={18} />
+      </Button>
+    ),
+  }}
+/>`}
+          language="tsx"
+          title="Input / TextField with InputProps"
         />
       </div>
 

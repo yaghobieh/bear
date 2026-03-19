@@ -1,165 +1,152 @@
 import { FC, useState } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
+import { Tabs, TabList, Tab, TabPanel, Typography } from '@forgedevstack/bear';
+import { CODE_BASIC, CODE_LIMIT, CODE_WRAP, CODE_PILLS, CODE_DISABLED } from './Tabs.code';
+
+const TAB_IDS = ['overview', 'features', 'pricing', 'docs', 'support', 'blog', 'about', 'contact'];
 
 const TabsPage: FC = () => {
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = useState('overview');
 
   return (
     <div className="fade-in">
       <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Tabs</h1>
       <p className="text-gray-600 dark:text-gray-400 mb-8">
-        Organize content into multiple sections with tab navigation.
+        Tabbed interface with <strong>TabList</strong>, <strong>Tab</strong>, and <strong>TabPanel</strong>. Use <code className="bear-px-1 bear-py-0.5 bear-rounded bear-bg-gray-200 dark:bear-bg-zinc-700 bear-text-sm">maxVisibleTabs</code> to limit visible tabs and show the rest in a &quot;…&quot; dropdown (selected tab moves to first). Use <code className="bear-px-1 bear-py-0.5 bear-rounded bear-bg-gray-200 dark:bear-bg-zinc-700 bear-text-sm">wrap</code> so tabs break to the next line without breakpoints.
       </p>
 
       <section className="mb-12">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Import</h2>
-        <CodeBlock code={`import { Tabs, Tab, TabPanel } from '@forgedevstack/bear';`} language="tsx" showLineNumbers={false} />
+        <CodeBlock code={`import { Tabs, TabList, Tab, TabPanel } from '@forgedevstack/bear';`} language="tsx" showLineNumbers={false} />
+        <p className="mt-3 text-sm text-gray-500 dark:text-gray-400">
+          API: <a href="/api/tabs" className="text-pink-600 dark:text-pink-400 hover:underline">Tabs API</a> (maxVisibleTabs, wrap, overflow dropdown).
+        </p>
       </section>
 
       <ComponentPreview
-        title="Basic Usage"
-        description="Simple tab navigation."
-        code={`<Tabs value={activeTab} onChange={setActiveTab}>
-  <Tab label="Tab 1" />
-  <Tab label="Tab 2" />
-  <Tab label="Tab 3" />
-</Tabs>
-<TabPanel value={activeTab} index={0}>Content 1</TabPanel>
-<TabPanel value={activeTab} index={1}>Content 2</TabPanel>
-<TabPanel value={activeTab} index={2}>Content 3</TabPanel>`}
+        title="Basic usage"
+        description="Controlled tabs with id-based panels. variant line | pills | enclosed."
+        code={CODE_BASIC}
       >
-        <div>
-          <div className="flex border-b border-gray-200 dark:border-gray-700">
-            {['Overview', 'Features', 'Pricing'].map((tab, i) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(i)}
-                className={`px-4 py-3 font-medium text-sm transition-colors relative ${
-                  activeTab === i
-                    ? 'text-bear-600 dark:text-bear-400'
-                    : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
-                }`}
-              >
-                {tab}
-                {activeTab === i && (
-                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-bear-500" />
-                )}
-              </button>
+        <Tabs value={activeTab} defaultTab="overview" onChange={setActiveTab} variant="line">
+          <TabList>
+            <Tab id="overview">Overview</Tab>
+            <Tab id="features">Features</Tab>
+            <Tab id="pricing">Pricing</Tab>
+          </TabList>
+          <TabPanel tabId="overview">
+            <Typography variant="body2" className="text-gray-600 dark:text-gray-400">Overview content panel.</Typography>
+          </TabPanel>
+          <TabPanel tabId="features">
+            <Typography variant="body2" className="text-gray-600 dark:text-gray-400">Features content panel.</Typography>
+          </TabPanel>
+          <TabPanel tabId="pricing">
+            <Typography variant="body2" className="text-gray-600 dark:text-gray-400">Pricing content panel.</Typography>
+          </TabPanel>
+        </Tabs>
+      </ComponentPreview>
+
+      <ComponentPreview
+        title="Limit visible tabs (maxVisibleTabs) + overflow dropdown"
+        description={'Show at most 5 tabs; the rest appear in a "..." dropdown. When you select a tab from the dropdown, it moves to the first visible position. The overflow trigger is a button that opens the list of hidden tabs.'}
+        code={CODE_LIMIT}
+      >
+        <Tabs value={activeTab} defaultTab="overview" onChange={setActiveTab} variant="pills">
+          <TabList maxVisibleTabs={5}>
+            {TAB_IDS.map((id) => (
+              <Tab key={id} id={id}>
+                {id.charAt(0).toUpperCase() + id.slice(1)}
+              </Tab>
             ))}
-          </div>
-          <div className="py-4">
-            <p className="text-gray-600 dark:text-gray-400">
-              {activeTab === 0 && 'This is the Overview content panel.'}
-              {activeTab === 1 && 'This is the Features content panel.'}
-              {activeTab === 2 && 'This is the Pricing content panel.'}
-            </p>
-          </div>
-        </div>
-      </ComponentPreview>
-
-      <ComponentPreview
-        title="With Icons"
-        description="Tabs with icons."
-        code={`<Tabs>
-  <Tab icon={<HomeIcon />} label="Home" />
-  <Tab icon={<SettingsIcon />} label="Settings" />
-  <Tab icon={<UserIcon />} label="Profile" />
-</Tabs>`}
-      >
-        <div className="flex border-b border-gray-200 dark:border-gray-700">
-          {[
-            { icon: '🏠', label: 'Home' },
-            { icon: '⚙️', label: 'Settings' },
-            { icon: '👤', label: 'Profile' },
-          ].map((tab, i) => (
-            <button
-              key={tab.label}
-              className={`flex items-center gap-2 px-4 py-3 font-medium text-sm transition-colors ${
-                i === 0 ? 'text-bear-600 dark:text-bear-400 border-b-2 border-bear-500' : 'text-gray-500'
-              }`}
-            >
-              <span>{tab.icon}</span>
-              {tab.label}
-            </button>
+          </TabList>
+          {TAB_IDS.map((id) => (
+            <TabPanel key={id} tabId={id}>
+              <Typography variant="body2" className="text-gray-600 dark:text-gray-400">
+                Content for {id}. When this tab was chosen from the &quot;…&quot; dropdown, it moved to the first visible slot.
+              </Typography>
+            </TabPanel>
           ))}
-        </div>
+        </Tabs>
       </ComponentPreview>
 
       <ComponentPreview
-        title="Contained Variant"
-        description="Tabs with background highlight."
-        code={`<Tabs variant="contained">
-  <Tab label="Tab 1" />
-  <Tab label="Tab 2" />
-</Tabs>`}
+        title="Wrap (auto-break, no breakpoints)"
+        description="TabList with wrap: tabs flow to the next line when they don't fit. No media queries."
+        code={CODE_WRAP}
       >
-        <div className="inline-flex bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
-          {['Daily', 'Weekly', 'Monthly'].map((tab, i) => (
-            <button
-              key={tab}
-              className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
-                i === 1
-                  ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm'
-                  : 'text-gray-600 dark:text-gray-400'
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
-      </ComponentPreview>
-
-      <ComponentPreview
-        title="Vertical Tabs"
-        description="Tabs arranged vertically."
-        code={`<Tabs orientation="vertical">
-  <Tab label="General" />
-  <Tab label="Security" />
-  <Tab label="Notifications" />
-</Tabs>`}
-      >
-        <div className="flex gap-6">
-          <div className="flex flex-col border-r border-gray-200 dark:border-gray-700 pr-4">
-            {['General', 'Security', 'Notifications', 'Privacy'].map((tab, i) => (
-              <button
-                key={tab}
-                className={`px-4 py-2 text-sm text-left transition-colors ${
-                  i === 0
-                    ? 'text-bear-600 dark:text-bear-400 border-r-2 border-bear-500 font-medium'
-                    : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
-                }`}
-              >
-                {tab}
-              </button>
+        <Tabs defaultTab="a" variant="pills">
+          <TabList wrap className="bear-max-w-md">
+            {['a', 'b', 'c', 'd', 'e', 'f'].map((id) => (
+              <Tab key={id} id={id}>Tab {id.toUpperCase()}</Tab>
             ))}
+          </TabList>
+          <TabPanel tabId="a"><Typography variant="body2" className="text-gray-600 dark:text-gray-400">Panel A</Typography></TabPanel>
+          <TabPanel tabId="b"><Typography variant="body2" className="text-gray-600 dark:text-gray-400">Panel B</Typography></TabPanel>
+          <TabPanel tabId="c"><Typography variant="body2" className="text-gray-600 dark:text-gray-400">Panel C</Typography></TabPanel>
+          <TabPanel tabId="d"><Typography variant="body2" className="text-gray-600 dark:text-gray-400">Panel D</Typography></TabPanel>
+          <TabPanel tabId="e"><Typography variant="body2" className="text-gray-600 dark:text-gray-400">Panel E</Typography></TabPanel>
+          <TabPanel tabId="f"><Typography variant="body2" className="text-gray-600 dark:text-gray-400">Panel F</Typography></TabPanel>
+        </Tabs>
+      </ComponentPreview>
+
+      <ComponentPreview
+        title="Variants: line, pills, enclosed"
+        description="line = underline; pills = rounded background; enclosed = bordered top."
+        code={CODE_PILLS}
+      >
+        <div className="space-y-8">
+          <div>
+            <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">variant=&quot;line&quot;</p>
+            <Tabs defaultTab="l1" variant="line">
+              <TabList>
+                <Tab id="l1">Tab 1</Tab>
+                <Tab id="l2">Tab 2</Tab>
+              </TabList>
+              <TabPanel tabId="l1"><Typography variant="body2" className="text-gray-600 dark:text-gray-400">Line content 1</Typography></TabPanel>
+              <TabPanel tabId="l2"><Typography variant="body2" className="text-gray-600 dark:text-gray-400">Line content 2</Typography></TabPanel>
+            </Tabs>
           </div>
-          <div className="flex-1">
-            <p className="text-gray-600 dark:text-gray-400">General settings content appears here.</p>
+          <div>
+            <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">variant=&quot;pills&quot;</p>
+            <Tabs defaultTab="p1" variant="pills">
+              <TabList>
+                <Tab id="p1">Tab 1</Tab>
+                <Tab id="p2">Tab 2</Tab>
+              </TabList>
+              <TabPanel tabId="p1"><Typography variant="body2" className="text-gray-600 dark:text-gray-400">Pills content 1</Typography></TabPanel>
+              <TabPanel tabId="p2"><Typography variant="body2" className="text-gray-600 dark:text-gray-400">Pills content 2</Typography></TabPanel>
+            </Tabs>
+          </div>
+          <div>
+            <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">variant=&quot;enclosed&quot;</p>
+            <Tabs defaultTab="e1" variant="enclosed">
+              <TabList>
+                <Tab id="e1">Tab 1</Tab>
+                <Tab id="e2">Tab 2</Tab>
+              </TabList>
+              <TabPanel tabId="e1"><Typography variant="body2" className="text-gray-600 dark:text-gray-400">Enclosed content 1</Typography></TabPanel>
+              <TabPanel tabId="e2"><Typography variant="body2" className="text-gray-600 dark:text-gray-400">Enclosed content 2</Typography></TabPanel>
+            </Tabs>
           </div>
         </div>
       </ComponentPreview>
 
       <ComponentPreview
-        title="Disabled Tab"
-        description="Tabs can be disabled."
-        code={`<Tabs>
-  <Tab label="Active" />
-  <Tab label="Disabled" disabled />
-  <Tab label="Active" />
-</Tabs>`}
+        title="Disabled tab"
+        description="Tab accepts disabled; overflow dropdown respects disabled state."
+        code={CODE_DISABLED}
       >
-        <div className="flex border-b border-gray-200 dark:border-gray-700">
-          <button className="px-4 py-3 font-medium text-sm text-bear-600 dark:text-bear-400 border-b-2 border-bear-500">
-            Active
-          </button>
-          <button className="px-4 py-3 font-medium text-sm text-gray-300 dark:text-gray-600 cursor-not-allowed">
-            Disabled
-          </button>
-          <button className="px-4 py-3 font-medium text-sm text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
-            Active
-          </button>
-        </div>
+        <Tabs defaultTab="active" variant="line">
+          <TabList>
+            <Tab id="active">Active</Tab>
+            <Tab id="disabled" disabled>Disabled</Tab>
+            <Tab id="other">Other</Tab>
+          </TabList>
+          <TabPanel tabId="active"><Typography variant="body2" className="text-gray-600 dark:text-gray-400">Active panel</Typography></TabPanel>
+          <TabPanel tabId="disabled"><Typography variant="body2" className="text-gray-600 dark:text-gray-400">Disabled panel</Typography></TabPanel>
+          <TabPanel tabId="other"><Typography variant="body2" className="text-gray-600 dark:text-gray-400">Other panel</Typography></TabPanel>
+        </Tabs>
       </ComponentPreview>
 
       <section className="mb-12">
@@ -168,6 +155,7 @@ const TabsPage: FC = () => {
           <table className="w-full text-left text-sm">
             <thead className="bg-gray-50 dark:bg-gray-800">
               <tr>
+                <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Component</th>
                 <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Prop</th>
                 <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Type</th>
                 <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Default</th>
@@ -175,14 +163,24 @@ const TabsPage: FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-              <tr><td className="px-4 py-3 font-mono text-bear-600">value</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>number | string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">0</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Active tab index</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">onChange</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>(value: number) =&gt; void</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Tab change handler</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">variant</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>underline | contained</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">underline</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Tab style variant</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">orientation</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>horizontal | vertical</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">horizontal</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Tab orientation</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">fullWidth</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Full width tabs</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">Tabs</td><td className="px-4 py-3 font-mono text-bear-600">value</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Controlled active tab id</td></tr>
+              <tr><td className="px-4 py-3">Tabs</td><td className="px-4 py-3 font-mono text-bear-600">defaultTab</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">required</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Initial active tab id (uncontrolled)</td></tr>
+              <tr><td className="px-4 py-3">Tabs</td><td className="px-4 py-3 font-mono text-bear-600">onChange</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>(tabId: string) =&gt; void</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Called when tab changes</td></tr>
+              <tr><td className="px-4 py-3">Tabs</td><td className="px-4 py-3 font-mono text-bear-600">variant</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>line | pills | enclosed</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">line</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Visual variant</td></tr>
+              <tr className="bg-green-50 dark:bg-green-900/20"><td className="px-4 py-3">TabList</td><td className="px-4 py-3 font-mono text-bear-600">maxVisibleTabs</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>number</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Max tabs to show; rest go in &quot;…&quot; dropdown. Selected tab is shown first.</td></tr>
+              <tr className="bg-green-50 dark:bg-green-900/20"><td className="px-4 py-3">TabList</td><td className="px-4 py-3 font-mono text-bear-600">wrap</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Allow tabs to wrap to next line (no breakpoints)</td></tr>
+              <tr><td className="px-4 py-3">TabList</td><td className="px-4 py-3 font-mono text-bear-600">className</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Extra classes for the tab list</td></tr>
+              <tr><td className="px-4 py-3">Tab</td><td className="px-4 py-3 font-mono text-bear-600">id</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">required</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Unique tab id (matches TabPanel tabId)</td></tr>
+              <tr><td className="px-4 py-3">Tab</td><td className="px-4 py-3 font-mono text-bear-600">disabled</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Disable this tab</td></tr>
+              <tr><td className="px-4 py-3">Tab</td><td className="px-4 py-3 font-mono text-bear-600">icon</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Icon before label</td></tr>
+              <tr><td className="px-4 py-3">TabPanel</td><td className="px-4 py-3 font-mono text-bear-600">tabId</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">required</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Tab id this panel belongs to</td></tr>
+              <tr><td className="px-4 py-3">TabPanel</td><td className="px-4 py-3 font-mono text-bear-600">className</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Extra classes for the panel</td></tr>
             </tbody>
           </table>
         </div>
+        <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
+          When <code className="bear-px-1 bear-py-0.5 bear-rounded bear-bg-gray-200 dark:bear-bg-zinc-700">maxVisibleTabs</code> is set, a &quot;…&quot; (more) button appears after the visible tabs. Clicking it opens a dropdown with the remaining tabs; selecting one switches to that tab and it moves to the first visible position.
+        </p>
       </section>
     </div>
   );

@@ -23,7 +23,14 @@ const Overview: FC = () => (
         </Typography>
         <CodeBlock
           code={`<Button size="md" variant="primary" disabled={false} />
-<Input size="lg" variant="outlined" className="w-full" />`}
+<Input size="lg" className="w-full" />
+<Input
+  placeholder="search"
+  InputProps={{
+    startAdornment: <span className="bear-text-gray-500 dark:bear-text-gray-400">https://</span>,
+    endAdornment: <BearIcons.SearchIcon size={18} />,
+  }}
+/>`}
           language="tsx"
           showLineNumbers={false}
         />
@@ -66,7 +73,7 @@ const Overview: FC = () => (
               </tr>
               <tr>
                 <td className="px-4 py-3 font-medium">Inputs</td>
-                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">Button, Input, FormField, Select, Checkbox, Switch</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">Button, Input, TextField, FormField, Select, Checkbox, Switch</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-medium">Display</td>

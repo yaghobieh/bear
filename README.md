@@ -76,7 +76,7 @@ function App() {
 
 ### Form Components
 
-- `Input` - Text input field
+- `Input` / `TextField` - Text input with optional `InputProps.startAdornment` / `endAdornment` for start/end slots
 - `Select` / `MultiSelect` - Dropdown selection components
 - `Checkbox` - Checkbox input
 - `Radio` / `RadioGroup` - Radio button inputs
@@ -116,7 +116,7 @@ function App() {
 - `DataTable` - Advanced data table with sorting, filtering, and pagination
 - `Carousel` - Image/content carousel
 - `Accordion` - Collapsible content sections
-- `Tabs` - Tabbed interface
+- `Tabs` / `TabList` / `Tab` / `TabPanel` - Tabbed interface; `TabList` supports `maxVisibleTabs` (overflow dropdown) and `wrap` (auto-break)
 - `List` - List component with various item types
 - `Avatar` / `AvatarGroup` - User avatar display
 - `Chip` - Compact element for input, attribute, or action
@@ -286,7 +286,7 @@ const buttonProps: ButtonProps = {
 
 ## How Bear Compares
 
-| Feature | Bear UI | MUI | Ant Design | Chakra UI |
+| Feature | Bear UI | Material UI | Ant Design | Chakra UI |
 |---------|---------|-----|------------|-----------|
 | **Tailwind CSS native** | Yes | No | No | Partial (v3) |
 | **Bundle (tree-shaken)** | ~18 kB | ~80 kB | ~120 kB | ~45 kB |
@@ -297,7 +297,7 @@ const buttonProps: ButtonProps = {
 | **Modular CSS** | `@BearInclude` PostCSS | N/A | N/A | N/A |
 | **React 18 / 19** | Yes | Yes | Yes | Yes |
 | **Zero runtime CSS-in-JS** | Yes | No (Emotion) | No (Less) | No (Emotion) |
-| **Built-in i18n** | Portal (en/es) | MUI X | ConfigProvider | N/A |
+| **Built-in i18n** | Portal (en/es) | X (add-on) | ConfigProvider | N/A |
 
 ## Contributing
 

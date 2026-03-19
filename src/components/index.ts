@@ -95,8 +95,8 @@ export { SpeedDial } from './SpeedDial';
 export type { SpeedDialProps, SpeedDialAction } from './SpeedDial';
 
 // Form Components
-export { Input } from './Input';
-export type { InputProps } from './Input';
+export { Input, Input as TextField } from './Input';
+export type { InputProps, InputPropsInput } from './Input';
 
 export { Select } from './Select';
 export type { SelectProps, SelectOption } from './Select';
@@ -620,3 +620,8 @@ export type { PageNavProps, PageNavItem } from './PageNav';
 // PropsPlayground
 export { PropsPlayground } from './PropsPlayground';
 export type { PropsPlaygroundProps, PropsConfig, PropValues, PropControlConfig, PropControlOption, PropControlType } from './PropsPlayground';
+
+// Biometric
+export { Biometric } from './Biometric';
+export { useBiometric } from './Biometric';
+export type { BiometricProps, BiometricType, BiometricStatus, UseBiometricOptions, UseBiometricReturn } from './Biometric';

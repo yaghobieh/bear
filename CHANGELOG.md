@@ -2,6 +2,24 @@
 
 All notable changes to Bear UI will be documented in this file.
 
+## [1.1.9] - 2026-03-12
+
+### Added
+
+- **Input / TextField (start/end slots)**: `InputProps.startAdornment` and `InputProps.endAdornment` for start/end slots (e.g. prefix text, icon buttons). Pass any ReactNode; no standalone component. Existing `leftAddon`/`rightAddon` still supported; `InputProps` takes precedence when set.
+- **Tabs**: `TabList` now supports `maxVisibleTabs` (e.g. `5`) — visible tabs plus a "..." overflow dropdown for the rest. Selected tab is always shown first. `wrap` prop enables flex-wrap so tabs break to the next line without breakpoints (auto-align).
+
+### Changed
+
+- **Tabs**: Overflow dropdown uses Bear `Dropdown` and `BearIcons.MoreHorizIcon`. When a tab is selected from the dropdown, it moves to the first visible position on the next render.
+
+### API
+
+- **Input**: `InputProps?: { startAdornment?: ReactNode; endAdornment?: ReactNode }`; export `InputPropsInput`.
+- **TabList**: `maxVisibleTabs?: number`; `wrap?: boolean`.
+
+---
+
 ## [1.1.5] - 2026-02-24
 
 ### Portal Enhancements
@@ -14,7 +32,7 @@ All notable changes to Bear UI will be documented in this file.
 ### Documentation
 
 - **CONTRIBUTING.md**: New contributor guide covering branch workflow, how to add components (types, const, tsx, index), coding rules, and portal development.
-- **README Comparison Table**: Added feature comparison vs MUI, Ant Design, and Chakra UI with bundle size, Tailwind integration, dark mode, and TypeScript coverage.
+- **README Comparison Table**: Added feature comparison vs Material UI, Ant Design, and Chakra UI with bundle size, Tailwind integration, dark mode, and TypeScript coverage.
 
 ---
 

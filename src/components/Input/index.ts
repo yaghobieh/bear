@@ -1,3 +1,3 @@
 export { Input } from './Input';
-export type { InputProps, AutoFormatType } from './Input.types';
+export type { InputProps, InputPropsInput, AutoFormatType } from './Input.types';
 

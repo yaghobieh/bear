@@ -2,29 +2,67 @@ import { FC } from 'react';
 import { useParams } from 'react-router-dom';
 import { Card, CardBody, CodeBlock, Typography } from '@forgedevstack/bear';
 import { usePortalLanguage } from '@/hooks/usePortalLanguage';
+import { TABS_EXAMPLE } from './ComponentApi.tabs-example';
 
 interface ApiDoc {
   title: string;
   description: string;
   importLine: string;
   commonProps: Array<{ name: string; type: string; note: string }>;
+  exampleCode?: string;
 }
 
 const API_DOCS: Record<string, ApiDoc> = {
   input: {
     title: 'Input API',
-    description: 'Single-line text input with validation, addons, and character counter support.',
-    importLine: "import { Input } from '@forgedevstack/bear';",
+    description: 'Single-line text input with validation, addons (leftAddon/rightAddon), and InputProps.startAdornment/endAdornment for start/end slots. Supports character counter and inline validation.',
+    importLine: "import { Input, Button, BearIcons } from '@forgedevstack/bear';",
     commonProps: [
       { name: 'label', type: 'string', note: 'Optional field label.' },
+      { name: 'InputProps', type: '{ startAdornment?, endAdornment? }', note: 'Start/end slots (ReactNode); takes precedence over leftAddon/rightAddon.' },
+      { name: 'leftAddon', type: 'ReactNode', note: 'Left addon (legacy).' },
+      { name: 'rightAddon', type: 'ReactNode', note: 'Right addon (legacy).' },
       { name: 'error', type: 'string', note: 'Error message and error styles.' },
       { name: 'success', type: 'string', note: 'Success state helper text.' },
       { name: 'showCharCount', type: 'boolean', note: 'Shows live char counter.' },
     ],
+    exampleCode: `<Input
+  placeholder="input search text"
+  InputProps={{
+    startAdornment: <span className="bear-text-gray-500 dark:bear-text-gray-400">https://</span>,
+    endAdornment: (
+      <Button variant="ghost" iconOnly size="sm">
+        <BearIcons.SearchIcon size={18} />
+      </Button>
+    ),
+  }}
+/>`,
+  },
+  'text-field': {
+    title: 'TextField API',
+    description: 'TextField is an alias of Input. Use the same props; supports InputProps.startAdornment and endAdornment for start/end slots.',
+    importLine: "import { TextField, Button, BearIcons } from '@forgedevstack/bear';",
+    commonProps: [
+      { name: 'InputProps', type: '{ startAdornment?, endAdornment? }', note: 'Start/end slots (ReactNode).' },
+      { name: 'label', type: 'string', note: 'Optional field label.' },
+      { name: 'placeholder', type: 'string', note: 'Placeholder text.' },
+      { name: 'validation', type: 'ValidationRule', note: 'Inline validation (same as Form).' },
+    ],
+    exampleCode: `<TextField
+  placeholder="input search text"
+  InputProps={{
+    startAdornment: <span className="bear-text-gray-500 dark:bear-text-gray-400">https://</span>,
+    endAdornment: (
+      <Button variant="ghost" iconOnly size="sm">
+        <BearIcons.SearchIcon size={18} />
+      </Button>
+    ),
+  }}
+/>`,
   },
   'form-field': {
     title: 'FormField API',
-    description: 'Floating-label field similar to MUI TextField style.',
+    description: 'Floating-label field with outlined or filled variant.',
     importLine: "import { FormField } from '@forgedevstack/bear';",
     commonProps: [
       { name: 'label', type: 'string', note: 'Floating label text.' },
@@ -54,6 +92,23 @@ const API_DOCS: Record<string, ApiDoc> = {
       { name: 'loadingText', type: 'string', note: 'Text shown while loading.' },
       { name: 'leftIcon', type: 'ReactNode', note: 'Icon before label.' },
     ],
+  },
+  tabs: {
+    title: 'Tabs API',
+    description: 'Tabbed interface with TabList, Tab, and TabPanel. Use maxVisibleTabs to limit visible tabs and show the rest in a "..." overflow dropdown (selected tab moves to first). Use wrap so tabs wrap to the next line without breakpoints.',
+    importLine: "import { Tabs, TabList, Tab, TabPanel } from '@forgedevstack/bear';",
+    commonProps: [
+      { name: 'Tabs.value', type: 'string', note: 'Controlled active tab id.' },
+      { name: 'Tabs.defaultTab', type: 'string', note: 'Initial active tab id (uncontrolled).' },
+      { name: 'Tabs.onChange', type: '(tabId: string) => void', note: 'Called when tab changes.' },
+      { name: 'Tabs.variant', type: "'line' | 'pills' | 'enclosed'", note: 'Visual variant.' },
+      { name: 'TabList.maxVisibleTabs', type: 'number', note: 'Max tabs to show; rest go in "..." dropdown. Selected tab shown first.' },
+      { name: 'TabList.wrap', type: 'boolean', note: 'Allow tabs to wrap to next line (no breakpoints).' },
+      { name: 'Tab.id', type: 'string', note: 'Unique tab id (matches TabPanel tabId).' },
+      { name: 'Tab.disabled', type: 'boolean', note: 'Disable this tab.' },
+      { name: 'TabPanel.tabId', type: 'string', note: 'Tab id this panel belongs to.' },
+    ],
+    exampleCode: TABS_EXAMPLE,
   },
 };
 
@@ -91,6 +146,17 @@ const ComponentApi: FC = () => {
           <CodeBlock code={doc.importLine} language="tsx" showLineNumbers={false} />
         </CardBody>
       </Card>
+
+      {doc.exampleCode != null && (
+        <Card variant="outlined" className="mb-8">
+          <CardBody>
+            <Typography variant="h5" className="mb-3 font-semibold">
+              Example
+            </Typography>
+            <CodeBlock code={doc.exampleCode.trim()} language="tsx" showLineNumbers={false} />
+          </CardBody>
+        </Card>
+      )}
 
       <Card variant="outlined" className="mb-8">
         <CardBody>

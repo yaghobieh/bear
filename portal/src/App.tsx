@@ -88,6 +88,7 @@ const BottomNavigationPage = lazy(() => import('./pages/components/BottomNavigat
 // Advanced Components
 const PopoverPage = lazy(() => import('./pages/components/Popover'));
 const ChipPage = lazy(() => import('./pages/components/Chip'));
+const BiometricPage = lazy(() => import('./pages/components/BiometricPage'));
 const TreeViewPage = lazy(() => import('./pages/components/TreeView'));
 const TimelinePage = lazy(() => import('./pages/components/Timeline'));
 const FileUploadPage = lazy(() => import('./pages/components/FileUpload'));
@@ -419,6 +420,7 @@ function PortalLayout({
                 
                 <Route path="/components/popover" element={<PopoverPage />} />
                 <Route path="/components/chip" element={<ChipPage />} />
+                <Route path="/components/biometric" element={<BiometricPage />} />
                 <Route path="/components/tree-view" element={<TreeViewPage />} />
                 <Route path="/components/timeline" element={<TimelinePage />} />
                 <Route path="/components/file-upload" element={<FileUploadPage />} />

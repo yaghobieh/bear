@@ -18,7 +18,7 @@ const FormFieldPage: FC = () => {
         FormField
       </Typography>
       <Typography variant="body1" className="mb-8 text-gray-600 dark:text-gray-400">
-        MUI TextField-style input with floating label. Supports sizes, variants, addons, and validation states.
+        Floating-label input with outlined or filled variant. Supports sizes, addons, and validation states.
       </Typography>
 
       <section className="mb-8">

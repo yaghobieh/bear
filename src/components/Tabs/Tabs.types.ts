@@ -26,6 +26,10 @@ export interface TabsProps {
 export interface TabListProps {
   /** Tab buttons */
   children: ReactNode;
+  /** Max number of visible tabs before overflow (e.g. 5); rest go in "..." dropdown. Selected tab is always shown first. */
+  maxVisibleTabs?: number;
+  /** Allow tabs to wrap to next line (flex-wrap), no breakpoints */
+  wrap?: boolean;
   /** Custom class name */
   className?: string;
 }

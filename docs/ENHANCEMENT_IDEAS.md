@@ -71,7 +71,7 @@ Concrete next steps:
 2. **Portal: copy import button** — Per component page, “Copy import” that copies `import { ComponentName } from '@forgedevstack/bear'`.
 3. **Docs: one “Accessibility” page** — Summarize focus, ARIA, keyboard nav, and link to specific components.
 4. **CHANGELOG: “Migration” subsection** — For any release with breaking changes, add 2–3 bullet points on how to upgrade.
-5. **README: “Comparison” table** — Short table (e.g. Bear vs MUI vs Chakra) on bundle size, Tailwind, dark mode, TypeScript — reuse content from Introduction if needed.
+5. **README: “Comparison” table** — Short table (e.g. Bear vs Material UI vs Chakra) on bundle size, Tailwind, dark mode, TypeScript — reuse content from Introduction if needed.
 
 ---
 

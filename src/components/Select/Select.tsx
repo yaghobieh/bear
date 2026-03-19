@@ -42,7 +42,7 @@ export const Select: FC<SelectProps> = ({
       className={cn('bear-relative bear-flex bear-flex-col bear-gap-1.5', fullWidth && 'bear-w-full')}
     >
       {label && (
-        <label className="bear-text-sm bear-font-medium bear-text-gray-700 dark:bear-text-gray-300">
+        <label className="bear-text-sm bear-font-medium" style={{ color: 'var(--bear-text-secondary)' }}>
           {label}
         </label>
       )}
@@ -54,9 +54,7 @@ export const Select: FC<SelectProps> = ({
         className={cn(
           'bear-flex bear-items-center bear-justify-between bear-w-full',
           'bear-rounded-lg bear-border bear-text-left bear-outline-none bear-transition-all bear-duration-200',
-          'bear-bg-white bear-text-gray-900 bear-border-gray-300',
-          'focus:bear-ring-2 focus:bear-ring-offset-2 focus:bear-ring-offset-white',
-          'dark:bear-bg-gray-800 dark:bear-text-white dark:bear-border-gray-600 dark:focus:bear-ring-offset-gray-900',
+          'focus:bear-ring-2 focus:bear-ring-offset-2 focus:bear-ring-offset-[var(--bear-bg-primary)]',
           hasError
             ? 'bear-border-red-500 focus:bear-ring-red-500'
             : 'focus:bear-border-bear-500 focus:bear-ring-bear-500 dark:focus:bear-border-bear-500 dark:focus:bear-ring-bear-500',
@@ -64,25 +62,28 @@ export const Select: FC<SelectProps> = ({
           sizeClasses[size],
           className
         )}
+        style={{
+          backgroundColor: 'var(--bear-bg-primary)',
+          borderColor: hasError ? undefined : 'var(--bear-border-default)',
+          color: selectedOption ? 'var(--bear-text-primary)' : 'var(--bear-text-muted)',
+        }}
       >
-        <span className={selectedOption ? 'bear-text-gray-900 dark:bear-text-white' : 'bear-text-gray-500 dark:bear-text-gray-500'}>
+        <span>
           {selectedOption?.label || placeholder}
         </span>
         <ChevronDownIcon
-          className={cn(
-            'bear-w-4 bear-h-4 bear-text-gray-500 dark:bear-text-gray-400 bear-transition-transform',
-            isOpen && 'bear-rotate-180'
-          )}
+          className={cn('bear-w-4 bear-h-4 bear-shrink-0 bear-transition-transform', isOpen && 'bear-rotate-180')}
+          style={{ color: 'var(--bear-text-muted)' }}
         />
       </button>
 
       {isOpen && (
         <div
-          className={cn(
-            'bear-absolute bear-z-50 bear-w-full bear-mt-1',
-            'bear-rounded-lg bear-border bear-shadow-lg bear-overflow-hidden bear-top-full',
-            'bear-bg-white bear-border-gray-200 dark:bear-bg-gray-800 dark:bear-border-gray-600'
-          )}
+          className="bear-absolute bear-z-50 bear-w-full bear-mt-1 bear-rounded-lg bear-border bear-shadow-lg bear-overflow-hidden bear-top-full"
+          style={{
+            backgroundColor: 'var(--bear-bg-primary)',
+            borderColor: 'var(--bear-border-default)',
+          }}
         >
           <div className="bear-max-h-60 bear-overflow-y-auto">
             {options.map((option) => (
@@ -94,15 +95,21 @@ export const Select: FC<SelectProps> = ({
                 className={cn(
                   'bear-flex bear-items-center bear-justify-between bear-w-full bear-px-4 bear-py-2',
                   'bear-text-left bear-transition-colors',
-                  option.disabled
-                    ? 'bear-text-gray-500 bear-cursor-not-allowed'
-                    : 'bear-text-gray-700 dark:bear-text-gray-300 hover:bear-bg-gray-100 hover:bear-text-gray-900 dark:hover:bear-bg-gray-700 dark:hover:bear-text-white',
-                  option.value === value && 'bear-bg-bear-100 bear-text-bear-700 dark:bear-bg-bear-600/20 dark:bear-text-bear-300'
+                  option.disabled && 'bear-cursor-not-allowed',
+                  option.value === value && 'bear-bg-bear-100 bear-text-bear-700 dark:bear-bg-bear-600/20 dark:bear-text-bear-300',
+                  !option.disabled && option.value !== value && 'hover:bear-bg-[var(--bear-bg-tertiary)]'
                 )}
+                style={
+                  option.disabled
+                    ? { color: 'var(--bear-text-muted)' }
+                    : option.value === value
+                      ? undefined
+                      : { color: 'var(--bear-text-secondary)' }
+                }
               >
                 {option.label}
                 {option.value === value && (
-                  <CheckIcon className="bear-w-4 bear-h-4 bear-text-bear-600 dark:bear-text-bear-400" />
+                  <CheckIcon className="bear-w-4 bear-h-4 bear-shrink-0 bear-text-bear-600 dark:bear-text-bear-400" />
                 )}
               </button>
             ))}

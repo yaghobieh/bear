@@ -1,4 +1,3 @@
 export { BearLogo } from './BearLogo';
-export type { BearLogoProps } from './BearLogo';
 export { EmberLogo } from './EmberLogo';
-export type { EmberLogoProps } from './EmberLogo';
+export type { BearLogoProps, EmberLogoProps } from './BearLogo.types';

@@ -152,7 +152,8 @@ export const Dropdown: FC<DropdownProps> = ({
       return (
         <div
           key={item.key}
-          className="bear-my-1 bear-mx-2 bear-h-px bear-bg-gray-200 dark:bear-bg-gray-700"
+          className="bear-my-1 bear-mx-2 bear-h-px"
+          style={{ backgroundColor: 'var(--bear-border-default)' }}
           role="separator"
         />
       );
@@ -162,7 +163,8 @@ export const Dropdown: FC<DropdownProps> = ({
       return (
         <div
           key={item.key}
-          className="bear-px-3 bear-py-1.5 bear-text-xs bear-font-semibold bear-uppercase bear-tracking-wider bear-text-gray-500 dark:bear-text-gray-400"
+          className="bear-px-3 bear-py-1.5 bear-text-xs bear-font-semibold bear-uppercase bear-tracking-wider"
+          style={{ color: 'var(--bear-text-muted)' }}
         >
           {item.label}
         </div>
@@ -187,12 +189,18 @@ export const Dropdown: FC<DropdownProps> = ({
           'bear-w-full bear-flex bear-items-center bear-gap-2 bear-text-left bear-border-none bear-bg-transparent',
           SIZE_CLASSES[size],
           'bear-transition-colors bear-cursor-pointer',
-          isFocused && 'bear-bg-gray-100 dark:bear-bg-gray-800',
-          item.danger 
-            ? 'bear-text-red-600 dark:bear-text-red-400 hover:bear-bg-red-50 dark:hover:bear-bg-red-900/20'
-            : 'bear-text-gray-700 dark:bear-text-gray-200 hover:bear-bg-gray-100 dark:hover:bear-bg-gray-800',
+          isFocused && !item.danger && 'bear-bg-[var(--bear-bg-tertiary)]',
+          item.danger && 'bear-text-red-600 dark:bear-text-red-400 hover:bear-bg-red-50 dark:hover:bear-bg-red-900/20',
+          !item.danger && !item.disabled && 'hover:bear-bg-[var(--bear-bg-tertiary)]',
           item.disabled && 'bear-opacity-50 bear-cursor-not-allowed bear-pointer-events-none'
         )}
+        style={
+          item.disabled
+            ? { color: 'var(--bear-text-muted)' }
+            : item.danger
+              ? undefined
+              : { color: 'var(--bear-text-secondary)' }
+        }
       >
         {item.icon && (
           <span className="bear-flex-shrink-0 bear-w-5 bear-h-5 bear-flex bear-items-center bear-justify-center">
@@ -201,12 +209,12 @@ export const Dropdown: FC<DropdownProps> = ({
         )}
         <span className="bear-flex-1">{item.label}</span>
         {item.trailing && (
-          <span className="bear-flex-shrink-0 bear-text-gray-400">
+          <span className="bear-flex-shrink-0" style={{ color: 'var(--bear-text-muted)' }}>
             {item.trailing}
           </span>
         )}
         {item.items && (
-          <svg className="bear-w-4 bear-h-4 bear-text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg className="bear-w-4 bear-h-4 bear-flex-shrink-0" style={{ color: 'var(--bear-text-muted)' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <polyline points="9 18 15 12 9 6" />
           </svg>
         )}
@@ -239,14 +247,14 @@ export const Dropdown: FC<DropdownProps> = ({
           role="menu"
           className={cn(
             'bear-absolute bear-z-50',
-            'bear-bg-white dark:bear-bg-gray-900',
-            'bear-border bear-border-gray-200 dark:bear-border-gray-700',
-            'bear-rounded-lg bear-shadow-lg',
+            'bear-border bear-rounded-lg bear-shadow-lg',
             'bear-py-1 bear-overflow-y-auto',
             'bear-animate-in bear-fade-in-0 bear-zoom-in-95 bear-duration-100',
             PLACEMENT_CLASSES[placement]
           )}
           style={{
+            backgroundColor: 'var(--bear-bg-primary)',
+            borderColor: 'var(--bear-border-default)',
             minWidth: matchWidth ? triggerRef.current?.offsetWidth : minWidth,
             maxHeight,
           }}

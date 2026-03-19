@@ -470,7 +470,7 @@ export const Topbar: FC<TopbarProps> = ({ onMenuClick, banner, onBannerVisibilit
               <BearIcon size={56} />
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white mt-4 mb-2">Bear UI v{BEAR_VERSION}</h2>
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-                1.1.5: Sidebar search, Copy import button, Breadcrumbs, Accessibility docs, CONTRIBUTING.md, README comparison table.
+                1.1.9: Input/TextField InputProps.startAdornment/endAdornment, Tabs maxVisibleTabs + overflow dropdown, wrap.
               </p>
               <div className="flex flex-wrap items-center justify-center gap-1.5 mb-4">
                 {['FormField', 'AspectRatio', 'PasswordInput+', 'AlertDialog', 'InputGroup', 'Store v2', 'Component API', 'ES i18n'].map((c) => (

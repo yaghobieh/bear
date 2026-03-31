@@ -17,7 +17,7 @@ export interface NavGroup {
   icon?: string;
 }
 
-export const BEAR_VERSION = '1.1.9';
+export const BEAR_VERSION = '1.2.0';
 
 /** Main Bear UI repository */
 export const GITHUB_URL = 'https://github.com/yaghobieh/bear';
@@ -85,8 +85,9 @@ export const NAVIGATION: NavGroup[] = [
           { path: '/components/fab', label: 'FAB' },
           { path: '/components/speed-dial', label: 'SpeedDial' },
           { path: '/components/copy-button', label: 'CopyButton' },
-          { path: '/components/split-button', label: 'SplitButton', badge: 'New' },
-          { path: '/components/action-icon', label: 'ActionIcon', badge: 'New' },
+          { path: '/components/close-button', label: 'CloseButton', badge: '1.2' },
+          { path: '/components/split-button', label: 'SplitButton' },
+          { path: '/components/action-icon', label: 'ActionIcon' },
           { path: '/components/back-top', label: 'BackTop' },
         ],
       },
@@ -262,9 +263,10 @@ export const NAVIGATION: NavGroup[] = [
         children: [
           { path: '/components/avatar', label: 'Avatar' },
           { path: '/components/badge', label: 'Badge' },
-          { path: '/components/indicator', label: 'Indicator', badge: 'New' },
+          { path: '/components/theme-icon', label: 'ThemeIcon', badge: '1.2' },
+          { path: '/components/indicator', label: 'Indicator' },
           { path: '/components/chip', label: 'Chip' },
-          { path: '/components/biometric', label: 'Biometric', badge: 'New' },
+          { path: '/components/biometric', label: 'Biometric' },
         ],
       },
       // Data
@@ -326,7 +328,8 @@ export const NAVIGATION: NavGroup[] = [
         label: 'Utility',
         children: [
           { path: '/components/watermark', label: 'Watermark' },
-          { path: '/components/affix', label: 'Affix', badge: 'New' },
+          { path: '/components/overlay', label: 'Overlay', badge: '1.2' },
+          { path: '/components/affix', label: 'Affix' },
           { path: '/components/qr-code', label: 'QRCode' },
           { path: '/components/tour', label: 'Tour' },
         ],
@@ -456,6 +459,7 @@ export const NAVIGATION: NavGroup[] = [
     icon: 'AnchorIcon',
     items: [
       { path: '/hooks', label: 'Overview' },
+      { path: '/hooks/use-media-query', label: 'useMediaQuery', badge: '1.2' },
       { path: '/hooks/use-clipboard', label: 'useClipboard' },
       { path: '/hooks/use-debounce', label: 'useDebounce' },
       { path: '/hooks/use-throttle', label: 'useThrottle' },
@@ -489,7 +493,8 @@ export const NAVIGATION: NavGroup[] = [
 ];
 
 export const VERSIONS = [
-  { value: '1.1.9', label: 'v1.1.9 (current)' },
+  { value: '1.2.0', label: 'v1.2.0 (current)' },
+  { value: '1.1.9', label: 'v1.1.9' },
   { value: '1.1.5', label: 'v1.1.5' },
   { value: '1.1.4', label: 'v1.1.4' },
   { value: '1.1.3', label: 'v1.1.3' },

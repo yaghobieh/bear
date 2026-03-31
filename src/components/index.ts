@@ -625,3 +625,23 @@ export type { PropsPlaygroundProps, PropsConfig, PropValues, PropControlConfig, 
 export { Biometric } from './Biometric';
 export { useBiometric } from './Biometric';
 export type { BiometricProps, BiometricType, BiometricStatus, UseBiometricOptions, UseBiometricReturn } from './Biometric';
+
+// ThemeIcon
+export { ThemeIcon } from './ThemeIcon';
+export type { ThemeIconProps } from './ThemeIcon';
+
+// CloseButton
+export { CloseButton } from './CloseButton';
+export type { CloseButtonProps } from './CloseButton';
+
+// Overlay
+export { Overlay } from './Overlay';
+export type { OverlayProps } from './Overlay';
+
+// VisuallyHidden
+export { VisuallyHidden } from './VisuallyHidden';
+export type { VisuallyHiddenProps } from './VisuallyHidden';
+
+// Portal
+export { Portal } from './Portal';
+export type { PortalProps } from './Portal';

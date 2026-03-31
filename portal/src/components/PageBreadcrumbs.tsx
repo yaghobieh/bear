@@ -6,6 +6,12 @@ const SEPARATOR_CLASS = 'text-gray-300 dark:text-gray-600 mx-1.5';
 const LINK_CLASS = 'text-xs text-gray-500 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400 transition-colors';
 const CURRENT_CLASS = 'text-xs text-gray-700 dark:text-gray-200 font-medium';
 
+const GROUP_PATH_MAP: Record<string, string> = {
+  Components: '/components',
+  Advanced: '/components',
+  Charts: '/components',
+};
+
 interface BreadcrumbSegment {
   label: string;
   path?: string;
@@ -20,14 +26,14 @@ export const PageBreadcrumbs: FC = () => {
     for (const group of NAVIGATION) {
       for (const item of group.items) {
         if (item.path === pathname) {
-          result.push({ label: group.title });
+          result.push({ label: group.title, path: GROUP_PATH_MAP[group.title] });
           result.push({ label: item.label });
           return result;
         }
         if (item.children) {
           for (const child of item.children) {
             if (child.path === pathname) {
-              result.push({ label: group.title });
+              result.push({ label: group.title, path: GROUP_PATH_MAP[group.title] });
               result.push({ label: item.label, path: item.path });
               result.push({ label: child.label });
               return result;

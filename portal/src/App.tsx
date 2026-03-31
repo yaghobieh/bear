@@ -1,10 +1,11 @@
 import { useState, useEffect, Suspense, lazy, useCallback } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { BearLoader } from './components/BearLoader';
 import { Topbar } from './components/Topbar/Topbar';
 import { Sidebar } from './components/Sidebar';
 import { PageBreadcrumbs } from './components/PageBreadcrumbs';
 import { DocPageNav } from './components/DocPageNav';
+import { RouteSEO } from './components/RouteSEO';
 
 // Banner configuration — promote ForgeStack CLI templates
 const BANNER_CONFIG = {
@@ -152,6 +153,9 @@ const UseIntersectionObserverPage = lazy(() => import('./pages/hooks/UseIntersec
 const UseDragDropPage = lazy(() => import('./pages/hooks/UseDragDrop'));
 const UseLazyLoadPage = lazy(() => import('./pages/hooks/UseLazyLoad'));
 
+// Responsive Hooks
+const UseMediaQueryPage = lazy(() => import('./pages/hooks/UseMediaQuery'));
+
 // New v1.0.9 Hooks
 const UseOnlinePage = lazy(() => import('./pages/hooks/UseOnline'));
 const UseIdlePage = lazy(() => import('./pages/hooks/UseIdle'));
@@ -232,6 +236,11 @@ const FieldsetPage = lazy(() => import('./pages/components/FieldsetPage'));
 const PageNavPage = lazy(() => import('./pages/components/PageNavPage'));
 const PropsPlaygroundPage = lazy(() => import('./pages/components/PropsPlaygroundPage'));
 
+// v1.2.0 Components
+const ThemeIconPage = lazy(() => import('./pages/components/ThemeIconPage'));
+const CloseButtonPage = lazy(() => import('./pages/components/CloseButtonPage'));
+const OverlayPage = lazy(() => import('./pages/components/OverlayPage'));
+
 // Guides
 const ResponsiveUiPage = lazy(() => import('./pages/guides/ResponsiveUi'));
 const MinimizeBundlePage = lazy(() => import('./pages/guides/MinimizeBundle'));
@@ -241,6 +250,9 @@ const AccessibilityPage = lazy(() => import('./pages/guides/Accessibility'));
 // API
 const ApiOverviewPage = lazy(() => import('./pages/api/Overview'));
 const ApiComponentPage = lazy(() => import('./pages/api/ComponentApi'));
+
+// Components Overview
+const ComponentsOverviewPage = lazy(() => import('./pages/ComponentsOverview'));
 
 // Store
 const StorePage = lazy(() => import('./pages/Store'));
@@ -325,8 +337,12 @@ function PortalLayout({
   topOffset,
   onBannerVisibilityChange,
 }: PortalLayoutProps) {
+  const location = useLocation();
+  const isLanding = location.pathname === '/';
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+      <RouteSEO />
       <Topbar
         onMenuClick={() => setSidebarOpen(!sidebarOpen)}
         banner={BANNER_CONFIG}
@@ -337,15 +353,17 @@ function PortalLayout({
         className="flex"
         style={{ paddingTop: `${topOffset}px` }}
       >
+        {/* Sidebar: always available on mobile (via hamburger), hidden on landing for desktop */}
         <Sidebar
           isOpen={sidebarOpen}
           onClose={() => setSidebarOpen(false)}
           topOffset={topOffset}
+          hiddenDesktop={isLanding}
         />
 
         <main className="flex-1 min-w-0">
-          <div className="max-w-4xl mx-auto px-6 py-8">
-            <PageBreadcrumbs />
+          <div className={isLanding ? 'max-w-6xl mx-auto px-6 py-8' : 'max-w-4xl mx-auto px-6 py-8'}>
+            {!isLanding && <PageBreadcrumbs />}
             <Suspense fallback={<PageLoader />}>
               <Routes>
                 <Route path="/" element={<IntroductionPage />} />
@@ -353,6 +371,7 @@ function PortalLayout({
                 <Route path="/theming" element={<ThemingPage />} />
                 <Route path="/typescript" element={<TypeScriptPage />} />
                 
+                <Route path="/components" element={<ComponentsOverviewPage />} />
                 <Route path="/components/container" element={<ContainerPage />} />
                 <Route path="/components/grid" element={<GridPage />} />
                 <Route path="/components/flex" element={<FlexPage />} />
@@ -512,6 +531,11 @@ function PortalLayout({
                 <Route path="/components/page-nav" element={<PageNavPage />} />
                 <Route path="/components/props-playground" element={<PropsPlaygroundPage />} />
                 
+                {/* v1.2.0 Components */}
+                <Route path="/components/theme-icon" element={<ThemeIconPage />} />
+                <Route path="/components/close-button" element={<CloseButtonPage />} />
+                <Route path="/components/overlay" element={<OverlayPage />} />
+                
                 {/* Charts & Graphs */}
                 <Route path="/components/chart" element={<ChartPage />} />
                 <Route path="/components/bar-chart" element={<ChartPage />} />
@@ -537,6 +561,9 @@ function PortalLayout({
                 <Route path="/hooks/use-intersection-observer" element={<UseIntersectionObserverPage />} />
                 <Route path="/hooks/use-drag-drop" element={<UseDragDropPage />} />
                 <Route path="/hooks/use-lazy-load" element={<UseLazyLoadPage />} />
+                
+                {/* Responsive Hooks */}
+                <Route path="/hooks/use-media-query" element={<UseMediaQueryPage />} />
                 
                 {/* v1.0.9 Hooks */}
                 <Route path="/hooks/use-online" element={<UseOnlinePage />} />

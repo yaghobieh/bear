@@ -4,6 +4,7 @@ import { useBear } from '@forgedevstack/bear';
 import { useSearch } from '@/hooks/useSearch';
 import { GITHUB_URL, NPM_URL, BEAR_VERSION, THEME_PRESETS, ThemePreset } from '@/constants/navigation.const';
 import { PORTAL_TEXT } from '@/constants/portal-i18n.const';
+import { useLocation } from 'react-router-dom';
 import { TopbarProps } from './Topbar.types';
 import { BearIcons } from '@forgedevstack/bear';
 import { BearIcon, NpmIcon } from './Topbar.icons';
@@ -14,15 +15,24 @@ const VERSION_POPUP_KEY = `bear-version-seen-${BEAR_VERSION}`;
 const COOKIE_CONSENT_KEY = 'bear-cookie-consent';
 
 const NEW_COMPONENT_ALERTS = [
-  { label: 'FormField', path: '/components/form-field', info: 'Floating label field' },
-  { label: 'AspectRatio', path: '/components/aspect-ratio', info: 'Keep media aspect ratio' },
-  { label: 'PasswordInput', path: '/components/password-input', info: 'Toggle + custom icons' },
+  { label: 'ThemeIcon', path: '/components/theme-icon', info: 'Icon in themed wrapper' },
+  { label: 'CloseButton', path: '/components/close-button', info: 'Styled dismiss button' },
+  { label: 'Overlay', path: '/components/overlay', info: 'Backdrop / dim layer' },
   { label: 'AlertDialog', path: '/components/alert-dialog', info: 'Confirmation dialog' },
-  { label: 'InputGroup', path: '/components/input-group', info: 'Field wrapper + helper states' },
+  { label: 'FormField', path: '/components/form-field', info: 'Floating label field' },
+];
+
+const TOP_NAV_LINKS = [
+  { label: 'Components', path: '/components' },
+  { label: 'Hooks', path: '/hooks' },
+  { label: 'Icons', path: '/icons' },
+  { label: 'Guides', path: '/guides/responsive-ui' },
+  { label: 'Templates', path: '/templates' },
 ];
 
 export const Topbar: FC<TopbarProps> = ({ onMenuClick, banner, onBannerVisibilityChange }) => {
   const { mode, setMode, toggleMode, updateTheme } = useBear();
+  const location = useLocation();
   const { language, setLanguage } = usePortalLanguage();
   const t = PORTAL_TEXT[language];
   const isDark = mode === 'dark';
@@ -192,6 +202,26 @@ export const Topbar: FC<TopbarProps> = ({ onMenuClick, banner, onBannerVisibilit
                 </kbd>
               </button>
             </div>
+
+            {/* Center: Nav links */}
+            <nav className="Bear-Topbar__nav hidden md:flex items-center gap-1">
+              {TOP_NAV_LINKS.map((link) => {
+                const isActive = location.pathname === link.path || location.pathname.startsWith(link.path.split('/').slice(0, 2).join('/') + '/');
+                return (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+                      isActive
+                        ? 'text-pink-600 dark:text-pink-400 bg-pink-50 dark:bg-pink-900/20'
+                        : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800'
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
+            </nav>
 
             {/* Right: GitHub, Alerts, Settings, Theme */}
             <div className="Bear-Topbar__right flex items-center gap-0.5">
@@ -470,10 +500,10 @@ export const Topbar: FC<TopbarProps> = ({ onMenuClick, banner, onBannerVisibilit
               <BearIcon size={56} />
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white mt-4 mb-2">Bear UI v{BEAR_VERSION}</h2>
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-                1.1.9: Input/TextField InputProps.startAdornment/endAdornment, Tabs maxVisibleTabs + overflow dropdown, wrap.
+                1.2.0: New components, 550+ icons, Components overview page, AlertDialog fixes.
               </p>
               <div className="flex flex-wrap items-center justify-center gap-1.5 mb-4">
-                {['FormField', 'AspectRatio', 'PasswordInput+', 'AlertDialog', 'InputGroup', 'Store v2', 'Component API', 'ES i18n'].map((c) => (
+                {['ThemeIcon', 'CloseButton', 'Overlay', 'Portal', 'VisuallyHidden', '550+ Icons', 'Components Grid'].map((c) => (
                   <span key={c} className="px-2 py-0.5 text-[10px] font-medium bg-pink-50 dark:bg-pink-900/20 text-pink-600 dark:text-pink-400 rounded-full">{c}</span>
                 ))}
               </div>

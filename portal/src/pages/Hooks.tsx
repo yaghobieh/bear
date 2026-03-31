@@ -71,20 +71,11 @@ const HooksPage: FC = () => {
           <BearIcons.CodeIcon size={18} className="text-gray-400" />
           Theme & Responsive
         </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+          <HookCard name="useMediaQuery" description="Track breakpoints and media queries with shorthand keys (sm, md, lg, xl). Includes useIsMobile, useIsTablet, useIsDesktop." path="/hooks/use-media-query" isNew />
+          <HookCard name="useResponsive" description="Resolve responsive prop values based on current viewport ({ base: 1, md: 2, lg: 4 })." path="/hooks/use-media-query" isNew />
+        </div>
         <div className="space-y-4">
-          <div className="p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-            <h3 className="font-mono text-pink-600 dark:text-pink-400 text-sm mb-2">useMediaQuery</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">Match CSS media queries with predefined breakpoints.</p>
-            <CodeBlock
-              code={`import { useMediaQuery, useIsMobile, useIsDesktop } from '@forgedevstack/bear';
-
-const isLarge = useMediaQuery('(min-width: 1024px)');
-const isMobile = useIsMobile();   // < 768px
-const isDesktop = useIsDesktop(); // > 1024px`}
-              language="tsx"
-              showLineNumbers={false}
-            />
-          </div>
 
           <div className="p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
             <h3 className="font-mono text-pink-600 dark:text-pink-400 text-sm mb-2">useDisclosure</h3>

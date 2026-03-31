@@ -1,4 +1,4 @@
-import { FC, useEffect, useCallback } from 'react';
+import { FC, useEffect, useCallback, useId, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { cn } from '@utils';
 import { Button } from '../Button';
@@ -31,25 +31,55 @@ export const AlertDialog: FC<AlertDialogProps> = (props) => {
     testId,
   } = props;
 
+  const uid = useId();
+  const titleId = `bear-alert-title-${uid}`;
+  const descId = `bear-alert-desc-${uid}`;
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
+
   const handleEscape = useCallback(
     (event: KeyboardEvent) => {
       if (closeOnEscape && event.key === 'Escape' && !loading) {
         onClose();
       }
     },
-    [closeOnEscape, onClose, loading]
+    [closeOnEscape, onClose, loading],
   );
+
+  // Focus trap: keep Tab within the dialog
+  const handleTab = useCallback((event: KeyboardEvent) => {
+    if (event.key !== 'Tab' || !dialogRef.current) return;
+    const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
+      'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    );
+    if (focusable.length === 0) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  }, []);
 
   useEffect(() => {
     if (isOpen) {
+      previousFocusRef.current = document.activeElement as HTMLElement;
       document.addEventListener('keydown', handleEscape);
+      document.addEventListener('keydown', handleTab);
       document.body.style.overflow = 'hidden';
+      // Auto-focus the dialog container for screen readers
+      requestAnimationFrame(() => dialogRef.current?.focus());
     }
     return () => {
       document.removeEventListener('keydown', handleEscape);
+      document.removeEventListener('keydown', handleTab);
       document.body.style.overflow = '';
+      previousFocusRef.current?.focus();
     };
-  }, [isOpen, handleEscape]);
+  }, [isOpen, handleEscape, handleTab]);
 
   if (!isOpen) return null;
 
@@ -65,10 +95,12 @@ export const AlertDialog: FC<AlertDialogProps> = (props) => {
       />
 
       <div
+        ref={dialogRef}
         role="alertdialog"
         aria-modal="true"
-        aria-labelledby="alert-dialog-title"
-        aria-describedby={description ? 'alert-dialog-description' : undefined}
+        aria-labelledby={titleId}
+        aria-describedby={description ? descId : undefined}
+        tabIndex={-1}
         className={cn('Bear-AlertDialog__container', ALERT_DIALOG_CONTAINER_CLASSES, 'bear-p-6', className)}
       >
         {icon && (
@@ -79,7 +111,7 @@ export const AlertDialog: FC<AlertDialogProps> = (props) => {
 
         <Typography
           variant="h6"
-          id="alert-dialog-title"
+          id={titleId}
           className={cn('Bear-AlertDialog__title', ALERT_DIALOG_TITLE_CLASSES, icon && 'bear-text-center')}
         >
           {title}
@@ -88,7 +120,7 @@ export const AlertDialog: FC<AlertDialogProps> = (props) => {
         {description && (
           <Typography
             variant="body2"
-            id="alert-dialog-description"
+            id={descId}
             className={cn('Bear-AlertDialog__description', ALERT_DIALOG_DESCRIPTION_CLASSES, icon && 'bear-text-center')}
           >
             {description}

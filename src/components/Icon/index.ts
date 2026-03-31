@@ -18,6 +18,10 @@ import * as MediaIcons from './icons/media';
 import * as EditorIcons from './icons/editor';
 import * as MiscIcons from './icons/misc';
 import * as BearCategoryIcons from './icons/bear';
+import * as FileIcons from './icons/file';
+import * as SocialIcons from './icons/social';
+import * as DeviceIcons from './icons/device';
+import * as CommerceIcons from './icons/commerce';
 
 // Export commonly used icons directly for convenience
 export const CheckIcon = StatusIcons.CheckIcon;
@@ -82,6 +86,10 @@ export const BearIcons = {
   ...EditorIcons,
   ...MiscIcons,
   ...BearCategoryIcons,
+  ...FileIcons,
+  ...SocialIcons,
+  ...DeviceIcons,
+  ...CommerceIcons,
 
   Action: ActionIcons,
   Navigation: NavigationIcons,
@@ -92,6 +100,10 @@ export const BearIcons = {
   Editor: EditorIcons,
   Misc: MiscIcons,
   Bear: BearCategoryIcons,
+  File: FileIcons,
+  Social: SocialIcons,
+  Device: DeviceIcons,
+  Commerce: CommerceIcons,
 };
 
 // Default export for convenience

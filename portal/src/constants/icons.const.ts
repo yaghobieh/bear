@@ -8,6 +8,10 @@ const ICON_CATEGORIES = {
   Media: BearIcons.Media ?? {},
   Content: BearIcons.Content ?? {},
   Editor: BearIcons.Editor ?? {},
+  File: BearIcons.File ?? {},
+  Social: BearIcons.Social ?? {},
+  Device: BearIcons.Device ?? {},
+  Commerce: BearIcons.Commerce ?? {},
   Misc: BearIcons.Misc ?? {},
   Bear: BearIcons.Bear ?? {},
 };

@@ -123,6 +123,7 @@ export interface BearBreakpoints {
   lg: string;
   xl: string;
   '2xl': string;
+  [key: string]: string;
 }
 
 export interface BearTheme {

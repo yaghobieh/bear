@@ -8,6 +8,7 @@ interface SidebarProps {
   isOpen?: boolean;
   onClose?: () => void;
   topOffset?: number;
+  hiddenDesktop?: boolean;
 }
 
 const GROUP_ICON_MAP: Record<string, FC<Omit<import('@forgedevstack/bear').IconProps, 'children'>>> = {
@@ -251,7 +252,7 @@ const CollapsibleGroup: FC<CollapsibleGroupProps> = ({
   );
 };
 
-export const Sidebar: FC<SidebarProps> = ({ isOpen = true, onClose, topOffset = 104 }) => {
+export const Sidebar: FC<SidebarProps> = ({ isOpen = true, onClose, topOffset = 104, hiddenDesktop = false }) => {
   const isMobile = useIsMobile();
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -276,7 +277,7 @@ export const Sidebar: FC<SidebarProps> = ({ isOpen = true, onClose, topOffset = 
           border-r border-gray-200 dark:border-gray-800
           z-50 flex flex-col
           transform transition-transform duration-200
-          lg:translate-x-0 lg:z-30
+          ${hiddenDesktop ? 'lg:-translate-x-full' : 'lg:translate-x-0'} lg:z-30
           ${isOpen ? 'translate-x-0' : '-translate-x-full'}
         `}
         style={{
@@ -340,7 +341,7 @@ export const Sidebar: FC<SidebarProps> = ({ isOpen = true, onClose, topOffset = 
         </div>
       </aside>
 
-      <div className="hidden lg:block w-64 flex-shrink-0" />
+      {!hiddenDesktop && <div className="hidden lg:block w-64 flex-shrink-0" />}
     </>
   );
 };

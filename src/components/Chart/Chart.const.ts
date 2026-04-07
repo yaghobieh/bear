@@ -13,6 +13,14 @@ export const CHART = {
   CENTER: 50,
 } as const;
 
+export const CHART_TYPES = {
+  BAR: 'bar',
+  LINE: 'line',
+  AREA: 'area',
+  PIE: 'pie',
+  DONUT: 'donut',
+} as const;
+
 export const DEFAULT_COLORS = [
   '#ec4899', // pink
   '#8b5cf6', // purple

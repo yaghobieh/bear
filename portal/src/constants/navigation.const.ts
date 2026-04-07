@@ -17,7 +17,7 @@ export interface NavGroup {
   icon?: string;
 }
 
-export const BEAR_VERSION = '1.2.0';
+export const BEAR_VERSION = '1.2.1';
 
 /** Main Bear UI repository */
 export const GITHUB_URL = 'https://github.com/yaghobieh/bear';
@@ -340,6 +340,7 @@ export const NAVIGATION: NavGroup[] = [
         children: [
           { path: '/components/json-viewer', label: 'JsonViewer' },
           { path: '/components/diff-viewer', label: 'DiffViewer' },
+          { path: '/components/diff-squares', label: 'DiffSquares', badge: 'New' },
           { path: '/components/terminal', label: 'Terminal' },
           { path: '/components/props-playground', label: 'PropsPlayground', badge: 'New' },
         ],
@@ -493,7 +494,8 @@ export const NAVIGATION: NavGroup[] = [
 ];
 
 export const VERSIONS = [
-  { value: '1.2.0', label: 'v1.2.0 (current)' },
+  { value: '1.2.1', label: 'v1.2.1 (current)' },
+  { value: '1.2.0', label: 'v1.2.0' },
   { value: '1.1.9', label: 'v1.1.9' },
   { value: '1.1.5', label: 'v1.1.5' },
   { value: '1.1.4', label: 'v1.1.4' },

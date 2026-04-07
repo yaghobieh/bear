@@ -1,4 +1,5 @@
 import { HTMLAttributes, ReactNode } from 'react';
+import type { MaxVisibleInput } from '../../utils/maxVisible.utils';
 
 export type StepperOrientation = 'horizontal' | 'vertical';
 export type StepStatus = 'pending' | 'active' | 'completed' | 'error';
@@ -46,6 +47,8 @@ export interface StepperProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onCh
   errorIcon?: ReactNode;
   /** Test ID */
   testId?: string;
+  /** When set on horizontal layout, show at most this many steps with ⋯ menus for the rest (breakpoint map supported). */
+  maxVisibleSteps?: MaxVisibleInput;
 }
 
 export interface StepperControlsProps {

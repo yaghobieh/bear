@@ -1,7 +1,10 @@
 import { FC, useState, useRef, useEffect, useCallback, KeyboardEvent, ChangeEvent } from 'react';
 import { cn } from '@utils';
+import { Portal } from '../Portal';
 import type { MentionsInputProps, MentionOption } from './MentionsInput.types';
 import { defaultFilter } from './MentionsInput.utils';
+
+const MENTIONS_PANEL_Z = 10000;
 
 const sizeClasses = {
   sm: 'bear-h-8 bear-text-sm bear-px-3',
@@ -32,11 +35,14 @@ export const MentionsInput: FC<MentionsInputProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0, width: 0 });
 
   const value = controlledValue ?? internalValue;
 
   const filteredOptions = filterOptions(options, query).slice(0, maxSuggestions);
   const showList = isOpen && query.length >= 0;
+  const showSuggestionsPanel = showList && filteredOptions.length > 0;
 
   const extractQuery = useCallback(() => {
     const idx = value.lastIndexOf(trigger);
@@ -66,10 +72,31 @@ export const MentionsInput: FC<MentionsInputProps> = ({
   }, [highlightedIndex]);
 
   useEffect(() => {
+    if (!showSuggestionsPanel) return;
+    const updatePosition = () => {
+      const rect = inputRef.current?.getBoundingClientRect();
+      if (!rect) return;
+      setMenuPosition({
+        top: rect.bottom + 4,
+        left: Math.max(8, Math.min(rect.left, window.innerWidth - rect.width - 8)),
+        width: rect.width,
+      });
+    };
+    updatePosition();
+    window.addEventListener('resize', updatePosition);
+    window.addEventListener('scroll', updatePosition, true);
+    return () => {
+      window.removeEventListener('resize', updatePosition);
+      window.removeEventListener('scroll', updatePosition, true);
+    };
+  }, [showSuggestionsPanel]);
+
+  useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
-        setIsOpen(false);
-      }
+      const t = e.target as Node;
+      if (containerRef.current?.contains(t)) return;
+      if (panelRef.current?.contains(t)) return;
+      setIsOpen(false);
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
@@ -152,27 +179,37 @@ export const MentionsInput: FC<MentionsInputProps> = ({
         )}
       />
 
-      {showList && filteredOptions.length > 0 && (
-        <div
-          ref={listRef}
-          className="bear-absolute bear-z-50 bear-mt-1 bear-w-full bear-max-h-48 bear-overflow-auto bear-rounded-lg bear-border bear-border-gray-200 dark:bear-border-zinc-600 bear-bg-white dark:bear-bg-zinc-800 bear-py-1 bear-shadow-lg"
-        >
-          {filteredOptions.map((opt, i) => (
-            <button
-              key={opt.value}
-              type="button"
-              className={cn(
-                'bear-w-full bear-flex bear-items-center bear-gap-2 bear-px-3 bear-py-2 bear-text-left bear-text-gray-800 dark:bear-text-zinc-200 hover:bear-bg-gray-100 dark:hover:bear-bg-zinc-700 bear-transition-colors',
-                i === highlightedIndex && 'bear-bg-gray-100 dark:bear-bg-zinc-700'
-              )}
-              onMouseEnter={() => setHighlightedIndex(i)}
-              onClick={() => insertMention(opt)}
-            >
-              {opt.avatar && <span className="bear-shrink-0">{opt.avatar}</span>}
-              <span>{opt.label}</span>
-            </button>
-          ))}
-        </div>
+      {showSuggestionsPanel && (
+        <Portal>
+          <div
+            ref={panelRef}
+            className="bear-fixed bear-rounded-lg bear-border bear-border-gray-200 dark:bear-border-zinc-600 bear-bg-white dark:bear-bg-zinc-800 bear-shadow-lg"
+            style={{
+              top: menuPosition.top,
+              left: menuPosition.left,
+              width: menuPosition.width,
+              zIndex: MENTIONS_PANEL_Z,
+            }}
+          >
+            <div ref={listRef} className="bear-max-h-48 bear-overflow-auto bear-py-1">
+              {filteredOptions.map((opt, i) => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  className={cn(
+                    'bear-w-full bear-flex bear-items-center bear-gap-2 bear-px-3 bear-py-2 bear-text-left bear-text-gray-800 dark:bear-text-zinc-200 hover:bear-bg-gray-100 dark:hover:bear-bg-zinc-700 bear-transition-colors',
+                    i === highlightedIndex && 'bear-bg-gray-100 dark:bear-bg-zinc-700'
+                  )}
+                  onMouseEnter={() => setHighlightedIndex(i)}
+                  onClick={() => insertMention(opt)}
+                >
+                  {opt.avatar && <span className="bear-shrink-0">{opt.avatar}</span>}
+                  <span>{opt.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </Portal>
       )}
     </div>
   );

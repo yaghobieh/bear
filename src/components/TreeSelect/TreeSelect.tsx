@@ -1,5 +1,6 @@
 import { FC, useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { cn } from '@utils';
+import { Portal } from '../Portal';
 import type { TreeSelectProps, TreeNode } from './TreeSelect.types';
 import {
   DEFAULT_MAX_HEIGHT, INDENT_PX, SIZE_CLASSES,
@@ -8,6 +9,8 @@ import {
   CHEVRON_CLASSES, TAG_CLASSES, LABEL_CLASSES, ERROR_CLASSES, HELPER_CLASSES,
 } from './TreeSelect.const';
 import { findNodeById, filterNodes, collectAllIds } from './TreeSelect.utils';
+
+const TREE_SELECT_PANEL_Z = 10000;
 
 const TreeNodeRow: FC<{
   node: TreeNode;
@@ -69,6 +72,9 @@ export const TreeSelect: FC<TreeSelectProps> = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState('');
   const containerRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0, width: 0 });
 
   const allIds = useMemo(() => collectAllIds(nodes), [nodes]);
   const [expanded, setExpanded] = useState<Set<string>>(() => expandAll ? allIds : new Set());
@@ -79,15 +85,37 @@ export const TreeSelect: FC<TreeSelectProps> = (props) => {
   }, [value]);
 
   useEffect(() => {
+    if (!isOpen) return;
+    const updatePosition = () => {
+      const rect = triggerRef.current?.getBoundingClientRect();
+      if (!rect) return;
+      setMenuPosition({
+        top: rect.bottom + 4,
+        left: Math.max(8, Math.min(rect.left, window.innerWidth - rect.width - 8)),
+        width: rect.width,
+      });
+    };
+    updatePosition();
+    window.addEventListener('resize', updatePosition);
+    window.addEventListener('scroll', updatePosition, true);
+    return () => {
+      window.removeEventListener('resize', updatePosition);
+      window.removeEventListener('scroll', updatePosition, true);
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
     const handleClick = (e: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
-        setIsOpen(false);
-        setSearch('');
-      }
+      const t = e.target as Node;
+      if (containerRef.current?.contains(t)) return;
+      if (dropdownRef.current?.contains(t)) return;
+      setIsOpen(false);
+      setSearch('');
     };
     document.addEventListener('mousedown', handleClick);
     return () => document.removeEventListener('mousedown', handleClick);
-  }, []);
+  }, [isOpen]);
 
   const onToggleExpand = useCallback((id: string) => {
     setExpanded((prev) => {
@@ -135,6 +163,7 @@ export const TreeSelect: FC<TreeSelectProps> = (props) => {
     <div ref={containerRef} className={cn(ROOT_CLASSES, className)} data-testid={testId} {...rest}>
       {label && <label className={LABEL_CLASSES}>{label}</label>}
       <button
+        ref={triggerRef}
         type="button"
         disabled={disabled}
         onClick={() => !disabled && setIsOpen(!isOpen)}
@@ -152,24 +181,35 @@ export const TreeSelect: FC<TreeSelectProps> = (props) => {
       </button>
 
       {isOpen && (
-        <div className={DROPDOWN_CLASSES}>
-          {searchable && (
-            <input
-              className={SEARCH_CLASSES}
-              placeholder="Search…"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              autoFocus
-            />
-          )}
-          <div style={{ maxHeight }} className="bear-overflow-y-auto" role="tree">
-            {filteredNodes.length > 0 ? filteredNodes.map((node) => (
-              <TreeNodeRow key={node.id} node={node} depth={0} selected={selected} expanded={expanded} multiple={multiple} onToggleExpand={onToggleExpand} onSelect={onSelect} />
-            )) : (
-              <div className="bear-py-6 bear-text-center bear-text-sm bear-text-gray-400">No results</div>
+        <Portal>
+          <div
+            ref={dropdownRef}
+            className={cn(DROPDOWN_CLASSES, 'bear-fixed')}
+            style={{
+              top: menuPosition.top,
+              left: menuPosition.left,
+              width: menuPosition.width,
+              zIndex: TREE_SELECT_PANEL_Z,
+            }}
+          >
+            {searchable && (
+              <input
+                className={SEARCH_CLASSES}
+                placeholder="Search…"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                autoFocus
+              />
             )}
+            <div style={{ maxHeight }} className="bear-overflow-y-auto" role="tree">
+              {filteredNodes.length > 0 ? filteredNodes.map((node) => (
+                <TreeNodeRow key={node.id} node={node} depth={0} selected={selected} expanded={expanded} multiple={multiple} onToggleExpand={onToggleExpand} onSelect={onSelect} />
+              )) : (
+                <div className="bear-py-6 bear-text-center bear-text-sm bear-text-gray-400">No results</div>
+              )}
+            </div>
           </div>
-        </div>
+        </Portal>
       )}
 
       {error && <p className={ERROR_CLASSES}>{error}</p>}

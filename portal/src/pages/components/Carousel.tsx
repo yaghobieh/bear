@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
+import { BearIcons, Card } from '@forgedevstack/bear';
 
 const CarouselPage: FC = () => {
   const [activeSlide, setActiveSlide] = useState(0);
@@ -13,9 +14,34 @@ const CarouselPage: FC = () => {
   return (
     <div className="fade-in">
       <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Carousel</h1>
-      <p className="text-gray-600 dark:text-gray-400 mb-8">
+      <p className="text-gray-600 dark:text-gray-400 mb-6">
         Slideshow component for cycling through images or content.
       </p>
+
+      <Card className="mb-8 p-4 bg-gradient-to-r from-pink-50 to-purple-50 dark:from-pink-900/20 dark:to-purple-900/20 border-pink-200 dark:border-pink-800">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex items-start gap-3">
+            <BearIcons.PlayCircleIcon size={24} className="text-pink-500 flex-shrink-0 mt-1" />
+            <div>
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
+                Coming to ForgeStack: dedicated Carousel package
+              </h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Bear ships an essential in-library carousel today. For studio-grade timelines, swipe physics, and CMS-driven decks, we are introducing a standalone <strong>@forgedevstack/carousel</strong> line—same publishing story as Grid Table and Forge Form. Follow releases on npm for the scoped package when it lands.
+              </p>
+            </div>
+          </div>
+          <a
+            href="https://www.npmjs.com/search?q=%40forgedevstack%2Fcarousel"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-pink-500 hover:bg-pink-600 text-white text-sm font-medium transition-colors flex-shrink-0"
+          >
+            <BearIcons.PackageIcon size={16} />
+            npm search
+          </a>
+        </div>
+      </Card>
 
       <section className="mb-12">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Import</h2>

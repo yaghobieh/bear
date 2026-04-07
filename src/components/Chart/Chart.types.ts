@@ -1,4 +1,4 @@
-import { HTMLAttributes } from 'react';
+import type { HTMLAttributes, ReactNode } from 'react';
 
 export type ChartType = 'bar' | 'line' | 'area' | 'pie' | 'donut';
 
@@ -54,5 +54,11 @@ export interface PieChartProps extends Omit<ChartProps, 'type'> {
   startAngle?: number;
   /** Padding between slices */
   padAngle?: number;
+  onSliceClick?: (item: ChartDataPoint, index: number) => void;
+  onSliceHover?: (item: ChartDataPoint | null, index: number | null) => void;
+  showSliceTooltip?: boolean;
+  sliceTooltipTitle?: (item: ChartDataPoint, index: number) => ReactNode;
+  sliceTooltipDescription?: (item: ChartDataPoint, index: number) => ReactNode;
+  sliceTooltipContent?: (item: ChartDataPoint, index: number) => ReactNode;
 }
 

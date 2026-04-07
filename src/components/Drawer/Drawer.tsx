@@ -8,16 +8,16 @@ const DRAWER_ANIMATION_MS = 300;
 
 const sizeClasses = {
   left: {
-    sm: 'bear-w-64',
-    md: 'bear-w-80',
-    lg: 'bear-w-96',
-    xl: 'bear-w-[32rem]',
+    sm: 'bear-w-full sm:bear-w-64 bear-max-w-full sm:bear-max-w-none',
+    md: 'bear-w-full sm:bear-w-80 bear-max-w-full sm:bear-max-w-none',
+    lg: 'bear-w-full sm:bear-w-96 bear-max-w-full sm:bear-max-w-none',
+    xl: 'bear-w-full sm:bear-w-[32rem] bear-max-w-full sm:bear-max-w-none',
   },
   right: {
-    sm: 'bear-w-64',
-    md: 'bear-w-80',
-    lg: 'bear-w-96',
-    xl: 'bear-w-[32rem]',
+    sm: 'bear-w-full sm:bear-w-64 bear-max-w-full sm:bear-max-w-none',
+    md: 'bear-w-full sm:bear-w-80 bear-max-w-full sm:bear-max-w-none',
+    lg: 'bear-w-full sm:bear-w-96 bear-max-w-full sm:bear-max-w-none',
+    xl: 'bear-w-full sm:bear-w-[32rem] bear-max-w-full sm:bear-max-w-none',
   },
   top: {
     sm: 'bear-h-32',
@@ -111,7 +111,7 @@ export const Drawer: FC<DrawerProps> = ({
   if (!isMounted) return null;
 
   const drawerContent = (
-    <div className="bear-fixed bear-inset-0 bear-z-50">
+    <div className="bear-fixed bear-inset-0 bear-z-[11000]">
       <div
         className={cn(
           'bear-absolute bear-inset-0 bear-bg-black/60 bear-backdrop-blur-sm bear-transition-opacity',

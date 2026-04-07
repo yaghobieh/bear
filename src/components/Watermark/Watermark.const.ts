@@ -5,7 +5,7 @@ export const DEFAULT_FONT_SIZE = 16;
 export const DEFAULT_ROTATE = -22;
 
 /** Default opacity */
-export const DEFAULT_OPACITY = 0.15;
+export const DEFAULT_OPACITY = 0.22;
 
 /** Default gap [horizontal, vertical] in pixels */
 export const DEFAULT_GAP: [number, number] = [100, 100];
@@ -20,10 +20,10 @@ export const DEFAULT_Z_INDEX = 9;
 export const DEFAULT_FONT_WEIGHT = 400;
 
 /** Default light mode color */
-export const DEFAULT_COLOR_LIGHT = 'rgba(0, 0, 0, 0.15)';
+export const DEFAULT_COLOR_LIGHT = 'rgba(0, 0, 0, 0.28)';
 
 /** Default dark mode color */
-export const DEFAULT_COLOR_DARK = 'rgba(255, 255, 255, 0.12)';
+export const DEFAULT_COLOR_DARK = 'rgba(255, 255, 255, 0.22)';
 
 /** Default font family */
 export const DEFAULT_FONT_FAMILY = 'system-ui, -apple-system, sans-serif';
@@ -42,3 +42,7 @@ export const HALF = 2;
 
 /** Degrees to radians conversion */
 export const DEG_TO_RAD = Math.PI / 180;
+
+/** Min / max pattern repeat per axis */
+export const PATTERN_REPEAT_MIN = 1;
+export const PATTERN_REPEAT_MAX = 4;

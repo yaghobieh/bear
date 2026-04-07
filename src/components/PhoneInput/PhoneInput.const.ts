@@ -30,7 +30,7 @@ export const PHONE_INPUT_VARIANT_CLASSES = {
 /**
  * Dropdown z-index
  */
-export const PHONE_INPUT_DROPDOWN_Z_INDEX = 9999;
+export const PHONE_INPUT_DROPDOWN_Z_INDEX = 10000;
 
 /**
  * Common countries data

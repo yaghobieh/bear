@@ -49,6 +49,34 @@ const BottomSheetPage: FC = () => {
           <span className="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded text-sm text-gray-600 dark:text-gray-400">full — 95%</span>
         </div>
       </ComponentPreview>
+
+      <section className="mb-12">
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Props</h2>
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-sm">
+            <thead className="bg-gray-50 dark:bg-gray-800">
+              <tr>
+                <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Prop</th>
+                <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Type</th>
+                <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Default</th>
+                <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Description</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+              <tr><td className="px-4 py-3 font-mono text-bear-600">isOpen</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">required</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Visibility</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">onClose</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>() =&gt; void</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">required</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Close handler</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">title</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">—</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Header title</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">size</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>sm | md | lg | full</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">md</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Max height</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">showCloseButton</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">true</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Header close control</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">closeOnBackdrop</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">true</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Backdrop closes sheet</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">closeOnEscape</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">true</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Escape closes</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">showHandle</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">true</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Drag handle</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">enableScroll</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">true</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Body scrolls when content overflows</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">isSticky</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Sticky header while body scrolls</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
     </div>
   );
 };

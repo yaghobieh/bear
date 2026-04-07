@@ -15,6 +15,8 @@ export interface WatermarkProps {
   rotate?: number;
   /** Opacity (0-1) */
   opacity?: number;
+  /** How many staggered copies of the mark to paint inside each pattern tile (1–4 per axis). Higher = denser field. */
+  patternRepeat?: number;
   /** Gap between watermarks [horizontal, vertical] */
   gap?: [number, number];
   /** Offset from top-left [x, y] */

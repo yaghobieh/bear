@@ -62,7 +62,7 @@ export const ClockFaceSvg: FC<ClockFaceSvgProps> = ({
           >
             <circle cx={x} cy={y} r={HIT_AREA_RADIUS} fill="transparent" />
             {isSelected && (
-              <circle cx={x} cy={y} r={SELECTED_DOT_RADIUS} className="Bear-TimePicker__clock-face-dot bear-fill-blue-500" />
+              <circle cx={x} cy={y} r={SELECTED_DOT_RADIUS} className="Bear-TimePicker__clock-face-dot bear-fill-pink-500" />
             )}
             <text
               x={x}
@@ -84,7 +84,7 @@ export const ClockFaceSvg: FC<ClockFaceSvgProps> = ({
         y1={CLOCK_CENTER}
         x2={CLOCK_CENTER + CLOCK_RADIUS * HAND_LENGTH_RATIO * Math.cos(handRad)}
         y2={CLOCK_CENTER + CLOCK_RADIUS * HAND_LENGTH_RATIO * Math.sin(handRad)}
-        className="Bear-TimePicker__clock-face-hand bear-stroke-blue-500 bear-stroke-2"
+        className="Bear-TimePicker__clock-face-hand bear-stroke-pink-500 bear-stroke-2"
         strokeLinecap="round"
       />
     </svg>

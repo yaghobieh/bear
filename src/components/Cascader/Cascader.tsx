@@ -1,7 +1,7 @@
 import { FC, useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { cn } from '@utils';
-import type { CascaderProps, CascaderOption, CascaderPanelProps } from './Cascader.types';
+import type { CascaderProps, CascaderOption } from './Cascader.types';
 import {
   CASCADER_DEFAULT_TRANSLATIONS,
   CASCADER_SIZE_CLASSES,
@@ -9,69 +9,7 @@ import {
   CASCADER_DROPDOWN_Z_INDEX,
   CASCADER_PATH_SEPARATOR,
 } from './Cascader.const';
-
-/**
- * CascaderPanel - Renders a single level of options
- */
-const CascaderPanel: FC<CascaderPanelProps> = ({
-  options,
-  selectedPath,
-  expandedPath,
-  onSelect,
-  onExpand,
-  expandTrigger,
-  level,
-}) => {
-  const handleClick = (option: CascaderOption) => {
-    onSelect(option, level);
-    if (option.children?.length) {
-      onExpand(option, level);
-    }
-  };
-
-  const handleMouseEnter = (option: CascaderOption) => {
-    if (expandTrigger === 'hover' && option.children?.length) {
-      onExpand(option, level);
-    }
-  };
-
-  return (
-    <div className="Bear-Cascader__panel bear-min-w-[180px] bear-max-h-[280px] bear-overflow-y-auto bear-border-r bear-border-zinc-200 dark:bear-border-zinc-700 last:bear-border-r-0">
-      {options.map((option) => {
-        const isSelected = selectedPath[level] === option.value;
-        const isExpanded = expandedPath[level] === option.value;
-        const hasChildren = option.children && option.children.length > 0;
-
-        return (
-          <button
-            key={option.value}
-            type="button"
-            disabled={option.disabled}
-            onClick={() => handleClick(option)}
-            onMouseEnter={() => handleMouseEnter(option)}
-            className={cn(
-              'Bear-Cascader__option bear-w-full bear-flex bear-items-center bear-justify-between bear-px-3 bear-py-2 bear-text-sm bear-text-left bear-transition-colors',
-              isSelected && 'Bear-Cascader__option--selected bear-bg-pink-500/20 bear-text-pink-600 dark:bear-text-pink-400',
-              isExpanded && !isSelected && 'Bear-Cascader__option--expanded bear-bg-gray-100 dark:bear-bg-zinc-700',
-              !isSelected && !isExpanded && 'bear-text-gray-700 dark:bear-text-zinc-300 hover:bear-bg-gray-100 dark:hover:bear-bg-zinc-700',
-              option.disabled && 'Bear-Cascader__option--disabled bear-opacity-50 bear-cursor-not-allowed'
-            )}
-          >
-            <span className="bear-flex bear-items-center bear-gap-2">
-              {option.icon && <span className="Bear-Cascader__option-icon">{option.icon}</span>}
-              <span className="Bear-Cascader__option-label">{option.label}</span>
-            </span>
-            {hasChildren && (
-              <svg className="Bear-Cascader__arrow bear-w-4 bear-h-4 bear-text-gray-500 dark:bear-text-zinc-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            )}
-          </button>
-        );
-      })}
-    </div>
-  );
-};
+import { CascaderPanel } from './components/CascaderPanel';
 
 /**
  * Cascader - Hierarchical selection component
@@ -120,17 +58,24 @@ export const Cascader: FC<CascaderProps> = ({
     ...translations,
   }), [translations]);
 
-  // Calculate dropdown position
   useEffect(() => {
-    if (isOpen && triggerRef.current) {
-      const rect = triggerRef.current.getBoundingClientRect();
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
+    if (!isOpen || !triggerRef.current) return;
+    const update = () => {
+      const rect = triggerRef.current!.getBoundingClientRect();
+      const estW = Math.min(560, window.innerWidth - 16);
+      let left = Math.max(8, Math.min(rect.left, window.innerWidth - estW - 8));
       setDropdownPosition({
-        top: rect.bottom + scrollTop + 8,
-        left: rect.left + scrollLeft,
+        top: rect.bottom + 8,
+        left,
       });
-    }
+    };
+    update();
+    window.addEventListener('resize', update);
+    window.addEventListener('scroll', update, true);
+    return () => {
+      window.removeEventListener('resize', update);
+      window.removeEventListener('scroll', update, true);
+    };
   }, [isOpen]);
 
   // Handle click outside
@@ -294,7 +239,7 @@ export const Cascader: FC<CascaderProps> = ({
       {isOpen && typeof document !== 'undefined' && createPortal(
         <div
           data-bear-cascader-dropdown
-          className="Bear-Cascader__dropdown bear-fixed bear-bg-white dark:bear-bg-zinc-800 bear-border bear-border-zinc-200 dark:bear-border-zinc-700 bear-rounded-lg bear-shadow-xl bear-flex bear-overflow-hidden"
+          className="Bear-Cascader__dropdown bear-fixed bear-max-w-[calc(100vw-16px)] bear-bg-white dark:bear-bg-zinc-800 bear-border bear-border-zinc-200 dark:bear-border-zinc-700 bear-rounded-lg bear-shadow-xl bear-flex bear-flex-col sm:bear-flex-row bear-overflow-hidden"
           style={{ top: dropdownPosition.top, left: dropdownPosition.left, zIndex: CASCADER_DROPDOWN_Z_INDEX }}
         >
           {panelOptions.map((opts, level) => (

@@ -500,10 +500,10 @@ export const Topbar: FC<TopbarProps> = ({ onMenuClick, banner, onBannerVisibilit
               <BearIcon size={56} />
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white mt-4 mb-2">Bear UI v{BEAR_VERSION}</h2>
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-                1.2.0: New components, 550+ icons, Components overview page, AlertDialog fixes.
+                1.2.1: Portaled menus and selects, consistent overlay z-index, scroll/resize anchoring, useClickOutsideMultiple on @forgedevstack/bear/hooks.
               </p>
               <div className="flex flex-wrap items-center justify-center gap-1.5 mb-4">
-                {['ThemeIcon', 'CloseButton', 'Overlay', 'Portal', 'VisuallyHidden', '550+ Icons', 'Components Grid'].map((c) => (
+                {['Dropdown', 'Select', 'TreeSelect', 'Menu', 'Popover', 'Autocomplete', 'MultiSelect', 'NavigableSelect', 'Popconfirm', 'Tooltip'].map((c) => (
                   <span key={c} className="px-2 py-0.5 text-[10px] font-medium bg-pink-50 dark:bg-pink-900/20 text-pink-600 dark:text-pink-400 rounded-full">{c}</span>
                 ))}
               </div>

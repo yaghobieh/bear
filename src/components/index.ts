@@ -137,8 +137,8 @@ export type { CarouselProps, CarouselTransition, CarouselIndicator } from './Car
 export { Accordion, AccordionItem } from './Accordion';
 export type { AccordionProps, AccordionItemProps } from './Accordion';
 
-export { Tabs, TabList, Tab, TabPanel } from './Tabs';
-export type { TabsProps, TabListProps, TabProps, TabPanelProps } from './Tabs';
+export { Tabs, TabList, Tab, Tab as ActiveTab, TabPanel } from './Tabs';
+export type { TabsProps, TabListProps, TabProps, TabPanelProps, MaxVisibleInput, MaxVisibleByBreakpoint } from './Tabs';
 
 export { Avatar, AvatarGroup } from './Avatar';
 export type { AvatarProps, AvatarGroupProps } from './Avatar';
@@ -185,7 +185,7 @@ export type { TimePickerProps } from './TimePicker';
 
 // Navigation
 export { Breadcrumbs } from './Breadcrumbs';
-export type { BreadcrumbsProps, BreadcrumbItem } from './Breadcrumbs';
+export type { BreadcrumbsProps, BreadcrumbItem, BreadcrumbDropdownItem } from './Breadcrumbs';
 
 export { Stepper, StepperControls } from './Stepper';
 export type { StepperProps, StepperControlsProps, Step, StepStatus, StepperOrientation, StepperSize } from './Stepper';
@@ -452,6 +452,9 @@ export type { QRCodeProps } from './QRCode';
 // JsonViewer
 export { JsonViewer } from './JsonViewer';
 export type { JsonViewerProps, JsonViewerTheme } from './JsonViewer';
+
+export { DiffSquares } from './DiffSquares';
+export type { DiffSquaresProps, DiffCube, DiffCubeFill } from './DiffSquares';
 
 // DiffViewer
 export { DiffViewer } from './DiffViewer';

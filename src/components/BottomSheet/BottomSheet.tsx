@@ -23,6 +23,8 @@ export const BottomSheet: FC<BottomSheetProps> = ({
   closeOnBackdrop = true,
   closeOnEscape = true,
   showHandle = true,
+  enableScroll = true,
+  isSticky = false,
   className,
 }) => {
   const [isMounted, setIsMounted] = useState(isOpen);
@@ -68,7 +70,7 @@ export const BottomSheet: FC<BottomSheetProps> = ({
   if (!isMounted) return null;
 
   const content = (
-    <div className="bear-fixed bear-inset-0 bear-z-50 bear-flex bear-items-end bear-justify-center">
+    <div className="bear-fixed bear-inset-0 bear-z-[11000] bear-flex bear-items-end bear-justify-center">
       <div
         className={cn(
           'bear-absolute bear-inset-0 bear-bg-black/60 bear-backdrop-blur-sm bear-transition-opacity',
@@ -84,7 +86,8 @@ export const BottomSheet: FC<BottomSheetProps> = ({
         aria-modal="true"
         aria-labelledby={title ? 'bottom-sheet-title' : undefined}
         className={cn(
-          'Bear-BottomSheet bear-relative bear-w-full bear-rounded-t-2xl bear-shadow-2xl bear-overflow-hidden bear-transition-transform bear-duration-300',
+          'Bear-BottomSheet bear-relative bear-w-full bear-rounded-t-2xl bear-shadow-2xl bear-transition-transform bear-duration-300',
+          'bear-flex bear-flex-col bear-min-h-0 bear-overflow-hidden',
           'bear-bg-white dark:bear-bg-neutral-900 bear-border-t bear-border-neutral-200 dark:bear-border-neutral-700',
           sizeClasses[size],
           hasOpened && !isClosing ? 'bear-translate-y-0' : 'bear-translate-y-full',
@@ -98,7 +101,13 @@ export const BottomSheet: FC<BottomSheetProps> = ({
         )}
 
         {(title || showCloseButton) && (
-          <div className="bear-flex bear-items-center bear-justify-between bear-px-4 bear-py-3 bear-border-b bear-border-neutral-200 dark:bear-border-neutral-700">
+          <div
+            className={cn(
+              'bear-flex bear-items-center bear-justify-between bear-px-4 bear-py-3 bear-border-b bear-border-neutral-200 dark:bear-border-neutral-700 bear-shrink-0',
+              isSticky &&
+                'bear-sticky bear-top-0 bear-z-10 bear-bg-white dark:bear-bg-neutral-900',
+            )}
+          >
             {title && (
               <h2
                 id="bottom-sheet-title"
@@ -119,7 +128,12 @@ export const BottomSheet: FC<BottomSheetProps> = ({
           </div>
         )}
 
-        <div className="bear-flex-1 bear-overflow-y-auto bear-p-4 bear-text-neutral-700 dark:bear-text-neutral-300">
+        <div
+          className={cn(
+            'bear-flex-1 bear-min-h-0 bear-p-4 bear-text-neutral-700 dark:bear-text-neutral-300',
+            enableScroll ? 'bear-overflow-y-auto' : 'bear-overflow-hidden',
+          )}
+        >
           {children}
         </div>
       </div>

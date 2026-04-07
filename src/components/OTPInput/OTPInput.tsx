@@ -1,5 +1,6 @@
 import { FC, useRef, useState, useEffect, useCallback, KeyboardEvent, ClipboardEvent } from 'react';
-import { OTPInputProps } from './OTPInput.types';
+import type { OTPInputProps } from './OTPInput.types';
+import { OTP_CELL_RECT_CLASSES, OTP_VARIANT_FRAME } from './OTPInput.const';
 import { cn } from '@utils';
 
 export const OTPInput: FC<OTPInputProps> = ({
@@ -7,6 +8,7 @@ export const OTPInput: FC<OTPInputProps> = ({
   value: controlledValue,
   onChange,
   onComplete,
+  onFinish,
   disabled = false,
   error = false,
   autoFocus = true,
@@ -14,6 +16,10 @@ export const OTPInput: FC<OTPInputProps> = ({
   size = 'md',
   separator,
   className,
+  variant = 'boxed',
+  layout = 'horizontal',
+  stackOnNarrow = true,
+  cancelAutoJump = false,
 }) => {
   const [values, setValues] = useState<string[]>(Array(length).fill(''));
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
@@ -30,14 +36,19 @@ export const OTPInput: FC<OTPInputProps> = ({
     }
   }, [autoFocus]);
 
+  const emitComplete = useCallback((joined: string) => {
+    onComplete?.(joined);
+    onFinish?.(joined);
+  }, [onComplete, onFinish]);
+
   const updateValues = useCallback((newValues: string[]) => {
     setValues(newValues);
     const joined = newValues.join('');
     onChange?.(joined);
     if (joined.length === length && newValues.every(v => v !== '')) {
-      onComplete?.(joined);
+      emitComplete(joined);
     }
-  }, [onChange, onComplete, length]);
+  }, [onChange, emitComplete, length]);
 
   const handleChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
     const char = e.target.value.slice(-1);
@@ -47,7 +58,7 @@ export const OTPInput: FC<OTPInputProps> = ({
     newValues[index] = char;
     updateValues(newValues);
 
-    if (char && index < length - 1) {
+    if (char && index < length - 1 && !cancelAutoJump) {
       inputRefs.current[index + 1]?.focus();
     }
   };
@@ -79,16 +90,31 @@ export const OTPInput: FC<OTPInputProps> = ({
     inputRefs.current[Math.min(pastedData.length, length - 1)]?.focus();
   };
 
-  const sizeClasses = {
-    sm: 'bear-w-8 bear-h-10 bear-text-lg',
-    md: 'bear-w-10 bear-h-12 bear-text-xl',
-    lg: 'bear-w-12 bear-h-14 bear-text-2xl',
-  };
+  const frame = OTP_VARIANT_FRAME[variant];
+  const sizeCfg = OTP_CELL_RECT_CLASSES[size];
+  const cellSize = variant === 'circle' ? sizeCfg.circle : sizeCfg.rect;
 
   return (
-    <div className={cn('bear-flex bear-items-center bear-gap-2', className)}>
+    <div
+      className={cn(
+        layout === 'vertical'
+          ? 'bear-flex bear-flex-col bear-items-center bear-gap-2'
+          : variant === 'circle'
+            ? 'bear-flex bear-flex-row bear-flex-wrap bear-justify-center bear-gap-2'
+            : stackOnNarrow
+              ? 'max-sm:bear-grid max-sm:bear-grid-cols-3 max-sm:bear-gap-2 max-sm:bear-justify-items-center sm:bear-flex sm:bear-flex-row sm:bear-flex-wrap sm:bear-justify-center sm:bear-gap-2'
+              : 'bear-flex bear-flex-row bear-flex-wrap bear-justify-center bear-gap-2',
+        className,
+      )}
+    >
       {values.map((val, index) => (
-        <div key={index} className="bear-flex bear-items-center">
+        <div
+          key={index}
+          className={cn(
+            'bear-flex bear-items-center',
+            layout === 'vertical' ? 'bear-flex-col' : 'bear-flex-row',
+          )}
+        >
           <input
             ref={(el) => { inputRefs.current[index] = el; }}
             type={mask ? 'password' : 'text'}
@@ -100,18 +126,26 @@ export const OTPInput: FC<OTPInputProps> = ({
             onPaste={handlePaste}
             disabled={disabled}
             className={cn(
-              'bear-text-center bear-font-semibold bear-rounded-lg bear-border bear-bg-zinc-800 bear-text-white bear-outline-none bear-transition-all',
-              sizeClasses[size],
+              'bear-text-center bear-font-semibold bear-outline-none bear-transition-all',
+              cellSize,
+              frame,
+              'bear-bg-[var(--bear-bg-primary,#18181b)] bear-text-[var(--bear-text-primary,#fafafa)]',
               error ? 'bear-border-red-500' : 'bear-border-zinc-600 focus:bear-border-pink-500 focus:bear-ring-2 focus:bear-ring-pink-500/30',
-              disabled && 'bear-opacity-50 bear-cursor-not-allowed'
+              disabled && 'bear-opacity-50 bear-cursor-not-allowed',
             )}
           />
           {separator && (index + 1) % separator === 0 && index < length - 1 && (
-            <span className="bear-mx-2 bear-text-zinc-500 bear-text-xl">-</span>
+            <span
+              className={cn(
+                'bear-text-zinc-500 bear-text-xl',
+                layout === 'vertical' ? 'bear-my-1' : 'bear-mx-2',
+              )}
+            >
+              —
+            </span>
           )}
         </div>
       ))}
     </div>
   );
 };
-

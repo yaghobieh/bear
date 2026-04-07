@@ -182,6 +182,7 @@ const QRCodePage = lazy(() => import('./pages/components/QRCode'));
 // New v1.0.9 Components
 const JsonViewerPage = lazy(() => import('./pages/components/JsonViewer'));
 const DiffViewerPage = lazy(() => import('./pages/components/DiffViewer'));
+const DiffSquaresPage = lazy(() => import('./pages/components/DiffSquares'));
 const ChatPage = lazy(() => import('./pages/components/ChatPage'));
 const FloatingChatPage = lazy(() => import('./pages/components/FloatingChatPage'));
 const TerminalPage = lazy(() => import('./pages/components/TerminalPage'));
@@ -491,6 +492,7 @@ function PortalLayout({
                 {/* v1.0.9 Components */}
                 <Route path="/components/json-viewer" element={<JsonViewerPage />} />
                 <Route path="/components/diff-viewer" element={<DiffViewerPage />} />
+                <Route path="/components/diff-squares" element={<DiffSquaresPage />} />
                 <Route path="/components/chat" element={<ChatPage />} />
                 <Route path="/components/floating-chat" element={<FloatingChatPage />} />
                 <Route path="/components/terminal" element={<TerminalPage />} />

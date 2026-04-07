@@ -1,4 +1,5 @@
-import { FC, useMemo, useCallback, useEffect, useRef, useState } from 'react';
+import { FC, useMemo, useCallback, useEffect, useRef, useState, useContext } from 'react';
+import { BearContext } from '../../context/BearProvider';
 import { cn } from '@utils';
 import type { WatermarkProps } from './Watermark.types';
 import {
@@ -17,6 +18,8 @@ import {
   CANVAS_WIDTH_OFFSET,
   HALF,
   DEG_TO_RAD,
+  PATTERN_REPEAT_MIN,
+  PATTERN_REPEAT_MAX,
 } from './Watermark.const';
 
 /**
@@ -32,6 +35,7 @@ export const Watermark: FC<WatermarkProps> = (props) => {
     color,
     rotate = DEFAULT_ROTATE,
     opacity = DEFAULT_OPACITY,
+    patternRepeat = PATTERN_REPEAT_MIN,
     gap = DEFAULT_GAP,
     offset = DEFAULT_OFFSET,
     zIndex = DEFAULT_Z_INDEX,
@@ -45,34 +49,41 @@ export const Watermark: FC<WatermarkProps> = (props) => {
 
   const containerRef = useRef<HTMLDivElement>(null);
   const watermarkRef = useRef<HTMLDivElement>(null);
-  const [isDark, setIsDark] = useState(false);
+  const bear = useContext(BearContext);
+  const [isDarkFallback, setIsDarkFallback] = useState(false);
 
-  // Detect dark mode
   useEffect(() => {
+    if (bear) return;
     const mq = window.matchMedia('(prefers-color-scheme: dark)');
     const checkDark = () => {
-      const hasDarkClass = document.documentElement.classList.contains('dark');
-      setIsDark(hasDarkClass || mq.matches);
+      const root = document.documentElement;
+      const dark =
+        root.classList.contains('dark') ||
+        root.classList.contains('bear-dark') ||
+        mq.matches;
+      setIsDarkFallback(dark);
     };
     checkDark();
-
-    // Observe class changes on <html> for theme toggles
     const observer = new MutationObserver(checkDark);
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
     mq.addEventListener('change', checkDark);
-
     return () => {
       observer.disconnect();
       mq.removeEventListener('change', checkDark);
     };
-  }, []);
+  }, [bear]);
+
+  const isDark = bear ? bear.mode === 'dark' : isDarkFallback;
 
   // Resolve font from theme CSS variable
   const resolvedFont = useMemo(() => {
     if (fontFamily) return fontFamily;
     if (typeof window !== 'undefined') {
-      const computed = getComputedStyle(document.documentElement).getPropertyValue('--bear-font-family');
-      if (computed.trim()) return computed.trim();
+      const root = document.documentElement;
+      const sans = getComputedStyle(root).getPropertyValue('--bear-font-sans');
+      if (sans.trim()) return sans.trim();
+      const legacy = getComputedStyle(root).getPropertyValue('--bear-font-family');
+      if (legacy.trim()) return legacy.trim();
     }
     return DEFAULT_FONT_FAMILY;
   }, [fontFamily]);
@@ -99,30 +110,60 @@ export const Watermark: FC<WatermarkProps> = (props) => {
     canvas.width = canvasWidth;
     canvas.height = canvasHeight;
 
-    ctx.translate(canvasWidth / HALF, canvasHeight / HALF);
-    ctx.rotate(rotate * DEG_TO_RAD);
+    const grid = Math.min(PATTERN_REPEAT_MAX, Math.max(PATTERN_REPEAT_MIN, Math.floor(patternRepeat)));
+    const cellW = canvasWidth / grid;
+    const cellH = canvasHeight / grid;
 
-    if (image) {
-      const img = new Image();
-      img.crossOrigin = 'anonymous';
-      img.src = image;
-      ctx.globalAlpha = opacity;
-      ctx.drawImage(img, -img.width / HALF, -img.height / HALF);
-    } else {
+    const drawTextAt = (cx: number, cy: number) => {
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(rotate * DEG_TO_RAD);
       ctx.font = `${fontWeight} ${fontSize}px ${resolvedFont}`;
       ctx.fillStyle = resolvedColor;
       ctx.globalAlpha = opacity;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-
       lines.forEach((line, i) => {
         const y = (i - (lines.length - 1) / HALF) * lineHeight;
         ctx.fillText(line, 0, y);
       });
+      ctx.restore();
+    };
+
+    if (image) {
+      ctx.save();
+      ctx.translate(canvasWidth / HALF, canvasHeight / HALF);
+      ctx.rotate(rotate * DEG_TO_RAD);
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.src = image;
+      ctx.globalAlpha = opacity;
+      ctx.drawImage(img, -img.width / HALF, -img.height / HALF);
+      ctx.restore();
+    } else if (grid <= 1) {
+      drawTextAt(canvasWidth / HALF, canvasHeight / HALF);
+    } else {
+      for (let gy = 0; gy < grid; gy++) {
+        for (let gx = 0; gx < grid; gx++) {
+          drawTextAt(gx * cellW + cellW / HALF, gy * cellH + cellH / HALF);
+        }
+      }
     }
 
     return canvas.toDataURL();
-  }, [text, image, fontSize, resolvedColor, rotate, opacity, gap, resolvedFont, fontWeight, visible]);
+  }, [
+    text,
+    image,
+    fontSize,
+    resolvedColor,
+    rotate,
+    opacity,
+    gap,
+    resolvedFont,
+    fontWeight,
+    visible,
+    patternRepeat,
+  ]);
 
   const backgroundImage = useMemo(() => generateWatermark(), [generateWatermark]);
 

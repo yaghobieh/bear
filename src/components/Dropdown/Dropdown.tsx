@@ -1,26 +1,9 @@
-import { FC, useState, useRef, useCallback, useEffect, cloneElement, isValidElement, ReactElement } from 'react';
+import { FC, useState, useRef, useCallback, useEffect, cloneElement, isValidElement, ReactElement, useMemo } from 'react';
 import { cn } from '@utils';
-import { useClickOutside } from '@hooks';
+import { useClickOutsideMultiple } from '@hooks';
+import { Portal } from '../Portal';
 import type { DropdownProps, DropdownItem } from './Dropdown.types';
-
-const SIZE_CLASSES = {
-  xs: 'bear-text-xs bear-py-1 bear-px-2',
-  sm: 'bear-text-sm bear-py-1.5 bear-px-3',
-  md: 'bear-text-sm bear-py-2 bear-px-3',
-  lg: 'bear-text-base bear-py-2.5 bear-px-4',
-  xl: 'bear-text-lg bear-py-3 bear-px-5',
-} as const;
-
-const PLACEMENT_CLASSES = {
-  'bottom-start': 'bear-top-full bear-left-0 bear-mt-1',
-  'bottom-end': 'bear-top-full bear-right-0 bear-mt-1',
-  'bottom': 'bear-top-full bear-left-1/2 -bear-translate-x-1/2 bear-mt-1',
-  'top-start': 'bear-bottom-full bear-left-0 bear-mb-1',
-  'top-end': 'bear-bottom-full bear-right-0 bear-mb-1',
-  'top': 'bear-bottom-full bear-left-1/2 -bear-translate-x-1/2 bear-mb-1',
-  'left': 'bear-right-full bear-top-0 bear-mr-1',
-  'right': 'bear-left-full bear-top-0 bear-ml-1',
-} as const;
+import { SIZE_CLASSES } from './Dropdown.const';
 
 /**
  * Dropdown - Contextual menu that appears on trigger click
@@ -58,6 +41,7 @@ export const Dropdown: FC<DropdownProps> = ({
 }) => {
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
   const [focusedIndex, setFocusedIndex] = useState(-1);
+  const [menuPosition, setMenuPosition] = useState<{ top: number; left: number; minWidth: number }>({ top: 0, left: 0, minWidth: minWidth });
   const containerRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLElement>(null);
@@ -98,7 +82,9 @@ export const Dropdown: FC<DropdownProps> = ({
     if (isOpen && closeOnClickOutside) close();
   }, [isOpen, closeOnClickOutside, close]);
 
-  useClickOutside(containerRef, handleClickOutside);
+  useClickOutsideMultiple([containerRef, menuRef], handleClickOutside, {
+    enabled: isOpen && closeOnClickOutside,
+  });
 
   // Keyboard navigation
   useEffect(() => {
@@ -140,12 +126,52 @@ export const Dropdown: FC<DropdownProps> = ({
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, items, focusedIndex, close, handleItemClick]);
 
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const updatePosition = () => {
+      const triggerRect = triggerRef.current?.getBoundingClientRect();
+      if (!triggerRect) return;
+      const viewportWidth = window.innerWidth;
+      const preferredWidth = matchWidth ? triggerRect.width : minWidth;
+      const placeEnd = placement.endsWith('end');
+      const placeCenter = placement === 'top' || placement === 'bottom';
+      const baseLeft = placeEnd
+        ? triggerRect.right - preferredWidth
+        : placeCenter
+          ? triggerRect.left + triggerRect.width / 2 - preferredWidth / 2
+          : triggerRect.left;
+      const nextLeft = Math.min(Math.max(8, baseLeft), Math.max(8, viewportWidth - preferredWidth - 8));
+      const openUp = placement.startsWith('top');
+      const nextTop = openUp ? triggerRect.top - offset : triggerRect.bottom + offset;
+
+      setMenuPosition({
+        top: nextTop,
+        left: nextLeft,
+        minWidth: preferredWidth,
+      });
+    };
+
+    updatePosition();
+    window.addEventListener('resize', updatePosition);
+    window.addEventListener('scroll', updatePosition, true);
+    return () => {
+      window.removeEventListener('resize', updatePosition);
+      window.removeEventListener('scroll', updatePosition, true);
+    };
+  }, [isOpen, matchWidth, minWidth, placement, offset]);
+
   // Reset focus when closed
   useEffect(() => {
     if (!isOpen) {
       setFocusedIndex(-1);
     }
   }, [isOpen]);
+
+  const selectableIndices = useMemo(
+    () => items.map((item, index) => ({ item, index })).filter(({ item }) => !item.disabled && !item.divider && !item.header),
+    [items]
+  );
 
   const renderItem = (item: DropdownItem, index: number) => {
     if (item.divider) {
@@ -171,9 +197,7 @@ export const Dropdown: FC<DropdownProps> = ({
       );
     }
 
-    const selectableIndex = items
-      .slice(0, index)
-      .filter(i => !i.disabled && !i.divider && !i.header).length;
+    const selectableIndex = selectableIndices.findIndex((entry) => entry.index === index);
 
     const isFocused = focusedIndex === selectableIndex;
 
@@ -189,6 +213,7 @@ export const Dropdown: FC<DropdownProps> = ({
           'bear-w-full bear-flex bear-items-center bear-gap-2 bear-text-left bear-border-none bear-bg-transparent',
           SIZE_CLASSES[size],
           'bear-transition-colors bear-cursor-pointer',
+          item.selected && !item.danger && 'bear-bg-[var(--bear-bg-tertiary)] bear-text-[var(--bear-text-primary)]',
           isFocused && !item.danger && 'bear-bg-[var(--bear-bg-tertiary)]',
           item.danger && 'bear-text-red-600 dark:bear-text-red-400 hover:bear-bg-red-50 dark:hover:bear-bg-red-900/20',
           !item.danger && !item.disabled && 'hover:bear-bg-[var(--bear-bg-tertiary)]',
@@ -242,29 +267,31 @@ export const Dropdown: FC<DropdownProps> = ({
       {triggerElement}
 
       {isOpen && (
-        <div
-          ref={menuRef}
-          role="menu"
-          className={cn(
-            'bear-absolute bear-z-50',
-            'bear-border bear-rounded-lg bear-shadow-lg',
-            'bear-py-1 bear-overflow-y-auto',
-            'bear-animate-in bear-fade-in-0 bear-zoom-in-95 bear-duration-100',
-            PLACEMENT_CLASSES[placement]
-          )}
-          style={{
-            backgroundColor: 'var(--bear-bg-primary)',
-            borderColor: 'var(--bear-border-default)',
-            minWidth: matchWidth ? triggerRef.current?.offsetWidth : minWidth,
-            maxHeight,
-          }}
-        >
-          {items.map((item, index) => renderItem(item, index))}
-        </div>
+        <Portal>
+          <div
+            ref={menuRef}
+            role="menu"
+            className={cn(
+              'bear-fixed',
+              'bear-border bear-rounded-lg bear-shadow-lg',
+              'bear-py-1 bear-overflow-y-auto',
+              'bear-duration-100',
+            )}
+            style={{
+              backgroundColor: 'var(--bear-bg-primary)',
+              borderColor: 'var(--bear-border-default)',
+              minWidth: menuPosition.minWidth,
+              maxHeight,
+              top: menuPosition.top,
+              left: menuPosition.left,
+              zIndex: 11000,
+            }}
+          >
+            {items.map((item, index) => renderItem(item, index))}
+          </div>
+        </Portal>
       )}
     </div>
   );
 };
-
-export default Dropdown;
 

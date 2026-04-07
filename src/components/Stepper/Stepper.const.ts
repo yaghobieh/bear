@@ -2,11 +2,12 @@ import type { StepperSize, StepStatus } from './Stepper.types';
 
 // Base classes
 export const STEPPER_BASE_CLASSES = 'Bear-Stepper';
-export const STEPPER_HORIZONTAL_CLASSES = 'flex items-start';
+export const STEPPER_HORIZONTAL_CLASSES = 'flex w-full min-w-0 items-start overflow-x-auto pb-1 flex-nowrap';
 export const STEPPER_VERTICAL_CLASSES = 'flex flex-col';
 
 // Step wrapper classes
-export const STEP_WRAPPER_HORIZONTAL = 'flex-1 relative';
+export const STEP_WRAPPER_HORIZONTAL = 'relative min-w-[7rem] shrink-0 flex-1';
+export const STEP_WRAPPER_HORIZONTAL_WINDOW = 'relative min-w-[5rem] max-w-[9rem] shrink-0';
 export const STEP_WRAPPER_VERTICAL = 'relative flex items-start pb-8 last:pb-0';
 
 // Step indicator classes

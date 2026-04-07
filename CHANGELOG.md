@@ -2,6 +2,39 @@
 
 All notable changes to Bear UI will be documented in this file.
 
+## [1.2.1] - 2026-04-07
+
+### Summary (this release batch)
+
+| Area | What changed | Why |
+|------|----------------|-----|
+| **TabList** | `maxVisibleTabs` is a number or `{ mobile, tablet, desktop, custom }` via `theme.breakpoints`; flex row uses scroll + non-shrinking overflow trigger; overflow `Dropdown` placement `bottom-end`. | Clipped tabs hid the menu on mobile; responsive cap matches other components. |
+| **Tabs docs** | Portal demos use `allowOverflow`; props tables split; **`ActiveTab`** export alias. | Documentation clarity; card overflow no longer hides ⋯ |
+| **Dropdown** | Menu layer **z-index 11000**. | Stack above dense layouts using the same tier as modal shell. |
+| **Menu** | **z-index 11000**; top placements subtract panel height (`useLayoutEffect` + `ResizeObserver`). | Under-lapping siblings; incorrect top anchor. |
+| **Breadcrumbs** | `maxItems` breakpoint map; collapsed middle in ⋯ menu; **`dropdownItems`** on items. | Same collapse/dropdown behavior as tabs; nested pickers on a crumb. |
+| **Stepper** | Horizontal: `w-full min-w-0 overflow-x-auto`; steps `min-w-[7rem] shrink-0`. | Mobile horizontal overflow. |
+| **Watermark** | `--bear-font-sans`; stronger default rgba / opacity. | Invisible watermark; wrong font token. |
+| **DiffSquares** | New **DiffSquares** (`Typography` summary + configurable cubes). | GitHub-style diff indicator. |
+
+### Fixed
+
+- **Dropdown** / **Select**: Floating menus use `Portal` and fixed positioning from the trigger rect; `useClickOutsideMultiple` keeps portaled panels inside the “inside” check so clicks on items work. Menu `z-index` aligned to **10000** so stacks above cards and scroll containers.
+- **NavigableSelect**: Dropdown is portaled, follows the trigger on scroll/resize, uses a higher overlay z-index, and outside-click includes the portaled panel.
+- **Menu**: Panel content is portaled to `document.body`, fixed positioning, **10000** z-index, reposition on window resize and scroll (capture).
+- **Popover**: Reposition while open on window resize and scroll (capture).
+- **Autocomplete**, **MultiSelect**, **MentionsInput**: Option/suggestion panels portaled with fixed coordinates and **10000** z-index; outside-click includes the portaled root.
+- **TreeSelect**: Tree panel portaled with trigger-aligned fixed layout and scroll/resize updates; outside-click includes the portaled dropdown.
+- **Popconfirm**: Content portaled with fixed placement by side; updates on scroll/resize; outside-click uses separate trigger and popup refs.
+
+### Changed
+
+- **Tooltip**: Reposition on scroll/resize while visible; overlay z-index set to **10000**.
+
+### Added
+
+- **Hooks**: **`useClickOutsideMultiple`** is exported from `@forgedevstack/bear/hooks` (implemented on the package root `useClickOutside` module) for trigger + portaled-surface click detection.
+
 ## [1.1.9] - 2026-03-12
 
 ### Added

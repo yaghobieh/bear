@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { PopoverProps } from './Popover.types';
 import { cn } from '@utils';
 
-const Z_INDEX = 10000;
+const Z_INDEX = 11000;
 
 function getPlacementStyles(placement: string, rect: DOMRect, offset: number): React.CSSProperties {
   const base: React.CSSProperties = { position: 'fixed' as const, zIndex: Z_INDEX };
@@ -69,10 +69,21 @@ export const Popover: FC<PopoverProps> = ({
   }, [onOpenChange]);
 
   useEffect(() => {
-    if (isOpen && containerRef.current) {
+    if (!isOpen || !containerRef.current) return;
+
+    const update = () => {
+      if (!containerRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
       setPosition(getPlacementStyles(placement, rect, offset));
-    }
+    };
+
+    update();
+    window.addEventListener('resize', update);
+    window.addEventListener('scroll', update, true);
+    return () => {
+      window.removeEventListener('resize', update);
+      window.removeEventListener('scroll', update, true);
+    };
   }, [isOpen, placement, offset]);
 
   useEffect(() => {

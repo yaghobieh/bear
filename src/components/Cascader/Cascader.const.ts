@@ -31,7 +31,7 @@ export const CASCADER_VARIANT_CLASSES = {
 /**
  * Z-index for dropdown
  */
-export const CASCADER_DROPDOWN_Z_INDEX = 9999;
+export const CASCADER_DROPDOWN_Z_INDEX = 10000;
 
 /**
  * Default path separator

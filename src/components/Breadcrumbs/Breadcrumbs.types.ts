@@ -1,27 +1,35 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import type { MaxVisibleInput } from '../../utils/maxVisible.utils';
 
 export type BreadcrumbSize = 'sm' | 'md' | 'lg';
+
+export interface BreadcrumbDropdownItem {
+  key: string;
+  label: ReactNode;
+  onClick?: () => void;
+  disabled?: boolean;
+}
 
 export interface BreadcrumbItem {
   label: string;
   href?: string;
   icon?: ReactNode;
   onClick?: () => void;
+  /** When set, the crumb opens a dropdown (same shape as Dropdown items). */
+  dropdownItems?: BreadcrumbDropdownItem[];
 }
 
 export interface BreadcrumbsProps {
   items: BreadcrumbItem[];
   separator?: ReactNode;
-  maxItems?: number;
+  /** Collapse middle crumbs into a "…" menu when items.length exceeds this threshold. Number or breakpoint map (same rules as TabList maxVisibleTabs). */
+  maxItems?: MaxVisibleInput;
   itemsBeforeCollapse?: number;
   itemsAfterCollapse?: number;
   className?: string;
   size?: BreadcrumbSize;
   showHomeIcon?: boolean;
-  /** Unique identifier for testing */
   testId?: string;
-  /** HTML id attribute */
   id?: string;
-  /** Accessible label for screen readers */
   'aria-label'?: string;
 }

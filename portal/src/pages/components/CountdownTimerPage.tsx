@@ -59,6 +59,70 @@ export default function CountdownTimerPage() {
         </section>
 
         <section>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Props</h2>
+          <div className="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-700">
+            <table className="w-full text-left text-sm text-gray-700 dark:text-gray-300">
+              <thead className="bg-gray-50 dark:bg-gray-900/50">
+                <tr>
+                  <th className="px-4 py-2 font-semibold">Prop</th>
+                  <th className="px-4 py-2 font-semibold">Type</th>
+                  <th className="px-4 py-2 font-semibold">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-t border-gray-200 dark:border-gray-700">
+                  <td className="px-4 py-2 font-mono text-xs">targetDate</td>
+                  <td className="px-4 py-2 font-mono text-xs">Date | string | number</td>
+                  <td className="px-4 py-2">Deadline to count down to.</td>
+                </tr>
+                <tr className="border-t border-gray-200 dark:border-gray-700">
+                  <td className="px-4 py-2 font-mono text-xs">duration</td>
+                  <td className="px-4 py-2 font-mono text-xs">number</td>
+                  <td className="px-4 py-2">Countdown length in seconds (alternative to targetDate).</td>
+                </tr>
+                <tr className="border-t border-gray-200 dark:border-gray-700">
+                  <td className="px-4 py-2 font-mono text-xs">variant</td>
+                  <td className="px-4 py-2 font-mono text-xs">&apos;default&apos; | &apos;card&apos; | &apos;minimal&apos; | &apos;flip&apos;</td>
+                  <td className="px-4 py-2">Visual treatment for digits.</td>
+                </tr>
+                <tr className="border-t border-gray-200 dark:border-gray-700">
+                  <td className="px-4 py-2 font-mono text-xs">size</td>
+                  <td className="px-4 py-2 font-mono text-xs">&apos;sm&apos; | &apos;md&apos; | &apos;lg&apos; | &apos;xl&apos;</td>
+                  <td className="px-4 py-2">Preset scale for digits and labels.</td>
+                </tr>
+                <tr className="border-t border-gray-200 dark:border-gray-700">
+                  <td className="px-4 py-2 font-mono text-xs">digitTypographyProps</td>
+                  <td className="px-4 py-2 font-mono text-xs">Partial&lt;TypographyProps&gt;</td>
+                  <td className="px-4 py-2">Overrides for Bear Typography on each digit block (variant, weight, className, etc.).</td>
+                </tr>
+                <tr className="border-t border-gray-200 dark:border-gray-700">
+                  <td className="px-4 py-2 font-mono text-xs">labelTypographyProps</td>
+                  <td className="px-4 py-2 font-mono text-xs">Partial&lt;TypographyProps&gt;</td>
+                  <td className="px-4 py-2">Overrides for day/hour/minute/second labels under digits.</td>
+                </tr>
+                <tr className="border-t border-gray-200 dark:border-gray-700">
+                  <td className="px-4 py-2 font-mono text-xs">narrowLayout</td>
+                  <td className="px-4 py-2 font-mono text-xs">boolean</td>
+                  <td className="px-4 py-2">
+                    Defaults to true: wraps and scales digits on narrow widths (~390px) to avoid horizontal page scroll.
+                  </td>
+                </tr>
+                <tr className="border-t border-gray-200 dark:border-gray-700">
+                  <td className="px-4 py-2 font-mono text-xs">showDays / showHours / …</td>
+                  <td className="px-4 py-2 font-mono text-xs">boolean</td>
+                  <td className="px-4 py-2">Toggle individual units.</td>
+                </tr>
+                <tr className="border-t border-gray-200 dark:border-gray-700">
+                  <td className="px-4 py-2 font-mono text-xs">onComplete / onTick / paused / render</td>
+                  <td className="px-4 py-2 font-mono text-xs">—</td>
+                  <td className="px-4 py-2">Lifecycle callbacks, pause, or fully custom render(time).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section>
           <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Usage</h2>
           <pre className="p-4 rounded-lg bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 text-sm overflow-x-auto border border-gray-200 dark:border-gray-700">
 {`import { CountdownTimer } from '@forgedevstack/bear';

@@ -23,10 +23,10 @@ export const COLOR_PICKER_SWATCH_CLASSES =
   'bear-rounded-lg bear-border bear-border-gray-300 dark:bear-border-zinc-600 bear-transition-all hover:bear-scale-105 bear-shadow-sm';
 
 export const COLOR_PICKER_POPUP_CLASSES =
-  'bear-absolute bear-z-50 bear-mt-2 bear-bg-white dark:bear-bg-zinc-800 bear-border bear-border-gray-200 dark:bear-border-zinc-700 bear-rounded-xl bear-shadow-xl bear-p-4 bear-animate-in bear-fade-in bear-slide-in-from-top-1 bear-duration-150';
+  'bear-bg-white dark:bear-bg-zinc-800 bear-border bear-border-gray-200 dark:bear-border-zinc-700 bear-rounded-xl bear-shadow-xl bear-p-4 bear-animate-in bear-fade-in bear-duration-150 bear-w-64';
 
-export const COLOR_PICKER_NATIVE_INPUT_CLASSES =
-  'bear-w-full bear-h-32 bear-rounded-lg bear-cursor-pointer bear-mb-3 bear-border bear-border-gray-200 dark:bear-border-zinc-600';
+export const COLOR_PICKER_HUE_STRIP_CLASSES =
+  'bear-w-full bear-h-2 bear-rounded-full bear-cursor-pointer bear-appearance-none bear-border-0 bear-mb-3';
 
 export const COLOR_PICKER_PRESET_ACTIVE_CLASSES =
   'bear-border-gray-900 dark:bear-border-white bear-ring-2 bear-ring-pink-500';
@@ -39,3 +39,8 @@ export const COLOR_PICKER_PRESET_ITEM_CLASSES =
 
 export const COLOR_PICKER_GRID_CLASSES =
   'bear-grid bear-grid-cols-6 bear-gap-1.5';
+
+export const COLOR_PICKER_POPUP_Z_INDEX = 11000;
+
+export const COLOR_PICKER_HUE_BACKGROUND =
+  'linear-gradient(to right,#f00 0%,#ff0 17%,#0f0 33%,#0ff 50%,#00f 67%,#f0f 83%,#f00 100%)';

@@ -1,4 +1,6 @@
-import { forwardRef } from 'react';
+import { forwardRef, useEffect, useMemo, useState } from 'react';
+import { useBearThemeOptional } from '../../context/BearProvider';
+import { resolveMaxVisible } from '../../utils/maxVisible.utils';
 import { cn } from '@utils';
 import type { StepperProps, StepperControlsProps, StepStatus, Step } from './Stepper.types';
 import {
@@ -6,6 +8,7 @@ import {
   STEPPER_HORIZONTAL_CLASSES,
   STEPPER_VERTICAL_CLASSES,
   STEP_WRAPPER_HORIZONTAL,
+  STEP_WRAPPER_HORIZONTAL_WINDOW,
   STEP_WRAPPER_VERTICAL,
   STEP_INDICATOR_BASE,
   STEP_INDICATOR_SIZES,
@@ -19,8 +22,9 @@ import {
   STEP_DESCRIPTION_CLASSES,
 } from './Stepper.const';
 import { Button } from '../Button';
+import { Dropdown } from '../Dropdown';
+import { BearIcons } from '../Icon';
 
-// Icons
 const CheckIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
     <polyline points="20 6 9 17 4 12" />
@@ -34,9 +38,6 @@ const ErrorIcon = () => (
   </svg>
 );
 
-/**
- * Stepper - Multi-step wizard component
- */
 export const Stepper = forwardRef<HTMLDivElement, StepperProps>(
   (
     {
@@ -52,12 +53,26 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(
       alternativeLabel = false,
       completedIcon,
       errorIcon,
+      maxVisibleSteps,
       testId,
       className,
       ...props
     },
     ref
   ) => {
+    const theme = useBearThemeOptional();
+    const [vw, setVw] = useState(() => (typeof window !== 'undefined' ? window.innerWidth : 1200));
+    useEffect(() => {
+      const r = () => setVw(window.innerWidth);
+      window.addEventListener('resize', r);
+      return () => window.removeEventListener('resize', r);
+    }, []);
+
+    const resolvedWindow = useMemo(
+      () => (maxVisibleSteps == null ? undefined : resolveMaxVisible(maxVisibleSteps, { width: vw, theme })),
+      [maxVisibleSteps, vw, theme]
+    );
+
     const getStepStatus = (index: number, step: Step): StepStatus => {
       if (step.status) return step.status;
       if (index < activeStep) return 'completed';
@@ -68,6 +83,29 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(
     const isHorizontal = orientation === 'horizontal';
     const sizeConfig = STEP_INDICATOR_SIZES[size];
     const labelSizeConfig = STEP_LABEL_SIZES[size];
+
+    const useWindow =
+      isHorizontal && resolvedWindow != null && steps.length > resolvedWindow;
+
+    const { visibleIndices, leftHidden, rightHidden } = useMemo(() => {
+      if (!useWindow || resolvedWindow == null) {
+        return {
+          visibleIndices: steps.map((_, i) => i),
+          leftHidden: [] as number[],
+          rightHidden: [] as number[],
+        };
+      }
+      const max = resolvedWindow;
+      const start = Math.max(0, Math.min(activeStep - Math.floor(max / 2), steps.length - max));
+      const vis = Array.from({ length: max }, (_, i) => start + i);
+      const left: number[] = [];
+      const right: number[] = [];
+      for (let i = 0; i < start; i++) left.push(i);
+      for (let i = start + max; i < steps.length; i++) right.push(i);
+      return { visibleIndices: vis, leftHidden: left, rightHidden: right };
+    }, [useWindow, resolvedWindow, steps.length, activeStep]);
+
+    const wrapperHorizontal = useWindow ? STEP_WRAPPER_HORIZONTAL_WINDOW : STEP_WRAPPER_HORIZONTAL;
 
     const renderIndicator = (step: Step, index: number, status: StepStatus) => {
       const statusClasses = STEP_STATUS_CLASSES[status];
@@ -107,7 +145,7 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(
       if (!showConnectors || index === steps.length - 1) return null;
 
       const isCompleted = index < activeStep;
-      
+
       return (
         <div
           className={cn(
@@ -120,71 +158,114 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(
       );
     };
 
+    const renderHorizontalInner = (step: Step, index: number) => {
+      const status = getStepStatus(index, step);
+      const statusClasses = STEP_STATUS_CLASSES[status];
+      return (
+        <div className={cn('flex', alternativeLabel ? 'flex-col items-center' : 'items-center gap-3')}>
+          {renderIndicator(step, index, status)}
+          <div className={cn(alternativeLabel && 'text-center mt-2')}>
+            <div className={cn(STEP_LABEL_BASE, labelSizeConfig.label, statusClasses.label)}>{step.label}</div>
+            {step.description && (
+              <div className={cn(STEP_DESCRIPTION_CLASSES, labelSizeConfig.description)}>{step.description}</div>
+            )}
+          </div>
+        </div>
+      );
+    };
+
+    const renderVerticalInner = (step: Step, index: number) => {
+      const status = getStepStatus(index, step);
+      const statusClasses = STEP_STATUS_CLASSES[status];
+      return (
+        <>
+          <div className="flex-shrink-0 mr-4">{renderIndicator(step, index, status)}</div>
+          <div className="flex-1 pt-0.5">
+            <div className={cn(STEP_LABEL_BASE, labelSizeConfig.label, statusClasses.label)}>{step.label}</div>
+            {step.description && (
+              <div className={cn(STEP_DESCRIPTION_CLASSES, labelSizeConfig.description)}>{step.description}</div>
+            )}
+            {step.content && status === 'active' && <div className="mt-4">{step.content}</div>}
+          </div>
+        </>
+      );
+    };
+
+    const renderOverflowColumn = (hidden: number[], side: 'left' | 'right') => (
+      <div key={`overflow-${side}`} className={cn('Bear-Stepper__step', 'Bear-Stepper__overflow', wrapperHorizontal)}>
+        <div className={cn('flex', alternativeLabel ? 'flex-col items-center' : 'items-center gap-3')}>
+          <Dropdown
+            placement="bottom-start"
+            closeOnSelect
+            trigger={
+              <button
+                type="button"
+                className={cn(
+                  STEP_INDICATOR_BASE,
+                  sizeConfig,
+                  STEP_STATUS_CLASSES.pending.indicator,
+                  'bear-cursor-pointer bear-border-0'
+                )}
+                aria-label={side === 'left' ? 'Previous steps' : 'More steps'}
+              >
+                <BearIcons.MoreHorizIcon size={16} />
+              </button>
+            }
+            items={hidden.map((idx) => ({
+              key: `step-${idx}`,
+              label: steps[idx].label,
+              disabled: steps[idx].disabled,
+              onClick: () => {
+                if (steps[idx].disabled) return;
+                onStepClick?.(idx);
+              },
+            }))}
+          />
+          {alternativeLabel && <div className="text-center mt-2 bear-text-xs bear-text-gray-400">&nbsp;</div>}
+        </div>
+      </div>
+    );
+
     return (
       <div
         ref={ref}
-        className={cn(
-          STEPPER_BASE_CLASSES,
-          isHorizontal ? STEPPER_HORIZONTAL_CLASSES : STEPPER_VERTICAL_CLASSES,
-          className
-        )}
+        className={cn(STEPPER_BASE_CLASSES, isHorizontal ? STEPPER_HORIZONTAL_CLASSES : STEPPER_VERTICAL_CLASSES, className)}
         data-testid={testId}
         {...props}
       >
-        {steps.map((step, index) => {
-          const status = getStepStatus(index, step);
-          const statusClasses = STEP_STATUS_CLASSES[status];
-
-          return (
-            <div
-              key={index}
-              className={cn(
-                'Bear-Stepper__step',
-                isHorizontal ? STEP_WRAPPER_HORIZONTAL : STEP_WRAPPER_VERTICAL
-              )}
-            >
-              {isHorizontal ? (
-                // Horizontal layout
-                <div className={cn('flex', alternativeLabel ? 'flex-col items-center' : 'items-center gap-3')}>
-                  {renderIndicator(step, index, status)}
-                  <div className={cn(alternativeLabel && 'text-center mt-2')}>
-                    <div className={cn(STEP_LABEL_BASE, labelSizeConfig.label, statusClasses.label)}>
-                      {step.label}
-                    </div>
-                    {step.description && (
-                      <div className={cn(STEP_DESCRIPTION_CLASSES, labelSizeConfig.description)}>
-                        {step.description}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ) : (
-                // Vertical layout
-                <>
-                  <div className="flex-shrink-0 mr-4">
-                    {renderIndicator(step, index, status)}
-                  </div>
-                  <div className="flex-1 pt-0.5">
-                    <div className={cn(STEP_LABEL_BASE, labelSizeConfig.label, statusClasses.label)}>
-                      {step.label}
-                    </div>
-                    {step.description && (
-                      <div className={cn(STEP_DESCRIPTION_CLASSES, labelSizeConfig.description)}>
-                        {step.description}
-                      </div>
-                    )}
-                    {step.content && status === 'active' && (
-                      <div className="mt-4">
-                        {step.content}
-                      </div>
-                    )}
-                  </div>
-                </>
-              )}
+        {isHorizontal && !useWindow &&
+          steps.map((step, index) => (
+            <div key={index} className={cn('Bear-Stepper__step', STEP_WRAPPER_HORIZONTAL)}>
+              {renderHorizontalInner(step, index)}
               {renderConnector(index)}
             </div>
-          );
-        })}
+          ))}
+
+        {isHorizontal && useWindow && (
+          <>
+            {leftHidden.length > 0 && renderOverflowColumn(leftHidden, 'left')}
+            {visibleIndices.map((index, k) => {
+              const step = steps[index];
+              const nextVisible = visibleIndices[k + 1];
+              const showConn = Boolean(nextVisible != null && nextVisible === index + 1);
+              return (
+                <div key={index} className={cn('Bear-Stepper__step', wrapperHorizontal)}>
+                  {renderHorizontalInner(step, index)}
+                  {showConn && renderConnector(index)}
+                </div>
+              );
+            })}
+            {rightHidden.length > 0 && renderOverflowColumn(rightHidden, 'right')}
+          </>
+        )}
+
+        {!isHorizontal &&
+          steps.map((step, index) => (
+            <div key={index} className={cn('Bear-Stepper__step', STEP_WRAPPER_VERTICAL)}>
+              {renderVerticalInner(step, index)}
+              {renderConnector(index)}
+            </div>
+          ))}
       </div>
     );
   }
@@ -192,9 +273,6 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(
 
 Stepper.displayName = 'Stepper';
 
-/**
- * StepperControls - Navigation buttons for stepper
- */
 export const StepperControls = forwardRef<HTMLDivElement, StepperControlsProps>(
   (
     {
@@ -217,11 +295,7 @@ export const StepperControls = forwardRef<HTMLDivElement, StepperControlsProps>(
 
     return (
       <div ref={ref} className="Bear-StepperControls flex items-center justify-between mt-6">
-        <Button
-          variant="outline"
-          onClick={onPrev}
-          disabled={isFirstStep || disablePrev}
-        >
+        <Button variant="outline" onClick={onPrev} disabled={isFirstStep || disablePrev}>
           {prevLabel}
         </Button>
 
@@ -246,5 +320,3 @@ export const StepperControls = forwardRef<HTMLDivElement, StepperControlsProps>(
 );
 
 StepperControls.displayName = 'StepperControls';
-
-export default Stepper;

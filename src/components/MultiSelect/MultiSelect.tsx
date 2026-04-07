@@ -1,6 +1,9 @@
 import { FC, useState, useRef, useEffect, KeyboardEvent } from 'react';
 import { cn } from '@utils';
+import { Portal } from '../Portal';
 import type { MultiSelectProps } from './MultiSelect.types';
+
+const MULTI_SELECT_PANEL_Z = 10000;
 
 /**
  * MultiSelect - Select multiple options with tags
@@ -38,29 +41,55 @@ export const MultiSelect: FC<MultiSelectProps> = ({
   const [search, setSearch] = useState('');
   const [internalValue, setInternalValue] = useState<string[]>(defaultValue);
   const containerRef = useRef<HTMLDivElement>(null);
+  const fieldRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0, width: 0 });
 
   const isControlled = controlledValue !== undefined;
   const selectedValues = isControlled ? controlledValue : internalValue;
 
-  // Handle click outside
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
-        setIsOpen(false);
-        setSearch('');
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  // Filter options based on search
   const filteredOptions = options.filter(
     (opt) =>
       opt.label.toLowerCase().includes(search.toLowerCase()) &&
       !selectedValues.includes(opt.value)
   );
+
+  const showOptionsPanel = isOpen && !disabled && filteredOptions.length > 0;
+  const showEmptyPanel = isOpen && !disabled && filteredOptions.length === 0 && Boolean(search);
+
+  useEffect(() => {
+    if (!showOptionsPanel && !showEmptyPanel) return;
+    const updatePosition = () => {
+      const rect = fieldRef.current?.getBoundingClientRect();
+      if (!rect) return;
+      setMenuPosition({
+        top: rect.bottom + 4,
+        left: Math.max(8, Math.min(rect.left, window.innerWidth - rect.width - 8)),
+        width: Math.max(rect.width, 160),
+      });
+    };
+    updatePosition();
+    window.addEventListener('resize', updatePosition);
+    window.addEventListener('scroll', updatePosition, true);
+    return () => {
+      window.removeEventListener('resize', updatePosition);
+      window.removeEventListener('scroll', updatePosition, true);
+    };
+  }, [showOptionsPanel, showEmptyPanel]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      const t = e.target as Node;
+      if (containerRef.current?.contains(t)) return;
+      if (panelRef.current?.contains(t)) return;
+      setIsOpen(false);
+      setSearch('');
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isOpen]);
 
   // Handle option selection
   const handleSelect = (optValue: string) => {
@@ -114,6 +143,7 @@ export const MultiSelect: FC<MultiSelectProps> = ({
       )}
 
       <div
+        ref={fieldRef}
         className={cn(
           'bear-relative bear-flex bear-flex-wrap bear-items-center bear-gap-1.5 bear-min-h-[42px] bear-px-3 bear-py-2',
           'bear-rounded-lg bear-border bear-bg-white dark:bear-bg-gray-900',
@@ -181,31 +211,53 @@ export const MultiSelect: FC<MultiSelectProps> = ({
         </svg>
       </div>
 
-      {isOpen && !disabled && filteredOptions.length > 0 && (
-        <div className="bear-absolute bear-z-50 bear-w-full bear-mt-1 bear-py-1 bear-bg-white dark:bear-bg-gray-800 bear-border bear-border-gray-200 dark:bear-border-gray-700 bear-rounded-lg bear-shadow-lg bear-max-h-60 bear-overflow-auto">
-          {filteredOptions.map((opt) => (
-            <button
-              key={opt.value}
-              type="button"
-              disabled={opt.disabled}
-              onClick={() => handleSelect(opt.value)}
-              className={cn(
-                'bear-w-full bear-px-3 bear-py-2 bear-text-left bear-text-sm',
-                'hover:bear-bg-amber-50 dark:hover:bear-bg-amber-900/20',
-                'bear-text-gray-900 dark:bear-text-white',
-                opt.disabled && 'bear-opacity-50 bear-cursor-not-allowed'
-              )}
-            >
-              {opt.label}
-            </button>
-          ))}
-        </div>
+      {showOptionsPanel && (
+        <Portal>
+          <div
+            ref={panelRef}
+            className="bear-fixed bear-py-1 bear-bg-white dark:bear-bg-gray-800 bear-border bear-border-gray-200 dark:bear-border-gray-700 bear-rounded-lg bear-shadow-lg bear-max-h-60 bear-overflow-auto"
+            style={{
+              top: menuPosition.top,
+              left: menuPosition.left,
+              width: menuPosition.width,
+              zIndex: MULTI_SELECT_PANEL_Z,
+            }}
+          >
+            {filteredOptions.map((opt) => (
+              <button
+                key={opt.value}
+                type="button"
+                disabled={opt.disabled}
+                onClick={() => handleSelect(opt.value)}
+                className={cn(
+                  'bear-w-full bear-px-3 bear-py-2 bear-text-left bear-text-sm',
+                  'hover:bear-bg-amber-50 dark:hover:bear-bg-amber-900/20',
+                  'bear-text-gray-900 dark:bear-text-white',
+                  opt.disabled && 'bear-opacity-50 bear-cursor-not-allowed'
+                )}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+        </Portal>
       )}
 
-      {isOpen && !disabled && filteredOptions.length === 0 && search && (
-        <div className="bear-absolute bear-z-50 bear-w-full bear-mt-1 bear-py-3 bear-px-4 bear-bg-white dark:bear-bg-gray-800 bear-border bear-border-gray-200 dark:bear-border-gray-700 bear-rounded-lg bear-shadow-lg bear-text-sm bear-text-gray-500">
-          No options found
-        </div>
+      {showEmptyPanel && (
+        <Portal>
+          <div
+            ref={panelRef}
+            className="bear-fixed bear-py-3 bear-px-4 bear-bg-white dark:bear-bg-gray-800 bear-border bear-border-gray-200 dark:bear-border-gray-700 bear-rounded-lg bear-shadow-lg bear-text-sm bear-text-gray-500"
+            style={{
+              top: menuPosition.top,
+              left: menuPosition.left,
+              width: menuPosition.width,
+              zIndex: MULTI_SELECT_PANEL_Z,
+            }}
+          >
+            No options found
+          </div>
+        </Portal>
       )}
 
       {(helperText || error) && (

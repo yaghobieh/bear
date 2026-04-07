@@ -1,6 +1,9 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { cn } from '@utils';
+import { Portal } from '../Portal';
 import type { MenuProps, MenuItemProps, MenuDividerProps } from './Menu.types';
+
+const MENU_Z_INDEX = 12000;
 
 /**
  * MenuItem component for menu items
@@ -91,35 +94,52 @@ export const Menu: FC<MenuProps> = ({
   const menuRef = useRef<HTMLDivElement>(null);
   const [coords, setCoords] = useState({ top: 0, left: 0 });
 
-  // Calculate position based on anchor element
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!open || !anchorEl) return;
 
-    const rect = anchorEl.getBoundingClientRect();
-    let top = 0;
-    let left = 0;
+    const update = () => {
+      const rect = anchorEl!.getBoundingClientRect();
+      const menuEl = menuRef.current;
+      const menuH = menuEl ? menuEl.offsetHeight : Math.min(maxHeight, 200);
+      let top = 0;
+      let left = 0;
 
-    switch (position) {
-      case 'bottom-start':
-        top = rect.bottom + 4;
-        left = rect.left;
-        break;
-      case 'bottom-end':
-        top = rect.bottom + 4;
-        left = rect.right - minWidth;
-        break;
-      case 'top-start':
-        top = rect.top - 4;
-        left = rect.left;
-        break;
-      case 'top-end':
-        top = rect.top - 4;
-        left = rect.right - minWidth;
-        break;
-    }
+      switch (position) {
+        case 'bottom-start':
+          top = rect.bottom + 4;
+          left = rect.left;
+          break;
+        case 'bottom-end':
+          top = rect.bottom + 4;
+          left = rect.right - minWidth;
+          break;
+        case 'top-start':
+          top = rect.top - menuH - 4;
+          left = rect.left;
+          break;
+        case 'top-end':
+          top = rect.top - menuH - 4;
+          left = rect.right - minWidth;
+          break;
+      }
 
-    setCoords({ top, left });
-  }, [open, anchorEl, position, minWidth]);
+      left = Math.max(8, Math.min(left, window.innerWidth - minWidth - 8));
+      const maxTop = window.innerHeight - menuH - 8;
+      top = Math.max(8, Math.min(top, maxTop));
+      setCoords({ top, left });
+    };
+
+    update();
+    const ro = menuRef.current && typeof ResizeObserver !== 'undefined' ? new ResizeObserver(update) : null;
+    if (menuRef.current && ro) ro.observe(menuRef.current);
+    window.addEventListener('resize', update);
+    window.addEventListener('scroll', update, true);
+    return () => {
+      ro?.disconnect();
+      window.removeEventListener('resize', update);
+      window.removeEventListener('scroll', update, true);
+    };
+  }, [open, anchorEl, position, minWidth, maxHeight]);
 
   // Handle click outside
   useEffect(() => {
@@ -154,27 +174,30 @@ export const Menu: FC<MenuProps> = ({
   if (!open) return null;
 
   return (
-    <div
-      ref={menuRef}
-      role="menu"
-      className={cn(
-        'bear-fixed bear-z-50 bear-bg-white dark:bear-bg-gray-800',
-        'bear-border bear-border-gray-200 dark:bear-border-gray-700',
-        'bear-rounded-lg bear-shadow-lg bear-py-1',
-        'bear-overflow-y-auto',
-        className
-      )}
-      style={{
-        top: coords.top,
-        left: coords.left,
-        minWidth,
-        maxHeight,
-      }}
-      data-testid={testId}
-      {...props}
-    >
-      {children}
-    </div>
+    <Portal>
+      <div
+        ref={menuRef}
+        role="menu"
+        className={cn(
+          'bear-fixed bear-bg-white dark:bear-bg-gray-800',
+          'bear-border bear-border-gray-200 dark:bear-border-gray-700',
+          'bear-rounded-lg bear-shadow-lg bear-py-1',
+          'bear-overflow-y-auto',
+          className
+        )}
+        style={{
+          top: coords.top,
+          left: coords.left,
+          minWidth,
+          maxHeight,
+          zIndex: MENU_Z_INDEX,
+        }}
+        data-testid={testId}
+        {...props}
+      >
+        {children}
+      </div>
+    </Portal>
   );
 };
 

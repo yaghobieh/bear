@@ -11,7 +11,7 @@ import {
 } from '../../TimePicker.constants';
 import { ClockFaceSvg } from '../../helpers';
 
-const DIAL_MODE_ACTIVE = 'bear-text-blue-600 dark:bear-text-blue-400 bear-font-bold bear-bg-blue-50 dark:bear-bg-blue-900/30 bear-rounded bear-px-1';
+const DIAL_MODE_ACTIVE = 'bear-text-pink-600 dark:bear-text-pink-400 bear-font-bold bear-bg-pink-50 dark:bear-bg-pink-900/30 bear-rounded bear-px-1';
 const DIAL_MODE_INACTIVE = 'bear-text-gray-400 dark:bear-text-zinc-500 hover:bear-text-gray-600 dark:hover:bear-text-zinc-300 bear-cursor-pointer bear-px-1';
 
 export const TimePickerDialDropdown: FC<TimePickerDialProps> = ({
@@ -92,7 +92,7 @@ export const TimePickerDialDropdown: FC<TimePickerDialProps> = ({
                 className={cn(
                   'Bear-TimePicker__dial-period-btn bear-px-2 bear-py-0.5 bear-rounded bear-text-sm bear-transition-colors',
                   period === p
-                    ? 'bear-text-blue-600 dark:bear-text-blue-400 bear-font-medium'
+                    ? 'bear-text-pink-600 dark:bear-text-pink-400 bear-font-medium'
                     : 'bear-text-gray-400 dark:bear-text-zinc-500 hover:bear-text-gray-600 dark:hover:bear-text-zinc-400'
                 )}
               >

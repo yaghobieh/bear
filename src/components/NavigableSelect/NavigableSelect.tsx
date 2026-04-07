@@ -1,5 +1,6 @@
 import { FC, useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { cn } from '@utils';
+import { Portal } from '../Portal';
 import type { NavigableSelectProps, NavigableSelectOption } from './NavigableSelect.types';
 import {
   DEFAULT_PLACEHOLDER,
@@ -53,9 +54,11 @@ export const NavigableSelect: FC<NavigableSelectProps> = (props) => {
   const [search, setSearch] = useState('');
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0, width: 0 });
 
   const selectedValues = isControlled ? normalizeValue(controlledValue) : internalValue;
 
@@ -82,17 +85,38 @@ export const NavigableSelect: FC<NavigableSelectProps> = (props) => {
   // Flat list for keyboard navigation
   const flatOptions = useMemo(() => filtered.filter((o) => !o.disabled), [filtered]);
 
-  // Close on outside click
   useEffect(() => {
+    if (!isOpen) return;
+    const updatePosition = () => {
+      const rect = triggerRef.current?.getBoundingClientRect();
+      if (!rect) return;
+      setMenuPosition({
+        top: rect.bottom + 4,
+        left: Math.max(8, Math.min(rect.left, window.innerWidth - rect.width - 8)),
+        width: rect.width,
+      });
+    };
+    updatePosition();
+    window.addEventListener('resize', updatePosition);
+    window.addEventListener('scroll', updatePosition, true);
+    return () => {
+      window.removeEventListener('resize', updatePosition);
+      window.removeEventListener('scroll', updatePosition, true);
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
     const handler = (e: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
-        setIsOpen(false);
-        setSearch('');
-      }
+      const t = e.target as Node;
+      if (containerRef.current?.contains(t)) return;
+      if (dropdownRef.current?.contains(t)) return;
+      setIsOpen(false);
+      setSearch('');
     };
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
-  }, []);
+  }, [isOpen]);
 
   // Scroll active option into view
   useEffect(() => {
@@ -310,17 +334,23 @@ export const NavigableSelect: FC<NavigableSelectProps> = (props) => {
         </svg>
       </button>
 
-      {/* Dropdown */}
       {isOpen && (
+        <Portal>
         <div
+          ref={dropdownRef}
           className={cn(
             'Bear-NavigableSelect__dropdown',
-            'bear-absolute bear-top-full bear-left-0 bear-w-full bear-mt-1',
+            'bear-fixed',
             'bear-bg-white dark:bear-bg-gray-900',
             'bear-border bear-border-gray-200 dark:bear-border-gray-700',
             'bear-rounded-lg bear-shadow-lg bear-overflow-hidden',
           )}
-          style={{ zIndex: DROPDOWN_Z_INDEX }}
+          style={{
+            zIndex: DROPDOWN_Z_INDEX,
+            top: menuPosition.top,
+            left: menuPosition.left,
+            width: menuPosition.width,
+          }}
         >
           {/* Search */}
           {searchable && (
@@ -477,6 +507,7 @@ export const NavigableSelect: FC<NavigableSelectProps> = (props) => {
             </span>
           </div>
         </div>
+        </Portal>
       )}
 
       {/* Helper / Error */}

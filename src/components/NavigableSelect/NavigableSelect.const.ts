@@ -38,7 +38,7 @@ export const TAG_SIZE_CLASSES: Record<NavigableSelectSize, string> = {
 };
 
 /** Dropdown z-index */
-export const DROPDOWN_Z_INDEX = 50;
+export const DROPDOWN_Z_INDEX = 10000;
 
 /** Search input debounce delay */
 export const SEARCH_DEBOUNCE = 0;

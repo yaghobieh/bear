@@ -1,16 +1,9 @@
-import { useEffect, RefObject } from 'react';
+import { useEffect, useRef, useCallback, RefObject } from 'react';
 
-/**
- * Hook to detect clicks outside of an element
- * 
- * @example
- * ```tsx
- * const ref = useRef<HTMLDivElement>(null);
- * useClickOutside(ref, () => setIsOpen(false));
- * 
- * return <div ref={ref}>Dropdown content</div>;
- * ```
- */
+export type UseClickOutsideMultipleOptions = {
+  enabled?: boolean;
+};
+
 export const useClickOutside = <T extends HTMLElement>(
   ref: RefObject<T>,
   handler: (event: MouseEvent | TouchEvent) => void
@@ -18,8 +11,7 @@ export const useClickOutside = <T extends HTMLElement>(
   useEffect(() => {
     const listener = (event: MouseEvent | TouchEvent) => {
       const el = ref.current;
-      
-      // Do nothing if clicking ref's element or descendent elements
+
       if (!el || el.contains(event.target as Node)) {
         return;
       }
@@ -35,5 +27,33 @@ export const useClickOutside = <T extends HTMLElement>(
       document.removeEventListener('touchstart', listener);
     };
   }, [ref, handler]);
+};
+
+export const useClickOutsideMultiple = <T extends HTMLElement>(
+  refs: RefObject<T>[],
+  handler: (event: MouseEvent | TouchEvent) => void,
+  options: UseClickOutsideMultipleOptions = {}
+): void => {
+  const { enabled = true } = options;
+  const handlerRef = useRef(handler);
+  useEffect(() => {
+    handlerRef.current = handler;
+  }, [handler]);
+
+  const onOutside = useCallback((event: MouseEvent | TouchEvent) => {
+    const target = event.target as Node;
+    if (refs.some((r) => r.current?.contains(target))) return;
+    handlerRef.current(event);
+  }, [refs]);
+
+  useEffect(() => {
+    if (!enabled) return;
+    document.addEventListener('mousedown', onOutside);
+    document.addEventListener('touchstart', onOutside);
+    return () => {
+      document.removeEventListener('mousedown', onOutside);
+      document.removeEventListener('touchstart', onOutside);
+    };
+  }, [enabled, onOutside]);
 };
 

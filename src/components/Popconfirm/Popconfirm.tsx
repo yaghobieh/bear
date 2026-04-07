@@ -1,11 +1,11 @@
-import { FC, useState, useRef, useEffect, useCallback } from 'react';
+import { FC, useState, useRef, useEffect, useCallback, type CSSProperties } from 'react';
 import { cn } from '@utils';
 import { Typography } from '../Typography';
-import type { PopconfirmProps } from './Popconfirm.types';
+import { Portal } from '../Portal';
+import type { PopconfirmProps, PopconfirmPlacement } from './Popconfirm.types';
 import {
   ROOT_CLASS,
   POPUP_CLASSES,
-  PLACEMENT_OFFSETS,
   ICON_AREA_CLASSES,
   ICON_WRAPPER_CLASSES,
   CONTENT_CLASSES,
@@ -16,6 +16,30 @@ import {
   DEFAULT_CONFIRM_TEXT,
   DEFAULT_CANCEL_TEXT,
 } from './Popconfirm.const';
+
+const POPCONFIRM_Z = 10000;
+
+function getPopconfirmPosition(placement: PopconfirmPlacement, rect: DOMRect, offset: number): CSSProperties {
+  const base: CSSProperties = { position: 'fixed', zIndex: POPCONFIRM_Z };
+  if (placement === 'bottom') {
+    base.top = rect.bottom + offset;
+    base.left = rect.left + rect.width / 2;
+    base.transform = 'translateX(-50%)';
+  } else if (placement === 'top') {
+    base.bottom = window.innerHeight - rect.top + offset;
+    base.left = rect.left + rect.width / 2;
+    base.transform = 'translateX(-50%)';
+  } else if (placement === 'left') {
+    base.right = window.innerWidth - rect.left + offset;
+    base.top = rect.top + rect.height / 2;
+    base.transform = 'translateY(-50%)';
+  } else {
+    base.left = rect.right + offset;
+    base.top = rect.top + rect.height / 2;
+    base.transform = 'translateY(-50%)';
+  }
+  return base;
+}
 
 const DEFAULT_ICON = (
   <svg className="bear-w-4 bear-h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -40,17 +64,39 @@ export const Popconfirm: FC<PopconfirmProps> = (props) => {
   } = props;
 
   const [isOpen, setIsOpen] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [popupStyle, setPopupStyle] = useState<CSSProperties>({});
+  const triggerRef = useRef<HTMLDivElement>(null);
+  const popupRef = useRef<HTMLDivElement>(null);
 
   const handleClose = useCallback(() => setIsOpen(false), []);
 
   useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
-        handleClose();
-      }
+    if (!isOpen || !triggerRef.current) return;
+
+    const update = () => {
+      if (!triggerRef.current) return;
+      const rect = triggerRef.current.getBoundingClientRect();
+      setPopupStyle(getPopconfirmPosition(placement, rect, 8));
     };
-    if (isOpen) document.addEventListener('mousedown', handleClickOutside);
+
+    update();
+    window.addEventListener('resize', update);
+    window.addEventListener('scroll', update, true);
+    return () => {
+      window.removeEventListener('resize', update);
+      window.removeEventListener('scroll', update, true);
+    };
+  }, [isOpen, placement]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      const t = e.target as Node;
+      if (triggerRef.current?.contains(t)) return;
+      if (popupRef.current?.contains(t)) return;
+      handleClose();
+    };
+    document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [isOpen, handleClose]);
 
@@ -79,37 +125,40 @@ export const Popconfirm: FC<PopconfirmProps> = (props) => {
   const confirmBtnClasses = variant === 'danger' ? CONFIRM_BTN_DANGER_CLASSES : CONFIRM_BTN_DEFAULT_CLASSES;
 
   return (
-    <div ref={containerRef} className={cn(ROOT_CLASS, 'bear-relative bear-inline-block')} data-testid={testId}>
+    <div className={cn(ROOT_CLASS, 'bear-inline-block')} data-testid={testId}>
       <div
+        ref={triggerRef}
         onClick={handleTriggerClick}
         className={cn('bear-cursor-pointer', disabled && 'bear-opacity-50 bear-cursor-not-allowed bear-pointer-events-none')}
       >
         {children}
       </div>
       {isOpen && (
-        <div className={cn(POPUP_CLASSES, PLACEMENT_OFFSETS[placement])}>
-          <div className={ICON_AREA_CLASSES}>
-            <div className={ICON_WRAPPER_CLASSES}>{icon}</div>
-            <div className={CONTENT_CLASSES}>
-              <Typography variant="body2" className="bear-text-gray-900 dark:bear-text-zinc-100">
-                {title}
-              </Typography>
-              {description && (
-                <Typography variant="caption" color="secondary" className="bear-mt-0.5">
-                  {description}
+        <Portal>
+          <div ref={popupRef} className={POPUP_CLASSES} style={popupStyle}>
+            <div className={ICON_AREA_CLASSES}>
+              <div className={ICON_WRAPPER_CLASSES}>{icon}</div>
+              <div className={CONTENT_CLASSES}>
+                <Typography variant="body2" className="bear-text-gray-900 dark:bear-text-zinc-100">
+                  {title}
                 </Typography>
-              )}
+                {description && (
+                  <Typography variant="caption" color="secondary" className="bear-mt-0.5">
+                    {description}
+                  </Typography>
+                )}
+              </div>
+            </div>
+            <div className={BUTTONS_WRAPPER_CLASSES}>
+              <button type="button" className={CANCEL_BTN_CLASSES} onClick={handleCancel}>
+                {cancelText}
+              </button>
+              <button type="button" className={confirmBtnClasses} onClick={handleConfirm}>
+                {confirmText}
+              </button>
             </div>
           </div>
-          <div className={BUTTONS_WRAPPER_CLASSES}>
-            <button type="button" className={CANCEL_BTN_CLASSES} onClick={handleCancel}>
-              {cancelText}
-            </button>
-            <button type="button" className={confirmBtnClasses} onClick={handleConfirm}>
-              {confirmText}
-            </button>
-          </div>
-        </div>
+        </Portal>
       )}
     </div>
   );

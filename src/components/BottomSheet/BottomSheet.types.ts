@@ -10,5 +10,7 @@ export interface BottomSheetProps {
   closeOnBackdrop?: boolean;
   closeOnEscape?: boolean;
   showHandle?: boolean;
+  enableScroll?: boolean;
+  isSticky?: boolean;
   className?: string;
 }

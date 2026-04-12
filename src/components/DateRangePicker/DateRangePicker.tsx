@@ -113,18 +113,27 @@ export const DateRangePicker: FC<DateRangePickerProps> = (props) => {
   }, [value]);
 
   useEffect(() => {
-    if (isOpen && triggerRef.current) {
-      const rect = triggerRef.current.getBoundingClientRect();
-      const padding = 8;
-      const dropdownHeight = 400;
+    if (!isOpen || !triggerRef.current) return;
+    const padding = 8;
+    const dropdownHeight = 420;
+    const update = () => {
+      const rect = triggerRef.current!.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
       const spaceBelow = viewportHeight - rect.bottom;
       const showAbove = spaceBelow < dropdownHeight && rect.top > dropdownHeight;
-      setDropdownPosition({
-        top: showAbove ? rect.top - dropdownHeight - padding : rect.bottom + padding,
-        left: rect.left,
-      });
-    }
+      let top = showAbove ? rect.top - dropdownHeight - padding : rect.bottom + padding;
+      top = Math.max(8, Math.min(top, viewportHeight - dropdownHeight - 8));
+      const estW = Math.min(640, window.innerWidth - 16);
+      let left = Math.max(8, Math.min(rect.left, window.innerWidth - estW - 8));
+      setDropdownPosition({ top, left });
+    };
+    update();
+    window.addEventListener('resize', update);
+    window.addEventListener('scroll', update, true);
+    return () => {
+      window.removeEventListener('resize', update);
+      window.removeEventListener('scroll', update, true);
+    };
   }, [isOpen]);
 
   useEffect(() => {
@@ -201,7 +210,7 @@ export const DateRangePicker: FC<DateRangePickerProps> = (props) => {
             ref={dropdownRef}
             data-bear-daterangepicker-dropdown
             className={cn(
-              'bear-fixed bear-z-[9999] bear-bg-white dark:bear-bg-zinc-800 bear-border bear-border-gray-200 dark:bear-border-zinc-700 bear-rounded-xl bear-shadow-xl bear-p-4'
+              'bear-fixed bear-z-[10000] bear-max-w-[calc(100vw-16px)] bear-bg-white dark:bear-bg-zinc-800 bear-border bear-border-gray-200 dark:bear-border-zinc-700 bear-rounded-xl bear-shadow-xl bear-p-4 bear-overflow-x-auto'
             )}
             style={{ top: dropdownPosition.top, left: dropdownPosition.left }}
           >

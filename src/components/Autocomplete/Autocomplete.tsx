@@ -1,7 +1,9 @@
 import { FC, useState, useRef, useEffect, KeyboardEvent, ChangeEvent } from 'react';
 import { cn } from '@utils';
+import { Portal } from '../Portal';
 import type { AutocompleteOption, AutocompleteProps } from './Autocomplete.types';
 import { defaultFilter } from './Autocomplete.utils';
+import { AUTOCOMPLETE_PANEL_Z } from './Autocomplete.const';
 
 /**
  * Autocomplete - Text input with suggestions
@@ -35,22 +37,49 @@ export const Autocomplete: FC<AutocompleteProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
+  const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0, width: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
+  const inputWrapRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
   const filteredOptions = filterOptions(options, value);
 
-  // Handle click outside
+  const showListPanel = isOpen && !disabled && filteredOptions.length > 0;
+  const showEmptyPanel = isOpen && !disabled && filteredOptions.length === 0 && Boolean(value) && !loading;
+
   useEffect(() => {
+    if (!showListPanel && !showEmptyPanel) return;
+    const updatePosition = () => {
+      const rect = inputWrapRef.current?.getBoundingClientRect();
+      if (!rect) return;
+      setMenuPosition({
+        top: rect.bottom + 4,
+        left: Math.max(8, Math.min(rect.left, window.innerWidth - rect.width - 8)),
+        width: rect.width,
+      });
+    };
+    updatePosition();
+    window.addEventListener('resize', updatePosition);
+    window.addEventListener('scroll', updatePosition, true);
+    return () => {
+      window.removeEventListener('resize', updatePosition);
+      window.removeEventListener('scroll', updatePosition, true);
+    };
+  }, [showListPanel, showEmptyPanel]);
+
+  useEffect(() => {
+    if (!isOpen) return;
     const handleClickOutside = (e: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
-        setIsOpen(false);
-      }
+      const t = e.target as Node;
+      if (containerRef.current?.contains(t)) return;
+      if (panelRef.current?.contains(t)) return;
+      setIsOpen(false);
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  }, [isOpen]);
 
   // Reset highlighted index when options change
   useEffect(() => {
@@ -124,7 +153,7 @@ export const Autocomplete: FC<AutocompleteProps> = ({
         </label>
       )}
 
-      <div className="bear-relative">
+      <div className="bear-relative" ref={inputWrapRef}>
         <input
           ref={inputRef}
           type="text"
@@ -161,41 +190,62 @@ export const Autocomplete: FC<AutocompleteProps> = ({
         </div>
       </div>
 
-      {isOpen && !disabled && filteredOptions.length > 0 && (
-        <div
-          ref={listRef}
-          className="bear-absolute bear-z-50 bear-w-full bear-mt-1 bear-py-1 bear-bg-white dark:bear-bg-gray-800 bear-border bear-border-gray-200 dark:bear-border-gray-700 bear-rounded-lg bear-shadow-lg bear-max-h-60 bear-overflow-auto"
-        >
-          {filteredOptions.map((opt, idx) => (
-            <button
-              key={opt.value}
-              type="button"
-              disabled={opt.disabled}
-              onClick={() => handleSelect(opt)}
-              className={cn(
-                'bear-w-full bear-px-4 bear-py-2 bear-text-left bear-text-sm bear-transition-colors',
-                'bear-text-gray-900 dark:bear-text-white',
-                idx === highlightedIndex
-                  ? 'bear-bg-amber-50 dark:bear-bg-amber-900/20'
-                  : 'hover:bear-bg-gray-50 dark:hover:bear-bg-gray-700',
-                opt.disabled && 'bear-opacity-50 bear-cursor-not-allowed'
-              )}
-            >
-              <div className="bear-font-medium">{opt.label}</div>
-              {opt.description && (
-                <div className="bear-text-xs bear-text-gray-500 dark:bear-text-gray-400 bear-mt-0.5">
-                  {opt.description}
-                </div>
-              )}
-            </button>
-          ))}
-        </div>
+      {showListPanel && (
+        <Portal>
+          <div
+            ref={panelRef}
+            className="bear-fixed bear-rounded-lg bear-border bear-border-gray-200 dark:bear-border-gray-700 bear-shadow-lg bear-bg-white dark:bear-bg-gray-800"
+            style={{
+              top: menuPosition.top,
+              left: menuPosition.left,
+              width: menuPosition.width,
+              zIndex: AUTOCOMPLETE_PANEL_Z,
+            }}
+          >
+            <div ref={listRef} className="bear-max-h-60 bear-overflow-auto bear-py-1">
+              {filteredOptions.map((opt, idx) => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  disabled={opt.disabled}
+                  onClick={() => handleSelect(opt)}
+                  className={cn(
+                    'bear-w-full bear-px-4 bear-py-2 bear-text-left bear-text-sm bear-transition-colors',
+                    'bear-text-gray-900 dark:bear-text-white',
+                    idx === highlightedIndex
+                      ? 'bear-bg-amber-50 dark:bear-bg-amber-900/20'
+                      : 'hover:bear-bg-gray-50 dark:hover:bear-bg-gray-700',
+                    opt.disabled && 'bear-opacity-50 bear-cursor-not-allowed'
+                  )}
+                >
+                  <div className="bear-font-medium">{opt.label}</div>
+                  {opt.description && (
+                    <div className="bear-text-xs bear-text-gray-500 dark:bear-text-gray-400 bear-mt-0.5">
+                      {opt.description}
+                    </div>
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+        </Portal>
       )}
 
-      {isOpen && !disabled && filteredOptions.length === 0 && value && !loading && (
-        <div className="bear-absolute bear-z-50 bear-w-full bear-mt-1 bear-py-3 bear-px-4 bear-bg-white dark:bear-bg-gray-800 bear-border bear-border-gray-200 dark:bear-border-gray-700 bear-rounded-lg bear-shadow-lg bear-text-sm bear-text-gray-500">
-          {freeSolo ? 'Press Enter to use this value' : 'No results found'}
-        </div>
+      {showEmptyPanel && (
+        <Portal>
+          <div
+            ref={panelRef}
+            className="bear-fixed bear-py-3 bear-px-4 bear-bg-white dark:bear-bg-gray-800 bear-border bear-border-gray-200 dark:bear-border-gray-700 bear-rounded-lg bear-shadow-lg bear-text-sm bear-text-gray-500"
+            style={{
+              top: menuPosition.top,
+              left: menuPosition.left,
+              width: menuPosition.width,
+              zIndex: AUTOCOMPLETE_PANEL_Z,
+            }}
+          >
+            {freeSolo ? 'Press Enter to use this value' : 'No results found'}
+          </div>
+        </Portal>
       )}
 
       {(helperText || error) && (

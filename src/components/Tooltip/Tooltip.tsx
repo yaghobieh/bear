@@ -77,6 +77,20 @@ export const Tooltip: FC<TooltipProps> = ({
   }, [isVisible, updatePosition]);
 
   useEffect(() => {
+    if (!isVisible) return;
+    const schedule = () => {
+      requestAnimationFrame(() => updatePosition());
+    };
+    schedule();
+    window.addEventListener('resize', schedule);
+    window.addEventListener('scroll', schedule, true);
+    return () => {
+      window.removeEventListener('resize', schedule);
+      window.removeEventListener('scroll', schedule, true);
+    };
+  }, [isVisible, updatePosition]);
+
+  useEffect(() => {
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
@@ -107,7 +121,7 @@ export const Tooltip: FC<TooltipProps> = ({
               top: coords.y,
             }}
             className={cn(
-              'bear-fixed bear-z-[9999]',
+              'bear-fixed bear-z-[11000]',
               'Bear-Tooltip',
               `Bear-Tooltip--${position}`,
               'bear-px-3 bear-py-2 bear-rounded-lg',

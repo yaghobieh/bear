@@ -21,6 +21,8 @@ export interface DropdownItem {
   header?: boolean;
   /** Danger/destructive action */
   danger?: boolean;
+  /** Selected/active visual state */
+  selected?: boolean;
   /** Click handler */
   onClick?: () => void;
   /** Nested items for submenu */

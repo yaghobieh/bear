@@ -1,12 +1,28 @@
 import { FC, useState } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
+import { Autocomplete } from '@forgedevstack/bear';
+import type { AutocompleteOption } from '@forgedevstack/bear';
+
+const fruitOptions: AutocompleteOption[] = [
+  { value: 'apple', label: 'Apple' },
+  { value: 'banana', label: 'Banana' },
+  { value: 'cherry', label: 'Cherry' },
+  { value: 'date', label: 'Date' },
+  { value: 'elderberry', label: 'Elderberry' },
+  { value: 'fig', label: 'Fig' },
+  { value: 'grape', label: 'Grape' },
+];
+
+const countryOptions: AutocompleteOption[] = [
+  { value: 'us', label: 'United States', description: '+1' },
+  { value: 'uk', label: 'United Kingdom', description: '+44' },
+  { value: 'de', label: 'Germany', description: '+49' },
+];
 
 const AutocompletePage: FC = () => {
-  const [inputValue, setInputValue] = useState('');
-  const [showDropdown, setShowDropdown] = useState(false);
-  const options = ['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry', 'Fig', 'Grape'];
-  const filteredOptions = options.filter(o => o.toLowerCase().includes(inputValue.toLowerCase()));
+  const [fruitValue, setFruitValue] = useState('');
+  const [countryValue, setCountryValue] = useState('');
 
   return (
     <div className="fade-in">
@@ -22,91 +38,61 @@ const AutocompletePage: FC = () => {
 
       <ComponentPreview
         title="Basic Usage"
-        description="Type to filter suggestions."
-        code={`const options = ['Apple', 'Banana', 'Cherry', 'Date'];
+        description="Type to filter suggestions. Menu renders in a portal above surrounding layout."
+        allowOverflow
+        code={`const options = [
+  { value: 'apple', label: 'Apple' },
+  { value: 'banana', label: 'Banana' },
+];
 
 <Autocomplete
   options={options}
+  value={value}
+  onChange={setValue}
   placeholder="Search fruits..."
-  onChange={(value) => console.log(value)}
 />`}
       >
-        <div className="max-w-xs mx-auto relative">
-          <input
-            type="text"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            onFocus={() => setShowDropdown(true)}
-            onBlur={() => setTimeout(() => setShowDropdown(false), 150)}
+        <div className="max-w-xs mx-auto w-full">
+          <Autocomplete
+            options={fruitOptions}
+            value={fruitValue}
+            onChange={setFruitValue}
             placeholder="Search fruits..."
-            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-bear-500 focus:border-transparent"
           />
-          {showDropdown && inputValue && (
-            <div className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg z-10 max-h-48 overflow-auto">
-              {filteredOptions.length > 0 ? (
-                filteredOptions.map(option => (
-                  <button
-                    key={option}
-                    onClick={() => setInputValue(option)}
-                    className="w-full px-4 py-2 text-left text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-                  >
-                    {option}
-                  </button>
-                ))
-              ) : (
-                <div className="px-4 py-3 text-sm text-gray-500">No results found</div>
-              )}
-            </div>
-          )}
         </div>
       </ComponentPreview>
 
       <ComponentPreview
         title="With Object Options"
-        description="Use objects with label and value."
+        description="Options use label, value, and optional description."
+        allowOverflow
         code={`const options = [
-  { label: 'United States', value: 'us' },
-  { label: 'United Kingdom', value: 'uk' },
-  { label: 'Germany', value: 'de' },
+  { value: 'us', label: 'United States', description: '+1' },
+  { value: 'uk', label: 'United Kingdom', description: '+44' },
 ];
 
 <Autocomplete
   options={options}
-  getOptionLabel={(opt) => opt.label}
-  onChange={(value) => console.log(value)}
+  value={value}
+  onChange={setValue}
+  placeholder="Select country..."
 />`}
       >
-        <div className="max-w-xs mx-auto">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Select country..."
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-            />
-            <div className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg">
-              {[
-                { flag: '🇺🇸', name: 'United States' },
-                { flag: '🇬🇧', name: 'United Kingdom' },
-                { flag: '🇩🇪', name: 'Germany' },
-              ].map(c => (
-                <div key={c.name} className="px-4 py-2 flex items-center gap-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
-                  <span>{c.flag}</span>
-                  <span className="text-gray-700 dark:text-gray-300">{c.name}</span>
-                </div>
-              ))}
-            </div>
-          </div>
+        <div className="max-w-xs mx-auto w-full">
+          <Autocomplete
+            options={countryOptions}
+            value={countryValue}
+            onChange={setCountryValue}
+            placeholder="Select country..."
+          />
         </div>
       </ComponentPreview>
 
       <ComponentPreview
         title="Free Solo"
         description="Allow custom values not in options."
-        code={`<Autocomplete
-  options={options}
-  freeSolo
-  placeholder="Enter or select..."
-/>`}
+        allowOverflow
+        code={`<Autocomplete options={options} value={value} onChange={setValue} freeSolo placeholder="Enter or select..." />`}
       >
         <div className="flex items-center justify-center gap-4 py-4">
           <div className="text-center">
@@ -154,12 +140,12 @@ const AutocompletePage: FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-              <tr><td className="px-4 py-3 font-mono text-bear-600">options</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>T[] | (query: string) =&gt; Promise&lt;T[]&gt;</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">[]</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Options array or async function</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">value</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>T | null</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">null</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Selected value</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">onChange</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>(value: T | null) =&gt; void</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Change handler</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">getOptionLabel</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>(option: T) =&gt; string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Get label for object options</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">options</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>AutocompleteOption[]</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">[]</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Options list</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">value</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">''</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Input value</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">onChange</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>(value: string) =&gt; void</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">—</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Change handler</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">onSelect</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>(option) =&gt; void</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">—</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">When a row is picked</td></tr>
               <tr><td className="px-4 py-3 font-mono text-bear-600">freeSolo</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Allow custom values</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">loading</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Show loading state</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">loading</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Loading indicator</td></tr>
             </tbody>
           </table>
         </div>
@@ -169,4 +155,3 @@ const AutocompletePage: FC = () => {
 };
 
 export default AutocompletePage;
-

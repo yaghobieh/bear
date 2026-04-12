@@ -21,6 +21,8 @@ export interface GaugeProps extends HTMLAttributes<HTMLDivElement> {
   label?: ReactNode;
   /** Animate on render */
   animated?: boolean;
+  /** Fill transition duration in ms when animated */
+  fillDurationMs?: number;
   /** Arc angle (180 for half, 270 for 3/4, 360 for full) */
   arcAngle?: number;
   /** Gradient colors [start, end] */

@@ -16,7 +16,7 @@ export const MODAL_SIZE_CLASSES: Record<ModalSize, string> = {
 export const MODAL_BACKDROP_CLASSES = 'bear-absolute bear-inset-0 bear-bg-black/60 bear-backdrop-blur-sm bear-transition-opacity';
 
 // Container
-export const MODAL_CONTAINER_CLASSES = 'bear-relative bear-w-full bear-bg-white dark:bear-bg-zinc-900 bear-rounded-xl bear-shadow-2xl bear-border bear-border-gray-200 dark:bear-border-zinc-700 bear-transform bear-transition-all bear-animate-in bear-fade-in bear-zoom-in-95';
+export const MODAL_CONTAINER_CLASSES = 'bear-relative bear-w-full bear-max-h-[calc(100vh-2rem)] bear-overflow-y-auto bear-bg-white dark:bear-bg-zinc-900 bear-rounded-xl bear-shadow-2xl bear-border bear-border-gray-200 dark:bear-border-zinc-700 bear-transform bear-transition-all bear-animate-in bear-fade-in bear-zoom-in-95';
 
 // Header
 export const MODAL_HEADER_CLASSES = 'bear-flex bear-items-center bear-justify-between bear-px-6 bear-py-4 bear-border-b bear-border-gray-200 dark:bear-border-zinc-700';

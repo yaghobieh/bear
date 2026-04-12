@@ -197,22 +197,22 @@ export const CreditInput: FC<CreditInputProps> = ({
       )}
 
       {mode === 'single' ? (
-        <div className={cn('Bear-CreditInput__single', wrapperBaseClass)}>
-          <div className="Bear-CreditInput__icon bear-pl-3 bear-pr-1">
-            {icon ?? CardIcons[cardType]}
+        <div className={cn('Bear-CreditInput__single bear-flex bear-flex-wrap bear-items-center bear-gap-2 sm:bear-gap-0', wrapperBaseClass)}>
+          <div className="Bear-CreditInput__row-main bear-flex bear-min-w-0 bear-flex-1 bear-basis-full sm:bear-basis-0 sm:bear-flex-1 bear-items-center">
+            <div className="Bear-CreditInput__icon bear-pl-3 bear-pr-1 bear-shrink-0">
+              {icon ?? CardIcons[cardType]}
+            </div>
+            <input
+              type="text"
+              inputMode="numeric"
+              autoComplete="cc-number"
+              value={cardNumber}
+              onChange={handleCardNumberChange}
+              placeholder={t.cardNumberPlaceholder}
+              disabled={disabled}
+              className={cn('Bear-CreditInput__number bear-min-w-0 bear-flex-1', inputBaseClass)}
+            />
           </div>
-
-          <input
-            type="text"
-            inputMode="numeric"
-            autoComplete="cc-number"
-            value={cardNumber}
-            onChange={handleCardNumberChange}
-            placeholder={t.cardNumberPlaceholder}
-            disabled={disabled}
-            className={cn('Bear-CreditInput__number bear-flex-1', inputBaseClass)}
-          />
-
           <input
             type="text"
             inputMode="numeric"
@@ -221,9 +221,8 @@ export const CreditInput: FC<CreditInputProps> = ({
             onChange={handleExpiryChange}
             placeholder={t.expiryPlaceholder}
             disabled={disabled}
-            className={cn('Bear-CreditInput__expiry bear-w-16 bear-text-center', inputBaseClass)}
+            className={cn('Bear-CreditInput__expiry bear-w-20 sm:bear-w-16 bear-text-center bear-shrink-0', inputBaseClass)}
           />
-
           <input
             type="text"
             inputMode="numeric"
@@ -232,7 +231,7 @@ export const CreditInput: FC<CreditInputProps> = ({
             onChange={handleCvvChange}
             placeholder={t.cvvPlaceholder}
             disabled={disabled}
-            className={cn('Bear-CreditInput__cvv bear-w-12 bear-text-center bear-pr-3', inputBaseClass)}
+            className={cn('Bear-CreditInput__cvv bear-w-14 sm:bear-w-12 bear-text-center bear-pr-3 bear-shrink-0', inputBaseClass)}
           />
         </div>
       ) : (

@@ -6,7 +6,7 @@ export {
   usePrefersReducedMotion,
   usePrefersDark,
 } from './useMediaQuery';
-export { useClickOutside } from './useClickOutside';
+export { useClickOutside, useClickOutsideMultiple } from './useClickOutside';
 export { useResizeObserver } from './useResizeObserver';
 export type { UseResizeObserverOptions, UseResizeObserverReturn } from './useResizeObserver';
 export { useDisclosure } from './useDisclosure';

@@ -1,4 +1,4 @@
-import { FC, useMemo, useId } from 'react';
+import { FC, useMemo, useId, useState, useLayoutEffect } from 'react';
 import { cn } from '@utils';
 import { GaugeProps } from './Gauge.types';
 
@@ -13,20 +13,21 @@ export const Gauge: FC<GaugeProps> = ({
   showLabel = true,
   label,
   animated = true,
+  fillDurationMs = 900,
   arcAngle = 270,
   gradient,
   className,
   ...props
 }) => {
   const gradientId = useId();
-  
+
   const { percentage, circumference, offset, startAngle } = useMemo(() => {
     const pct = Math.min(Math.max(((value - min) / (max - min)) * 100, 0), 100);
     const radius = 50 - strokeWidth / 2;
     const circ = 2 * Math.PI * radius * (arcAngle / 360);
     const off = circ - (pct / 100) * circ;
     const start = 90 + (360 - arcAngle) / 2;
-    
+
     return {
       percentage: pct,
       circumference: circ,
@@ -34,6 +35,18 @@ export const Gauge: FC<GaugeProps> = ({
       startAngle: start,
     };
   }, [value, min, max, arcAngle, strokeWidth]);
+
+  const [dashOffset, setDashOffset] = useState(() => (animated ? circumference : offset));
+
+  useLayoutEffect(() => {
+    if (!animated) {
+      setDashOffset(offset);
+      return;
+    }
+    setDashOffset(circumference);
+    const id = requestAnimationFrame(() => setDashOffset(offset));
+    return () => cancelAnimationFrame(id);
+  }, [animated, circumference, offset]);
 
   const radius = 50 - strokeWidth / 2;
 
@@ -43,7 +56,7 @@ export const Gauge: FC<GaugeProps> = ({
       style={{ width: size, height: size }}
       {...props}
     >
-      <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90">
+      <svg viewBox="0 0 100 100" className="h-full w-full -rotate-90">
         <defs>
           {gradient && (
             <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
@@ -53,7 +66,6 @@ export const Gauge: FC<GaugeProps> = ({
           )}
         </defs>
 
-        {/* Track */}
         <circle
           cx="50"
           cy="50"
@@ -71,7 +83,6 @@ export const Gauge: FC<GaugeProps> = ({
           }}
         />
 
-        {/* Progress */}
         <circle
           cx="50"
           cy="50"
@@ -81,18 +92,17 @@ export const Gauge: FC<GaugeProps> = ({
           strokeWidth={strokeWidth}
           strokeLinecap="round"
           strokeDasharray={circumference}
-          strokeDashoffset={offset}
-          className={cn(
-            animated && 'transition-all duration-1000 ease-out'
-          )}
+          strokeDashoffset={dashOffset}
           style={{
             transformOrigin: 'center',
             transform: `rotate(${startAngle}deg)`,
+            transitionProperty: animated ? 'stroke-dashoffset' : undefined,
+            transitionDuration: animated ? `${fillDurationMs}ms` : undefined,
+            transitionTimingFunction: animated ? 'cubic-bezier(0.4, 0, 0.2, 1)' : undefined,
           }}
         />
       </svg>
 
-      {/* Label */}
       {showLabel && (
         <div className="absolute inset-0 flex items-center justify-center">
           {label || (
@@ -105,4 +115,3 @@ export const Gauge: FC<GaugeProps> = ({
     </div>
   );
 };
-

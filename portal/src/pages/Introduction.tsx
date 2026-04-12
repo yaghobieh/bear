@@ -86,7 +86,7 @@ const Introduction: FC = () => {
         <div className="relative z-10 text-center max-w-4xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-1.5 rounded-full bg-white/60 dark:bg-white/5 backdrop-blur-sm border border-pink-200/60 dark:border-pink-800/30 text-pink-600 dark:text-pink-400 text-xs md:text-sm font-medium mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-pink-500 animate-pulse" />
-            v1.2.0 — bearStyled, breakpoint overrides, 550+ icons
+            v1.2.1 — portaled dropdowns & overlays, scroll-safe positioning
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 dark:text-white mb-6 leading-[1.1] tracking-tight">

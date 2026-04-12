@@ -31,6 +31,8 @@ export interface ToastProps {
   onClose?: () => void;
   /** Additional CSS class */
   className?: string;
+  /** Scroll the toast into view when it appears */
+  autoScroll?: boolean;
 }
 
 export interface ToastContainerProps {

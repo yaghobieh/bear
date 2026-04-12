@@ -1,15 +1,52 @@
 import { FC } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
-import { Form, Input, Button } from '@forgedevstack/bear';
+import { Form, Input, Button, BearIcons, Card } from '@forgedevstack/bear';
 
 const FormPage: FC = () => {
   return (
     <div className="fade-in">
       <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Form</h1>
-      <p className="text-gray-600 dark:text-gray-400 mb-8">
+      <p className="text-gray-600 dark:text-gray-400 mb-6">
         Form management with validation, Form.Item wrapper, and useFormContext hook.
       </p>
+
+      <Card className="mb-8 p-4 bg-gradient-to-r from-pink-50 to-purple-50 dark:from-pink-900/20 dark:to-purple-900/20 border-pink-200 dark:border-pink-800">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex items-start gap-3">
+            <BearIcons.ClipboardListIcon size={24} className="text-pink-500 flex-shrink-0 mt-1" />
+            <div>
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
+                Need more power? Try Forge Form
+              </h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                For schema-driven fields, async validation, nested objects, and tight integration with data APIs, use our standalone{' '}
+                <strong>@forgedevstack/forge-form</strong> package alongside Bear inputs.
+              </p>
+            </div>
+          </div>
+          <div className="flex gap-3 flex-shrink-0">
+            <a
+              href="https://www.npmjs.com/package/@forgedevstack/forge-form"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-pink-500 hover:bg-pink-600 text-white text-sm font-medium transition-colors"
+            >
+              <BearIcons.PackageIcon size={16} />
+              npm
+            </a>
+            <a
+              href="https://github.com/yaghobieh/forge-form"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium transition-colors"
+            >
+              <BearIcons.GithubIcon size={16} />
+              GitHub
+            </a>
+          </div>
+        </div>
+      </Card>
 
       <section className="mb-12">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Import</h2>

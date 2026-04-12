@@ -1,16 +1,7 @@
-import type { PopconfirmPlacement } from './Popconfirm.types';
-
 export const ROOT_CLASS = 'Bear-Popconfirm';
 
 export const POPUP_CLASSES =
-  'bear-absolute bear-z-[9999] bear-bg-white dark:bear-bg-zinc-800 bear-border bear-border-gray-200 dark:bear-border-zinc-700 bear-rounded-lg bear-shadow-xl bear-p-4 bear-min-w-[220px] bear-max-w-[320px]';
-
-export const PLACEMENT_OFFSETS: Record<PopconfirmPlacement, string> = {
-  top: 'bear-bottom-full bear-left-1/2 -bear-translate-x-1/2 bear-mb-2',
-  bottom: 'bear-top-full bear-left-1/2 -bear-translate-x-1/2 bear-mt-2',
-  left: 'bear-right-full bear-top-1/2 -bear-translate-y-1/2 bear-mr-2',
-  right: 'bear-left-full bear-top-1/2 -bear-translate-y-1/2 bear-ml-2',
-};
+  'bear-bg-white dark:bear-bg-zinc-800 bear-border bear-border-gray-200 dark:bear-border-zinc-700 bear-rounded-lg bear-shadow-xl bear-p-4 bear-min-w-[220px] bear-max-w-[320px]';
 
 export const ICON_AREA_CLASSES = 'bear-flex bear-items-center bear-gap-3 bear-mb-3';
 

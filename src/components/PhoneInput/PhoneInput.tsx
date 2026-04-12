@@ -105,17 +105,25 @@ export const PhoneInput: FC<PhoneInputProps> = ({
     }
   }, [value?.number, selectedCountry?.format]);
 
-  // Calculate dropdown position
   useEffect(() => {
-    if (isDropdownOpen && triggerRef.current) {
-      const rect = triggerRef.current.getBoundingClientRect();
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
+    if (!isDropdownOpen || !triggerRef.current) return;
+    const panelW = 256;
+    const update = () => {
+      const rect = triggerRef.current!.getBoundingClientRect();
+      let left = rect.left;
+      left = Math.max(8, Math.min(left, window.innerWidth - panelW - 8));
       setDropdownPosition({
-        top: rect.bottom + scrollTop + 4,
-        left: rect.left + scrollLeft,
+        top: rect.bottom + 4,
+        left,
       });
-    }
+    };
+    update();
+    window.addEventListener('resize', update);
+    window.addEventListener('scroll', update, true);
+    return () => {
+      window.removeEventListener('resize', update);
+      window.removeEventListener('scroll', update, true);
+    };
   }, [isDropdownOpen]);
 
   // Focus search input when dropdown opens

@@ -1,4 +1,4 @@
-import { FC, createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react';
+import { FC, createContext, useContext, useState, useCallback, useEffect, useRef, ReactNode } from 'react';
 import { cn } from '@utils';
 import type { 
   ToastProps, 
@@ -88,8 +88,16 @@ const ToastItem: FC<ToastProps & { onRemove: () => void }> = ({
   onClose,
   onRemove,
   className,
+  autoScroll = false,
 }) => {
   const [isExiting, setIsExiting] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (autoScroll && rootRef.current) {
+      rootRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+    }
+  }, [autoScroll]);
 
   useEffect(() => {
     if (duration > 0) {
@@ -120,6 +128,7 @@ const ToastItem: FC<ToastProps & { onRemove: () => void }> = ({
 
   return (
     <div
+      ref={rootRef}
       role="alert"
       className={cn(
         'bear-flex bear-items-start bear-gap-3 bear-p-4 bear-rounded-lg bear-shadow-lg bear-min-w-[300px] bear-max-w-[400px]',
@@ -186,7 +195,7 @@ export const ToastContainer: FC<ToastContainerProps> = ({
   return (
     <div
       className={cn(
-        'bear-fixed bear-z-50 bear-flex bear-flex-col bear-gap-2',
+        'bear-fixed bear-z-[11000] bear-flex bear-flex-col bear-gap-2',
         POSITION_STYLES[position],
         className
       )}

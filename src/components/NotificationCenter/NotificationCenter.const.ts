@@ -24,7 +24,7 @@ export const NOTIFICATION_CENTER_MAX_VISIBLE = 5;
 /**
  * Dropdown z-index
  */
-export const NOTIFICATION_CENTER_Z_INDEX = 9999;
+export const NOTIFICATION_CENTER_Z_INDEX = 10000;
 
 /**
  * Type icon colors

@@ -1,19 +1,11 @@
-import { FC, useState } from 'react';
-import { BreadcrumbsProps, BreadcrumbItem } from './Breadcrumbs.types';
+import { FC, useEffect, useMemo, useState } from 'react';
+import { useBearThemeOptional } from '@context/BearProvider';
+import { resolveMaxVisible } from '@utils/maxVisible.utils';
 import { cn } from '@utils';
+import { Dropdown } from '../Dropdown';
+import { BearIcons } from '../Icon';
+import { BreadcrumbsProps, BreadcrumbItem } from './Breadcrumbs.types';
 import { BREADCRUMBS_SIZE, BREADCRUMBS_ICON_SIZE, BREADCRUMBS_DEFAULTS } from './Breadcrumbs.const';
-
-const HomeIcon: FC<{ className?: string }> = ({ className }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-  </svg>
-);
-
-const ChevronIcon: FC<{ className?: string }> = ({ className }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-  </svg>
-);
 
 export const Breadcrumbs: FC<BreadcrumbsProps> = (props) => {
   const {
@@ -30,73 +22,177 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = (props) => {
     'aria-label': ariaLabel = 'Breadcrumb',
   } = props;
 
-  const [expanded, setExpanded] = useState(false);
+  const theme = useBearThemeOptional();
+  const [ellipsisPickIndex, setEllipsisPickIndex] = useState<number | null>(null);
+  const [itemDropdownPick, setItemDropdownPick] = useState<Record<number, string>>({});
+  const [vw, setVw] = useState(() => (typeof window !== 'undefined' ? window.innerWidth : 1200));
+  useEffect(() => {
+    const r = () => setVw(window.innerWidth);
+    window.addEventListener('resize', r);
+    return () => window.removeEventListener('resize', r);
+  }, []);
+  useEffect(() => {
+    setEllipsisPickIndex(null);
+    setItemDropdownPick({});
+  }, [items]);
 
-  const renderSeparator = () => separator || <ChevronIcon className={cn(BREADCRUMBS_ICON_SIZE[size], 'bear-text-zinc-500 bear-mx-2')} />;
+  const resolvedCollapseThreshold = useMemo(
+    () => (maxItems == null ? undefined : resolveMaxVisible(maxItems, { width: vw, theme })),
+    [maxItems, vw, theme]
+  );
+
+  const renderSeparator = () => separator || (
+    <BearIcons.ChevronRightIcon className={cn(BREADCRUMBS_ICON_SIZE[size], 'bear-text-zinc-500 bear-mx-2')} />
+  );
 
   const renderItem = (item: BreadcrumbItem, index: number, isLast: boolean) => {
     const content = (
-      <span className="bear-flex bear-items-center bear-gap-1">
-        {index === 0 && showHomeIcon && <HomeIcon className={BREADCRUMBS_ICON_SIZE[size]} />}
+      <span className="bear-flex bear-items-center bear-gap-1 bear-max-w-[12rem] bear-truncate md:bear-max-w-none">
+        {index === 0 && showHomeIcon && <BearIcons.HomeIcon className={BREADCRUMBS_ICON_SIZE[size]} />}
         {item.icon}
         {item.label}
       </span>
     );
 
-    if (isLast) {
-      return <span className="bear-text-zinc-300 bear-font-medium" aria-current="page">{content}</span>;
-    }
+    const body = (() => {
+      if (isLast) {
+        return <span className="bear-text-zinc-300 bear-font-medium" aria-current="page">{content}</span>;
+      }
+      if (item.href) {
+        return (
+          <a href={item.href} className="bear-text-zinc-400 hover:bear-text-pink-400 bear-transition-colors bear-truncate">
+            {content}
+          </a>
+        );
+      }
+      if (item.onClick) {
+        return (
+          <button type="button" onClick={item.onClick} className="bear-text-zinc-400 hover:bear-text-pink-400 bear-transition-colors bear-truncate">
+            {content}
+          </button>
+        );
+      }
+      return <span className="bear-text-zinc-400 bear-truncate">{content}</span>;
+    })();
 
-    if (item.href) {
+    if (item.dropdownItems && item.dropdownItems.length > 0 && !isLast) {
+      const selectedKey = itemDropdownPick[index];
+      const selectedOption = item.dropdownItems.find((opt) => opt.key === selectedKey);
       return (
-        <a href={item.href} className="bear-text-zinc-400 hover:bear-text-pink-400 bear-transition-colors">
-          {content}
-        </a>
+        <Dropdown
+          placement="bottom-start"
+          closeOnSelect
+          trigger={
+            <button
+              type="button"
+              className="bear-inline-flex bear-items-center bear-gap-1 bear-text-zinc-400 hover:bear-text-pink-400 bear-transition-colors"
+              aria-haspopup="true"
+            >
+              {content}
+              {selectedOption && (
+                <span className="bear-ml-1 bear-max-w-[8rem] bear-truncate bear-text-xs bear-text-zinc-300">
+                  {selectedOption.label}
+                </span>
+              )}
+              <BearIcons.ChevronDownIcon size={14} />
+            </button>
+          }
+          items={item.dropdownItems.map((d) => ({
+            key: d.key,
+            label: d.label,
+            disabled: d.disabled,
+            selected: selectedKey === d.key,
+            onClick: () => {
+              setItemDropdownPick((prev) => ({ ...prev, [index]: d.key }));
+              d.onClick?.();
+            },
+          }))}
+        />
       );
     }
 
-    if (item.onClick) {
-      return (
-        <button type="button" onClick={item.onClick} className="bear-text-zinc-400 hover:bear-text-pink-400 bear-transition-colors">
-          {content}
-        </button>
-      );
-    }
-
-    return <span className="bear-text-zinc-400">{content}</span>;
+    return body;
   };
 
-  const shouldCollapse = maxItems && items.length > maxItems && !expanded;
-  let displayItems: (BreadcrumbItem | 'ellipsis')[] = items;
+  const shouldCollapse =
+    resolvedCollapseThreshold != null && items.length > resolvedCollapseThreshold;
+
+  const hiddenStart = itemsBeforeCollapse;
+  const hiddenEndExclusive = items.length - itemsAfterCollapse;
+
+  type Segment = { type: 'item'; item: BreadcrumbItem; index: number } | { type: 'ellipsis'; hidden: BreadcrumbItem[] };
+
+  let segments: Segment[] = items.map((item, index) => ({ type: 'item', item, index }));
 
   if (shouldCollapse) {
     const before = items.slice(0, itemsBeforeCollapse);
     const after = items.slice(-itemsAfterCollapse);
-    displayItems = [...before, 'ellipsis', ...after];
+    const hidden = items.slice(itemsBeforeCollapse, items.length - itemsAfterCollapse);
+    segments = [
+      ...before.map((item, i) => ({ type: 'item' as const, item, index: i })),
+      ...(hidden.length ? [{ type: 'ellipsis' as const, hidden }] : []),
+      ...after.map((item, i) => ({
+        type: 'item' as const,
+        item,
+        index: items.length - itemsAfterCollapse + i,
+      })),
+    ];
   }
+
+  const ellipsisPickInRange =
+    ellipsisPickIndex != null &&
+    ellipsisPickIndex >= hiddenStart &&
+    ellipsisPickIndex < hiddenEndExclusive;
 
   return (
     <nav
       id={id}
       data-testid={testId}
-      className={cn('bear-flex bear-items-center bear-flex-wrap', BREADCRUMBS_SIZE[size], className)}
+      className={cn('bear-flex bear-min-w-0 bear-items-center bear-flex-wrap', BREADCRUMBS_SIZE[size], className)}
       aria-label={ariaLabel}
     >
-      <ol className="bear-flex bear-items-center bear-flex-wrap bear-list-none bear-p-0 bear-m-0">
-        {displayItems.map((item, index) => (
-          <li key={index} className="bear-flex bear-items-center">
-            {index > 0 && <span aria-hidden="true">{renderSeparator()}</span>}
-            {item === 'ellipsis' ? (
-              <button
-                type="button"
-                onClick={() => setExpanded(true)}
-                className="bear-text-zinc-400 hover:bear-text-pink-400 bear-transition-colors bear-px-1"
-                aria-label="Show more breadcrumbs"
-              >
-                ...
-              </button>
+      <ol className="bear-flex bear-min-w-0 bear-items-center bear-flex-wrap bear-list-none bear-p-0 bear-m-0">
+        {segments.map((seg, si) => (
+          <li key={si} className="bear-flex bear-min-w-0 bear-items-center">
+            {si > 0 && <span aria-hidden="true">{renderSeparator()}</span>}
+            {seg.type === 'ellipsis' ? (
+              <span className="bear-inline-flex bear-min-w-0 bear-max-w-full bear-items-center bear-gap-1">
+                <Dropdown
+                  placement="bottom-start"
+                  closeOnSelect
+                  trigger={
+                    <button
+                      type="button"
+                      className="bear-inline-flex bear-items-center bear-justify-center bear-rounded bear-px-2 bear-py-1 bear-text-zinc-400 hover:bear-bg-[var(--bear-bg-tertiary)] hover:bear-text-pink-400 bear-transition-colors"
+                      aria-label="Hidden breadcrumbs"
+                    >
+                      <BearIcons.MoreHorizIcon size={18} />
+                    </button>
+                  }
+                  items={seg.hidden.map((it, hi) => {
+                    const globalIndex = hiddenStart + hi;
+                    return {
+                      key: `${it.label}-${hi}`,
+                      label: it.label,
+                      onClick: () => {
+                        setEllipsisPickIndex(globalIndex);
+                        it.onClick?.();
+                      },
+                    };
+                  })}
+                />
+                {ellipsisPickInRange && ellipsisPickIndex != null && (
+                  <span className="bear-min-w-0 bear-max-w-[12rem] bear-truncate md:bear-max-w-none bear-inline-flex bear-items-center">
+                    {renderItem(
+                      items[ellipsisPickIndex],
+                      ellipsisPickIndex,
+                      ellipsisPickIndex === items.length - 1
+                    )}
+                  </span>
+                )}
+              </span>
             ) : (
-              renderItem(item, index, index === displayItems.length - 1)
+              renderItem(seg.item, seg.index, seg.index === items.length - 1)
             )}
           </li>
         ))}

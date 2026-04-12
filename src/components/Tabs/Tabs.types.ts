@@ -1,4 +1,7 @@
 import type { ReactNode } from 'react';
+import type { MaxVisibleInput } from '../../utils/maxVisible.utils';
+
+export { type MaxVisibleByBreakpoint, type MaxVisibleInput } from '../../utils/maxVisible.utils';
 
 export interface TabsContextValue {
   activeTab: string;
@@ -26,8 +29,8 @@ export interface TabsProps {
 export interface TabListProps {
   /** Tab buttons */
   children: ReactNode;
-  /** Max number of visible tabs before overflow (e.g. 5); rest go in "..." dropdown. Selected tab is always shown first. */
-  maxVisibleTabs?: number;
+  /** Max visible tabs before "…" dropdown. Number, or breakpoint map using theme.breakpoints (mobile &lt; md, tablet md–lg, desktop ≥ lg). `custom` overrides all widths. */
+  maxVisibleTabs?: MaxVisibleInput;
   /** Allow tabs to wrap to next line (flex-wrap), no breakpoints */
   wrap?: boolean;
   /** Custom class name */

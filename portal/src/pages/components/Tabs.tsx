@@ -49,8 +49,9 @@ const TabsPage: FC = () => {
 
       <ComponentPreview
         title="Limit visible tabs (maxVisibleTabs) + overflow dropdown"
-        description={'Show at most 5 tabs; the rest appear in a "..." dropdown. When you select a tab from the dropdown, it moves to the first visible position. The overflow trigger is a button that opens the list of hidden tabs.'}
+        description={'Show at most N tabs; the rest in a "⋯" menu. The menu stays visible (scroll the tab row on narrow widths). Resize the viewport to see breakpoint-based limits in the next example.'}
         code={CODE_LIMIT}
+        allowOverflow
       >
         <Tabs value={activeTab} defaultTab="overview" onChange={setActiveTab} variant="pills">
           <TabList maxVisibleTabs={5}>
@@ -64,6 +65,45 @@ const TabsPage: FC = () => {
             <TabPanel key={id} tabId={id}>
               <Typography variant="body2" className="text-gray-600 dark:text-gray-400">
                 Content for {id}. When this tab was chosen from the &quot;…&quot; dropdown, it moved to the first visible slot.
+              </Typography>
+            </TabPanel>
+          ))}
+        </Tabs>
+      </ComponentPreview>
+
+      <ComponentPreview
+        title="maxVisibleTabs by theme breakpoints"
+        description="Object form: mobile &lt; md, tablet md–lg, desktop ≥ lg from Bear theme.breakpoints. Optional custom overrides all."
+        code={`<TabList
+  maxVisibleTabs={{
+    mobile: 3,
+    tablet: 4,
+    desktop: 5,
+    custom: 10,
+  }}
+>
+  ...
+</TabList>`}
+        allowOverflow
+      >
+        <Tabs value={activeTab} defaultTab="overview" onChange={setActiveTab} variant="pills">
+          <TabList
+            maxVisibleTabs={{
+              mobile: 3,
+              tablet: 4,
+              desktop: 5,
+            }}
+          >
+            {TAB_IDS.map((id) => (
+              <Tab key={id} id={id}>
+                {id.charAt(0).toUpperCase() + id.slice(1)}
+              </Tab>
+            ))}
+          </TabList>
+          {TAB_IDS.map((id) => (
+            <TabPanel key={id} tabId={id}>
+              <Typography variant="body2" className="text-gray-600 dark:text-gray-400">
+                Content for {id} (responsive max visible).
               </Typography>
             </TabPanel>
           ))}
@@ -151,11 +191,12 @@ const TabsPage: FC = () => {
 
       <section className="mb-12">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Props</h2>
-        <div className="overflow-x-auto">
+
+        <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Tabs</h3>
+        <div className="overflow-x-auto mb-8">
           <table className="w-full text-left text-sm">
             <thead className="bg-gray-50 dark:bg-gray-800">
               <tr>
-                <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Component</th>
                 <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Prop</th>
                 <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Type</th>
                 <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Default</th>
@@ -163,23 +204,58 @@ const TabsPage: FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-              <tr><td className="px-4 py-3 font-mono text-bear-600">Tabs</td><td className="px-4 py-3 font-mono text-bear-600">value</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Controlled active tab id</td></tr>
-              <tr><td className="px-4 py-3">Tabs</td><td className="px-4 py-3 font-mono text-bear-600">defaultTab</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">required</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Initial active tab id (uncontrolled)</td></tr>
-              <tr><td className="px-4 py-3">Tabs</td><td className="px-4 py-3 font-mono text-bear-600">onChange</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>(tabId: string) =&gt; void</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Called when tab changes</td></tr>
-              <tr><td className="px-4 py-3">Tabs</td><td className="px-4 py-3 font-mono text-bear-600">variant</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>line | pills | enclosed</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">line</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Visual variant</td></tr>
-              <tr className="bg-green-50 dark:bg-green-900/20"><td className="px-4 py-3">TabList</td><td className="px-4 py-3 font-mono text-bear-600">maxVisibleTabs</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>number</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Max tabs to show; rest go in &quot;…&quot; dropdown. Selected tab is shown first.</td></tr>
-              <tr className="bg-green-50 dark:bg-green-900/20"><td className="px-4 py-3">TabList</td><td className="px-4 py-3 font-mono text-bear-600">wrap</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Allow tabs to wrap to next line (no breakpoints)</td></tr>
-              <tr><td className="px-4 py-3">TabList</td><td className="px-4 py-3 font-mono text-bear-600">className</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Extra classes for the tab list</td></tr>
-              <tr><td className="px-4 py-3">Tab</td><td className="px-4 py-3 font-mono text-bear-600">id</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">required</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Unique tab id (matches TabPanel tabId)</td></tr>
-              <tr><td className="px-4 py-3">Tab</td><td className="px-4 py-3 font-mono text-bear-600">disabled</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Disable this tab</td></tr>
-              <tr><td className="px-4 py-3">Tab</td><td className="px-4 py-3 font-mono text-bear-600">icon</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Icon before label</td></tr>
-              <tr><td className="px-4 py-3">TabPanel</td><td className="px-4 py-3 font-mono text-bear-600">tabId</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">required</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Tab id this panel belongs to</td></tr>
-              <tr><td className="px-4 py-3">TabPanel</td><td className="px-4 py-3 font-mono text-bear-600">className</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Extra classes for the panel</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">value</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Controlled active tab id</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">defaultTab</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">required</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Initial tab when uncontrolled</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">onChange</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>(tabId: string) =&gt; void</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Tab change callback</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">variant</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>line | pills | enclosed</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">line</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">List visual style (passed to TabList via context)</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">className</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Root class</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">TabList</h3>
+        <div className="overflow-x-auto mb-8">
+          <table className="w-full text-left text-sm">
+            <thead className="bg-gray-50 dark:bg-gray-800">
+              <tr>
+                <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Prop</th>
+                <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Type</th>
+                <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Default</th>
+                <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Description</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+              <tr><td className="px-4 py-3 font-mono text-bear-600">children</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>Tab</code> components</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">maxVisibleTabs</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>number | {'{'} mobile?, tablet?, desktop?, custom?{'}'}</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Cap visible tabs; rest in ⋯ menu. Breakpoints use <code className="text-xs">theme.breakpoints</code>. <code className="text-xs">custom</code> wins over breakpoints.</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">wrap</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Multiline tabs (disables the horizontal scroll + flex split used with maxVisibleTabs)</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">className</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Extra classes</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Tab / ActiveTab / TabPanel</h3>
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-sm">
+            <thead className="bg-gray-50 dark:bg-gray-800">
+              <tr>
+                <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Component</th>
+                <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Prop</th>
+                <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Type</th>
+                <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Description</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+              <tr><td className="px-4 py-3 font-mono text-bear-600">Tab</td><td className="px-4 py-3 font-mono text-bear-600">id</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Required. Matches <code className="text-xs">tabId</code> on TabPanel</td></tr>
+              <tr><td className="px-4 py-3">Tab</td><td className="px-4 py-3 font-mono text-bear-600">disabled</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td></tr>
+              <tr><td className="px-4 py-3">Tab</td><td className="px-4 py-3 font-mono text-bear-600">icon</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td></tr>
+              <tr><td className="px-4 py-3">ActiveTab</td><td colSpan={3} className="px-4 py-3 text-gray-600 dark:text-gray-400">Same as <code className="text-xs">Tab</code> (exported alias for documentation tooling)</td></tr>
+              <tr><td className="px-4 py-3">TabPanel</td><td className="px-4 py-3 font-mono text-bear-600">tabId</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Panel shown when this tab is active</td></tr>
+              <tr><td className="px-4 py-3">TabPanel</td><td className="px-4 py-3 font-mono text-bear-600">className</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td></tr>
             </tbody>
           </table>
         </div>
         <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
-          When <code className="bear-px-1 bear-py-0.5 bear-rounded bear-bg-gray-200 dark:bear-bg-zinc-700">maxVisibleTabs</code> is set, a &quot;…&quot; (more) button appears after the visible tabs. Clicking it opens a dropdown with the remaining tabs; selecting one switches to that tab and it moves to the first visible position.
+            With <code className="bear-px-1 bear-py-0.5 bear-rounded bear-bg-gray-200 dark:bear-bg-zinc-700">maxVisibleTabs</code>, the ⋯ control uses a portaled <code className="text-xs">Dropdown</code> (<code className="text-xs">z-index: 11000</code>). Use <code className="text-xs">allowOverflow</code> on demo cards if a parent uses <code className="text-xs">overflow: hidden</code>.
         </p>
       </section>
     </div>

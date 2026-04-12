@@ -199,29 +199,28 @@ export const NotificationCenter: FC<NotificationCenterProps> = ({
     return notifications.slice(0, maxVisible);
   }, [notifications, maxVisible, showAll]);
 
-  // Calculate dropdown position
   useEffect(() => {
-    if (isOpen && triggerRef.current) {
-      const rect = triggerRef.current.getBoundingClientRect();
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
-
-      let top = rect.bottom + scrollTop + 8;
-      let left = rect.left + scrollLeft;
-
-      // Adjust based on position
-      if (position.includes('left')) {
-        left = rect.left + scrollLeft;
-      } else {
-        left = rect.right + scrollLeft - 360; // dropdown width
+    if (!isOpen || !triggerRef.current) return;
+    const panelW = 360;
+    const panelMaxH = 400;
+    const gap = 8;
+    const update = () => {
+      const rect = triggerRef.current!.getBoundingClientRect();
+      let left = position.includes('left') ? rect.left : rect.right - panelW;
+      left = Math.max(8, Math.min(left, window.innerWidth - panelW - 8));
+      let top = rect.bottom + gap;
+      if (top + panelMaxH > window.innerHeight - 8) {
+        top = Math.max(8, rect.top - panelMaxH - gap);
       }
-
-      if (position.includes('bottom')) {
-        top = rect.top + scrollTop - 8;
-      }
-
-      setDropdownPosition({ top, left: Math.max(8, left) });
-    }
+      setDropdownPosition({ top, left });
+    };
+    update();
+    window.addEventListener('resize', update);
+    window.addEventListener('scroll', update, true);
+    return () => {
+      window.removeEventListener('resize', update);
+      window.removeEventListener('scroll', update, true);
+    };
   }, [isOpen, position]);
 
   // Handle click outside

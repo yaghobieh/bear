@@ -71,3 +71,14 @@ ComponentName/
 - When creating **new** components: follow this layout from the start.
 - When **refactoring** existing components: migrate incrementally—types first, then constants, then sub-components, then helpers.
 - Components to prioritize for migration: DatePicker, Calendar, Select, Modal, Drawer, Input, Button (those with sub-parts or many constants).
+
+## 9. Additional enforcement (project-specific)
+
+- No `export default` in component modules. Use named exports only.
+- Keep interfaces and public prop types only in `*.types.ts`.
+- Keep reusable constants only in `*.const.ts` (size maps, class maps, z-indexes, magic numbers).
+- Keep reusable pure helpers in `*.utils.ts`.
+- If a component file becomes large, move view-independent logic into a hook in `hooks/use{Name}.ts`.
+- Prefer aliases over long relative imports when going more than one directory up.
+- For dropdown-like item lists, support selected state in item data and reflect it visually.
+- For popovers/tooltips, compose with Bear primitives (`Card`, `Typography`, `Portal`) instead of raw ad-hoc markup.

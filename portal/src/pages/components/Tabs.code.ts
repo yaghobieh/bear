@@ -10,12 +10,8 @@ export const CODE_BASIC = `<Tabs value={activeTab} defaultTab="overview" onChang
 </Tabs>`;
 
 export const CODE_LIMIT = `<Tabs value={activeTab} defaultTab="overview" onChange={setActiveTab} variant="pills">
-  <TabList maxVisibleTabs={5}>
-    <Tab id="overview">Overview</Tab>
-    ... (8 tabs total)
-  </TabList>
-  <TabPanel tabId="overview">...</TabPanel>
-  {/* TabPanel for each id */}
+  <TabList maxVisibleTabs={5}>{/* or maxVisibleTabs={{ mobile: 3, desktop: 5 }} */}</TabList>
+  {/* TabPanel per id */}
 </Tabs>`;
 
 export const CODE_WRAP = `<TabList wrap>

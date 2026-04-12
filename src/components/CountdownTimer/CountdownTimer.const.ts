@@ -44,6 +44,20 @@ export const SIZE_GAP_CLASSES: Record<CountdownTimerSize, string> = {
   xl: 'bear-gap-5',
 };
 
+export const NARROW_DIGIT_BREAKPOINT_CLASSES: Record<CountdownTimerSize, string> = {
+  sm: 'max-[480px]:bear-text-base',
+  md: 'max-[480px]:bear-text-2xl max-[480px]:bear-leading-none',
+  lg: 'max-[480px]:bear-text-3xl max-[480px]:bear-leading-tight',
+  xl: 'max-[480px]:bear-text-4xl max-[480px]:bear-leading-tight',
+};
+
+export const NARROW_LABEL_BREAKPOINT_CLASSES: Record<CountdownTimerSize, string> = {
+  sm: 'max-[480px]:bear-text-[9px]',
+  md: 'max-[480px]:bear-text-[10px]',
+  lg: 'max-[480px]:bear-text-xs',
+  xl: 'max-[480px]:bear-text-sm',
+};
+
 /** Separator horizontal margin */
 export const SEPARATOR_MARGIN = 'bear-mx-1';
 

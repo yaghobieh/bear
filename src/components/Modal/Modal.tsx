@@ -32,13 +32,20 @@ export const Modal: FC<ModalProps> = (props) => {
     children,
     size = 'md',
     showCloseButton = true,
-    closeOnBackdrop = true,
     closeOnEscape = true,
+    lockBodyScroll = true,
+    cancelPreventScroll = false,
+    closeOnBackdrop = true,
+    isCancelBackgroundClick,
     className,
     footer,
     testId,
     id,
   } = props;
+
+  const shouldLockBodyScroll = lockBodyScroll && !cancelPreventScroll;
+  const closeBackdropClick =
+    isCancelBackgroundClick !== undefined ? isCancelBackgroundClick : closeOnBackdrop;
 
   const handleEscape = useCallback(
     (event: KeyboardEvent) => {
@@ -50,27 +57,28 @@ export const Modal: FC<ModalProps> = (props) => {
   );
 
   useEffect(() => {
-    if (isOpen) {
-      document.addEventListener('keydown', handleEscape);
+    if (!isOpen) return;
+    document.addEventListener('keydown', handleEscape);
+    if (shouldLockBodyScroll) {
       document.body.style.overflow = 'hidden';
     }
     return () => {
       document.removeEventListener('keydown', handleEscape);
       document.body.style.overflow = '';
     };
-  }, [isOpen, handleEscape]);
+  }, [isOpen, handleEscape, shouldLockBodyScroll]);
 
   if (!isOpen) return null;
 
   const modalContent = (
     <div 
-      className="Bear-Modal bear-fixed bear-inset-0 bear-z-50 bear-flex bear-items-center bear-justify-center"
+      className="Bear-Modal bear-fixed bear-inset-0 bear-z-[11000] bear-flex bear-items-center bear-justify-center bear-p-4"
       id={id}
       data-testid={testId}
     >
       <div
         className={cn('Bear-Modal__backdrop', MODAL_BACKDROP_CLASSES)}
-        onClick={closeOnBackdrop ? onClose : undefined}
+        onClick={closeBackdropClick ? onClose : undefined}
         aria-hidden="true"
       />
 

@@ -1,4 +1,5 @@
 import { HTMLAttributes, ReactNode } from 'react';
+import type { TypographyProps } from '../Typography/Typography.types';
 import type { MaxVisibleInput } from '../../utils/maxVisible.utils';
 
 export type StepperOrientation = 'horizontal' | 'vertical';
@@ -18,6 +19,10 @@ export interface Step {
   disabled?: boolean;
   /** Optional content for this step */
   content?: ReactNode;
+  /** Per-step Typography props for the label */
+  labelTypographyProps?: Partial<TypographyProps>;
+  /** Per-step Typography props for the description */
+  descriptionTypographyProps?: Partial<TypographyProps>;
 }
 
 export interface StepperProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
@@ -45,9 +50,13 @@ export interface StepperProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onCh
   completedIcon?: ReactNode;
   /** Custom error icon */
   errorIcon?: ReactNode;
+  /** Typography props applied to all step labels (overridden by per-step labelTypographyProps) */
+  labelTypographyProps?: Partial<TypographyProps>;
+  /** Typography props applied to all step descriptions (overridden by per-step descriptionTypographyProps) */
+  descriptionTypographyProps?: Partial<TypographyProps>;
   /** Test ID */
   testId?: string;
-  /** When set on horizontal layout, show at most this many steps with ⋯ menus for the rest (breakpoint map supported). */
+  /** When set on horizontal layout, show at most this many steps with dropdown menus for the rest (breakpoint map supported). */
   maxVisibleSteps?: MaxVisibleInput;
 }
 
@@ -74,4 +83,6 @@ export interface StepperControlsProps {
   completeLabel?: string;
   /** Show step indicator */
   showIndicator?: boolean;
+  /** Step indicator format function (receives activeStep + 1 and totalSteps) */
+  indicatorFormat?: (current: number, total: number) => string;
 }

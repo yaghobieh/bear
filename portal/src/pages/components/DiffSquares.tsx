@@ -1,9 +1,11 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
-import { DiffSquares } from '@forgedevstack/bear';
+import { DiffSquares, DiffViewer } from '@forgedevstack/bear';
 
 const DiffSquaresPage: FC = () => {
+  const [selectedCube, setSelectedCube] = useState<{ ariaLabel?: string } | null>(null);
+
   return (
     <div className="fade-in">
       <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">DiffSquares</h1>
@@ -26,7 +28,7 @@ const DiffSquaresPage: FC = () => {
   cubeCount={5}
 />`}
       >
-        <div className="w-full rounded-lg border border-zinc-700 bg-zinc-900/80 px-4 py-3">
+        <div className="w-full rounded-lg border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-900/80 px-4 py-3">
           <DiffSquares additionsText="+8" deletionsText="-2" cubeCount={5} />
         </div>
       </ComponentPreview>
@@ -46,7 +48,7 @@ const DiffSquaresPage: FC = () => {
   ]}
 />`}
       >
-        <div className="w-full rounded-lg border border-zinc-700 bg-zinc-900/80 px-4 py-3">
+        <div className="w-full rounded-lg border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-900/80 px-4 py-3">
           <DiffSquares
             additionsText="+53"
             cubes={[
@@ -58,6 +60,57 @@ const DiffSquaresPage: FC = () => {
             ]}
           />
         </div>
+      </ComponentPreview>
+
+      <ComponentPreview
+        title="Hover popup with DiffViewer"
+        description="Click a cube to see a diff preview popover."
+        allowOverflow
+        code={`<DiffSquares
+  additionsText="+3"
+  deletionsText="-1"
+  cubes={[
+    { fill: 'full', ariaLabel: 'Added auth check' },
+    { fill: 'full', ariaLabel: 'Added validation' },
+    { fill: 'half', ariaLabel: 'Changed handler' },
+    { fill: 'striped', ariaLabel: 'Refactored util' },
+    { fill: 'empty', ariaLabel: 'Unchanged' },
+  ]}
+  onCubeClick={(cube) => setSelectedCube(cube)}
+/>`}
+      >
+        <div className="w-full rounded-lg border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-900/80 px-4 py-3">
+          <DiffSquares
+            additionsText="+3"
+            deletionsText="-1"
+            cubes={[
+              { fill: 'full', ariaLabel: 'Added auth check' },
+              { fill: 'full', ariaLabel: 'Added validation' },
+              { fill: 'half', ariaLabel: 'Changed handler' },
+              { fill: 'striped', ariaLabel: 'Refactored util' },
+              { fill: 'empty', ariaLabel: 'Unchanged' },
+            ]}
+            onCubeClick={(cube) => setSelectedCube(cube)}
+          />
+        </div>
+        {selectedCube && (
+          <div className="mt-4 relative">
+            <button
+              className="absolute top-2 right-2 z-10 text-gray-400 hover:text-gray-600 dark:hover:text-white"
+              onClick={() => setSelectedCube(null)}
+              aria-label="Close"
+            >
+              &times;
+            </button>
+            <DiffViewer
+              oldValue={`function handler(req) {\n  const data = req.body;\n  return process(data);\n}`}
+              newValue={`function handler(req) {\n  if (!req.auth) throw new Error('Unauthorized');\n  const data = validate(req.body);\n  return process(data);\n}`}
+              viewMode="unified"
+              oldTitle={selectedCube.ariaLabel ?? 'Original'}
+              newTitle="Modified"
+            />
+          </div>
+        )}
       </ComponentPreview>
 
       <section className="mb-12">

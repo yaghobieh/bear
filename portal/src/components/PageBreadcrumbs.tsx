@@ -34,7 +34,8 @@ export const PageBreadcrumbs: FC = () => {
           for (const child of item.children) {
             if (child.path === pathname) {
               result.push({ label: group.title, path: GROUP_PATH_MAP[group.title] });
-              result.push({ label: item.label, path: item.path });
+              const categoryHash = encodeURIComponent(item.label);
+              result.push({ label: item.label, path: `/components#${categoryHash}` });
               result.push({ label: child.label });
               return result;
             }

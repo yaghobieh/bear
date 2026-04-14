@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Typography, CardCompound as Card, DiffViewer, Button } from '@forgedevstack/bear';
+import type { DiffSpacing } from '@forgedevstack/bear';
 
 const oldCode = `function greet(name) {
   console.log("Hello " + name);
@@ -12,8 +13,11 @@ const newCode = `function greet(name, greeting = "Hello") {
   return true;
 }`;
 
+const SPACING_OPTIONS: DiffSpacing[] = ['compact', 'comfortable', 'spacious'];
+
 const DiffViewerPage: React.FC = () => {
   const [viewMode, setViewMode] = useState<'split' | 'unified'>('split');
+  const [spacing, setSpacing] = useState<DiffSpacing>('comfortable');
 
   return (
     <div className="space-y-8">
@@ -74,6 +78,48 @@ const DiffViewerPage: React.FC = () => {
             oldValue={oldCode}
             newValue={newCode}
             viewMode="unified"
+            showStats
+          />
+        </Card.Body>
+      </Card>
+
+      {/* Spacing */}
+      <Card>
+        <Card.Header title={<Typography variant="h5">Spacing Control</Typography>} />
+        <Card.Body>
+          <div className="flex gap-2 mb-4">
+            {SPACING_OPTIONS.map((s) => (
+              <Button
+                key={s}
+                variant={spacing === s ? 'primary' : 'ghost'}
+                onClick={() => setSpacing(s)}
+              >
+                {s.charAt(0).toUpperCase() + s.slice(1)}
+              </Button>
+            ))}
+          </div>
+          <DiffViewer
+            oldValue={oldCode}
+            newValue={newCode}
+            viewMode="unified"
+            spacing={spacing}
+            showStats
+          />
+        </Card.Body>
+      </Card>
+
+      {/* Hover Info */}
+      <Card>
+        <Card.Header title={<Typography variant="h5">Line Hover Info</Typography>} />
+        <Card.Body>
+          <Typography variant="body2" className="mb-3 text-neutral-500">
+            Hover over changed lines to see inline labels.
+          </Typography>
+          <DiffViewer
+            oldValue={oldCode}
+            newValue={newCode}
+            viewMode="unified"
+            showLineHoverInfo
             showStats
           />
         </Card.Body>
@@ -143,6 +189,18 @@ const DiffViewerPage: React.FC = () => {
                   <td className="py-3 px-4 font-mono text-xs">boolean</td>
                   <td className="py-3 px-4 font-mono text-xs">true</td>
                   <td className="py-3 px-4">Show additions/deletions count</td>
+                </tr>
+                <tr className="border-b border-neutral-100 dark:border-neutral-800">
+                  <td className="py-3 px-4 font-mono text-xs text-pink-600 dark:text-pink-400">spacing</td>
+                  <td className="py-3 px-4 font-mono text-xs">'compact' | 'comfortable' | 'spacious'</td>
+                  <td className="py-3 px-4 font-mono text-xs">'comfortable'</td>
+                  <td className="py-3 px-4">Line spacing density</td>
+                </tr>
+                <tr className="border-b border-neutral-100 dark:border-neutral-800">
+                  <td className="py-3 px-4 font-mono text-xs text-pink-600 dark:text-pink-400">showLineHoverInfo</td>
+                  <td className="py-3 px-4 font-mono text-xs">boolean</td>
+                  <td className="py-3 px-4 font-mono text-xs">false</td>
+                  <td className="py-3 px-4">Show inline label on hover for changed lines</td>
                 </tr>
               </tbody>
             </table>

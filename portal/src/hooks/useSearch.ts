@@ -1,17 +1,38 @@
 import { useState, useMemo, useCallback } from 'react';
 import { NAVIGATION, NavItem } from '@/constants/navigation.const';
 
+const SEARCH_HISTORY_KEY = 'bear-search-history';
+const MAX_HISTORY = 8;
+
 export interface SearchResult {
   path: string;
   label: string;
   category: string;
 }
 
+export interface GroupedResults {
+  category: string;
+  items: SearchResult[];
+}
+
+function loadHistory(): SearchResult[] {
+  try {
+    const raw = localStorage.getItem(SEARCH_HISTORY_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveHistory(history: SearchResult[]) {
+  localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(history.slice(0, MAX_HISTORY)));
+}
+
 export function useSearch() {
   const [query, setQuery] = useState('');
   const [isOpen, setIsOpen] = useState(false);
+  const [history, setHistory] = useState<SearchResult[]>(loadHistory);
 
-  // Flatten navigation for search — skip parent items that have children (they are groups, not pages)
   const allItems = useMemo((): SearchResult[] => {
     const items: SearchResult[] = [];
     const seen = new Set<string>();
@@ -20,7 +41,6 @@ export function useSearch() {
       const flatten = (navItems: NavItem[], category: string) => {
         navItems.forEach(item => {
           if (item.children && item.children.length > 0) {
-            // Only add children, skip the parent (it's just a group label)
             flatten(item.children, category);
           } else if (!seen.has(item.path)) {
             seen.add(item.path);
@@ -45,8 +65,31 @@ export function useSearch() {
     return allItems.filter(item =>
       item.label.toLowerCase().includes(lowerQuery) ||
       item.category.toLowerCase().includes(lowerQuery)
-    ).slice(0, 12);
+    ).slice(0, 16);
   }, [query, allItems]);
+
+  const grouped = useMemo((): GroupedResults[] => {
+    const map = new Map<string, SearchResult[]>();
+    for (const r of results) {
+      const list = map.get(r.category) ?? [];
+      list.push(r);
+      map.set(r.category, list);
+    }
+    return Array.from(map.entries()).map(([category, items]) => ({ category, items }));
+  }, [results]);
+
+  const addToHistory = useCallback((item: SearchResult) => {
+    setHistory(prev => {
+      const next = [item, ...prev.filter(h => h.path !== item.path)].slice(0, MAX_HISTORY);
+      saveHistory(next);
+      return next;
+    });
+  }, []);
+
+  const clearHistory = useCallback(() => {
+    setHistory([]);
+    localStorage.removeItem(SEARCH_HISTORY_KEY);
+  }, []);
 
   const openSearch = useCallback(() => setIsOpen(true), []);
   const closeSearch = useCallback(() => {
@@ -58,6 +101,10 @@ export function useSearch() {
     query,
     setQuery,
     results,
+    grouped,
+    history,
+    addToHistory,
+    clearHistory,
     isOpen,
     openSearch,
     closeSearch,

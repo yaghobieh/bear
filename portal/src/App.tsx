@@ -242,6 +242,16 @@ const ThemeIconPage = lazy(() => import('./pages/components/ThemeIconPage'));
 const CloseButtonPage = lazy(() => import('./pages/components/CloseButtonPage'));
 const OverlayPage = lazy(() => import('./pages/components/OverlayPage'));
 
+// v1.2.2 Components
+const AnimatedCounterPage = lazy(() => import('./pages/components/AnimatedCounterPage'));
+const GlowCardPage = lazy(() => import('./pages/components/GlowCardPage'));
+const MediaPlayerPage = lazy(() => import('./pages/components/MediaPlayerPage'));
+const HeatmapPage = lazy(() => import('./pages/components/HeatmapPage'));
+const TagCloudPage = lazy(() => import('./pages/components/TagCloudPage'));
+const CurrencyInputPage = lazy(() => import('./pages/components/CurrencyInputPage'));
+const TimelineChartPage = lazy(() => import('./pages/components/TimelineChartPage'));
+const ImageAnnotationPage = lazy(() => import('./pages/components/ImageAnnotationPage'));
+
 // Guides
 const ResponsiveUiPage = lazy(() => import('./pages/guides/ResponsiveUi'));
 const MinimizeBundlePage = lazy(() => import('./pages/guides/MinimizeBundle'));
@@ -537,6 +547,16 @@ function PortalLayout({
                 <Route path="/components/theme-icon" element={<ThemeIconPage />} />
                 <Route path="/components/close-button" element={<CloseButtonPage />} />
                 <Route path="/components/overlay" element={<OverlayPage />} />
+                
+                {/* v1.2.2 Components */}
+                <Route path="/components/animated-counter" element={<AnimatedCounterPage />} />
+                <Route path="/components/glow-card" element={<GlowCardPage />} />
+                <Route path="/components/media-player" element={<MediaPlayerPage />} />
+                <Route path="/components/heatmap" element={<HeatmapPage />} />
+                <Route path="/components/tag-cloud" element={<TagCloudPage />} />
+                <Route path="/components/currency-input" element={<CurrencyInputPage />} />
+                <Route path="/components/timeline-chart" element={<TimelineChartPage />} />
+                <Route path="/components/image-annotation" element={<ImageAnnotationPage />} />
                 
                 {/* Charts & Graphs */}
                 <Route path="/components/chart" element={<ChartPage />} />

@@ -114,3 +114,18 @@
 .animate-alert-dialog-in {
   animation: alert-dialog-in 0.2s ease-out forwards;
 }
+
+@keyframes bear-glow-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.02); }
+}
+
+@keyframes bear-glow-wave {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes bear-glow-wave-shadow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}

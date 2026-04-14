@@ -17,7 +17,7 @@ export interface NavGroup {
   icon?: string;
 }
 
-export const BEAR_VERSION = '1.2.1';
+export const BEAR_VERSION = '1.2.2';
 
 /** Main Bear UI repository */
 export const GITHUB_URL = 'https://github.com/yaghobieh/bear';
@@ -105,6 +105,7 @@ export const NAVIGATION: NavGroup[] = [
           { path: '/components/otp-input', label: 'OTPInput' },
           { path: '/components/phone-input', label: 'PhoneInput' },
           { path: '/components/credit-input', label: 'CreditInput' },
+          { path: '/components/currency-input', label: 'CurrencyInput', badge: '1.2.2' },
           { path: '/components/tags-input', label: 'TagsInput' },
           { path: '/components/mentions-input', label: 'MentionsInput' },
           { path: '/components/autocomplete', label: 'Autocomplete' },
@@ -172,6 +173,7 @@ export const NAVIGATION: NavGroup[] = [
         children: [
           { path: '/components/card', label: 'Card' },
           { path: '/components/hover-card', label: 'HoverCard' },
+          { path: '/components/glow-card', label: 'GlowCard', badge: '1.2.2' },
         ],
       },
       // Overlay
@@ -308,6 +310,8 @@ export const NAVIGATION: NavGroup[] = [
         children: [
           { path: '/components/map', label: 'Map' },
           { path: '/components/image-gallery', label: 'ImageGallery', badge: 'New' },
+          { path: '/components/media-player', label: 'MediaPlayer', badge: '1.2.2' },
+          { path: '/components/image-annotation', label: 'ImageAnnotation', badge: '1.2.2' },
           { path: '/components/code-editor', label: 'CodeEditor' },
           { path: '/components/cropper', label: 'Cropper' },
           { path: '/components/carousel', label: 'Carousel' },
@@ -318,6 +322,7 @@ export const NAVIGATION: NavGroup[] = [
         label: 'Animation',
         children: [
           { path: '/components/transition', label: 'Transition' },
+          { path: '/components/animated-counter', label: 'AnimatedCounter', badge: '1.2.2' },
           { path: '/components/marquee', label: 'Marquee' },
           { path: '/components/confetti', label: 'Confetti' },
           { path: '/components/countdown-timer', label: 'CountdownTimer' },
@@ -367,6 +372,9 @@ export const NAVIGATION: NavGroup[] = [
       { path: '/components/pie-chart', label: 'PieChart' },
       { path: '/components/sparkline', label: 'Sparkline' },
       { path: '/components/gauge', label: 'Gauge' },
+      { path: '/components/heatmap', label: 'Heatmap', badge: '1.2.2' },
+      { path: '/components/timeline-chart', label: 'TimelineChart', badge: '1.2.2' },
+      { path: '/components/tag-cloud', label: 'TagCloud', badge: '1.2.2' },
     ],
   },
 
@@ -494,7 +502,8 @@ export const NAVIGATION: NavGroup[] = [
 ];
 
 export const VERSIONS = [
-  { value: '1.2.1', label: 'v1.2.1 (current)' },
+  { value: '1.2.2', label: 'v1.2.2 (current)' },
+  { value: '1.2.1', label: 'v1.2.1' },
   { value: '1.2.0', label: 'v1.2.0' },
   { value: '1.1.9', label: 'v1.1.9' },
   { value: '1.1.5', label: 'v1.1.5' },

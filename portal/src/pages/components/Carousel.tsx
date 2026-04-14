@@ -24,22 +24,34 @@ const CarouselPage: FC = () => {
             <BearIcons.PlayCircleIcon size={24} className="text-pink-500 flex-shrink-0 mt-1" />
             <div>
               <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
-                Coming to ForgeStack: dedicated Carousel package
+                ForgeStack Carousel: @forgedevstack/rail
               </h3>
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                Bear ships an essential in-library carousel today. For studio-grade timelines, swipe physics, and CMS-driven decks, we are introducing a standalone <strong>@forgedevstack/carousel</strong> line—same publishing story as Grid Table and Forge Form. Follow releases on npm for the scoped package when it lands.
+                Rail is the dedicated carousel engine for ForgeStack — 25+ tree-shakeable modules, 10+ effects, Story Mode, video slides, and a visual Studio builder.
+                Fully typed, zero dependencies, and designed to work seamlessly with Bear UI.
               </p>
             </div>
           </div>
-          <a
-            href="https://www.npmjs.com/search?q=%40forgedevstack%2Fcarousel"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-pink-500 hover:bg-pink-600 text-white text-sm font-medium transition-colors flex-shrink-0"
-          >
-            <BearIcons.PackageIcon size={16} />
-            npm search
-          </a>
+          <div className="flex flex-col sm:flex-row gap-2 flex-shrink-0">
+            <a
+              href="https://www.npmjs.com/package/@forgedevstack/rail"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-pink-500 hover:bg-pink-600 text-white text-sm font-medium transition-colors"
+            >
+              <BearIcons.PackageIcon size={16} />
+              npm
+            </a>
+            <a
+              href="https://railjs.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-800 hover:bg-gray-900 dark:bg-gray-700 dark:hover:bg-gray-600 text-white text-sm font-medium transition-colors"
+            >
+              <BearIcons.GlobeIcon size={16} />
+              railjs.com
+            </a>
+          </div>
         </div>
       </Card>
 

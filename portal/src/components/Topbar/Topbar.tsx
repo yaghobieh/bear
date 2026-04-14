@@ -36,7 +36,7 @@ export const Topbar: FC<TopbarProps> = ({ onMenuClick, banner, onBannerVisibilit
   const { language, setLanguage } = usePortalLanguage();
   const t = PORTAL_TEXT[language];
   const isDark = mode === 'dark';
-  const { query, setQuery, results, isOpen, openSearch, closeSearch } = useSearch();
+  const { query, setQuery, results, grouped, history, addToHistory, clearHistory, isOpen, openSearch, closeSearch } = useSearch();
   const navigate = useNavigate();
   const searchRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -110,6 +110,8 @@ export const Topbar: FC<TopbarProps> = ({ onMenuClick, banner, onBannerVisibilit
   }, [openSearch, closeSearch]);
 
   const handleResultClick = (path: string) => {
+    const item = results.find(r => r.path === path) ?? history.find(r => r.path === path);
+    if (item) addToHistory(item);
     navigate(path);
     setSearchExpanded(false);
     closeSearch();
@@ -432,21 +434,50 @@ export const Topbar: FC<TopbarProps> = ({ onMenuClick, banner, onBannerVisibilit
                   <BearIcons.CloseIcon size={16} />
                 </button>
               </div>
-              {isOpen && results.length > 0 && (
+              {isOpen && query.trim() === '' && history.length > 0 && (
                 <div className="mt-2 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm">
-                  <ul className="py-1 max-h-72 overflow-y-auto">
-                    {results.map((r) => (
+                  <div className="flex items-center justify-between px-4 py-2 border-b border-gray-100 dark:border-gray-700">
+                    <span className="text-[11px] font-semibold uppercase tracking-wider text-gray-400">{t.recent}</span>
+                    <button onClick={clearHistory} className="text-[11px] text-pink-500 hover:text-pink-600 font-medium">{t.clear}</button>
+                  </div>
+                  <ul className="py-1">
+                    {history.map((r) => (
                       <li key={r.path}>
                         <button
                           onClick={() => handleResultClick(r.path)}
-                          className="w-full px-4 py-2.5 text-left hover:bg-gray-50 dark:hover:bg-gray-700/50 flex items-center justify-between transition-colors"
+                          className="w-full px-4 py-2 text-left hover:bg-gray-50 dark:hover:bg-gray-700/50 flex items-center gap-2 transition-colors"
                         >
-                          <span className="text-sm text-gray-900 dark:text-gray-100">{r.label}</span>
+                          <BearIcons.ClockIcon size={14} className="text-gray-400 shrink-0" />
+                          <span className="text-sm text-gray-900 dark:text-gray-100 flex-1">{r.label}</span>
                           <span className="text-xs text-gray-400 dark:text-gray-500 bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-full">{r.category}</span>
                         </button>
                       </li>
                     ))}
                   </ul>
+                </div>
+              )}
+              {isOpen && grouped.length > 0 && (
+                <div className="mt-2 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm max-h-80 overflow-y-auto">
+                  {grouped.map((group) => (
+                    <div key={group.category}>
+                      <div className="px-4 py-1.5 bg-gray-50 dark:bg-gray-700/50 border-b border-gray-100 dark:border-gray-700 sticky top-0">
+                        <span className="text-[11px] font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">{group.category}</span>
+                        <span className="ml-1.5 text-[10px] text-gray-400">({group.items.length})</span>
+                      </div>
+                      <ul className="py-0.5">
+                        {group.items.map((r) => (
+                          <li key={r.path}>
+                            <button
+                              onClick={() => handleResultClick(r.path)}
+                              className="w-full px-4 py-2 text-left hover:bg-gray-50 dark:hover:bg-gray-700/50 flex items-center justify-between transition-colors"
+                            >
+                              <span className="text-sm text-gray-900 dark:text-gray-100">{r.label}</span>
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
                 </div>
               )}
             </div>

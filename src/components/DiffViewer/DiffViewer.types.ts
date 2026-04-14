@@ -4,6 +4,7 @@
 
 export type DiffViewMode = 'split' | 'unified';
 export type DiffLineType = 'add' | 'remove' | 'context';
+export type DiffSpacing = 'compact' | 'comfortable' | 'spacious';
 
 export interface DiffViewerProps {
   /** Original text (left side) */
@@ -24,6 +25,10 @@ export interface DiffViewerProps {
   newTitle?: string;
   /** Show diff statistics */
   showStats?: boolean;
+  /** Line spacing density */
+  spacing?: DiffSpacing;
+  /** Show a tooltip on line hover with change type */
+  showLineHoverInfo?: boolean;
   /** Custom class name */
   className?: string;
   /** Test ID */

@@ -6,10 +6,6 @@ Strong, reliable React UI components. Tailwind-powered, zero config required. Th
 
 Visit the [Bear UI Portal](https://bearui.com/) to explore all components, view live examples, and browse the documentation.
 
-## Changelog
-
-**Current release: 1.2.1** — Portaled overlays (Dropdown, Select, NavigableSelect, Menu, Autocomplete, MultiSelect, MentionsInput, TreeSelect, Popconfirm) use fixed positioning tied to the trigger, **z-index 10000**, and scroll/resize updates where applicable so panels are not clipped by parent `overflow` or stacking contexts. **Popover** and **Tooltip** also reposition on scroll/resize. **`useClickOutsideMultiple`** is available from `@forgedevstack/bear/hooks` for trigger + floating-root outside detection. Details: [CHANGELOG.md](./CHANGELOG.md).
-
 ## Features
 
 - **Tailwind-Powered**: Built with Tailwind CSS, zero config required

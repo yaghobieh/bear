@@ -2,38 +2,44 @@
 
 All notable changes to Bear UI will be documented in this file.
 
-## [1.2.1] - 2026-04-07
-
-### Summary (this release batch)
-
-| Area | What changed | Why |
-|------|----------------|-----|
-| **TabList** | `maxVisibleTabs` is a number or `{ mobile, tablet, desktop, custom }` via `theme.breakpoints`; flex row uses scroll + non-shrinking overflow trigger; overflow `Dropdown` placement `bottom-end`. | Clipped tabs hid the menu on mobile; responsive cap matches other components. |
-| **Tabs docs** | Portal demos use `allowOverflow`; props tables split; **`ActiveTab`** export alias. | Documentation clarity; card overflow no longer hides ⋯ |
-| **Dropdown** | Menu layer **z-index 11000**. | Stack above dense layouts using the same tier as modal shell. |
-| **Menu** | **z-index 11000**; top placements subtract panel height (`useLayoutEffect` + `ResizeObserver`). | Under-lapping siblings; incorrect top anchor. |
-| **Breadcrumbs** | `maxItems` breakpoint map; collapsed middle in ⋯ menu; **`dropdownItems`** on items. | Same collapse/dropdown behavior as tabs; nested pickers on a crumb. |
-| **Stepper** | Horizontal: `w-full min-w-0 overflow-x-auto`; steps `min-w-[7rem] shrink-0`. | Mobile horizontal overflow. |
-| **Watermark** | `--bear-font-sans`; stronger default rgba / opacity. | Invisible watermark; wrong font token. |
-| **DiffSquares** | New **DiffSquares** (`Typography` summary + configurable cubes). | GitHub-style diff indicator. |
-
-### Fixed
-
-- **Dropdown** / **Select**: Floating menus use `Portal` and fixed positioning from the trigger rect; `useClickOutsideMultiple` keeps portaled panels inside the “inside” check so clicks on items work. Menu `z-index` aligned to **10000** so stacks above cards and scroll containers.
-- **NavigableSelect**: Dropdown is portaled, follows the trigger on scroll/resize, uses a higher overlay z-index, and outside-click includes the portaled panel.
-- **Menu**: Panel content is portaled to `document.body`, fixed positioning, **10000** z-index, reposition on window resize and scroll (capture).
-- **Popover**: Reposition while open on window resize and scroll (capture).
-- **Autocomplete**, **MultiSelect**, **MentionsInput**: Option/suggestion panels portaled with fixed coordinates and **10000** z-index; outside-click includes the portaled root.
-- **TreeSelect**: Tree panel portaled with trigger-aligned fixed layout and scroll/resize updates; outside-click includes the portaled dropdown.
-- **Popconfirm**: Content portaled with fixed placement by side; updates on scroll/resize; outside-click uses separate trigger and popup refs.
-
-### Changed
-
-- **Tooltip**: Reposition on scroll/resize while visible; overlay z-index set to **10000**.
+## [1.2.2] - 2026-03-24
 
 ### Added
 
-- **Hooks**: **`useClickOutsideMultiple`** is exported from `@forgedevstack/bear/hooks` (implemented on the package root `useClickOutside` module) for trigger + portaled-surface click detection.
+- **AnimatedCounter**: Smoothly animated number transitions with formatting, easing, prefix/suffix, thousand separators, and viewport-triggered animation.
+- **GlowCard**: Card with animated glow effects that follow the mouse cursor. Four effect modes: ambient (radial gradient), border (border-edge glow), spotlight (focused beam + border), and pulse (continuous animation). Configurable color, intensity, border width, and radius.
+- **MediaPlayer**: Audio and video player with custom controls, progress bar, seek, volume, mute, and fullscreen. Custom icon props for play, pause, mute, unmute, and fullscreen buttons. Bear icons by default.
+- **Heatmap**: GitHub contribution-style calendar heatmap with configurable color scales, cell sizes, day/month labels, and interactive tooltips.
+- **TagCloud / WordCloud**: Weighted tag visualization where font size and opacity scale proportionally with each tag's value. Configurable color palette.
+- **CurrencyInput**: Locale-aware currency input built on Bear Input. Currency symbol as string key or custom ReactNode. Auto-formatting, min/max bounds, and multiple currency support (USD, EUR, GBP, JPY, etc.).
+- **TimelineChart**: Horizontal Gantt-like timeline for visualizing schedules, project phases, and task durations with color-coded bars and axis labels.
+- **ImageAnnotation**: Pin annotations on images with click-to-add, inline label editing, and delete functionality. Uses Bear Popover for hover labels and edit inputs. Custom popover content via `renderPopover` prop.
+- **Heatmap**: Added `renderTooltip` prop for custom Bear Popover hover content per cell.
+- **TagCloud**: Added `layout` prop ('flow' | 'circle') and `mobileCompact` for responsive horizontal scroll on small screens.
+
+### Changed
+
+- **Stepper**: Refactored for better mobile/desktop appearance. Labels now use Typography with configurable props (global and per-step). StepperControls extracted to its own file. All magic numbers replaced with named constants. Indicator content logic moved to utility functions. Fixed useMemo missing dependency. Improved horizontal layout to avoid forced scrolling on desktop.
+- **DiffSquares**: Fixed light mode background (was dark-only). Added portal demo showing popover with DiffViewer on cube click.
+- **DiffViewer**: Added `spacing` prop (compact/comfortable/spacious) for line density control. Added `showLineHoverInfo` prop for inline "Added"/"Removed" labels on hover. Stats bar now includes unchanged line count.
+
+### Portal
+
+- **Carousel**: Updated "Coming to ForgeStack" banner with live npm and railjs.com links for @forgedevstack/rail.
+- **Stepper**: Comprehensive examples page with basic, descriptions, alternative label, vertical, windowed overflow (3 dots), breakpoint-aware, sizes, dashed connectors, and StepperControls demos. Full props tables for Stepper, Step, and StepperControls.
+- All eight new component documentation pages include props tables, multiple examples, and LinesOfCode indicators.
+- **Introduction**: Updated version badge to 1.2.2, added more popular component cards (GlowCard, Stepper, DiffViewer, Heatmap), fixed horizontal scroll, moved all strings to constants, added Rail to ecosystem.
+- Reusable `PropsTable` component created for consistent props documentation across all pages.
+
+---
+
+## [1.2.1] - 2026-03-20
+
+### Changed
+
+- Portaled dropdowns and overlays with scroll-safe positioning.
+
+---
 
 ## [1.1.9] - 2026-03-12
 

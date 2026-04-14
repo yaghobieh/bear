@@ -458,7 +458,7 @@ export type { DiffSquaresProps, DiffCube, DiffCubeFill } from './DiffSquares';
 
 // DiffViewer
 export { DiffViewer } from './DiffViewer';
-export type { DiffViewerProps, DiffViewMode, DiffLine, DiffStats } from './DiffViewer';
+export type { DiffViewerProps, DiffViewMode, DiffLine, DiffStats, DiffSpacing } from './DiffViewer';
 
 // Chat
 export { Chat } from './Chat';
@@ -648,3 +648,37 @@ export type { VisuallyHiddenProps } from './VisuallyHidden';
 // Portal
 export { Portal } from './Portal';
 export type { PortalProps } from './Portal';
+
+// v1.2.2 Components
+
+// AnimatedCounter
+export { AnimatedCounter } from './AnimatedCounter';
+export type { AnimatedCounterProps } from './AnimatedCounter';
+
+// GlowCard
+export { GlowCard } from './GlowCard';
+export type { GlowCardProps, GlowEffect } from './GlowCard';
+
+// MediaPlayer
+export { MediaPlayer } from './MediaPlayer';
+export type { MediaPlayerProps, MediaType, MediaPlayerSize, PlaylistItem, StickyPosition } from './MediaPlayer';
+
+// Heatmap
+export { Heatmap } from './Heatmap';
+export type { HeatmapProps, HeatmapCell } from './Heatmap';
+
+// TagCloud
+export { TagCloud } from './TagCloud';
+export type { TagCloudProps, TagCloudItem, TagCloudLayout } from './TagCloud';
+
+// CurrencyInput
+export { CurrencyInput } from './CurrencyInput';
+export type { CurrencyInputProps } from './CurrencyInput';
+
+// TimelineChart
+export { TimelineChart } from './TimelineChart';
+export type { TimelineChartProps, TimelineChartItem } from './TimelineChart';
+
+// ImageAnnotation
+export { ImageAnnotation } from './ImageAnnotation';
+export type { ImageAnnotationProps, Annotation } from './ImageAnnotation';

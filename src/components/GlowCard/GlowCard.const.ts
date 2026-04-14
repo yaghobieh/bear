@@ -1,0 +1,11 @@
+export const DEFAULT_GLOW_COLOR = '#ec4899';
+export const DEFAULT_GLOW_INTENSITY = 40;
+export const DEFAULT_BORDER_RADIUS = 12;
+export const DEFAULT_EFFECT = 'ambient' as const;
+export const DEFAULT_BORDER_WIDTH = 2;
+export const CENTER_POSITION = 50;
+export const HEX_OPACITY_BORDER = '66';
+export const HEX_OPACITY_AMBIENT = '33';
+export const HEX_OPACITY_SHADOW = '22';
+export const HEX_OPACITY_BORDER_SHADOW = '44';
+export const PULSE_INTERVAL_MS = 2000;

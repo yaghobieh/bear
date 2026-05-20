@@ -227,8 +227,8 @@ export const Calendar: FC<CalendarProps> = (props) => {
         disabled={disabled}
         className={cn(
           'Bear-Calendar__day bear-w-8 bear-h-8 bear-rounded-full bear-text-sm bear-font-medium bear-transition-colors bear-flex bear-items-center bear-justify-center',
-          selected && 'Bear-Calendar__day--selected bear-bg-pink-500 bear-text-white hover:bear-bg-pink-600',
-          !selected && isToday && 'Bear-Calendar__day--today bear-ring-2 bear-ring-pink-500/50 bear-bg-transparent',
+          selected && 'Bear-Calendar__day--selected bear-bg-primary-500 bear-text-white hover:bear-bg-primary-600',
+          !selected && isToday && 'Bear-Calendar__day--today bear-ring-2 bear-ring-primary-500/50 bear-bg-transparent',
           !selected &&
             !isToday &&
             (isCurrentMonth
@@ -236,7 +236,7 @@ export const Calendar: FC<CalendarProps> = (props) => {
                 ? 'Bear-Calendar__day--weekend bear-text-red-500 dark:bear-text-red-400 hover:bear-bg-zinc-100 dark:hover:bear-bg-zinc-800'
                 : 'bear-text-zinc-700 dark:bear-text-zinc-300 hover:bear-bg-zinc-100 dark:hover:bear-bg-zinc-800'
               : 'Bear-Calendar__day--other bear-text-zinc-500 dark:bear-text-zinc-600 hover:bear-bg-zinc-50 dark:hover:bear-bg-zinc-800/50'),
-          highlighted && !selected && 'Bear-Calendar__day--highlighted bear-bg-pink-500/15',
+          highlighted && !selected && 'Bear-Calendar__day--highlighted bear-bg-primary-500/15',
           disabled && 'Bear-Calendar__day--disabled bear-opacity-40 bear-cursor-not-allowed'
         )}
       >
@@ -268,7 +268,7 @@ export const Calendar: FC<CalendarProps> = (props) => {
               </button>
             ) : <span />}
             {showToday && Today ? Today({ onClick: onToday }) : showToday ? (
-              <button type="button" onClick={onToday} className="Bear-Calendar__today-btn bear-text-sm bear-text-pink-600 dark:bear-text-pink-400 hover:bear-text-pink-700 dark:hover:bear-text-pink-300 bear-font-medium">
+              <button type="button" onClick={onToday} className="Bear-Calendar__today-btn bear-text-sm bear-text-primary-600 dark:bear-text-primary-400 hover:bear-text-primary-700 dark:hover:bear-text-primary-300 bear-font-medium">
                 Today
               </button>
             ) : null}
@@ -296,7 +296,7 @@ export const Calendar: FC<CalendarProps> = (props) => {
           <span />
         )}
         {showToday ? (
-          <button type="button" onClick={onToday} className="Bear-Calendar__today-btn bear-text-sm bear-text-pink-400 hover:bear-text-pink-300 bear-font-medium bear-transition-colors">
+          <button type="button" onClick={onToday} className="Bear-Calendar__today-btn bear-text-sm bear-text-primary-400 hover:bear-text-primary-300 bear-font-medium bear-transition-colors">
             Today
           </button>
         ) : null}

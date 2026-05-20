@@ -47,7 +47,7 @@ export const Statistic: FC<StatisticProps> = ({
     <div className={cn('bear-flex bear-items-start bear-gap-3', variantClasses[variant], className)}>
       {icon && (
         <div className={cn(
-          'bear-flex bear-items-center bear-justify-center bear-rounded-lg bear-bg-pink-500/20 bear-text-pink-400',
+          'bear-flex bear-items-center bear-justify-center bear-rounded-lg bear-bg-primary-500/20 bear-text-primary-400',
           sizeClasses[size].icon
         )}>
           {icon}

@@ -69,7 +69,7 @@ export const ResizableTextarea: FC<ResizableTextareaProps> = ({
             'bear-p-3 bear-resize-none focus:bear-outline-none focus:bear-ring-2',
             hasError
               ? 'bear-border-red-500 focus:bear-ring-red-500'
-              : 'bear-border-gray-300 dark:bear-border-gray-600 focus:bear-ring-pink-500/50'
+              : 'bear-border-gray-300 dark:bear-border-gray-600 focus:bear-ring-primary-500/50'
           )}
           style={{
             ...style,

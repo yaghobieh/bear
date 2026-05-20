@@ -56,7 +56,7 @@ export const PropsPlayground: FC<PropsPlaygroundProps> = ({
     'bear-w-full bear-rounded-md bear-border bear-border-zinc-700',
     'bear-bg-zinc-800 bear-text-zinc-100',
     'placeholder:bear-text-zinc-500',
-    'focus:bear-outline-none focus:bear-ring-2 focus:bear-ring-pink-500/30 focus:bear-border-pink-500',
+    'focus:bear-outline-none focus:bear-ring-2 focus:bear-ring-primary-500/30 focus:bear-border-primary-500',
     'bear-transition-colors',
     s.input
   );
@@ -81,10 +81,10 @@ export const PropsPlayground: FC<PropsPlaygroundProps> = ({
           s.text
         )}
       >
-        <span className="bear-text-pink-500">
+        <span className="bear-text-primary-500">
           {collapsed ? <ChevronRight size={12} /> : <ChevronDown size={12} />}
         </span>
-        <span className="bear-text-pink-500">
+        <span className="bear-text-primary-500">
           <SlidersIcon size={14} />
         </span>
         <span className="bear-font-semibold">{title}</span>
@@ -96,7 +96,7 @@ export const PropsPlayground: FC<PropsPlaygroundProps> = ({
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); handleReset(); }}
-              className="bear-text-[10px] bear-font-semibold bear-text-pink-500 hover:bear-text-pink-400 hover:bear-underline"
+              className="bear-text-[10px] bear-font-semibold bear-text-primary-500 hover:bear-text-primary-400 hover:bear-underline"
             >
               Reset
             </button>
@@ -121,7 +121,7 @@ export const PropsPlayground: FC<PropsPlaygroundProps> = ({
                     key={key}
                     className="bear-rounded-lg bear-border bear-border-zinc-700/60 bear-bg-zinc-800/30 bear-p-3"
                   >
-                    <span className={cn('bear-block bear-font-semibold bear-uppercase bear-tracking-wider bear-text-pink-500 bear-mb-2', s.label)}>
+                    <span className={cn('bear-block bear-font-semibold bear-uppercase bear-tracking-wider bear-text-primary-500 bear-mb-2', s.label)}>
                       {TYPE_LABELS.boolean}
                     </span>
                     <label className="bear-flex bear-items-center bear-gap-2.5 bear-cursor-pointer">
@@ -132,7 +132,7 @@ export const PropsPlayground: FC<PropsPlaygroundProps> = ({
                         onClick={() => handleChange(key, !checked)}
                         className={cn(
                           'bear-relative bear-inline-flex bear-h-5 bear-w-9 bear-flex-shrink-0 bear-rounded-full bear-border-2 bear-border-transparent bear-transition-colors',
-                          checked ? 'bear-bg-pink-500' : 'bear-bg-zinc-600'
+                          checked ? 'bear-bg-primary-500' : 'bear-bg-zinc-600'
                         )}
                       >
                         <span
@@ -160,7 +160,7 @@ export const PropsPlayground: FC<PropsPlaygroundProps> = ({
                       <label htmlFor={`pp-${key}`} className={cn('bear-font-medium bear-text-zinc-300 bear-truncate', s.label)}>
                         {label}
                       </label>
-                      <span className={cn('bear-font-semibold bear-uppercase bear-tracking-wider bear-text-pink-500', s.label)}>
+                      <span className={cn('bear-font-semibold bear-uppercase bear-tracking-wider bear-text-primary-500', s.label)}>
                         {TYPE_LABELS.select}
                       </span>
                     </div>
@@ -195,7 +195,7 @@ export const PropsPlayground: FC<PropsPlaygroundProps> = ({
                       <label htmlFor={`pp-${key}`} className={cn('bear-font-medium bear-text-zinc-300 bear-truncate', s.label)}>
                         {label}
                       </label>
-                      <span className={cn('bear-font-semibold bear-uppercase bear-tracking-wider bear-text-pink-500', s.label)}>
+                      <span className={cn('bear-font-semibold bear-uppercase bear-tracking-wider bear-text-primary-500', s.label)}>
                         {TYPE_LABELS.number}
                       </span>
                     </div>
@@ -225,7 +225,7 @@ export const PropsPlayground: FC<PropsPlaygroundProps> = ({
                     <label htmlFor={`pp-${key}`} className={cn('bear-font-medium bear-text-zinc-300 bear-truncate', s.label)}>
                       {label}
                     </label>
-                    <span className={cn('bear-font-semibold bear-uppercase bear-tracking-wider bear-text-pink-500', s.label)}>
+                    <span className={cn('bear-font-semibold bear-uppercase bear-tracking-wider bear-text-primary-500', s.label)}>
                       {TYPE_LABELS.string}
                     </span>
                   </div>

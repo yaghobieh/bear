@@ -85,13 +85,13 @@ export const RadioCard: FC<RadioCardProps> = ({
         className={cn(
           'bear-absolute bear-top-3 bear-right-3 bear-flex bear-items-center bear-justify-center bear-rounded-full bear-border-2',
           isChecked
-            ? 'bear-border-pink-500 dark:bear-border-pink-400'
+            ? 'bear-border-primary-500 dark:bear-border-primary-400'
             : 'bear-border-gray-300 dark:bear-border-gray-600',
           RADIO_INDICATOR_SIZE_MAP[size]
         )}
       >
         {isChecked && (
-          <div className="bear-w-2 bear-h-2 bear-rounded-full bear-bg-pink-500 dark:bear-bg-pink-400" />
+          <div className="bear-w-2 bear-h-2 bear-rounded-full bear-bg-primary-500 dark:bear-bg-primary-400" />
         )}
       </div>
       {icon && (

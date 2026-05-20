@@ -18,17 +18,17 @@ export const SIZE_CLASSES = {
 } as const;
 
 export const ROOT_CLASSES = 'Bear-DateRangePicker bear-relative bear-inline-block';
-export const TRIGGER_CLASSES = 'bear-w-full bear-flex bear-items-center bear-justify-between bear-rounded-lg bear-border bear-border-gray-300 dark:bear-border-zinc-600 bear-bg-white dark:bear-bg-zinc-800 bear-text-gray-900 dark:bear-text-white bear-transition-colors focus:bear-ring-2 focus:bear-ring-pink-500 bear-outline-none';
+export const TRIGGER_CLASSES = 'bear-w-full bear-flex bear-items-center bear-justify-between bear-rounded-lg bear-border bear-border-gray-300 dark:bear-border-zinc-600 bear-bg-white dark:bear-bg-zinc-800 bear-text-gray-900 dark:bear-text-white bear-transition-colors focus:bear-ring-2 focus:bear-ring-primary-500 bear-outline-none';
 export const DROPDOWN_CLASSES = 'bear-absolute bear-z-[9999] bear-mt-1 bear-bg-white dark:bear-bg-zinc-800 bear-border bear-border-gray-200 dark:bear-border-zinc-700 bear-rounded-xl bear-shadow-xl bear-p-4';
 export const CALENDAR_HEADER_CLASSES = 'bear-flex bear-items-center bear-justify-between bear-mb-2';
 export const NAV_BTN_CLASSES = 'bear-p-1 bear-rounded hover:bear-bg-gray-100 dark:hover:bear-bg-zinc-700 bear-text-gray-500 dark:bear-text-zinc-400';
 export const DAY_BASE_CLASSES = 'bear-w-8 bear-h-8 bear-text-sm bear-rounded-full bear-transition-colors bear-cursor-pointer';
-export const DAY_SELECTED_CLASSES = 'bear-bg-pink-500 bear-text-white';
-export const DAY_IN_RANGE_CLASSES = 'bear-bg-pink-100 dark:bear-bg-pink-900/30 bear-text-pink-800 dark:bear-text-pink-200';
+export const DAY_SELECTED_CLASSES = 'bear-bg-primary-500 bear-text-white';
+export const DAY_IN_RANGE_CLASSES = 'bear-bg-primary-100 dark:bear-bg-primary-900/30 bear-text-primary-800 dark:bear-text-primary-200';
 export const DAY_HOVER_CLASSES = 'hover:bear-bg-gray-100 dark:hover:bear-bg-zinc-700';
 export const DAY_DISABLED_CLASSES = 'bear-text-gray-300 dark:bear-text-zinc-600 bear-cursor-not-allowed';
-export const DAY_TODAY_CLASSES = 'bear-ring-1 bear-ring-pink-400';
-export const PRESET_BTN_CLASSES = 'bear-w-full bear-text-left bear-px-3 bear-py-1.5 bear-text-sm bear-rounded bear-transition-colors hover:bear-bg-pink-50 dark:hover:bear-bg-pink-900/20 bear-text-gray-700 dark:bear-text-zinc-300';
+export const DAY_TODAY_CLASSES = 'bear-ring-1 bear-ring-primary-400';
+export const PRESET_BTN_CLASSES = 'bear-w-full bear-text-left bear-px-3 bear-py-1.5 bear-text-sm bear-rounded bear-transition-colors hover:bear-bg-primary-50 dark:hover:bear-bg-primary-900/20 bear-text-gray-700 dark:bear-text-zinc-300';
 export const LABEL_CLASSES = 'Bear-DateRangePicker__label bear-block bear-text-sm bear-font-medium bear-text-gray-700 dark:bear-text-zinc-300 bear-mb-1.5';
 export const ERROR_CLASSES = 'bear-mt-1 bear-text-xs bear-text-red-500';
 export const HELPER_CLASSES = 'bear-mt-1 bear-text-xs bear-text-gray-500 dark:bear-text-zinc-500';

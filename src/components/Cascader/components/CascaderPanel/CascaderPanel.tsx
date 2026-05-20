@@ -40,7 +40,7 @@ export const CascaderPanel: FC<CascaderPanelProps> = ({
             onMouseEnter={() => handleMouseEnter(option)}
             className={cn(
               'Bear-Cascader__option bear-w-full bear-flex bear-items-center bear-justify-between bear-px-3 bear-py-2 bear-text-sm bear-text-left bear-transition-colors',
-              isSelected && 'Bear-Cascader__option--selected bear-bg-pink-500/20 bear-text-pink-600 dark:bear-text-pink-400',
+              isSelected && 'Bear-Cascader__option--selected bear-bg-primary-500/20 bear-text-primary-600 dark:bear-text-primary-400',
               isExpanded && !isSelected && 'Bear-Cascader__option--expanded bear-bg-gray-100 dark:bear-bg-zinc-700',
               !isSelected && !isExpanded && 'bear-text-gray-700 dark:bear-text-zinc-300 hover:bear-bg-gray-100 dark:hover:bear-bg-zinc-700',
               option.disabled && 'Bear-Cascader__option--disabled bear-opacity-50 bear-cursor-not-allowed'

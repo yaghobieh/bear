@@ -4,7 +4,7 @@ export const BORDER_COLOR_MAP: Record<BlockquoteColor, string> = {
   default:
     'bear-border-l-gray-300 dark:bear-border-l-zinc-600',
   primary:
-    'bear-border-l-pink-500 dark:bear-border-l-pink-400',
+    'bear-border-l-primary-500 dark:bear-border-l-primary-400',
   success:
     'bear-border-l-green-500 dark:bear-border-l-green-400',
   warning:
@@ -17,7 +17,7 @@ export const ICON_COLOR_MAP: Record<BlockquoteColor, string> = {
   default:
     'bear-text-gray-500 dark:bear-text-zinc-400',
   primary:
-    'bear-text-pink-500 dark:bear-text-pink-400',
+    'bear-text-primary-500 dark:bear-text-primary-400',
   success:
     'bear-text-green-500 dark:bear-text-green-400',
   warning:

@@ -102,7 +102,7 @@ export const DatePicker: FC<DatePickerProps> = ({
           'Bear-DatePicker__trigger bear-w-full bear-flex bear-items-center bear-justify-between bear-rounded-lg bear-border bear-text-left bear-transition-colors',
           sizeClasses[size],
           variantClasses[variant],
-          error ? 'bear-border-red-500' : 'focus:bear-border-pink-500',
+          error ? 'bear-border-red-500' : 'focus:bear-border-primary-500',
           disabled && 'bear-opacity-50 bear-cursor-not-allowed',
           value ? 'bear-text-zinc-900 dark:bear-text-white' : 'bear-text-zinc-500'
         )}

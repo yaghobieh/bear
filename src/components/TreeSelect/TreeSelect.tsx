@@ -47,7 +47,7 @@ const TreeNodeRow: FC<{
           <span className="bear-w-4 bear-mr-1" />
         )}
         {multiple && (
-          <span className={cn('bear-w-4 bear-h-4 bear-mr-2 bear-border bear-rounded bear-flex bear-items-center bear-justify-center bear-text-xs', isSelected ? 'bear-bg-pink-500 bear-border-pink-500 bear-text-white' : 'bear-border-gray-300 dark:bear-border-zinc-600')}>
+          <span className={cn('bear-w-4 bear-h-4 bear-mr-2 bear-border bear-rounded bear-flex bear-items-center bear-justify-center bear-text-xs', isSelected ? 'bear-bg-primary-500 bear-border-primary-500 bear-text-white' : 'bear-border-gray-300 dark:bear-border-zinc-600')}>
             {isSelected && '✓'}
           </span>
         )}

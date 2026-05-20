@@ -40,7 +40,7 @@ export const SPEED_DIAL_MAIN_SIZES: Record<SpeedDialSize, string> = {
   lg: 'w-16 h-16',
 };
 
-export const SPEED_DIAL_MAIN_COLORS = 'bg-pink-500 hover:bg-pink-600 text-white';
+export const SPEED_DIAL_MAIN_COLORS = 'bg-primary-500 hover:bg-primary-600 text-white';
 
 // Action button classes
 export const SPEED_DIAL_ACTION = 'Bear-SpeedDial__action rounded-full shadow-md transition-all duration-200';

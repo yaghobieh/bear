@@ -1,4 +1,4 @@
-export const COLOR_PICKER_DEFAULT_VALUE = '#ec4899';
+export const COLOR_PICKER_DEFAULT_VALUE = 'var(--bear-primary-500, #ec4899)';
 export const COLOR_PICKER_HEX_PATTERN = /^#[0-9A-Fa-f]{6}$/;
 
 export const COLOR_PICKER_DEFAULT_PRESETS = [
@@ -17,7 +17,7 @@ export const COLOR_PICKER_LABEL_CLASSES =
   'bear-block bear-text-sm bear-font-medium bear-text-gray-700 dark:bear-text-zinc-300 bear-mb-1.5';
 
 export const COLOR_PICKER_INPUT_CLASSES =
-  'bear-px-3 bear-py-1.5 bear-rounded-lg bear-border bear-bg-white dark:bear-bg-zinc-800 bear-text-gray-900 dark:bear-text-white bear-text-sm bear-font-mono bear-w-24 bear-outline-none bear-border-gray-300 dark:bear-border-zinc-600 focus:bear-border-pink-500';
+  'bear-px-3 bear-py-1.5 bear-rounded-lg bear-border bear-bg-white dark:bear-bg-zinc-800 bear-text-gray-900 dark:bear-text-white bear-text-sm bear-font-mono bear-w-24 bear-outline-none bear-border-gray-300 dark:bear-border-zinc-600 focus:bear-border-primary-500';
 
 export const COLOR_PICKER_SWATCH_CLASSES =
   'bear-rounded-lg bear-border bear-border-gray-300 dark:bear-border-zinc-600 bear-transition-all hover:bear-scale-105 bear-shadow-sm';
@@ -29,7 +29,7 @@ export const COLOR_PICKER_HUE_STRIP_CLASSES =
   'bear-w-full bear-h-2 bear-rounded-full bear-cursor-pointer bear-appearance-none bear-border-0 bear-mb-3';
 
 export const COLOR_PICKER_PRESET_ACTIVE_CLASSES =
-  'bear-border-gray-900 dark:bear-border-white bear-ring-2 bear-ring-pink-500';
+  'bear-border-gray-900 dark:bear-border-white bear-ring-2 bear-ring-primary-500';
 
 export const COLOR_PICKER_PRESET_INACTIVE_CLASSES =
   'bear-border-gray-300 dark:bear-border-zinc-600';

@@ -66,7 +66,7 @@ export const TreeView: FC<TreeViewProps> = ({
             'bear-flex bear-items-center bear-gap-1 bear-rounded bear-transition-colors bear-cursor-pointer',
             sizeClasses[size].padding,
             sizeClasses[size].text,
-            isSelected ? 'bear-bg-pink-500/20 bear-text-pink-400' : 'bear-text-zinc-300 hover:bear-bg-zinc-700/50',
+            isSelected ? 'bear-bg-primary-500/20 bear-text-primary-400' : 'bear-text-zinc-300 hover:bear-bg-zinc-700/50',
             node.disabled && 'bear-opacity-50 bear-cursor-not-allowed'
           )}
           style={{ paddingLeft: depth * sizeClasses[size].indent + 8 }}
@@ -87,7 +87,7 @@ export const TreeView: FC<TreeViewProps> = ({
               type="checkbox"
               checked={isChecked}
               onChange={(e) => { e.stopPropagation(); onCheck?.(node.id, e.target.checked); }}
-              className="bear-accent-pink-500"
+              className="bear-accent-primary-500"
               disabled={node.disabled}
             />
           )}

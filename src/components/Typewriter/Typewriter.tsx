@@ -138,7 +138,7 @@ export const Typewriter: FC<TypewriterProps> = (props) => {
           className={cn(
             'Bear-Typewriter__cursor',
             'bear-inline-block bear-ml-0.5',
-            'bear-text-[var(--bear-primary-500)]',
+            'bear-text-primary-500',
           )}
           style={{ opacity: cursorVisible ? 1 : 0 }}
           aria-hidden="true"

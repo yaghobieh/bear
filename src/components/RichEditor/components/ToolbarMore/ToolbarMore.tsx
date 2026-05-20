@@ -76,7 +76,7 @@ export const ToolbarMore: FC<ToolbarMoreProps> = ({ children, disabled, isMobile
           RICH_EDITOR_BUTTON_BASE_CLASSES,
           RICH_EDITOR_BUTTON_INACTIVE_CLASSES,
           'flex items-center justify-center',
-          isOpen && 'bg-pink-500 text-white',
+          isOpen && 'bg-primary-500 text-white',
           disabled && `Bear-RichEditor__more-trigger--disabled ${RICH_EDITOR_BUTTON_DISABLED_CLASSES}`
         )}
       >

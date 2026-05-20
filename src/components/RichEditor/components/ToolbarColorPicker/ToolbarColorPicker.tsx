@@ -80,7 +80,7 @@ export const ToolbarColorPicker: FC<ToolbarColorPickerProps> = (props) => {
                 onClick={() => handleSelect(color)}
                 className={cn(
                   'w-6 h-6 rounded-full border border-gray-300 dark:border-zinc-600 transition-transform hover:scale-110 touch-manipulation',
-                  value === color && 'ring-2 ring-pink-500 ring-offset-1 dark:ring-offset-zinc-800'
+                  value === color && 'ring-2 ring-primary-500 ring-offset-1 dark:ring-offset-zinc-800'
                 )}
                 style={{ backgroundColor: color }}
                 title={color}
@@ -98,7 +98,7 @@ export const ToolbarColorPicker: FC<ToolbarColorPickerProps> = (props) => {
             onClick={() => handleSelect(color)}
             className={cn(
               'Bear-RichEditor__color-swatch w-5 h-5 rounded-full border border-gray-300 dark:border-zinc-600 transition-transform hover:scale-110 touch-manipulation',
-              value === color && 'ring-2 ring-pink-500 ring-offset-1 dark:ring-offset-zinc-800'
+              value === color && 'ring-2 ring-primary-500 ring-offset-1 dark:ring-offset-zinc-800'
             )}
             style={{ backgroundColor: color }}
             title={color}

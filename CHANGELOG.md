@@ -2,6 +2,29 @@
 
 All notable changes to Bear UI will be documented in this file.
 
+## [1.2.3] - 2026-04-13
+
+### Changed
+
+- **Build Pipeline**: Migrated from Tailwind CSS to AeroCraft (`@forgedevstack/aerocraft`).
+  - Replaced `tailwind.config.js` with `aerocraft.config.ts` — same `bear-` prefix, all utility groups enabled, responsive variants active.
+  - Created `postcss-bear-variants.cjs` — Bear-owned PostCSS plugin that generates `dark:`, `hover:`, `focus:`, `active:`, `disabled:`, `group-hover:`, and other state variant classes by scanning source files. Runs after AeroCraft in the PostCSS pipeline.
+  - Updated `postcss.config.js` to chain `aerocraftPlugin` + `bearVariants`.
+  - Replaced `build:css` script — now uses `postcss-cli` instead of `tailwindcss` CLI.
+  - Removed `tailwindcss` and `autoprefixer` from devDependencies; added `@forgedevstack/aerocraft` and `postcss-cli`.
+  - Updated `_base.css` — replaced `@tailwind base/components/utilities` with `@aerocraft all`. Expanded CSS variables to include full secondary, success, warning, danger, info, and neutral color scales.
+
+- **Drawer**: Refactored for better code organization.
+  - Extracted `sizeClasses`, `positionClasses`, `transformOpen`, `transformClosed` to `Drawer.const.ts` with strong typing.
+  - Extracted `lockBodyScroll` utility to `Drawer.utils.ts`.
+  - Added `BORDER_SIDE_MAP` constant for conditional border classes.
+
+### Added
+
+- **Media Player Banner**: Coming to ForgeStack — `@forgedevstack/player` (Torch). A dedicated player package with playlists, subtitles, picture-in-picture, streaming, and AirPlay, designed to work seamlessly with Bear UI.
+
+---
+
 ## [1.2.2] - 2026-03-24
 
 ### Added

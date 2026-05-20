@@ -43,7 +43,7 @@ export const LoadingOverlay: FC<LoadingOverlayProps> = ({
           aria-live="polite"
         >
           {loader ?? (
-            <Spinner size={SPINNER_SIZE_MAP[loaderSize]} className="bear-text-pink-500 dark:bear-text-pink-400" />
+            <Spinner size={SPINNER_SIZE_MAP[loaderSize]} className="bear-text-primary-500 dark:bear-text-primary-400" />
           )}
           {label && (
             <Typography variant="body2" color="secondary" className={LABEL_CLASS}>

@@ -9,9 +9,9 @@ import { BearIcons, CheckIcon, XIcon, Typewriter, Badge } from '@forgedevstack/b
 const ArrowRightIcon = BearIcons.ArrowRightIcon;
 
 const HERO_TITLE = 'The React UI library';
-const HERO_DESCRIPTION = '100+ accessible, customizable React components with TypeScript, Tailwind CSS, responsive hooks, a powerful theming system, and 550+ icons — everything you need to ship beautiful products fast.';
+const HERO_DESCRIPTION = '100+ accessible, customizable React components with TypeScript, AeroCraft CSS, responsive hooks, a powerful theming system, and 550+ icons — everything you need to ship beautiful products fast.';
 const INSTALL_CMD = 'npm install @forgedevstack/bear';
-const VERSION_LABEL = `v${BEAR_VERSION} — new components, GlowCard effects, enhanced DiffViewer & Stepper`;
+const VERSION_LABEL = `v${BEAR_VERSION} — AeroCraft migration, enhanced Button/Input/Dropdown, new component props`;
 
 const STATS = [
   { value: '100+', label: 'Components', color: 'text-pink-500' },
@@ -91,7 +91,7 @@ const FeatureCard: FC<{ title: string; description: string; icon: ReactNode; pat
 interface ComparisonRow { id: number; feature: string; bearUI: boolean | 'soon' | 'partial'; others: boolean | 'soon' | 'partial'; [key: string]: unknown; }
 
 const comparisonData: ComparisonRow[] = [
-  { id: 1, feature: 'Zero Config Tailwind', bearUI: true, others: false },
+  { id: 1, feature: 'Zero Config AeroCraft', bearUI: true, others: false },
   { id: 2, feature: 'Built-in Dark Mode', bearUI: true, others: 'partial' },
   { id: 3, feature: '100+ Components', bearUI: true, others: true },
   { id: 4, feature: 'TypeScript First', bearUI: true, others: 'partial' },
@@ -139,7 +139,7 @@ const Introduction: FC = () => {
           <div className="absolute top-1/2 -left-40 w-[500px] h-[500px] bg-gradient-radial from-purple-200/30 to-transparent dark:from-purple-900/10 rounded-full blur-3xl" />
           <div className="absolute top-1/3 -right-40 w-[500px] h-[500px] bg-gradient-radial from-rose-200/30 to-transparent dark:from-rose-900/10 rounded-full blur-3xl" />
         </div>
-
+        
         <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-1.5 rounded-full bg-white/60 dark:bg-white/5 backdrop-blur-sm border border-pink-200/60 dark:border-pink-800/30 text-pink-600 dark:text-pink-400 text-xs md:text-sm font-medium mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-pink-500 animate-pulse" />
@@ -148,12 +148,12 @@ const Introduction: FC = () => {
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 dark:text-white mb-6 leading-[1.1] tracking-tight">
             {HERO_TITLE}
-            <br />
+          <br />
             <span className="text-pink-500">
               <Typewriter text={['for speed', 'for beauty', 'for developers', 'you deserve']} loop cursor as="span" className="text-pink-500" />
-            </span>
-          </h1>
-
+          </span>
+        </h1>
+        
           <p className="text-base sm:text-lg md:text-xl text-gray-500 dark:text-gray-400 max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed">
             {HERO_DESCRIPTION}
           </p>
@@ -164,12 +164,12 @@ const Introduction: FC = () => {
             </Link>
             <Link to="/components" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 font-semibold transition-colors text-base">
               Explore Components
-            </Link>
-          </div>
+          </Link>
+      </div>
 
           <div className="max-w-sm sm:max-w-md mx-auto">
             <CodeBlock code={INSTALL_CMD} language="bash" showLineNumbers={false} />
-          </div>
+      </div>
         </div>
       </section>
 
@@ -177,7 +177,7 @@ const Introduction: FC = () => {
       <section className="mb-14 md:mb-20">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-2xl mx-auto">
           {STATS.map((s) => <StatBadge key={s.label} {...s} />)}
-        </div>
+      </div>
       </section>
 
       {/* Why Bear */}
@@ -204,10 +204,10 @@ const Introduction: FC = () => {
                 <div key={b} className="flex items-start gap-3">
                   <CheckIcon size={18} className="text-green-500 mt-0.5 flex-shrink-0" />
                   <p className="text-sm text-gray-600 dark:text-gray-400">{b}</p>
-                </div>
-              ))}
-            </div>
-          </div>
+              </div>
+                ))}
+              </div>
+              </div>
           <div>
             <CodeBlock
               code={`import { BearProvider, useMediaQuery } from '@forgedevstack/bear';
@@ -230,8 +230,8 @@ const Introduction: FC = () => {
               language="tsx"
               title="Theming"
             />
-          </div>
-        </div>
+              </div>
+              </div>
       </section>
 
       {/* bearStyled */}
@@ -257,7 +257,7 @@ const BrandCard = bearStyled(Card, {
               language="tsx"
               title="bearStyled"
             />
-          </div>
+              </div>
           <div className="order-1 md:order-2">
             <Badge variant="secondary" className="mb-4">New in 1.2</Badge>
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">bearStyled — your component variants</h2>
@@ -317,7 +317,7 @@ const BrandCard = bearStyled(Card, {
           <Link to="/components" className="inline-flex items-center gap-2 text-sm text-pink-600 dark:text-pink-400 hover:underline font-medium">
             View all 100+ components <ArrowRightIcon size={14} />
           </Link>
-        </div>
+      </div>
       </section>
 
       {/* Hooks */}
@@ -343,7 +343,7 @@ const BrandCard = bearStyled(Card, {
         <p className="text-center text-gray-500 dark:text-gray-400 mb-8 max-w-lg mx-auto">Features that come built-in vs what you typically need to add yourself with other libraries.</p>
         <div className="max-w-2xl mx-auto grid-table-wrapper">
           <GridTable<ComparisonRow> data={comparisonData} columns={comparisonColumns} getRowId={(row) => row.id} showPagination={false} />
-        </div>
+      </div>
         <p className="text-center text-xs text-gray-400 mt-3">
           Table powered by <a href="https://www.npmjs.com/package/@forgedevstack/grid-table" target="_blank" rel="noopener noreferrer" className="text-pink-500 hover:underline">@forgedevstack/grid-table</a>
         </p>
@@ -359,16 +359,16 @@ const BrandCard = bearStyled(Card, {
           </div>
           <div>
             <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">2. Use</p>
-            <CodeBlock
-              code={`import { BearProvider, Button, Card } from '@forgedevstack/bear';
+        <CodeBlock
+          code={`import { BearProvider, Button, Card } from '@forgedevstack/bear';
 import '@forgedevstack/bear/styles.css';
 
-<BearProvider>
+    <BearProvider>
   <Card className="p-6">
     <Button variant="primary">Hello Bear</Button>
-  </Card>
+      </Card>
 </BearProvider>`}
-              language="tsx"
+          language="tsx"
               showLineNumbers={false}
             />
           </div>
@@ -381,7 +381,7 @@ import '@forgedevstack/bear/styles.css';
         <p className="text-center text-gray-500 dark:text-gray-400 mb-8 max-w-lg mx-auto">Import all styles at once, or pick individual modules for minimal bundle size.</p>
         <div className="grid md:grid-cols-2 gap-6">
           <CodeBlock code={`/* All styles at once */\n@BearIncludeAll;\n\n/* Or pick modules */\n@BearInclude 'base';\n@BearInclude 'buttons';\n@BearInclude 'effects';`} language="css" title="styles.css" showLineNumbers={false} />
-          <CodeBlock code={`// postcss.config.js\nmodule.exports = {\n  plugins: [\n    require('@forgedevstack/bear/postcss'),\n    // tailwindcss, autoprefixer, etc.\n  ],\n};`} language="javascript" title="postcss.config.js" showLineNumbers={false} />
+          <CodeBlock code={`// postcss.config.js\nimport { aerocraftPlugin } from '@forgedevstack/aerocraft/postcss';\nimport config from './aerocraft.config.js';\n\nexport default {\n  plugins: [aerocraftPlugin(config)],\n};`} language="javascript" title="postcss.config.js" showLineNumbers={false} />
         </div>
       </section>
 

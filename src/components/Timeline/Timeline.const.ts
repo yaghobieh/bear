@@ -44,7 +44,7 @@ export const TIMELINE_DOT_ICON_SIZES: Record<TimelineSize, string> = {
 };
 
 export const TIMELINE_DOT_COLORS = {
-  pink: 'bg-pink-500',
+  pink: 'bg-primary-500',
   green: 'bg-green-500',
   blue: 'bg-blue-500',
   amber: 'bg-amber-500',

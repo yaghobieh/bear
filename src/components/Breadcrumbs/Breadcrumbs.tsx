@@ -60,14 +60,14 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = (props) => {
       }
       if (item.href) {
         return (
-          <a href={item.href} className="bear-text-zinc-400 hover:bear-text-pink-400 bear-transition-colors bear-truncate">
+          <a href={item.href} className="bear-text-zinc-400 hover:bear-text-primary-400 bear-transition-colors bear-truncate">
             {content}
           </a>
         );
       }
       if (item.onClick) {
         return (
-          <button type="button" onClick={item.onClick} className="bear-text-zinc-400 hover:bear-text-pink-400 bear-transition-colors bear-truncate">
+          <button type="button" onClick={item.onClick} className="bear-text-zinc-400 hover:bear-text-primary-400 bear-transition-colors bear-truncate">
             {content}
           </button>
         );
@@ -85,7 +85,7 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = (props) => {
           trigger={
             <button
               type="button"
-              className="bear-inline-flex bear-items-center bear-gap-1 bear-text-zinc-400 hover:bear-text-pink-400 bear-transition-colors"
+              className="bear-inline-flex bear-items-center bear-gap-1 bear-text-zinc-400 hover:bear-text-primary-400 bear-transition-colors"
               aria-haspopup="true"
             >
               {content}
@@ -163,7 +163,7 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = (props) => {
                   trigger={
                     <button
                       type="button"
-                      className="bear-inline-flex bear-items-center bear-justify-center bear-rounded bear-px-2 bear-py-1 bear-text-zinc-400 hover:bear-bg-[var(--bear-bg-tertiary)] hover:bear-text-pink-400 bear-transition-colors"
+                      className="bear-inline-flex bear-items-center bear-justify-center bear-rounded bear-px-2 bear-py-1 bear-text-zinc-400 hover:bear-bg-[var(--bear-bg-tertiary)] hover:bear-text-primary-400 bear-transition-colors"
                       aria-label="Hidden breadcrumbs"
                     >
                       <BearIcons.MoreHorizIcon size={18} />

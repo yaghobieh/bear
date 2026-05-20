@@ -180,7 +180,7 @@ export const CreditInput: FC<CreditInputProps> = ({
   const wrapperBaseClass = cn(
     'bear-flex bear-items-center bear-rounded-lg bear-border bear-transition-colors',
     CREDIT_INPUT_VARIANT_CLASSES[variant],
-    error || Object.keys(errors).length > 0 ? 'bear-border-red-500' : 'focus-within:bear-border-pink-500',
+    error || Object.keys(errors).length > 0 ? 'bear-border-red-500' : 'focus-within:bear-border-primary-500',
     disabled && 'bear-opacity-50 bear-cursor-not-allowed'
   );
 

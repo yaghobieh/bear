@@ -8,7 +8,7 @@ export const Gauge: FC<GaugeProps> = ({
   max = 100,
   size = 120,
   strokeWidth = 10,
-  color = '#ec4899',
+  color = 'var(--bear-primary-500, #ec4899)',
   trackColor,
   showLabel = true,
   label,

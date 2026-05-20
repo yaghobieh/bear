@@ -9,12 +9,16 @@ export type AutoFormatType =
   | 'sentenceCase'
   | 'none';
 
+export type InputVariant = 'outline' | 'filled' | 'underline';
+
+export type InputRadius = 'default' | 'pill' | 'square' | 'none';
+
 export interface InputPropsInput {
   startAdornment?: ReactNode;
   endAdornment?: ReactNode;
 }
 
-export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
+export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size' | 'prefix' | 'onCopy'> {
   /** Input label */
   label?: string;
   /** Helper text below input */
@@ -25,12 +29,20 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
   success?: string;
   /** Input size */
   size?: 'sm' | 'md' | 'lg';
+  /** Visual style variant */
+  variant?: InputVariant;
+  /** Border radius preset */
+  radius?: InputRadius;
   /** Start/end slots (takes precedence over leftAddon/rightAddon when set) */
   InputProps?: InputPropsInput;
   /** Left addon (legacy; use InputProps.startAdornment for start slot) */
   leftAddon?: ReactNode;
   /** Right addon (legacy; use InputProps.endAdornment for end slot) */
   rightAddon?: ReactNode;
+  /** Static text prefix inside the input (e.g. "$", "https://") */
+  prefix?: ReactNode;
+  /** Static text suffix inside the input (e.g. "kg", ".com") */
+  suffix?: ReactNode;
   /** Whether input is full width */
   fullWidth?: boolean;
   /** Show a clear (X) button when input has value */
@@ -49,4 +61,16 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
   validateOnBlur?: boolean;
   /** Run validation on change */
   validateOnChange?: boolean;
+  /** Show a loading spinner inside the input */
+  loading?: boolean;
+  /** Show a copy button that copies the current value to clipboard */
+  copyable?: boolean;
+  /** Callback when value is copied */
+  onCopy?: (value: string) => void;
+  /** Make the label float above the input on focus/filled */
+  floatingLabel?: boolean;
+  /** Required asterisk next to label */
+  required?: boolean;
+  /** Test ID for testing */
+  testId?: string;
 }

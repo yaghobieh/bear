@@ -1,7 +1,7 @@
 import type { IndicatorPosition } from './Indicator.types';
 
 export const DEFAULT_SIZE = 10;
-export const DEFAULT_COLOR = 'bear-bg-pink-500 dark:bear-bg-pink-400';
+export const DEFAULT_COLOR = 'bear-bg-primary-500 dark:bear-bg-primary-400';
 
 export const POSITION_MAP: Record<IndicatorPosition, string> = {
   'top-start': 'bear-top-0 bear-left-0 bear-translate-x-[-50%] bear-translate-y-[-50%]',

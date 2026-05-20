@@ -130,7 +130,7 @@ export const Dock: FC<DockProps> = (props) => {
                   'bear-w-full bear-h-full bear-rounded-xl',
                   'bear-transition-transform',
                   item.active
-                    ? 'bear-bg-[var(--bear-primary-500)] bear-text-white'
+                    ? 'bear-bg-primary-500 bear-text-white'
                     : 'bear-bg-gray-100 dark:bear-bg-gray-800',
                 )}
                 style={{ fontSize: size * ICON_SCALE_RATIO }}
@@ -160,7 +160,7 @@ export const Dock: FC<DockProps> = (props) => {
                 className={cn(
                   'Bear-Dock__dot',
                   'bear-w-1 bear-h-1 bear-rounded-full bear-mt-0.5',
-                  'bear-bg-[var(--bear-primary-500)]',
+                  'bear-bg-primary-500',
                 )}
                 aria-hidden="true"
               />

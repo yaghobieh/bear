@@ -135,7 +135,7 @@ const Input = forwardRef<HTMLInputElement, EditableInputProps>(({
 
   if (!isEditing) return null;
 
-  const baseClasses = 'Bear-Editable__input bear-w-full bear-px-2 bear-py-1 bear-border bear-border-gray-300 dark:bear-border-zinc-600 bear-rounded bear-bg-white dark:bear-bg-zinc-800 bear-text-gray-900 dark:bear-text-white focus:bear-outline-none focus:bear-ring-2 focus:bear-ring-pink-500';
+  const baseClasses = 'Bear-Editable__input bear-w-full bear-px-2 bear-py-1 bear-border bear-border-gray-300 dark:bear-border-zinc-600 bear-rounded bear-bg-white dark:bear-bg-zinc-800 bear-text-gray-900 dark:bear-text-white focus:bear-outline-none focus:bear-ring-2 focus:bear-ring-primary-500';
 
   if (asTextarea) {
     return (

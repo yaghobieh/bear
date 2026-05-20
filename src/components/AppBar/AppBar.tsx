@@ -28,7 +28,7 @@ export const AppBar: FC<AppBarProps> = ({
 
   const colorClasses = {
     default: 'bear-bg-white bear-text-gray-900 dark:bear-bg-zinc-900 dark:bear-text-white',
-    primary: 'bear-bg-pink-600 bear-text-white',
+    primary: 'bear-bg-primary-600 bear-text-white',
     dark: 'bear-bg-gray-900 bear-text-white dark:bear-bg-black',
   };
 

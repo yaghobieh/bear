@@ -1,4 +1,4 @@
-export const DEFAULT_GLOW_COLOR = '#ec4899';
+export const DEFAULT_GLOW_COLOR = 'var(--bear-primary-500, #ec4899)';
 export const DEFAULT_GLOW_INTENSITY = 40;
 export const DEFAULT_BORDER_RADIUS = 12;
 export const DEFAULT_EFFECT = 'ambient' as const;

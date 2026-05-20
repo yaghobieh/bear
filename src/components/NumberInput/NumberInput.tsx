@@ -91,7 +91,7 @@ export const NumberInput: FC<NumberInputProps> = ({
           placeholder={placeholder}
           disabled={disabled}
           className={cn(
-            'bear-flex-1 bear-px-4 bear-rounded-lg bear-border bear-text-center bear-text-white bear-outline-none bear-transition-colors focus:bear-border-pink-500',
+            'bear-flex-1 bear-px-4 bear-rounded-lg bear-border bear-text-center bear-text-white bear-outline-none bear-transition-colors focus:bear-border-primary-500',
             sizeClasses[size].input,
             variantClasses[variant],
             error && 'bear-border-red-500',

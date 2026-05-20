@@ -1,4 +1,4 @@
-export const DEFAULT_ACCENT = '#ec4899';
+export const DEFAULT_ACCENT = 'var(--bear-primary-500, #ec4899)';
 export const PROGRESS_HEIGHT = 4;
 export const ICON_SM = 18;
 export const ICON_MD = 20;

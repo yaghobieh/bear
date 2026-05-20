@@ -9,7 +9,7 @@ interface SEOProps {
 const BASE_TITLE = 'Bear UI';
 const SITE_URL = 'https://bearui.com';
 const DEFAULT_DESCRIPTION =
-  'Bear UI — 100+ beautiful, accessible React components with TypeScript, Tailwind CSS, 550+ icons, responsive hooks, and a powerful theming system.';
+  'Bear UI — 100+ beautiful, accessible React components with TypeScript, AeroCraft CSS, 550+ icons, responsive hooks, and a powerful theming system.';
 
 const setMeta = (attr: 'name' | 'property', key: string, content: string) => {
   let el = document.querySelector(`meta[${attr}="${key}"]`) as HTMLMetaElement | null;

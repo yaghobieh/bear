@@ -37,7 +37,7 @@ export const VARIANT_CLASSES: Record<
     default:
       'bear-bg-gray-100 dark:bear-bg-gray-800 bear-text-gray-700 dark:bear-text-gray-300 hover:bear-bg-gray-200 dark:hover:bear-bg-gray-700 focus:bear-ring-2 focus:bear-ring-gray-400/50 dark:focus:bear-ring-gray-500/50',
     primary:
-      'bear-bg-gray-100 dark:bear-bg-gray-800 bear-text-pink-600 dark:bear-text-pink-400 hover:bear-bg-pink-100 dark:hover:bear-bg-pink-900/30 focus:bear-ring-2 focus:bear-ring-pink-500/30 dark:focus:bear-ring-pink-400/30',
+      'bear-bg-gray-100 dark:bear-bg-gray-800 bear-text-primary-600 dark:bear-text-primary-400 hover:bear-bg-primary-100 dark:hover:bear-bg-primary-900/30 focus:bear-ring-2 focus:bear-ring-primary-500/30 dark:focus:bear-ring-primary-400/30',
     success:
       'bear-bg-gray-100 dark:bear-bg-gray-800 bear-text-green-600 dark:bear-text-green-400 hover:bear-bg-green-100 dark:hover:bear-bg-green-900/30 focus:bear-ring-2 focus:bear-ring-green-500/30 dark:focus:bear-ring-green-400/30',
     warning:
@@ -49,7 +49,7 @@ export const VARIANT_CLASSES: Record<
     default:
       'bear-bg-gray-200 dark:bear-bg-gray-700 bear-text-gray-800 dark:bear-text-gray-200 hover:bear-bg-gray-300 dark:hover:bear-bg-gray-600 focus:bear-ring-2 focus:bear-ring-gray-400/50 dark:focus:bear-ring-gray-500/50',
     primary:
-      'bear-bg-pink-500 dark:bear-bg-pink-600 bear-text-white hover:bear-bg-pink-600 dark:hover:bear-bg-pink-500 focus:bear-ring-2 focus:bear-ring-pink-500/50 dark:focus:bear-ring-pink-400/50',
+      'bear-bg-primary-500 dark:bear-bg-primary-600 bear-text-white hover:bear-bg-primary-600 dark:hover:bear-bg-primary-500 focus:bear-ring-2 focus:bear-ring-primary-500/50 dark:focus:bear-ring-primary-400/50',
     success:
       'bear-bg-green-500 dark:bear-bg-green-600 bear-text-white hover:bear-bg-green-600 dark:hover:bear-bg-green-500 focus:bear-ring-2 focus:bear-ring-green-500/50 dark:focus:bear-ring-green-400/50',
     warning:
@@ -61,7 +61,7 @@ export const VARIANT_CLASSES: Record<
     default:
       'bear-bg-transparent bear-border bear-border-gray-300 dark:bear-border-gray-600 bear-text-gray-700 dark:bear-text-gray-300 hover:bear-bg-gray-100 dark:hover:bear-bg-gray-800 focus:bear-ring-2 focus:bear-ring-gray-400/50 dark:focus:bear-ring-gray-500/50',
     primary:
-      'bear-bg-transparent bear-border bear-border-pink-500 dark:bear-border-pink-400 bear-text-pink-600 dark:bear-text-pink-400 hover:bear-bg-pink-50 dark:hover:bear-bg-pink-950/30 focus:bear-ring-2 focus:bear-ring-pink-500/30 dark:focus:bear-ring-pink-400/30',
+      'bear-bg-transparent bear-border bear-border-primary-500 dark:bear-border-primary-400 bear-text-primary-600 dark:bear-text-primary-400 hover:bear-bg-primary-50 dark:hover:bear-bg-primary-950/30 focus:bear-ring-2 focus:bear-ring-primary-500/30 dark:focus:bear-ring-primary-400/30',
     success:
       'bear-bg-transparent bear-border bear-border-green-500 dark:bear-border-green-400 bear-text-green-600 dark:bear-text-green-400 hover:bear-bg-green-50 dark:hover:bear-bg-green-950/30 focus:bear-ring-2 focus:bear-ring-green-500/30 dark:focus:bear-ring-green-400/30',
     warning:
@@ -73,7 +73,7 @@ export const VARIANT_CLASSES: Record<
     default:
       'bear-bg-transparent bear-text-gray-600 dark:bear-text-gray-400 hover:bear-bg-gray-100 dark:hover:bear-bg-gray-800 focus:bear-ring-2 focus:bear-ring-gray-400/30 dark:focus:bear-ring-gray-500/30',
     primary:
-      'bear-bg-transparent bear-text-pink-600 dark:bear-text-pink-400 hover:bear-bg-pink-50 dark:hover:bear-bg-pink-950/20 focus:bear-ring-2 focus:bear-ring-pink-500/30 dark:focus:bear-ring-pink-400/30',
+      'bear-bg-transparent bear-text-primary-600 dark:bear-text-primary-400 hover:bear-bg-primary-50 dark:hover:bear-bg-primary-950/20 focus:bear-ring-2 focus:bear-ring-primary-500/30 dark:focus:bear-ring-primary-400/30',
     success:
       'bear-bg-transparent bear-text-green-600 dark:bear-text-green-400 hover:bear-bg-green-50 dark:hover:bear-bg-green-950/20 focus:bear-ring-2 focus:bear-ring-green-500/30 dark:focus:bear-ring-green-400/30',
     warning:
@@ -85,7 +85,7 @@ export const VARIANT_CLASSES: Record<
     default:
       'bear-bg-transparent bear-text-gray-600 dark:bear-text-gray-400 hover:bear-bg-gray-100/50 dark:hover:bear-bg-gray-800/50 focus:bear-ring-2 focus:bear-ring-gray-400/20 dark:focus:bear-ring-gray-500/20',
     primary:
-      'bear-bg-transparent bear-text-pink-600 dark:bear-text-pink-400 hover:bear-bg-pink-500/10 dark:hover:bear-bg-pink-400/10 focus:bear-ring-2 focus:bear-ring-pink-500/20 dark:focus:bear-ring-pink-400/20',
+      'bear-bg-transparent bear-text-primary-600 dark:bear-text-primary-400 hover:bear-bg-primary-500/10 dark:hover:bear-bg-primary-400/10 focus:bear-ring-2 focus:bear-ring-primary-500/20 dark:focus:bear-ring-primary-400/20',
     success:
       'bear-bg-transparent bear-text-green-600 dark:bear-text-green-400 hover:bear-bg-green-500/10 dark:hover:bear-bg-green-400/10 focus:bear-ring-2 focus:bear-ring-green-500/20 dark:focus:bear-ring-green-400/20',
     warning:

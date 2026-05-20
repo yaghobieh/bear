@@ -11,7 +11,7 @@ export const VARIANT_CLASSES: Record<'default' | 'outline' | 'filled', string> =
 };
 
 export const CHECKED_CLASSES =
-  'bear-border-pink-500 dark:bear-border-pink-400 bear-ring-2 bear-ring-pink-500/30 dark:bear-ring-pink-400/30 bear-bg-pink-50 dark:bear-bg-pink-950/30';
+  'bear-border-primary-500 dark:bear-border-primary-400 bear-ring-2 bear-ring-primary-500/30 dark:bear-ring-primary-400/30 bear-bg-primary-50 dark:bear-bg-primary-950/30';
 
 export const ROOT_CLASS =
   'Bear-CheckboxCard bear-relative bear-rounded-lg bear-transition-all bear-duration-200 bear-cursor-pointer bear-text-left';

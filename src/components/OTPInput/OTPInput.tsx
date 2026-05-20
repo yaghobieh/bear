@@ -129,8 +129,8 @@ export const OTPInput: FC<OTPInputProps> = ({
               'bear-text-center bear-font-semibold bear-outline-none bear-transition-all',
               cellSize,
               frame,
-              'bear-bg-[var(--bear-bg-primary,#18181b)] bear-text-[var(--bear-text-primary,#fafafa)]',
-              error ? 'bear-border-red-500' : 'bear-border-zinc-600 focus:bear-border-pink-500 focus:bear-ring-2 focus:bear-ring-pink-500/30',
+              'bear-bg-white dark:bear-bg-zinc-900 bear-text-gray-900 dark:bear-text-white',
+              error ? 'bear-border-red-500' : 'bear-border-gray-300 dark:bear-border-zinc-600 focus:bear-border-primary-500 focus:bear-ring-2 focus:bear-ring-primary-500/30',
               disabled && 'bear-opacity-50 bear-cursor-not-allowed',
             )}
           />

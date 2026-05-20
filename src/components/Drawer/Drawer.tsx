@@ -3,56 +3,15 @@ import { createPortal } from 'react-dom';
 import { cn } from '@utils';
 import { XIcon } from '../Icon';
 import type { DrawerProps } from './Drawer.types';
-
-const DRAWER_ANIMATION_MS = 300;
-
-const sizeClasses = {
-  left: {
-    sm: 'bear-w-full sm:bear-w-64 bear-max-w-full sm:bear-max-w-none',
-    md: 'bear-w-full sm:bear-w-80 bear-max-w-full sm:bear-max-w-none',
-    lg: 'bear-w-full sm:bear-w-96 bear-max-w-full sm:bear-max-w-none',
-    xl: 'bear-w-full sm:bear-w-[32rem] bear-max-w-full sm:bear-max-w-none',
-  },
-  right: {
-    sm: 'bear-w-full sm:bear-w-64 bear-max-w-full sm:bear-max-w-none',
-    md: 'bear-w-full sm:bear-w-80 bear-max-w-full sm:bear-max-w-none',
-    lg: 'bear-w-full sm:bear-w-96 bear-max-w-full sm:bear-max-w-none',
-    xl: 'bear-w-full sm:bear-w-[32rem] bear-max-w-full sm:bear-max-w-none',
-  },
-  top: {
-    sm: 'bear-h-32',
-    md: 'bear-h-48',
-    lg: 'bear-h-64',
-    xl: 'bear-h-96',
-  },
-  bottom: {
-    sm: 'bear-h-32',
-    md: 'bear-h-48',
-    lg: 'bear-h-64',
-    xl: 'bear-h-96',
-  },
-};
-
-const positionClasses = {
-  left: 'bear-left-0 bear-top-0 bear-h-full',
-  right: 'bear-right-0 bear-top-0 bear-h-full',
-  top: 'bear-top-0 bear-left-0 bear-w-full',
-  bottom: 'bear-bottom-0 bear-left-0 bear-w-full',
-};
-
-const transformOpen = {
-  left: 'bear-translate-x-0',
-  right: 'bear-translate-x-0',
-  top: 'bear-translate-y-0',
-  bottom: 'bear-translate-y-0',
-};
-
-const transformClosed = {
-  left: '-bear-translate-x-full',
-  right: 'bear-translate-x-full',
-  top: '-bear-translate-y-full',
-  bottom: 'bear-translate-y-full',
-};
+import {
+  DRAWER_ANIMATION_MS,
+  SIZE_CLASSES,
+  POSITION_CLASSES,
+  TRANSFORM_OPEN,
+  TRANSFORM_CLOSED,
+  BORDER_SIDE_MAP,
+} from './Drawer.const';
+import { lockBodyScroll } from './Drawer.utils';
 
 export const Drawer: FC<DrawerProps> = ({
   isOpen,
@@ -100,11 +59,14 @@ export const Drawer: FC<DrawerProps> = ({
   useEffect(() => {
     if (isMounted) {
       document.addEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'hidden';
+      const unlock = lockBodyScroll();
+      return () => {
+        document.removeEventListener('keydown', handleEscape);
+        unlock();
+      };
     }
     return () => {
       document.removeEventListener('keydown', handleEscape);
-      document.body.style.overflow = '';
     };
   }, [isMounted, handleEscape]);
 
@@ -128,21 +90,19 @@ export const Drawer: FC<DrawerProps> = ({
         aria-labelledby={title ? 'drawer-title' : undefined}
         className={cn(
           'bear-absolute bear-bg-white dark:bear-bg-neutral-900 bear-shadow-2xl',
-          'bear-border-neutral-200 dark:bear-border-neutral-700 bear-overflow-hidden',
+          'bear-border-neutral-200 dark:bear-border-neutral-700',
+          'bear-flex bear-flex-col bear-overflow-hidden',
           'bear-transform bear-transition-transform',
-          side === 'left' && 'bear-border-r',
-          side === 'right' && 'bear-border-l',
-          side === 'top' && 'bear-border-b',
-          side === 'bottom' && 'bear-border-t',
-          positionClasses[side],
-          sizeClasses[side][size],
-          hasOpened && !isClosing ? transformOpen[side] : transformClosed[side],
+          BORDER_SIDE_MAP[side],
+          POSITION_CLASSES[side],
+          SIZE_CLASSES[side][size],
+          hasOpened && !isClosing ? TRANSFORM_OPEN[side] : TRANSFORM_CLOSED[side],
           className
         )}
         style={{ transitionDuration: `${DRAWER_ANIMATION_MS}ms` }}
       >
         {(title || showCloseButton) && (
-          <div className="bear-flex bear-items-center bear-justify-between bear-px-4 bear-py-3 bear-border-b bear-border-neutral-200 dark:bear-border-neutral-700">
+          <div className="bear-flex bear-items-center bear-justify-between bear-px-4 bear-py-3 bear-border-b bear-border-neutral-200 dark:bear-border-neutral-700 bear-shrink-0">
             {title && (
               <h2
                 id="drawer-title"
@@ -163,7 +123,7 @@ export const Drawer: FC<DrawerProps> = ({
           </div>
         )}
 
-        <div className="bear-flex-1 bear-overflow-y-auto bear-p-4 bear-text-neutral-700 dark:bear-text-neutral-300">
+        <div className="bear-flex-1 bear-min-h-0 bear-overflow-y-auto bear-overscroll-contain bear-p-4 bear-text-neutral-700 dark:bear-text-neutral-300">
           {children}
         </div>
       </div>
@@ -172,4 +132,3 @@ export const Drawer: FC<DrawerProps> = ({
 
   return createPortal(drawerContent, document.body);
 };
-

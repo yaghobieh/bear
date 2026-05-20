@@ -19,14 +19,14 @@ const POSITION_CLASSES = {
 };
 
 const VARIANT_CLASSES: Record<BearVariant, string> = {
-  primary: 'bear-bg-pink-500 hover:bear-bg-pink-600 bear-text-white',
+  primary: 'bear-bg-primary-500 hover:bear-bg-primary-600 bear-text-white',
   secondary: 'bear-bg-gray-600 hover:bear-bg-gray-700 bear-text-white',
   success: 'bear-bg-green-500 hover:bear-bg-green-600 bear-text-white',
   danger: 'bear-bg-red-500 hover:bear-bg-red-600 bear-text-white',
   warning: 'bear-bg-amber-500 hover:bear-bg-amber-600 bear-text-white',
   info: 'bear-bg-blue-500 hover:bear-bg-blue-600 bear-text-white',
   ghost: 'bear-bg-gray-500 hover:bear-bg-gray-600 bear-text-white',
-  outline: 'bear-bg-white dark:bear-bg-gray-900 bear-border-2 bear-border-pink-500 hover:bear-bg-pink-50 dark:hover:bear-bg-pink-900/20 bear-text-pink-500',
+  outline: 'bear-bg-white dark:bear-bg-gray-900 bear-border-2 bear-border-primary-500 hover:bear-bg-primary-50 dark:hover:bear-bg-primary-900/20 bear-text-primary-500',
   error: 'bear-bg-red-500 hover:bear-bg-red-600 bear-text-white',
 };
 
@@ -67,7 +67,7 @@ export const Fab = forwardRef<HTMLButtonElement, FabProps>(({
       className={cn(
         'bear-inline-flex bear-items-center bear-justify-center bear-rounded-full',
         'bear-border-none bear-cursor-pointer bear-transition-all bear-duration-200',
-        'focus:bear-outline-none focus:bear-ring-2 focus:bear-ring-offset-2 focus:bear-ring-pink-500',
+        'focus:bear-outline-none focus:bear-ring-2 focus:bear-ring-offset-2 focus:bear-ring-primary-500',
         SIZE_CLASSES[size],
         POSITION_CLASSES[position],
         VARIANT_CLASSES[variant],

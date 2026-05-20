@@ -10,7 +10,7 @@ export const LineChart: FC<LineChartProps> = ({
   smooth = true,
   fill = false,
   strokeWidth = 2,
-  color = '#ec4899',
+  color = 'var(--bear-primary-500, #ec4899)',
   animated = true,
   className,
   ...props

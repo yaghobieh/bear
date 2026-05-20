@@ -1,0 +1,9 @@
+export const HIT_AREA_RADIUS = 16;
+export const SELECTED_DOT_RADIUS = 14;
+export const LABEL_POSITION_RATIO = 0.85;
+export const HAND_LENGTH_RATIO = 0.6;
+export const HOUR_ANGLE_STEP = 30;
+export const MINUTE_ANGLE_OFFSET = 90;
+export const DEG_TO_RAD = Math.PI / 180;
+export const FULL_CIRCLE_DEGREES = 360;
+export const CLOCK_BG_PADDING = 10;

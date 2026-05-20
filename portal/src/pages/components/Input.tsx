@@ -331,6 +331,62 @@ const InputPage: FC = () => {
         </div>
       </ComponentPreview>
 
+      <ComponentPreview
+        title="Prefix & Suffix (v1.2.3)"
+        description="Static text or icons inside the input field — currency symbols, units, domains."
+        code={`<Input prefix="$" placeholder="0.00" />
+<Input prefix="https://" suffix=".com" placeholder="yoursite" />
+<Input suffix="kg" placeholder="Weight" />`}
+      >
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
+          <Input prefix="$" placeholder="0.00" />
+          <Input prefix="https://" suffix=".com" placeholder="yoursite" />
+          <Input suffix="kg" placeholder="Weight" />
+        </div>
+      </ComponentPreview>
+
+      <ComponentPreview
+        title="Variant & Radius (v1.2.3)"
+        description="Visual style variants — outline (default), filled, and underline. Combine with radius for pill or square shapes."
+        code={`<Input variant="outline" placeholder="Outline (default)" />
+<Input variant="filled" placeholder="Filled" />
+<Input variant="underline" placeholder="Underline" />
+<Input radius="pill" placeholder="Pill radius" />
+<Input radius="square" placeholder="Square radius" />`}
+      >
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
+          <Input variant="outline" placeholder="Outline (default)" />
+          <Input variant="filled" placeholder="Filled" />
+          <Input variant="underline" placeholder="Underline" />
+          <Input radius="pill" placeholder="Pill radius" />
+          <Input radius="square" placeholder="Square radius" />
+        </div>
+      </ComponentPreview>
+
+      <ComponentPreview
+        title="Loading & Copyable (v1.2.3)"
+        description="Show a loading spinner during async validation or fetch, and a copy button for share-friendly fields."
+        code={`<Input loading placeholder="Searching..." />
+<Input copyable value="npm i @forgedevstack/bear" readOnly />`}
+      >
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto">
+          <Input loading placeholder="Searching..." />
+          <Input copyable value="npm i @forgedevstack/bear" readOnly />
+        </div>
+      </ComponentPreview>
+
+      <ComponentPreview
+        title="Floating Label & Required (v1.2.3)"
+        description="Floating label moves up on focus or when filled. Required shows an asterisk."
+        code={`<Input floatingLabel label="Email" placeholder=" " />
+<Input required label="Full Name" placeholder="Enter your name" />`}
+      >
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto">
+          <Input floatingLabel label="Email" placeholder=" " />
+          <Input required label="Full Name" placeholder="Enter your name" />
+        </div>
+      </ComponentPreview>
+
       <section className="mb-12">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Props</h2>
         <div className="overflow-x-auto">
@@ -361,6 +417,15 @@ const InputPage: FC = () => {
               <tr className="bg-green-50 dark:bg-green-900/20"><td className="px-4 py-3 font-mono text-bear-600">validateOnChange</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Run validation on every keystroke</td></tr>
               <tr><td className="px-4 py-3 font-mono text-bear-600">fullWidth</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Stretch to full container width</td></tr>
               <tr><td className="px-4 py-3 font-mono text-bear-600">disabled</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Disabled state</td></tr>
+              <tr className="bg-blue-50 dark:bg-blue-900/20"><td className="px-4 py-3 font-mono text-bear-600">variant</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>'outline' | 'filled' | 'underline'</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">'outline'</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Visual style variant</td></tr>
+              <tr className="bg-blue-50 dark:bg-blue-900/20"><td className="px-4 py-3 font-mono text-bear-600">radius</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>'default' | 'pill' | 'square' | 'none'</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">'default'</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Border radius preset</td></tr>
+              <tr className="bg-blue-50 dark:bg-blue-900/20"><td className="px-4 py-3 font-mono text-bear-600">prefix</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Static text prefix inside field (e.g. "$", "https://")</td></tr>
+              <tr className="bg-blue-50 dark:bg-blue-900/20"><td className="px-4 py-3 font-mono text-bear-600">suffix</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Static text suffix inside field (e.g. "kg", ".com")</td></tr>
+              <tr className="bg-blue-50 dark:bg-blue-900/20"><td className="px-4 py-3 font-mono text-bear-600">loading</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Show loading spinner inside input</td></tr>
+              <tr className="bg-blue-50 dark:bg-blue-900/20"><td className="px-4 py-3 font-mono text-bear-600">copyable</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Show copy-to-clipboard button</td></tr>
+              <tr className="bg-blue-50 dark:bg-blue-900/20"><td className="px-4 py-3 font-mono text-bear-600">onCopy</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>(value: string) =&gt; void</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Callback when value is copied</td></tr>
+              <tr className="bg-blue-50 dark:bg-blue-900/20"><td className="px-4 py-3 font-mono text-bear-600">floatingLabel</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Label floats above input on focus/filled</td></tr>
+              <tr className="bg-blue-50 dark:bg-blue-900/20"><td className="px-4 py-3 font-mono text-bear-600">required</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Show required asterisk next to label</td></tr>
             </tbody>
           </table>
         </div>

@@ -44,7 +44,7 @@ export const Tab: FC<TabProps> = ({ id, children, disabled = false, icon }) => {
     line: cn(
       'bear-border-b-2 bear--mb-px',
       isActive
-        ? 'bear-border-pink-500 bear-text-pink-600 dark:bear-text-pink-400'
+        ? 'bear-border-primary-500 bear-text-primary-600 dark:bear-text-primary-400'
         : 'bear-border-transparent hover:bear-border-[var(--bear-border-default)]'
     ),
     pills: cn(

@@ -1,5 +1,5 @@
 export const VARIANT_CLASSES = {
-  primary: 'bear-bg-pink-500 bear-text-white hover:bear-bg-pink-600',
+  primary: 'bear-bg-primary-500 bear-text-white hover:bear-bg-primary-600',
   secondary: 'bear-bg-gray-600 bear-text-white hover:bear-bg-gray-700',
   outline: 'bear-bg-white dark:bear-bg-zinc-800 bear-border bear-border-gray-300 dark:bear-border-zinc-600 bear-text-gray-700 dark:bear-text-zinc-300 hover:bear-bg-gray-50 dark:hover:bear-bg-zinc-700',
   danger: 'bear-bg-red-500 bear-text-white hover:bear-bg-red-600',

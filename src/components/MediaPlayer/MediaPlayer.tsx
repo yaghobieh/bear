@@ -288,19 +288,19 @@ export const MediaPlayer: FC<MediaPlayerProps> = ({
 
             <div className={cn('Bear-MediaPlayer__bar flex items-center', sizeConfig.gap)}>
               {hasPlaylist && (
-                <button type="button" onClick={skipPrev} className="text-white hover:text-pink-400 transition-colors">
+                <button type="button" onClick={skipPrev} className="text-white hover:text-primary-400 transition-colors">
                   <BearIcons.SkipBackIcon size={iconSm} />
                 </button>
               )}
-              <button type="button" onClick={togglePlay} className="text-white hover:text-pink-400 transition-colors">
+              <button type="button" onClick={togglePlay} className="text-white hover:text-primary-400 transition-colors">
                 {PlayIconEl}
               </button>
               {hasPlaylist && (
-                <button type="button" onClick={skipNext} className="text-white hover:text-pink-400 transition-colors">
+                <button type="button" onClick={skipNext} className="text-white hover:text-primary-400 transition-colors">
                   <BearIcons.SkipForwardIcon size={iconSm} />
                 </button>
               )}
-              <button type="button" onClick={toggleMute} className="text-white hover:text-pink-400 transition-colors">
+              <button type="button" onClick={toggleMute} className="text-white hover:text-primary-400 transition-colors">
                 {MuteIconEl}
               </button>
               <span className={cn('Bear-MediaPlayer__time text-white font-mono', sizeConfig.text)}>
@@ -317,11 +317,11 @@ export const MediaPlayer: FC<MediaPlayerProps> = ({
                 <BearIcons.RepeatIcon size={iconSm} className={loop ? undefined : 'text-white/60 hover:text-white'} />
               </button>
               {airPlay && (
-                <button type="button" onClick={requestAirPlay} className="text-white hover:text-pink-400 transition-colors" title="AirPlay">
+                <button type="button" onClick={requestAirPlay} className="text-white hover:text-primary-400 transition-colors" title="AirPlay">
                   <BearIcons.CastIcon size={iconSm} />
                 </button>
               )}
-              <button type="button" onClick={toggleFullscreen} className="text-white hover:text-pink-400 transition-colors">
+              <button type="button" onClick={toggleFullscreen} className="text-white hover:text-primary-400 transition-colors">
                 {FullscreenIconEl}
               </button>
             </div>

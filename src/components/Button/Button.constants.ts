@@ -1,4 +1,5 @@
 import type { BearSize, BearVariant } from '../../types';
+import type { ButtonRadius } from './Button.types';
 
 export const BUTTON_SIZE: Record<BearSize, string> = {
   xs: 'bear-px-2 bear-py-1 bear-text-xs bear-gap-1',
@@ -14,6 +15,21 @@ export const BUTTON_ICON_ONLY_SIZE: Record<BearSize, string> = {
   md: 'bear-w-10 bear-h-10 bear-p-0',
   lg: 'bear-w-12 bear-h-12 bear-p-0',
   xl: 'bear-w-14 bear-h-14 bear-p-0',
+};
+
+export const BUTTON_COMPACT_SIZE: Record<BearSize, string> = {
+  xs: 'bear-px-1.5 bear-py-0.5 bear-text-xs bear-gap-1',
+  sm: 'bear-px-2 bear-py-1 bear-text-xs bear-gap-1',
+  md: 'bear-px-2.5 bear-py-1 bear-text-sm bear-gap-1.5',
+  lg: 'bear-px-3 bear-py-1.5 bear-text-sm bear-gap-1.5',
+  xl: 'bear-px-4 bear-py-2 bear-text-base bear-gap-2',
+};
+
+export const BUTTON_RADIUS: Record<ButtonRadius, string> = {
+  default: 'bear-rounded-lg',
+  pill: 'bear-rounded-full',
+  square: 'bear-rounded-none',
+  none: 'bear-rounded-none',
 };
 
 export const BUTTON_ICON_SIZE: Record<BearSize, string> = {

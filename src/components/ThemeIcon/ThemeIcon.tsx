@@ -19,7 +19,7 @@ const RADIUS_MAP: Record<string, string> = {
 };
 
 const VARIANT_MAP: Record<string, string> = {
-  primary: 'bear-bg-pink-500 bear-text-white',
+  primary: 'bear-bg-primary-500 bear-text-white',
   secondary: 'bear-bg-gray-500 bear-text-white',
   success: 'bear-bg-green-500 bear-text-white',
   danger: 'bear-bg-red-500 bear-text-white',

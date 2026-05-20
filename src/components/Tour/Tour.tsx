@@ -261,7 +261,7 @@ export const Tour: FC<TourProps> = ({
                   className={cn(
                     'bear-w-2 bear-h-2 bear-rounded-full bear-transition-colors',
                     idx === currentStep
-                      ? 'bear-bg-[var(--bear-primary-500)]'
+                      ? 'bear-bg-primary-500'
                       : 'bear-bg-neutral-300 dark:bear-bg-neutral-600'
                   )}
                 />

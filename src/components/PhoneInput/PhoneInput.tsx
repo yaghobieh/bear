@@ -181,7 +181,7 @@ export const PhoneInput: FC<PhoneInputProps> = ({
       <div className={cn(
         'Bear-PhoneInput__wrapper bear-flex bear-items-center bear-rounded-lg bear-border bear-transition-colors',
         PHONE_INPUT_VARIANT_CLASSES[variant],
-        error ? 'bear-border-red-500' : 'focus-within:bear-border-pink-500',
+        error ? 'bear-border-red-500' : 'focus-within:bear-border-primary-500',
         disabled && 'bear-opacity-50 bear-cursor-not-allowed'
       )}>
         <button
@@ -246,7 +246,7 @@ export const PhoneInput: FC<PhoneInputProps> = ({
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={t.searchCountry}
-                className="bear-w-full bear-px-3 bear-py-2 bear-bg-gray-50 dark:bear-bg-zinc-700 bear-border bear-border-zinc-200 dark:bear-border-zinc-600 bear-rounded bear-text-sm bear-text-gray-900 dark:bear-text-white placeholder:bear-text-gray-400 dark:placeholder:bear-text-zinc-500 bear-outline-none focus:bear-border-pink-500"
+                className="bear-w-full bear-px-3 bear-py-2 bear-bg-gray-50 dark:bear-bg-zinc-700 bear-border bear-border-zinc-200 dark:bear-border-zinc-600 bear-rounded bear-text-sm bear-text-gray-900 dark:bear-text-white placeholder:bear-text-gray-400 dark:placeholder:bear-text-zinc-500 bear-outline-none focus:bear-border-primary-500"
               />
             </div>
           )}
@@ -265,7 +265,7 @@ export const PhoneInput: FC<PhoneInputProps> = ({
                   className={cn(
                     'Bear-PhoneInput__country-option bear-w-full bear-flex bear-items-center bear-gap-3 bear-px-3 bear-py-2 bear-text-left bear-text-sm bear-transition-colors',
                     selectedCountry?.code === country.code
-                      ? 'bear-bg-pink-500/20 bear-text-pink-600 dark:bear-text-pink-400'
+                      ? 'bear-bg-primary-500/20 bear-text-primary-600 dark:bear-text-primary-400'
                       : 'bear-text-gray-700 dark:bear-text-zinc-300 hover:bear-bg-gray-100 dark:hover:bear-bg-zinc-700'
                   )}
                 >

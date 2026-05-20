@@ -100,7 +100,7 @@ export const ResizablePanel: FC<ResizablePanelProps> = (props) => {
         tabIndex={0}
         onPointerDown={handlePointerDown}
         className={cn(
-          'Bear-ResizablePanel__handle bear-shrink-0 bear-bg-gray-200 dark:bear-bg-gray-700 hover:bear-bg-pink-500/30 bear-transition-colors bear-cursor-col-resize',
+          'Bear-ResizablePanel__handle bear-shrink-0 bear-bg-gray-200 dark:bear-bg-gray-700 hover:bear-bg-primary-500/30 bear-transition-colors bear-cursor-col-resize',
           isHorizontal ? 'bear-w-1.5' : 'bear-h-1.5 bear-w-full bear-cursor-row-resize'
         )}
         style={isHorizontal ? { width: HANDLE_WIDTH } : { height: HANDLE_WIDTH }}

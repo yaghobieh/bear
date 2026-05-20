@@ -456,7 +456,7 @@ export const Cropper: FC<CropperProps> = ({
                 step={ZOOM_STEP}
                 value={zoom}
                 onChange={(e) => updateZoom(parseFloat(e.target.value))}
-                className="bear-flex-1 bear-h-1 bear-accent-pink-500"
+                className="bear-flex-1 bear-h-1 bear-accent-primary-500"
               />
               <span className="bear-text-xs bear-text-gray-400 bear-w-10 bear-text-right">
                 {(zoom * 100).toFixed(0)}%
@@ -475,7 +475,7 @@ export const Cropper: FC<CropperProps> = ({
                 step={ROTATION_STEP}
                 value={rotation}
                 onChange={(e) => updateRotation(parseFloat(e.target.value))}
-                className="bear-flex-1 bear-h-1 bear-accent-pink-500"
+                className="bear-flex-1 bear-h-1 bear-accent-primary-500"
               />
               <span className="bear-text-xs bear-text-gray-400 bear-w-10 bear-text-right">
                 {rotation}°

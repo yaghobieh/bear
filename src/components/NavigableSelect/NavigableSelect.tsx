@@ -270,7 +270,7 @@ export const NavigableSelect: FC<NavigableSelectProps> = (props) => {
           'bear-text-gray-900 dark:bear-text-white',
           hasError
             ? 'bear-border-red-500 focus:bear-ring-2 focus:bear-ring-red-500/20'
-            : 'bear-border-gray-300 dark:bear-border-gray-600 focus:bear-border-[var(--bear-primary-500)] focus:bear-ring-2 focus:bear-ring-[var(--bear-primary-500)]/20',
+            : 'bear-border-gray-300 dark:bear-border-gray-600 focus:bear-border-primary-500 focus:bear-ring-2 focus:bear-ring-primary-500/20',
           disabled && 'bear-opacity-50 bear-cursor-not-allowed',
           triggerCls,
         )}
@@ -285,8 +285,8 @@ export const NavigableSelect: FC<NavigableSelectProps> = (props) => {
               className={cn(
                 'Bear-NavigableSelect__tag',
                 'bear-inline-flex bear-items-center bear-gap-1 bear-rounded-md',
-                'bear-bg-[var(--bear-primary-100,#fce7f3)] dark:bear-bg-[var(--bear-primary-900,#831843)]/30',
-                'bear-text-[var(--bear-primary-700,#be185d)] dark:bear-text-[var(--bear-primary-300,#f9a8d4)]',
+                'bear-bg-primary-100 dark:bear-bg-primary-900/30',
+                'bear-text-primary-700 dark:bear-text-primary-300',
                 tagCls,
               )}
             >
@@ -421,7 +421,7 @@ export const NavigableSelect: FC<NavigableSelectProps> = (props) => {
                         'bear-transition-colors bear-duration-100',
                         optionCls,
                         isActive && 'bear-bg-gray-100 dark:bear-bg-gray-800',
-                        selected && !isActive && 'bear-bg-[var(--bear-primary-50,#fdf2f8)] dark:bear-bg-[var(--bear-primary-950,#500724)]/20',
+                        selected && !isActive && 'bear-bg-primary-50 dark:bear-bg-primary-950/20',
                         isDisabled && 'bear-opacity-40 bear-cursor-not-allowed',
                       )}
                       data-active={isActive}
@@ -439,7 +439,7 @@ export const NavigableSelect: FC<NavigableSelectProps> = (props) => {
                             'bear-flex bear-items-center bear-justify-center bear-w-4 bear-h-4 bear-rounded bear-border bear-shrink-0',
                             'bear-transition-colors',
                             selected
-                              ? 'bear-bg-[var(--bear-primary-500)] bear-border-[var(--bear-primary-500)] bear-text-white'
+                              ? 'bear-bg-primary-500 bear-border-primary-500 bear-text-white'
                               : 'bear-border-gray-300 dark:bear-border-gray-600',
                           )}
                         >
@@ -463,7 +463,7 @@ export const NavigableSelect: FC<NavigableSelectProps> = (props) => {
                         <div className={cn(
                           'Bear-NavigableSelect__option-label bear-truncate',
                           selected
-                            ? 'bear-text-[var(--bear-primary-700,#be185d)] dark:bear-text-[var(--bear-primary-300,#f9a8d4)] bear-font-medium'
+                            ? 'bear-text-primary-700 dark:bear-text-primary-300 bear-font-medium'
                             : 'bear-text-gray-900 dark:bear-text-white',
                         )}>
                           {option.label}
@@ -478,7 +478,7 @@ export const NavigableSelect: FC<NavigableSelectProps> = (props) => {
                       {/* Single select checkmark */}
                       {!multiple && selected && (
                         <svg
-                          className={cn(iconCls, 'bear-text-[var(--bear-primary-500)] bear-shrink-0')}
+                          className={cn(iconCls, 'bear-text-primary-500 bear-shrink-0')}
                           fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
                         >
                           <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />

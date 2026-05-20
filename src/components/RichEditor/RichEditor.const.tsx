@@ -116,7 +116,7 @@ export const RICH_EDITOR_DIVIDER_CLASSES = 'w-px h-5 bg-gray-300 dark:bg-zinc-60
 
 export const RICH_EDITOR_BUTTON_BASE_CLASSES = 'p-1.5 rounded transition-colors';
 
-export const RICH_EDITOR_BUTTON_ACTIVE_CLASSES = 'bg-pink-500 text-white';
+export const RICH_EDITOR_BUTTON_ACTIVE_CLASSES = 'bg-primary-500 text-white';
 
 export const RICH_EDITOR_BUTTON_INACTIVE_CLASSES = 'text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-zinc-700';
 

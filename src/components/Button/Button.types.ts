@@ -3,7 +3,9 @@ import type { BearSize, BearVariant } from '../../types';
 import type { BisProp } from '../../types/bis.types';
 import type { TypographyVariant } from '../Typography/Typography.types';
 
-export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'style'> {
+export type ButtonRadius = 'default' | 'pill' | 'square' | 'none';
+
+export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'style' | 'prefix'> {
   /**
    * Button variant style
    * Can be a built-in variant or a custom variant defined in BearProvider
@@ -47,6 +49,22 @@ export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement
   /** Spotlight size in pixels (default: 120) */
   spotlightSize?: number;
   iconOnly?: boolean;
+  /** Border radius preset */
+  radius?: ButtonRadius;
+  /** Enable material-design-style ripple effect on click */
+  ripple?: boolean;
+  /** Shorthand tooltip — renders a native title attribute and Bear Tooltip wrapper */
+  tooltip?: string;
+  /** Compact mode — reduces padding for dense layouts */
+  compact?: boolean;
+  /** Gradient background — array of two colors, overrides variant bg */
+  gradient?: [string, string];
+  /** Gradient direction in degrees (default: 135) */
+  gradientDirection?: number;
+  /** Prefix content rendered before children inside the button */
+  prefix?: ReactNode;
+  /** Suffix content rendered after children inside the button */
+  suffix?: ReactNode;
   /** Test ID for testing */
   testId?: string;
   /** Bear Inner Style - sx-like overrides */

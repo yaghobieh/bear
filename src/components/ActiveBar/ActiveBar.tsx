@@ -41,11 +41,11 @@ export const ActiveBar = forwardRef<HTMLDivElement, ActiveBarProps>(({
     switch (variant) {
       case 'pills':
         return isActive
-          ? 'bg-pink-500 text-white shadow-lg shadow-pink-500/30'
+          ? 'bg-primary-500 text-white shadow-lg shadow-primary-500/30'
           : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800';
       case 'underline':
         return isActive
-          ? 'text-pink-500 font-medium'
+          ? 'text-primary-500 font-medium'
           : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200';
       default:
         return isActive
@@ -83,7 +83,7 @@ export const ActiveBar = forwardRef<HTMLDivElement, ActiveBarProps>(({
               {item.icon}
               <span>{item.label}</span>
               {item.badge !== undefined && (
-                <span className="px-1.5 py-0.5 text-xs rounded-full bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-400">
+                <span className="px-1.5 py-0.5 text-xs rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400">
                   {item.badge}
                 </span>
               )}
@@ -94,7 +94,7 @@ export const ActiveBar = forwardRef<HTMLDivElement, ActiveBarProps>(({
 
       {animated && variant === 'underline' && (
         <div
-          className="absolute bottom-0 h-0.5 bg-pink-500 transition-all duration-300 ease-out"
+          className="absolute bottom-0 h-0.5 bg-primary-500 transition-all duration-300 ease-out"
           style={indicatorStyle}
         />
       )}

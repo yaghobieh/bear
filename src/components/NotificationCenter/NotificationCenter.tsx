@@ -90,7 +90,7 @@ const NotificationItemComponent: FC<NotificationItemProps> = ({
             {notification.title}
           </p>
           {!notification.read && (
-            <span className="Bear-NotificationCenter__item-badge bear-w-2 bear-h-2 bear-rounded-full bear-bg-pink-500 bear-shrink-0 bear-mt-1.5" />
+            <span className="Bear-NotificationCenter__item-badge bear-w-2 bear-h-2 bear-rounded-full bear-bg-primary-500 bear-shrink-0 bear-mt-1.5" />
           )}
         </div>
         {notification.description && (
@@ -114,7 +114,7 @@ const NotificationItemComponent: FC<NotificationItemProps> = ({
                 }}
                 className={cn(
                   'bear-px-2 bear-py-1 bear-text-xs bear-rounded bear-transition-colors',
-                  action.variant === 'primary' && 'bear-bg-pink-500 bear-text-white hover:bear-bg-pink-600',
+                  action.variant === 'primary' && 'bear-bg-primary-500 bear-text-white hover:bear-bg-primary-600',
                   action.variant === 'secondary' && 'bear-bg-gray-200 dark:bear-bg-zinc-600 bear-text-gray-900 dark:bear-text-white hover:bear-bg-gray-300 dark:hover:bear-bg-zinc-500',
                   action.variant === 'danger' && 'bear-bg-red-500 bear-text-white hover:bear-bg-red-600',
                   !action.variant && 'bear-bg-gray-100 dark:bear-bg-zinc-700 bear-text-gray-700 dark:bear-text-zinc-300 hover:bear-bg-gray-200 dark:hover:bear-bg-zinc-600'
@@ -260,7 +260,7 @@ export const NotificationCenter: FC<NotificationCenterProps> = ({
             </svg>
           )}
           {unreadCount > 0 && (
-            <span className="Bear-NotificationCenter__badge bear-absolute bear-top-0 bear-right-0 bear-w-5 bear-h-5 bear-flex bear-items-center bear-justify-center bear-text-xs bear-font-medium bear-text-white bear-bg-pink-500 bear-rounded-full">
+            <span className="Bear-NotificationCenter__badge bear-absolute bear-top-0 bear-right-0 bear-w-5 bear-h-5 bear-flex bear-items-center bear-justify-center bear-text-xs bear-font-medium bear-text-white bear-bg-primary-500 bear-rounded-full">
               {unreadCount > 99 ? '99+' : unreadCount}
             </span>
           )}
@@ -287,7 +287,7 @@ export const NotificationCenter: FC<NotificationCenterProps> = ({
                 <button
                   type="button"
                   onClick={onMarkAllAsRead}
-                  className="Bear-NotificationCenter__mark-all bear-text-xs bear-text-pink-400 hover:bear-text-pink-300 bear-transition-colors"
+                  className="Bear-NotificationCenter__mark-all bear-text-xs bear-text-primary-400 hover:bear-text-primary-300 bear-transition-colors"
                 >
                   {t.markAllRead}
                 </button>
@@ -328,7 +328,7 @@ export const NotificationCenter: FC<NotificationCenterProps> = ({
               <button
                 type="button"
                 onClick={() => setShowAll(true)}
-                className="bear-w-full bear-py-2 bear-text-sm bear-text-pink-500 dark:bear-text-pink-400 hover:bear-bg-gray-100 dark:hover:bear-bg-zinc-700/50 bear-transition-colors"
+                className="bear-w-full bear-py-2 bear-text-sm bear-text-primary-500 dark:bear-text-primary-400 hover:bear-bg-gray-100 dark:hover:bear-bg-zinc-700/50 bear-transition-colors"
               >
                 {t.showMore} ({notifications.length - maxVisible} more)
               </button>

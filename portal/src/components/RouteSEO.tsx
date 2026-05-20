@@ -3,8 +3,8 @@ import { useLocation } from 'react-router-dom';
 import { SEO } from './SEO';
 
 const SEO_MAP: Record<string, { title: string; description: string }> = {
-  '/': { title: 'Home', description: 'Bear UI — 100+ beautiful, accessible React components with TypeScript, Tailwind CSS, 550+ icons, responsive hooks, and theming.' },
-  '/installation': { title: 'Installation', description: 'Install Bear UI in your React project with npm or yarn. Setup guide with Tailwind CSS and TypeScript.' },
+  '/': { title: 'Home', description: 'Bear UI — 100+ beautiful, accessible React components with TypeScript, AeroCraft CSS, 550+ icons, responsive hooks, and theming.' },
+  '/installation': { title: 'Installation', description: 'Install Bear UI in your React project with npm or yarn. Setup guide with AeroCraft CSS and TypeScript.' },
   '/theming': { title: 'Theming', description: 'Customize Bear UI themes — colors, spacing, typography, dark mode, and custom variants via BearProvider.' },
   '/typescript': { title: 'TypeScript', description: 'Bear UI TypeScript support — full type safety, generics, and IntelliSense for all components.' },
   '/components': { title: 'Components', description: 'Browse 100+ Bear UI React components — buttons, modals, forms, charts, editors, and more.' },

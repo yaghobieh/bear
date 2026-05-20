@@ -54,7 +54,7 @@ export const TIMEPICKER_COLUMN_CLASSES = 'Bear-TimePicker__column bear-h-32 bear
 
 export const TIMEPICKER_OPTION_CLASSES = 'Bear-TimePicker__option bear-w-full bear-py-1 bear-rounded bear-text-sm bear-transition-colors';
 
-export const TIMEPICKER_OPTION_ACTIVE_CLASSES = 'bear-bg-pink-500 bear-text-white';
+export const TIMEPICKER_OPTION_ACTIVE_CLASSES = 'bear-bg-primary-500 bear-text-white';
 
 export const TIMEPICKER_OPTION_INACTIVE_CLASSES = 'bear-text-gray-700 dark:bear-text-zinc-300 hover:bear-bg-gray-100 dark:hover:bear-bg-zinc-700';
 
@@ -62,7 +62,7 @@ export const TIMEPICKER_FOOTER_CLASSES = 'Bear-TimePicker__footer bear-flex bear
 
 export const TIMEPICKER_CLEAR_BUTTON_CLASSES = 'Bear-TimePicker__clear bear-flex-1 bear-py-1.5 bear-text-sm bear-text-gray-500 dark:bear-text-zinc-400 hover:bear-text-gray-700 dark:hover:bear-text-white bear-rounded bear-border bear-border-gray-300 dark:bear-border-zinc-600';
 
-export const TIMEPICKER_CONFIRM_BUTTON_CLASSES = 'Bear-TimePicker__confirm bear-flex-1 bear-py-1.5 bear-text-sm bear-bg-pink-500 bear-text-white bear-rounded hover:bear-bg-pink-600';
+export const TIMEPICKER_CONFIRM_BUTTON_CLASSES = 'Bear-TimePicker__confirm bear-flex-1 bear-py-1.5 bear-text-sm bear-bg-primary-500 bear-text-white bear-rounded hover:bear-bg-primary-600';
 
 export const TIMEPICKER_ERROR_CLASSES = 'Bear-TimePicker__error bear-mt-1 bear-text-xs bear-text-red-500';
 

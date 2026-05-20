@@ -81,7 +81,7 @@ export const Timeline = forwardRef<HTMLDivElement, TimelineProps>(
               dotIconSize,
               TIMELINE_DOT_COLORS[color],
               'flex items-center justify-center text-white',
-              isActive && 'ring-4 ring-pink-500/30'
+              isActive && 'ring-4 ring-primary-500/30'
             )}
             style={{
               top: '2px',
@@ -101,7 +101,7 @@ export const Timeline = forwardRef<HTMLDivElement, TimelineProps>(
             TIMELINE_DOT_BASE,
             dotSize,
             TIMELINE_DOT_COLORS[color],
-            isActive && 'ring-4 ring-pink-500/30 scale-125'
+            isActive && 'ring-4 ring-primary-500/30 scale-125'
           )}
           style={{
             top: '6px',
@@ -166,7 +166,7 @@ export const Timeline = forwardRef<HTMLDivElement, TimelineProps>(
                   className={cn(
                     'Bear-Timeline__title font-medium text-gray-900 dark:text-white',
                     titleSize,
-                    item.active && 'text-pink-600 dark:text-pink-400'
+                    item.active && 'text-primary-600 dark:text-primary-400'
                   )}
                 >
                   {item.title}

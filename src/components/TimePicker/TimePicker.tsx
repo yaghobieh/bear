@@ -166,7 +166,7 @@ export const TimePicker: FC<TimePickerProps> = (incomingProps) => {
           TIMEPICKER_BUTTON_CLASSES,
           sizeClasses[size ?? 'md'],
           variantClasses[variant ?? 'default'],
-          error ? 'bear-border-red-500' : 'focus:bear-border-pink-500',
+          error ? 'bear-border-red-500' : 'focus:bear-border-primary-500',
           disabled && 'bear-opacity-50 bear-cursor-not-allowed',
           timeValue ? 'bear-text-gray-900 dark:bear-text-white' : 'bear-text-gray-400 dark:bear-text-zinc-500'
         )}

@@ -21,7 +21,7 @@ export const SIGN_PAD_ROOT_CLASSES = 'bear-inline-flex bear-flex-col bear-gap-2'
 
 export const SIGN_PAD_CANVAS_WRAPPER_CLASSES = 'bear-relative bear-rounded-lg bear-border-2 bear-border-dashed bear-border-gray-300 dark:bear-border-zinc-600';
 
-export const SIGN_PAD_CANVAS_WRAPPER_HOVER = 'hover:bear-border-pink-400 dark:hover:bear-border-pink-500';
+export const SIGN_PAD_CANVAS_WRAPPER_HOVER = 'hover:bear-border-primary-400 dark:hover:bear-border-primary-500';
 
 export const SIGN_PAD_PLACEHOLDER_CLASSES = 'bear-absolute bear-inset-0 bear-flex bear-items-center bear-justify-center bear-text-gray-400 dark:bear-text-zinc-500 bear-text-sm bear-pointer-events-none';
 

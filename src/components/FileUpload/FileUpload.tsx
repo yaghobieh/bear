@@ -76,7 +76,7 @@ export const FileUpload: FC<FileUploadProps> = ({
           <div className="bear-text-xs bear-text-zinc-500">{formatSize(file.size)}</div>
           {status === 'uploading' && progress !== undefined && (
             <div className="bear-mt-1 bear-h-1 bear-bg-zinc-700 bear-rounded-full bear-overflow-hidden">
-              <div className="bear-h-full bear-bg-pink-500 bear-transition-all" style={{ width: `${progress}%` }} />
+              <div className="bear-h-full bear-bg-primary-500 bear-transition-all" style={{ width: `${progress}%` }} />
             </div>
           )}
           {fileError && <div className="bear-text-xs bear-text-red-400 bear-mt-1">{fileError}</div>}
@@ -106,7 +106,7 @@ export const FileUpload: FC<FileUploadProps> = ({
           onClick={handleClick}
           disabled={disabled}
           className={cn(
-            'bear-px-4 bear-py-2 bear-rounded-lg bear-bg-pink-500 bear-text-white hover:bear-bg-pink-600 bear-transition-colors bear-flex bear-items-center bear-gap-2',
+            'bear-px-4 bear-py-2 bear-rounded-lg bear-bg-primary-500 bear-text-white hover:bear-bg-primary-600 bear-transition-colors bear-flex bear-items-center bear-gap-2',
             disabled && 'bear-opacity-50 bear-cursor-not-allowed'
           )}
         >
@@ -133,7 +133,7 @@ export const FileUpload: FC<FileUploadProps> = ({
         onDragLeave={handleDragLeave}
         className={cn(
           'bear-border-2 bear-border-dashed bear-rounded-lg bear-p-8 bear-text-center bear-transition-colors bear-cursor-pointer',
-          isDragging ? 'bear-border-pink-500 bear-bg-pink-500/10' : 'bear-border-zinc-600 hover:bear-border-zinc-500',
+          isDragging ? 'bear-border-primary-500 bear-bg-primary-500/10' : 'bear-border-zinc-600 hover:bear-border-zinc-500',
           disabled && 'bear-opacity-50 bear-cursor-not-allowed',
           error && 'bear-border-red-500'
         )}

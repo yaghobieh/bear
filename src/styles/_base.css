@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@aerocraft all;
 
 /* Bear CSS Variables */
 :root {
@@ -17,22 +15,73 @@
   --bear-primary-900: #831843;
   --bear-primary-950: #500724;
 
-  /* Background colors - Light mode */
+  /* Secondary colors */
+  --bear-secondary-50: #f8fafc;
+  --bear-secondary-100: #f1f5f9;
+  --bear-secondary-200: #e2e8f0;
+  --bear-secondary-300: #cbd5e1;
+  --bear-secondary-400: #94a3b8;
+  --bear-secondary-500: #64748b;
+  --bear-secondary-600: #475569;
+  --bear-secondary-700: #334155;
+  --bear-secondary-800: #1e293b;
+  --bear-secondary-900: #0f172a;
+  --bear-secondary-950: #020617;
+
+  /* Success colors */
+  --bear-success-50: #f0fdf4;
+  --bear-success-500: #22c55e;
+  --bear-success-600: #16a34a;
+  --bear-success-700: #15803d;
+
+  /* Warning colors */
+  --bear-warning-50: #fffbeb;
+  --bear-warning-500: #f59e0b;
+  --bear-warning-600: #d97706;
+  --bear-warning-700: #b45309;
+
+  /* Danger colors */
+  --bear-danger-50: #fef2f2;
+  --bear-danger-500: #ef4444;
+  --bear-danger-600: #dc2626;
+  --bear-danger-700: #b91c1c;
+
+  /* Info colors */
+  --bear-info-50: #eff6ff;
+  --bear-info-500: #3b82f6;
+  --bear-info-600: #2563eb;
+  --bear-info-700: #1d4ed8;
+
+  /* Neutral colors */
+  --bear-neutral-50: #fafafa;
+  --bear-neutral-100: #f5f5f5;
+  --bear-neutral-200: #e5e5e5;
+  --bear-neutral-300: #d4d4d4;
+  --bear-neutral-400: #a3a3a3;
+  --bear-neutral-500: #737373;
+  --bear-neutral-600: #525252;
+  --bear-neutral-700: #404040;
+  --bear-neutral-800: #262626;
+  --bear-neutral-900: #171717;
+  --bear-neutral-950: #0a0a0a;
+
+  /* Background colors — Light mode */
   --bear-bg-primary: #ffffff;
   --bear-bg-secondary: #f9fafb;
   --bear-bg-tertiary: #f3f4f6;
 
-  /* Text colors - Light mode */
+  /* Text colors — Light mode */
   --bear-text-primary: #111827;
   --bear-text-secondary: #4b5563;
   --bear-text-muted: #9ca3af;
 
-  /* Border colors - Light mode */
+  /* Border colors — Light mode */
   --bear-border-default: #e5e7eb;
 }
 
-/* Dark mode variables */
-.bear-dark {
+/* Dark mode variables — supports both .bear-dark and .dark (Tailwind convention) */
+.bear-dark,
+.dark {
   --bear-bg-primary: #09090b;
   --bear-bg-secondary: #18181b;
   --bear-bg-tertiary: #27272a;
@@ -44,17 +93,82 @@
   --bear-border-default: #27272a;
 }
 
-/* Base component layer */
-@layer components {
-  .bear-focus-ring:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(236, 72, 153, 0.5);
-    box-shadow: 0 0 0 2px var(--bear-primary-500, rgba(236, 72, 153, 0.5)), 0 0 0 4px #fff;
-  }
+/* ── Theme-aware primary color utilities ──
+   These reference CSS variables from BearProvider so they respond to theme changes.
+   Components use bear-*-primary-* instead of hardcoded bear-*-pink-*.              */
 
-  .bear-transition {
-    transition-property: all;
-    transition-duration: 200ms;
-    transition-timing-function: ease-in-out;
-  }
-}
+.bear-bg-primary-50  { background-color: var(--bear-primary-50); }
+.bear-bg-primary-100 { background-color: var(--bear-primary-100); }
+.bear-bg-primary-200 { background-color: var(--bear-primary-200); }
+.bear-bg-primary-300 { background-color: var(--bear-primary-300); }
+.bear-bg-primary-400 { background-color: var(--bear-primary-400); }
+.bear-bg-primary-500 { background-color: var(--bear-primary-500); }
+.bear-bg-primary-600 { background-color: var(--bear-primary-600); }
+.bear-bg-primary-700 { background-color: var(--bear-primary-700); }
+.bear-bg-primary-800 { background-color: var(--bear-primary-800); }
+.bear-bg-primary-900 { background-color: var(--bear-primary-900); }
+.bear-bg-primary-950 { background-color: var(--bear-primary-950); }
+
+.bear-text-primary-200 { color: var(--bear-primary-200); }
+.bear-text-primary-300 { color: var(--bear-primary-300); }
+.bear-text-primary-400 { color: var(--bear-primary-400); }
+.bear-text-primary-500 { color: var(--bear-primary-500); }
+.bear-text-primary-600 { color: var(--bear-primary-600); }
+.bear-text-primary-700 { color: var(--bear-primary-700); }
+.bear-text-primary-800 { color: var(--bear-primary-800); }
+
+.bear-border-primary-200 { border-color: var(--bear-primary-200); }
+.bear-border-primary-400 { border-color: var(--bear-primary-400); }
+.bear-border-primary-500 { border-color: var(--bear-primary-500); }
+
+.bear-ring-primary-400 { --bear-ring-color: var(--bear-primary-400); --tw-ring-color: var(--bear-primary-400); }
+.bear-ring-primary-500 { --bear-ring-color: var(--bear-primary-500); --tw-ring-color: var(--bear-primary-500); }
+
+/* Opacity variants for primary colors — these use color-mix for CSS variable support */
+.bear-bg-primary-500\/10 { background-color: color-mix(in srgb, var(--bear-primary-500) 10%, transparent); }
+.bear-bg-primary-500\/15 { background-color: color-mix(in srgb, var(--bear-primary-500) 15%, transparent); }
+.bear-bg-primary-500\/20 { background-color: color-mix(in srgb, var(--bear-primary-500) 20%, transparent); }
+.bear-bg-primary-500\/30 { background-color: color-mix(in srgb, var(--bear-primary-500) 30%, transparent); }
+.bear-bg-primary-400\/10 { background-color: color-mix(in srgb, var(--bear-primary-400) 10%, transparent); }
+.bear-bg-primary-900\/20 { background-color: color-mix(in srgb, var(--bear-primary-900) 20%, transparent); }
+.bear-bg-primary-900\/30 { background-color: color-mix(in srgb, var(--bear-primary-900) 30%, transparent); }
+.bear-bg-primary-950\/20 { background-color: color-mix(in srgb, var(--bear-primary-950) 20%, transparent); }
+.bear-bg-primary-950\/30 { background-color: color-mix(in srgb, var(--bear-primary-950) 30%, transparent); }
+.bear-ring-primary-500\/20 { --bear-ring-color: color-mix(in srgb, var(--bear-primary-500) 20%, transparent); --tw-ring-color: color-mix(in srgb, var(--bear-primary-500) 20%, transparent); }
+.bear-ring-primary-500\/30 { --bear-ring-color: color-mix(in srgb, var(--bear-primary-500) 30%, transparent); --tw-ring-color: color-mix(in srgb, var(--bear-primary-500) 30%, transparent); }
+.bear-ring-primary-500\/50 { --bear-ring-color: color-mix(in srgb, var(--bear-primary-500) 50%, transparent); --tw-ring-color: color-mix(in srgb, var(--bear-primary-500) 50%, transparent); }
+.bear-ring-primary-400\/30 { --bear-ring-color: color-mix(in srgb, var(--bear-primary-400) 30%, transparent); --tw-ring-color: color-mix(in srgb, var(--bear-primary-400) 30%, transparent); }
+.bear-ring-primary-400\/50 { --bear-ring-color: color-mix(in srgb, var(--bear-primary-400) 50%, transparent); --tw-ring-color: color-mix(in srgb, var(--bear-primary-400) 50%, transparent); }
+
+.bear-fill-primary-400 { fill: var(--bear-primary-400); }
+.bear-fill-primary-500 { fill: var(--bear-primary-500); }
+.bear-fill-primary-600 { fill: var(--bear-primary-600); }
+.bear-stroke-primary-400 { stroke: var(--bear-primary-400); }
+.bear-stroke-primary-500 { stroke: var(--bear-primary-500); }
+.bear-stroke-primary-600 { stroke: var(--bear-primary-600); }
+
+.bear-fill-gray-50  { fill: #f9fafb; }
+.bear-fill-gray-100 { fill: #f3f4f6; }
+.bear-fill-gray-200 { fill: #e5e7eb; }
+.bear-fill-gray-300 { fill: #d1d5db; }
+.bear-fill-gray-400 { fill: #9ca3af; }
+.bear-fill-gray-500 { fill: #6b7280; }
+.bear-fill-gray-600 { fill: #4b5563; }
+.bear-fill-gray-700 { fill: #374151; }
+.bear-fill-gray-800 { fill: #1f2937; }
+.bear-fill-gray-900 { fill: #111827; }
+
+.bear-fill-zinc-100 { fill: #f4f4f5; }
+.bear-fill-zinc-200 { fill: #e4e4e7; }
+.bear-fill-zinc-300 { fill: #d4d4d8; }
+.bear-fill-zinc-400 { fill: #a1a1aa; }
+.bear-fill-zinc-500 { fill: #71717a; }
+.bear-fill-zinc-600 { fill: #52525b; }
+.bear-fill-zinc-700 { fill: #3f3f46; }
+.bear-fill-zinc-800 { fill: #27272a; }
+.bear-fill-zinc-900 { fill: #18181b; }
+
+.bear-stroke-gray-200 { stroke: #e5e7eb; }
+.bear-stroke-gray-300 { stroke: #d1d5db; }
+.bear-stroke-zinc-600 { stroke: #52525b; }
+.bear-stroke-zinc-700 { stroke: #3f3f46; }

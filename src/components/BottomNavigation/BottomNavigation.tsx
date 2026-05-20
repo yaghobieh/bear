@@ -37,7 +37,7 @@ export const BottomNavigation: FC<BottomNavigationProps> = ({
             disabled={item.disabled}
             className={cn(
               'bear-flex bear-flex-col bear-items-center bear-justify-center bear-flex-1 bear-h-full bear-py-2 bear-transition-all',
-              isActive ? 'bear-text-pink-400' : 'bear-text-zinc-500 hover:bear-text-zinc-300',
+              isActive ? 'bear-text-primary-400' : 'bear-text-zinc-500 hover:bear-text-zinc-300',
               item.disabled && 'bear-opacity-50 bear-cursor-not-allowed'
             )}
           >
@@ -46,7 +46,7 @@ export const BottomNavigation: FC<BottomNavigationProps> = ({
                 {item.icon}
               </span>
               {item.badge !== undefined && (
-                <span className="bear-absolute -bear-top-1 -bear-right-1 bear-min-w-[16px] bear-h-4 bear-px-1 bear-flex bear-items-center bear-justify-center bear-text-xs bear-font-medium bear-bg-pink-500 bear-text-white bear-rounded-full">
+                <span className="bear-absolute -bear-top-1 -bear-right-1 bear-min-w-[16px] bear-h-4 bear-px-1 bear-flex bear-items-center bear-justify-center bear-text-xs bear-font-medium bear-bg-primary-500 bear-text-white bear-rounded-full">
                   {item.badge}
                 </span>
               )}

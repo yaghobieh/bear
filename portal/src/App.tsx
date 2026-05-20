@@ -7,12 +7,11 @@ import { PageBreadcrumbs } from './components/PageBreadcrumbs';
 import { DocPageNav } from './components/DocPageNav';
 import { RouteSEO } from './components/RouteSEO';
 
-// Banner configuration — promote ForgeStack CLI templates
 const BANNER_CONFIG = {
-  id: 'forge-cli-templates',
-  message: '🚀 ForgeStack CLI — Use templates to start fast. Create React apps with Bear, Compass, Synapse in seconds.',
-  link: '/templates',
-  linkText: 'Try npx create-forge my-app --template react →',
+  id: 'bear-aerocraft-1.0.3',
+  message: '🎉 Goodbye Tailwind! Bear v1.2.3 is now fully powered by AeroCraft — lighter, faster, zero-config utility CSS.',
+  link: '/installation',
+  linkText: 'See what changed →',
 };
 
 // Lazy load pages - Getting Started
@@ -242,7 +241,7 @@ const ThemeIconPage = lazy(() => import('./pages/components/ThemeIconPage'));
 const CloseButtonPage = lazy(() => import('./pages/components/CloseButtonPage'));
 const OverlayPage = lazy(() => import('./pages/components/OverlayPage'));
 
-// v1.2.2 Components
+// v1.2.3 Components
 const AnimatedCounterPage = lazy(() => import('./pages/components/AnimatedCounterPage'));
 const GlowCardPage = lazy(() => import('./pages/components/GlowCardPage'));
 const MediaPlayerPage = lazy(() => import('./pages/components/MediaPlayerPage'));
@@ -548,7 +547,7 @@ function PortalLayout({
                 <Route path="/components/close-button" element={<CloseButtonPage />} />
                 <Route path="/components/overlay" element={<OverlayPage />} />
                 
-                {/* v1.2.2 Components */}
+                {/* v1.2.3 Components */}
                 <Route path="/components/animated-counter" element={<AnimatedCounterPage />} />
                 <Route path="/components/glow-card" element={<GlowCardPage />} />
                 <Route path="/components/media-player" element={<MediaPlayerPage />} />

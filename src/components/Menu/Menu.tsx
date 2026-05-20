@@ -28,7 +28,7 @@ export const MenuItem: FC<MenuItemProps> = ({
           'bear-flex bear-items-center bear-gap-3 bear-px-4 bear-py-2 bear-cursor-pointer bear-transition-colors',
           'hover:bear-bg-gray-100 dark:hover:bear-bg-gray-700',
           'focus:bear-outline-none focus:bear-bg-gray-100 dark:focus:bear-bg-gray-700',
-          selected && 'bear-bg-pink-50 dark:bear-bg-pink-900/20 bear-text-pink-600',
+          selected && 'bear-bg-primary-50 dark:bear-bg-primary-900/20 bear-text-primary-600',
           disabled && 'bear-opacity-50 bear-cursor-not-allowed hover:bear-bg-transparent',
           className
         )}

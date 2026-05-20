@@ -54,7 +54,7 @@ export const STEP_STATUS_CLASSES: Record<StepStatus, { indicator: string; label:
     label: 'text-gray-500 dark:text-gray-400',
   },
   active: {
-    indicator: 'bg-pink-500 text-white shadow-lg shadow-pink-500/30',
+    indicator: 'bg-primary-500 text-white shadow-lg shadow-primary-500/30',
     label: 'text-gray-900 dark:text-white font-medium',
   },
   completed: {

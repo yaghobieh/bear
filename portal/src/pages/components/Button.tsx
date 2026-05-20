@@ -237,6 +237,135 @@ addVariant('custom', { bg: '#8b5cf6', text: '#fff' });`}
         </div>
       </ComponentPreview>
 
+      <ComponentPreview
+        title="Radius Variants"
+        description="Control border radius with the radius prop — default, pill (fully rounded), or square (sharp corners)."
+        code={`<Button radius="default">Default</Button>
+<Button radius="pill">Pill</Button>
+<Button radius="square">Square</Button>
+<Button radius="none">None</Button>`}
+      >
+        <div className="flex flex-wrap gap-4 justify-center">
+          <Button radius="default">Default</Button>
+          <Button radius="pill">Pill</Button>
+          <Button radius="square">Square</Button>
+          <Button radius="none">None</Button>
+        </div>
+      </ComponentPreview>
+
+      <ComponentPreview
+        title="Ripple Effect"
+        description="Material Design-style ripple on click. Enable with the ripple prop."
+        code={`<Button ripple>Click me</Button>
+<Button ripple variant="secondary">Secondary</Button>
+<Button ripple variant="danger">Danger</Button>`}
+      >
+        <div className="flex flex-wrap gap-4 justify-center">
+          <Button ripple>Click me</Button>
+          <Button ripple variant="secondary">Secondary</Button>
+          <Button ripple variant="danger">Danger</Button>
+        </div>
+      </ComponentPreview>
+
+      <ComponentPreview
+        title="Gradient Buttons"
+        description="Pass a gradient prop with two colors to create gradient backgrounds. Use gradientDirection to change the angle."
+        code={`<Button gradient={['#ec4899', '#8b5cf6']}>Pink → Purple</Button>
+<Button gradient={['#06b6d4', '#3b82f6']}>Cyan → Blue</Button>
+<Button gradient={['#f97316', '#ef4444']} gradientDirection={90}>
+  Orange → Red (90°)
+</Button>
+<Button gradient={['#22c55e', '#14b8a6']} radius="pill">
+  Green → Teal (Pill)
+</Button>`}
+      >
+        <div className="flex flex-wrap gap-4 justify-center">
+          <Button gradient={['#ec4899', '#8b5cf6']}>Pink to Purple</Button>
+          <Button gradient={['#06b6d4', '#3b82f6']}>Cyan to Blue</Button>
+          <Button gradient={['#f97316', '#ef4444']} gradientDirection={90}>Orange to Red (90deg)</Button>
+          <Button gradient={['#22c55e', '#14b8a6']} radius="pill">Green to Teal (Pill)</Button>
+        </div>
+      </ComponentPreview>
+
+      <ComponentPreview
+        title="Compact Mode"
+        description="Reduce padding for dense UIs — toolbars, inline actions, tag-like buttons."
+        code={`<Button compact size="sm">Compact SM</Button>
+<Button compact size="md">Compact MD</Button>
+<Button compact size="lg">Compact LG</Button>
+<Button compact variant="outline">Compact Outline</Button>`}
+      >
+        <div className="flex flex-wrap items-center gap-4 justify-center">
+          <Button compact size="sm">Compact SM</Button>
+          <Button compact size="md">Compact MD</Button>
+          <Button compact size="lg">Compact LG</Button>
+          <Button compact variant="outline">Compact Outline</Button>
+        </div>
+      </ComponentPreview>
+
+      <ComponentPreview
+        title="Prefix & Suffix"
+        description="Add content before or after the button label — badges, indicators, keyboard shortcuts."
+        code={`<Button prefix={<BearIcons.StarIcon size={14} />}>Favorite</Button>
+<Button suffix={<span className="bear-text-xs bear-opacity-60">⌘K</span>}>Search</Button>
+<Button
+  variant="outline"
+  prefix={<span className="bear-w-2 bear-h-2 bear-rounded-full bear-bg-green-500" />}
+>
+  Online
+</Button>`}
+      >
+        <div className="flex flex-wrap gap-4 justify-center">
+          <Button prefix={<BearIcons.StarIcon size={14} />}>Favorite</Button>
+          <Button suffix={<span className="bear-text-xs bear-opacity-60">&#8984;K</span>}>Search</Button>
+          <Button variant="outline" prefix={<span className="bear-w-2 bear-h-2 bear-rounded-full bear-bg-green-500" />}>Online</Button>
+        </div>
+      </ComponentPreview>
+
+      <ComponentPreview
+        title="Tooltip Shorthand"
+        description="Pass a tooltip string for a native title attribute — instant hover hint, no wrapper needed."
+        code={`<Button tooltip="Save your changes" leftIcon={<BearIcons.SaveIcon size={16} />}>
+  Save
+</Button>
+<Button iconOnly tooltip="Settings" variant="ghost">
+  <BearIcons.SettingsIcon size={18} />
+</Button>`}
+      >
+        <div className="flex flex-wrap gap-4 justify-center">
+          <Button tooltip="Save your changes" leftIcon={<BearIcons.SaveIcon size={16} />}>Save</Button>
+          <Button iconOnly tooltip="Settings" variant="ghost"><BearIcons.SettingsIcon size={18} /></Button>
+          <Button iconOnly tooltip="Delete" variant="danger"><BearIcons.CloseIcon size={18} /></Button>
+        </div>
+      </ComponentPreview>
+
+      <ComponentPreview
+        title="Combined Features"
+        description="Stack multiple new props for rich, interactive buttons."
+        code={`<Button
+  gradient={['#ec4899', '#8b5cf6']}
+  radius="pill"
+  ripple
+  spotlight
+  leftIcon={<BearIcons.RocketIcon size={16} />}
+  tooltip="Launch the rocket"
+>
+  Launch
+</Button>`}
+      >
+        <div className="flex flex-wrap gap-4 justify-center">
+          <Button gradient={['#ec4899', '#8b5cf6']} radius="pill" ripple spotlight leftIcon={<BearIcons.RocketIcon size={16} />} tooltip="Launch the rocket">
+            Launch
+          </Button>
+          <Button gradient={['#06b6d4', '#3b82f6']} radius="pill" ripple compact suffix={<BearIcons.ChevronRightIcon size={14} />}>
+            Get Started
+          </Button>
+          <Button variant="ghost" ripple compact radius="pill" prefix={<span className="bear-w-2 bear-h-2 bear-rounded-full bear-bg-green-500" />}>
+            Active
+          </Button>
+        </div>
+      </ComponentPreview>
+
       <section className="mb-12">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
           Props
@@ -339,6 +468,54 @@ addVariant('custom', { bg: '#8b5cf6', text: '#fff' });`}
                 </td>
                 <td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td>
                 <td className="px-4 py-3 text-gray-600 dark:text-gray-400">Icon to show after text</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-mono text-bear-600">radius</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>'default' | 'pill' | 'square' | 'none'</code></td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">'default'</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">Border radius preset</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-mono text-bear-600">ripple</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">Material-design ripple effect on click</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-mono text-bear-600">tooltip</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">Native title attribute shorthand</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-mono text-bear-600">compact</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">Reduced padding for dense layouts</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-mono text-bear-600">gradient</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>[string, string]</code></td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">Two-color gradient background (overrides variant bg)</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-mono text-bear-600">gradientDirection</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>number</code></td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">135</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">Gradient angle in degrees</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-mono text-bear-600">prefix</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">Content rendered before children</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-mono text-bear-600">suffix</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">Content rendered after children</td>
               </tr>
             </tbody>
           </table>

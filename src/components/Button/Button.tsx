@@ -1,11 +1,11 @@
-import { forwardRef, useMemo, useContext, useCallback } from 'react';
+import { forwardRef, useMemo, useContext, useCallback, useState } from 'react';
 import { cn } from '@utils';
 import { Spinner } from '../Spinner';
 import { Typography } from '../Typography';
 import { useBearStyles } from '@hooks';
 import { BearContext } from '../../context/BearProvider';
 import type { ButtonProps } from './Button.types';
-import { BUTTON_SIZE, BUTTON_ICON_SIZE, BUTTON_ICON_ONLY_SIZE, BUTTON_VARIANT, VARIANT_DEFAULTS } from './Button.constants';
+import { BUTTON_SIZE, BUTTON_COMPACT_SIZE, BUTTON_RADIUS, BUTTON_ICON_SIZE, BUTTON_ICON_ONLY_SIZE, BUTTON_VARIANT, VARIANT_DEFAULTS } from './Button.constants';
 import { isBuiltInVariant } from './Button.utils';
 import { useSpotlight } from './useSpotlight';
 
@@ -23,6 +23,14 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       rightIcon: rightIconProp,
       textVariant = 'inherit',
       iconOnly = false,
+      radius = 'default',
+      ripple = false,
+      tooltip,
+      compact = false,
+      gradient,
+      gradientDirection = 135,
+      prefix: prefixContent,
+      suffix: suffixContent,
       spotlight = false,
       spotlightColor = 'rgba(255, 255, 255, 0.35)',
       spotlightSize = 150,
@@ -35,6 +43,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       onMouseMove,
       onMouseEnter,
       onMouseLeave,
+      onClick,
       ...rest
     } = props;
 
@@ -42,6 +51,26 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const mergedStyle = useBearStyles(bis, style);
     const leftIcon = leftIconProp ?? (icon && iconPosition === 'left' ? icon : undefined);
     const rightIcon = rightIconProp ?? (icon && iconPosition === 'right' ? icon : undefined);
+
+    const [rippleStyle, setRippleStyle] = useState<React.CSSProperties | null>(null);
+
+    const handleRipple = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+      if (!ripple) return;
+      const rect = e.currentTarget.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height) * 2;
+      setRippleStyle({
+        width: size,
+        height: size,
+        left: e.clientX - rect.left - size / 2,
+        top: e.clientY - rect.top - size / 2,
+      });
+      setTimeout(() => setRippleStyle(null), 600);
+    }, [ripple]);
+
+    const handleClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+      handleRipple(e);
+      onClick?.(e);
+    }, [handleRipple, onClick]);
 
     const context = useContext(BearContext);
     const componentStyles = context?.components?.Button?.root || {};
@@ -72,7 +101,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       }
 
       const styles: React.CSSProperties = {
-        backgroundColor: `var(--bear-btn-${variant}-bg, ${variantColors.bg})`,
+        backgroundColor: gradient ? undefined : `var(--bear-btn-${variant}-bg, ${variantColors.bg})`,
+        background: gradient
+          ? `linear-gradient(${gradientDirection}deg, ${gradient[0]}, ${gradient[1]})`
+          : undefined,
         color: variant === 'outline' || variant === 'ghost'
           ? `var(--bear-btn-${variant}-text, ${variantColors.text || 'inherit'})`
           : 'white',
@@ -85,7 +117,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       } as React.CSSProperties;
 
       return styles;
-    }, [variant, variantColors, componentStyles, mergedStyle, isCustomVariant, customVariantConfig]);
+    }, [variant, variantColors, componentStyles, mergedStyle, isCustomVariant, customVariantConfig, gradient, gradientDirection]);
 
     const setRefs = useCallback((node: HTMLButtonElement | null) => {
       spotlightRef.current = node;
@@ -102,11 +134,16 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={isDisabled}
         aria-busy={loading || undefined}
         style={dynamicStyles}
+        title={tooltip}
         className={cn(
           'Bear-Button',
-          'bear-inline-flex bear-items-center bear-justify-center bear-font-medium bear-rounded-lg bear-transition-all bear-duration-200 bear-outline-none bear-relative bear-overflow-hidden',
-          iconOnly ? BUTTON_ICON_ONLY_SIZE[size] : BUTTON_SIZE[size],
-          iconOnly && 'bear-rounded-lg',
+          'bear-inline-flex bear-items-center bear-justify-center bear-font-medium bear-transition-all bear-duration-200 bear-outline-none bear-relative bear-overflow-hidden',
+          BUTTON_RADIUS[radius],
+          iconOnly
+            ? BUTTON_ICON_ONLY_SIZE[size]
+            : compact
+              ? BUTTON_COMPACT_SIZE[size]
+              : BUTTON_SIZE[size],
           isBuiltInVariant(variant)
             ? BUTTON_VARIANT[variant]
             : `bear-btn-custom bear-text-white focus:bear-ring-2 focus:bear-ring-offset-2 disabled:bear-opacity-50 disabled:bear-cursor-not-allowed hover:bear-brightness-110 active:bear-brightness-95`,
@@ -115,6 +152,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           className
         )}
         data-testid={testId}
+        onClick={handleClick}
         onMouseMove={handlers.handleMouseMove}
         onMouseEnter={handlers.handleMouseEnter}
         onMouseLeave={handlers.handleMouseLeave}
@@ -159,6 +197,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             loading && 'bear-invisible'
           )}
         >
+          {prefixContent && (
+            <span className="Bear-Button__prefix bear-inline-flex bear-shrink-0">{prefixContent}</span>
+          )}
           {leftIcon && (
             <span className={cn('Bear-Button__icon Bear-Button__icon--left bear-inline-flex bear-shrink-0', BUTTON_ICON_SIZE[size])}>
               {leftIcon}
@@ -172,7 +213,18 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
               {rightIcon}
             </span>
           )}
+          {suffixContent && (
+            <span className="Bear-Button__suffix bear-inline-flex bear-shrink-0">{suffixContent}</span>
+          )}
         </span>
+
+        {ripple && rippleStyle && (
+          <span
+            className="Bear-Button__ripple bear-absolute bear-rounded-full bear-pointer-events-none bear-z-[2] bear-animate-ping bear-opacity-30 bear-bg-white"
+            style={rippleStyle}
+            aria-hidden="true"
+          />
+        )}
       </button>
     );
   }

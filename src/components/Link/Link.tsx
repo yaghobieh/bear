@@ -4,7 +4,7 @@ import type { BearVariant } from '../../types';
 import type { LinkProps } from './Link.types';
 
 const VARIANT_CLASSES: Record<BearVariant | 'inherit', string> = {
-  primary: 'bear-text-pink-500 hover:bear-text-pink-600',
+  primary: 'bear-text-primary-500 hover:bear-text-primary-600',
   secondary: 'bear-text-gray-600 hover:bear-text-gray-700',
   success: 'bear-text-green-500 hover:bear-text-green-600',
   danger: 'bear-text-red-500 hover:bear-text-red-600',
@@ -72,7 +72,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(({
       ref={ref}
       className={cn(
         'bear-cursor-pointer bear-transition-colors bear-duration-200',
-        'focus:bear-outline-none focus:bear-ring-2 focus:bear-ring-pink-500 focus:bear-ring-offset-2 bear-rounded',
+        'focus:bear-outline-none focus:bear-ring-2 focus:bear-ring-primary-500 focus:bear-ring-offset-2 bear-rounded',
         !color && VARIANT_CLASSES[variant],
         UNDERLINE_CLASSES[underline],
         className

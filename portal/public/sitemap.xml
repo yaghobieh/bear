@@ -9,82 +9,190 @@
   <url><loc>https://bearui.com/hooks</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://bearui.com/templates</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://bearui.com/roadmap</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <!-- Layout -->
+  <url><loc>https://bearui.com/components/flex</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bearui.com/components/grid</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bearui.com/components/columns</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/masonry</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/container</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/box</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/paper</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/divider</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/scroll-area</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/resizable-panel</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/aspect-ratio</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <!-- Page Layout -->
+  <url><loc>https://bearui.com/components/app-bar</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bearui.com/components/sidebar</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bearui.com/components/dock</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <!-- Button -->
   <url><loc>https://bearui.com/components/button</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://bearui.com/components/button-group</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://bearui.com/components/fab</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/speed-dial</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/copy-button</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/close-button</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/split-button</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/action-icon</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/back-top</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <!-- Input -->
   <url><loc>https://bearui.com/components/input</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://bearui.com/components/form-field</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bearui.com/components/password-input</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bearui.com/components/input-group</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/resizable-textarea</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/number-input</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/otp-input</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/phone-input</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/credit-input</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/currency-input</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/tags-input</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/mentions-input</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/autocomplete</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <!-- Select -->
   <url><loc>https://bearui.com/components/select</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bearui.com/components/tree-select</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/multi-select</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bearui.com/components/navigable-select</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/cascader</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/transfer-list</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <!-- Form Controls -->
   <url><loc>https://bearui.com/components/checkbox</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bearui.com/components/checkbox-card</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://bearui.com/components/radio</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bearui.com/components/radio-card</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://bearui.com/components/switch</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://bearui.com/components/slider</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/slider-range</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://bearui.com/components/rating</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/autocomplete</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://bearui.com/components/multi-select</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://bearui.com/components/transfer-list</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/typography</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://bearui.com/components/avatar</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/badge</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/card</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://bearui.com/components/list</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/data-table</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://bearui.com/components/tooltip</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/carousel</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://bearui.com/components/pagination</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/modal</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://bearui.com/components/drawer</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://bearui.com/components/alert</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://bearui.com/components/alert-dialog</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://bearui.com/components/toast</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://bearui.com/components/skeleton</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/spinner</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/progress</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/tabs</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://bearui.com/components/accordion</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://bearui.com/components/menu</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://bearui.com/components/dropdown</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://bearui.com/components/speed-dial</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/breadcrumbs</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/stepper</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/calendar</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bearui.com/components/segmented-control</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <!-- Pickers -->
   <url><loc>https://bearui.com/components/date-picker</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://bearui.com/components/date-range-picker</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://bearui.com/components/time-picker</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/color-picker</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/color-swatch</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/emoji-picker</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <!-- Editors -->
+  <url><loc>https://bearui.com/components/rich-editor</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://bearui.com/components/editable</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/sign-pad</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bearui.com/components/fieldset</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://bearui.com/components/form</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://bearui.com/components/file-upload</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <!-- Card -->
+  <url><loc>https://bearui.com/components/card</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://bearui.com/components/hover-card</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/glow-card</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <!-- Overlay -->
+  <url><loc>https://bearui.com/components/modal</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://bearui.com/components/alert-dialog</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bearui.com/components/context-menu</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/drawer</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bearui.com/components/bottom-sheet</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/command-palette</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bearui.com/components/spotlight</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <!-- Tooltip -->
+  <url><loc>https://bearui.com/components/tooltip</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/popover</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/popconfirm</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <!-- Feedback -->
+  <url><loc>https://bearui.com/components/alert</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bearui.com/components/toast</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bearui.com/components/notification-center</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <!-- Loading -->
+  <url><loc>https://bearui.com/components/spinner</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/progress</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/ring-progress</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/skeleton</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/bear-loader</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/loading-overlay</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <!-- Navigation -->
+  <url><loc>https://bearui.com/components/tabs</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://bearui.com/components/accordion</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bearui.com/components/collapsible</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/menu</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bearui.com/components/dropdown</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bearui.com/components/breadcrumbs</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/anchor</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/stepper</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/bottom-navigation</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/active-bar</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/page-nav</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <!-- Typography -->
+  <url><loc>https://bearui.com/components/typography</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bearui.com/components/code-block</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/blockquote</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/spoiler</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/kbd</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/em</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/highlight</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/mark</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/gradient-text</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/typewriter</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <!-- Avatar & Identity -->
+  <url><loc>https://bearui.com/components/avatar</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/badge</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/theme-icon</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/indicator</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/chip</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/biometric</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <!-- Data Display -->
+  <url><loc>https://bearui.com/components/data-table</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://bearui.com/components/list</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/tree-view</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/file-tree</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/virtual-list</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/infinite-scroll</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/kanban</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bearui.com/components/descriptions</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/number-formatter</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <!-- Misc -->
+  <url><loc>https://bearui.com/components/calendar</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bearui.com/components/empty-state</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/result</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/pagination</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/statistic</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/timeline</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/link</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/image</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <!-- Advanced: Media -->
+  <url><loc>https://bearui.com/components/map</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bearui.com/components/image-gallery</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/media-player</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/image-annotation</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/code-editor</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bearui.com/components/cropper</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/carousel</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <!-- Advanced: Animation -->
+  <url><loc>https://bearui.com/components/transition</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/animated-counter</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/marquee</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/confetti</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/countdown-timer</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <!-- Advanced: Utility -->
+  <url><loc>https://bearui.com/components/watermark</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/overlay</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/affix</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/qr-code</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/tour</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <!-- Advanced: Developer -->
+  <url><loc>https://bearui.com/components/json-viewer</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/diff-viewer</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/diff-squares</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/terminal</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/props-playground</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <!-- Advanced: Chat -->
+  <url><loc>https://bearui.com/components/chat</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bearui.com/components/floating-chat</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <!-- Charts -->
   <url><loc>https://bearui.com/components/chart</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://bearui.com/components/sparkline</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://bearui.com/components/gauge</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/rich-editor</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://bearui.com/components/sign-pad</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://bearui.com/components/kanban</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://bearui.com/components/emoji-picker</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/code-editor</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://bearui.com/components/cropper</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/map</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://bearui.com/components/terminal</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/chat</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://bearui.com/components/json-viewer</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/diff-viewer</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/masonry</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/marquee</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/typewriter</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/dock</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/spotlight</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/theme-icon</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/close-button</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/overlay</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/popover</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/popconfirm</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/context-menu</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/command-palette</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://bearui.com/components/notification-center</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/tree-view</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/tree-select</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/file-upload</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://bearui.com/components/color-picker</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/image-gallery</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bearui.com/components/virtual-list</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/heatmap</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/timeline-chart</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/components/tag-cloud</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <!-- Hooks -->
   <url><loc>https://bearui.com/hooks/use-media-query</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://bearui.com/hooks/use-clipboard</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://bearui.com/hooks/use-debounce</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
@@ -102,16 +210,24 @@
   <url><loc>https://bearui.com/hooks/use-idle</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://bearui.com/hooks/use-long-press</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://bearui.com/hooks/use-websocket</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/hooks/use-pulse</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/hooks/use-shake</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/hooks/use-page-visibility</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <!-- Guides -->
   <url><loc>https://bearui.com/guides/responsive-ui</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://bearui.com/guides/minimize-bundle</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://bearui.com/guides/server-rendering</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://bearui.com/guides/accessibility</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <!-- Customization -->
   <url><loc>https://bearui.com/customization/overview</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://bearui.com/customization/palette</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://bearui.com/customization/typography</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://bearui.com/customization/spacing</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://bearui.com/customization/breakpoints</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bearui.com/customization/z-index</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://bearui.com/customization/dark-mode</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://bearui.com/customization/css-variables</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://bearui.com/customization/custom-components</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <!-- API -->
+  <url><loc>https://bearui.com/api/overview</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
 </urlset>

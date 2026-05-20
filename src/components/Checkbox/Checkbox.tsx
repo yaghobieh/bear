@@ -28,7 +28,7 @@ const LABEL_SIZE_CLASSES: Record<BearSize, string> = {
 };
 
 const VARIANT_COLORS: Record<BearVariant, string> = {
-  primary: '#ec4899',
+  primary: 'var(--bear-primary-500, #ec4899)',
   secondary: '#6b7280',
   success: '#22c55e',
   danger: '#ef4444',

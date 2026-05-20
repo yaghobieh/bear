@@ -125,33 +125,39 @@ const MediaPlayerPage: React.FC = () => {
         </Typography>
       </div>
 
-      <Card className="p-4 bg-gradient-to-r from-pink-50 to-purple-50 dark:from-pink-900/20 dark:to-purple-900/20 border-pink-200 dark:border-pink-800">
+      <Card className="p-4 bg-gradient-to-r from-orange-50 to-amber-50 dark:from-orange-900/20 dark:to-amber-900/20 border-orange-200 dark:border-orange-800">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-start gap-3">
-            <BearIcons.PlayCircleIcon size={24} className="text-pink-500 flex-shrink-0 mt-1" />
+            <BearIcons.PlayCircleIcon size={24} className="text-orange-500 flex-shrink-0 mt-1" />
             <div>
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-1">{t.comingSoonPlayer}</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">{t.comingSoonPlayerDesc}</p>
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
+                Coming to ForgeStack: @forgedevstack/torch
+              </h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                A dedicated player package with playlists, subtitles, picture-in-picture, streaming,
+                and AirPlay — designed to work seamlessly with Bear UI. Includes reel mode, ad player,
+                tracking dashboard, embed support (YouTube, Vimeo), and configurable skins.
+              </p>
             </div>
           </div>
           <div className="flex gap-3 flex-shrink-0">
             <a
-              href="https://www.npmjs.com/package/@forgedevstack/bear"
+              href="https://www.npmjs.com/package/@forgedevstack/torch"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-pink-500 hover:bg-pink-600 text-white text-sm font-medium transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium transition-colors"
             >
               <BearIcons.PackageIcon size={16} />
               npm
             </a>
             <a
-              href="https://bearui.com"
+              href="https://github.com/yaghobieh/torch"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium transition-colors"
             >
               <BearIcons.GlobeIcon size={16} />
-              bearui.com
+              Docs
             </a>
           </div>
         </div>

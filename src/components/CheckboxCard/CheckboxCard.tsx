@@ -108,7 +108,7 @@ export const CheckboxCard: FC<CheckboxCardProps> = ({
         className={cn(
           'bear-absolute bear-top-3 bear-right-3 bear-flex bear-items-center bear-justify-center bear-rounded-full bear-border-2',
           isChecked
-            ? 'bear-border-pink-500 dark:bear-border-pink-400 bear-bg-pink-500 dark:bear-bg-pink-400 bear-text-white'
+            ? 'bear-border-primary-500 dark:bear-border-primary-400 bear-bg-primary-500 dark:bear-bg-primary-400 bear-text-white'
             : 'bear-border-gray-300 dark:bear-border-gray-600',
           CHECKBOX_INDICATOR_SIZE_MAP[size]
         )}

@@ -9,6 +9,10 @@ export interface DropdownItem {
   key: string;
   /** Display label */
   label: ReactNode;
+  /** Searchable text (defaults to label if string) */
+  searchLabel?: string;
+  /** Description shown below label */
+  description?: string;
   /** Item icon */
   icon?: ReactNode;
   /** Trailing content */
@@ -58,6 +62,32 @@ export interface DropdownProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onC
   disabled?: boolean;
   /** Handler for open/close */
   onOpenChange?: (open: boolean) => void;
+  /** Enable search/filter within dropdown items */
+  searchable?: boolean;
+  /** Placeholder text for the search input */
+  searchPlaceholder?: string;
+  /** Custom filter function; return true to include the item */
+  filterFn?: (item: DropdownItem, query: string) => boolean;
+  /** Show loading spinner inside dropdown */
+  loading?: boolean;
+  /** Loading text shown while loading */
+  loadingText?: string;
+  /** Text shown when no items match the search */
+  emptyText?: string;
+  /** Custom render function for each item */
+  renderItem?: (item: DropdownItem, index: number) => ReactNode;
+  /** Enable multi-select mode — items toggle on click */
+  multiSelect?: boolean;
+  /** Callback when selected keys change (multiSelect mode) */
+  onSelectionChange?: (keys: string[]) => void;
+  /** Currently selected keys (controlled, multiSelect mode) */
+  selectedKeys?: string[];
+  /** Header content above items */
+  header?: ReactNode;
+  /** Footer content below items */
+  footer?: ReactNode;
+  /** Virtual scrolling for large lists (renders only visible items) */
+  virtualized?: boolean;
   /** Test ID */
   testId?: string;
 }

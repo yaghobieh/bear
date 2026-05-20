@@ -1,24 +1,20 @@
 import { FC } from 'react';
 import { cn } from '@utils';
 import { CLOCK_CENTER, CLOCK_RADIUS } from '../TimePicker.constants';
+import type { ClockFaceSvgProps } from './ClockFaceSvg.types';
+import {
+  HIT_AREA_RADIUS,
+  SELECTED_DOT_RADIUS,
+  LABEL_POSITION_RATIO,
+  HAND_LENGTH_RATIO,
+  HOUR_ANGLE_STEP,
+  MINUTE_ANGLE_OFFSET,
+  DEG_TO_RAD,
+  FULL_CIRCLE_DEGREES,
+  CLOCK_BG_PADDING,
+} from './ClockFaceSvg.constants';
 
-const HIT_AREA_RADIUS = 16;
-const SELECTED_DOT_RADIUS = 14;
-const LABEL_POSITION_RATIO = 0.85;
-const HAND_LENGTH_RATIO = 0.6;
-const HOUR_ANGLE_STEP = 30;
-const MINUTE_ANGLE_OFFSET = 90;
-const DEG_TO_RAD = Math.PI / 180;
-
-export interface ClockFaceSvgProps {
-  values: readonly number[] | number[];
-  isHourMode: boolean;
-  format: '12h' | '24h';
-  selectedHour: number;
-  selectedMinute: number;
-  onSelect: (v: number) => void;
-  className?: string;
-}
+export type { ClockFaceSvgProps } from './ClockFaceSvg.types';
 
 export const ClockFaceSvg: FC<ClockFaceSvgProps> = ({
   values,
@@ -31,7 +27,7 @@ export const ClockFaceSvg: FC<ClockFaceSvgProps> = ({
 }) => {
   const getAngle = (idx: number) => {
     if (isHourMode) return (idx * HOUR_ANGLE_STEP - MINUTE_ANGLE_OFFSET) * DEG_TO_RAD;
-    return (idx * (360 / values.length) - MINUTE_ANGLE_OFFSET) * DEG_TO_RAD;
+    return (idx * (FULL_CIRCLE_DEGREES / values.length) - MINUTE_ANGLE_OFFSET) * DEG_TO_RAD;
   };
 
   const handAngle = isHourMode
@@ -44,8 +40,15 @@ export const ClockFaceSvg: FC<ClockFaceSvgProps> = ({
       <circle
         cx={CLOCK_CENTER}
         cy={CLOCK_CENTER}
+        r={CLOCK_RADIUS + CLOCK_BG_PADDING}
+        className="Bear-TimePicker__clock-face-bg bear-fill-gray-100 dark:bear-fill-zinc-800"
+      />
+      <circle
+        cx={CLOCK_CENTER}
+        cy={CLOCK_CENTER}
         r={CLOCK_RADIUS}
-        className="Bear-TimePicker__clock-face-circle bear-fill-none bear-stroke-gray-200 dark:bear-stroke-zinc-700 bear-stroke-2"
+        className="Bear-TimePicker__clock-face-circle bear-fill-none bear-stroke-gray-200 dark:bear-stroke-zinc-700"
+        strokeWidth={2}
       />
       {values.map((v, i) => {
         const angle = getAngle(i);
@@ -62,7 +65,12 @@ export const ClockFaceSvg: FC<ClockFaceSvgProps> = ({
           >
             <circle cx={x} cy={y} r={HIT_AREA_RADIUS} fill="transparent" />
             {isSelected && (
-              <circle cx={x} cy={y} r={SELECTED_DOT_RADIUS} className="Bear-TimePicker__clock-face-dot bear-fill-pink-500" />
+              <circle
+                cx={x}
+                cy={y}
+                r={SELECTED_DOT_RADIUS}
+                className="Bear-TimePicker__clock-face-dot bear-fill-primary-500"
+              />
             )}
             <text
               x={x}
@@ -84,7 +92,8 @@ export const ClockFaceSvg: FC<ClockFaceSvgProps> = ({
         y1={CLOCK_CENTER}
         x2={CLOCK_CENTER + CLOCK_RADIUS * HAND_LENGTH_RATIO * Math.cos(handRad)}
         y2={CLOCK_CENTER + CLOCK_RADIUS * HAND_LENGTH_RATIO * Math.sin(handRad)}
-        className="Bear-TimePicker__clock-face-hand bear-stroke-pink-500 bear-stroke-2"
+        className="Bear-TimePicker__clock-face-hand bear-stroke-primary-500"
+        strokeWidth={2}
         strokeLinecap="round"
       />
     </svg>

@@ -236,35 +236,6 @@ function deepMerge<T>(target: T, source: Partial<T>): T {
 }
 
 /**
- * Set CSS variables for a color scale
- */
-const setColorScaleVariables = (
-  root: HTMLElement,
-  prefix: string,
-  scale: BearColorScale
-) => {
-  Object.entries(scale).forEach(([shade, value]) => {
-    root.style.setProperty(`--bear-${prefix}-${shade}`, value);
-  });
-};
-
-/**
- * Set CSS variables for a custom variant
- */
-const setCustomVariantVariables = (
-  root: HTMLElement,
-  name: string,
-  config: CustomVariant
-) => {
-  root.style.setProperty(`--bear-${name}-bg`, config.bg);
-  if (config.bgHover) root.style.setProperty(`--bear-${name}-bg-hover`, config.bgHover);
-  if (config.bgActive) root.style.setProperty(`--bear-${name}-bg-active`, config.bgActive);
-  if (config.text) root.style.setProperty(`--bear-${name}-text`, config.text);
-  if (config.border) root.style.setProperty(`--bear-${name}-border`, config.border);
-  if (config.ring) root.style.setProperty(`--bear-${name}-ring`, config.ring);
-};
-
-/**
  * BearProvider - Wraps your app to provide theme context
  * 
  * @example
@@ -457,88 +428,92 @@ export const BearProvider = ({
     }));
   }, []);
 
-  // Apply mode to document: Tailwind dark: variants + Bear classes + CSS variables
+  // Apply mode to document: dark/light classes + CSS variables via a single style element
   useEffect(() => {
-    if (typeof document !== 'undefined') {
-      const root = document.documentElement;
+    if (typeof document === 'undefined') return;
+    const root = document.documentElement;
 
-      // Tailwind dark mode (class strategy) – so dark: variants work everywhere
-      if (mode === 'dark') {
-        root.classList.add('dark');
-      } else {
-        root.classList.remove('dark');
-      }
+    // Toggle dark/light classes — single classList operation
+    root.classList.toggle('dark', mode === 'dark');
+    root.classList.remove('bear-light', 'bear-dark');
+    root.classList.add(`bear-${mode}`);
 
-      // Bear-specific classes (for any bear-* scoped styles)
-      root.classList.remove('bear-light', 'bear-dark');
-      root.classList.add(`bear-${mode}`);
-      
-      // Set ALL color scale CSS variables
-      setColorScaleVariables(root, 'primary', theme.colors.primary);
-      setColorScaleVariables(root, 'secondary', theme.colors.secondary);
-      setColorScaleVariables(root, 'success', theme.colors.success);
-      setColorScaleVariables(root, 'warning', theme.colors.warning);
-      setColorScaleVariables(root, 'danger', theme.colors.danger);
-      setColorScaleVariables(root, 'info', theme.colors.info);
-      setColorScaleVariables(root, 'neutral', theme.colors.neutral);
-      
-      // Set background colors
-      root.style.setProperty('--bear-bg-primary', theme.colors.background.primary);
-      root.style.setProperty('--bear-bg-secondary', theme.colors.background.secondary);
-      root.style.setProperty('--bear-bg-tertiary', theme.colors.background.tertiary);
-      
-      // Set text colors
-      root.style.setProperty('--bear-text-primary', theme.colors.text.primary);
-      root.style.setProperty('--bear-text-secondary', theme.colors.text.secondary);
-      root.style.setProperty('--bear-text-muted', theme.colors.text.muted);
-      root.style.setProperty('--bear-text-inverted', theme.colors.text.inverted);
-      
-      // Set border colors
-      root.style.setProperty('--bear-border-default', theme.colors.border.default);
-      root.style.setProperty('--bear-border-subtle', theme.colors.border.subtle);
-      root.style.setProperty('--bear-border-strong', theme.colors.border.strong);
-      
-      // Set variant colors from configuration
-      if (variants.Button) {
-        Object.entries(variants.Button).forEach(([variant, config]) => {
-          if (config) {
-            if (config.bg) root.style.setProperty(`--bear-btn-${variant}-bg`, config.bg);
-            if (config.bgHover) root.style.setProperty(`--bear-btn-${variant}-bg-hover`, config.bgHover);
-            if (config.bgActive) root.style.setProperty(`--bear-btn-${variant}-bg-active`, config.bgActive);
-            if (config.bgDisabled) root.style.setProperty(`--bear-btn-${variant}-bg-disabled`, config.bgDisabled);
-            if (config.text) root.style.setProperty(`--bear-btn-${variant}-text`, config.text);
-            if (config.textDisabled) root.style.setProperty(`--bear-btn-${variant}-text-disabled`, config.textDisabled);
-            if (config.border) root.style.setProperty(`--bear-btn-${variant}-border`, config.border);
-            if (config.borderHover) root.style.setProperty(`--bear-btn-${variant}-border-hover`, config.borderHover);
-            if (config.ring) root.style.setProperty(`--bear-btn-${variant}-ring`, config.ring);
-          }
-        });
-      }
-      
-      // Set custom variants CSS variables
-      Object.entries(customVariants).forEach(([name, config]) => {
-        setCustomVariantVariables(root, name, config);
+    // Build all CSS variables as a single string and inject via one style element.
+    // This is significantly faster than calling setProperty 80+ times.
+    const vars: string[] = [];
+
+    const pushScale = (prefix: string, scale: BearColorScale) => {
+      Object.entries(scale).forEach(([shade, value]) => {
+        vars.push(`--bear-${prefix}-${shade}:${value}`);
       });
-      
-      // Set typography
-      root.style.setProperty('--bear-font-sans', theme.typography.fontFamily.sans);
-      root.style.setProperty('--bear-font-mono', theme.typography.fontFamily.mono);
-      
-      // Set shadows
-      Object.entries(theme.shadows).forEach(([key, value]) => {
-        root.style.setProperty(`--bear-shadow-${key}`, value);
-      });
-      
-      // Set border radius
-      Object.entries(theme.borderRadius).forEach(([key, value]) => {
-        root.style.setProperty(`--bear-radius-${key}`, value);
-      });
-      
-      // Set spacing
-      Object.entries(theme.spacing).forEach(([key, value]) => {
-        root.style.setProperty(`--bear-spacing-${key}`, value);
+    };
+
+    pushScale('primary', theme.colors.primary);
+    pushScale('secondary', theme.colors.secondary);
+    pushScale('success', theme.colors.success);
+    pushScale('warning', theme.colors.warning);
+    pushScale('danger', theme.colors.danger);
+    pushScale('info', theme.colors.info);
+    pushScale('neutral', theme.colors.neutral);
+
+    vars.push(`--bear-bg-primary:${theme.colors.background.primary}`);
+    vars.push(`--bear-bg-secondary:${theme.colors.background.secondary}`);
+    vars.push(`--bear-bg-tertiary:${theme.colors.background.tertiary}`);
+
+    vars.push(`--bear-text-primary:${theme.colors.text.primary}`);
+    vars.push(`--bear-text-secondary:${theme.colors.text.secondary}`);
+    vars.push(`--bear-text-muted:${theme.colors.text.muted}`);
+    vars.push(`--bear-text-inverted:${theme.colors.text.inverted}`);
+
+    vars.push(`--bear-border-default:${theme.colors.border.default}`);
+    vars.push(`--bear-border-subtle:${theme.colors.border.subtle}`);
+    vars.push(`--bear-border-strong:${theme.colors.border.strong}`);
+
+    if (variants.Button) {
+      Object.entries(variants.Button).forEach(([variant, config]) => {
+        if (!config) return;
+        if (config.bg) vars.push(`--bear-btn-${variant}-bg:${config.bg}`);
+        if (config.bgHover) vars.push(`--bear-btn-${variant}-bg-hover:${config.bgHover}`);
+        if (config.bgActive) vars.push(`--bear-btn-${variant}-bg-active:${config.bgActive}`);
+        if (config.bgDisabled) vars.push(`--bear-btn-${variant}-bg-disabled:${config.bgDisabled}`);
+        if (config.text) vars.push(`--bear-btn-${variant}-text:${config.text}`);
+        if (config.textDisabled) vars.push(`--bear-btn-${variant}-text-disabled:${config.textDisabled}`);
+        if (config.border) vars.push(`--bear-btn-${variant}-border:${config.border}`);
+        if (config.borderHover) vars.push(`--bear-btn-${variant}-border-hover:${config.borderHover}`);
+        if (config.ring) vars.push(`--bear-btn-${variant}-ring:${config.ring}`);
       });
     }
+
+    Object.entries(customVariants).forEach(([name, config]) => {
+      vars.push(`--bear-${name}-bg:${config.bg}`);
+      if (config.bgHover) vars.push(`--bear-${name}-bg-hover:${config.bgHover}`);
+      if (config.bgActive) vars.push(`--bear-${name}-bg-active:${config.bgActive}`);
+      if (config.text) vars.push(`--bear-${name}-text:${config.text}`);
+      if (config.border) vars.push(`--bear-${name}-border:${config.border}`);
+      if (config.ring) vars.push(`--bear-${name}-ring:${config.ring}`);
+    });
+
+    vars.push(`--bear-font-sans:${theme.typography.fontFamily.sans}`);
+    vars.push(`--bear-font-mono:${theme.typography.fontFamily.mono}`);
+
+    Object.entries(theme.shadows).forEach(([key, value]) => {
+      vars.push(`--bear-shadow-${key}:${value}`);
+    });
+    Object.entries(theme.borderRadius).forEach(([key, value]) => {
+      vars.push(`--bear-radius-${key}:${value}`);
+    });
+    Object.entries(theme.spacing).forEach(([key, value]) => {
+      vars.push(`--bear-spacing-${key}:${value}`);
+    });
+
+    const STYLE_ID = 'bear-theme-vars';
+    let style = document.getElementById(STYLE_ID) as HTMLStyleElement | null;
+    if (!style) {
+      style = document.createElement('style');
+      style.id = STYLE_ID;
+      document.head.appendChild(style);
+    }
+    style.textContent = `:root{${vars.join(';')}}`;
   }, [theme, mode, variants, customVariants]);
 
   const value = useMemo(() => ({

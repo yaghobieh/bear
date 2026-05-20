@@ -531,10 +531,10 @@ export const Topbar: FC<TopbarProps> = ({ onMenuClick, banner, onBannerVisibilit
               <BearIcon size={56} />
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white mt-4 mb-2">Bear UI v{BEAR_VERSION}</h2>
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-                1.2.1: Portaled menus and selects, consistent overlay z-index, scroll/resize anchoring, useClickOutsideMultiple on @forgedevstack/bear/hooks.
+                1.2.3: Goodbye Tailwind! Fully migrated to AeroCraft CSS. Enhanced Button, Input & Dropdown with new props. Faster dark mode toggle.
               </p>
               <div className="flex flex-wrap items-center justify-center gap-1.5 mb-4">
-                {['Dropdown', 'Select', 'TreeSelect', 'Menu', 'Popover', 'Autocomplete', 'MultiSelect', 'NavigableSelect', 'Popconfirm', 'Tooltip'].map((c) => (
+                {['AeroCraft', 'Button', 'Input', 'Dropdown', 'Drawer', 'GlowCard', 'DiffViewer', 'Stepper', 'Heatmap', 'TagCloud'].map((c) => (
                   <span key={c} className="px-2 py-0.5 text-[10px] font-medium bg-pink-50 dark:bg-pink-900/20 text-pink-600 dark:text-pink-400 rounded-full">{c}</span>
                 ))}
               </div>

@@ -6,7 +6,7 @@ export const SIZE_MAP = {
 } as const;
 
 export const SWATCH_CLASSES = 'Bear-ColorSwatch bear-inline-flex bear-items-center bear-justify-center bear-cursor-pointer bear-transition-all bear-border-2 hover:bear-scale-110';
-export const SWATCH_SELECTED_CLASSES = 'bear-ring-2 bear-ring-offset-2 bear-ring-pink-500 dark:bear-ring-offset-zinc-900';
+export const SWATCH_SELECTED_CLASSES = 'bear-ring-2 bear-ring-offset-2 bear-ring-primary-500 dark:bear-ring-offset-zinc-900';
 export const SWATCH_DEFAULT_BORDER = 'bear-border-transparent';
 export const SWATCH_LIGHT_BORDER = 'bear-border-gray-200';
 export const CHECK_CLASSES = 'bear-text-white drop-shadow-sm';

@@ -29,7 +29,7 @@ const CommandItemComponent: FC<CommandItemComponentProps> = ({
     className={cn(
       'Bear-CommandPalette__item bear-w-full bear-flex bear-items-center bear-gap-3 bear-px-4 bear-py-2.5 bear-text-left bear-transition-colors',
       isHighlighted
-        ? 'bear-bg-pink-500/20 bear-text-pink-400'
+        ? 'bear-bg-primary-500/20 bear-text-primary-400'
         : 'bear-text-zinc-300 hover:bear-bg-zinc-700',
       command.disabled && 'bear-opacity-50 bear-cursor-not-allowed'
     )}

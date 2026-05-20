@@ -18,7 +18,7 @@ const Installation: FC = () => {
         <ul className="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-400">
           <li>React 18.0 or later</li>
           <li>Node.js 18.0 or later</li>
-          <li>Tailwind CSS 3.0 or later (optional, for customization)</li>
+          <li>AeroCraft CSS (optional, for customization)</li>
         </ul>
       </section>
 
@@ -122,23 +122,22 @@ function MyComponent() {
 
       <section className="mb-12">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-          Tailwind CSS Integration (Optional)
+          AeroCraft CSS Integration (Optional)
         </h2>
         <p className="text-gray-600 dark:text-gray-400 mb-4">
-          Bear UI works out of the box with bundled styles. If you want to customize using Tailwind, 
-          add the Bear UI source files to your Tailwind config:
+          Bear UI works out of the box with bundled styles. If you want to customize using AeroCraft,
+          create an <code className="px-1 py-0.5 rounded bg-gray-200 dark:bg-zinc-700 text-sm">aerocraft.config.js</code> and reference it in your PostCSS config:
         </p>
         <CodeBlock
-          code={`// tailwind.config.js
-module.exports = {
-  content: [
-    './src/**/*.{js,ts,jsx,tsx}',
-    './node_modules/@forgedevstack/bear/dist/**/*.{js,ts,jsx,tsx}',
-  ],
-  // ... rest of your config
+          code={`// aerocraft.config.js
+export default {
+  prefix: 'bear',
+  mode: 'standalone',
+  groups: 'all',
+  content: ['./src/**/*.{ts,tsx}'],
 };`}
           language="javascript"
-          title="tailwind.config.js"
+          title="aerocraft.config.js"
         />
       </section>
 

@@ -17,7 +17,7 @@ export const Chip: FC<ChipProps> = ({
   const colorClasses = {
     filled: {
       default: 'bear-bg-zinc-600 bear-text-white',
-      primary: 'bear-bg-pink-500 bear-text-white',
+      primary: 'bear-bg-primary-500 bear-text-white',
       secondary: 'bear-bg-purple-500 bear-text-white',
       success: 'bear-bg-green-500 bear-text-white',
       warning: 'bear-bg-yellow-500 bear-text-black',
@@ -26,7 +26,7 @@ export const Chip: FC<ChipProps> = ({
     },
     outlined: {
       default: 'bear-border bear-border-zinc-500 bear-text-zinc-300',
-      primary: 'bear-border bear-border-pink-500 bear-text-pink-400',
+      primary: 'bear-border bear-border-primary-500 bear-text-primary-400',
       secondary: 'bear-border bear-border-purple-500 bear-text-purple-400',
       success: 'bear-border bear-border-green-500 bear-text-green-400',
       warning: 'bear-border bear-border-yellow-500 bear-text-yellow-400',
@@ -35,7 +35,7 @@ export const Chip: FC<ChipProps> = ({
     },
     soft: {
       default: 'bear-bg-zinc-500/20 bear-text-zinc-300',
-      primary: 'bear-bg-pink-500/20 bear-text-pink-400',
+      primary: 'bear-bg-primary-500/20 bear-text-primary-400',
       secondary: 'bear-bg-purple-500/20 bear-text-purple-400',
       success: 'bear-bg-green-500/20 bear-text-green-400',
       warning: 'bear-bg-yellow-500/20 bear-text-yellow-400',

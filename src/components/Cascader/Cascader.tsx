@@ -198,7 +198,7 @@ export const Cascader: FC<CascaderProps> = ({
           'Bear-Cascader__trigger bear-w-full bear-flex bear-items-center bear-justify-between bear-rounded-lg bear-border bear-text-left bear-transition-colors',
           CASCADER_SIZE_CLASSES[size],
           CASCADER_VARIANT_CLASSES[variant],
-          error ? 'bear-border-red-500' : 'focus:bear-border-pink-500',
+          error ? 'bear-border-red-500' : 'focus:bear-border-primary-500',
           disabled && 'bear-opacity-50 bear-cursor-not-allowed',
           displayLabel ? 'bear-text-gray-900 dark:bear-text-white' : 'bear-text-gray-500 dark:bear-text-zinc-500'
         )}

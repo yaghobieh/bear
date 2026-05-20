@@ -71,7 +71,7 @@ export const ToolbarDropdown: FC<ToolbarDropdownProps> = (props) => {
                 'w-full px-3 py-2 text-left text-sm transition-colors',
                 'hover:bg-gray-100 dark:hover:bg-zinc-700',
                 option.value === value
-                  ? 'bg-pink-50 dark:bg-pink-900/20 text-pink-600 dark:text-pink-400'
+                  ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400'
                   : 'text-gray-700 dark:text-gray-300'
               )}
             >

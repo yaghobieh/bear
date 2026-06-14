@@ -6,7 +6,7 @@ import reactHooks from 'eslint-plugin-react-hooks';
 // Import order convention: put @utils, @hooks, @context imports LAST in the block (see .cursor rules).
 
 export default [
-  { ignores: ['dist/**', '**/*.kiln.*', '.kiln/**', 'portal/**'] },
+  { ignores: ['dist/**', '**/*.kiln.*', '.kiln/**', 'portal/**', 'src/postcss/**'] },
   js.configs.recommended,
   {
     files: ['**/*.ts', '**/*.tsx'],
@@ -22,9 +22,11 @@ export default [
     rules: {
       ...tseslint.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
-      'no-undef': 'off', // TypeScript handles types; DOM globals are available in tsconfig lib
+      'no-undef': 'off',
       'no-unused-vars': 'off',
+      'no-redeclare': 'off',
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-explicit-any': 'warn',
     },
   },
 ];

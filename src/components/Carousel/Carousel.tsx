@@ -206,8 +206,8 @@ export const Carousel: FC<CarouselProps> = ({
       style={style}
       onMouseEnter={() => pauseOnHover && setIsPaused(true)}
       onMouseLeave={() => {
-        pauseOnHover && setIsPaused(false);
-        mouseDown && setMouseDown(false);
+        if (pauseOnHover) setIsPaused(false);
+        if (mouseDown) setMouseDown(false);
       }}
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}

@@ -61,7 +61,7 @@ export const ColorSwatchGroup: FC<ColorSwatchGroupProps> = ({
   const handleClick = useCallback((color: string) => {
     if (multiple) {
       const next = new Set(selected);
-      next.has(color) ? next.delete(color) : next.add(color);
+      if (next.has(color)) { next.delete(color); } else { next.add(color); }
       onChange?.(Array.from(next));
     } else {
       onChange?.(color);

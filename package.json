@@ -55,10 +55,21 @@
     "build:modules": "cp -r src/styles dist/styles && cp -r src/postcss dist/postcss",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "test": "vitest",
+    "test:run": "vitest run",
     "portal": "cd portal && npm run dev",
     "portal:install": "cd portal && npm install",
     "portal:build": "cd portal && npm run build",
-    "prepublishOnly": "npm run build"
+    "sanity": "bash scripts/pre-commit.sh",
+    "prepublishOnly": "npm run build",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx}": [
+      "eslint --fix --max-warnings 0"
+    ],
+    "portal/src/**/*.{ts,tsx}": [
+      "eslint --fix --max-warnings 0"
+    ]
   },
   "peerDependencies": {
     "react": ">=18.0.0",
@@ -74,6 +85,8 @@
     "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^9.18.0",
     "eslint-plugin-react-hooks": "^5.1.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.7",
     "postcss": "^8.5.1",
     "postcss-cli": "^11.0.0",
     "postcss-import": "^16.1.1",

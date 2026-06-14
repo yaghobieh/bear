@@ -1,5 +1,5 @@
 import { FC, useRef, useState, useCallback, useEffect, useMemo } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { CropperProps, CropArea } from './Cropper.types';
 import {
   DEFAULT_CROP,
@@ -66,6 +66,7 @@ export const Cropper: FC<CropperProps> = ({
   style,
   testId,
 }) => {
+
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const imageRef = useRef<HTMLImageElement | null>(null);

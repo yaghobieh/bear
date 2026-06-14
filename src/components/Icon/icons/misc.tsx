@@ -418,3 +418,26 @@ export const RocketIcon: IconComponent = (props) => (
   </Icon>
 );
 
+export const ToggleButtonIcon: IconComponent = (props) => (
+  <Icon {...props}>
+    <rect x="3" y="7" width="18" height="10" rx="2" />
+    <rect x="5" y="9" width="7" height="6" rx="1" fill="currentColor" stroke="none" />
+  </Icon>
+);
+
+export const FormControlIcon: IconComponent = (props) => (
+  <Icon {...props}>
+    <rect x="4" y="4" width="16" height="16" rx="2" />
+    <line x1="8" y1="9" x2="16" y2="9" />
+    <rect x="8" y="12" width="8" height="5" rx="1" />
+  </Icon>
+);
+
+export const SnackbarIcon: IconComponent = (props) => (
+  <Icon {...props}>
+    <rect x="3" y="11" width="18" height="8" rx="2" />
+    <line x1="7" y1="15" x2="13" y2="15" />
+    <line x1="16" y1="15" x2="16.01" y2="15" />
+  </Icon>
+);
+

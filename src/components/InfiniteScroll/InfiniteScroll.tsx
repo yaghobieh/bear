@@ -1,5 +1,5 @@
 import { FC, useRef, useEffect, useCallback } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { InfiniteScrollProps } from './InfiniteScroll.types';
 import {
   DEFAULT_THRESHOLD,

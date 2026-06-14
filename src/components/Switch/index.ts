@@ -1,3 +1,4 @@
 export { Switch } from './Switch';
-export type { SwitchProps } from './Switch.types';
+export { SwitchGroup } from './SwitchGroup';
+export type { SwitchProps, SwitchGroupProps, SwitchGroupOption, SwitchOrientation } from './Switch.types';
 

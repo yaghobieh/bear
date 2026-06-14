@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { BearVariant } from '../../types';
 import type { FabProps } from './Fab.types';
 
@@ -55,10 +55,11 @@ export const Fab = forwardRef<HTMLButtonElement, FabProps>(({
   shadow = true,
   animated = true,
   className,
-  testId,
+      testId,
   style,
   ...props
 }, ref) => {
+
   return (
     <button
       ref={ref}
@@ -80,8 +81,7 @@ export const Fab = forwardRef<HTMLButtonElement, FabProps>(({
       style={{
         ...style,
         ...(color && { backgroundColor: color }),
-      }}
-      data-testid={testId}
+      }} data-testid={testId}
       {...props}
     >
       {children}

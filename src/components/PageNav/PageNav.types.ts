@@ -9,6 +9,7 @@ export interface PageNavItem {
 }
 
 export interface PageNavProps {
+  id?: string;
   prev?: PageNavItem | null;
   next?: PageNavItem | null;
   size?: BearSize;

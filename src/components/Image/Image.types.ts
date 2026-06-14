@@ -1,6 +1,8 @@
 import { ImgHTMLAttributes } from 'react';
 
 export interface ImageProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, 'onError' | 'onLoad'> {
+  testId?: string;
+  id?: string;
   src: string;
   alt: string;
   fallback?: string;

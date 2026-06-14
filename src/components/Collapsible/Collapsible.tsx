@@ -1,8 +1,9 @@
 import { FC, useState, useRef, useEffect } from 'react';
 import { CollapsibleProps } from './Collapsible.types';
-import { cn } from '@utils';
+import {cn } from '@utils';
 
 export const Collapsible: FC<CollapsibleProps> = ({
+
   children,
   trigger,
   open: controlledOpen,
@@ -14,6 +15,7 @@ export const Collapsible: FC<CollapsibleProps> = ({
   contentClassName,
   animationDuration = 200,
 }) => {
+
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
   const [height, setHeight] = useState<number | undefined>(defaultOpen ? undefined : 0);
   const contentRef = useRef<HTMLDivElement>(null);

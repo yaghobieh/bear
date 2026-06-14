@@ -23,6 +23,7 @@ const useEditableContext = () => {
 };
 
 const Root = forwardRef<HTMLDivElement, EditableRootProps>(({
+
   children,
   defaultValue = '',
   value: controlledValue,
@@ -35,6 +36,7 @@ const Root = forwardRef<HTMLDivElement, EditableRootProps>(({
   className = '',
   ...props
 }, ref) => {
+
   const [isEditing, setIsEditing] = useState(startWithEditView);
   const [internalValue, setInternalValue] = useState(defaultValue);
   const [previousValue, setPreviousValue] = useState(defaultValue);

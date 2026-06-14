@@ -1,6 +1,7 @@
 import type { ReactNode, HTMLAttributes } from 'react';
 
 export interface RadioCardProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
+  id?: string;
   value: string;
   checked?: boolean;
   onChange?: (value: string) => void;

@@ -1,6 +1,6 @@
 import { FC, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { CloseIcon } from '../Icon/icons/navigation';
 import type { ModalProps } from './Modal.types';
 import {
@@ -33,9 +33,12 @@ export const Modal: FC<ModalProps> = (props) => {
     size = 'md',
     showCloseButton = true,
     closeOnEscape = true,
+    disableEscapeKeyDown = false,
     lockBodyScroll = true,
     cancelPreventScroll = false,
     closeOnBackdrop = true,
+    hideBackdrop = false,
+    keepMounted = false,
     isCancelBackgroundClick,
     className,
     footer,
@@ -46,14 +49,15 @@ export const Modal: FC<ModalProps> = (props) => {
   const shouldLockBodyScroll = lockBodyScroll && !cancelPreventScroll;
   const closeBackdropClick =
     isCancelBackgroundClick !== undefined ? isCancelBackgroundClick : closeOnBackdrop;
+  const escapeEnabled = closeOnEscape && !disableEscapeKeyDown;
 
   const handleEscape = useCallback(
     (event: KeyboardEvent) => {
-      if (closeOnEscape && event.key === 'Escape') {
+      if (escapeEnabled && event.key === 'Escape') {
         onClose();
       }
     },
-    [closeOnEscape, onClose]
+    [escapeEnabled, onClose]
   );
 
   useEffect(() => {
@@ -68,19 +72,21 @@ export const Modal: FC<ModalProps> = (props) => {
     };
   }, [isOpen, handleEscape, shouldLockBodyScroll]);
 
-  if (!isOpen) return null;
+  if (!isOpen && !keepMounted) return null;
 
   const modalContent = (
     <div 
       className="Bear-Modal bear-fixed bear-inset-0 bear-z-[11000] bear-flex bear-items-center bear-justify-center bear-p-4"
-      id={id}
       data-testid={testId}
+      id={id}
     >
+      {!hideBackdrop && (
       <div
         className={cn('Bear-Modal__backdrop', MODAL_BACKDROP_CLASSES)}
         onClick={closeBackdropClick ? onClose : undefined}
         aria-hidden="true"
       />
+      )}
 
       <div
         role="dialog"

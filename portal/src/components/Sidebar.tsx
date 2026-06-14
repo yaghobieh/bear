@@ -1,45 +1,20 @@
 import { FC, useCallback, useState, useEffect, useMemo } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { NAVIGATION, VERSIONS, BEAR_VERSION, NavGroup, NavItem } from '@/constants/navigation.const';
+import { NAVIGATION, VERSIONS, BEAR_VERSION } from '@/constants/navigation.const';
 import { ICON_COUNT } from '@/constants/icons.const';
 import { useIsMobile, BearIcons } from '@forgedevstack/bear';
+import type { SidebarProps, NestedNavItemProps, CollapsibleGroupProps } from './Sidebar.types';
+import { GROUP_ICON_MAP } from './Sidebar.const';
+import { getNavLabel, getNavItemStorageKey, getGroupStorageKey } from './Sidebar.utils';
 
-interface SidebarProps {
-  isOpen?: boolean;
-  onClose?: () => void;
-  topOffset?: number;
-  hiddenDesktop?: boolean;
-}
-
-const GROUP_ICON_MAP: Record<string, FC<Omit<import('@forgedevstack/bear').IconProps, 'children'>>> = {
-  RocketIcon: BearIcons.RocketIcon,
-  LayersIcon: BearIcons.LayersIcon,
-  ZapIcon: BearIcons.ZapIcon,
-  BarChartIcon: BearIcons.BarChartIcon,
-  CodeIcon: BearIcons.CodeIcon,
-  PaletteIcon: BearIcons.PaletteIcon,
-  BookOpenIcon: BearIcons.BookOpenIcon,
-  AnchorIcon: BearIcons.AnchorIcon,
-  ShoppingBagIcon: BearIcons.ShoppingBagIcon,
-};
-
-interface NestedNavItemProps {
-  item: NavItem;
-  onItemClick?: () => void;
-  searchQuery?: string;
-}
-
-const NestedNavItem: FC<NestedNavItemProps> = ({
-  item,
-  onItemClick,
-  searchQuery = '',
-}) => {
+const NestedNavItem: FC<NestedNavItemProps> = (props) => {
+  const { item, onItemClick, searchQuery = '' } = props;
   const location = useLocation();
   const hasChildren = item.children && item.children.length > 0;
-  const storageKey = `bear-nav-${item.label.toLowerCase().replace(/\s+/g, '-')}`;
+  const storageKey = getNavItemStorageKey(item.label);
 
   const isActive = location.pathname === item.path;
-  const hasActiveChild = hasChildren && item.children?.some(child => location.pathname === child.path);
+  const hasActiveChild = hasChildren && item.children?.some((child) => location.pathname === child.path);
 
   const [isExpanded, setIsExpanded] = useState(() => {
     if (hasActiveChild) return true;
@@ -51,9 +26,7 @@ const NestedNavItem: FC<NestedNavItemProps> = ({
     if (!hasChildren) return [];
     if (!searchQuery) return item.children!;
     const query = searchQuery.toLowerCase();
-    return item.children!.filter(child =>
-      child.label.toLowerCase().includes(query)
-    );
+    return item.children!.filter((child) => child.label.toLowerCase().includes(query));
   }, [item.children, searchQuery, hasChildren]);
 
   useEffect(() => {
@@ -88,7 +61,7 @@ const NestedNavItem: FC<NestedNavItemProps> = ({
           <span className="flex items-center gap-2">
             {item.label}
             {item.badge && (
-              <span className={`text-[10px] font-semibold ${item.badge === 'New' || item.badge === 'Hot' ? 'text-pink-500' : 'text-gray-400'}`}>
+              <span className={`doc-nav-badge ${item.badge === 'New' || item.badge === 'Hot' ? 'doc-nav-badge--new' : ''}`}>
                 {item.badge === 'icons' ? ICON_COUNT : item.badge}
               </span>
             )}
@@ -106,17 +79,17 @@ const NestedNavItem: FC<NestedNavItemProps> = ({
                 <NavLink
                   to={child.path}
                   onClick={onItemClick}
-                  className={({ isActive }) =>
+                  className={({ isActive: active }) =>
                     `flex items-center justify-between pl-3 pr-2 py-1 text-[12px] transition-colors rounded-r-md
-                    ${isActive
+                    ${active
                       ? 'text-pink-600 dark:text-pink-400 font-medium border-l-2 border-pink-500 -ml-[1px] bg-pink-50/50 dark:bg-pink-900/10'
                       : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-pink-50/40 dark:hover:bg-pink-950/15'
                     }`
                   }
                 >
-                  <span>{child.label}</span>
+                  <span>{getNavLabel(child)}</span>
                   {child.badge && (
-                    <span className={`text-[9px] font-semibold ${child.badge === 'New' || child.badge === 'Hot' ? 'text-pink-500' : 'text-gray-400'}`}>
+                    <span className={`doc-nav-badge ${child.badge === 'New' || child.badge === 'Hot' ? 'doc-nav-badge--new' : ''}`}>
                       {child.badge}
                     </span>
                   )}
@@ -133,9 +106,9 @@ const NestedNavItem: FC<NestedNavItemProps> = ({
     <NavLink
       to={item.path}
       onClick={onItemClick}
-      className={({ isActive }) =>
+      className={({ isActive: active }) =>
         `flex items-center justify-between px-3 py-1.5 text-[13px] rounded-md mx-1 transition-colors
-        ${isActive
+        ${active
           ? 'bg-pink-50 text-pink-700 dark:bg-pink-900/20 dark:text-pink-400 font-medium'
           : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-pink-50/50 dark:hover:bg-pink-950/20'
         }`
@@ -143,7 +116,7 @@ const NestedNavItem: FC<NestedNavItemProps> = ({
     >
       <span>{item.label}</span>
       {item.badge && (
-        <span className={`text-[10px] font-semibold ${item.badge === 'New' || item.badge === 'Hot' ? 'text-pink-500' : 'text-gray-400'}`}>
+        <span className={`doc-nav-badge ${item.badge === 'New' || item.badge === 'Hot' ? 'doc-nav-badge--new' : ''}`}>
           {item.badge === 'icons' ? ICON_COUNT : item.badge}
         </span>
       )}
@@ -151,25 +124,14 @@ const NestedNavItem: FC<NestedNavItemProps> = ({
   );
 };
 
-interface CollapsibleGroupProps {
-  group: NavGroup;
-  onItemClick?: () => void;
-  defaultOpen?: boolean;
-  searchQuery?: string;
-}
-
-const CollapsibleGroup: FC<CollapsibleGroupProps> = ({
-  group,
-  onItemClick,
-  defaultOpen = false,
-  searchQuery = '',
-}) => {
+const CollapsibleGroup: FC<CollapsibleGroupProps> = (props) => {
+  const { group, onItemClick, defaultOpen = false, searchQuery = '' } = props;
   const location = useLocation();
-  const storageKey = `bear-sidebar-${group.title.toLowerCase().replace(/\s+/g, '-')}`;
+  const storageKey = getGroupStorageKey(group.title);
 
-  const hasActiveItem = group.items.some(item => {
+  const hasActiveItem = group.items.some((item) => {
     if (location.pathname === item.path) return true;
-    if (item.children?.some(child => location.pathname === child.path)) return true;
+    if (item.children?.some((child) => location.pathname === child.path)) return true;
     return false;
   });
 
@@ -182,9 +144,9 @@ const CollapsibleGroup: FC<CollapsibleGroupProps> = ({
   const filteredItems = useMemo(() => {
     if (!searchQuery) return group.items;
     const query = searchQuery.toLowerCase();
-    return group.items.filter(item => {
+    return group.items.filter((item) => {
       if (item.label.toLowerCase().includes(query)) return true;
-      if (item.children?.some(child => child.label.toLowerCase().includes(query))) return true;
+      if (item.children?.some((child) => child.label.toLowerCase().includes(query))) return true;
       return false;
     });
   }, [group.items, searchQuery]);
@@ -215,7 +177,6 @@ const CollapsibleGroup: FC<CollapsibleGroupProps> = ({
             : 'text-gray-500 dark:text-gray-500 hover:text-pink-600 dark:hover:text-pink-400'
           }`}
       >
-        {/* Bear icon for the group */}
         {GroupIcon && (
           <GroupIcon
             size={14}
@@ -246,13 +207,13 @@ const CollapsibleGroup: FC<CollapsibleGroupProps> = ({
         </ul>
       </div>
 
-      {/* Group divider */}
       <div className="mx-3 border-b border-gray-100 dark:border-gray-800/60" />
     </div>
   );
 };
 
-export const Sidebar: FC<SidebarProps> = ({ isOpen = true, onClose, topOffset = 104, hiddenDesktop = false }) => {
+export const Sidebar: FC<SidebarProps> = (props) => {
+  const { isOpen = true, onClose, topOffset = 104, hiddenDesktop = false } = props;
   const isMobile = useIsMobile();
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -263,7 +224,7 @@ export const Sidebar: FC<SidebarProps> = ({ isOpen = true, onClose, topOffset = 
   }, [isMobile, onClose]);
 
   return (
-    <>
+    <div>
       {isOpen && (
         <div
           className="fixed inset-0 bg-black/50 z-40 lg:hidden backdrop-blur-sm"
@@ -285,9 +246,7 @@ export const Sidebar: FC<SidebarProps> = ({ isOpen = true, onClose, topOffset = 
           height: `calc(100vh - ${topOffset}px)`,
         }}
       >
-        {/* Header */}
         <div className="p-3 space-y-2 border-b border-gray-100 dark:border-gray-800">
-          {/* Sidebar search */}
           <div className="relative">
             <BearIcons.SearchIcon
               size={14}
@@ -325,7 +284,6 @@ export const Sidebar: FC<SidebarProps> = ({ isOpen = true, onClose, topOffset = 
           </select>
         </div>
 
-        {/* Content */}
         <div className="flex-1 overflow-y-auto py-2 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700">
           <nav>
             {NAVIGATION.map((group) => (
@@ -342,7 +300,7 @@ export const Sidebar: FC<SidebarProps> = ({ isOpen = true, onClose, topOffset = 
       </aside>
 
       {!hiddenDesktop && <div className="hidden lg:block w-64 flex-shrink-0" />}
-    </>
+    </div>
   );
 };
 

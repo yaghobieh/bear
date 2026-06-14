@@ -24,6 +24,7 @@ export interface SpotlightAction {
 }
 
 export interface SpotlightProps {
+  id?: string;
   /** Available actions */
   actions: SpotlightAction[];
   /** Whether spotlight is open */

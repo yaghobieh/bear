@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
 
 export interface StatisticProps {
+  testId?: string;
+  id?: string;
   title: string;
   value: string | number;
   prefix?: ReactNode;

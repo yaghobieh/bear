@@ -1,6 +1,8 @@
 import { ReactNode, CSSProperties } from 'react';
 
 export interface ColumnsProps {
+  testId?: string;
+  id?: string;
   children: ReactNode;
   count?: 1 | 2 | 3 | 4 | 5 | 6 | 'auto';
   gap?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';

@@ -7,6 +7,7 @@ export interface RingProgressSection {
 }
 
 export interface RingProgressProps extends HTMLAttributes<HTMLDivElement> {
+  id?: string;
   sections: RingProgressSection[];
   size?: number;
   thickness?: number;

@@ -2,6 +2,42 @@
 
 All notable changes to Bear UI will be documented in this file.
 
+## [1.2.4] - 2026-06-14
+
+### Added
+
+- **Cursor skills** — `bear-ui-standards`, `bear-component-workflow`, `bear-js-fundamentals`, `bear-code-quality`, `bear-release-workflow` under `.cursor/skills/`
+- **`generateBearId` / `useBearId`** — `Bear_{component}_{suffix}` DOM id format (e.g. `Bear_button_482931`)
+- **`CssBaseline`** — global box-sizing and body reset from theme CSS variables
+- **`ToggleButton` / `ToggleButtonGroup`** — MUI-style exclusive/multi selection
+- **`FormControl`** — label, error, helper, disabled propagation via context
+- **`Snackbar`** — anchored message with action and auto-hide
+- **`TableSkeleton` / `FormSkeleton` / `CardSkeleton`** — loading placeholders
+- **Input `multiline`** — `rows`, `minRows`, `maxRows`, `readOnly`, `inputRef`, `inputProps`
+- **BearProvider** — `defaultProps`, `direction` (RTL), `density`, controlled `mode` + `onModeChange`
+- **`useBearDirection`**, **`useBearDensity`**, **`useBearDefaultProps`** hooks
+- **`docs/MUI_PARITY.md`** — Bear ↔ MUI prop mapping
+
+### Changed
+
+- **Button** — `disableRipple`, `href`, `component`, `disableElevation`; simplified ripple handlers
+- **Modal** — `disableEscapeKeyDown`, `hideBackdrop`, `keepMounted`
+- **Drawer** — `anchor` (alias `side`), `variant` (`temporary` | `persistent` | `permanent`)
+- **FormField** — integrates `FormControl` context; uses `useBearId`
+- **Checkbox / Radio** — `useBearId` for stable input ids
+- **Select** — `displayEmpty`, `renderValue`, `native` prop types
+- **Toast** — uses shared `generateBearId`
+- **All components** — `id?` and `testId?` on prop types; 72 new `*.const.ts` root-class files
+- **`useBearComponent`** — reads overrides from main `BearProvider` context
+
+### Migration
+
+- Prefer `useBearId('ComponentName')` + `resolveBearId(id, generated)` — never `id ?? useBearId()`
+- Wrap form fields in `FormControl` for shared label/error/disabled state
+- Set `BearProvider` `direction="rtl"` for RTL layouts
+
+---
+
 ## [1.2.3] - 2026-04-13
 
 ### Changed

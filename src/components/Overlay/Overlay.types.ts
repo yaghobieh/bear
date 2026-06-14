@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 
 export interface OverlayProps {
+  id?: string;
   /** Whether the overlay is visible */
   visible?: boolean;
   /** Overlay opacity (0–1) */

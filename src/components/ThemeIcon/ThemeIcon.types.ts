@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import type { BearVariant, BearSize } from '../../types';
 
 export interface ThemeIconProps {
+  id?: string;
   /** The icon element to render inside */
   children: ReactNode;
   /** Color variant */

@@ -1,6 +1,7 @@
 import type { ReactNode, HTMLAttributes } from 'react';
 
 export interface CheckboxCardProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
+  id?: string;
   checked?: boolean;
   onChange?: (checked: boolean) => void;
   value?: string;

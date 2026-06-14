@@ -1,22 +1,39 @@
 import { FC } from 'react';
-import { CodeBlock } from '@/components/CodeBlock';
+import { List, ListItem } from '@forgedevstack/bear';
+import { DocPage } from '@/components/DocPage';
 import { ComponentPreview } from '@/components/ComponentPreview';
+import { PropsTable } from '@/components/PropsTable';
+import { usePortalLanguage } from '@/hooks/usePortalLanguage';
+import { DOCS_TEXT } from '@/constants/docs-i18n.const';
+
+const LIST_PROPS = [
+  { name: 'variant', type: "'default' | 'bordered' | 'divided' | 'laminated'", default: 'default', description: 'List visual style' },
+  { name: 'size', type: 'BearSize', default: 'md', description: 'Typography size' },
+  { name: 'hoverable', type: 'boolean', default: 'false', description: 'Hover styles on items' },
+  { name: 'dense', type: 'boolean', default: 'false', description: 'Compact item spacing' },
+  { name: 'disablePadding', type: 'boolean', default: 'false', description: 'Remove vertical padding' },
+  { name: 'className', type: 'string', description: 'Additional root classes' },
+  { name: 'testId', type: 'string', description: 'data-testid on the list' },
+];
+
+const LIST_ITEM_PROPS = [
+  { name: 'primary', type: 'ReactNode', description: 'Primary text' },
+  { name: 'secondary', type: 'ReactNode', description: 'Secondary text' },
+  { name: 'leading', type: 'ReactNode', description: 'Leading icon or avatar' },
+  { name: 'trailing', type: 'ReactNode', description: 'Trailing action or badge' },
+  { name: 'clickable', type: 'boolean', description: 'Enable hover and pointer cursor' },
+  { name: 'selected', type: 'boolean', description: 'Selected state styling' },
+  { name: 'disabled', type: 'boolean', description: 'Disabled state' },
+];
 
 const ListPage: FC = () => {
+  const { language } = usePortalLanguage();
+  const t = DOCS_TEXT[language];
+
   return (
-    <div className="fade-in">
-      <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">List</h1>
-      <p className="text-gray-600 dark:text-gray-400 mb-8">
-        Lists are continuous, vertical indexes of text or images.
-      </p>
-
-      <section className="mb-12">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Import</h2>
-        <CodeBlock code={`import { List, ListItem, ListItemIcon } from '@forgedevstack/bear';`} language="tsx" showLineNumbers={false} />
-      </section>
-
+    <DocPage title="List" description={t.listDesc} componentName="List">
       <ComponentPreview
-        title="Basic Usage"
+        title={t.basic}
         description="Simple list with items."
         code={`<List>
   <ListItem primary="Inbox" secondary="You have 3 new messages" />
@@ -24,103 +41,55 @@ const ListPage: FC = () => {
   <ListItem primary="Sent" secondary="Last sent: 2 days ago" />
 </List>`}
       >
-        <div className="max-w-sm mx-auto bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow">
-          {[
-            { primary: 'Inbox', secondary: 'You have 3 new messages' },
-            { primary: 'Drafts', secondary: null },
-            { primary: 'Sent', secondary: 'Last sent: 2 days ago' },
-          ].map((item, i) => (
-            <div 
-              key={item.primary} 
-              className={`px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700/50 cursor-pointer ${i > 0 ? 'border-t border-gray-100 dark:border-gray-700' : ''}`}
-            >
-              <div className="text-gray-900 dark:text-white">{item.primary}</div>
-              {item.secondary && <div className="text-sm text-gray-500 dark:text-gray-400">{item.secondary}</div>}
-            </div>
-          ))}
+        <div className="max-w-sm mx-auto">
+          <List variant="divided">
+            <ListItem primary="Inbox" secondary="You have 3 new messages" clickable />
+            <ListItem primary="Drafts" clickable />
+            <ListItem primary="Sent" secondary="Last sent: 2 days ago" clickable />
+          </List>
         </div>
       </ComponentPreview>
 
       <ComponentPreview
-        title="With Icons"
-        description="List items with leading icons."
+        title={t.withIcons}
+        description="List items with leading content."
         code={`<List>
-  <ListItem icon={<InboxIcon />} primary="Inbox" />
-  <ListItem icon={<SendIcon />} primary="Sent" />
-  <ListItem icon={<SettingsIcon />} primary="Settings" />
+  <ListItem leading={<span>📥</span>} primary="Inbox" />
+  <ListItem leading={<span>📤</span>} primary="Sent" />
+  <ListItem leading={<span>⚙️</span>} primary="Settings" />
 </List>`}
       >
-        <div className="max-w-sm mx-auto bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow">
-          {[
-            { icon: '📥', label: 'Inbox' },
-            { icon: '📤', label: 'Sent' },
-            { icon: '⚙️', label: 'Settings' },
-          ].map((item, i) => (
-            <div 
-              key={item.label}
-              className={`px-4 py-3 flex items-center gap-3 hover:bg-gray-50 dark:hover:bg-gray-700/50 cursor-pointer ${i > 0 ? 'border-t border-gray-100 dark:border-gray-700' : ''}`}
-            >
-              <span className="text-xl">{item.icon}</span>
-              <span className="text-gray-900 dark:text-white">{item.label}</span>
-            </div>
-          ))}
+        <div className="max-w-sm mx-auto">
+          <List variant="divided">
+            <ListItem leading={<span>📥</span>} primary="Inbox" clickable />
+            <ListItem leading={<span>📤</span>} primary="Sent" clickable />
+            <ListItem leading={<span>⚙️</span>} primary="Settings" clickable />
+          </List>
         </div>
       </ComponentPreview>
 
       <ComponentPreview
-        title="Selectable"
-        description="List with selectable items."
-        code={`<List>
-  <ListItem 
-    primary="Item 1" 
-    selected={selected === 'item1'}
-    onClick={() => setSelected('item1')}
-  />
-  <ListItem 
-    primary="Item 2"
-    selected={selected === 'item2'}
-    onClick={() => setSelected('item2')}
-  />
+        title={t.laminated}
+        description="Card-style list items with shadow and spacing."
+        code={`<List variant="laminated">
+  <ListItem primary="Inbox" secondary="3 new messages" />
+  <ListItem primary="Drafts" />
+  <ListItem primary="Sent" secondary="Last sent yesterday" />
 </List>`}
       >
-        <div className="max-w-sm mx-auto bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow">
-          <div className="px-4 py-3 bg-bear-500/10 border-l-4 border-bear-500 text-bear-600 dark:text-bear-400 cursor-pointer">
-            Selected Item
-          </div>
-          <div className="px-4 py-3 border-t border-gray-100 dark:border-gray-700 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700/50 cursor-pointer">
-            Other Item
-          </div>
-          <div className="px-4 py-3 border-t border-gray-100 dark:border-gray-700 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700/50 cursor-pointer">
-            Another Item
-          </div>
+        <div className="max-w-sm mx-auto">
+          <List variant="laminated">
+            <ListItem primary="Inbox" secondary="3 new messages" clickable />
+            <ListItem primary="Drafts" clickable />
+            <ListItem primary="Sent" secondary="Last sent yesterday" clickable />
+          </List>
         </div>
       </ComponentPreview>
 
-      <section className="mb-12">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Props</h2>
-        <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-3">ListItem</h3>
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
-            <thead className="bg-gray-50 dark:bg-gray-800">
-              <tr>
-                <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Prop</th>
-                <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Type</th>
-                <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Description</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-              <tr><td className="px-4 py-3 font-mono text-bear-600">primary</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Primary text</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">secondary</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Secondary text</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">icon</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Leading icon</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">selected</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Selected state</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">disabled</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Disabled state</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-    </div>
+      <PropsTable title={`List ${t.props}`} rows={LIST_PROPS} />
+      <PropsTable title={`ListItem ${t.props}`} rows={LIST_ITEM_PROPS} />
+    </DocPage>
   );
 };
 
 export default ListPage;
-

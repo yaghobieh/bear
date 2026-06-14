@@ -6,6 +6,7 @@ export interface AutocompleteOption {
 }
 
 export interface AutocompleteProps {
+  id?: string;
   /** Available options */
   options: AutocompleteOption[];
   /** Current value */

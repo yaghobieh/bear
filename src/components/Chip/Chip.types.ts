@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
 
 export interface ChipProps {
+  testId?: string;
+  id?: string;
   children: ReactNode;
   variant?: 'filled' | 'outlined' | 'soft';
   color?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';

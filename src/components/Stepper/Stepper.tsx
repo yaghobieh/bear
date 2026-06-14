@@ -1,7 +1,7 @@
 import React, { forwardRef, useEffect, useMemo, useState } from 'react';
 import { useBearThemeOptional } from '../../context/BearProvider';
 import { resolveMaxVisible } from '../../utils/maxVisible.utils';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Typography } from '../Typography';
 import { Dropdown } from '../Dropdown';
 import { BearIcons } from '../Icon';
@@ -79,6 +79,7 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(
     },
     ref
   ) => {
+
     const theme = useBearThemeOptional();
     const [vw, setVw] = useState(() => (typeof window !== 'undefined' ? window.innerWidth : DEFAULT_VIEWPORT_WIDTH));
     useEffect(() => {
@@ -266,8 +267,7 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(
     return (
       <div
         ref={ref}
-        className={cn(STEPPER_BASE_CLASSES, isHorizontal ? STEPPER_HORIZONTAL_CLASSES : STEPPER_VERTICAL_CLASSES, className)}
-        data-testid={testId}
+        className={cn(STEPPER_BASE_CLASSES, isHorizontal ? STEPPER_HORIZONTAL_CLASSES : STEPPER_VERTICAL_CLASSES, className)} data-testid={testId}
         {...props}
       >
         {isHorizontal && !useWindow &&

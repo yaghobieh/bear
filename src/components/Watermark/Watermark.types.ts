@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 
 export interface WatermarkProps {
+  id?: string;
   /** Content to display watermark over */
   children?: ReactNode;
   /** Watermark text (string or array for multi-line) */

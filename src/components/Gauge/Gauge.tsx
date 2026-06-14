@@ -1,117 +1,85 @@
-import { FC, useMemo, useId, useState, useLayoutEffect } from 'react';
-import { cn } from '@utils';
-import { GaugeProps } from './Gauge.types';
+import { FC } from 'react';
+import { cn, useBearId } from '@utils';
+import { Typography } from '../Typography';
+import { Flex } from '../Flex';
+import type { GaugeProps } from './Gauge.types';
+import {
+  GAUGE_DEFAULT_ARC_ANGLE,
+  GAUGE_DEFAULT_COLOR,
+  GAUGE_DEFAULT_FILL_DURATION_MS,
+  GAUGE_DEFAULT_MAX,
+  GAUGE_DEFAULT_MIN,
+  GAUGE_DEFAULT_SIZE,
+  GAUGE_DEFAULT_STROKE_WIDTH,
+} from './Gauge.const';
+import { useGauge } from './hooks/useGauge';
+import { GaugeArcSvg } from './helpers/GaugeArcSvg';
 
-export const Gauge: FC<GaugeProps> = ({
-  value,
-  min = 0,
-  max = 100,
-  size = 120,
-  strokeWidth = 10,
-  color = 'var(--bear-primary-500, #ec4899)',
-  trackColor,
-  showLabel = true,
-  label,
-  animated = true,
-  fillDurationMs = 900,
-  arcAngle = 270,
-  gradient,
-  className,
-  ...props
-}) => {
-  const gradientId = useId();
+export const Gauge: FC<GaugeProps> = (props) => {
+  const {
+    value,
+    min = GAUGE_DEFAULT_MIN,
+    max = GAUGE_DEFAULT_MAX,
+    size = GAUGE_DEFAULT_SIZE,
+    strokeWidth = GAUGE_DEFAULT_STROKE_WIDTH,
+    color = GAUGE_DEFAULT_COLOR,
+    trackColor,
+    showLabel = true,
+    label,
+    animated = true,
+    fillDurationMs = GAUGE_DEFAULT_FILL_DURATION_MS,
+    arcAngle = GAUGE_DEFAULT_ARC_ANGLE,
+    gradient,
+    className,
+    ...rest
+  } = props;
 
-  const { percentage, circumference, offset, startAngle } = useMemo(() => {
-    const pct = Math.min(Math.max(((value - min) / (max - min)) * 100, 0), 100);
-    const radius = 50 - strokeWidth / 2;
-    const circ = 2 * Math.PI * radius * (arcAngle / 360);
-    const off = circ - (pct / 100) * circ;
-    const start = 90 + (360 - arcAngle) / 2;
-
-    return {
-      percentage: pct,
-      circumference: circ,
-      offset: off,
-      startAngle: start,
-    };
-  }, [value, min, max, arcAngle, strokeWidth]);
-
-  const [dashOffset, setDashOffset] = useState(() => (animated ? circumference : offset));
-
-  useLayoutEffect(() => {
-    if (!animated) {
-      setDashOffset(offset);
-      return;
-    }
-    setDashOffset(circumference);
-    const id = requestAnimationFrame(() => setDashOffset(offset));
-    return () => cancelAnimationFrame(id);
-  }, [animated, circumference, offset]);
-
-  const radius = 50 - strokeWidth / 2;
+  const gradientId = useBearId('Gauge', 'gradient');
+  const gauge = useGauge({
+    value,
+    min,
+    max,
+    strokeWidth,
+    arcAngle,
+    animated,
+    fillDurationMs,
+  });
 
   return (
-    <div
-      className={cn('relative inline-flex items-center justify-center', className)}
+    <Flex
+      align="center"
+      justify="center"
+      className={cn('bear-relative bear-inline-flex', className)}
       style={{ width: size, height: size }}
-      {...props}
+      {...rest}
     >
-      <svg viewBox="0 0 100 100" className="h-full w-full -rotate-90">
-        <defs>
-          {gradient && (
-            <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor={gradient[0]} />
-              <stop offset="100%" stopColor={gradient[1]} />
-            </linearGradient>
-          )}
-        </defs>
-
-        <circle
-          cx="50"
-          cy="50"
-          r={radius}
-          fill="none"
-          stroke={trackColor || 'currentColor'}
-          strokeWidth={strokeWidth}
-          strokeLinecap="round"
-          strokeDasharray={circumference}
-          strokeDashoffset={0}
-          className={cn('text-gray-200 dark:text-slate-700')}
-          style={{
-            transformOrigin: 'center',
-            transform: `rotate(${startAngle}deg)`,
-          }}
-        />
-
-        <circle
-          cx="50"
-          cy="50"
-          r={radius}
-          fill="none"
-          stroke={gradient ? `url(#${gradientId})` : color}
-          strokeWidth={strokeWidth}
-          strokeLinecap="round"
-          strokeDasharray={circumference}
-          strokeDashoffset={dashOffset}
-          style={{
-            transformOrigin: 'center',
-            transform: `rotate(${startAngle}deg)`,
-            transitionProperty: animated ? 'stroke-dashoffset' : undefined,
-            transitionDuration: animated ? `${fillDurationMs}ms` : undefined,
-            transitionTimingFunction: animated ? 'cubic-bezier(0.4, 0, 0.2, 1)' : undefined,
-          }}
-        />
-      </svg>
+      <GaugeArcSvg
+        radius={gauge.radius}
+        strokeWidth={strokeWidth}
+        circumference={gauge.circumference}
+        dashOffset={gauge.dashOffset}
+        startAngle={gauge.startAngle}
+        color={color}
+        trackColor={trackColor}
+        gradientId={gradient ? gradientId : undefined}
+        gradient={gradient}
+        animated={gauge.animated}
+        fillDurationMs={gauge.fillDurationMs}
+      />
 
       {showLabel && (
-        <div className="absolute inset-0 flex items-center justify-center">
+        <Flex
+          align="center"
+          justify="center"
+          className="bear-absolute bear-inset-0"
+        >
           {label || (
-            <span className="text-2xl font-semibold text-gray-800 dark:text-white">
-              {Math.round(percentage)}%
-            </span>
+            <Typography variant="h4" className="bear-text-[var(--bear-text-primary)]">
+              {Math.round(gauge.percentage)}%
+            </Typography>
           )}
-        </div>
+        </Flex>
       )}
-    </div>
+    </Flex>
   );
 };

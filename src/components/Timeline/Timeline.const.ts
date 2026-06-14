@@ -74,3 +74,29 @@ export const TIMELINE_DESC_SIZES: Record<TimelineSize, string> = {
 // Time label classes
 export const TIMELINE_TIME_CLASSES = 'text-xs text-gray-500 dark:text-gray-400';
 
+export const TIMELINE_DOT_TOP_WITH_ICON_PX = 2;
+export const TIMELINE_DOT_TOP_DEFAULT_PX = 6;
+export const TIMELINE_DOT_OFFSET_WITH_ICON_PX = -4;
+export const TIMELINE_DOT_OFFSET_DEFAULT_PX = 0;
+
+export const TIMELINE_DOT_ICON_EXTRA = 'bear-flex bear-items-center bear-justify-center bear-text-white';
+export const TIMELINE_DOT_ACTIVE_RING = 'bear-ring-4 bear-ring-primary-500/30';
+export const TIMELINE_DOT_INTERACTIVE = 'bear-cursor-pointer';
+export const TIMELINE_DOT_HOVER_SCALE = 'hover:bear-scale-125 bear-transition-transform';
+export const TIMELINE_DOT_ACTIVE_SCALE = 'bear-scale-125';
+
+export const TIMELINE_HOVER_CARD_CONTENT = 'bear-text-sm bear-space-y-1';
+export const TIMELINE_HOVER_CARD_DATE = 'bear-font-semibold bear-text-gray-900 dark:bear-text-white';
+
+export const TIMELINE_ALTERNATE_EVEN_WRAPPER = 'bear-pr-8 bear-text-right bear-w-1/2';
+export const TIMELINE_ALTERNATE_ODD_WRAPPER = 'bear-pl-8 bear-text-left bear-w-1/2 bear-ml-auto';
+export const TIMELINE_ALTERNATE_EVEN_CONTENT = 'bear-text-right';
+export const TIMELINE_ALTERNATE_ODD_CONTENT = 'bear-text-left';
+
+export const TIMELINE_TITLE_BASE = 'Bear-Timeline__title bear-font-medium bear-text-gray-900 dark:bear-text-white';
+export const TIMELINE_TITLE_ACTIVE = 'bear-text-primary-600 dark:bear-text-primary-400';
+export const TIMELINE_DESC_BASE = 'Bear-Timeline__description bear-text-gray-600 dark:bear-text-gray-400 bear-mt-1';
+export const TIMELINE_EXTRA_CLASSES = 'Bear-Timeline__extra bear-mt-3';
+export const TIMELINE_TIME_MARGIN = 'bear-mb-1';
+export const TIMELINE_PENDING_TITLE = 'Loading...';
+

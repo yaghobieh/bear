@@ -1,5 +1,5 @@
 import { FC, useRef, useState, useCallback } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { ResizableTextareaProps } from './ResizableTextarea.types';
 import { DEFAULT_MIN_HEIGHT, DEFAULT_MAX_HEIGHT } from './ResizableTextarea.const';
 
@@ -14,9 +14,10 @@ export const ResizableTextarea: FC<ResizableTextareaProps> = ({
   charCountMax,
   className,
   style,
-  testId,
+      testId,
   ...textareaProps
 }) => {
+
   const hasError = Boolean(error);
   const charMax = charCountMax ?? textareaProps.maxLength;
   const currentLen = typeof textareaProps.value === 'string'

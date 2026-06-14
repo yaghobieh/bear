@@ -1,12 +1,14 @@
-import { FC, forwardRef, useState, useCallback, useId, useContext } from 'react';
-import { cn } from '@utils';
+import { FC, forwardRef, useState, useCallback, useContext } from 'react';
+import { cn, resolveBearId, useBearId } from '@utils';
 import { FORMFIELD_SIZE_CLASSES } from './FormField.const';
 import type { FormFieldProps } from './FormField.types';
 import { BearContext } from '../../context/BearProvider';
+import { useFormControl } from '@hooks/useFormControl';
 
 export const FormField: FC<FormFieldProps> = forwardRef<HTMLInputElement, FormFieldProps>(
   (
     {
+
       label,
       helperText,
       error,
@@ -28,6 +30,7 @@ export const FormField: FC<FormFieldProps> = forwardRef<HTMLInputElement, FormFi
     },
     ref
   ) => {
+    const formControl = useFormControl();
     const isFilled = variant === 'filled';
     const isStandard = variant === 'standard';
 
@@ -45,13 +48,17 @@ export const FormField: FC<FormFieldProps> = forwardRef<HTMLInputElement, FormFi
         : componentStyles?.outlined;
 
     const [focused, setFocused] = useState(false);
-    const id = useId();
-    const fieldId = props.id ?? id;
+    const generatedId = useBearId('FormField');
+    const domId = resolveBearId(props.id, generatedId);
+    const fieldId = domId;
+    const mergedDisabled = disabled ?? formControl?.disabled;
+    const mergedRequired = required ?? formControl?.required;
+    const mergedError = Boolean(error) || formControl?.error;
 
     const hasValue = (value != null && value !== '') || (defaultValue != null && defaultValue !== '');
     // Match TextField behavior: label starts inside and floats only on focus/value
     const isFloating = focused || hasValue;
-    const hasError = Boolean(error);
+    const hasError = mergedError;
     const hasSuccess = Boolean(success) && !hasError;
     const sizeConfig = FORMFIELD_SIZE_CLASSES[size];
     const feedbackMessage = error || success || helperText;
@@ -84,7 +91,7 @@ export const FormField: FC<FormFieldProps> = forwardRef<HTMLInputElement, FormFi
           <input
             ref={ref}
             id={fieldId}
-            disabled={disabled}
+            disabled={mergedDisabled}
             value={value}
             defaultValue={defaultValue}
             placeholder={isFloating ? placeholder : undefined}
@@ -171,7 +178,7 @@ export const FormField: FC<FormFieldProps> = forwardRef<HTMLInputElement, FormFi
             style={labelStyle}
           >
             {label}
-            {required && <span className="bear-text-red-500 bear-ml-0.5">*</span>}
+            {mergedRequired && <span className="bear-text-red-500 bear-ml-0.5">*</span>}
           </label>
 
           {rightAddon && (

@@ -17,8 +17,9 @@ export const FileTree: FC<FileTreeProps> = ({
   size = 'md',
   showLines = false,
   className,
-  testId,
+      testId,
 }) => {
+
   const treeData = useMemo(() => items.map((n) => fileNodeToTreeNode(n, 0, FileIcon)), [items]);
 
   return (

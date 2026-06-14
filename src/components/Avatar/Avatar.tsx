@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { AvatarProps, AvatarGroupProps } from './Avatar.types';
 import { AVATAR_SIZE, AVATAR_VARIANT, AVATAR_STATUS, AVATAR_DEFAULTS } from './Avatar.const';
 

@@ -3,6 +3,7 @@ import type { HTMLAttributes, ReactNode } from 'react';
 export type GlowEffect = 'ambient' | 'border' | 'spotlight' | 'pulse' | 'wave';
 
 export interface GlowCardProps extends HTMLAttributes<HTMLDivElement> {
+  id?: string;
   children?: ReactNode;
   /** Glow color (CSS color value) */
   glowColor?: string;

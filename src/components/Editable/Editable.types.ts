@@ -11,6 +11,8 @@ export interface EditableContextValue {
 }
 
 export interface EditableRootProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'onSubmit'> {
+  testId?: string;
+  id?: string;
   children?: ReactNode;
   defaultValue?: string;
   value?: string;

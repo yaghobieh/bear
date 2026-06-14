@@ -10,6 +10,7 @@ export interface TimelineChartItem {
 }
 
 export interface TimelineChartProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
+  id?: string;
   /** Items to display on the timeline */
   items: TimelineChartItem[];
   /** Minimum value of the axis */

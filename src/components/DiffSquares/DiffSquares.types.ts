@@ -12,6 +12,7 @@ export interface DiffCube {
 }
 
 export interface DiffSquaresProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
+  id?: string;
   additionsText?: ReactNode;
   deletionsText?: ReactNode;
   cubeCount?: number;

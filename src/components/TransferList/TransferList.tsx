@@ -1,5 +1,5 @@
 import { FC, useState, useCallback, useMemo } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Button } from '../Button';
 import { Input } from '../Input';
 import { Checkbox } from '../Checkbox';
@@ -49,6 +49,7 @@ const DoubleChevronLeftIcon = () => (
  * ```
  */
 export const TransferList: FC<TransferListProps> = ({
+
   leftItems,
   rightItems,
   leftTitle = 'Available',
@@ -67,6 +68,7 @@ export const TransferList: FC<TransferListProps> = ({
   testId,
   ...props
 }) => {
+
   const [leftChecked, setLeftChecked] = useState<Set<string | number>>(new Set());
   const [rightChecked, setRightChecked] = useState<Set<string | number>>(new Set());
   const [leftSearch, setLeftSearch] = useState('');
@@ -252,8 +254,7 @@ export const TransferList: FC<TransferListProps> = ({
         'bear-flex bear-items-stretch bear-gap-4',
         disabled && 'bear-opacity-60 bear-pointer-events-none',
         className
-      )}
-      data-testid={testId}
+      )} data-testid={testId}
       {...props}
     >
       {renderPanel(

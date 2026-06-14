@@ -1,6 +1,6 @@
 import { FC, useState, useRef, useEffect, useMemo, useCallback, ChangeEvent } from 'react';
 import { createPortal } from 'react-dom';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { PhoneInputProps, CountryData } from './PhoneInput.types';
 import {
   PHONE_INPUT_DEFAULT_TRANSLATIONS,
@@ -51,10 +51,11 @@ export const PhoneInput: FC<PhoneInputProps> = ({
   showFlags = true,
   showDialCode = true,
   className,
-  testId,
+      testId,
   translations,
   icon,
 }) => {
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [inputValue, setInputValue] = useState('');
@@ -168,8 +169,7 @@ export const PhoneInput: FC<PhoneInputProps> = ({
   return (
     <div
       ref={containerRef}
-      className={cn('Bear-PhoneInput bear-relative', className)}
-      data-testid={testId}
+      className={cn('Bear-PhoneInput bear-relative', className)} data-testid={testId}
     >
       {label && (
         <label className="Bear-PhoneInput__label bear-block bear-text-sm bear-font-medium bear-text-zinc-700 dark:bear-text-zinc-300 bear-mb-1.5">

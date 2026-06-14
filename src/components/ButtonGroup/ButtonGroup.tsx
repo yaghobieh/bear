@@ -1,5 +1,5 @@
 import { FC, Children, cloneElement, isValidElement } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { ButtonGroupProps } from './ButtonGroup.types';
 
 /**
@@ -15,6 +15,7 @@ import type { ButtonGroupProps } from './ButtonGroup.types';
  * ```
  */
 export const ButtonGroup: FC<ButtonGroupProps> = ({
+
   children,
   size = 'md',
   variant = 'primary',
@@ -25,6 +26,7 @@ export const ButtonGroup: FC<ButtonGroupProps> = ({
   testId,
   ...props
 }) => {
+
   const isHorizontal = orientation === 'horizontal';
 
   const childArray = Children.toArray(children);

@@ -1,6 +1,6 @@
 import { FC, useRef, useState, useCallback } from 'react';
 import { FileUploadProps, UploadedFile } from './FileUpload.types';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { formatSize } from './FileUpload.utils';
 
 const UploadIcon: FC<{ className?: string }> = ({ className }) => (
@@ -16,6 +16,7 @@ const FileIcon: FC<{ className?: string }> = ({ className }) => (
 );
 
 export const FileUpload: FC<FileUploadProps> = ({
+
   onFilesSelect,
   onFileRemove,
   accept,
@@ -32,6 +33,7 @@ export const FileUpload: FC<FileUploadProps> = ({
   icon,
   className,
 }) => {
+
   const inputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState(false);
 

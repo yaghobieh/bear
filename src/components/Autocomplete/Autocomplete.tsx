@@ -1,5 +1,5 @@
 import { FC, useState, useRef, useEffect, KeyboardEvent, ChangeEvent } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Portal } from '../Portal';
 import type { AutocompleteOption, AutocompleteProps } from './Autocomplete.types';
 import { defaultFilter } from './Autocomplete.utils';
@@ -20,6 +20,7 @@ import { AUTOCOMPLETE_PANEL_Z } from './Autocomplete.const';
  * ```
  */
 export const Autocomplete: FC<AutocompleteProps> = ({
+
   options,
   value = '',
   onChange,
@@ -35,6 +36,7 @@ export const Autocomplete: FC<AutocompleteProps> = ({
   className,
   testId,
 }) => {
+
   const [isOpen, setIsOpen] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0, width: 0 });

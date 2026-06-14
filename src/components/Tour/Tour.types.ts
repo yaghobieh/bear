@@ -40,6 +40,7 @@ export type TourPlacement =
   | 'right-end';
 
 export interface TourProps {
+  id?: string;
   /** Array of tour steps */
   steps: TourStep[];
   /** Whether tour is open */

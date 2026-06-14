@@ -1,5 +1,5 @@
 import { FC, useState, useCallback, useEffect, ReactNode } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Input } from '../Input';
 import { VisibilityIcon, VisibilityOffIcon } from '../Icon/icons/action';
 import type { PasswordInputProps } from './PasswordInput.types';
@@ -12,6 +12,7 @@ const SHIFT_INDICATOR_CLASSES = cn(
 );
 
 export const PasswordInput: FC<PasswordInputProps> = ({
+
   visible: controlledVisible,
   onVisibilityChange,
   hideToggle = false,
@@ -21,6 +22,7 @@ export const PasswordInput: FC<PasswordInputProps> = ({
   hiddenIcon,
   ...inputProps
 }) => {
+
   const [internalVisible, setInternalVisible] = useState(false);
   const [capsLockOn, setCapsLockOn] = useState(false);
 

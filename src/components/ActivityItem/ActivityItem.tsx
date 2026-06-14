@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { ActivityItemProps } from './ActivityItem.types';
 
 /**
@@ -7,6 +7,7 @@ import { ActivityItemProps } from './ActivityItem.types';
  * A single activity/event item for activity feeds
  */
 export const ActivityItem: FC<ActivityItemProps> = ({
+
   icon,
   iconBg = 'rgba(16, 185, 129, 0.2)',
   title,
@@ -17,6 +18,7 @@ export const ActivityItem: FC<ActivityItemProps> = ({
   className,
   ...props
 }) => {
+
   return (
     <div
       className={cn(

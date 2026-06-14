@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { BearSize } from '../../types';
 import type { IconProps } from './Icon.types';
 
@@ -32,9 +32,10 @@ export const Icon: FC<IconProps> = ({
   spin = false,
   className,
   children,
-  testId,
+      testId,
   ...props
 }) => {
+
   const sizeValue = typeof size === 'number' ? size : sizeMap[size];
 
   return (
@@ -51,8 +52,7 @@ export const Icon: FC<IconProps> = ({
         'bear-inline-block bear-shrink-0',
         spin && 'bear-animate-spin',
         className
-      )}
-      data-testid={testId}
+      )} data-testid={testId}
       {...props}
     >
       {children}

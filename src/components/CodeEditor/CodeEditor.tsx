@@ -1,5 +1,5 @@
 import { FC, useRef, useState, useCallback, useMemo, KeyboardEvent, ChangeEvent } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { CodeEditorProps } from './CodeEditor.types';
 import {
   DEFAULT_FONT_SIZE,
@@ -33,6 +33,7 @@ import { tokenizeLine } from './CodeEditor.utils';
  * ```
  */
 export const CodeEditor: FC<CodeEditorProps> = ({
+
   value,
   onChange,
   language = 'typescript',
@@ -58,6 +59,7 @@ export const CodeEditor: FC<CodeEditorProps> = ({
   onFocus,
   onBlur,
 }) => {
+
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [isFocused, setIsFocused] = useState(false);
   const [activeLine, setActiveLine] = useState(0);

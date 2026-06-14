@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Typography } from '../Typography';
 import type { RingProgressProps } from './RingProgress.types';
 import {
@@ -17,9 +17,10 @@ export const RingProgress: FC<RingProgressProps> = ({
   label,
   rootColor,
   className,
-  testId,
+      testId,
   ...rest
 }) => {
+
   const total = sections.reduce((sum, s) => sum + s.value, 0);
 
   const radius = (size - thickness) / 2;
@@ -31,8 +32,7 @@ export const RingProgress: FC<RingProgressProps> = ({
 
   return (
     <div
-      className={cn(ROOT_CLASS, className)}
-      data-testid={testId}
+      className={cn(ROOT_CLASS, className)} data-testid={testId}
       {...rest}
     >
       <svg width={size} height={size} className="bear-rotate-[-90deg]">

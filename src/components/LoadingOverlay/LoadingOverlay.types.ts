@@ -1,6 +1,7 @@
 import type { ReactNode, HTMLAttributes } from 'react';
 
 export interface LoadingOverlayProps extends HTMLAttributes<HTMLDivElement> {
+  id?: string;
   visible: boolean;
   loader?: ReactNode;
   overlayOpacity?: number;

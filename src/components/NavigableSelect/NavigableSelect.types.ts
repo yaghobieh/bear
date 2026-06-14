@@ -18,6 +18,7 @@ export interface NavigableSelectOption {
 }
 
 export interface NavigableSelectProps {
+  id?: string;
   /** Available options */
   options: NavigableSelectOption[];
   /** Selected value(s) — string for single, string[] for multiple */

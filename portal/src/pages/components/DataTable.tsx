@@ -1,26 +1,52 @@
-import { FC } from 'react';
-import { CodeBlock } from '@/components/CodeBlock';
+import { FC, useState } from 'react';
 import { ComponentPreview } from '@/components/ComponentPreview';
+import { DocPage } from '@/components/DocPage';
+import { PropsTable } from '@/components/PropsTable';
 import { LinesOfCode } from '@/components/LinesOfCode';
-import { BearIcons, Alert, Card } from '@forgedevstack/bear';
+import { BearIcons, Alert, Card, Checkbox } from '@forgedevstack/bear';
+import { usePortalLanguage } from '@/hooks/usePortalLanguage';
+import { DOCS_TEXT } from '@/constants/docs-i18n.const';
+
+const DATA_TABLE_PROPS = [
+  { name: 'data', type: 'T[]', description: 'Table row data' },
+  { name: 'columns', type: 'DataTableColumn<T>[]', description: 'Column definitions with header, accessor, and cell' },
+  { name: 'rowKey', type: '(row, index) => string | number', description: 'Unique key per row' },
+  { name: 'variant', type: "'simple' | 'striped' | 'bordered'", default: 'simple', description: 'Table visual style' },
+  { name: 'loading', type: 'boolean', default: 'false', description: 'Show loading overlay' },
+  { name: 'emptyContent', type: 'ReactNode', description: 'Content when data is empty' },
+  { name: 'onRowClick', type: '(row, index) => void', description: 'Row click handler' },
+  { name: 'clickable', type: 'boolean', description: 'Pointer cursor on rows' },
+  { name: 'sortColumn', type: 'string', description: 'Active sort column key' },
+  { name: 'sortDirection', type: "'asc' | 'desc'", description: 'Sort direction' },
+  { name: 'onSort', type: '(column: string) => void', description: 'Sort change handler' },
+  { name: 'compact', type: 'boolean', description: 'Reduced row padding' },
+  { name: 'stickyHeader', type: 'boolean', description: 'Pin header while scrolling' },
+  { name: 'maxHeight', type: 'string | number', description: 'Scrollable body max height' },
+];
 
 const DataTablePage: FC = () => {
+  const { language } = usePortalLanguage();
+  const t = DOCS_TEXT[language];
   const sampleData = [
     { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Admin' },
     { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'User' },
     { id: 3, name: 'Bob Wilson', email: 'bob@example.com', role: 'Editor' },
   ];
+  const [selected, setSelected] = useState<number[]>([1]);
+
+  const toggleRow = (id: number) => {
+    setSelected((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
+  };
+
+  const allSelected = selected.length === sampleData.length;
 
   return (
-    <div className="fade-in">
-      <div className="flex items-center gap-3 mb-4">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">DataTable</h1>
-        <LinesOfCode lines={280} />
-      </div>
-      <p className="text-gray-600 dark:text-gray-400 mb-6">
-        Feature-rich data table with sorting, filtering, pagination, and more.
-      </p>
-
+    <DocPage
+      title="DataTable"
+      description={t.dataTableDesc}
+      componentName="DataTable"
+      icon={<LinesOfCode lines={280} />}
+    >
       {/* Grid Table Reference Card */}
       <Card className="mb-8 p-4 bg-gradient-to-r from-pink-50 to-purple-50 dark:from-pink-900/20 dark:to-purple-900/20 border-pink-200 dark:border-pink-800">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -58,11 +84,6 @@ const DataTablePage: FC = () => {
           </div>
         </div>
       </Card>
-
-      <section className="mb-12">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Import</h2>
-        <CodeBlock code={`import { DataTable } from '@forgedevstack/bear';`} language="tsx" showLineNumbers={false} />
-      </section>
 
       <ComponentPreview
         title="Basic Table"
@@ -199,7 +220,12 @@ const DataTablePage: FC = () => {
             <thead className="bg-gray-50 dark:bg-gray-800">
               <tr>
                 <th className="px-4 py-3 w-12">
-                  <input type="checkbox" className="rounded border-gray-300 dark:border-gray-600 text-bear-500 focus:ring-bear-500" />
+                  <Checkbox
+                    size="sm"
+                    checked={allSelected}
+                    indeterminate={selected.length > 0 && !allSelected}
+                    onChange={() => setSelected(allSelected ? [] : sampleData.map((r) => r.id))}
+                  />
                 </th>
                 <th className="px-4 py-3 text-left font-medium text-gray-900 dark:text-white">Name</th>
                 <th className="px-4 py-3 text-left font-medium text-gray-900 dark:text-white">Email</th>
@@ -209,7 +235,7 @@ const DataTablePage: FC = () => {
               {sampleData.map((row, idx) => (
                 <tr key={row.id} className={idx === 0 ? 'bg-bear-50 dark:bg-bear-900/20' : ''}>
                   <td className="px-4 py-3">
-                    <input type="checkbox" defaultChecked={idx === 0} className="rounded border-gray-300 dark:border-gray-600 text-bear-500 focus:ring-bear-500" />
+                    <Checkbox size="sm" checked={selected.includes(row.id)} onChange={() => toggleRow(row.id)} />
                   </td>
                   <td className="px-4 py-3 text-gray-900 dark:text-white">{row.name}</td>
                   <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{row.email}</td>
@@ -220,30 +246,8 @@ const DataTablePage: FC = () => {
         </div>
       </ComponentPreview>
 
-      <section className="mb-12">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Props</h2>
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
-            <thead className="bg-gray-50 dark:bg-gray-800">
-              <tr>
-                <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Prop</th>
-                <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Type</th>
-                <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Default</th>
-                <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Description</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-              <tr><td className="px-4 py-3 font-mono text-bear-600">data</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>T[]</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">[]</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Table data</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">columns</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>Column[]</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">[]</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Column definitions</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">sortable</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Enable sorting</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">pagination</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Enable pagination</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">selectable</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Enable row selection</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">pageSize</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>number</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">10</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Rows per page</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-    </div>
+      <PropsTable title={t.props} rows={DATA_TABLE_PROPS} />
+    </DocPage>
   );
 };
 

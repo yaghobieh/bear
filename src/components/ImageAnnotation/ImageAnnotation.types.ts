@@ -9,6 +9,7 @@ export interface Annotation {
 }
 
 export interface ImageAnnotationProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'onChange'> {
+  id?: string;
   /** Image source URL */
   src: string;
   /** Alt text */

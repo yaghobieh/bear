@@ -1,5 +1,5 @@
 import { FC, useState, useRef, useEffect, useCallback, useMemo } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Portal } from '../Portal';
 import type { NavigableSelectProps, NavigableSelectOption } from './NavigableSelect.types';
 import {
@@ -39,7 +39,7 @@ export const NavigableSelect: FC<NavigableSelectProps> = (props) => {
     emptyText = DEFAULT_EMPTY_TEXT,
     className,
     style,
-    testId,
+      testId,
   } = props;
 
   const isControlled = controlledValue !== undefined;
@@ -244,8 +244,7 @@ export const NavigableSelect: FC<NavigableSelectProps> = (props) => {
         fullWidth && 'bear-w-full',
         className,
       )}
-      style={style}
-      data-testid={testId}
+      style={style} data-testid={testId}
     >
       {/* Label */}
       {label && (

@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { SegmentedControlProps } from './SegmentedControl.types';
 
 const sizeClasses = {
@@ -9,6 +9,7 @@ const sizeClasses = {
 };
 
 export const SegmentedControl: FC<SegmentedControlProps> = ({
+
   items,
   value: controlledValue,
   defaultValue,
@@ -18,6 +19,7 @@ export const SegmentedControl: FC<SegmentedControlProps> = ({
   disabled = false,
   className,
 }) => {
+
   const [internalValue, setInternalValue] = useState(defaultValue ?? items[0]?.value ?? '');
   const value = controlledValue ?? internalValue;
 

@@ -2,6 +2,8 @@ import type { ReactNode } from 'react';
 import type { InputProps } from '../Input/Input.types';
 
 export interface PasswordInputProps extends Omit<InputProps, 'type' | 'rightAddon'> {
+  testId?: string;
+  id?: string;
   /** Whether password is currently visible */
   visible?: boolean;
   /** Controlled visibility toggle */

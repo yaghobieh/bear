@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 
 export interface InputGroupProps {
+  id?: string;
   /** Group label */
   label?: string;
   /** Description text (below label, above input) */

@@ -34,6 +34,7 @@ export interface DropdownItem {
 }
 
 export interface DropdownProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
+  id?: string;
   /** Dropdown trigger element */
   trigger: ReactNode;
   /** Dropdown items */

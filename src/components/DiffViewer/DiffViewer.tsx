@@ -1,5 +1,5 @@
 import { FC, useMemo, useState, useCallback } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { useBear } from '../../context/BearProvider';
 import { Typography } from '../Typography';
 import type { DiffViewerProps, DiffLineType } from './DiffViewer.types';
@@ -25,8 +25,9 @@ export const DiffViewer: FC<DiffViewerProps> = ({
   spacing = DEFAULT_SPACING,
   showLineHoverInfo = false,
   className,
-  testId,
+      testId,
 }) => {
+
   const { mode } = useBear();
   const isDark = mode === 'dark';
   const [hoveredLine, setHoveredLine] = useState<number | null>(null);

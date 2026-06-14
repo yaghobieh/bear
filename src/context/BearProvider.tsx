@@ -1,7 +1,15 @@
-import { createContext, useContext, useState, useCallback, useMemo, ReactNode, useEffect } from 'react';
+import { createContext, useContext, useState, useCallback, useMemo, ReactNode, useEffect, startTransition } from 'react';
 import type { BearTheme, BearThemeOverride, BearColorScale, CustomVariant, CustomVariantsMap } from '../types';
-import type { BearComponentOverrides, ButtonVariantsConfig } from '../types/component.types';
+import type { BearComponentOverrides, ButtonVariantsConfig, BearDefaultPropsMap } from '../types/component.types';
 import type { CustomTypography, CustomTypographyMap } from '../components/Typography/Typography.types';
+import type { BearDirection, BearDensity } from './bearProvider.types';
+import {
+  DEFAULT_DIRECTION,
+  DEFAULT_DENSITY,
+  DENSITY_CSS_VAR,
+  DENSITY_SCALE_COMFORTABLE,
+  DENSITY_SCALE_COMPACT,
+} from './bearProvider.const';
 import { defaultLightTheme, defaultDarkTheme } from './defaultTheme';
 
 interface BearContextValue {
@@ -10,32 +18,25 @@ interface BearContextValue {
   setMode: (mode: 'light' | 'dark') => void;
   toggleMode: () => void;
   updateTheme: (overrides: BearThemeOverride) => void;
-  /** Component style overrides */
+  direction: BearDirection;
+  setDirection: (direction: BearDirection) => void;
+  density: BearDensity;
+  setDensity: (density: BearDensity) => void;
+  defaultProps: BearDefaultPropsMap;
   components: BearComponentOverrides;
-  /** Variant configurations */
   variants: { Button?: ButtonVariantsConfig };
-  /** Custom variants map */
   customVariants: CustomVariantsMap;
-  /** Check if a variant exists (built-in or custom) */
   hasVariant: (name: string) => boolean;
-  /** Get variant colors */
   getVariant: (name: string) => CustomVariant | undefined;
-  /** Register a new custom variant at runtime */
   addVariant: (name: string, config: CustomVariant) => void;
-  /** Custom typography variants */
   customTypography: CustomTypographyMap;
-  /** Check if typography variant exists */
   hasTypography: (name: string) => boolean;
-  /** Get typography config */
   getTypography: (name: string) => CustomTypography | undefined;
-  /** Add custom typography at runtime */
   addTypography: (name: string, config: CustomTypography) => void;
-  /** Register component overrides */
   registerComponent: <K extends keyof BearComponentOverrides>(
     componentKey: K,
     styles: BearComponentOverrides[K]
   ) => void;
-  /** Register variant overrides */
   registerVariant: <K extends 'Button'>(
     componentKey: K,
     variantConfig: ButtonVariantsConfig
@@ -47,42 +48,18 @@ export const BearContext = createContext<BearContextValue | null>(null);
 
 interface BearProviderProps {
   children: ReactNode;
-  /** Initial theme mode */
   defaultMode?: 'light' | 'dark';
-  /** Theme overrides applied on top of default theme */
+  mode?: 'light' | 'dark';
+  onModeChange?: (mode: 'light' | 'dark') => void;
+  direction?: BearDirection;
+  density?: BearDensity;
   theme?: BearThemeOverride;
-  /** Global component style overrides */
   components?: BearComponentOverrides;
-  /** Variant color configurations for built-in variants */
+  defaultProps?: BearDefaultPropsMap;
   variants?: { Button?: ButtonVariantsConfig };
-  /**
-   * Custom variants - add your own color variants!
-   * @example
-   * ```tsx
-   * <BearProvider customVariants={{
-   *   redBrand: { bg: '#dc2626', bgHover: '#b91c1c', text: '#ffffff' },
-   *   oceanBlue: { bg: '#0ea5e9', bgHover: '#0284c7', text: '#ffffff' },
-   * }}>
-   * ```
-   * Then use: `<Button variant="redBrand">Click me</Button>`
-   */
   customVariants?: CustomVariantsMap;
-  /**
-   * Custom typography variants - add your own text styles!
-   * @example
-   * ```tsx
-   * <BearProvider customTypography={{
-   *   b250: { fontSize: '25px', fontWeight: 'bold', lineHeight: '1.2' },
-   *   display1: { fontSize: '4rem', fontWeight: 800, letterSpacing: '-0.025em' },
-   *   label: { fontSize: '12px', fontWeight: 'medium', textTransform: 'uppercase' },
-   * }}>
-   * ```
-   * Then use: `<Typography variant="b250">Custom text</Typography>`
-   */
   customTypography?: CustomTypographyMap;
-  /** Persist theme preference to localStorage */
   persistPreference?: boolean;
-  /** localStorage key for persisting preference */
   storageKey?: string;
 }
 
@@ -235,6 +212,82 @@ function deepMerge<T>(target: T, source: Partial<T>): T {
   return output;
 }
 
+const buildThemeCssVars = (
+  activeTheme: BearTheme,
+  buttonVariants: { Button?: ButtonVariantsConfig } | undefined,
+  runtimeVariants: CustomVariantsMap,
+  activeDensity: BearDensity
+): string => {
+  const vars: string[] = [];
+
+  const pushScale = (prefix: string, scale: BearColorScale) => {
+    Object.entries(scale).forEach(([shade, value]) => {
+      vars.push(`--bear-${prefix}-${shade}:${value}`);
+    });
+  };
+
+  pushScale('primary', activeTheme.colors.primary);
+  pushScale('secondary', activeTheme.colors.secondary);
+  pushScale('success', activeTheme.colors.success);
+  pushScale('warning', activeTheme.colors.warning);
+  pushScale('danger', activeTheme.colors.danger);
+  pushScale('info', activeTheme.colors.info);
+  pushScale('neutral', activeTheme.colors.neutral);
+
+  vars.push(`--bear-bg-primary:${activeTheme.colors.background.primary}`);
+  vars.push(`--bear-bg-secondary:${activeTheme.colors.background.secondary}`);
+  vars.push(`--bear-bg-tertiary:${activeTheme.colors.background.tertiary}`);
+  vars.push(`--bear-text-primary:${activeTheme.colors.text.primary}`);
+  vars.push(`--bear-text-secondary:${activeTheme.colors.text.secondary}`);
+  vars.push(`--bear-text-muted:${activeTheme.colors.text.muted}`);
+  vars.push(`--bear-text-inverted:${activeTheme.colors.text.inverted}`);
+  vars.push(`--bear-border-default:${activeTheme.colors.border.default}`);
+  vars.push(`--bear-border-subtle:${activeTheme.colors.border.subtle}`);
+  vars.push(`--bear-border-strong:${activeTheme.colors.border.strong}`);
+
+  if (buttonVariants?.Button) {
+    Object.entries(buttonVariants.Button).forEach(([variant, config]) => {
+      if (!config) return;
+      if (config.bg) vars.push(`--bear-btn-${variant}-bg:${config.bg}`);
+      if (config.bgHover) vars.push(`--bear-btn-${variant}-bg-hover:${config.bgHover}`);
+      if (config.bgActive) vars.push(`--bear-btn-${variant}-bg-active:${config.bgActive}`);
+      if (config.bgDisabled) vars.push(`--bear-btn-${variant}-bg-disabled:${config.bgDisabled}`);
+      if (config.text) vars.push(`--bear-btn-${variant}-text:${config.text}`);
+      if (config.textDisabled) vars.push(`--bear-btn-${variant}-text-disabled:${config.textDisabled}`);
+      if (config.border) vars.push(`--bear-btn-${variant}-border:${config.border}`);
+      if (config.borderHover) vars.push(`--bear-btn-${variant}-border-hover:${config.borderHover}`);
+      if (config.ring) vars.push(`--bear-btn-${variant}-ring:${config.ring}`);
+    });
+  }
+
+  Object.entries(runtimeVariants).forEach(([name, config]) => {
+    vars.push(`--bear-${name}-bg:${config.bg}`);
+    if (config.bgHover) vars.push(`--bear-${name}-bg-hover:${config.bgHover}`);
+    if (config.bgActive) vars.push(`--bear-${name}-bg-active:${config.bgActive}`);
+    if (config.text) vars.push(`--bear-${name}-text:${config.text}`);
+    if (config.border) vars.push(`--bear-${name}-border:${config.border}`);
+    if (config.ring) vars.push(`--bear-${name}-ring:${config.ring}`);
+  });
+
+  vars.push(`--bear-font-sans:${activeTheme.typography.fontFamily.sans}`);
+  vars.push(`--bear-font-mono:${activeTheme.typography.fontFamily.mono}`);
+
+  Object.entries(activeTheme.shadows).forEach(([key, value]) => {
+    vars.push(`--bear-shadow-${key}:${value}`);
+  });
+  Object.entries(activeTheme.borderRadius).forEach(([key, value]) => {
+    vars.push(`--bear-radius-${key}:${value}`);
+  });
+  Object.entries(activeTheme.spacing).forEach(([key, value]) => {
+    vars.push(`--bear-spacing-${key}:${value}`);
+  });
+
+  const densityScale = activeDensity === 'compact' ? DENSITY_SCALE_COMPACT : DENSITY_SCALE_COMFORTABLE;
+  vars.push(`${DENSITY_CSS_VAR}:${densityScale}`);
+
+  return vars.join(';');
+};
+
 /**
  * BearProvider - Wraps your app to provide theme context
  * 
@@ -273,22 +326,28 @@ function deepMerge<T>(target: T, source: Partial<T>): T {
 export const BearProvider = ({
   children,
   defaultMode = 'light',
+  mode: controlledMode,
+  onModeChange,
+  direction = DEFAULT_DIRECTION,
+  density = DEFAULT_DENSITY,
   theme: themeOverrides,
   components: initialComponents = {},
+  defaultProps: initialDefaultProps = {},
   variants: initialVariants = {},
   customVariants: initialCustomVariants = {},
   customTypography: initialCustomTypography = {},
   persistPreference = true,
   storageKey = STORAGE_KEY_DEFAULT,
 }: BearProviderProps) => {
-  // Initialize mode from localStorage or default
-  const [mode, setModeState] = useState<'light' | 'dark'>(() => {
+  const [internalMode, setInternalModeState] = useState<'light' | 'dark'>(() => {
+    if (controlledMode !== undefined) {
+      return controlledMode;
+    }
     if (typeof window !== 'undefined' && persistPreference) {
       const stored = localStorage.getItem(storageKey);
       if (stored === 'light' || stored === 'dark') {
         return stored;
       }
-      // Check system preference
       if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
         return 'dark';
       }
@@ -296,11 +355,14 @@ export const BearProvider = ({
     return defaultMode;
   });
 
-  // Store custom overrides
+  const mode = controlledMode ?? internalMode;
+
+  const [directionState, setDirectionState] = useState<BearDirection>(direction);
+  const [densityState, setDensityState] = useState<BearDensity>(density);
+
   const [customOverrides, setCustomOverrides] = useState<BearThemeOverride>(themeOverrides || {});
-  
-  // Store component overrides
   const [components, setComponents] = useState<BearComponentOverrides>(initialComponents);
+  const [defaultProps] = useState<BearDefaultPropsMap>(initialDefaultProps);
   
   // Store variant configurations
   const [variants, setVariants] = useState<{ Button?: ButtonVariantsConfig }>(initialVariants);
@@ -338,26 +400,68 @@ export const BearProvider = ({
   }, [customOverrides]);
 
   // Build the final theme with deep merge
-  const theme = useMemo((): BearTheme => {
-    const baseTheme = mode === 'dark' ? defaultDarkTheme : defaultLightTheme;
+  const resolvedLightTheme = useMemo((): BearTheme => {
     if (Object.keys(processedOverrides).length === 0) {
-      return baseTheme;
+      return defaultLightTheme;
     }
-    return deepMerge(baseTheme, processedOverrides as Partial<BearTheme>) as BearTheme;
-  }, [mode, processedOverrides]);
+    return deepMerge(defaultLightTheme, processedOverrides as Partial<BearTheme>) as BearTheme;
+  }, [processedOverrides]);
 
-  // Set mode and persist
+  const resolvedDarkTheme = useMemo((): BearTheme => {
+    if (Object.keys(processedOverrides).length === 0) {
+      return defaultDarkTheme;
+    }
+    return deepMerge(defaultDarkTheme, processedOverrides as Partial<BearTheme>) as BearTheme;
+  }, [processedOverrides]);
+
+  const theme = mode === 'dark' ? resolvedDarkTheme : resolvedLightTheme;
+
+  const lightThemeCss = useMemo(
+    () => buildThemeCssVars(resolvedLightTheme, variants, customVariants, densityState),
+    [resolvedLightTheme, variants, customVariants, densityState]
+  );
+
+  const darkThemeCss = useMemo(
+    () => buildThemeCssVars(resolvedDarkTheme, variants, customVariants, densityState),
+    [resolvedDarkTheme, variants, customVariants, densityState]
+  );
+
   const setMode = useCallback((newMode: 'light' | 'dark') => {
-    setModeState(newMode);
+    if (controlledMode === undefined) {
+      setInternalModeState(newMode);
+    }
+    onModeChange?.(newMode);
     if (typeof window !== 'undefined' && persistPreference) {
       localStorage.setItem(storageKey, newMode);
     }
-  }, [persistPreference, storageKey]);
+  }, [controlledMode, onModeChange, persistPreference, storageKey]);
+
+  const setDirection = useCallback((newDirection: BearDirection) => {
+    setDirectionState(newDirection);
+  }, []);
+
+  const setDensity = useCallback((newDensity: BearDensity) => {
+    setDensityState(newDensity);
+  }, []);
 
   // Toggle between light and dark
   const toggleMode = useCallback(() => {
-    setMode(mode === 'light' ? 'dark' : 'light');
-  }, [mode, setMode]);
+    if (controlledMode !== undefined) {
+      const next = controlledMode === 'light' ? 'dark' : 'light';
+      onModeChange?.(next);
+      return;
+    }
+    startTransition(() => {
+      setInternalModeState((prev) => {
+        const next = prev === 'light' ? 'dark' : 'light';
+        onModeChange?.(next);
+        if (typeof window !== 'undefined' && persistPreference) {
+          localStorage.setItem(storageKey, next);
+        }
+        return next;
+      });
+    });
+  }, [controlledMode, onModeChange, persistPreference, storageKey]);
 
   // Update theme with overrides
   const updateTheme = useCallback((overrides: BearThemeOverride) => {
@@ -428,84 +532,14 @@ export const BearProvider = ({
     }));
   }, []);
 
-  // Apply mode to document: dark/light classes + CSS variables via a single style element
+  useEffect(() => {
+    if (controlledMode !== undefined) {
+      setInternalModeState(controlledMode);
+    }
+  }, [controlledMode]);
+
   useEffect(() => {
     if (typeof document === 'undefined') return;
-    const root = document.documentElement;
-
-    // Toggle dark/light classes — single classList operation
-    root.classList.toggle('dark', mode === 'dark');
-    root.classList.remove('bear-light', 'bear-dark');
-    root.classList.add(`bear-${mode}`);
-
-    // Build all CSS variables as a single string and inject via one style element.
-    // This is significantly faster than calling setProperty 80+ times.
-    const vars: string[] = [];
-
-    const pushScale = (prefix: string, scale: BearColorScale) => {
-      Object.entries(scale).forEach(([shade, value]) => {
-        vars.push(`--bear-${prefix}-${shade}:${value}`);
-      });
-    };
-
-    pushScale('primary', theme.colors.primary);
-    pushScale('secondary', theme.colors.secondary);
-    pushScale('success', theme.colors.success);
-    pushScale('warning', theme.colors.warning);
-    pushScale('danger', theme.colors.danger);
-    pushScale('info', theme.colors.info);
-    pushScale('neutral', theme.colors.neutral);
-
-    vars.push(`--bear-bg-primary:${theme.colors.background.primary}`);
-    vars.push(`--bear-bg-secondary:${theme.colors.background.secondary}`);
-    vars.push(`--bear-bg-tertiary:${theme.colors.background.tertiary}`);
-
-    vars.push(`--bear-text-primary:${theme.colors.text.primary}`);
-    vars.push(`--bear-text-secondary:${theme.colors.text.secondary}`);
-    vars.push(`--bear-text-muted:${theme.colors.text.muted}`);
-    vars.push(`--bear-text-inverted:${theme.colors.text.inverted}`);
-
-    vars.push(`--bear-border-default:${theme.colors.border.default}`);
-    vars.push(`--bear-border-subtle:${theme.colors.border.subtle}`);
-    vars.push(`--bear-border-strong:${theme.colors.border.strong}`);
-
-    if (variants.Button) {
-      Object.entries(variants.Button).forEach(([variant, config]) => {
-        if (!config) return;
-        if (config.bg) vars.push(`--bear-btn-${variant}-bg:${config.bg}`);
-        if (config.bgHover) vars.push(`--bear-btn-${variant}-bg-hover:${config.bgHover}`);
-        if (config.bgActive) vars.push(`--bear-btn-${variant}-bg-active:${config.bgActive}`);
-        if (config.bgDisabled) vars.push(`--bear-btn-${variant}-bg-disabled:${config.bgDisabled}`);
-        if (config.text) vars.push(`--bear-btn-${variant}-text:${config.text}`);
-        if (config.textDisabled) vars.push(`--bear-btn-${variant}-text-disabled:${config.textDisabled}`);
-        if (config.border) vars.push(`--bear-btn-${variant}-border:${config.border}`);
-        if (config.borderHover) vars.push(`--bear-btn-${variant}-border-hover:${config.borderHover}`);
-        if (config.ring) vars.push(`--bear-btn-${variant}-ring:${config.ring}`);
-      });
-    }
-
-    Object.entries(customVariants).forEach(([name, config]) => {
-      vars.push(`--bear-${name}-bg:${config.bg}`);
-      if (config.bgHover) vars.push(`--bear-${name}-bg-hover:${config.bgHover}`);
-      if (config.bgActive) vars.push(`--bear-${name}-bg-active:${config.bgActive}`);
-      if (config.text) vars.push(`--bear-${name}-text:${config.text}`);
-      if (config.border) vars.push(`--bear-${name}-border:${config.border}`);
-      if (config.ring) vars.push(`--bear-${name}-ring:${config.ring}`);
-    });
-
-    vars.push(`--bear-font-sans:${theme.typography.fontFamily.sans}`);
-    vars.push(`--bear-font-mono:${theme.typography.fontFamily.mono}`);
-
-    Object.entries(theme.shadows).forEach(([key, value]) => {
-      vars.push(`--bear-shadow-${key}:${value}`);
-    });
-    Object.entries(theme.borderRadius).forEach(([key, value]) => {
-      vars.push(`--bear-radius-${key}:${value}`);
-    });
-    Object.entries(theme.spacing).forEach(([key, value]) => {
-      vars.push(`--bear-spacing-${key}:${value}`);
-    });
-
     const STYLE_ID = 'bear-theme-vars';
     let style = document.getElementById(STYLE_ID) as HTMLStyleElement | null;
     if (!style) {
@@ -513,8 +547,20 @@ export const BearProvider = ({
       style.id = STYLE_ID;
       document.head.appendChild(style);
     }
-    style.textContent = `:root{${vars.join(';')}}`;
-  }, [theme, mode, variants, customVariants]);
+    style.textContent = `:root.bear-light,:root:not(.dark){${lightThemeCss}}:root.bear-dark,:root.dark,.dark{${darkThemeCss}}`;
+  }, [lightThemeCss, darkThemeCss]);
+
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    const root = document.documentElement;
+
+    root.classList.toggle('dark', mode === 'dark');
+    root.classList.remove('bear-light', 'bear-dark');
+    root.classList.add(mode === 'dark' ? 'bear-dark' : 'bear-light');
+    root.setAttribute('dir', directionState);
+    root.classList.toggle('bear-rtl', directionState === 'rtl');
+    root.classList.toggle('bear-density-compact', densityState === 'compact');
+  }, [mode, directionState, densityState]);
 
   const value = useMemo(() => ({
     theme,
@@ -522,6 +568,11 @@ export const BearProvider = ({
     setMode,
     toggleMode,
     updateTheme,
+    direction: directionState,
+    setDirection,
+    density: densityState,
+    setDensity,
+    defaultProps,
     components,
     variants,
     customVariants,
@@ -534,7 +585,7 @@ export const BearProvider = ({
     addTypography,
     registerComponent,
     registerVariant,
-  }), [theme, mode, setMode, toggleMode, updateTheme, components, variants, customVariants, hasVariant, getVariant, addVariant, customTypography, hasTypography, getTypography, addTypography, registerComponent, registerVariant]);
+  }), [theme, mode, setMode, toggleMode, updateTheme, directionState, setDirection, densityState, setDensity, defaultProps, components, variants, customVariants, hasVariant, getVariant, addVariant, customTypography, hasTypography, getTypography, addTypography, registerComponent, registerVariant]);
 
   return (
     <BearContext.Provider value={value}>
@@ -586,6 +637,16 @@ export const useBearThemeOptional = (): BearTheme => {
 export const useBearMode = () => {
   const { mode, setMode, toggleMode } = useBear();
   return { mode, setMode, toggleMode };
+};
+
+export const useBearDirection = () => {
+  const { direction, setDirection } = useBear();
+  return { direction, setDirection };
+};
+
+export const useBearDensity = () => {
+  const { density, setDensity } = useBear();
+  return { density, setDensity };
 };
 
 /**

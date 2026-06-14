@@ -1,10 +1,11 @@
 import { FC, useState, createContext, useContext } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { TabsContextValue, TabsProps, TabProps } from './Tabs.types';
 
 export const TabsContext = createContext<TabsContextValue | null>(null);
 
 export const Tabs: FC<TabsProps> = ({
+
   children,
   value,
   defaultTab,
@@ -13,6 +14,7 @@ export const Tabs: FC<TabsProps> = ({
   className,
   testId,
 }) => {
+
   const [internalTab, setInternalTab] = useState(defaultTab);
   const isControlled = value !== undefined;
   const activeTab = isControlled ? value : internalTab;

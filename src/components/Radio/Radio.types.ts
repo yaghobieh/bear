@@ -2,6 +2,7 @@ import type { InputHTMLAttributes, ReactNode } from 'react';
 import type { BearSize, BearVariant } from '../../types';
 
 export interface RadioProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
+  id?: string;
   /** Radio label */
   label?: ReactNode;
   /** Size of the radio */

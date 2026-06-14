@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Typography } from '../Typography';
 import type { IndicatorProps } from './Indicator.types';
 import {
@@ -27,9 +27,10 @@ export const Indicator: FC<IndicatorProps> = ({
   withBorder = false,
   inline = false,
   className,
-  testId,
+      testId,
   ...rest
 }) => {
+
   const positionClass = POSITION_MAP[position];
   const radiusClass = RADIUS_MAP[radius];
   const isCustomColor = typeof color === 'string' && !color.startsWith('bear-');
@@ -40,8 +41,7 @@ export const Indicator: FC<IndicatorProps> = ({
 
   return (
     <div
-      className={cn(ROOT_CLASS, inline && ROOT_INLINE_CLASS, className)}
-      data-testid={testId}
+      className={cn(ROOT_CLASS, inline && ROOT_INLINE_CLASS, className)} data-testid={testId}
       {...rest}
     >
       {children}

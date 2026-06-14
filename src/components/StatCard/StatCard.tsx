@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { StatCardProps } from './StatCard.types';
 
 /**
@@ -7,6 +7,7 @@ import { StatCardProps } from './StatCard.types';
  * A colorful statistics card with gradient background
  */
 export const StatCard: FC<StatCardProps> = ({
+
   title,
   value,
   color = '#6366f1',
@@ -15,6 +16,7 @@ export const StatCard: FC<StatCardProps> = ({
   className,
   ...props
 }) => {
+
   return (
     <div
       className={cn(

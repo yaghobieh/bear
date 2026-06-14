@@ -15,6 +15,7 @@ export interface TerminalLine {
 }
 
 export interface TerminalProps {
+  id?: string;
   /** Array of terminal lines */
   lines: TerminalLine[];
   /** Callback when user submits a command */

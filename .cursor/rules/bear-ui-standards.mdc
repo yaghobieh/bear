@@ -1,6 +1,6 @@
 ---
-description: Bear UI component standards — types, constants, structure, BEM, translations, helpers
-alwaysApply: true
+description: Bear UI component standards — superseded by bear-ui-standards skill; see agents-index.mdc
+alwaysApply: false
 ---
 
 # Bear UI Component Standards

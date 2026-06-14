@@ -3,6 +3,8 @@ export type OTPInputVariant = 'boxed' | 'outline' | 'underline' | 'circle';
 export type OTPInputLayout = 'horizontal' | 'vertical';
 
 export interface OTPInputProps {
+  testId?: string;
+  id?: string;
   length?: number;
   value?: string;
   onChange?: (value: string) => void;

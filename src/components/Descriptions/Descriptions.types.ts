@@ -7,6 +7,7 @@ export interface DescriptionItem {
 }
 
 export interface DescriptionsProps extends HTMLAttributes<HTMLDivElement> {
+  id?: string;
   title?: string;
   items: DescriptionItem[];
   columns?: number;

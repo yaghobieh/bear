@@ -12,11 +12,13 @@ import type { BearLogoProps } from './BearLogo.types';
  * ```
  */
 export const BearLogo: FC<BearLogoProps> = ({ 
+ 
   size = 32, 
   animated = false,
   className,
   ...props 
 }) => {
+
   return (
     <svg
       width={size}

@@ -1,6 +1,6 @@
 import { FC, useState, useRef, useEffect } from 'react';
 import type { ColorPickerProps } from './ColorPicker.types';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Portal } from '../Portal';
 import {
   COLOR_PICKER_DEFAULT_VALUE,
@@ -22,6 +22,7 @@ import {
 import { hexToRgb, rgbToHsv, hsvToHex } from './ColorPicker.utils';
 
 export const ColorPicker: FC<ColorPickerProps> = ({
+
   value = COLOR_PICKER_DEFAULT_VALUE,
   onChange,
   presets = COLOR_PICKER_DEFAULT_PRESETS,
@@ -32,6 +33,7 @@ export const ColorPicker: FC<ColorPickerProps> = ({
   size = 'md',
   className,
 }) => {
+
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState(value);
   const [hsv, setHsv] = useState({ h: 330, s: 80, v: 90 });

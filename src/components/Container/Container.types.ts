@@ -3,6 +3,7 @@ import type { HTMLAttributes } from 'react';
 export type ContainerSize = 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full';
 
 export interface ContainerProps extends HTMLAttributes<HTMLDivElement> {
+  id?: string;
   /** Maximum width of the container */
   size?: ContainerSize;
   /** Whether to center the container */

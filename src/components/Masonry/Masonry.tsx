@@ -1,5 +1,5 @@
 import { FC, Children, useMemo, useRef, useState, useEffect, useCallback } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { MasonryProps } from './Masonry.types';
 import {
   DEFAULT_COLUMNS,
@@ -21,7 +21,7 @@ export const Masonry: FC<MasonryProps> = (props) => {
     gap = DEFAULT_GAP,
     className,
     style,
-    testId,
+      testId,
   } = props;
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -60,8 +60,7 @@ export const Masonry: FC<MasonryProps> = (props) => {
     <div
       ref={containerRef}
       className={cn('Bear-Masonry', 'bear-flex', className)}
-      style={{ gap, ...style }}
-      data-testid={testId}
+      style={{ gap, ...style }} data-testid={testId}
     >
       {columnItems.map((items, colIdx) => (
         <div

@@ -1,5 +1,5 @@
 import { FC, useRef, useState, useCallback, useMemo } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { MapProps, MapViewport } from './Map.types';
 import {
   DEFAULT_VIEWPORT,
@@ -51,8 +51,9 @@ export const Map: FC<MapProps> = ({
   maxZoom = MAX_ZOOM,
   className,
   style,
-  testId,
+      testId,
 }) => {
+
   const containerRef = useRef<HTMLDivElement>(null);
   const [internalViewport, setInternalViewport] = useState<MapViewport>(
     initialViewport ?? DEFAULT_VIEWPORT
@@ -239,8 +240,7 @@ export const Map: FC<MapProps> = ({
       onMouseLeave={handleMouseUp}
       onWheel={handleWheel}
       onDoubleClick={handleDoubleClick}
-      onClick={handleMapClick}
-      data-testid={testId}
+      onClick={handleMapClick} data-testid={testId}
       role="application"
       aria-label="Interactive map"
     >

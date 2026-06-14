@@ -26,6 +26,7 @@ export interface Step {
 }
 
 export interface StepperProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
+  id?: string;
   /** Array of steps */
   steps: Step[];
   /** Current active step (0-indexed) */

@@ -16,6 +16,7 @@ export interface ChatMessage {
 }
 
 export interface ChatProps {
+  id?: string;
   /** Array of messages */
   messages: ChatMessage[];
   /** Callback when user sends a message */

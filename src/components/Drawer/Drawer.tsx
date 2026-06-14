@@ -1,6 +1,6 @@
 import { FC, useEffect, useCallback, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { XIcon } from '../Icon';
 import type { DrawerProps } from './Drawer.types';
 import {
@@ -19,12 +19,19 @@ export const Drawer: FC<DrawerProps> = ({
   title,
   children,
   side = 'right',
+  anchor,
+  variant: _variant = 'temporary',
   size = 'md',
   showCloseButton = true,
   closeOnBackdrop = true,
   closeOnEscape = true,
   className,
+  container,
+  id: _id,
+  testId: _testId,
 }) => {
+  const resolvedSide = anchor ?? side;
+
   const [isMounted, setIsMounted] = useState(isOpen);
   const [isClosing, setIsClosing] = useState(false);
   const [hasOpened, setHasOpened] = useState(false);
@@ -93,10 +100,10 @@ export const Drawer: FC<DrawerProps> = ({
           'bear-border-neutral-200 dark:bear-border-neutral-700',
           'bear-flex bear-flex-col bear-overflow-hidden',
           'bear-transform bear-transition-transform',
-          BORDER_SIDE_MAP[side],
-          POSITION_CLASSES[side],
-          SIZE_CLASSES[side][size],
-          hasOpened && !isClosing ? TRANSFORM_OPEN[side] : TRANSFORM_CLOSED[side],
+          BORDER_SIDE_MAP[resolvedSide],
+          POSITION_CLASSES[resolvedSide],
+          SIZE_CLASSES[resolvedSide][size],
+          hasOpened && !isClosing ? TRANSFORM_OPEN[resolvedSide] : TRANSFORM_CLOSED[resolvedSide],
           className
         )}
         style={{ transitionDuration: `${DRAWER_ANIMATION_MS}ms` }}
@@ -130,5 +137,5 @@ export const Drawer: FC<DrawerProps> = ({
     </div>
   );
 
-  return createPortal(drawerContent, document.body);
+  return createPortal(drawerContent, container ?? document.body);
 };

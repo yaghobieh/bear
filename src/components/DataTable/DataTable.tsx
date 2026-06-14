@@ -1,4 +1,4 @@
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { DataTableColumn, DataTableProps } from './DataTable.types';
 
 /**
@@ -36,7 +36,7 @@ export const DataTable = <T extends Record<string, unknown>>({
   stickyHeader = false,
   maxHeight,
   className,
-  testId,
+      testId,
 }: DataTableProps<T>) => {
   const handleSort = (columnKey: string) => {
     const column = columns.find((c) => c.key === columnKey);
@@ -53,8 +53,7 @@ export const DataTable = <T extends Record<string, unknown>>({
       className={cn(
         'bear-w-full bear-overflow-hidden bear-rounded-lg bear-border bear-border-gray-200 dark:bear-border-gray-700',
         className
-      )}
-      data-testid={testId}
+      )} data-testid={testId}
     >
       <div
         className="bear-overflow-auto"

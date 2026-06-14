@@ -1,5 +1,5 @@
 import { FC, useEffect, useState, useCallback, useRef } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Typography } from '../Typography';
 import type { AnchorProps, AnchorLink } from './Anchor.types';
 import {

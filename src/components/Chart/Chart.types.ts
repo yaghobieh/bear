@@ -9,6 +9,7 @@ export interface ChartDataPoint {
 }
 
 export interface ChartProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
+  testId?: string;
   /** Chart type */
   type: ChartType;
   /** Data points */

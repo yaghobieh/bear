@@ -18,10 +18,11 @@ export const CurrencyInput: FC<CurrencyInputProps> = ({
   allowNegative = false,
   max,
   min,
-  testId,
+      testId,
   className,
   ...rest
 }) => {
+
   const [displayValue, setDisplayValue] = useState(() => formatCurrency(value, locale, decimals));
   const [focused, setFocused] = useState(false);
 

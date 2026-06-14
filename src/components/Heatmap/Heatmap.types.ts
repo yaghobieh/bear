@@ -7,6 +7,7 @@ export interface HeatmapCell {
 }
 
 export interface HeatmapProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
+  id?: string;
   /** Data points with date strings (YYYY-MM-DD) and values */
   data: HeatmapCell[];
   /** Start date (defaults to 1 year ago) */

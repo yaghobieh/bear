@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 
 export interface CalendarDayProps {
+  testId?: string;
   date: Date;
   day: number;
   isCurrentMonth: boolean;

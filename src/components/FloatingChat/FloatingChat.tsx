@@ -1,6 +1,6 @@
 import { FC, useState, useCallback } from 'react';
 import { createPortal } from 'react-dom';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { useBear } from '../../context/BearProvider';
 import { Button } from '../Button';
 import { Avatar } from '../Avatar';
@@ -46,8 +46,9 @@ export const FloatingChat: FC<FloatingChatProps> = ({
   welcomeMessage = FLOATING_CHAT_DEFAULTS.WELCOME_MESSAGE,
   poweredBy,
   className,
-  testId,
+      testId,
 }) => {
+
   const { mode } = useBear();
   const isDark = mode === 'dark';
   const [internalOpen, setInternalOpen] = useState(defaultOpen);

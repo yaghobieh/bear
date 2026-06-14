@@ -1,6 +1,6 @@
 import { FC, useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { createPortal } from 'react-dom';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type {
   NotificationCenterProps,
   NotificationItemProps,
@@ -171,10 +171,11 @@ export const NotificationCenter: FC<NotificationCenterProps> = ({
   open: controlledOpen,
   onOpenChange,
   className,
-  testId,
+      testId,
   translations,
   icon,
 }) => {
+
   const [internalOpen, setInternalOpen] = useState(false);
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
   const [showAll, setShowAll] = useState(false);
@@ -242,8 +243,7 @@ export const NotificationCenter: FC<NotificationCenterProps> = ({
   return (
     <div
       ref={containerRef}
-      className={cn('Bear-NotificationCenter bear-relative bear-inline-block', className)}
-      data-testid={testId}
+      className={cn('Bear-NotificationCenter bear-relative bear-inline-block', className)} data-testid={testId}
     >
       {trigger ? (
         <div onClick={handleToggle}>{trigger}</div>

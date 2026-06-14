@@ -1,71 +1,61 @@
-import { FC } from 'react';
 import { cn } from '@utils';
 import type { SwitchProps } from './Switch.types';
+import {
+  SWITCH_THUMB_TRANSLATE_PX,
+  SWITCH_THUMB_OFFSET_PX,
+  SWITCH_ROOT_CLASSES,
+  SWITCH_ROOT_HORIZONTAL,
+  SWITCH_ROOT_VERTICAL,
+  SWITCH_DISABLED_CLASSES,
+  SWITCH_TRACK_BASE_CLASSES,
+  SWITCH_TRACK_CHECKED_CLASSES,
+  SWITCH_TRACK_UNCHECKED_CLASSES,
+  SWITCH_THUMB_BASE_CLASSES,
+  SWITCH_LABEL_CLASSES,
+  SWITCH_ICON_CLASSES,
+  SWITCH_ICON_LEFT_CLASSES,
+  SWITCH_ICON_RIGHT_CLASSES,
+  SWITCH_ICON_CHECKED_VISIBLE,
+  SWITCH_ICON_CHECKED_HIDDEN,
+  SWITCH_ICON_UNCHECKED_VISIBLE,
+  SWITCH_ICON_THUMB_CHECKED,
+  SWITCH_ICON_THUMB_UNCHECKED,
+  SWITCH_SIZE_CLASSES,
+} from './Switch.const';
 
-// CSS class constants
-const SWITCH_ROOT_CLASSES = 'Bear-Switch bear-inline-flex bear-items-center bear-gap-3 bear-cursor-pointer';
-const SWITCH_DISABLED_CLASSES = 'bear-opacity-50 bear-cursor-not-allowed';
+export const Switch = (props: SwitchProps) => {
+  const {
+    label,
+    checked = false,
+    onCheckedChange,
+    size = 'md',
+    orientation = 'horizontal',
+    disabled = false,
+    uncheckedIcon,
+    checkedIcon,
+    showIconsInThumb = false,
+    className,
+    testId,
+    onChange,
+    ...rest
+  } = props;
 
-const SWITCH_TRACK_BASE_CLASSES = 'Bear-Switch__track bear-relative bear-inline-flex bear-items-center bear-shrink-0 bear-rounded-full bear-transition-colors bear-duration-200 focus-within:bear-ring-2 focus-within:bear-ring-primary-500 focus-within:bear-ring-offset-2 focus-within:bear-ring-offset-white dark:focus-within:bear-ring-offset-zinc-900';
-const SWITCH_TRACK_CHECKED_CLASSES = 'bear-bg-primary-500';
-const SWITCH_TRACK_UNCHECKED_CLASSES = 'bear-bg-gray-300 dark:bear-bg-gray-600';
-
-const SWITCH_THUMB_BASE_CLASSES = 'Bear-Switch__thumb bear-absolute bear-top-0.5 bear-left-0.5 bear-rounded-full bear-bg-white bear-shadow bear-transition-transform bear-duration-200 bear-flex bear-items-center bear-justify-center';
-
-const SWITCH_LABEL_CLASSES = 'Bear-Switch__label bear-text-sm bear-text-gray-700 dark:bear-text-gray-300';
-
-const SWITCH_ICON_CLASSES = 'Bear-Switch__icon bear-flex bear-items-center bear-justify-center';
-
-const sizeClasses = {
-  sm: {
-    track: 'bear-w-8 bear-h-4',
-    thumb: 'bear-w-3 bear-h-3',
-    translate: 'bear-translate-x-4',
-    iconSize: 8,
-  },
-  md: {
-    track: 'bear-w-11 bear-h-6',
-    thumb: 'bear-w-5 bear-h-5',
-    translate: 'bear-translate-x-5',
-    iconSize: 12,
-  },
-  lg: {
-    track: 'bear-w-14 bear-h-7',
-    thumb: 'bear-w-6 bear-h-6',
-    translate: 'bear-translate-x-7',
-    iconSize: 16,
-  },
-};
-
-export const Switch: FC<SwitchProps> = ({
-  label,
-  checked = false,
-  onCheckedChange,
-  size = 'md',
-  disabled = false,
-  uncheckedIcon,
-  checkedIcon,
-  showIconsInThumb = false,
-  className,
-  testId,
-  id,
-  ...props
-}) => {
-  const handleChange = () => {
-    if (!disabled) {
-      onCheckedChange?.(!checked);
-    }
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (disabled) return;
+    onCheckedChange?.(event.target.checked);
+    onChange?.(event);
   };
 
-  const sizeConfig = sizeClasses[size];
+  const sizeConfig = SWITCH_SIZE_CLASSES[size];
   const hasIcons = uncheckedIcon || checkedIcon;
+  const thumbTranslate = checked ? SWITCH_THUMB_TRANSLATE_PX[size] : 0;
 
   return (
     <label
-      id={id}
       data-testid={testId}
       className={cn(
         SWITCH_ROOT_CLASSES,
+        orientation === 'vertical' ? SWITCH_ROOT_VERTICAL : SWITCH_ROOT_HORIZONTAL,
         disabled && SWITCH_DISABLED_CLASSES,
         className
       )}
@@ -76,7 +66,7 @@ export const Switch: FC<SwitchProps> = ({
         onChange={handleChange}
         disabled={disabled}
         className="bear-sr-only"
-        {...props}
+        {...rest}
       />
 
       <span
@@ -86,52 +76,34 @@ export const Switch: FC<SwitchProps> = ({
           sizeConfig.track
         )}
       >
-        {/* Side icons (outside thumb) */}
         {hasIcons && !showIconsInThumb && (
           <>
-            <span className={cn(
-              SWITCH_ICON_CLASSES,
-              'bear-absolute bear-left-1',
-              checked ? 'bear-text-white' : 'bear-text-transparent',
-              'bear-transition-colors bear-duration-200'
-            )}>
+            <span className={cn(SWITCH_ICON_CLASSES, SWITCH_ICON_LEFT_CLASSES, checked ? SWITCH_ICON_CHECKED_VISIBLE : SWITCH_ICON_CHECKED_HIDDEN)}>
               {checkedIcon}
             </span>
-            <span className={cn(
-              SWITCH_ICON_CLASSES,
-              'bear-absolute bear-right-1',
-              !checked ? 'bear-text-gray-600 dark:bear-text-gray-400' : 'bear-text-transparent',
-              'bear-transition-colors bear-duration-200'
-            )}>
+            <span className={cn(SWITCH_ICON_CLASSES, SWITCH_ICON_RIGHT_CLASSES, !checked ? SWITCH_ICON_UNCHECKED_VISIBLE : SWITCH_ICON_CHECKED_HIDDEN)}>
               {uncheckedIcon}
             </span>
           </>
         )}
-        
-        {/* Thumb */}
+
         <span
-          className={cn(
-            SWITCH_THUMB_BASE_CLASSES,
-            checked && sizeConfig.translate,
-            sizeConfig.thumb
-          )}
+          className={cn(SWITCH_THUMB_BASE_CLASSES, sizeConfig.thumb)}
+          style={{
+            top: `${SWITCH_THUMB_OFFSET_PX}px`,
+            left: `${SWITCH_THUMB_OFFSET_PX}px`,
+            transform: `translateX(${thumbTranslate}px)`,
+          }}
         >
-          {/* Icons inside thumb */}
           {hasIcons && showIconsInThumb && (
-            <span className={cn(
-              SWITCH_ICON_CLASSES,
-              checked ? 'bear-text-primary-500' : 'bear-text-gray-400'
-            )}>
+            <span className={cn(SWITCH_ICON_CLASSES, checked ? SWITCH_ICON_THUMB_CHECKED : SWITCH_ICON_THUMB_UNCHECKED)}>
               {checked ? checkedIcon : uncheckedIcon}
             </span>
           )}
         </span>
       </span>
 
-      {label && (
-        <span className={SWITCH_LABEL_CLASSES}>{label}</span>
-      )}
+      {label && <span className={SWITCH_LABEL_CLASSES}>{label}</span>}
     </label>
   );
 };
-

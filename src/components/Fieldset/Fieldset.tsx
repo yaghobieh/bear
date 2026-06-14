@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Typography } from '../Typography';
 import type { FieldsetProps } from './Fieldset.types';
 import {
@@ -17,10 +17,11 @@ export const Fieldset: FC<FieldsetProps> = ({
   radius = 'md',
   disabled = false,
   children,
-  testId,
+      testId,
   className,
   ...rest
 }) => {
+
   return (
     <fieldset
       disabled={disabled}
@@ -30,8 +31,7 @@ export const Fieldset: FC<FieldsetProps> = ({
         RADIUS_MAP[radius],
         disabled && 'bear-opacity-50 bear-pointer-events-none',
         className
-      )}
-      data-testid={testId}
+      )} data-testid={testId}
       {...rest}
     >
       {legend && (

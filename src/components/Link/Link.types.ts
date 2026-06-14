@@ -2,6 +2,7 @@ import type { AnchorHTMLAttributes, ReactNode } from 'react';
 import type { BearVariant } from '../../types';
 
 export interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
+  id?: string;
   /** Link color variant */
   variant?: BearVariant | 'inherit';
   /** Whether link has underline */

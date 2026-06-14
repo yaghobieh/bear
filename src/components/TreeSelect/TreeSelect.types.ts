@@ -9,6 +9,7 @@ export interface TreeNode {
 }
 
 export interface TreeSelectProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
+  id?: string;
   nodes: TreeNode[];
   value?: string | string[];
   onChange?: (value: string | string[]) => void;

@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
 
 export interface CopyButtonProps {
+  testId?: string;
+  id?: string;
   value: string;
   children?: ReactNode;
   onCopy?: (value: string) => void;

@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { HighlightProps } from './Highlight.types';
 import { HIGHLIGHT_COLOR_CLASSES, DEFAULT_COLOR } from './Highlight.const';
 
@@ -29,8 +29,7 @@ export const Highlight = forwardRef<HTMLSpanElement, HighlightProps>(
           colorCls,
           animated && 'bear-animate-pulse',
           className,
-        )}
-        data-testid={testId}
+        )} data-testid={testId}
         {...rest}
       >
         {children}

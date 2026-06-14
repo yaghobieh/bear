@@ -1,33 +1,29 @@
 import { FC, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { NAVIGATION } from '@/constants/navigation.const';
-
-const SEPARATOR_CLASS = 'text-gray-300 dark:text-gray-600 mx-1.5';
-const LINK_CLASS = 'text-xs text-gray-500 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400 transition-colors';
-const CURRENT_CLASS = 'text-xs text-gray-700 dark:text-gray-200 font-medium';
-
-const GROUP_PATH_MAP: Record<string, string> = {
-  Components: '/components',
-  Advanced: '/components',
-  Charts: '/components',
-};
-
-interface BreadcrumbSegment {
-  label: string;
-  path?: string;
-}
+import { formatDocTitleFromPath } from '@/utils/formatDocTitle.utils';
+import type { BreadcrumbSegment } from './PageBreadcrumbs.types';
+import {
+  BREADCRUMB_HOME_LABEL,
+  BREADCRUMB_HOME_PATH,
+  GROUP_PATH_MAP,
+  SEPARATOR_CLASS,
+  LINK_CLASS,
+  CURRENT_CLASS,
+} from './PageBreadcrumbs.const';
+import { getSegmentLabel } from './PageBreadcrumbs.utils';
 
 export const PageBreadcrumbs: FC = () => {
   const { pathname } = useLocation();
 
   const segments = useMemo((): BreadcrumbSegment[] => {
-    const result: BreadcrumbSegment[] = [{ label: 'Home', path: '/' }];
+    const result: BreadcrumbSegment[] = [{ label: BREADCRUMB_HOME_LABEL, path: BREADCRUMB_HOME_PATH }];
 
     for (const group of NAVIGATION) {
       for (const item of group.items) {
         if (item.path === pathname) {
           result.push({ label: group.title, path: GROUP_PATH_MAP[group.title] });
-          result.push({ label: item.label });
+          result.push({ label: getSegmentLabel(item.path, item.label) });
           return result;
         }
         if (item.children) {
@@ -36,7 +32,7 @@ export const PageBreadcrumbs: FC = () => {
               result.push({ label: group.title, path: GROUP_PATH_MAP[group.title] });
               const categoryHash = encodeURIComponent(item.label);
               result.push({ label: item.label, path: `/components#${categoryHash}` });
-              result.push({ label: child.label });
+              result.push({ label: getSegmentLabel(child.path, child.label) });
               return result;
             }
           }
@@ -45,8 +41,9 @@ export const PageBreadcrumbs: FC = () => {
     }
 
     const parts = pathname.split('/').filter(Boolean);
-    parts.forEach((part) => {
-      result.push({ label: part.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) });
+    parts.forEach((part, index) => {
+      const partialPath = `/${parts.slice(0, index + 1).join('/')}`;
+      result.push({ label: getSegmentLabel(partialPath, formatDocTitleFromPath(part)) });
     });
     return result;
   }, [pathname]);

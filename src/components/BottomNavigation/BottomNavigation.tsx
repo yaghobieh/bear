@@ -1,8 +1,9 @@
 import { FC } from 'react';
 import { BottomNavigationProps } from './BottomNavigation.types';
-import { cn } from '@utils';
+import {cn } from '@utils';
 
 export const BottomNavigation: FC<BottomNavigationProps> = ({
+
   items,
   value,
   onChange,
@@ -10,6 +11,7 @@ export const BottomNavigation: FC<BottomNavigationProps> = ({
   variant = 'default',
   className,
 }) => {
+
   const variantClasses = {
     default: 'bear-bg-zinc-900 bear-border-t bear-border-zinc-800',
     elevated: 'bear-bg-zinc-900 bear-shadow-[0_-4px_20px_rgba(0,0,0,0.3)]',

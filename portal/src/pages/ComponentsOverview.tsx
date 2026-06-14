@@ -4,6 +4,7 @@ import { NAVIGATION, NavItem } from '@/constants/navigation.const';
 import { BearIcons } from '@forgedevstack/bear';
 import { usePortalLanguage } from '@/hooks/usePortalLanguage';
 import { PORTAL_TEXT } from '@/constants/portal-i18n.const';
+import { formatDocTitleFromPath } from '@/utils/formatDocTitle.utils';
 
 interface ComponentEntry {
   label: string;
@@ -22,7 +23,7 @@ function flattenNavItems(items: NavItem[]): ComponentEntry[] {
   for (const item of items) {
     if (item.children && item.children.length > 0) {
       for (const child of item.children) {
-        result.push({ label: child.label, path: child.path, badge: child.badge });
+        result.push({ label: formatDocTitleFromPath(child.path), path: child.path, badge: child.badge });
       }
     } else {
       result.push({ label: item.label, path: item.path, badge: item.badge });

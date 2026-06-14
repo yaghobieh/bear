@@ -8,11 +8,13 @@ const variantClasses: Record<string, string> = {
 };
 
 export const Em = forwardRef<HTMLElement, EmProps>(({
+
   children,
   variant = 'default',
   className = '',
   ...props
 }, ref) => {
+
   return (
     <em
       ref={ref}

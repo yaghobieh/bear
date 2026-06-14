@@ -1,5 +1,5 @@
 import { FC, useState, useMemo, useCallback, ChangeEvent, useEffect } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { CreditInputProps, CardType } from './CreditInput.types';
 import {
   CREDIT_INPUT_DEFAULT_TRANSLATIONS,
@@ -81,6 +81,7 @@ const CardIcons: Record<CardType, JSX.Element> = {
  * ```
  */
 export const CreditInput: FC<CreditInputProps> = ({
+
   value,
   onChange,
   mode = 'single',
@@ -99,6 +100,7 @@ export const CreditInput: FC<CreditInputProps> = ({
   translations,
   icon,
 }) => {
+
   const [cardNumber, setCardNumber] = useState(value?.number || '');
   const [expiry, setExpiry] = useState(
     value?.expiryMonth && value?.expiryYear

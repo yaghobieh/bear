@@ -1,5 +1,5 @@
 import { FC, useRef, useState, useCallback } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { GlowCardProps } from './GlowCard.types';
 import {
   DEFAULT_GLOW_COLOR,
@@ -23,11 +23,12 @@ export const GlowCard: FC<GlowCardProps> = ({
   disabled = false,
   effect = DEFAULT_EFFECT,
   borderWidth = DEFAULT_BORDER_WIDTH,
-  testId,
+      testId,
   className,
   style,
   ...rest
 }) => {
+
   const ref = useRef<HTMLDivElement>(null);
   const [pos, setPos] = useState({ x: CENTER_POSITION, y: CENTER_POSITION });
   const [hovering, setHovering] = useState(false);

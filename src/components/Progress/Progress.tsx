@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { ProgressProps } from './Progress.types';
 
 const sizeClasses = {
@@ -37,8 +37,9 @@ export const Progress: FC<ProgressProps> = ({
   animated = false,
   indeterminate = false,
   className,
-  testId,
+      testId,
 }) => {
+
   const percentage = Math.min(100, Math.max(0, (value / max) * 100));
   
   return (

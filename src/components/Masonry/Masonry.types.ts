@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 
 export interface MasonryProps {
+  id?: string;
   /** Items to render in masonry layout */
   children: ReactNode;
   /** Number of columns */

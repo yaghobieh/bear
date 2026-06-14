@@ -2,6 +2,7 @@ import { HTMLAttributes } from 'react';
 import { BearSize, BearVariant } from '../../types';
 
 export interface PaginationProps extends Omit<HTMLAttributes<HTMLElement>, 'onChange'> {
+  id?: string;
   /** Total number of pages */
   count: number;
   /** Current page (1-indexed) */

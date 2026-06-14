@@ -11,6 +11,7 @@ export interface DateRangePreset {
 }
 
 export interface DateRangePickerProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
+  id?: string;
   value?: DateRange;
   onChange?: (range: DateRange) => void;
   label?: string;

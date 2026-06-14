@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 export type PopconfirmPlacement = 'top' | 'bottom' | 'left' | 'right';
 
 export interface PopconfirmProps {
+  id?: string;
   title: string;
   description?: string;
   onConfirm?: () => void;

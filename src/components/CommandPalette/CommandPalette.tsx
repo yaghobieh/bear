@@ -1,6 +1,6 @@
 import { FC, useState, useRef, useEffect, useMemo, useCallback, KeyboardEvent } from 'react';
 import { createPortal } from 'react-dom';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { CommandPaletteProps, CommandItem, CommandItemComponentProps } from './CommandPalette.types';
 import {
   COMMAND_PALETTE_DEFAULT_TRANSLATIONS,
@@ -80,6 +80,7 @@ const CommandItemComponent: FC<CommandItemComponentProps> = ({
  * ```
  */
 export const CommandPalette: FC<CommandPaletteProps> = ({
+
   commands,
   open: controlledOpen,
   onOpenChange,
@@ -97,6 +98,7 @@ export const CommandPalette: FC<CommandPaletteProps> = ({
   icon,
   footer,
 }) => {
+
   const [internalOpen, setInternalOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [highlightedIndex, setHighlightedIndex] = useState(0);

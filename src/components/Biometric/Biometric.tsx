@@ -1,5 +1,5 @@
 import { FC, useCallback } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { BiometricProps, BiometricStatus } from './Biometric.types';
 import { BiometricIcon } from './BiometricIcon';
 import { useBiometric } from './useBiometric';
@@ -23,6 +23,7 @@ const ringColorMap: Record<BiometricStatus, string> = {
 };
 
 export const Biometric: FC<BiometricProps> = ({
+
   type = 'fingerprint',
   size = 'md',
   status: controlledStatus,
@@ -38,6 +39,7 @@ export const Biometric: FC<BiometricProps> = ({
   className,
   testId,
 }) => {
+
   const { status: internalStatus, scan } = useBiometric({
     onSuccess,
     onError,

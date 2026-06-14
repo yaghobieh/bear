@@ -8,6 +8,7 @@ export interface GalleryImage {
 }
 
 export interface ImageGalleryProps extends HTMLAttributes<HTMLDivElement> {
+  id?: string;
   images: GalleryImage[];
   columns?: number;
   gap?: number;

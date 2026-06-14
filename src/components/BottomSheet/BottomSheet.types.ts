@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react';
 
 export interface BottomSheetProps {
+  testId?: string;
+  id?: string;
   isOpen: boolean;
   onClose: () => void;
   title?: ReactNode;

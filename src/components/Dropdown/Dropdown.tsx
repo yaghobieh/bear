@@ -1,5 +1,5 @@
 import { FC, useState, useRef, useCallback, useEffect, cloneElement, isValidElement, ReactElement, useMemo } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { useClickOutsideMultiple } from '@hooks';
 import { Portal } from '../Portal';
 import type { DropdownProps, DropdownItem } from './Dropdown.types';
@@ -36,9 +36,10 @@ export const Dropdown: FC<DropdownProps> = ({
   disabled = false,
   onOpenChange,
   className,
-  testId,
+      testId,
   ...props
 }) => {
+
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
   const [focusedIndex, setFocusedIndex] = useState(-1);
   const [menuPosition, setMenuPosition] = useState<{ top: number; left: number; minWidth: number }>({ top: 0, left: 0, minWidth: minWidth });
@@ -260,8 +261,7 @@ export const Dropdown: FC<DropdownProps> = ({
   return (
     <div
       ref={containerRef}
-      className={cn('bear-relative bear-inline-block', className)}
-      data-testid={testId}
+      className={cn('bear-relative bear-inline-block', className)} data-testid={testId}
       {...props}
     >
       {triggerElement}

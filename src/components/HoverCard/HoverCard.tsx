@@ -52,6 +52,7 @@ function computePosition(
 }
 
 export const HoverCard = forwardRef<HTMLDivElement, HoverCardProps>(({
+
   children,
   cardContent,
   side = 'bottom',
@@ -62,6 +63,7 @@ export const HoverCard = forwardRef<HTMLDivElement, HoverCardProps>(({
   className = '',
   ...props
 }, ref) => {
+
   const [isOpen, setIsOpen] = useState(false);
   const [panelStyle, setPanelStyle] = useState<CSSProperties>({});
   const openTimeoutRef = useRef<ReturnType<typeof setTimeout>>();

@@ -1,4 +1,6 @@
 export interface TagsInputProps {
+  testId?: string;
+  id?: string;
   value?: string[];
   defaultValue?: string[];
   onChange?: (tags: string[]) => void;

@@ -1,6 +1,6 @@
 import { FC, useEffect, useCallback, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { XIcon } from '../Icon';
 import type { BottomSheetProps } from './BottomSheet.types';
 
@@ -14,6 +14,7 @@ const sizeClasses = {
 };
 
 export const BottomSheet: FC<BottomSheetProps> = ({
+
   isOpen,
   onClose,
   title,
@@ -27,6 +28,7 @@ export const BottomSheet: FC<BottomSheetProps> = ({
   isSticky = false,
   className,
 }) => {
+
   const [isMounted, setIsMounted] = useState(isOpen);
   const [isClosing, setIsClosing] = useState(false);
   const [hasOpened, setHasOpened] = useState(false);

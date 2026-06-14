@@ -1,3 +1,5 @@
+export const CONTEXT_MENU_DATA_ATTR = 'data-bear-context-menu';
+
 export const MENU_CLASSES = 'Bear-ContextMenu bear-fixed bear-z-[99999] bear-bg-white dark:bear-bg-zinc-800 bear-border bear-border-gray-200 dark:bear-border-zinc-700 bear-rounded-lg bear-shadow-xl bear-py-1 bear-min-w-[180px] bear-animate-in';
 export const ITEM_CLASSES = 'bear-flex bear-items-center bear-justify-between bear-px-3 bear-py-1.5 bear-text-sm bear-cursor-pointer bear-transition-colors bear-text-gray-700 dark:bear-text-zinc-300 hover:bear-bg-gray-50 dark:hover:bear-bg-zinc-700';
 export const ITEM_DISABLED_CLASSES = 'bear-opacity-40 bear-cursor-not-allowed';
@@ -6,4 +8,6 @@ export const DIVIDER_CLASSES = 'bear-my-1 bear-border-t bear-border-gray-200 dar
 export const ICON_CLASSES = 'bear-mr-2 bear-w-4 bear-h-4 bear-flex-shrink-0';
 export const SHORTCUT_CLASSES = 'bear-text-xs bear-text-gray-400 dark:bear-text-zinc-500 bear-ml-4';
 export const SUB_INDICATOR_CLASSES = 'bear-ml-2 bear-text-gray-400 dark:bear-text-zinc-500';
+export const ITEM_ROW_CLASSES = 'bear-flex bear-items-center';
 export const SUB_MENU_OFFSET = 4;
+export const VIEWPORT_PADDING = 8;

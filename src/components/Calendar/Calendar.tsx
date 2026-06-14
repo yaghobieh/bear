@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo } from 'react';
 import type { CalendarProps, CalendarDayProps, CalendarNavActions, HeaderLabelRFC } from './Calendar.types';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { useBearStyles } from '@hooks';
 import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon } from '../Icon';
 import { CALENDAR_DROPDOWN_Z_INDEX, DEFAULT_WEEKDAYS, MONTHS, NUMBER, WEEKEND_LABELS } from './Calendar.const';

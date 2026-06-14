@@ -8,6 +8,12 @@ import type {
   ListItemIconProps,
   ListItemButtonProps,
 } from './List.types';
+import {
+  LIST_SIZE_CLASSES,
+  LIST_VARIANT_CLASSES,
+  LIST_BASE_CLASSES,
+  LIST_PADDING_CLASSES,
+} from './List.const';
 
 /** Context for list-wide settings */
 interface ListContextValue {
@@ -29,30 +35,18 @@ const useListContext = () => useContext(ListContext);
  * </List>
  * ```
  */
-export const List = forwardRef<HTMLUListElement, ListProps>(({
-  variant = 'default',
-  size = 'md',
-  hoverable = false,
-  dense = false,
-  disablePadding = false,
-  className,
-  children,
-  testId,
-  ...props
-}, ref) => {
-  const sizeClasses = {
-    xs: 'bear-text-xs',
-    sm: 'bear-text-sm',
-    md: 'bear-text-base',
-    lg: 'bear-text-lg',
-    xl: 'bear-text-xl',
-  };
-
-  const variantClasses = {
-    default: '',
-    bordered: 'bear-border bear-border-gray-200 dark:bear-border-gray-700 bear-rounded-lg',
-    divided: '[&>li:not(:last-child)]:bear-border-b [&>li:not(:last-child)]:bear-border-gray-200 dark:[&>li:not(:last-child)]:bear-border-gray-700',
-  };
+export const List = forwardRef<HTMLUListElement, ListProps>((props, ref) => {
+  const {
+    variant = 'default',
+    size = 'md',
+    hoverable = false,
+    dense = false,
+    disablePadding = false,
+    className,
+    children,
+    testId,
+    ...rest
+  } = props;
 
   return (
     <ListContext.Provider value={{ dense, hoverable }}>
@@ -60,14 +54,14 @@ export const List = forwardRef<HTMLUListElement, ListProps>(({
         ref={ref}
         role="list"
         className={cn(
-          'bear-list-none bear-m-0',
-          !disablePadding && 'bear-py-2',
-          sizeClasses[size],
-          variantClasses[variant],
+          LIST_BASE_CLASSES,
+          !disablePadding && LIST_PADDING_CLASSES,
+          LIST_SIZE_CLASSES[size],
+          LIST_VARIANT_CLASSES[variant],
           className
         )}
         data-testid={testId}
-        {...props}
+        {...rest}
       >
         {children}
       </ul>

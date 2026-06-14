@@ -1,5 +1,5 @@
 import { FC, createContext, useContext, useCallback, useState } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Typography } from '../Typography';
 import type { RadioCardProps, RadioCardGroupProps } from './RadioCard.types';
 import {
@@ -31,11 +31,12 @@ export const RadioCard: FC<RadioCardProps> = ({
   disabled = false,
   variant = 'default',
   size = 'md',
-  testId,
+      testId,
   className,
   onClick,
   ...rest
 }) => {
+
   const groupContext = useContext(RadioCardGroupContext);
   const isInGroup = !!groupContext;
 
@@ -146,8 +147,7 @@ export const RadioCardGroup: FC<RadioCardGroupProps> = ({
         style={{
           gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
           gap: `${gap * 0.25}rem`,
-        }}
-        data-testid={testId}
+        }} data-testid={testId}
         {...rest}
       >
         {children}

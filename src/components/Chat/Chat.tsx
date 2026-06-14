@@ -1,5 +1,5 @@
 import { FC, useState, useRef, useEffect, useCallback, KeyboardEvent } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { useBear } from '../../context/BearProvider';
 import { Button } from '../Button';
 import { Input } from '../Input';
@@ -136,6 +136,7 @@ const TypingIndicator: FC<{ text?: string }> = ({ text = CHAT_DEFAULTS.TYPING_TE
  * ```
  */
 export const Chat: FC<ChatProps> = ({
+
   messages,
   onSend,
   isLoading = false,
@@ -154,6 +155,7 @@ export const Chat: FC<ChatProps> = ({
   testId,
   disabled = false,
 }) => {
+
   const { mode } = useBear();
   const isDark = mode === 'dark';
   const [inputValue, setInputValue] = useState('');

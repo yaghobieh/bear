@@ -11,6 +11,7 @@ export type CarouselTransition = 'slide' | 'fade' | 'zoom' | 'flip';
 export type CarouselIndicator = 'dots' | 'numbers' | 'thumbnails' | 'bars' | 'none';
 
 export interface CarouselProps {
+  id?: string;
   /** Carousel slides */
   children: ReactNode;
   /** Auto-play interval in ms (0 to disable) */

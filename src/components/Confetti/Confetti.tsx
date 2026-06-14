@@ -1,5 +1,5 @@
 import { FC, useState, useEffect, useCallback, useRef } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { ConfettiProps, ConfettiPiece } from './Confetti.types';
 import { CONFETTI_DEFAULTS, CONFETTI_COLORS, CONFETTI_SHAPES, CONFETTI_SIZE_RANGE } from './Confetti.const';
 
@@ -23,6 +23,7 @@ import { CONFETTI_DEFAULTS, CONFETTI_COLORS, CONFETTI_SHAPES, CONFETTI_SIZE_RANG
  * ```
  */
 export const Confetti: FC<ConfettiProps> = ({
+
   active = false,
   count = CONFETTI_DEFAULTS.COUNT,
   duration = CONFETTI_DEFAULTS.DURATION,
@@ -37,6 +38,7 @@ export const Confetti: FC<ConfettiProps> = ({
   className,
   testId,
 }) => {
+
   const [pieces, setPieces] = useState<ConfettiPiece[]>([]);
   const [isVisible, setIsVisible] = useState(false);
   const animationRef = useRef<number>();

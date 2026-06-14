@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { OverlayProps } from './Overlay.types';
 
 export const Overlay: FC<OverlayProps> = ({
@@ -12,8 +12,9 @@ export const Overlay: FC<OverlayProps> = ({
   children,
   onClick,
   className,
-  testId,
+      testId,
 }) => {
+
   if (!visible) return null;
 
   return (
@@ -31,8 +32,7 @@ export const Overlay: FC<OverlayProps> = ({
         backdropFilter: blur ? `blur(${blur}px)` : undefined,
       }}
       onClick={onClick}
-      aria-hidden="true"
-      data-testid={testId}
+      aria-hidden="true" data-testid={testId}
     >
       {children}
     </div>

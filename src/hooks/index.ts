@@ -60,6 +60,7 @@ export type { UseLazyLoadOptions, UseLazyLoadReturn } from './useLazyLoad';
 // Component Customization Hook
 export { useBearComponent, useBC, BearComponentProvider, useBearComponentContext } from './useBearComponent';
 export type { UseBearComponentReturn, BearComponentContextValue } from './useBearComponent';
+export { useBearDefaultProps } from './useBearDefaultProps';
 
 // Mouse Spotlight Hook
 export { useSpotlight } from './useSpotlight';
@@ -90,3 +91,5 @@ export type { UseAnimateOptions, UseAnimateReturn, AnimationPreset, AnimationKey
 // Responsive Hooks
 export { useResponsive, useResponsiveProps } from './useResponsive';
 export type { ResponsiveProp } from './useResponsive';
+
+export { useFormControl } from './useFormControl';

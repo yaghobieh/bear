@@ -1,5 +1,5 @@
 import { FC, useMemo } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { TagCloudProps } from './TagCloud.types';
 import { DEFAULT_MIN_FONT, DEFAULT_MAX_FONT, DEFAULT_COLORS, CIRCLE_RADIUS_RATIO, FULL_CIRCLE_DEG } from './TagCloud.const';
 
@@ -11,10 +11,11 @@ export const TagCloud: FC<TagCloudProps> = ({
   layout = 'flow',
   mobileCompact = false,
   onTagClick,
-  testId,
+      testId,
   className,
   ...rest
 }) => {
+
   const { minVal, maxVal } = useMemo(() => {
     let min = Infinity, max = -Infinity;
     for (const t of tags) {
@@ -60,8 +61,7 @@ export const TagCloud: FC<TagCloudProps> = ({
     return (
       <div
         className={cn('Bear-TagCloud Bear-TagCloud--circle relative', className)}
-        style={{ width: '100%', paddingBottom: '100%' }}
-        data-testid={testId}
+        style={{ width: '100%', paddingBottom: '100%' }} data-testid={testId}
         {...rest}
       >
         <div className="absolute inset-0 flex items-center justify-center">

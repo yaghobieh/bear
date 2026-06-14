@@ -1,3 +1,6 @@
+# Bear UI documentation — John Yaghobieh
+# https://bearui.com
+
 User-agent: *
 Allow: /
 

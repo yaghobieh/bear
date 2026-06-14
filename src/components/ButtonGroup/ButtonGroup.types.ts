@@ -2,6 +2,7 @@ import type { HTMLAttributes, ReactNode } from 'react';
 import type { BearSize, BearVariant } from '../../types';
 
 export interface ButtonGroupProps extends HTMLAttributes<HTMLDivElement> {
+  id?: string;
   /** Button elements */
   children: ReactNode;
   /** Size applied to all buttons */

@@ -3,6 +3,7 @@ import type { HTMLAttributes, ReactNode } from 'react';
 export type HighlightColor = 'primary' | 'yellow' | 'pink' | 'blue' | 'green' | 'purple' | 'orange' | 'red' | 'cyan';
 
 export interface HighlightProps extends HTMLAttributes<HTMLSpanElement> {
+  id?: string;
   /** Content to highlight */
   children?: ReactNode;
   /** Highlight color — 'primary' uses theme color from BearProvider */

@@ -1,5 +1,5 @@
 import { FC, useState, useEffect, useCallback, useRef, useMemo } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { TypewriterProps } from './Typewriter.types';
 import {
   DEFAULT_SPEED,
@@ -32,7 +32,7 @@ export const Typewriter: FC<TypewriterProps> = (props) => {
     as: Tag = 'span',
     className,
     style,
-    testId,
+      testId,
   } = props;
 
   const texts = useMemo(() => (Array.isArray(text) ? text : [text]), [text]);
@@ -128,8 +128,7 @@ export const Typewriter: FC<TypewriterProps> = (props) => {
   return (
     <Tag
       className={cn('Bear-Typewriter', 'bear-inline', className)}
-      style={style}
-      data-testid={testId}
+      style={style} data-testid={testId}
       aria-label={texts.join(', ')}
     >
       <span className="Bear-Typewriter__text">{displayed}</span>

@@ -7,6 +7,8 @@ export interface SegmentedControlItem {
 }
 
 export interface SegmentedControlProps {
+  testId?: string;
+  id?: string;
   items: SegmentedControlItem[];
   value?: string;
   defaultValue?: string;

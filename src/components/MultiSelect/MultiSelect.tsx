@@ -1,5 +1,5 @@
 import { FC, useState, useRef, useEffect, KeyboardEvent } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Portal } from '../Portal';
 import type { MultiSelectProps } from './MultiSelect.types';
 
@@ -35,8 +35,9 @@ export const MultiSelect: FC<MultiSelectProps> = ({
   maxSelections,
   searchable = true,
   className,
-  testId,
+      testId,
 }) => {
+
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState('');
   const [internalValue, setInternalValue] = useState<string[]>(defaultValue);

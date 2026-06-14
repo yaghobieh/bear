@@ -7,6 +7,8 @@ export type PopoverPlacement =
   | 'right' | 'right-start' | 'right-end';
 
 export interface PopoverProps {
+  testId?: string;
+  id?: string;
   children: ReactNode;
   content: ReactNode;
   placement?: PopoverPlacement;

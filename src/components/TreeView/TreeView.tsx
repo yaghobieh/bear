@@ -1,6 +1,6 @@
 import { FC, useState, useCallback } from 'react';
 import { TreeViewProps, TreeNode } from './TreeView.types';
-import { cn } from '@utils';
+import {cn } from '@utils';
 
 const ChevronIcon: FC<{ expanded: boolean; className?: string }> = ({ expanded, className }) => (
   <svg className={cn('bear-transition-transform', expanded && 'bear-rotate-90', className)} fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -19,6 +19,7 @@ const FolderIcon: FC<{ open: boolean; className?: string }> = ({ open, className
 );
 
 export const TreeView: FC<TreeViewProps> = ({
+
   data,
   onSelect,
   onExpand,
@@ -31,6 +32,7 @@ export const TreeView: FC<TreeViewProps> = ({
   size = 'md',
   showLines = false,
 }) => {
+
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set(defaultExpandedIds));
 
   const toggleExpand = useCallback((nodeId: string) => {

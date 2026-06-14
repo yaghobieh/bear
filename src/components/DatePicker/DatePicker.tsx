@@ -2,11 +2,12 @@ import { FC, useState, useRef, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { DatePickerProps } from './DatePicker.types';
 import { Calendar } from '../Calendar';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { useBearStyles } from '@hooks';
 import { formatDate } from './DatePicker.utils';
 
 export const DatePicker: FC<DatePickerProps> = ({
+
   value,
   onChange,
   minDate,
@@ -31,6 +32,7 @@ export const DatePicker: FC<DatePickerProps> = ({
   variant = 'default',
   icon,
 }) => {
+
   const [isOpen, setIsOpen] = useState(false);
   const [viewDate, setViewDate] = useState(value ?? new Date());
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });

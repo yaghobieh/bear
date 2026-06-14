@@ -1,5 +1,5 @@
 import { FC, useState, useRef, useCallback, useEffect } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { SliderRangeProps, SliderRangeValue } from './SliderRange.types';
 import type { BearSize, BearVariant } from '../../types';
 
@@ -26,6 +26,7 @@ const COLOR_STYLES: Record<BearVariant, { track: string; thumb: string }> = {
 import { stepValue } from './SliderRange.utils';
 
 export const SliderRange: FC<SliderRangeProps> = ({
+
   value: controlledValue,
   defaultValue = [20, 80],
   min = 0,
@@ -40,6 +41,7 @@ export const SliderRange: FC<SliderRangeProps> = ({
   className,
   ...props
 }) => {
+
   const [internalValue, setInternalValue] = useState<SliderRangeValue>(defaultValue);
   const [activeThumb, setActiveThumb] = useState<'min' | 'max' | null>(null);
   const trackRef = useRef<HTMLDivElement>(null);

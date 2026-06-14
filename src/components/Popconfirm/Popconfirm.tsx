@@ -1,5 +1,5 @@
 import { FC, useState, useRef, useEffect, useCallback, type CSSProperties } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Typography } from '../Typography';
 import { Portal } from '../Portal';
 import type { PopconfirmProps, PopconfirmPlacement } from './Popconfirm.types';
@@ -60,7 +60,7 @@ export const Popconfirm: FC<PopconfirmProps> = (props) => {
     disabled = false,
     children,
     variant = 'default',
-    testId,
+      testId,
   } = props;
 
   const [isOpen, setIsOpen] = useState(false);

@@ -1,4 +1,5 @@
 export interface TypewriterProps {
+  id?: string;
   /** Text or array of texts to type */
   text: string | string[];
   /** Typing speed in ms per character */

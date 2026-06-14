@@ -11,6 +11,7 @@ export interface FileTreeNode {
 }
 
 export interface FileTreeProps {
+  id?: string;
   /** Tree data (files and folders) */
   items: FileTreeNode[];
   /** Selected node id */

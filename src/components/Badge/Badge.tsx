@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { BadgeProps } from './Badge.types';
 import { sizeClasses, variantClasses, dotVariantColors, BADGE_DOT_SIZE_CLASSES } from './Badge.constants';
 
@@ -14,6 +14,7 @@ import { sizeClasses, variantClasses, dotVariantColors, BADGE_DOT_SIZE_CLASSES }
  * ```
  */
 export const Badge: FC<BadgeProps> = ({
+
   variant = 'neutral',
   size = 'sm',
   pill = false,
@@ -23,6 +24,7 @@ export const Badge: FC<BadgeProps> = ({
   testId,
   ...props
 }) => {
+
   return (
     <span
       className={cn(

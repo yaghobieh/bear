@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { KbdProps } from './Kbd.types';
-import { cn } from '@utils';
+import {cn } from '@utils';
 
 const KEY_MAP: Record<string, string> = {
   cmd: '⌘',
@@ -25,12 +25,14 @@ const KEY_MAP: Record<string, string> = {
 };
 
 export const Kbd: FC<KbdProps> = ({
+
   children,
   keys,
   size = 'md',
   variant = 'default',
   className,
 }) => {
+
   const sizeClasses = {
     sm: 'bear-text-xs bear-px-1.5 bear-py-0.5 bear-min-w-[18px]',
     md: 'bear-text-sm bear-px-2 bear-py-1 bear-min-w-[24px]',

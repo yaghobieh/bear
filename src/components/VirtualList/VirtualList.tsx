@@ -3,8 +3,7 @@ import { useState, useCallback, useRef } from 'react';
 import { cn } from '@utils';
 import { useResizeObserver } from '@hooks';
 import type { VirtualListProps } from './VirtualList.types';
-
-const FALLBACK_HEIGHT = 300;
+import { VIRTUAL_LIST_FALLBACK_HEIGHT } from './VirtualList.const';
 
 export function VirtualList<T>({
   items,
@@ -22,7 +21,7 @@ export function VirtualList<T>({
   });
 
   const containerHeight =
-    typeof height === 'number' ? height : (observedHeight > 0 ? observedHeight : FALLBACK_HEIGHT);
+    typeof height === 'number' ? height : (observedHeight > 0 ? observedHeight : VIRTUAL_LIST_FALLBACK_HEIGHT);
 
   const totalHeight = items.length * itemHeight;
   const startIndex = Math.max(0, Math.floor(scrollTop / itemHeight) - overscan);
@@ -46,22 +45,12 @@ export function VirtualList<T>({
       style={{ height: typeof height === 'number' ? `${height}px` : height }}
       onScroll={handleScroll}
     >
-      <div
-        className="bear-relative"
-        style={{ height: `${totalHeight}px` }}
-      >
-        <div
-          className="bear-absolute bear-inset-x-0 bear-top-0"
-          style={{ transform: `translateY(${offsetY}px)` }}
-        >
+      <div className="bear-relative" style={{ height: `${totalHeight}px` }}>
+        <div style={{ transform: `translateY(${offsetY}px)` }}>
           {visibleItems.map((item, i) => {
             const index = startIndex + i;
             return (
-              <div
-                key={keyExtractor(item, index)}
-                className="bear-absolute bear-inset-x-0 bear-top-0"
-                style={{ height: `${itemHeight}px`, transform: `translateY(${i * itemHeight}px)` }}
-              >
+              <div key={keyExtractor(item, index)} style={{ height: `${itemHeight}px` }}>
                 {renderItem(item, index)}
               </div>
             );
@@ -70,4 +59,4 @@ export function VirtualList<T>({
       </div>
     </div>
   );
-};
+}

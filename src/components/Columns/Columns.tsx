@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { ColumnsProps, ColumnProps } from './Columns.types';
 
 const COLUMN_GAP_VALUES = {
@@ -12,6 +12,7 @@ const COLUMN_GAP_VALUES = {
 };
 
 export const Columns: FC<ColumnsProps> = ({
+
   children,
   count = 'auto',
   gap = 'md',
@@ -20,6 +21,7 @@ export const Columns: FC<ColumnsProps> = ({
   className,
   style,
 }) => {
+
 
   const columnStyle: React.CSSProperties = {
     columnCount: count === 'auto' ? 'auto' : count,

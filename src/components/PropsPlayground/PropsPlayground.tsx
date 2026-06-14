@@ -1,5 +1,5 @@
 import { FC, useState, useMemo, useCallback } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Icon } from '../Icon/Icon';
 import type { PropsPlaygroundProps, PropValues } from './PropsPlayground.types';
 import { ROOT_CLASS, SIZE_CLASSES, COLUMN_CLASSES, TYPE_LABELS } from './PropsPlayground.const';
@@ -32,8 +32,9 @@ export const PropsPlayground: FC<PropsPlaygroundProps> = ({
   showReset = true,
   columns = 3,
   className,
-  testId,
+      testId,
 }) => {
+
   const defaults = useMemo(() => getDefaults(config), [config]);
   const [values, setValues] = useState<PropValues>(defaults);
   const [collapsed, setCollapsed] = useState(defaultCollapsed);
@@ -62,8 +63,7 @@ export const PropsPlayground: FC<PropsPlaygroundProps> = ({
   );
 
   return (
-    <div
-      data-testid={testId}
+    <div data-testid={testId}
       className={cn(
         ROOT_CLASS,
         'bear-rounded-lg bear-border bear-border-zinc-700 bear-overflow-hidden',

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Icon } from '../Icon/Icon';
 import type { PageNavProps, PageNavItem } from './PageNav.types';
 import { ROOT_CLASS, SIZE_CLASSES, LINK_SIZE, VARIANT_CLASSES, ICON_SIZE } from './PageNav.const';
@@ -63,17 +63,17 @@ export const PageNav: FC<PageNavProps> = ({
   size = 'md',
   variant = 'default',
   className,
-  testId,
+      testId,
   'aria-label': ariaLabel = 'Page navigation',
 }) => {
+
   if (!prev && !next) return null;
 
   const v = VARIANT_CLASSES[variant];
   const iconSize = ICON_SIZE[size];
 
   return (
-    <nav
-      data-testid={testId}
+    <nav data-testid={testId}
       className={cn(
         ROOT_CLASS,
         'bear-flex bear-items-start bear-justify-between bear-gap-4 bear-border-t bear-border-zinc-700/50',

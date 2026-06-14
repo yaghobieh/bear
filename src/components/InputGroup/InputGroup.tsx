@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Typography } from '../Typography';
 import type { InputGroupProps } from './InputGroup.types';
 
@@ -13,15 +13,15 @@ export const InputGroup: FC<InputGroupProps> = ({
   children,
   className,
   htmlFor,
-  testId,
+      testId,
 }) => {
+
   const hasError = Boolean(error);
   const feedbackMessage = error || helperText;
 
   return (
     <div
-      className={cn('Bear-InputGroup bear-flex bear-flex-col bear-gap-1.5', fullWidth && 'bear-w-full', className)}
-      data-testid={testId}
+      className={cn('Bear-InputGroup bear-flex bear-flex-col bear-gap-1.5', fullWidth && 'bear-w-full', className)} data-testid={testId}
     >
       {label && (
         <label htmlFor={htmlFor} className="Bear-InputGroup__label">

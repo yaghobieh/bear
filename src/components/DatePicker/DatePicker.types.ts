@@ -3,6 +3,8 @@ import type { CalendarSlots } from '../Calendar/Calendar.types';
 import type { BisProp } from '../../types/bis.types';
 
 export interface DatePickerProps {
+  testId?: string;
+  id?: string;
   value?: Date | null;
   onChange?: (date: Date | null) => void;
   onRangeChange?: (range: [Date | null, Date | null]) => void;

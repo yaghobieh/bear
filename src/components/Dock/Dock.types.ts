@@ -22,6 +22,7 @@ export interface DockItem {
 }
 
 export interface DockProps {
+  id?: string;
   /** Dock items */
   items: DockItem[];
   /** Position on screen */

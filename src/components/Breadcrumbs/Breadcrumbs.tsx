@@ -1,7 +1,7 @@
 import { FC, useEffect, useMemo, useState } from 'react';
 import { useBearThemeOptional } from '@context/BearProvider';
 import { resolveMaxVisible } from '@utils/maxVisible.utils';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Dropdown } from '../Dropdown';
 import { BearIcons } from '../Icon';
 import { BreadcrumbsProps, BreadcrumbItem } from './Breadcrumbs.types';
@@ -18,7 +18,6 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = (props) => {
     size = BREADCRUMBS_DEFAULTS.SIZE,
     showHomeIcon = BREADCRUMBS_DEFAULTS.SHOW_HOME_ICON,
     testId,
-    id,
     'aria-label': ariaLabel = 'Breadcrumb',
   } = props;
 
@@ -146,7 +145,6 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = (props) => {
 
   return (
     <nav
-      id={id}
       data-testid={testId}
       className={cn('bear-flex bear-min-w-0 bear-items-center bear-flex-wrap', BREADCRUMBS_SIZE[size], className)}
       aria-label={ariaLabel}

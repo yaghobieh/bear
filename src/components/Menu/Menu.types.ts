@@ -1,6 +1,7 @@
 import type { HTMLAttributes, ReactNode } from 'react';
 
 export interface MenuItemProps extends HTMLAttributes<HTMLDivElement> {
+  id?: string;
   /** Icon to show before the label */
   icon?: ReactNode;
   /** Whether the item is disabled */

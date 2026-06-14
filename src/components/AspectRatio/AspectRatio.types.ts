@@ -1,6 +1,8 @@
 import type { HTMLAttributes, ReactNode } from 'react';
 
 export interface AspectRatioProps extends HTMLAttributes<HTMLDivElement> {
+  testId?: string;
+  id?: string;
   /** Aspect ratio as a number (width / height). E.g. 16/9, 4/3, 1 */
   ratio?: number;
   /** Maximum width constraint */

@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { BearVariant } from '../../types';
 import type { LinkProps } from './Link.types';
 
@@ -57,11 +57,12 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(({
   children,
   className,
   style,
-  testId,
+      testId,
   target,
   rel,
   ...props
 }, ref) => {
+
   const externalProps = external ? {
     target: target || '_blank',
     rel: rel || 'noopener noreferrer',
@@ -80,8 +81,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(({
       style={{
         ...style,
         ...(color && { color }),
-      }}
-      data-testid={testId}
+      }} data-testid={testId}
       {...externalProps}
       {...props}
     >

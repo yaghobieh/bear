@@ -1,6 +1,6 @@
 import { FC, useMemo, useCallback, useEffect, useRef, useState, useContext } from 'react';
 import { BearContext } from '../../context/BearProvider';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { WatermarkProps } from './Watermark.types';
 import {
   DEFAULT_FONT_SIZE,
@@ -44,7 +44,7 @@ export const Watermark: FC<WatermarkProps> = (props) => {
     visible = true,
     className,
     style,
-    testId,
+      testId,
   } = props;
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -189,8 +189,7 @@ export const Watermark: FC<WatermarkProps> = (props) => {
     <div
       ref={containerRef}
       className={cn('Bear-Watermark', 'bear-relative', className)}
-      style={style}
-      data-testid={testId}
+      style={style} data-testid={testId}
     >
       {children}
       {visible && backgroundImage && (

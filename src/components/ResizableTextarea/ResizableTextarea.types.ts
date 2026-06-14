@@ -1,6 +1,7 @@
 import type { TextareaHTMLAttributes } from 'react';
 
 export interface ResizableTextareaProps extends Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'style'> {
+  id?: string;
   /** Textarea label */
   label?: string;
   /** Helper text below textarea */

@@ -1,5 +1,5 @@
 import { FC, useState, useEffect, useCallback } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Button } from '../Button';
 import type { BackTopProps } from './BackTop.types';
 import { BACKTOP_DEFAULTS, BACKTOP_SIZES } from './BackTop.const';
@@ -22,6 +22,7 @@ import { BACKTOP_DEFAULTS, BACKTOP_SIZES } from './BackTop.const';
  * ```
  */
 export const BackTop: FC<BackTopProps> = ({
+
   bottom = BACKTOP_DEFAULTS.BOTTOM,
   right = BACKTOP_DEFAULTS.RIGHT,
   visibleAt = BACKTOP_DEFAULTS.VISIBLE_AT,
@@ -36,6 +37,7 @@ export const BackTop: FC<BackTopProps> = ({
   onClick,
   ...rest
 }) => {
+
   const [visible, setVisible] = useState(false);
 
   const sizeConfig = BACKTOP_SIZES[size];

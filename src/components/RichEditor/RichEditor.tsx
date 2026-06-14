@@ -1,5 +1,5 @@
 import { FC, useRef, useState, useCallback, useEffect } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { RichEditorProps, ToolbarOption } from './RichEditor.types';
 import {
   execCommand,
@@ -81,7 +81,6 @@ export const RichEditor: FC<RichEditorProps> = (props) => {
     toolbar = RICH_EDITOR_DEFAULT_TOOLBAR,
     className = '',
     testId,
-    id,
     allowImagePaste = true,
     showCharCount = false,
     charCountMax,
@@ -474,9 +473,7 @@ export const RichEditor: FC<RichEditorProps> = (props) => {
   };
 
   return (
-    <div
-      id={id}
-      data-testid={testId}
+    <div data-testid={testId}
       className={cn(
         'Bear-RichEditor',
         RICH_EDITOR_ROOT_CLASSES,

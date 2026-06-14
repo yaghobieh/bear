@@ -1,5 +1,5 @@
 import { FC, useState, useEffect, useCallback, useMemo, useRef } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Typography } from '../Typography';
 import type { CountdownTimerProps, CountdownTime } from './CountdownTimer.types';
 import {

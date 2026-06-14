@@ -83,6 +83,12 @@ export const PORTAL_TEXT = {
     componentsOverviewNote: 'Every component ships with TypeScript types, dark mode support, and AeroCraft CSS styling.',
     roadmapTitle: 'Roadmap',
     roadmapDesc: 'Bear UI development roadmap. Phases show completed work, active development, and planned features.',
+    langEnglish: 'English',
+    langSpanish: 'Español',
+    propColProp: 'Prop',
+    propColType: 'Type',
+    propColDefault: 'Default',
+    propColDescription: 'Description',
   },
   es: {
     searchPlaceholder: 'Buscar...',
@@ -163,6 +169,12 @@ export const PORTAL_TEXT = {
     componentsOverviewNote: 'Todos los componentes incluyen tipos TypeScript, soporte para modo oscuro y estilos con AeroCraft CSS.',
     roadmapTitle: 'Hoja de ruta',
     roadmapDesc: 'Hoja de ruta de desarrollo de Bear UI. Las fases muestran trabajo completado, desarrollo activo y funcionalidades planificadas.',
+    langEnglish: 'English',
+    langSpanish: 'Español',
+    propColProp: 'Prop',
+    propColType: 'Tipo',
+    propColDefault: 'Por defecto',
+    propColDescription: 'Descripción',
   },
 } as const;
 

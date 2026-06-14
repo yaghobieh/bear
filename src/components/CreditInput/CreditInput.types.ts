@@ -71,6 +71,7 @@ export interface CreditInputTranslations {
  * CreditInput component props
  */
 export interface CreditInputProps {
+  id?: string;
   /** Current credit card value */
   value?: Partial<CreditCardValue>;
   /** Callback when value changes */

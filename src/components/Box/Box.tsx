@@ -3,6 +3,7 @@ import { BoxProps } from './Box.types';
 import { spacingToClass, roundedMap, shadowMap } from './Box.utils';
 
 export const Box = forwardRef<HTMLDivElement, BoxProps>(({
+
   children,
   as: Component = 'div',
   className = '',
@@ -28,6 +29,7 @@ export const Box = forwardRef<HTMLDivElement, BoxProps>(({
   style,
   ...props
 }, ref) => {
+
   const spacingClasses = [
     spacingToClass(p, 'p'),
     spacingToClass(px, 'px'),

@@ -10,6 +10,8 @@ export interface TreeNode {
 }
 
 export interface TreeViewProps {
+  testId?: string;
+  id?: string;
   data: TreeNode[];
   onSelect?: (node: TreeNode) => void;
   onExpand?: (nodeId: string, expanded: boolean) => void;

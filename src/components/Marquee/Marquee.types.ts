@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 export type MarqueeDirection = 'left' | 'right' | 'up' | 'down';
 
 export interface MarqueeProps {
+  id?: string;
   /** Content to scroll */
   children: ReactNode;
   /** Scroll direction */

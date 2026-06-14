@@ -1,5 +1,5 @@
 import { FC, useState, useRef, useEffect, Children, TouchEvent, useCallback, KeyboardEvent } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { CarouselProps } from './Carousel.types';
 import {
   DEFAULT_TRANSITION_DURATION,
@@ -34,6 +34,7 @@ import {
  * ```
  */
 export const Carousel: FC<CarouselProps> = ({
+
   children,
   autoPlay = 0,
   showDots = true,
@@ -57,6 +58,7 @@ export const Carousel: FC<CarouselProps> = ({
   style,
   testId,
 }) => {
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);

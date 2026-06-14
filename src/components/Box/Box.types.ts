@@ -1,8 +1,10 @@
 import { HTMLAttributes, ReactNode } from 'react';
 
 export interface BoxProps extends HTMLAttributes<HTMLDivElement> {
+  testId?: string;
+  id?: string;
   children?: ReactNode;
-  as?: 'div' | 'section' | 'article' | 'aside' | 'main' | 'header' | 'footer' | 'nav';
+  as?: 'div' | 'section' | 'article' | 'aside' | 'main' | 'header' | 'footer' | 'nav' | 'span';
   p?: number | string;
   px?: number | string;
   py?: number | string;

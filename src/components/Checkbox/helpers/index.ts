@@ -1,0 +1,1 @@
+export { CheckboxIndicatorIcon } from './CheckboxIndicatorIcon';

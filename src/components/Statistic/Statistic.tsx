@@ -1,8 +1,9 @@
 import { FC } from 'react';
 import { StatisticProps } from './Statistic.types';
-import { cn } from '@utils';
+import {cn } from '@utils';
 
 export const Statistic: FC<StatisticProps> = ({
+
   title,
   value,
   prefix,
@@ -16,6 +17,7 @@ export const Statistic: FC<StatisticProps> = ({
   size = 'md',
   variant = 'default',
 }) => {
+
   const formattedValue = typeof value === 'number' 
     ? value.toLocaleString(undefined, { minimumFractionDigits: precision, maximumFractionDigits: precision })
     : value;

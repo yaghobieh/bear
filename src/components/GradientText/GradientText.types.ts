@@ -10,6 +10,7 @@ export type GradientPreset =
   | 'aurora' | 'midnight';
 
 export interface GradientTextProps {
+  id?: string;
   /** Content to render with gradient */
   children: ReactNode;
   /** Gradient preset name */

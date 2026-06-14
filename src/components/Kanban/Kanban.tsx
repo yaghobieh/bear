@@ -1,11 +1,12 @@
 import { FC, useCallback } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { useDragDrop } from '@hooks';
 import type { KanbanProps, KanbanColumn, KanbanCard } from './Kanban.types';
 
 const DRAG_TYPE = 'bear-kanban';
 
 export const Kanban: FC<KanbanProps> = ({
+
   columns,
   onColumnsChange,
   onCardMove,
@@ -14,6 +15,7 @@ export const Kanban: FC<KanbanProps> = ({
   disabled = false,
   className,
 }) => {
+
   const moveCard = useCallback(
     (sourceColId: string, targetColId: string, sourceIndex: number, insertAt: number, card: KanbanCard) => {
       const sourceCol = columns.find((c) => c.id === sourceColId);

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Spinner } from '../Spinner';
 import type { ActionIconProps } from './ActionIcon.types';
 import {
@@ -12,6 +12,7 @@ import {
 } from './ActionIcon.const';
 
 export const ActionIcon: FC<ActionIconProps> = ({
+
   children,
   variant = 'default',
   color = 'default',
@@ -23,6 +24,7 @@ export const ActionIcon: FC<ActionIconProps> = ({
   className,
   ...rest
 }) => {
+
   const isDisabled = disabled || loading;
   const variantClasses = VARIANT_CLASSES[variant][color];
 

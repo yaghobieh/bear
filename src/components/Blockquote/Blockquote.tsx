@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Typography } from '../Typography';
 import type { BlockquoteProps } from './Blockquote.types';
 import {
@@ -21,6 +21,7 @@ const DEFAULT_QUOTE_ICON = (
 );
 
 export const Blockquote: FC<BlockquoteProps> = ({
+
   cite,
   icon,
   color = 'default',
@@ -29,6 +30,7 @@ export const Blockquote: FC<BlockquoteProps> = ({
   testId,
   ...rest
 }) => {
+
   const borderClass = BORDER_COLOR_MAP[color];
   const iconClass = ICON_COLOR_MAP[color];
 

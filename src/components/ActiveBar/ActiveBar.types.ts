@@ -8,6 +8,8 @@ export interface ActiveBarItem {
 }
 
 export interface ActiveBarProps extends HTMLAttributes<HTMLDivElement> {
+  testId?: string;
+  id?: string;
   items: ActiveBarItem[];
   activeId?: string;
   onItemClick?: (item: ActiveBarItem) => void;

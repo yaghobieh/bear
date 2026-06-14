@@ -1,5 +1,5 @@
 import { FC, useState, useRef, useEffect, useCallback, useMemo } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Portal } from '../Portal';
 import type { TreeSelectProps, TreeNode } from './TreeSelect.types';
 import {

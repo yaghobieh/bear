@@ -1,5 +1,5 @@
 import { FC, useState, useCallback, useMemo, useRef, cloneElement, isValidElement } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { FormProps, FormState, ValidationRule, FormItemProps } from './Form.types';
 import { FormContext } from './Form.context';
 import { validateFieldValue } from './Form.utils';
@@ -27,9 +27,10 @@ export const Form: FC<FormProps> & { Item: FC<FormItemProps> } = ({
   validateOnChange = true,
   validateOnBlur = true,
   className,
-  testId,
+      testId,
   ...rest
 }) => {
+
   const [state, setState] = useState<FormState>(() => ({
     ...FORM_INITIAL_STATE,
     fields: Object.fromEntries(
@@ -249,8 +250,7 @@ export const Form: FC<FormProps> & { Item: FC<FormItemProps> } = ({
     <FormContext.Provider value={contextValue}>
       <form
         className={cn('Bear-Form', FORM_LAYOUT_CLASSES[layout], className)}
-        onSubmit={onSubmit ? handleSubmit(onSubmit) : undefined}
-        data-testid={testId}
+        onSubmit={onSubmit ? handleSubmit(onSubmit) : undefined} data-testid={testId}
         {...rest}
       >
         {children}

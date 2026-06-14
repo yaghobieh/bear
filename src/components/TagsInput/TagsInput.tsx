@@ -1,5 +1,5 @@
 import { FC, useState, useCallback, useRef } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Chip } from '../Chip';
 import type { TagsInputProps } from './TagsInput.types';
 
@@ -12,6 +12,7 @@ const sizeClasses = {
 const chipSizeMap = { sm: 'sm' as const, md: 'md' as const, lg: 'lg' as const };
 
 export const TagsInput: FC<TagsInputProps> = ({
+
   value: controlledValue,
   defaultValue = [],
   onChange,
@@ -27,6 +28,7 @@ export const TagsInput: FC<TagsInputProps> = ({
   fullWidth = false,
   className,
 }) => {
+
   const [internalTags, setInternalTags] = useState<string[]>(defaultValue);
   const [inputValue, setInputValue] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);

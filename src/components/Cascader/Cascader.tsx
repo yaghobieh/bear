@@ -1,6 +1,6 @@
-import { FC, useState, useRef, useEffect, useCallback, useMemo } from 'react';
+import { useState, useRef, useEffect, useCallback, useMemo, type MouseEvent as ReactMouseEvent } from 'react';
 import { createPortal } from 'react-dom';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { CascaderProps, CascaderOption } from './Cascader.types';
 import {
   CASCADER_DEFAULT_TRANSLATIONS,
@@ -25,7 +25,7 @@ import { CascaderPanel } from './components/CascaderPanel';
  * />
  * ```
  */
-export const Cascader: FC<CascaderProps> = ({
+export function Cascader({
   options,
   value = [],
   onChange,
@@ -46,7 +46,7 @@ export const Cascader: FC<CascaderProps> = ({
   testId,
   translations,
   icon,
-}) => {
+}: CascaderProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [expandedPath, setExpandedPath] = useState<string[]>([]);
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
@@ -171,7 +171,7 @@ export const Cascader: FC<CascaderProps> = ({
     setExpandedPath((prev) => [...prev.slice(0, level), option.value]);
   }, []);
 
-  const handleClear = useCallback((e: React.MouseEvent) => {
+  const handleClear = useCallback((e: ReactMouseEvent) => {
     e.stopPropagation();
     onChange?.([], []);
     setExpandedPath([]);
@@ -264,4 +264,4 @@ export const Cascader: FC<CascaderProps> = ({
       )}
     </div>
   );
-};
+}

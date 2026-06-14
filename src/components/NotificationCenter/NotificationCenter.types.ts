@@ -79,6 +79,7 @@ export interface NotificationCenterTranslations {
  * NotificationCenter component props
  */
 export interface NotificationCenterProps {
+  id?: string;
   /** List of notifications */
   notifications: NotificationItem[];
   /** Callback when notification is clicked */

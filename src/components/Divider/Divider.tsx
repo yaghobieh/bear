@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { DividerProps } from './Divider.types';
 
 const VARIANT_STYLES = {
@@ -41,10 +41,11 @@ export const Divider: FC<DividerProps> = ({
   thickness = 1,
   spacing = 4,
   className,
-  testId,
+      testId,
   style,
   ...props
 }) => {
+
   const isHorizontal = orientation === 'horizontal';
 
   // If no children, render simple divider
@@ -66,8 +67,7 @@ export const Divider: FC<DividerProps> = ({
           marginLeft: !isHorizontal ? `${spacing * 0.25}rem` : 0,
           marginRight: !isHorizontal ? `${spacing * 0.25}rem` : 0,
           ...style,
-        }}
-        data-testid={testId}
+        }} data-testid={testId}
         {...props}
       />
     );

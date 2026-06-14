@@ -1,9 +1,10 @@
 import { FC, useRef, useState, useEffect, useCallback, KeyboardEvent, ClipboardEvent } from 'react';
 import type { OTPInputProps } from './OTPInput.types';
 import { OTP_CELL_RECT_CLASSES, OTP_VARIANT_FRAME } from './OTPInput.const';
-import { cn } from '@utils';
+import {cn } from '@utils';
 
 export const OTPInput: FC<OTPInputProps> = ({
+
   length = 6,
   value: controlledValue,
   onChange,
@@ -21,6 +22,7 @@ export const OTPInput: FC<OTPInputProps> = ({
   stackOnNarrow = true,
   cancelAutoJump = false,
 }) => {
+
   const [values, setValues] = useState<string[]>(Array(length).fill(''));
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 

@@ -19,6 +19,7 @@ export interface SpeedDialAction {
 }
 
 export interface SpeedDialProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onClick'> {
+  id?: string;
   /** Array of actions */
   actions: SpeedDialAction[];
   /** Main button icon (when closed) */

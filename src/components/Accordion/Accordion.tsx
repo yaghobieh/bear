@@ -1,5 +1,5 @@
 import { FC, useState, createContext, useContext } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { AccordionContextValue, AccordionProps, AccordionItemProps } from './Accordion.types';
 import {
   ACCORDION_ROOT_CLASSES,
@@ -33,7 +33,6 @@ export const Accordion: FC<AccordionProps> = (props) => {
     defaultOpen = [],
     className,
     testId,
-    id,
   } = props;
 
   const [openItems, setOpenItems] = useState<string[]>(defaultOpen);
@@ -53,7 +52,6 @@ export const Accordion: FC<AccordionProps> = (props) => {
   return (
     <AccordionContext.Provider value={{ openItems, toggleItem, allowMultiple }}>
       <div
-        id={id}
         className={cn('Bear-Accordion', ACCORDION_ROOT_CLASSES, className)}
         data-testid={testId}
       >

@@ -1,11 +1,12 @@
 import { FC, useEffect, useRef, useState, useCallback } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Typography } from '../Typography';
 import type { AnimatedCounterProps } from './AnimatedCounter.types';
 import { DEFAULT_DURATION, DEFAULT_DECIMALS, DEFAULT_SEPARATOR, DEFAULT_EASING } from './AnimatedCounter.const';
 import { EASING_FUNCTIONS, formatNumber } from './AnimatedCounter.utils';
 
 export const AnimatedCounter: FC<AnimatedCounterProps> = ({
+
   value,
   from = 0,
   duration = DEFAULT_DURATION,
@@ -20,6 +21,7 @@ export const AnimatedCounter: FC<AnimatedCounterProps> = ({
   className,
   ...rest
 }) => {
+
   const [displayValue, setDisplayValue] = useState(from);
   const [hasStarted, setHasStarted] = useState(!animateOnView);
   const ref = useRef<HTMLSpanElement>(null);

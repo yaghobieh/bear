@@ -150,4 +150,10 @@ export interface BearComponentsConfig {
   variants?: {
     Button?: ButtonVariantsConfig;
   };
+  /** Default props applied to all instances of a component */
+  defaultProps?: BearDefaultPropsMap;
 }
+
+export type BearDefaultPropsMap = Partial<{
+  [K in keyof BearComponentOverrides]: Record<string, unknown>;
+}>;

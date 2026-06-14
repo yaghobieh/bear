@@ -4,6 +4,7 @@ export type SkeletonVariant = 'text' | 'circular' | 'rectangular' | 'rounded';
 export type SkeletonAnimation = 'pulse' | 'wave' | 'none';
 
 export interface SkeletonProps extends HTMLAttributes<HTMLDivElement> {
+  id?: string;
   /** Variant type */
   variant?: SkeletonVariant;
   /** Animation type */

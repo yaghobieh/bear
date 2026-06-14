@@ -7,6 +7,7 @@ export interface AnchorLink {
 }
 
 export interface AnchorProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onClick'> {
+  id?: string;
   links: AnchorLink[];
   offset?: number;
   affix?: boolean;

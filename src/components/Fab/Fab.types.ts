@@ -2,6 +2,7 @@ import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import type { BearVariant } from '../../types';
 
 export interface FabProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  id?: string;
   /** Icon or content */
   children: ReactNode;
   /** Size of the FAB */

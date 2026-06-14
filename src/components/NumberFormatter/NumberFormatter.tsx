@@ -1,5 +1,5 @@
 import { FC, useMemo, useState, useEffect, useRef } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { NumberFormatterProps } from './NumberFormatter.types';
 import { DEFAULT_ANIMATION_DURATION, ANIMATION_FRAME_RATE, ROOT_CLASSES } from './NumberFormatter.const';
 import { buildFormatter } from './NumberFormatter.utils';

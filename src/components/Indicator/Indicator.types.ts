@@ -11,6 +11,7 @@ export type IndicatorPosition =
   | 'bottom-end';
 
 export interface IndicatorProps extends HTMLAttributes<HTMLDivElement> {
+  id?: string;
   children: ReactNode;
   label?: ReactNode;
   color?: string;

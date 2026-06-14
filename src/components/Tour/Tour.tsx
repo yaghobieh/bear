@@ -1,5 +1,5 @@
 import { FC, useState, useEffect, useCallback, useRef } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Button } from '../Button';
 import { Typography } from '../Typography';
 import type { TourProps } from './Tour.types';
@@ -35,8 +35,9 @@ export const Tour: FC<TourProps> = ({
   maskColor = TOUR_DEFAULTS.MASK_COLOR,
   animated = TOUR_DEFAULTS.ANIMATED,
   className,
-  testId,
+      testId,
 }) => {
+
   const [internalCurrent, setInternalCurrent] = useState(0);
   const [targetRect, setTargetRect] = useState<DOMRect | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
@@ -176,8 +177,7 @@ export const Tour: FC<TourProps> = ({
 
   return (
     <div
-      className={cn('Bear-Tour', className)}
-      data-testid={testId}
+      className={cn('Bear-Tour', className)} data-testid={testId}
     >
       {/* Overlay mask */}
       <div

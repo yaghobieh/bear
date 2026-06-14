@@ -1,5 +1,5 @@
 import { FC, useState, useEffect, useCallback, useRef, useMemo } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { SpotlightProps, SpotlightAction } from './Spotlight.types';
 import {
   DEFAULT_SHORTCUT_KEY,
@@ -29,7 +29,7 @@ export const Spotlight: FC<SpotlightProps> = (props) => {
     filter,
     className,
     style,
-    testId,
+      testId,
   } = props;
 
   const [internalOpen, setInternalOpen] = useState(false);
@@ -129,8 +129,7 @@ export const Spotlight: FC<SpotlightProps> = (props) => {
         'Bear-Spotlight',
         'bear-fixed bear-inset-0 bear-flex bear-items-start bear-justify-center bear-pt-[15vh]',
       )}
-      style={{ zIndex: SPOTLIGHT_Z_INDEX }}
-      data-testid={testId}
+      style={{ zIndex: SPOTLIGHT_Z_INDEX }} data-testid={testId}
     >
       {/* Backdrop */}
       <div

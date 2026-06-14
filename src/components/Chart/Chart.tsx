@@ -8,7 +8,9 @@ import { CHART, CHART_TYPES } from './Chart.const';
 /**
  * Main Chart Component
  */
-export const Chart: FC<ChartProps> = ({ type, ...props }) => {
+export const Chart: FC<ChartProps> = ({ id,
+ type, ...props }) => {
+
   switch (type) {
     case CHART_TYPES.BAR:
       return <BarChart {...props} />;

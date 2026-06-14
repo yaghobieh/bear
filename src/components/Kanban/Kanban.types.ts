@@ -14,6 +14,8 @@ export interface KanbanColumn {
 }
 
 export interface KanbanProps {
+  testId?: string;
+  id?: string;
   columns: KanbanColumn[];
   onColumnsChange?: (columns: KanbanColumn[]) => void;
   onCardMove?: (cardId: string, fromColumnId: string, toColumnId: string, fromIndex: number, toIndex: number) => void;

@@ -1,5 +1,5 @@
 import { FC, useMemo } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { SparklineProps } from './Sparkline.types';
 import { SPARKLINE } from './Sparkline.const';
 import { calculateSparklinePathData } from './Sparkline.utils';

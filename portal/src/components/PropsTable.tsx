@@ -1,4 +1,6 @@
 import { FC } from 'react';
+import { PORTAL_TEXT } from '@/constants/portal-i18n.const';
+import { usePortalLanguage } from '@/hooks/usePortalLanguage';
 
 export interface PropRow {
   name: string;
@@ -13,30 +15,36 @@ interface PropsTableProps {
   showDefault?: boolean;
 }
 
-export const PropsTable: FC<PropsTableProps> = ({ title, rows, showDefault = true }) => (
-  <section className="mb-12">
-    <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">{title}</h2>
-    <div className="overflow-x-auto">
-      <table className="w-full text-left text-sm">
-        <thead className="bg-gray-50 dark:bg-gray-800">
-          <tr>
-            <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Prop</th>
-            <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Type</th>
-            {showDefault && <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Default</th>}
-            <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Description</th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-          {rows.map((r) => (
-            <tr key={r.name}>
-              <td className="px-4 py-3 font-mono text-bear-600">{r.name}</td>
-              <td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>{r.type}</code></td>
-              {showDefault && <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{r.default ?? '-'}</td>}
-              <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{r.description}</td>
+export const PropsTable: FC<PropsTableProps> = (props) => {
+  const { title, rows, showDefault = true } = props;
+  const { language } = usePortalLanguage();
+  const t = PORTAL_TEXT[language];
+
+  return (
+    <section className="doc-section mb-12">
+      <h2 className="doc-section__title">{title}</h2>
+      <div className="doc-table-wrap overflow-x-auto rounded-lg border border-zinc-200 dark:border-zinc-800">
+        <table className="doc-table w-full text-left text-sm">
+          <thead>
+            <tr className="border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/80">
+              <th className="doc-table__th">{t.propColProp}</th>
+              <th className="doc-table__th">{t.propColType}</th>
+              {showDefault && <th className="doc-table__th">{t.propColDefault}</th>}
+              <th className="doc-table__th">{t.propColDescription}</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  </section>
-);
+          </thead>
+          <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800/80">
+            {rows.map((r) => (
+              <tr key={r.name} className="bg-white dark:bg-zinc-950">
+                <td className="doc-table__td font-mono text-pink-600 dark:text-pink-400">{r.name}</td>
+                <td className="doc-table__td"><code className="doc-code-inline">{r.type}</code></td>
+                {showDefault && <td className="doc-table__td text-zinc-500">{r.default ?? '—'}</td>}
+                <td className="doc-table__td text-zinc-600 dark:text-zinc-400">{r.description}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+};

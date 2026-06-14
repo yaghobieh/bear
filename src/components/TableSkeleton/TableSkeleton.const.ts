@@ -1,0 +1,11 @@
+export const TABLE_SKELETON_ROOT_CLASS = 'Bear-TableSkeleton';
+
+export const TABLE_SKELETON_DEFAULT_ROWS = 5;
+
+export const TABLE_SKELETON_DEFAULT_COLUMNS = 4;
+
+export const TABLE_SKELETON_ROW_HEIGHT_PX = 48;
+
+export const TABLE_SKELETON_HEADER_HEIGHT_PX = 40;
+
+export const TABLE_SKELETON_CELL_GAP_PX = 8;

@@ -1,5 +1,5 @@
 import { FC, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Portal } from '../Portal';
 import type { MenuProps, MenuItemProps, MenuDividerProps } from './Menu.types';
 
@@ -16,9 +16,10 @@ export const MenuItem: FC<MenuItemProps> = ({
   children,
   onClick,
   className,
-  testId,
+      testId,
   ...props
 }) => {
+
   return (
     <>
       <div
@@ -191,8 +192,7 @@ export const Menu: FC<MenuProps> = ({
           minWidth,
           maxHeight,
           zIndex: MENU_Z_INDEX,
-        }}
-        data-testid={testId}
+        }} data-testid={testId}
         {...props}
       >
         {children}

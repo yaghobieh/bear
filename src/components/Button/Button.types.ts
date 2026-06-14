@@ -53,7 +53,10 @@ export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement
   radius?: ButtonRadius;
   /** Enable material-design-style ripple effect on click */
   ripple?: boolean;
-  /** Shorthand tooltip — renders a native title attribute and Bear Tooltip wrapper */
+  disableRipple?: boolean;
+  disableElevation?: boolean;
+  href?: string;
+  component?: React.ElementType;
   tooltip?: string;
   /** Compact mode — reduces padding for dense layouts */
   compact?: boolean;
@@ -67,6 +70,7 @@ export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement
   suffix?: ReactNode;
   /** Test ID for testing */
   testId?: string;
+  id?: string;
   /** Bear Inner Style - sx-like overrides */
   bis?: BisProp;
   /** Inline styles */

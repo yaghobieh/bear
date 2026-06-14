@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
 
 export interface ScrollAreaProps {
+  testId?: string;
+  id?: string;
   children: ReactNode;
   className?: string;
   orientation?: 'vertical' | 'horizontal' | 'both';

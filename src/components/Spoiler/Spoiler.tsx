@@ -1,5 +1,5 @@
 import { FC, useState, useRef, useEffect, useLayoutEffect } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Typography } from '../Typography';
 import type { SpoilerProps } from './Spoiler.types';
 import {
@@ -19,9 +19,10 @@ export const Spoiler: FC<SpoilerProps> = ({
   initialExpanded = false,
   transitionDuration = TRANSITION_DURATION,
   className,
-  testId,
+      testId,
   ...rest
 }) => {
+
   const [expanded, setExpanded] = useState(initialExpanded);
   const [showToggle, setShowToggle] = useState(false);
   const [measuredHeight, setMeasuredHeight] = useState<number | null>(null);

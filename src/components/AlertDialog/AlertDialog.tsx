@@ -1,6 +1,6 @@
 import { FC, useEffect, useCallback, useId, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Button } from '../Button';
 import { Typography } from '../Typography';
 import type { AlertDialogProps } from './AlertDialog.types';

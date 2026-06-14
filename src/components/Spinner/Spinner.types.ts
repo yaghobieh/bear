@@ -1,6 +1,8 @@
 import type { BearSize } from '../../types';
 
 export interface SpinnerProps {
+  testId?: string;
+  id?: string;
   /** Spinner size */
   size?: BearSize;
   /** Additional class names */

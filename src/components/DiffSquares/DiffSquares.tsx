@@ -1,5 +1,5 @@
 import { FC, useMemo } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Typography } from '../Typography';
 import type { DiffSquaresProps, DiffCube } from './DiffSquares.types';
 import { DIFF_SQUARES_DEFAULT_COUNT, DIFF_SQUARES_CUBE_CLASS, DIFF_SQUARES_GAP } from './DiffSquares.const';
@@ -17,9 +17,10 @@ export const DiffSquares: FC<DiffSquaresProps> = ({
   onCubeClick,
   onCubeHover,
   className,
-  testId,
+      testId,
   ...rest
 }) => {
+
   const list = useMemo((): DiffCube[] => {
     if (cubes?.length) return cubes;
     return Array.from({ length: cubeCount }, () => ({ fill: 'full' as const }));
@@ -37,8 +38,7 @@ export const DiffSquares: FC<DiffSquaresProps> = ({
 
   return (
     <div
-      className={cn('Bear-DiffSquares bear-inline-flex bear-min-w-0 bear-max-w-full bear-items-center bear-gap-2', className)}
-      data-testid={testId}
+      className={cn('Bear-DiffSquares bear-inline-flex bear-min-w-0 bear-max-w-full bear-items-center bear-gap-2', className)} data-testid={testId}
       {...rest}
     >
       {(additionsText != null || deletionsText != null) && (

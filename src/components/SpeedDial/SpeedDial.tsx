@@ -1,5 +1,5 @@
 import { forwardRef, useState, useCallback, useRef, useEffect } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { SpeedDialProps, SpeedDialAction } from './SpeedDial.types';
 import {
   SPEED_DIAL_BASE,
@@ -65,6 +65,7 @@ export const SpeedDial = forwardRef<HTMLDivElement, SpeedDialProps>(
     },
     ref
   ) => {
+
     const [internalOpen, setInternalOpen] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -145,8 +146,7 @@ export const SpeedDial = forwardRef<HTMLDivElement, SpeedDialProps>(
           SPEED_DIAL_BASE,
           fixed && position && SPEED_DIAL_POSITIONS[position],
           className
-        )}
-        data-testid={testId}
+        )} data-testid={testId}
         onMouseEnter={openOnHover ? () => setIsOpen(true) : undefined}
         onMouseLeave={openOnHover ? () => setIsOpen(false) : undefined}
         {...props}

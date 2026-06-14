@@ -17,6 +17,7 @@ export type TransitionName =
   | 'collapse';
 
 export interface TransitionProps {
+  id?: string;
   /** Whether the child is visible */
   show: boolean;
   /** Transition name or custom styles */

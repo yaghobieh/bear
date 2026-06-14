@@ -1,5 +1,5 @@
 import { FC, useMemo, useState, useRef, useCallback } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Popover } from '../Popover';
 import { Typography } from '../Typography';
 import type { HeatmapProps, HeatmapCell } from './Heatmap.types';
@@ -28,10 +28,11 @@ export const Heatmap: FC<HeatmapProps> = ({
   tooltipFormat,
   onCellClick,
   renderTooltip,
-  testId,
+      testId,
   className,
   ...rest
 }) => {
+
   const [hoveredCell, setHoveredCell] = useState<HeatmapCell | null>(null);
   const [popoverOpen, setPopoverOpen] = useState(false);
   const cellRefs = useRef<Map<string, HTMLDivElement>>(new Map());

@@ -1,6 +1,8 @@
 import { HTMLAttributes } from 'react';
 
 export interface SparklineProps extends HTMLAttributes<HTMLDivElement> {
+  testId?: string;
+  id?: string;
   /** Data points (array of numbers) */
   data: number[];
   /** Width of the sparkline */

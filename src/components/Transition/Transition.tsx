@@ -1,5 +1,5 @@
 import { FC, useState, useEffect, useRef, createElement } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { TransitionProps, MotionProps } from './Transition.types';
 import { DEFAULT_DURATION, DEFAULT_EASING, TRANSITION_PRESETS } from './Transition.const';
 
@@ -18,6 +18,7 @@ import { DEFAULT_DURATION, DEFAULT_EASING, TRANSITION_PRESETS } from './Transiti
  * ```
  */
 export const Transition: FC<TransitionProps> = ({
+
   show,
   name = 'fade',
   duration = DEFAULT_DURATION,
@@ -36,6 +37,7 @@ export const Transition: FC<TransitionProps> = ({
   className,
   as = 'div',
 }) => {
+
   const [mounted, setMounted] = useState(show);
   const [phase, setPhase] = useState<'enter' | 'enter-active' | 'exit' | 'exit-active' | 'idle'>(
     show ? 'idle' : 'exit-active'
@@ -139,7 +141,7 @@ export const Motion: FC<MotionProps> = ({
   inView = true,
   as = 'div',
   className,
-  testId,
+      testId,
 }) => {
   const [currentStyles, setCurrentStyles] = useState<React.CSSProperties>(initial ?? {});
   const [isHovered, setIsHovered] = useState(false);

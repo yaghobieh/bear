@@ -1,5 +1,5 @@
 import { FC, useState, useRef, useCallback, useEffect } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { SliderProps } from './Slider.types';
 import type { BearSize, BearVariant } from '../../types';
 
@@ -77,9 +77,10 @@ export const Slider: FC<SliderProps> = ({
   valueFormatter = (v) => String(v),
   ariaLabel = 'Slider',
   className,
-  testId,
+      testId,
   ...props
 }) => {
+
   const [internalValue, setInternalValue] = useState(defaultValue);
   const [isDragging, setIsDragging] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
@@ -204,8 +205,7 @@ export const Slider: FC<SliderProps> = ({
         sizeStyles.height,
         disabled && 'bear-opacity-50 bear-cursor-not-allowed',
         className
-      )}
-      data-testid={testId}
+      )} data-testid={testId}
       {...props}
     >
       <div

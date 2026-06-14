@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react';
 
 export interface VirtualListProps<T = unknown> {
+  testId?: string;
+  id?: string;
   items: T[];
   itemHeight: number;
   overscan?: number;

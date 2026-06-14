@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { BearSize } from '../../types';
 import type { CardProps, CardHeaderProps, CardBodyProps, CardFooterProps } from './Card.types';
 import {
@@ -37,14 +37,12 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
       className,
       children,
       testId,
-      id,
       ...rest
     } = props;
 
     return (
       <div
         ref={ref}
-        id={id}
         className={cn(
           'Bear-Card',
           `Bear-Card--${variant}`,

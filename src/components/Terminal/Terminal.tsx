@@ -1,5 +1,5 @@
 import { FC, useState, useRef, useEffect, useCallback, KeyboardEvent } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Typography } from '../Typography';
 import { Spinner } from '../Spinner';
 import type { TerminalProps, TerminalLine } from './Terminal.types';
@@ -46,9 +46,10 @@ export const Terminal: FC<TerminalProps> = ({
   onHistoryChange,
   autoScroll = true,
   className,
-  testId,
+      testId,
   isLoading = false,
 }) => {
+
   const colors = TERMINAL_THEMES[theme];
   const [inputValue, setInputValue] = useState('');
   const [historyIndex, setHistoryIndex] = useState(-1);
@@ -167,8 +168,7 @@ export const Terminal: FC<TerminalProps> = ({
         color: colors.text,
         border: `1px solid ${colors.border}`,
         height: typeof height === 'number' ? `${height}px` : height,
-      }}
-      data-testid={testId}
+      }} data-testid={testId}
       onClick={handleContainerClick}
     >
       {/* Header */}

@@ -10,7 +10,7 @@ import {
   EVENT_POINTER_UP,
 } from './ResizablePanel.const';
 import { getResizePercentage, clampSize } from './ResizablePanel.utils';
-import { cn } from '@utils';
+import {cn } from '@utils';
 
 /**
  * Two-pane resizable layout with a draggable divider.
@@ -36,7 +36,7 @@ export const ResizablePanel: FC<ResizablePanelProps> = (props) => {
     maxSize = MAX_SIZE,
     onResize,
     className,
-    testId,
+      testId,
   } = props;
 
   const [size, setSize] = useState(defaultSize);
@@ -81,8 +81,7 @@ export const ResizablePanel: FC<ResizablePanelProps> = (props) => {
 
   return (
     <div
-      ref={containerRef}
-      data-testid={testId}
+      ref={containerRef} data-testid={testId}
       className={cn(
         'Bear-ResizablePanel bear-flex bear-w-full bear-h-full bear-overflow-hidden',
         isHorizontal ? 'bear-flex-row' : 'bear-flex-col',

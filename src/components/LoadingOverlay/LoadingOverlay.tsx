@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Typography } from '../Typography';
 import { Spinner } from '../Spinner';
 import type { LoadingOverlayProps } from './LoadingOverlay.types';
@@ -24,9 +24,10 @@ export const LoadingOverlay: FC<LoadingOverlayProps> = ({
   label,
   children,
   className,
-  testId,
+      testId,
   ...rest
 }) => {
+
   return (
     <div className={cn(ROOT_CLASS, className)} data-testid={testId} {...rest}>
       {children}

@@ -1,5 +1,5 @@
 import { forwardRef, useEffect } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { SkeletonProps, SkeletonTextProps, SkeletonAvatarProps } from './Skeleton.types';
 import {
   SKELETON_BASE_CLASSES,
@@ -31,6 +31,7 @@ export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
     },
     ref
   ) => {
+
     useEffect(() => {
       if (animation === 'wave') {
         injectStyles();
@@ -61,8 +62,7 @@ export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
       return (
         <div 
           className="Bear-Skeleton__group flex flex-col" 
-          style={{ gap: getSize(gap) }}
-          data-testid={testId}
+          style={{ gap: getSize(gap) }} data-testid={testId}
         >
           {Array.from({ length: count }).map((_, index) => (
             <div

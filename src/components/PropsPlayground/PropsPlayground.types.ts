@@ -23,6 +23,7 @@ export type PropsConfig = Record<string, PropControlConfig>;
 export type PropValues = Record<string, string | number | boolean>;
 
 export interface PropsPlaygroundProps {
+  id?: string;
   config: PropsConfig;
   render: (values: PropValues) => ReactNode;
   title?: string;

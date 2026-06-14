@@ -18,9 +18,16 @@ export interface TimelineItem {
   active?: boolean;
   /** Extra content below description */
   extra?: ReactNode;
+  /** Full date string shown on dot hover/click */
+  date?: string;
+  /** Detail panel content for dot interaction */
+  detail?: ReactNode;
+  /** Dot click handler */
+  onDotClick?: () => void;
 }
 
 export interface TimelineProps extends HTMLAttributes<HTMLDivElement> {
+  id?: string;
   /** Array of timeline items */
   items: TimelineItem[];
   /** Position of content relative to line */

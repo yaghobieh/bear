@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 export interface SelectOption {
   value: string;
   label: string;
@@ -5,6 +7,8 @@ export interface SelectOption {
 }
 
 export interface SelectProps {
+  testId?: string;
+  id?: string;
   /** Select options */
   options: SelectOption[];
   /** Current value */
@@ -23,7 +27,9 @@ export interface SelectProps {
   size?: 'sm' | 'md' | 'lg';
   /** Whether select is full width */
   fullWidth?: boolean;
-  /** Additional class names */
+  displayEmpty?: boolean;
+  renderValue?: (value: string) => ReactNode;
+  native?: boolean;
   className?: string;
 }
 

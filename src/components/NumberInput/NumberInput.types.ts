@@ -1,4 +1,6 @@
 export interface NumberInputProps {
+  testId?: string;
+  id?: string;
   value?: number;
   onChange?: (value: number) => void;
   min?: number;

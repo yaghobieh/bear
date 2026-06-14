@@ -5,8 +5,9 @@ import type { HTMLAttributes, ReactNode } from 'react';
 import type { BearSize } from '../../types';
 
 export interface ListProps extends HTMLAttributes<HTMLUListElement> {
+  id?: string;
   /** List variant */
-  variant?: 'default' | 'bordered' | 'divided';
+  variant?: 'default' | 'bordered' | 'divided' | 'laminated';
   /** List size */
   size?: BearSize;
   /** Whether items are hoverable */

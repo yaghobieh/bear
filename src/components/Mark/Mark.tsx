@@ -10,11 +10,13 @@ const colorClasses: Record<string, string> = {
 };
 
 export const Mark = forwardRef<HTMLElement, MarkProps>(({
+
   children,
   color = 'default',
   className = '',
   ...props
 }, ref) => {
+
   return (
     <mark
       ref={ref}

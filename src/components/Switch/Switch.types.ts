@@ -1,25 +1,36 @@
 import type { InputHTMLAttributes, ReactNode } from 'react';
 
+export type SwitchOrientation = 'horizontal' | 'vertical';
+
 export interface SwitchProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size' | 'type'> {
-  /** Switch label */
   label?: string;
-  /** Whether switch is checked */
   checked?: boolean;
-  /** Callback when switch changes */
   onCheckedChange?: (checked: boolean) => void;
-  /** Switch size */
   size?: 'sm' | 'md' | 'lg';
-  /** Icon to show when unchecked (on left side) */
+  orientation?: SwitchOrientation;
   uncheckedIcon?: ReactNode;
-  /** Icon to show when checked (on right side) */
   checkedIcon?: ReactNode;
-  /** Show icons inside thumb */
   showIconsInThumb?: boolean;
-  /** Additional class names */
   className?: string;
-  /** Test ID for testing */
   testId?: string;
-  /** Element ID */
   id?: string;
+}
+
+export interface SwitchGroupOption {
+  value: string;
+  label: ReactNode;
+  disabled?: boolean;
+}
+
+export interface SwitchGroupProps {
+  value: string;
+  options: SwitchGroupOption[];
+  onChange: (value: string) => void;
+  size?: 'sm' | 'md' | 'lg';
+  orientation?: SwitchOrientation;
+  disabled?: boolean;
+  className?: string;
+  testId?: string;
+  'aria-label'?: string;
 }
 

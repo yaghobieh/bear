@@ -1,5 +1,5 @@
 import { FC, createContext, useContext, useCallback, useState } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Typography } from '../Typography';
 import type { CheckboxCardProps, CheckboxCardGroupProps } from './CheckboxCard.types';
 import {
@@ -35,6 +35,7 @@ const CheckIcon: FC<{ className?: string }> = ({ className }) => (
 );
 
 export const CheckboxCard: FC<CheckboxCardProps> = ({
+
   checked,
   onChange,
   value: valueProp,
@@ -49,6 +50,7 @@ export const CheckboxCard: FC<CheckboxCardProps> = ({
   onClick,
   ...rest
 }) => {
+
   const groupContext = useContext(CheckboxCardGroupContext);
   const isInGroup = !!groupContext;
   const [internalChecked, setInternalChecked] = useState(false);

@@ -1,5 +1,5 @@
 import { FC, useRef, useCallback, useState } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { BearIcons } from '../Icon';
 import { Popover } from '../Popover';
 import { Input } from '../Input';
@@ -51,6 +51,7 @@ function renderLabelPopover(
 }
 
 export const ImageAnnotation: FC<ImageAnnotationProps> = ({
+
   src,
   alt = '',
   annotations,
@@ -63,6 +64,7 @@ export const ImageAnnotation: FC<ImageAnnotationProps> = ({
   className,
   ...rest
 }) => {
+
   const containerRef = useRef<HTMLDivElement>(null);
   const [editing, setEditing] = useState<string | null>(null);
   const [editText, setEditText] = useState('');
@@ -108,8 +110,7 @@ export const ImageAnnotation: FC<ImageAnnotationProps> = ({
     <div
       ref={containerRef}
       className={cn('Bear-ImageAnnotation relative inline-block select-none', editable && 'cursor-crosshair', className)}
-      onClick={handleClick}
-      data-testid={testId}
+      onClick={handleClick} data-testid={testId}
       {...rest}
     >
       <img src={src} alt={alt} className="w-full h-auto block rounded-lg" draggable={false} />

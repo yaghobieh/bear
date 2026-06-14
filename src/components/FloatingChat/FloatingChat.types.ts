@@ -6,6 +6,7 @@ import type { ReactNode } from 'react';
 import type { ChatMessage } from '../Chat/Chat.types';
 
 export interface FloatingChatProps {
+  id?: string;
   /** Chat messages */
   messages: ChatMessage[];
   /** Callback when user sends a message */

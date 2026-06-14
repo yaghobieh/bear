@@ -1,5 +1,5 @@
 import { FC, useState, ReactNode } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { AlertProps, AlertSeverity } from './Alert.types';
 import { ALERT_VARIANT_CLASSES, ALERT_DEFAULTS } from './Alert.const';
 
@@ -65,7 +65,6 @@ export const Alert: FC<AlertProps> = (props) => {
     children,
     className,
     testId,
-    id,
     ...rest
   } = props;
 
@@ -101,7 +100,6 @@ export const Alert: FC<AlertProps> = (props) => {
 
   return (
     <div
-      id={id}
       role="alert"
       aria-live="polite"
       className={cn(

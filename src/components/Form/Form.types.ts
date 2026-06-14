@@ -96,6 +96,7 @@ export type FormLayout = 'vertical' | 'horizontal' | 'inline';
  * Form component props
  */
 export interface FormProps extends Omit<FormHTMLAttributes<HTMLFormElement>, 'onSubmit' | 'onError'> {
+  id?: string;
   /** Child elements */
   children: ReactNode;
   /** Initial form values */

@@ -7,6 +7,8 @@ export interface MentionOption {
 }
 
 export interface MentionsInputProps {
+  testId?: string;
+  id?: string;
   value?: string;
   defaultValue?: string;
   onChange?: (value: string, mentions: string[]) => void;

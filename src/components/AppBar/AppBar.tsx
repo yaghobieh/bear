@@ -1,8 +1,9 @@
 import { FC } from 'react';
 import { AppBarProps } from './AppBar.types';
-import { cn } from '@utils';
+import {cn } from '@utils';
 
 export const AppBar: FC<AppBarProps> = ({
+
   children,
   position = 'sticky',
   variant = 'default',
@@ -13,6 +14,7 @@ export const AppBar: FC<AppBarProps> = ({
   centerContent,
   elevation = true,
 }) => {
+
   const positionClasses = {
     fixed: 'bear-fixed bear-top-0 bear-left-0 bear-right-0 bear-z-50',
     sticky: 'bear-sticky bear-top-0 bear-z-50',

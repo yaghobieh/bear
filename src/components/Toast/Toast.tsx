@@ -1,5 +1,5 @@
 import { FC, createContext, useContext, useState, useCallback, useEffect, useRef, ReactNode } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { 
   ToastProps, 
   ToastContainerProps, 
@@ -8,7 +8,7 @@ import type {
   ToastPosition 
 } from './Toast.types';
 
-import { generateId } from './Toast.utils';
+import { generateBearId } from '@utils';
 
 // Default icons
 const ToastIcons: Record<ToastSeverity, ReactNode> = {
@@ -177,10 +177,12 @@ const ToastItem: FC<ToastProps & { onRemove: () => void }> = ({
 
 // Toast Container
 export const ToastContainer: FC<ToastContainerProps> = ({
+
   position = 'top-right',
   maxToasts = 5,
   className,
 }) => {
+
   const context = useContext(ToastContext);
   if (!context) return null;
 
@@ -223,7 +225,7 @@ export const ToastProvider: FC<{ children: ReactNode; position?: ToastPosition }
   }, []);
 
   const addToast = useCallback((props: ToastProps): string => {
-    const id = props.id || generateId();
+    const id = props.id || generateBearId('Toast');
     setToasts((prev) => [...prev, { ...props, id }]);
     return id;
   }, []);

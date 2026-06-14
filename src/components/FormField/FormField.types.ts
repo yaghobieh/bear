@@ -1,6 +1,8 @@
 import type { InputHTMLAttributes, ReactNode } from 'react';
 
 export interface FormFieldProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
+  testId?: string;
+  id?: string;
   /** Floating label text */
   label: string;
   /** Helper text below the field */

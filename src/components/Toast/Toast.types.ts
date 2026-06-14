@@ -11,6 +11,7 @@ export type ToastPosition =
 export type ToastSeverity = 'success' | 'info' | 'warning' | 'error';
 
 export interface ToastProps {
+  testId?: string;
   /** Unique identifier for the toast */
   id?: string;
   /** Toast message content */

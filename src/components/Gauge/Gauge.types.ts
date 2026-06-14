@@ -1,6 +1,8 @@
 import { HTMLAttributes, ReactNode } from 'react';
 
 export interface GaugeProps extends HTMLAttributes<HTMLDivElement> {
+  testId?: string;
+  id?: string;
   /** Current value (0-100 or within min/max) */
   value: number;
   /** Minimum value */

@@ -21,6 +21,7 @@ export interface PlaylistItem {
 }
 
 export interface MediaPlayerProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
+  id?: string;
   /** Media source URL */
   src: string;
   /** Media type */

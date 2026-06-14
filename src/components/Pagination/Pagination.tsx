@@ -1,5 +1,5 @@
 import { FC, useState, useMemo } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { PaginationProps } from './Pagination.types';
 import type { BearSize, BearVariant } from '../../types';
 
@@ -138,9 +138,10 @@ export const Pagination: FC<PaginationProps> = ({
   disabled = false,
   onChange,
   className,
-  testId,
+      testId,
   ...props
 }) => {
+
   const [internalPage, setInternalPage] = useState(defaultPage);
   const page = controlledPage ?? internalPage;
   const items = usePagination(count, page, boundaryCount, siblingCount);
@@ -162,8 +163,7 @@ export const Pagination: FC<PaginationProps> = ({
   return (
     <nav
       aria-label="Pagination"
-      className={cn('bear-flex bear-items-center bear-gap-1', className)}
-      data-testid={testId}
+      className={cn('bear-flex bear-items-center bear-gap-1', className)} data-testid={testId}
       {...props}
     >
       {showFirstLast && (

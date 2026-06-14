@@ -2,6 +2,7 @@ import type { ReactNode, HTMLAttributes } from 'react';
 import type { BearVariant, BearSize } from '../../types';
 
 export interface BackTopProps extends Omit<HTMLAttributes<HTMLButtonElement>, 'children'> {
+  id?: string;
   /** Distance from bottom of viewport */
   bottom?: number | string;
   /** Distance from right of viewport */

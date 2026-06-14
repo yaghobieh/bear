@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { EmptyStateProps } from './EmptyState.types';
-import { cn } from '@utils';
+import {cn } from '@utils';
 
 const DefaultIcon: FC<{ className?: string }> = ({ className }) => (
   <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -9,6 +9,7 @@ const DefaultIcon: FC<{ className?: string }> = ({ className }) => (
 );
 
 export const EmptyState: FC<EmptyStateProps> = ({
+
   icon,
   title,
   description,
@@ -18,6 +19,7 @@ export const EmptyState: FC<EmptyStateProps> = ({
   size = 'md',
   variant = 'default',
 }) => {
+
   const sizeClasses = {
     sm: { icon: 'bear-w-12 bear-h-12', title: 'bear-text-lg', desc: 'bear-text-sm', padding: 'bear-py-6 bear-px-4' },
     md: { icon: 'bear-w-16 bear-h-16', title: 'bear-text-xl', desc: 'bear-text-base', padding: 'bear-py-10 bear-px-6' },

@@ -20,6 +20,7 @@ export interface DataTableColumn<T> {
 }
 
 export interface DataTableProps<T> {
+  id?: string;
   /** Column definitions */
   columns: DataTableColumn<T>[];
   /** Table data */

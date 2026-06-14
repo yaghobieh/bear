@@ -1,0 +1,1 @@
+export { BellSvg } from './BellSvg';

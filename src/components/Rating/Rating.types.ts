@@ -3,6 +3,7 @@ import { HTMLAttributes, ReactNode } from 'react';
 export type RatingSize = 'sm' | 'md' | 'lg';
 
 export interface RatingProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
+  id?: string;
   /** Current value (0-max) */
   value?: number;
   /** Default value (uncontrolled) */

@@ -9,6 +9,8 @@ export interface UploadedFile {
 }
 
 export interface FileUploadProps {
+  testId?: string;
+  id?: string;
   onFilesSelect?: (files: File[]) => void;
   onFileRemove?: (file: UploadedFile) => void;
   accept?: string;

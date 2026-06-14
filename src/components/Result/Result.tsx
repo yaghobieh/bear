@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Typography } from '../Typography';
 import type { ResultProps } from './Result.types';
 import {
@@ -23,7 +23,7 @@ export const Result: FC<ResultProps> = (props) => {
     icon,
     extra,
     className,
-    testId,
+      testId,
     ...rest
   } = props;
 
@@ -33,8 +33,7 @@ export const Result: FC<ResultProps> = (props) => {
 
   return (
     <div
-      className={cn(ROOT_CLASS, CONTAINER_CLASSES, className)}
-      data-testid={testId}
+      className={cn(ROOT_CLASS, CONTAINER_CLASSES, className)} data-testid={testId}
       {...rest}
     >
       <div className={cn(ICON_WRAPPER_CLASSES, !isTextStatus && ICON_SIZE_CLASSES, colorClass)}>

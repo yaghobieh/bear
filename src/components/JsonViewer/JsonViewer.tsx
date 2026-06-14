@@ -1,5 +1,5 @@
 import { FC, useState, useMemo, useCallback } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { useBear } from '../../context/BearProvider';
 import { Typography } from '../Typography';
 import { Button } from '../Button';
@@ -208,8 +208,9 @@ export const JsonViewer: FC<JsonViewerProps> = ({
   onValueClick,
   onCopy,
   className,
-  testId,
+      testId,
 }) => {
+
   const { mode } = useBear();
   const theme = mode === 'dark' ? DARK_THEME : DEFAULT_THEME;
   const [copied, setCopied] = useState(false);
@@ -232,8 +233,7 @@ export const JsonViewer: FC<JsonViewerProps> = ({
         'rounded-lg overflow-hidden font-mono text-sm',
         className
       )}
-      style={{ backgroundColor: theme.background }}
-      data-testid={testId}
+      style={{ backgroundColor: theme.background }} data-testid={testId}
     >
       {/* Header */}
       {showCopyButton && (

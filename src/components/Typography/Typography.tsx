@@ -15,7 +15,7 @@ import {
   LINE_HEIGHT_CLASSES,
   BUILT_IN_VARIANTS,
 } from './Typography.const';
-import { cn } from '@utils';
+import {cn } from '@utils';
 
 /**
  * Typography component for consistent text styling
@@ -52,7 +52,7 @@ export const Typography: FC<TypographyProps> = (props) => {
   children,
   className,
   style,
-  testId,
+      testId,
     ...rest
   } = props;
   const context = useContext(BearContext);
@@ -146,8 +146,7 @@ export const Typography: FC<TypographyProps> = (props) => {
           WebkitLineClamp: maxLines,
           WebkitBoxOrient: 'vertical' as const,
         }),
-      }}
-      data-testid={testId}
+      }} data-testid={testId}
       {...rest}
     >
       {wrappedContent}

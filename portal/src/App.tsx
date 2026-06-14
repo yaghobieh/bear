@@ -8,14 +8,26 @@ import { DocPageNav } from './components/DocPageNav';
 import { RouteSEO } from './components/RouteSEO';
 
 const BANNER_CONFIG = {
-  id: 'bear-aerocraft-1.0.3',
-  message: '🎉 Goodbye Tailwind! Bear v1.2.3 is now fully powered by AeroCraft — lighter, faster, zero-config utility CSS.',
-  link: '/installation',
-  linkText: 'See what changed →',
+  id: 'bear-1.2.4',
+  message: 'Bear v1.2.4 — ToggleButton, FormControl, Snackbar, Bear IDs, and provider RTL/density.',
+  link: '/whats-new',
+  linkText: "See what's new",
 };
 
 // Lazy load pages - Getting Started
 const IntroductionPage = lazy(() => import('./pages/Introduction'));
+const WhatsNew124Page = lazy(() => import('./pages/WhatsNew124'));
+const ChangelogPage = lazy(() => import('./pages/Changelog'));
+const SkillsPage = lazy(() => import('./pages/Skills'));
+const FormsDocsPage = lazy(() => import('./pages/docs/FormsDocs'));
+const CliDocsPage = lazy(() => import('./pages/docs/CliDocs'));
+const PackageImportsDocsPage = lazy(() => import('./pages/docs/PackageImportsDocs'));
+const DarkModeDocsPage = lazy(() => import('./pages/docs/DarkModeDocs'));
+const JavaScriptDocsPage = lazy(() => import('./pages/docs/JavaScriptDocs'));
+const NextJsDocsPage = lazy(() => import('./pages/docs/NextJsDocs'));
+const RegistryGithubDocsPage = lazy(() => import('./pages/docs/RegistryGithubDocs'));
+const RegistryMcpDocsPage = lazy(() => import('./pages/docs/RegistryMcpDocs'));
+const RegistryDirectoryDocsPage = lazy(() => import('./pages/docs/RegistryDirectoryDocs'));
 const InstallationPage = lazy(() => import('./pages/Installation'));
 const ThemingPage = lazy(() => import('./pages/Theming'));
 const TypeScriptPage = lazy(() => import('./pages/TypeScript'));
@@ -208,6 +220,9 @@ const PasswordInputPage = lazy(() => import('./pages/components/PasswordInput'))
 const AlertDialogPage = lazy(() => import('./pages/components/AlertDialog'));
 const InputGroupPage = lazy(() => import('./pages/components/InputGroup'));
 const FormFieldPage = lazy(() => import('./pages/components/FormFieldPage'));
+const FormControlPage = lazy(() => import('./pages/components/FormControl'));
+const ToggleButtonPage = lazy(() => import('./pages/components/ToggleButton'));
+const SnackbarPage = lazy(() => import('./pages/components/Snackbar'));
 const AspectRatioPage = lazy(() => import('./pages/components/AspectRatioPage'));
 
 // v1.1.3 New Components
@@ -321,7 +336,7 @@ function App() {
   }, []);
 
   if (isLoading) {
-    return <BearLoader onComplete={handleLoaderComplete} duration={2000} />;
+    return <BearLoader onComplete={handleLoaderComplete} duration={600} />;
   }
 
   return (
@@ -351,7 +366,7 @@ function PortalLayout({
   const isLanding = location.pathname === '/';
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+    <div className="min-h-screen bg-white dark:bg-zinc-950">
       <RouteSEO />
       <Topbar
         onMenuClick={() => setSidebarOpen(!sidebarOpen)}
@@ -372,11 +387,23 @@ function PortalLayout({
         />
 
         <main className="flex-1 min-w-0">
-          <div className={isLanding ? 'max-w-6xl mx-auto px-6 py-8' : 'max-w-4xl mx-auto px-6 py-8'}>
+          <div className={isLanding ? 'max-w-7xl mx-auto px-6 py-10' : 'max-w-3xl mx-auto px-6 py-10 doc-layout'}>
             {!isLanding && <PageBreadcrumbs />}
             <Suspense fallback={<PageLoader />}>
               <Routes>
                 <Route path="/" element={<IntroductionPage />} />
+                <Route path="/whats-new" element={<WhatsNew124Page />} />
+                <Route path="/changelog" element={<ChangelogPage />} />
+                <Route path="/skills" element={<SkillsPage />} />
+                <Route path="/docs/forms" element={<FormsDocsPage />} />
+                <Route path="/docs/cli" element={<CliDocsPage />} />
+                <Route path="/docs/package-imports" element={<PackageImportsDocsPage />} />
+                <Route path="/docs/dark-mode" element={<DarkModeDocsPage />} />
+                <Route path="/docs/javascript" element={<JavaScriptDocsPage />} />
+                <Route path="/docs/nextjs" element={<NextJsDocsPage />} />
+                <Route path="/docs/directory" element={<RegistryDirectoryDocsPage />} />
+                <Route path="/docs/registry/github" element={<RegistryGithubDocsPage />} />
+                <Route path="/docs/registry/mcp" element={<RegistryMcpDocsPage />} />
                 <Route path="/installation" element={<InstallationPage />} />
                 <Route path="/theming" element={<ThemingPage />} />
                 <Route path="/typescript" element={<TypeScriptPage />} />
@@ -393,6 +420,8 @@ function PortalLayout({
                 <Route path="/components/fab" element={<FabPage />} />
                 <Route path="/components/input" element={<InputPage />} />
                 <Route path="/components/form-field" element={<FormFieldPage />} />
+                <Route path="/components/form-control" element={<FormControlPage />} />
+                <Route path="/components/toggle-button" element={<ToggleButtonPage />} />
                 <Route path="/components/aspect-ratio" element={<AspectRatioPage />} />
                 <Route path="/components/select" element={<SelectPage />} />
                 <Route path="/components/tree-select" element={<TreeSelectPage />} />
@@ -417,6 +446,7 @@ function PortalLayout({
                 
                 <Route path="/components/alert" element={<AlertPage />} />
                 <Route path="/components/toast" element={<ToastPage />} />
+                <Route path="/components/snackbar" element={<SnackbarPage />} />
                 <Route path="/components/skeleton" element={<SkeletonPage />} />
                 <Route path="/components/spinner" element={<SpinnerPage />} />
                 <Route path="/components/progress" element={<ProgressPage />} />

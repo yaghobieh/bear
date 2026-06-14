@@ -101,8 +101,8 @@ export type { InputProps, InputPropsInput } from './Input';
 export { Select } from './Select';
 export type { SelectProps, SelectOption } from './Select';
 
-export { Switch } from './Switch';
-export type { SwitchProps } from './Switch';
+export { Switch, SwitchGroup } from './Switch';
+export type { SwitchProps, SwitchGroupProps, SwitchGroupOption, SwitchOrientation } from './Switch';
 
 export { Checkbox } from './Checkbox';
 export type { CheckboxProps } from './Checkbox';
@@ -682,3 +682,24 @@ export type { TimelineChartProps, TimelineChartItem } from './TimelineChart';
 // ImageAnnotation
 export { ImageAnnotation } from './ImageAnnotation';
 export type { ImageAnnotationProps, Annotation } from './ImageAnnotation';
+
+// Theme & MUI parity (1.2.4)
+export { CssBaseline } from './CssBaseline';
+export type { CssBaselineProps } from './CssBaseline';
+
+export { ToggleButton, ToggleButtonGroup } from './ToggleButton';
+export type { ToggleButtonProps, ToggleButtonGroupProps } from './ToggleButton';
+
+export { FormControl, useFormControl } from './FormControl';
+export type { FormControlProps, FormControlContextValue } from './FormControl';
+
+export { Snackbar } from './Snackbar';
+export type { SnackbarProps } from './Snackbar';
+
+export { CardSkeleton } from './CardSkeleton';
+export { TableSkeleton } from './TableSkeleton';
+export type { TableSkeletonProps } from './TableSkeleton';
+
+export { FormSkeleton } from './FormSkeleton';
+export type { FormSkeletonProps } from './FormSkeleton';
+

@@ -1,6 +1,7 @@
 import type { ReactNode, ButtonHTMLAttributes } from 'react';
 
 export interface ActionIconProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  id?: string;
   children: ReactNode;
   variant?: 'default' | 'filled' | 'outline' | 'subtle' | 'transparent';
   color?: 'default' | 'primary' | 'success' | 'warning' | 'error';

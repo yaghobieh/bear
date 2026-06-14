@@ -1,5 +1,5 @@
 import { FC, useState, useRef, useEffect, useCallback, KeyboardEvent, ChangeEvent } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Portal } from '../Portal';
 import type { MentionsInputProps, MentionOption } from './MentionsInput.types';
 import { defaultFilter } from './MentionsInput.utils';
@@ -13,6 +13,7 @@ const sizeClasses = {
 };
 
 export const MentionsInput: FC<MentionsInputProps> = ({
+
   value: controlledValue,
   defaultValue = '',
   onChange,
@@ -27,6 +28,7 @@ export const MentionsInput: FC<MentionsInputProps> = ({
   fullWidth = false,
   className,
 }) => {
+
   const [internalValue, setInternalValue] = useState(defaultValue);
   const [query, setQuery] = useState('');
   const [isOpen, setIsOpen] = useState(false);

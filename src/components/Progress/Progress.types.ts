@@ -1,4 +1,5 @@
 export interface ProgressProps {
+  id?: string;
   /** Progress value (0-100) */
   value: number;
   /** Maximum value */

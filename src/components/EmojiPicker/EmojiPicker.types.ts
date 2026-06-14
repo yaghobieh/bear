@@ -1,4 +1,6 @@
 export interface EmojiPickerProps {
+  testId?: string;
+  id?: string;
   onSelect?: (emoji: string) => void;
   size?: 'sm' | 'md' | 'lg';
   maxHeight?: string | number;

@@ -1,9 +1,11 @@
 import { FC, forwardRef } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { AspectRatioProps } from './AspectRatio.types';
 
 export const AspectRatio: FC<AspectRatioProps> = forwardRef<HTMLDivElement, AspectRatioProps>(
-  ({ ratio = 16 / 9, maxWidth, children, className, style, ...props }, ref) => {
+  ({ id,
+ ratio = 16 / 9, maxWidth, children, className, style, ...props }, ref) => {
+
     return (
       <div
         ref={ref}

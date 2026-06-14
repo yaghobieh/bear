@@ -4,6 +4,8 @@ import type { BearSize, BearVariant } from '../../types';
 export type SliderRangeValue = [number, number];
 
 export interface SliderRangeProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> {
+  testId?: string;
+  id?: string;
   value?: SliderRangeValue;
   defaultValue?: SliderRangeValue;
   min?: number;

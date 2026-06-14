@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { BEAR_EMOJIS } from './EmojiPicker.const';
 import type { EmojiPickerProps } from './EmojiPicker.types';
 
@@ -12,11 +12,13 @@ const sizeClasses = {
 const categories = Object.keys(BEAR_EMOJIS);
 
 export const EmojiPicker: FC<EmojiPickerProps> = ({
+
   onSelect,
   size = 'md',
   maxHeight = 280,
   className,
 }) => {
+
   const [activeCategory, setActiveCategory] = useState(categories[0]);
 
   const emojis = BEAR_EMOJIS[activeCategory] ?? [];

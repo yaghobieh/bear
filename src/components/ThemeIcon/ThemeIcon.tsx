@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { ThemeIconProps } from './ThemeIcon.types';
 
 const SIZE_MAP: Record<string, string> = {
@@ -36,8 +36,9 @@ export const ThemeIcon: FC<ThemeIconProps> = ({
   radius = 'md',
   gradient,
   className,
-  testId,
+      testId,
 }) => {
+
   const sizeClass = typeof size === 'string' ? SIZE_MAP[size] ?? SIZE_MAP.md : undefined;
   const sizeStyle = typeof size === 'number' ? { width: size, height: size } : undefined;
   const radiusClass = RADIUS_MAP[radius] ?? RADIUS_MAP.md;
@@ -56,8 +57,7 @@ export const ThemeIcon: FC<ThemeIconProps> = ({
         variantClass,
         className,
       )}
-      style={{ ...sizeStyle, ...gradientStyle }}
-      data-testid={testId}
+      style={{ ...sizeStyle, ...gradientStyle }} data-testid={testId}
     >
       {children}
     </div>

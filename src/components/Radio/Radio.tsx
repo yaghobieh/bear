@@ -1,5 +1,5 @@
-import { FC, createContext, useContext, useState, useCallback, forwardRef, useId } from 'react';
-import { cn } from '@utils';
+import { FC, createContext, useContext, useState, useCallback, forwardRef } from 'react';
+import { cn, resolveBearId, useBearId } from '@utils';
 import type { BearSize, BearVariant } from '../../types';
 import type { RadioProps, RadioGroupProps } from './Radio.types';
 
@@ -54,6 +54,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(({
   error = false,
   helperText,
   className,
+  id,
   testId,
   value,
   name,
@@ -61,8 +62,10 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(({
   onChange,
   ...props
 }, ref) => {
+
   const groupContext = useContext(RadioGroupContext);
-  const id = useId();
+  const generatedId = useBearId('Radio');
+  const domId = resolveBearId(id, generatedId);
   
   const effectiveSize = groupContext?.size ?? size;
   const effectiveVariant = groupContext?.variant ?? variant;
@@ -92,15 +95,14 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(({
         <div className="bear-relative bear-flex bear-items-center bear-justify-center">
           <input
             ref={ref}
+            id={domId}
             type="radio"
             name={effectiveName}
             value={value}
             checked={effectiveChecked}
             disabled={effectiveDisabled}
             onChange={handleChange}
-            className="bear-sr-only"
-            id={id}
-            data-testid={testId}
+            className="bear-sr-only" data-testid={testId}
             {...props}
           />
           <div

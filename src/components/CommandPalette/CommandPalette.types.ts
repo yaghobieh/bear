@@ -51,6 +51,7 @@ export interface CommandPaletteTranslations {
  * CommandPalette component props
  */
 export interface CommandPaletteProps {
+  id?: string;
   /** Available commands */
   commands: CommandItem[];
   /** Whether the palette is open */

@@ -2,6 +2,7 @@ import type { SVGAttributes, ReactNode } from 'react';
 import type { BearSize } from '../../types';
 
 export interface IconProps extends SVGAttributes<SVGElement> {
+  id?: string;
   /** Icon size */
   size?: BearSize | number;
   /** Icon color (CSS color value) */

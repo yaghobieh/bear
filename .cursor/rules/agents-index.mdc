@@ -1,0 +1,34 @@
+---
+description: Index of Bear Cursor skills — when to use each skill for components, quality, JS fundamentals, and releases
+alwaysApply: true
+---
+
+# Bear Agents & Skills Index
+
+Use these skills to keep Bear work consistent. Reference by skill name when starting a task.
+
+## Skills (`.cursor/skills/`)
+
+| Skill | When to use |
+|-------|-------------|
+| **bear-ui-standards** | Creating/refactoring components — types, consts, BEM, translations, file layout, `useBearId` |
+| **bear-component-workflow** | Adding a new component or portal page — 4-file pattern, barrel, nav, changelog |
+| **bear-js-fundamentals** | Component logic — Promises, event loop, when to avoid `useEffect` / `useCallback` / `useMemo` |
+| **bear-code-review** | Structured review — hooks, SVG helpers, props pattern, portal PropsTable, `/bear-code-review` |
+| **bear-code-quality** | Code review — types in type files, constants in const files, no magic numbers/strings, logic-first |
+| **bear-release-workflow** | Version bumps, CHANGELOG, build, publish |
+
+## How to invoke
+
+- "Follow bear-ui-standards when refactoring Select"
+- "Use bear-component-workflow to add ToggleButton"
+- "Run /bear-code-review on FormControl"
+- "Prepare 1.2.4 per bear-release-workflow"
+
+## Legacy rule
+
+`bear-ui-standards.mdc` is superseded by the **bear-ui-standards** skill. Prefer the skill for full guidance including component IDs.
+
+## Publishing
+
+All ForgeStack packages follow `forge-publishing.mdc` in forgestack — `@forgedevstack/bear`, CI on push to `main`.

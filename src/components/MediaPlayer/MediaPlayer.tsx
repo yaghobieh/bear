@@ -1,5 +1,5 @@
 import { FC, useRef, useState, useEffect, useCallback, useMemo } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { BearIcons } from '../Icon';
 import type { MediaPlayerProps, PlaylistItem } from './MediaPlayer.types';
 import { DEFAULT_ACCENT, PROGRESS_HEIGHT, CENTER_ICON_SIZE, SIZE_MAP } from './MediaPlayer.const';
@@ -34,11 +34,12 @@ export const MediaPlayer: FC<MediaPlayerProps> = ({
   playlist,
   onTrackChange,
   bis,
-  testId,
+      testId,
   className,
   style: styleProp,
   ...rest
 }) => {
+
   const mediaRef = useRef<HTMLVideoElement & HTMLAudioElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const sentinelRef = useRef<HTMLDivElement>(null);
@@ -241,8 +242,7 @@ export const MediaPlayer: FC<MediaPlayerProps> = ({
       <div
         ref={containerRef}
         className={cn('Bear-MediaPlayer relative rounded-xl overflow-hidden bg-black', className)}
-        style={containerStyle}
-        data-testid={testId}
+        style={containerStyle} data-testid={testId}
         {...rest}
       >
         <MediaTag

@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react';
 
 export interface TooltipProps {
+  testId?: string;
+  id?: string;
   /** Tooltip content */
   content: ReactNode;
   /** Trigger element */

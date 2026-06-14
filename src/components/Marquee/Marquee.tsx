@@ -1,5 +1,5 @@
 import { FC, useRef, useState, useEffect, useCallback } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { MarqueeProps } from './Marquee.types';
 import { DEFAULT_SPEED, DEFAULT_GRADIENT_WIDTH, DEFAULT_GAP, MARQUEE_ANIMATION } from './Marquee.const';
 
@@ -20,7 +20,7 @@ export const Marquee: FC<MarqueeProps> = (props) => {
     gap = DEFAULT_GAP,
     className,
     style,
-    testId,
+      testId,
   } = props;
 
   const contentRef = useRef<HTMLDivElement>(null);
@@ -78,8 +78,7 @@ export const Marquee: FC<MarqueeProps> = (props) => {
       } as React.CSSProperties}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onClick={handleClick}
-      data-testid={testId}
+      onClick={handleClick} data-testid={testId}
       role="marquee"
       aria-live="off"
     >

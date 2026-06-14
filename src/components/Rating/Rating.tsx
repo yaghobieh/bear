@@ -1,5 +1,5 @@
 import { forwardRef, useState, useCallback, useMemo } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { RatingProps } from './Rating.types';
 import {
   RATING_BASE_CLASSES,
@@ -91,6 +91,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(
     },
     ref
   ) => {
+
     const [internalValue, setInternalValue] = useState(defaultValue);
     const [hoverValue, setHoverValue] = useState<number | null>(null);
 
@@ -197,8 +198,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(
         ref={ref}
         className={cn(RATING_BASE_CLASSES, className)}
         role="radiogroup"
-        aria-label="Rating"
-        data-testid={testId}
+        aria-label="Rating" data-testid={testId}
         {...props}
       >
         {stars}

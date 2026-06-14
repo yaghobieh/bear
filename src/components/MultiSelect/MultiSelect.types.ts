@@ -5,6 +5,7 @@ export interface MultiSelectOption {
 }
 
 export interface MultiSelectProps {
+  id?: string;
   /** Available options */
   options: MultiSelectOption[];
   /** Selected values */

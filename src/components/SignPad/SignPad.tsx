@@ -1,5 +1,5 @@
 import { FC, useRef, useState, useEffect, useCallback } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Button } from '../Button';
 import type { SignPadProps } from './SignPad.types';
 import {
@@ -51,7 +51,6 @@ export const SignPad: FC<SignPadProps> = (props) => {
     outputQuality = SIGN_PAD_DEFAULT_OUTPUT_QUALITY,
     className,
     testId,
-    id,
     ...rest
   } = props;
 
@@ -201,9 +200,7 @@ export const SignPad: FC<SignPadProps> = (props) => {
   }, [hasSignature, onChange, outputFormat, outputQuality]);
 
   return (
-    <div
-      id={id}
-      data-testid={testId}
+    <div data-testid={testId}
       className={cn(
         'Bear-SignPad bear-w-full',
         SIGN_PAD_ROOT_CLASSES,

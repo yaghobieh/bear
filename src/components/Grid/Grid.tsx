@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { ResponsiveProp } from '../../types';
 import type { GridCols, GridGap, GridFlow, GridProps, GridItemProps } from './Grid.types';
 
@@ -63,6 +63,7 @@ const getSimpleValue = <T extends string | number>(
 export const Grid = forwardRef<HTMLDivElement, GridProps>(
   (
     {
+
       cols = 1,
       gap = 0,
       rowGap,
@@ -75,6 +76,7 @@ export const Grid = forwardRef<HTMLDivElement, GridProps>(
     },
     ref
   ) => {
+
     const colsValue = getSimpleValue(cols);
     const gapValue = getSimpleValue(gap);
     const rowGapValue = getSimpleValue(rowGap);
@@ -91,8 +93,7 @@ export const Grid = forwardRef<HTMLDivElement, GridProps>(
           colGapValue !== undefined && `bear-gap-x-${colGapValue}`,
           flow && flowClasses[flow],
           className
-        )}
-        data-testid={testId}
+        )} data-testid={testId}
         {...props}
       >
         {children}

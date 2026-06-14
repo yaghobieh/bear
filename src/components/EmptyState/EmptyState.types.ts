@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
 
 export interface EmptyStateProps {
+  testId?: string;
+  id?: string;
   icon?: ReactNode;
   title: string;
   description?: string;

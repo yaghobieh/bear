@@ -9,6 +9,8 @@ export interface BottomNavItem {
 }
 
 export interface BottomNavigationProps {
+  testId?: string;
+  id?: string;
   items: BottomNavItem[];
   value?: string;
   onChange?: (id: string) => void;

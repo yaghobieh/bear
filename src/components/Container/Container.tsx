@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { ContainerSize, ContainerProps } from './Container.types';
 
 const sizeClasses: Record<ContainerSize, string> = {
@@ -24,6 +24,7 @@ const sizeClasses: Record<ContainerSize, string> = {
 export const Container = forwardRef<HTMLDivElement, ContainerProps>(
   (
     {
+
       size = 'xl',
       centered = true,
       padding = true,
@@ -34,6 +35,7 @@ export const Container = forwardRef<HTMLDivElement, ContainerProps>(
     },
     ref
   ) => {
+
     return (
       <div
         ref={ref}

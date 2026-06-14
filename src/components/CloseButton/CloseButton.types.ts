@@ -1,6 +1,7 @@
 import type { BearSize } from '../../types';
 
 export interface CloseButtonProps {
+  id?: string;
   /** Click handler */
   onClick?: () => void;
   /** Button size */

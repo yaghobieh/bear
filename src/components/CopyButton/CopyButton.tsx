@@ -1,6 +1,6 @@
 import { FC, useState, useCallback } from 'react';
 import { CopyButtonProps } from './CopyButton.types';
-import { cn } from '@utils';
+import {cn } from '@utils';
 
 const CopyIcon: FC<{ className?: string }> = ({ className }) => (
   <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -15,6 +15,7 @@ const CheckIcon: FC<{ className?: string }> = ({ className }) => (
 );
 
 export const CopyButton: FC<CopyButtonProps> = ({
+
   value,
   children,
   onCopy,
@@ -26,6 +27,7 @@ export const CopyButton: FC<CopyButtonProps> = ({
   copyText = 'Copy',
   showText = false,
 }) => {
+
   const [copied, setCopied] = useState(false);
 
   const handleCopy = useCallback(async () => {

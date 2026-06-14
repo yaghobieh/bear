@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { CloseButtonProps } from './CloseButton.types';
 
 const SIZE_MAP: Record<string, { btn: string; icon: number }> = {
@@ -11,6 +11,7 @@ const SIZE_MAP: Record<string, { btn: string; icon: number }> = {
 };
 
 export const CloseButton: FC<CloseButtonProps> = ({
+
   onClick,
   size = 'md',
   disabled = false,
@@ -18,6 +19,7 @@ export const CloseButton: FC<CloseButtonProps> = ({
   className,
   testId,
 }) => {
+
   const { btn, icon } = SIZE_MAP[size] ?? SIZE_MAP.md;
 
   return (

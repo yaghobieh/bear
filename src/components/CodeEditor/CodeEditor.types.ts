@@ -65,6 +65,7 @@ export interface CodeEditorTheme {
 }
 
 export interface CodeEditorProps {
+  id?: string;
   /** Current value */
   value: string;
   /** Called on value change */

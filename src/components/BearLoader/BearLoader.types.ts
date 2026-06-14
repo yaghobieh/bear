@@ -1,4 +1,5 @@
 export interface BearLoaderProps {
+  id?: string;
   /** Size of the loader */
   size?: 'sm' | 'md' | 'lg' | 'xl';
   /** Loading text to display */

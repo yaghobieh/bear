@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Typography } from '../Typography';
 import type { DescriptionsProps, DescriptionItem } from './Descriptions.types';
 import {
@@ -26,7 +26,7 @@ export const Descriptions: FC<DescriptionsProps> = (props) => {
     layout = 'horizontal',
     labelWidth,
     className,
-    testId,
+      testId,
     ...rest
   } = props;
 

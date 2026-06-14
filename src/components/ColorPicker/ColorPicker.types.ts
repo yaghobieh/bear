@@ -1,4 +1,6 @@
 export interface ColorPickerProps {
+  testId?: string;
+  id?: string;
   value?: string;
   onChange?: (color: string) => void;
   presets?: string[];

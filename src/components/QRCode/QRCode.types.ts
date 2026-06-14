@@ -1,6 +1,7 @@
 import type { CSSProperties } from 'react';
 
 export interface QRCodeProps {
+  id?: string;
   /** The value to encode in the QR code */
   value: string;
   /** Size in pixels */

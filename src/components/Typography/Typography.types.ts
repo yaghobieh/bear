@@ -40,6 +40,7 @@ export type CustomTypographyMap = {
 };
 
 export interface TypographyProps extends HTMLAttributes<HTMLElement> {
+  id?: string;
   /** Typography variant - built-in or custom */
   variant?: TypographyVariant;
   /** HTML element to render as */

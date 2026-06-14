@@ -1,5 +1,5 @@
 import { FC, useMemo } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { QRCodeProps } from './QRCode.types';
 import { QRCODE_DEFAULTS } from './QRCode.const';
 import { generateQRMatrix, matrixToSvgPath } from './QRCode.utils';
@@ -40,8 +40,9 @@ export const QRCode: FC<QRCodeProps> = ({
   imageSize = QRCODE_DEFAULTS.IMAGE_SIZE,
   className,
   style,
-  testId,
+      testId,
 }) => {
+
   const qrData = useMemo(() => {
     if (!value) return null;
     
@@ -65,8 +66,7 @@ export const QRCode: FC<QRCodeProps> = ({
       width={size}
       height={size}
       viewBox={`0 0 ${size} ${size}`}
-      style={style}
-      data-testid={testId}
+      style={style} data-testid={testId}
     >
       {/* Background */}
       <rect width={size} height={size} fill={bgColor} />

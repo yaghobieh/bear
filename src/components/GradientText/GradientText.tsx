@@ -1,5 +1,5 @@
 import { FC, useMemo } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { GradientTextProps, GradientPreset } from './GradientText.types';
 import {
   GRADIENT_PRESETS,
@@ -27,7 +27,7 @@ export const GradientText: FC<GradientTextProps> = (props) => {
     weight = 'bold',
     className,
     style,
-    testId,
+      testId,
   } = props;
 
   const colors = useMemo(() => {
@@ -60,8 +60,7 @@ export const GradientText: FC<GradientTextProps> = (props) => {
           animation: `bear-gradient-shift ${animationSpeed}s ease infinite`,
         }),
         ...style,
-      }}
-      data-testid={testId}
+      }} data-testid={testId}
     >
       {children}
     </Tag>

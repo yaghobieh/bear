@@ -1,6 +1,6 @@
 import { FC, useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import type { TimePickerProps } from './TimePicker.types';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { formatTime } from './TimePicker.utils';
 import {

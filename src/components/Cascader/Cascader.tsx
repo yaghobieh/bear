@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback, useMemo, type MouseEvent as ReactMouseEvent } from 'react';
 import { createPortal } from 'react-dom';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { CascaderProps, CascaderOption } from './Cascader.types';
 import {
   CASCADER_DEFAULT_TRANSLATIONS,

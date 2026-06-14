@@ -1,8 +1,9 @@
 import { FC } from 'react';
 import { ScrollAreaProps } from './ScrollArea.types';
-import { cn } from '@utils';
+import {cn } from '@utils';
 
 export const ScrollArea: FC<ScrollAreaProps> = ({
+
   children,
   className,
   orientation = 'vertical',
@@ -11,6 +12,7 @@ export const ScrollArea: FC<ScrollAreaProps> = ({
   maxHeight,
   maxWidth,
 }) => {
+
   const scrollbarSizeClasses = {
     sm: '[&::-webkit-scrollbar]:bear-w-1 [&::-webkit-scrollbar]:bear-h-1',
     md: '[&::-webkit-scrollbar]:bear-w-2 [&::-webkit-scrollbar]:bear-h-2',

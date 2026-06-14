@@ -1,17 +1,18 @@
-import React, { FC, ReactNode } from 'react';
+import React, { FC, ReactNode, lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import { CodeBlock } from '@/components/CodeBlock';
+import { HomeBentoGrid } from '@/components/HomeBentoGrid';
 import { GITHUB_URL, BEAR_VERSION } from '@/constants/navigation.const';
-import { GridTable, ColumnDefinition } from '@forgedevstack/grid-table';
-import '@forgedevstack/grid-table/grid-table.css';
-import { BearIcons, CheckIcon, XIcon, Typewriter, Badge } from '@forgedevstack/bear';
+import { BearIcons, CheckIcon, Badge } from '@forgedevstack/bear';
+
+const ComparisonSection = lazy(() => import('@/components/ComparisonSection/ComparisonSection'));
 
 const ArrowRightIcon = BearIcons.ArrowRightIcon;
 
-const HERO_TITLE = 'The React UI library';
-const HERO_DESCRIPTION = '100+ accessible, customizable React components with TypeScript, AeroCraft CSS, responsive hooks, a powerful theming system, and 550+ icons — everything you need to ship beautiful products fast.';
+const HERO_TITLE = 'The Foundation for your React UI';
+const HERO_DESCRIPTION = '100+ accessible, customizable React components with TypeScript, AeroCraft CSS, responsive hooks, and a powerful theming system. Start here, then make it your own.';
 const INSTALL_CMD = 'npm install @forgedevstack/bear';
-const VERSION_LABEL = `v${BEAR_VERSION} — AeroCraft migration, enhanced Button/Input/Dropdown, new component props`;
+const VERSION_LABEL = `Introducing Bear v${BEAR_VERSION}`;
 
 const STATS = [
   { value: '100+', label: 'Components', color: 'text-pink-500' },
@@ -88,36 +89,6 @@ const FeatureCard: FC<{ title: string; description: string; icon: ReactNode; pat
   return path ? <Link to={path}>{inner}</Link> : inner;
 };
 
-interface ComparisonRow { id: number; feature: string; bearUI: boolean | 'soon' | 'partial'; others: boolean | 'soon' | 'partial'; [key: string]: unknown; }
-
-const comparisonData: ComparisonRow[] = [
-  { id: 1, feature: 'Zero Config AeroCraft', bearUI: true, others: false },
-  { id: 2, feature: 'Built-in Dark Mode', bearUI: true, others: 'partial' },
-  { id: 3, feature: '100+ Components', bearUI: true, others: true },
-  { id: 4, feature: 'TypeScript First', bearUI: true, others: 'partial' },
-  { id: 5, feature: 'Custom Icon Library (550+)', bearUI: true, others: false },
-  { id: 6, feature: 'bearStyled (styled-components)', bearUI: true, others: false },
-  { id: 7, feature: 'Breakpoint Provider Override', bearUI: true, others: 'partial' },
-  { id: 8, feature: 'Animation Hooks (6+)', bearUI: true, others: false },
-  { id: 9, feature: 'Charts, Gauge, Sparkline', bearUI: true, others: 'partial' },
-  { id: 10, feature: 'WYSIWYG Rich Editor', bearUI: true, others: false },
-  { id: 11, feature: 'Signature Pad', bearUI: true, others: false },
-  { id: 12, feature: 'Kanban Board', bearUI: true, others: false },
-];
-
-const renderStatus = (value: unknown) => {
-  if (value === true) return <CheckIcon size={18} className="text-green-500" />;
-  if (value === 'soon') return <span className="px-2 py-0.5 rounded text-xs font-medium bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400">Soon</span>;
-  if (value === 'partial') return <span className="text-xs text-gray-400">Partial</span>;
-  return <XIcon size={18} className="text-gray-300 dark:text-gray-600" />;
-};
-
-const comparisonColumns: ColumnDefinition<ComparisonRow>[] = [
-  { id: 'feature', accessor: 'feature', header: 'Feature', width: 260 },
-  { id: 'bearUI', accessor: 'bearUI', header: 'Bear UI', align: 'center', width: 100, render: renderStatus, headerClassName: 'text-pink-500 font-bold' },
-  { id: 'others', accessor: 'others', header: 'Others', align: 'center', width: 100, render: renderStatus },
-];
-
 const ComponentCard: FC<{ title: string; desc: string; path: string; preview: React.ReactNode }> = ({ title, desc, path, preview }) => (
   <Link to={path} className="group block p-4 rounded-xl border border-gray-200 dark:border-gray-700/60 bg-white dark:bg-gray-800/40 hover:border-pink-400 dark:hover:border-pink-500 hover:shadow-lg hover:shadow-pink-500/5 transition-all">
     <div className="h-20 mb-3 rounded-lg bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 flex items-center justify-center overflow-hidden">{preview}</div>
@@ -129,49 +100,50 @@ const ComponentCard: FC<{ title: string; desc: string; path: string; preview: Re
 const Introduction: FC = () => {
   return (
     <div className="fade-in overflow-x-hidden">
-      {/* Hero */}
-      <section
-        className="relative py-16 md:py-24 lg:py-32 mb-16 overflow-hidden bg-gradient-to-b from-pink-50/80 via-white to-transparent dark:from-pink-950/20 dark:via-gray-950 dark:to-transparent"
-        style={{ marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', paddingLeft: 'calc(50vw - 50%)', paddingRight: 'calc(50vw - 50%)' }}
-      >
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-gradient-radial from-pink-200/40 via-pink-100/20 to-transparent dark:from-pink-800/15 dark:via-pink-900/5 rounded-full blur-3xl" />
-          <div className="absolute top-1/2 -left-40 w-[500px] h-[500px] bg-gradient-radial from-purple-200/30 to-transparent dark:from-purple-900/10 rounded-full blur-3xl" />
-          <div className="absolute top-1/3 -right-40 w-[500px] h-[500px] bg-gradient-radial from-rose-200/30 to-transparent dark:from-rose-900/10 rounded-full blur-3xl" />
-        </div>
-        
-        <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-1.5 rounded-full bg-white/60 dark:bg-white/5 backdrop-blur-sm border border-pink-200/60 dark:border-pink-800/30 text-pink-600 dark:text-pink-400 text-xs md:text-sm font-medium mb-6">
-            <span className="w-1.5 h-1.5 rounded-full bg-pink-500 animate-pulse" />
-            {VERSION_LABEL}
-          </div>
+      <section className="text-center pt-12 md:pt-20 pb-10 md:pb-14">
+        <Link
+          to="/whats-new"
+          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-xs font-medium text-gray-600 dark:text-gray-400 hover:border-pink-300 dark:hover:border-pink-800 hover:text-pink-600 dark:hover:text-pink-400 transition-colors mb-8"
+        >
+          {VERSION_LABEL}
+          <ArrowRightIcon size={12} />
+        </Link>
 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 dark:text-white mb-6 leading-[1.1] tracking-tight">
-            {HERO_TITLE}
-          <br />
-            <span className="text-pink-500">
-              <Typewriter text={['for speed', 'for beauty', 'for developers', 'you deserve']} loop cursor as="span" className="text-pink-500" />
-          </span>
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-5 leading-[1.1] tracking-tight max-w-3xl mx-auto">
+          {HERO_TITLE}
         </h1>
-        
-          <p className="text-base sm:text-lg md:text-xl text-gray-500 dark:text-gray-400 max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed">
-            {HERO_DESCRIPTION}
-          </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-8 md:mb-10">
-            <Link to="/installation" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-pink-500 hover:bg-pink-600 text-white font-semibold transition-colors shadow-xl shadow-pink-500/20 text-base">
-              Get Started <ArrowRightIcon size={18} />
-            </Link>
-            <Link to="/components" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 font-semibold transition-colors text-base">
-              Explore Components
+        <p className="text-base sm:text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto mb-8 leading-relaxed">
+          {HERO_DESCRIPTION}
+        </p>
+
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-6">
+          <Link
+            to="/installation"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-medium text-sm hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors"
+          >
+            Get Started
+            <ArrowRightIcon size={16} />
           </Link>
-      </div>
-
-          <div className="max-w-sm sm:max-w-md mx-auto">
-            <CodeBlock code={INSTALL_CMD} language="bash" showLineNumbers={false} />
-      </div>
+          <Link
+            to="/components"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-900 font-medium text-sm transition-colors"
+          >
+            Explore Components
+          </Link>
         </div>
+
+        <p className="text-xs text-gray-400 dark:text-gray-500">
+          Built by{' '}
+          <a href="https://github.com/yaghobieh" className="text-pink-600 dark:text-pink-400 hover:underline">
+            John Yaghobieh
+          </a>
+          {' · '}
+          Part of ForgeStack
+        </p>
       </section>
+
+      <HomeBentoGrid />
 
       {/* Stats */}
       <section className="mb-14 md:mb-20">
@@ -337,17 +309,9 @@ const BrandCard = bearStyled(Card, {
         </div>
       </section>
 
-      {/* Comparison */}
-      <section className="mb-14 md:mb-20">
-        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-3 text-center">How Bear UI compares</h2>
-        <p className="text-center text-gray-500 dark:text-gray-400 mb-8 max-w-lg mx-auto">Features that come built-in vs what you typically need to add yourself with other libraries.</p>
-        <div className="max-w-2xl mx-auto grid-table-wrapper">
-          <GridTable<ComparisonRow> data={comparisonData} columns={comparisonColumns} getRowId={(row) => row.id} showPagination={false} />
-      </div>
-        <p className="text-center text-xs text-gray-400 mt-3">
-          Table powered by <a href="https://www.npmjs.com/package/@forgedevstack/grid-table" target="_blank" rel="noopener noreferrer" className="text-pink-500 hover:underline">@forgedevstack/grid-table</a>
-        </p>
-      </section>
+      <Suspense fallback={<div className="mb-20 text-center text-sm text-gray-400">Loading comparison…</div>}>
+        <ComparisonSection />
+      </Suspense>
 
       {/* Quick Example */}
       <section className="mb-14 md:mb-20">

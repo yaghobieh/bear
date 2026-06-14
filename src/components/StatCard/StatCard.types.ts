@@ -1,6 +1,8 @@
 import { HTMLAttributes, ReactNode } from 'react';
 
 export interface StatCardProps extends HTMLAttributes<HTMLDivElement> {
+  testId?: string;
+  id?: string;
   /** Card title */
   title: string;
   /** Main value to display */

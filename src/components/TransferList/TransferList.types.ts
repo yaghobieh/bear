@@ -17,6 +17,7 @@ export interface TransferListItem {
 }
 
 export interface TransferListProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
+  id?: string;
   /** Available items on the left side */
   leftItems: TransferListItem[];
   /** Selected items on the right side */

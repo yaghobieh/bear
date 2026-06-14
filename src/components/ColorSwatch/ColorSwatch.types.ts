@@ -3,6 +3,7 @@ import type { HTMLAttributes } from 'react';
 export type SwatchSize = 'sm' | 'md' | 'lg' | 'xl';
 
 export interface ColorSwatchProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
+  id?: string;
   color: string;
   selected?: boolean;
   size?: SwatchSize;

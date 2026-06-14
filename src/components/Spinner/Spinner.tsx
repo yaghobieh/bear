@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { BearSize } from '../../types';
 import type { SpinnerProps } from './Spinner.types';
 
@@ -21,11 +21,13 @@ const sizeClasses: Record<BearSize, string> = {
  * ```
  */
 export const Spinner: FC<SpinnerProps> = ({
+
   size = 'md',
   className,
   color = 'currentColor',
   label = 'Loading',
 }) => {
+
   return (
     <svg
       className={cn(

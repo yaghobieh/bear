@@ -1,6 +1,7 @@
 import type { HTMLAttributes, ReactNode } from 'react';
 
 export interface DividerProps extends HTMLAttributes<HTMLHRElement> {
+  id?: string;
   /** Text to display in the middle of the divider */
   children?: ReactNode;
   /** Orientation of the divider */

@@ -2,6 +2,7 @@ import type { HTMLAttributes } from 'react';
 import type { TypographyProps } from '../Typography/Typography.types';
 
 export interface AnimatedCounterProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'children'> {
+  id?: string;
   /** Target value to count to */
   value: number;
   /** Starting value */

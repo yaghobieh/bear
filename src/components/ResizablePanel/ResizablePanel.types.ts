@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 
 export interface ResizablePanelProps {
+  id?: string;
   /** First pane content */
   first: ReactNode;
   /** Second pane content */

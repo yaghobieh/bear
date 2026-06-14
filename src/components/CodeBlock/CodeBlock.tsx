@@ -1,5 +1,5 @@
 import { forwardRef, useState } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { CodeBlockProps } from './CodeBlock.types';
 import { Typography } from '../Typography';
 
@@ -45,9 +45,9 @@ export const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(({
   theme = 'auto',
   className = '',
   testId,
-  id,
   ...props
 }, ref) => {
+
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -90,7 +90,6 @@ export const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(({
 
   return (
     <div
-      id={id}
       data-testid={testId}
       className={cn(CODEBLOCK_ROOT_CLASSES, getRootClasses(), className)}
     >

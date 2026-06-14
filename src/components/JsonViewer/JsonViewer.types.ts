@@ -3,6 +3,7 @@
  */
 
 export interface JsonViewerProps {
+  id?: string;
   /** JSON data to display */
   data: unknown;
   /** Number of levels to expand by default (default: 2) */

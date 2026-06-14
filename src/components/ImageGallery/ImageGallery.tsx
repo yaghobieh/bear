@@ -1,5 +1,5 @@
 import { FC, useState, useEffect, useCallback } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { ImageGalleryProps, LightboxProps } from './ImageGallery.types';
 import {
   DEFAULT_COLUMNS, DEFAULT_GAP, DEFAULT_THUMB_HEIGHT,
@@ -60,8 +60,7 @@ export const ImageGallery: FC<ImageGalleryProps> = (props) => {
     <>
       <div
         className={cn(ROOT_CLASSES, className)}
-        style={{ gridTemplateColumns: `repeat(${columns}, 1fr)`, gap }}
-        data-testid={testId}
+        style={{ gridTemplateColumns: `repeat(${columns}, 1fr)`, gap }} data-testid={testId}
         {...rest}
       >
         {images.map((img, i) => (

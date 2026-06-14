@@ -7,6 +7,7 @@ export type DiffLineType = 'add' | 'remove' | 'context';
 export type DiffSpacing = 'compact' | 'comfortable' | 'spacious';
 
 export interface DiffViewerProps {
+  id?: string;
   /** Original text (left side) */
   oldValue: string;
   /** New text (right side) */

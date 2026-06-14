@@ -40,6 +40,7 @@ export interface MapViewport {
 export type MapTileProvider = 'openstreetmap' | 'cartodb-light' | 'cartodb-dark' | 'stamen-terrain' | 'custom';
 
 export interface MapProps {
+  id?: string;
   /** Map markers */
   markers?: MapMarker[];
   /** Initial viewport */

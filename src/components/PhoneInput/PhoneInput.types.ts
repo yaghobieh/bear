@@ -55,6 +55,7 @@ export interface PhoneInputTranslations {
  * PhoneInput component props
  */
 export interface PhoneInputProps {
+  id?: string;
   /** Current phone value */
   value?: PhoneValue;
   /** Callback when value changes */

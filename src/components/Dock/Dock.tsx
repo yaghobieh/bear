@@ -1,5 +1,5 @@
 import { FC, useState, useCallback, useRef } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { DockProps, DockItem } from './Dock.types';
 import {
   DEFAULT_ICON_SIZE,
@@ -29,7 +29,7 @@ export const Dock: FC<DockProps> = (props) => {
     showLabels = true,
     className,
     style,
-    testId,
+      testId,
   } = props;
 
   const [hoverIndex, setHoverIndex] = useState(-1);
@@ -67,8 +67,7 @@ export const Dock: FC<DockProps> = (props) => {
         padding: DOCK_PADDING,
         zIndex: DOCK_Z_INDEX,
         ...style,
-      }}
-      data-testid={testId}
+      }} data-testid={testId}
       role="toolbar"
       aria-label="Dock"
       onMouseLeave={handleMouseLeave}

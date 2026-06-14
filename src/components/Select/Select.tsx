@@ -1,5 +1,5 @@
 import { FC, useState, useRef, useCallback, useEffect } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { useClickOutsideMultiple } from '@hooks';
 import { ChevronDownIcon, CheckIcon } from '../Icon';
 import { Portal } from '../Portal';
@@ -12,6 +12,7 @@ const sizeClasses = {
 };
 
 export const Select: FC<SelectProps> = ({
+
   options,
   value,
   onChange,
@@ -23,6 +24,7 @@ export const Select: FC<SelectProps> = ({
   fullWidth = false,
   className,
 }) => {
+
   const [isOpen, setIsOpen] = useState(false);
   const [menuPosition, setMenuPosition] = useState<{ top: number; left: number; width: number }>({ top: 0, left: 0, width: 0 });
   const selectRef = useRef<HTMLDivElement>(null);

@@ -11,6 +11,7 @@ export interface ConfettiPiece {
 }
 
 export interface ConfettiProps {
+  id?: string;
   /** Whether confetti is active */
   active?: boolean;
   /** Number of confetti pieces */

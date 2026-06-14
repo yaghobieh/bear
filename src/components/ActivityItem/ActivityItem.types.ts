@@ -1,6 +1,8 @@
 import { HTMLAttributes, ReactNode } from 'react';
 
 export interface ActivityItemProps extends HTMLAttributes<HTMLDivElement> {
+  testId?: string;
+  id?: string;
   /** Icon element */
   icon: ReactNode;
   /** Icon background color/gradient */

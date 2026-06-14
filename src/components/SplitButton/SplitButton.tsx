@@ -1,5 +1,5 @@
 import { FC, useState, useRef, useEffect, useCallback } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { SplitButtonProps } from './SplitButton.types';
 import {
   VARIANT_CLASSES, SIZE_CLASSES, ARROW_SIZE_CLASSES,

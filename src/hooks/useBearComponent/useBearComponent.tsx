@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useCallback, useMemo, ReactNode, CSSProperties } from 'react';
+import { BearContext } from '../../context/BearProvider';
 import type { BearComponentOverrides, ButtonVariantsConfig } from '../../types/component.types';
 import type { UseBearComponentReturn, BearComponentContextValue } from './useBearComponent.types';
 
@@ -137,8 +138,9 @@ export const useBearComponent = <K extends keyof BearComponentOverrides>(
   componentKey: K,
   defaultStyles?: BearComponentOverrides[K]
 ): UseBearComponentReturn => {
-  const context = useContext(BearComponentContext);
-  const componentOverrides = context?.components[componentKey];
+  const legacyContext = useContext(BearComponentContext);
+  const bearContext = useContext(BearContext);
+  const componentOverrides = legacyContext?.components[componentKey] ?? bearContext?.components[componentKey];
 
   const getStyles = useCallback((part: string = 'root'): CSSProperties => {
     const overrides = componentOverrides as Record<string, CSSProperties | undefined> | undefined;

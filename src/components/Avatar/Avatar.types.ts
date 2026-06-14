@@ -1,6 +1,7 @@
 import type { ImgHTMLAttributes, ReactNode } from 'react';
 
 export interface AvatarProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, 'size'> {
+  id?: string;
   /** Image source URL */
   src?: string;
   /** Alt text */

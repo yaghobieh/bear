@@ -3,6 +3,7 @@ import type { HTMLAttributes } from 'react';
 export type NumberFormatStyle = 'decimal' | 'currency' | 'percent' | 'compact' | 'unit';
 
 export interface NumberFormatterProps extends HTMLAttributes<HTMLSpanElement> {
+  id?: string;
   value: number;
   formatStyle?: NumberFormatStyle;
   locale?: string;

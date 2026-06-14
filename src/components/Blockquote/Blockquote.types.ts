@@ -3,6 +3,7 @@ import type { ReactNode, HTMLAttributes } from 'react';
 export type BlockquoteColor = 'default' | 'primary' | 'success' | 'warning' | 'error';
 
 export interface BlockquoteProps extends HTMLAttributes<HTMLElement> {
+  id?: string;
   cite?: string;
   icon?: ReactNode;
   color?: BlockquoteColor;

@@ -1,6 +1,6 @@
 import { FC, useState, useRef, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { DateRangePickerProps, DateRange } from './DateRangePicker.types';
 import {
   DAY_LABELS, MONTH_LABELS, SIZE_CLASSES,
@@ -89,7 +89,7 @@ export const DateRangePicker: FC<DateRangePickerProps> = (props) => {
     error,
     helperText,
     className,
-    testId,
+      testId,
     ...rest
   } = props;
 

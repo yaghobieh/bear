@@ -1,8 +1,9 @@
 import { FC } from 'react';
 import { ChipProps } from './Chip.types';
-import { cn } from '@utils';
+import {cn } from '@utils';
 
 export const Chip: FC<ChipProps> = ({
+
   children,
   variant = 'filled',
   color = 'default',
@@ -14,6 +15,7 @@ export const Chip: FC<ChipProps> = ({
   disabled = false,
   className,
 }) => {
+
   const colorClasses = {
     filled: {
       default: 'bear-bg-zinc-600 bear-text-white',

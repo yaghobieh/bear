@@ -45,6 +45,7 @@ export interface CascaderTranslations {
  * Cascader component props
  */
 export interface CascaderProps {
+  id?: string;
   /** Available options (hierarchical) */
   options: CascaderOption[];
   /** Selected value path (array of values) */

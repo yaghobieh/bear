@@ -10,6 +10,7 @@ export interface SplitButtonOption {
 }
 
 export interface SplitButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children'> {
+  id?: string;
   label: string;
   icon?: ReactNode;
   options: SplitButtonOption[];

@@ -5,6 +5,7 @@ export type CountdownTimerVariant = 'default' | 'card' | 'minimal' | 'flip' | 'd
 export type CountdownTimerSize = 'sm' | 'md' | 'lg' | 'xl';
 
 export interface CountdownTimerProps {
+  id?: string;
   /** Target date/time to count down to */
   targetDate?: Date | string | number;
   /** Duration in seconds (alternative to targetDate) */

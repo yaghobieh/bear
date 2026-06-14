@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { BearLoaderProps } from './BearLoader.types';
 
 const SIZE_MAP = {
@@ -100,6 +100,7 @@ const LotsoBeaSVG: FC<{ size: number }> = ({ size }) => (
  * ```
  */
 export const BearLoader: FC<BearLoaderProps> = ({
+
   size = 'md',
   text,
   fullscreen = false,
@@ -108,6 +109,7 @@ export const BearLoader: FC<BearLoaderProps> = ({
   className,
   testId,
 }) => {
+
   const [progress, setProgress] = useState(0);
   const bearSize = SIZE_MAP[size];
 

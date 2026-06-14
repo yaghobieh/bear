@@ -6,6 +6,7 @@ export type GridGap = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12 | 16;
 export type GridFlow = 'row' | 'column' | 'dense' | 'row-dense' | 'column-dense';
 
 export interface GridProps extends HTMLAttributes<HTMLDivElement> {
+  id?: string;
   /** Number of columns */
   cols?: ResponsiveProp<GridCols>;
   /** Gap between items */

@@ -1,5 +1,5 @@
-import { forwardRef, useMemo, useContext, useCallback, useState } from 'react';
-import { cn } from '@utils';
+import { forwardRef, useMemo, useContext, useState } from 'react';
+import { cn, resolveBearId, useBearId } from '@utils';
 import { Spinner } from '../Spinner';
 import { Typography } from '../Typography';
 import { useBearStyles } from '@hooks';
@@ -25,6 +25,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       iconOnly = false,
       radius = 'default',
       ripple = false,
+      disableRipple = false,
+      disableElevation = false,
+      href,
+      component: Component = 'button',
       tooltip,
       compact = false,
       gradient,
@@ -37,6 +41,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       disabled,
       className,
       children,
+      id,
       testId,
       bis,
       style,
@@ -47,6 +52,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       ...rest
     } = props;
 
+    const generatedId = useBearId('Button');
+    const domId = resolveBearId(id, generatedId);
+    const rippleEnabled = ripple && !disableRipple;
     const isDisabled = disabled || loading;
     const mergedStyle = useBearStyles(bis, style);
     const leftIcon = leftIconProp ?? (icon && iconPosition === 'left' ? icon : undefined);
@@ -54,23 +62,20 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const [rippleStyle, setRippleStyle] = useState<React.CSSProperties | null>(null);
 
-    const handleRipple = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-      if (!ripple) return;
-      const rect = e.currentTarget.getBoundingClientRect();
-      const size = Math.max(rect.width, rect.height) * 2;
-      setRippleStyle({
-        width: size,
-        height: size,
-        left: e.clientX - rect.left - size / 2,
-        top: e.clientY - rect.top - size / 2,
-      });
-      setTimeout(() => setRippleStyle(null), 600);
-    }, [ripple]);
-
-    const handleClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-      handleRipple(e);
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (rippleEnabled) {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const rippleSize = Math.max(rect.width, rect.height) * 2;
+        setRippleStyle({
+          width: rippleSize,
+          height: rippleSize,
+          left: e.clientX - rect.left - rippleSize / 2,
+          top: e.clientY - rect.top - rippleSize / 2,
+        });
+        setTimeout(() => setRippleStyle(null), 600);
+      }
       onClick?.(e);
-    }, [handleRipple, onClick]);
+    };
 
     const context = useContext(BearContext);
     const componentStyles = context?.components?.Button?.root || {};
@@ -119,25 +124,31 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       return styles;
     }, [variant, variantColors, componentStyles, mergedStyle, isCustomVariant, customVariantConfig, gradient, gradientDirection]);
 
-    const setRefs = useCallback((node: HTMLButtonElement | null) => {
+    const setRefs = (node: HTMLButtonElement | null) => {
       spotlightRef.current = node;
       if (typeof ref === 'function') {
         ref(node);
       } else if (ref) {
         ref.current = node;
       }
-    }, [ref, spotlightRef]);
+    };
+
+    const Root = href ? 'a' : Component;
+    const linkProps = href ? { href: isDisabled ? undefined : href } : {};
 
     return (
-      <button
-        ref={setRefs}
-        disabled={isDisabled}
+      <Root
+        ref={setRefs as React.Ref<HTMLButtonElement>}
+        id={domId}
+        disabled={href ? undefined : isDisabled}
+        aria-disabled={href && isDisabled ? true : undefined}
         aria-busy={loading || undefined}
         style={dynamicStyles}
         title={tooltip}
         className={cn(
           'Bear-Button',
           'bear-inline-flex bear-items-center bear-justify-center bear-font-medium bear-transition-all bear-duration-200 bear-outline-none bear-relative bear-overflow-hidden',
+          !disableElevation && 'bear-shadow-sm',
           BUTTON_RADIUS[radius],
           iconOnly
             ? BUTTON_ICON_ONLY_SIZE[size]
@@ -152,10 +163,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           className
         )}
         data-testid={testId}
-        onClick={handleClick}
+        onClick={handleClick as React.MouseEventHandler<HTMLButtonElement & HTMLAnchorElement>}
         onMouseMove={handlers.handleMouseMove}
         onMouseEnter={handlers.handleMouseEnter}
         onMouseLeave={handlers.handleMouseLeave}
+        {...linkProps}
         {...rest}
       >
         {spotlight && (
@@ -218,14 +230,14 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           )}
         </span>
 
-        {ripple && rippleStyle && (
+        {rippleEnabled && rippleStyle && (
           <span
             className="Bear-Button__ripple bear-absolute bear-rounded-full bear-pointer-events-none bear-z-[2] bear-animate-ping bear-opacity-30 bear-bg-white"
             style={rippleStyle}
             aria-hidden="true"
           />
         )}
-      </button>
+      </Root>
     );
   }
 );

@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import type { BearVariant } from '../../types';
 
 export interface AlertDialogProps {
+  id?: string;
   /** Whether the dialog is open */
   isOpen: boolean;
   /** Callback when dialog should close (cancel/backdrop/escape) */

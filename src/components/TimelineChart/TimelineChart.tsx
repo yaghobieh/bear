@@ -1,5 +1,5 @@
 import { FC, useMemo } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { Typography } from '../Typography';
 import type { TimelineChartProps } from './TimelineChart.types';
 import { DEFAULT_BAR_HEIGHT, DEFAULT_BAR_GAP, DEFAULT_AXIS_TICKS, LABEL_WIDTH, DEFAULT_COLORS, MIN_BAR_WIDTH } from './TimelineChart.const';
@@ -14,10 +14,11 @@ export const TimelineChart: FC<TimelineChartProps> = ({
   axisTicks = DEFAULT_AXIS_TICKS,
   formatTick,
   onItemClick,
-  testId,
+      testId,
   className,
   ...rest
 }) => {
+
   const { min, max, ticks } = useMemo(() => {
     let lo = propMin ?? Infinity;
     let hi = propMax ?? -Infinity;

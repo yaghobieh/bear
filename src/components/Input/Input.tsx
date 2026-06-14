@@ -1,24 +1,19 @@
 import { FC, forwardRef, useContext, useState, useCallback, useRef, useEffect } from 'react';
-import { cn } from '@utils';
+import { cn, resolveBearId, useBearId } from '@utils';
 import type { InputProps } from './Input.types';
 import { BearContext } from '../../context/BearProvider';
 import { ClearIcon } from './components/ClearIcon';
 import { applyAutoFormat } from './Input.utils';
 import { validateFieldValue } from '../Form/Form.utils';
+import {
+  INPUT_MULTILINE_DEFAULT_ROWS,
+  INPUT_MULTILINE_MIN_ROWS,
+  INPUT_ROOT_CLASS,
+  INPUT_TEXT_CLASSES,
+  INPUT_WRAPPER_HEIGHT_CLASSES,
+} from './Input.const';
 
-const wrapperHeightClasses = {
-  sm: 'bear-h-8',
-  md: 'bear-h-10',
-  lg: 'bear-h-12',
-};
-
-const inputTextClasses = {
-  sm: 'bear-text-sm bear-px-3',
-  md: 'bear-text-base bear-px-4',
-  lg: 'bear-text-lg bear-px-5',
-};
-
-export const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
+export const Input: FC<InputProps> = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(
   (
     {
       label,
@@ -46,7 +41,15 @@ export const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
       copyable: _copyable,
       onCopy: _onCopy,
       floatingLabel: _floatingLabel,
-      testId: _testId,
+      multiline = false,
+      rows,
+      minRows = INPUT_MULTILINE_MIN_ROWS,
+      maxRows,
+      readOnly,
+      inputRef,
+      inputProps,
+      id,
+      testId,
       className,
       disabled,
       value,
@@ -58,6 +61,9 @@ export const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
     },
     ref
   ) => {
+    const generatedId = useBearId('Input');
+    const domId = resolveBearId(id, generatedId);
+
     const context = useContext(BearContext);
     const componentStyles = context?.components?.Input;
     const rootStyle = componentStyles?.root;
@@ -70,6 +76,8 @@ export const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
     const [internalError, setInternalError] = useState<string | null>(null);
     const validationPending = useRef(false);
 
+    const inputTextClasses = INPUT_TEXT_CLASSES;
+    const wrapperHeightClasses = INPUT_WRAPPER_HEIGHT_CLASSES;
     const shouldValidateOnBlur = validation ? (validateOnBlur ?? true) : false;
 
     const error = errorProp || internalError;
@@ -99,24 +107,24 @@ export const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
     }, [errorProp]);
 
     const handleChange = useCallback(
-      (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (autoFormat) {
+      (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        if (autoFormat && !multiline) {
           const formatted = applyAutoFormat(e.target.value, autoFormat);
           if (formatted !== e.target.value) {
             e.target.value = formatted;
           }
         }
-        onChange?.(e);
+        onChange?.(e as React.ChangeEvent<HTMLInputElement>);
         if (validateOnChange && validation) {
           runValidation(e.target.value);
         }
       },
-      [autoFormat, onChange, validateOnChange, validation, runValidation]
+      [autoFormat, multiline, onChange, validateOnChange, validation, runValidation]
     );
 
     const handleBlur = useCallback(
-      (e: React.FocusEvent<HTMLInputElement>) => {
-        onBlur?.(e);
+      (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        onBlur?.(e as React.FocusEvent<HTMLInputElement>);
         if (shouldValidateOnBlur && validation) {
           runValidation(e.target.value);
         }
@@ -124,8 +132,29 @@ export const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
       [onBlur, shouldValidateOnBlur, validation, runValidation]
     );
 
+    const fieldClasses = cn(
+      'Bear-Input__field',
+      'bear-flex-1 bear-min-w-0 bear-border-0 bear-outline-none bear-bg-transparent',
+      'placeholder:opacity-100 placeholder:[color:var(--bear-text-muted)]',
+      inputTextClasses[size],
+      multiline && 'bear-resize-y bear-py-2 bear-min-h-0 bear-h-auto',
+      className
+    );
+
+    const fieldStyle = {
+      color: 'var(--bear-text-primary)',
+      ...inputStyle,
+    };
+
+    const textareaRows = rows ?? minRows ?? INPUT_MULTILINE_DEFAULT_ROWS;
+
     return (
-      <div className={cn('Bear-Input bear-flex bear-flex-col bear-gap-1.5', fullWidth && 'bear-w-full')} style={rootStyle}>
+      <div
+        id={domId}
+        data-testid={testId}
+        className={cn(INPUT_ROOT_CLASS, 'bear-flex bear-flex-col bear-gap-1.5', fullWidth && 'bear-w-full')}
+        style={rootStyle}
+      >
         {label && (
           <label className="Bear-Input__label bear-text-sm bear-font-medium" style={{ color: 'var(--bear-text-secondary)', ...labelStyle }}>
             {label}
@@ -143,7 +172,7 @@ export const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
                 ? 'Bear-Input__wrapper--success bear-border-green-500 focus-within:bear-ring-green-500'
                 : 'focus-within:bear-border-bear-500 focus-within:bear-ring-bear-500 dark:focus-within:bear-border-bear-500 dark:focus-within:bear-ring-bear-500',
             disabled && 'bear-opacity-50 bear-cursor-not-allowed',
-            wrapperHeightClasses[size]
+            !multiline && wrapperHeightClasses[size]
           )}
           style={{
             backgroundColor: 'var(--bear-bg-primary)',
@@ -164,28 +193,52 @@ export const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
             </div>
           )}
 
-          <input
-            ref={ref}
-            disabled={disabled}
-            value={value}
-            defaultValue={defaultValue}
-            maxLength={maxLength}
-            aria-invalid={hasError || undefined}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            className={cn(
-              'Bear-Input__field',
-              'bear-flex-1 bear-min-w-0 bear-h-full bear-border-0 bear-outline-none bear-bg-transparent',
-              'placeholder:opacity-100 placeholder:[color:var(--bear-text-muted)]',
-              inputTextClasses[size],
-              className
-            )}
-            style={{
-              color: 'var(--bear-text-primary)',
-              ...inputStyle,
-            }}
-            {...props}
-          />
+          {multiline ? (
+            <textarea
+              ref={(node) => {
+                if (typeof ref === 'function') ref(node);
+                else if (ref) ref.current = node;
+                if (typeof inputRef === 'function') inputRef(node);
+                else if (inputRef) (inputRef as React.MutableRefObject<HTMLTextAreaElement | null>).current = node;
+              }}
+              id={`${domId}-field`}
+              disabled={disabled}
+              readOnly={readOnly}
+              value={value}
+              defaultValue={defaultValue}
+              maxLength={maxLength}
+              rows={textareaRows}
+              aria-invalid={hasError || undefined}
+              className={fieldClasses}
+              style={fieldStyle}
+              {...(inputProps as React.TextareaHTMLAttributes<HTMLTextAreaElement>)}
+              {...(props as React.TextareaHTMLAttributes<HTMLTextAreaElement>)}
+              onChange={(e) => handleChange(e)}
+              onBlur={(e) => handleBlur(e)}
+            />
+          ) : (
+            <input
+              ref={(node) => {
+                if (typeof ref === 'function') ref(node);
+                else if (ref) ref.current = node;
+                if (typeof inputRef === 'function') inputRef(node);
+                else if (inputRef) (inputRef as React.MutableRefObject<HTMLInputElement | null>).current = node;
+              }}
+              id={`${domId}-field`}
+              disabled={disabled}
+              readOnly={readOnly}
+              value={value}
+              defaultValue={defaultValue}
+              maxLength={maxLength}
+              aria-invalid={hasError || undefined}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              className={fieldClasses}
+              style={fieldStyle}
+              {...inputProps}
+              {...props}
+            />
+          )}
 
           {showClear && (
             <div

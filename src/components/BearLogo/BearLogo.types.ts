@@ -1,6 +1,8 @@
 import type { SVGAttributes } from 'react';
 
 export interface BearLogoProps extends SVGAttributes<SVGElement> {
+  testId?: string;
+  id?: string;
   /** Logo size in pixels */
   size?: number;
   /** Whether to show animated sparkle */

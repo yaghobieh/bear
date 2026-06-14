@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import { ChevronLeftIcon, ChevronRightIcon } from '../Icon';
 import { SidebarItem } from './components/SidebarItem';
 import type { SidebarProps } from './Sidebar.types';
@@ -45,7 +45,6 @@ export const Sidebar: FC<SidebarProps> = (props) => {
     className,
     style,
     testId,
-    id,
   } = props;
 
   const currentWidth = collapsed ? collapsedWidth : width;
@@ -53,9 +52,7 @@ export const Sidebar: FC<SidebarProps> = (props) => {
   const showHeaderArea = showHeader && header;
 
   return (
-    <aside
-      id={id}
-      data-testid={testId}
+    <aside data-testid={testId}
       className={cn(
         'Bear-Sidebar',
         `Bear-Sidebar--${variant}`,

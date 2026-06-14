@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
 
 export interface CollapsibleProps {
+  testId?: string;
+  id?: string;
   children: ReactNode;
   trigger: ReactNode;
   open?: boolean;

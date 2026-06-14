@@ -8,6 +8,7 @@ const sizeClasses = {
 };
 
 export const ActiveBar = forwardRef<HTMLDivElement, ActiveBarProps>(({
+
   items,
   activeId,
   onItemClick,
@@ -18,6 +19,7 @@ export const ActiveBar = forwardRef<HTMLDivElement, ActiveBarProps>(({
   className = '',
   ...props
 }, ref) => {
+
   const containerRef = useRef<HTMLDivElement>(null);
   const [indicatorStyle, setIndicatorStyle] = useState<React.CSSProperties>({});
 

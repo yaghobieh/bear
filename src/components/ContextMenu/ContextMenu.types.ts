@@ -19,6 +19,7 @@ export interface ContextMenuDivider {
 export type ContextMenuEntry = ContextMenuItem | ContextMenuDivider;
 
 export interface ContextMenuProps {
+  id?: string;
   items: ContextMenuEntry[];
   children: ReactNode;
   disabled?: boolean;

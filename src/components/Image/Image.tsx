@@ -1,10 +1,11 @@
 import { FC, useState, useRef, useEffect } from 'react';
 import { ImageProps } from './Image.types';
-import { cn } from '@utils';
+import {cn } from '@utils';
 
 const DEFAULT_FALLBACK = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiMyNzI3MmEiLz48cGF0aCBkPSJNNCAxNmw0LjU4Ni00LjU4NmExIDEgMCAwMTEuNDE0IDBMMTQgMTVtLTQtMy41bDEuNTg2LTEuNTg2YTEgMSAwIDAxMS40MTQgMEwyMCAxNm0tNS0zaDEuMDFNNCAxOGgxNmEyIDIgMCAwMDItMlY4YTIgMiAwIDAwLTItMkg0YTIgMiAwIDAwLTIgMnY4YTIgMiAwIDAwMiAyeiIgc3Ryb2tlPSIjNTI1MjViIiBzdHJva2Utd2lkdGg9IjEuNSIvPjwvc3ZnPg==';
 
 export const Image: FC<ImageProps> = ({
+
   src,
   alt,
   fallback = DEFAULT_FALLBACK,
@@ -20,6 +21,7 @@ export const Image: FC<ImageProps> = ({
   containerClassName,
   ...props
 }) => {
+
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [isInView, setIsInView] = useState(!lazy);

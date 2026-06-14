@@ -16,6 +16,8 @@ export interface TimePickerTranslations {
 
 /** Props for TimePickerColumnsDropdown sub-component. */
 export interface TimePickerColumnsProps {
+  testId?: string;
+  id?: string;
   selectedHour: number;
   setSelectedHour: (h: number) => void;
   selectedMinute: number;

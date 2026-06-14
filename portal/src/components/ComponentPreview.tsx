@@ -54,19 +54,19 @@ export const ComponentPreview: FC<ComponentPreviewProps> = ({
   }, [code]);
 
   const hasLiveProps = Boolean(editableProps && render);
-  const previewContent = hasLiveProps ? render!(liveProps) : children;
+  const previewContent = render ? render(liveProps) : children;
 
   return (
-    <div className={allowOverflow ? 'mb-8 rounded-xl border border-gray-200 dark:border-gray-700' : 'mb-8 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden'}>
-      <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{title}</h3>
-        {description && (
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{description}</p>
-        )}
-      </div>
+    <div className={allowOverflow ? 'doc-preview mb-10' : 'doc-preview mb-10 overflow-hidden'}>
+      {(title || description) && (
+        <div className="doc-preview__header mb-4">
+          {title && <h3 className="doc-preview__title">{title}</h3>}
+          {description && <p className="doc-preview__desc">{description}</p>}
+        </div>
+      )}
 
       {hasLiveProps && editableProps && (
-        <div className="px-4 pt-2 pb-1">
+        <div className="px-4 pt-2 pb-1 border border-b-0 border-zinc-200 dark:border-zinc-800 rounded-t-xl bg-white dark:bg-zinc-950">
           <LivePropsBlock
             config={editableProps}
             values={liveProps}
@@ -77,12 +77,12 @@ export const ComponentPreview: FC<ComponentPreviewProps> = ({
         </div>
       )}
 
-      <div className="p-8 bg-white dark:bg-gray-900 flex items-center justify-center min-h-[200px]">
-        <div className="w-full">{previewContent}</div>
+      <div className={`doc-preview__stage ${hasLiveProps && editableProps ? 'rounded-t-none border-t-0' : ''} rounded-t-xl border border-b-0 border-zinc-200 dark:border-zinc-800`}>
+        <div className="doc-preview__stage-inner">{previewContent}</div>
       </div>
 
-      <div className="border-t border-gray-200 dark:border-gray-700">
-        <div className="flex items-center justify-between px-4 py-2 bg-gray-50 dark:bg-gray-800/50">
+      <div className="doc-preview__code mt-0 rounded-b-xl border border-t-0 border-zinc-200 dark:border-zinc-800 overflow-hidden">
+        <div className="flex items-center justify-between px-4 py-2 bg-zinc-50 dark:bg-zinc-900/80">
           <Button
             variant="ghost"
             size="sm"
@@ -122,7 +122,7 @@ export const ComponentPreview: FC<ComponentPreviewProps> = ({
 
         {showCode && (
           <div 
-            className={`border-t border-gray-200 dark:border-gray-700 transition-all ${
+            className={`border-t border-zinc-200 dark:border-zinc-800 transition-all ${
               expanded ? 'max-h-none' : 'max-h-80 overflow-y-auto'
             }`}
           >

@@ -1,6 +1,6 @@
 import { FC, useState, useEffect, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { AffixProps } from './Affix.types';
 import {
   ROOT_CLASS,

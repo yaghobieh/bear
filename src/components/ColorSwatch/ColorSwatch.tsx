@@ -1,5 +1,5 @@
 import { FC, useCallback, useMemo } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { ColorSwatchProps, ColorSwatchGroupProps } from './ColorSwatch.types';
 import {
   SIZE_MAP, SWATCH_CLASSES, SWATCH_SELECTED_CLASSES,
@@ -10,9 +10,11 @@ import {
 import { isLightColor } from './ColorSwatch.utils';
 
 export const ColorSwatch: FC<ColorSwatchProps> = ({
+
   color, selected = false, size = 'md', rounded = true,
   label, onClick, className, testId, ...rest
 }) => {
+
   const dim = SIZE_MAP[size];
   const light = isLightColor(color);
   const checkSize = Math.max(12, dim * 0.4);

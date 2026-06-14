@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { PaperProps } from './Paper.types';
 
 const ELEVATION_CLASSES = {
@@ -57,9 +57,10 @@ export const Paper = forwardRef<HTMLDivElement, PaperProps>(({
   children,
   className,
   style,
-  testId,
+      testId,
   ...props
 }, ref) => {
+
   const isCustomBackground = background && !BACKGROUND_CLASSES[background as keyof typeof BACKGROUND_CLASSES];
 
   return (
@@ -77,8 +78,7 @@ export const Paper = forwardRef<HTMLDivElement, PaperProps>(({
       style={{
         ...style,
         ...(isCustomBackground && { backgroundColor: background }),
-      }}
-      data-testid={testId}
+      }} data-testid={testId}
       {...props}
     >
       {children}

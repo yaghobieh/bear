@@ -1,9 +1,10 @@
 import { FC, useState, useRef, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
-import { cn } from '@utils';
+import {cn } from '@utils';
 import type { TooltipProps } from './Tooltip.types';
 
 export const Tooltip: FC<TooltipProps> = ({
+
   content,
   children,
   position: positionProp,
@@ -12,6 +13,7 @@ export const Tooltip: FC<TooltipProps> = ({
   className,
   disabled = false,
 }) => {
+
   // Support both position and placement props
   const position = placement || positionProp || 'top';
   const [isVisible, setIsVisible] = useState(false);

@@ -1,7 +1,7 @@
 import { FC, useState, useRef, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { PopoverProps } from './Popover.types';
-import { cn } from '@utils';
+import {cn } from '@utils';
 
 const Z_INDEX = 11000;
 
@@ -44,6 +44,7 @@ function getPlacementStyles(placement: string, rect: DOMRect, offset: number): R
 }
 
 export const Popover: FC<PopoverProps> = ({
+
   children,
   content,
   placement = 'bottom',
@@ -57,6 +58,7 @@ export const Popover: FC<PopoverProps> = ({
   closeOnEscape = true,
   offset = 8,
 }) => {
+
   const [internalOpen, setInternalOpen] = useState(false);
   const [position, setPosition] = useState<React.CSSProperties>({});
   const containerRef = useRef<HTMLDivElement>(null);

@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import type { InputProps } from '../Input/Input.types';
 
 export interface CurrencyInputProps extends Omit<InputProps, 'onChange' | 'value' | 'type'> {
+  id?: string;
   /** Current numeric value */
   value?: number;
   /** Change handler receiving the numeric value */

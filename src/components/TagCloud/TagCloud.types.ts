@@ -10,6 +10,7 @@ export interface TagCloudItem {
 }
 
 export interface TagCloudProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
+  id?: string;
   /** Tags with text and weight value */
   tags: TagCloudItem[];
   /** Minimum font size in px */

@@ -1,8 +1,9 @@
 import { FC, useState, useEffect } from 'react';
 import { NumberInputProps } from './NumberInput.types';
-import { cn } from '@utils';
+import {cn } from '@utils';
 
 export const NumberInput: FC<NumberInputProps> = ({
+
   value: controlledValue,
   onChange,
   min,
@@ -20,6 +21,7 @@ export const NumberInput: FC<NumberInputProps> = ({
   className,
   precision = 0,
 }) => {
+
   const [internalValue, setInternalValue] = useState<number>(controlledValue ?? 0);
   const value = controlledValue !== undefined ? controlledValue : internalValue;
 

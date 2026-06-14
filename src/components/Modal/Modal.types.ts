@@ -19,7 +19,9 @@ export interface ModalProps {
   closeOnBackdrop?: boolean;
   /** Whether pressing Escape closes modal */
   closeOnEscape?: boolean;
-  /** When false, the document body scroll is not locked while open */
+  disableEscapeKeyDown?: boolean;
+  hideBackdrop?: boolean;
+  keepMounted?: boolean;
   lockBodyScroll?: boolean;
   /** When true, the page behind the modal stays scrollable (same as lockBodyScroll: false) */
   cancelPreventScroll?: boolean;

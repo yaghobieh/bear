@@ -24,7 +24,7 @@ export interface CardHeaderProps extends Omit<HTMLAttributes<HTMLDivElement>, 't
   action?: ReactNode;
 }
 
-export interface CardBodyProps extends HTMLAttributes<HTMLDivElement> {}
+export type CardBodyProps = HTMLAttributes<HTMLDivElement>;
 
 export interface CardFooterProps extends HTMLAttributes<HTMLDivElement> {
   /** Whether to add a divider above footer */

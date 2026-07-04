@@ -36,7 +36,7 @@ const SkillsPage: FC = () => (
   <DocPage
     title="Skills"
     badge="New"
-    description="Give your AI assistant deep knowledge of Bear UI components, patterns, and best practices — similar to how shadcn/ui skills work for their registry."
+    description="Give your AI assistant deep knowledge of Bear UI components, patterns, and best practices"
   >
     <section className="doc-section mb-10">
       <Typography variant="h4" className="doc-section__title mb-3">Install</Typography>
@@ -123,11 +123,6 @@ const SkillsPage: FC = () => (
       <ul className="space-y-2 text-sm">
         <li>
           <Link to="/changelog" className="doc-link">Changelog</Link> — release notes
-        </li>
-        <li>
-          <a href="https://ui.shadcn.com/docs/skills" target="_blank" rel="noopener noreferrer" className="doc-link">
-            shadcn/ui Skills
-          </a> — inspiration for this workflow
         </li>
         <li>
           <a href="https://github.com/yaghobieh/bear/tree/main/.cursor/skills" target="_blank" rel="noopener noreferrer" className="doc-link">

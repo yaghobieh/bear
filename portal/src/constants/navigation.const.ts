@@ -17,7 +17,7 @@ export interface NavGroup {
   icon?: string;
 }
 
-export const BEAR_VERSION = '1.2.4';
+export const BEAR_VERSION = '1.2.5';
 
 /** Main Bear UI repository */
 export const GITHUB_URL = 'https://github.com/yaghobieh/bear';
@@ -371,6 +371,7 @@ export const NAVIGATION: NavGroup[] = [
         children: [
           { path: '/components/chat', label: 'Chat' },
           { path: '/components/floating-chat', label: 'FloatingChat' },
+          { path: '/components/message-list', label: 'MessageList', badge: 'New' },
         ],
       },
     ],

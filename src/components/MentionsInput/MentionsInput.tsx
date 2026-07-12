@@ -1,4 +1,4 @@
-import { FC, useState, useRef, useEffect, useCallback, KeyboardEvent, ChangeEvent } from 'react';
+import { FC, useState, useRef, useEffect, useCallback, KeyboardEvent, ChangeEvent, RefObject } from 'react';
 import {cn } from '@utils';
 import { Portal } from '../Portal';
 import type { MentionsInputProps, MentionOption } from './MentionsInput.types';
@@ -6,10 +6,18 @@ import { defaultFilter } from './MentionsInput.utils';
 
 const MENTIONS_PANEL_Z = 10000;
 
+const DEFAULT_MULTILINE_ROWS = 3;
+
 const sizeClasses = {
   sm: 'bear-h-8 bear-text-sm bear-px-3',
   md: 'bear-h-10 bear-text-base bear-px-4',
   lg: 'bear-h-12 bear-text-lg bear-px-5',
+};
+
+const multilineSizeClasses = {
+  sm: 'bear-text-sm bear-px-3 bear-py-2',
+  md: 'bear-text-base bear-px-4 bear-py-2',
+  lg: 'bear-text-lg bear-px-5 bear-py-3',
 };
 
 export const MentionsInput: FC<MentionsInputProps> = ({
@@ -27,6 +35,8 @@ export const MentionsInput: FC<MentionsInputProps> = ({
   size = 'md',
   fullWidth = false,
   className,
+  multiline = false,
+  rows = DEFAULT_MULTILINE_ROWS,
 }) => {
 
   const [internalValue, setInternalValue] = useState(defaultValue);
@@ -35,7 +45,7 @@ export const MentionsInput: FC<MentionsInputProps> = ({
   const [highlightedIndex, setHighlightedIndex] = useState(0);
   const [triggerStart, setTriggerStart] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0, width: 0 });
@@ -114,7 +124,7 @@ export const MentionsInput: FC<MentionsInputProps> = ({
     return [...new Set(matches)];
   };
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const v = e.target.value;
     if (controlledValue === undefined) setInternalValue(v);
     onChange?.(v, getMentions(v));
@@ -133,7 +143,7 @@ export const MentionsInput: FC<MentionsInputProps> = ({
     inputRef.current?.focus();
   };
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (!showList || filteredOptions.length === 0) return;
 
     if (e.key === 'ArrowDown') {
@@ -166,20 +176,37 @@ export const MentionsInput: FC<MentionsInputProps> = ({
         className
       )}
     >
-      <input
-        ref={inputRef}
-        type="text"
-        value={value}
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
-        placeholder={placeholder}
-        disabled={disabled}
-        className={cn(
-          'bear-w-full bear-rounded-lg bear-border bear-border-gray-300 dark:bear-border-zinc-600 bear-bg-white dark:bear-bg-zinc-900 bear-text-gray-900 dark:bear-text-white placeholder:bear-text-gray-500 dark:placeholder:bear-text-zinc-500 bear-outline-none bear-transition-colors focus:bear-border-bear-500 focus:bear-ring-2 focus:bear-ring-bear-500/20',
-          disabled && 'bear-opacity-50 bear-cursor-not-allowed',
-          sizeClasses[size]
-        )}
-      />
+      {multiline ? (
+        <textarea
+          ref={inputRef as RefObject<HTMLTextAreaElement>}
+          value={value}
+          rows={rows}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+          placeholder={placeholder}
+          disabled={disabled}
+          className={cn(
+            'bear-w-full bear-rounded-lg bear-border bear-border-gray-300 dark:bear-border-zinc-600 bear-bg-white dark:bear-bg-zinc-900 bear-text-gray-900 dark:bear-text-white placeholder:bear-text-gray-500 dark:placeholder:bear-text-zinc-500 bear-outline-none bear-transition-colors focus:bear-border-bear-500 focus:bear-ring-2 focus:bear-ring-bear-500/20 bear-resize-none',
+            disabled && 'bear-opacity-50 bear-cursor-not-allowed',
+            multilineSizeClasses[size]
+          )}
+        />
+      ) : (
+        <input
+          ref={inputRef as RefObject<HTMLInputElement>}
+          type="text"
+          value={value}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+          placeholder={placeholder}
+          disabled={disabled}
+          className={cn(
+            'bear-w-full bear-rounded-lg bear-border bear-border-gray-300 dark:bear-border-zinc-600 bear-bg-white dark:bear-bg-zinc-900 bear-text-gray-900 dark:bear-text-white placeholder:bear-text-gray-500 dark:placeholder:bear-text-zinc-500 bear-outline-none bear-transition-colors focus:bear-border-bear-500 focus:bear-ring-2 focus:bear-ring-bear-500/20',
+            disabled && 'bear-opacity-50 bear-cursor-not-allowed',
+            sizeClasses[size]
+          )}
+        />
+      )}
 
       {showSuggestionsPanel && (
         <Portal>

@@ -1,0 +1,42 @@
+/* MessageList theme-aware styles — CSS variables flip with light/dark mode */
+
+.Bear-MessageList {
+  background-color: var(--bear-bg-primary);
+  border-color: var(--bear-border-default);
+}
+
+.Bear-MessageList__day-line {
+  background-color: var(--bear-border-default);
+}
+
+.Bear-MessageList__day-label {
+  color: var(--bear-text-secondary);
+}
+
+.Bear-MessageList__author {
+  color: var(--bear-text-primary);
+}
+
+.Bear-MessageList__timestamp {
+  color: var(--bear-text-secondary);
+}
+
+.Bear-MessageList__bubble {
+  background-color: var(--bear-bg-secondary);
+  color: var(--bear-text-primary);
+}
+
+.Bear-MessageList__bubble--own {
+  background-color: var(--bear-primary-500);
+  color: var(--bear-text-inverted, #fff);
+}
+
+.Bear-MessageList__new-messages {
+  background-color: var(--bear-primary-500);
+  color: var(--bear-text-inverted, #fff);
+  transition: opacity 200ms ease-in-out;
+}
+
+.Bear-MessageList__empty {
+  color: var(--bear-text-secondary);
+}

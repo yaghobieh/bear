@@ -30,12 +30,12 @@ const CommandItemComponent: FC<CommandItemComponentProps> = ({
       'Bear-CommandPalette__item bear-w-full bear-flex bear-items-center bear-gap-3 bear-px-4 bear-py-2.5 bear-text-left bear-transition-colors',
       isHighlighted
         ? 'bear-bg-primary-500/20 bear-text-primary-400'
-        : 'bear-text-zinc-300 hover:bear-bg-zinc-700',
+        : 'bear-text-gray-700 dark:bear-text-zinc-300 hover:bear-bg-gray-100 dark:hover:bear-bg-zinc-700',
       command.disabled && 'bear-opacity-50 bear-cursor-not-allowed'
     )}
   >
     {command.icon && (
-      <span className="Bear-CommandPalette__item-icon bear-text-zinc-400 bear-shrink-0">
+      <span className="Bear-CommandPalette__item-icon bear-text-gray-500 dark:bear-text-zinc-400 bear-shrink-0">
         {command.icon}
       </span>
     )}
@@ -44,7 +44,7 @@ const CommandItemComponent: FC<CommandItemComponentProps> = ({
         {command.label}
       </div>
       {command.description && (
-        <div className="Bear-CommandPalette__item-description bear-text-xs bear-text-zinc-500 bear-truncate">
+        <div className="Bear-CommandPalette__item-description bear-text-xs bear-text-gray-500 dark:bear-text-zinc-500 bear-truncate">
           {command.description}
         </div>
       )}
@@ -54,7 +54,7 @@ const CommandItemComponent: FC<CommandItemComponentProps> = ({
         {formatShortcut(command.shortcut).map((key, idx) => (
           <kbd
             key={idx}
-            className="bear-px-1.5 bear-py-0.5 bear-text-xs bear-font-mono bear-bg-zinc-700 bear-rounded bear-text-zinc-400"
+            className="bear-px-1.5 bear-py-0.5 bear-text-xs bear-font-mono bear-bg-gray-200 bear-text-gray-600 dark:bear-bg-zinc-700 dark:bear-text-zinc-400 bear-rounded"
           >
             {key}
           </kbd>
@@ -240,10 +240,10 @@ export const CommandPalette: FC<CommandPaletteProps> = ({
         onClick={() => setIsOpen(false)}
       />
 
-      <div className="Bear-CommandPalette__content bear-relative bear-w-full bear-max-w-xl bear-bg-zinc-800 bear-border bear-border-zinc-700 bear-rounded-xl bear-shadow-2xl bear-overflow-hidden"        >
-        <div className="Bear-CommandPalette__search bear-flex bear-items-center bear-gap-3 bear-px-4 bear-py-3 bear-border-b bear-border-zinc-700">
+      <div className="Bear-CommandPalette__content bear-relative bear-w-full bear-max-w-xl bear-bg-white dark:bear-bg-zinc-800 bear-border bear-border-gray-200 dark:bear-border-zinc-700 bear-rounded-xl bear-shadow-2xl bear-overflow-hidden"        >
+        <div className="Bear-CommandPalette__search bear-flex bear-items-center bear-gap-3 bear-px-4 bear-py-3 bear-border-b bear-border-gray-200 dark:bear-border-zinc-700">
           {icon ?? (
-            <svg className="bear-w-5 bear-h-5 bear-text-zinc-400 bear-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="bear-w-5 bear-h-5 bear-text-gray-500 dark:bear-text-zinc-400 bear-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
           )}
@@ -257,9 +257,9 @@ export const CommandPalette: FC<CommandPaletteProps> = ({
             }}
             onKeyDown={handleKeyDown}
             placeholder={placeholder || t.placeholder}
-            className="Bear-CommandPalette__input bear-flex-1 bear-bg-transparent bear-border-0 bear-outline-none bear-text-white placeholder:bear-text-zinc-500"
+            className="Bear-CommandPalette__input bear-flex-1 bear-bg-transparent bear-border-0 bear-outline-none bear-text-gray-900 dark:bear-text-white placeholder:bear-text-gray-400 dark:placeholder:bear-text-zinc-500"
           />
-          <kbd className="bear-px-2 bear-py-1 bear-text-xs bear-font-mono bear-bg-zinc-700 bear-rounded bear-text-zinc-400">
+          <kbd className="bear-px-2 bear-py-1 bear-text-xs bear-font-mono bear-bg-gray-200 bear-text-gray-600 dark:bear-bg-zinc-700 dark:bear-text-zinc-400 bear-rounded">
             esc
           </kbd>
         </div>
@@ -269,14 +269,14 @@ export const CommandPalette: FC<CommandPaletteProps> = ({
           className="Bear-CommandPalette__list bear-max-h-[60vh] bear-overflow-y-auto"
         >
           {flatList.length === 0 ? (
-            <div className="Bear-CommandPalette__empty bear-px-4 bear-py-8 bear-text-center bear-text-sm bear-text-zinc-500">
+            <div className="Bear-CommandPalette__empty bear-px-4 bear-py-8 bear-text-center bear-text-sm bear-text-gray-500 dark:bear-text-zinc-500">
               {t.noResults}
             </div>
           ) : (
             <>
               {recentCommands.length > 0 && !query.trim() && (
                 <div className="Bear-CommandPalette__group">
-                  <div className="Bear-CommandPalette__group-header bear-px-4 bear-py-2 bear-text-xs bear-font-medium bear-text-zinc-500 bear-uppercase bear-tracking-wider bear-bg-zinc-800/50">
+                  <div className="Bear-CommandPalette__group-header bear-px-4 bear-py-2 bear-text-xs bear-font-medium bear-text-gray-500 dark:bear-text-zinc-500 bear-uppercase bear-tracking-wider bear-bg-gray-50 dark:bear-bg-zinc-800/50">
                     {t.recentCommands}
                   </div>
                   {recentCommands.map((cmd, idx) => (
@@ -300,7 +300,7 @@ export const CommandPalette: FC<CommandPaletteProps> = ({
                   
                   return (
                     <div key={group.name} className="Bear-CommandPalette__group">
-                      <div className="Bear-CommandPalette__group-header bear-px-4 bear-py-2 bear-text-xs bear-font-medium bear-text-zinc-500 bear-uppercase bear-tracking-wider bear-bg-zinc-800/50">
+                      <div className="Bear-CommandPalette__group-header bear-px-4 bear-py-2 bear-text-xs bear-font-medium bear-text-gray-500 dark:bear-text-zinc-500 bear-uppercase bear-tracking-wider bear-bg-gray-50 dark:bear-bg-zinc-800/50">
                         {group.name}
                       </div>
                       {group.commands.map((cmd, idx) => (
@@ -318,7 +318,7 @@ export const CommandPalette: FC<CommandPaletteProps> = ({
               ) : (
                 <div className="Bear-CommandPalette__group">
                   {!query.trim() && recentCommands.length > 0 && (
-                    <div className="Bear-CommandPalette__group-header bear-px-4 bear-py-2 bear-text-xs bear-font-medium bear-text-zinc-500 bear-uppercase bear-tracking-wider bear-bg-zinc-800/50">
+                    <div className="Bear-CommandPalette__group-header bear-px-4 bear-py-2 bear-text-xs bear-font-medium bear-text-gray-500 dark:bear-text-zinc-500 bear-uppercase bear-tracking-wider bear-bg-gray-50 dark:bear-bg-zinc-800/50">
                       {t.allCommands}
                     </div>
                   )}
@@ -340,7 +340,7 @@ export const CommandPalette: FC<CommandPaletteProps> = ({
         </div>
 
         {footer && (
-          <div className="Bear-CommandPalette__footer bear-px-4 bear-py-2 bear-border-t bear-border-zinc-700 bear-text-xs bear-text-zinc-500">
+          <div className="Bear-CommandPalette__footer bear-px-4 bear-py-2 bear-border-t bear-border-gray-200 dark:bear-border-zinc-700 bear-text-xs bear-text-gray-500 dark:bear-text-zinc-500">
             {footer}
           </div>
         )}

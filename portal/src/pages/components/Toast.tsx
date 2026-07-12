@@ -44,7 +44,7 @@ import { ToastProvider } from '@forgedevstack/bear';
 
 function App() {
   return (
-    <ToastProvider position="top-right">
+    <ToastProvider position="top-right" maxToasts={5}>
       <YourApp />
     </ToastProvider>
   );
@@ -146,6 +146,8 @@ function MyComponent() {
               <tr><td className="px-4 py-3 font-mono text-bear-600">position</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ToastPosition</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">top-right</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Position of toast container</td></tr>
               <tr><td className="px-4 py-3 font-mono text-bear-600">duration</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>number</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">5000</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Auto-dismiss duration (ms)</td></tr>
               <tr><td className="px-4 py-3 font-mono text-bear-600">closable</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">true</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Show close button</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">maxToasts</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>number</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">5</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Max visible toasts in the stack (ToastProvider)</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">pauseOnHover</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Pause auto-dismiss while hovered</td></tr>
             </tbody>
           </table>
         </div>

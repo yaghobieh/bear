@@ -22,4 +22,8 @@ export interface MentionsInputProps {
   size?: 'sm' | 'md' | 'lg';
   fullWidth?: boolean;
   className?: string;
+  /** Render a textarea instead of a single-line input */
+  multiline?: boolean;
+  /** Visible rows when multiline */
+  rows?: number;
 }

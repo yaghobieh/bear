@@ -4,6 +4,7 @@ import type {
   ToastProps, 
   ToastContainerProps, 
   ToastContextValue, 
+  ToastProviderProps, 
   ToastSeverity, 
   ToastPosition 
 } from './Toast.types';
@@ -89,9 +90,13 @@ const ToastItem: FC<ToastProps & { onRemove: () => void }> = ({
   onRemove,
   className,
   autoScroll = false,
+  pauseOnHover = false,
 }) => {
   const [isExiting, setIsExiting] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
+  const remainingRef = useRef(duration);
+  const startedAtRef = useRef(0);
 
   useEffect(() => {
     if (autoScroll && rootRef.current) {
@@ -100,17 +105,20 @@ const ToastItem: FC<ToastProps & { onRemove: () => void }> = ({
   }, [autoScroll]);
 
   useEffect(() => {
-    if (duration > 0) {
-      const timer = setTimeout(() => {
-        setIsExiting(true);
-        setTimeout(() => {
-          onRemove();
-          onClose?.();
-        }, 200);
-      }, duration);
-      return () => clearTimeout(timer);
-    }
-  }, [duration, onRemove, onClose]);
+    if (duration <= 0 || isPaused) return;
+    startedAtRef.current = Date.now();
+    const timer = setTimeout(() => {
+      setIsExiting(true);
+      setTimeout(() => {
+        onRemove();
+        onClose?.();
+      }, 200);
+    }, remainingRef.current);
+    return () => {
+      clearTimeout(timer);
+      remainingRef.current = Math.max(0, remainingRef.current - (Date.now() - startedAtRef.current));
+    };
+  }, [duration, isPaused, onRemove, onClose]);
 
   const handleClose = () => {
     setIsExiting(true);
@@ -130,6 +138,8 @@ const ToastItem: FC<ToastProps & { onRemove: () => void }> = ({
     <div
       ref={rootRef}
       role="alert"
+      onMouseEnter={pauseOnHover ? () => setIsPaused(true) : undefined}
+      onMouseLeave={pauseOnHover ? () => setIsPaused(false) : undefined}
       className={cn(
         'bear-flex bear-items-start bear-gap-3 bear-p-4 bear-rounded-lg bear-shadow-lg bear-min-w-[300px] bear-max-w-[400px]',
         'bear-transition-all bear-duration-200',
@@ -214,9 +224,10 @@ export const ToastContainer: FC<ToastContainerProps> = ({
 };
 
 // Toast Provider
-export const ToastProvider: FC<{ children: ReactNode; position?: ToastPosition }> = ({ 
+export const ToastProvider: FC<ToastProviderProps> = ({ 
   children, 
-  position = 'top-right' 
+  position = 'top-right',
+  maxToasts,
 }) => {
   const [toasts, setToasts] = useState<(ToastProps & { id: string })[]>([]);
 
@@ -263,7 +274,7 @@ export const ToastProvider: FC<{ children: ReactNode; position?: ToastPosition }
   return (
     <ToastContext.Provider value={contextValue}>
       {children}
-      <ToastContainer position={position} />
+      <ToastContainer position={position} maxToasts={maxToasts} />
     </ToastContext.Provider>
   );
 };

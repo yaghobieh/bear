@@ -34,6 +34,16 @@ export interface ToastProps {
   className?: string;
   /** Scroll the toast into view when it appears */
   autoScroll?: boolean;
+  /** Pause the auto-dismiss timer while hovered */
+  pauseOnHover?: boolean;
+}
+
+export interface ToastProviderProps {
+  children: ReactNode;
+  /** Position of the toast stack */
+  position?: ToastPosition;
+  /** Maximum number of visible toasts */
+  maxToasts?: number;
 }
 
 export interface ToastContainerProps {

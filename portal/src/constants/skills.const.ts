@@ -46,7 +46,7 @@ export const BEAR_SKILLS: BearSkillEntry[] = [
     name: 'bear-release-workflow',
     slug: 'bear-release-workflow',
     description: 'Version bumps, CHANGELOG, build verification, and publish steps.',
-    invoke: 'Prepare 1.2.4 per bear-release-workflow',
+    invoke: 'Prepare 1.2.5 per bear-release-workflow',
   },
 ];
 
@@ -57,7 +57,9 @@ export const SKILLS_EXAMPLE_PROMPTS = [
   'Create a settings page with BearProvider RTL and density.',
   'Run /bear-code-review on Gauge and fix file layout.',
   'Add a data table page with sort, filter, and pagination.',
-  'Prepare Bear 1.2.4 release per bear-release-workflow.',
+  'Build a chat screen with MessageList, MentionsInput, and ToastProvider.',
+  'Wire a Cmd+K CommandPalette with grouped commands and shortcuts.',
+  'Prepare Bear 1.2.5 release per bear-release-workflow.',
 ];
 
 export const AI_MODEL_PROMPT_FORMATS: AiModelPromptFormat[] = [

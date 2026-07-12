@@ -155,7 +155,7 @@ export type { FabProps } from './Fab';
 
 // Toast/Snackbar
 export { ToastProvider, ToastContainer, useToast } from './Toast';
-export type { ToastProps, ToastContainerProps, ToastContextValue, ToastSeverity, ToastPosition } from './Toast';
+export type { ToastProps, ToastContainerProps, ToastContextValue, ToastProviderProps, ToastSeverity, ToastPosition } from './Toast';
 
 // Skeleton
 export { Skeleton, SkeletonAvatar, SkeletonText, SkeletonCard } from './Skeleton';
@@ -467,6 +467,15 @@ export type { ChatProps, ChatMessage, ChatBubbleProps } from './Chat';
 // FloatingChat
 export { FloatingChat } from './FloatingChat';
 export type { FloatingChatProps } from './FloatingChat';
+
+// MessageList
+export { MessageList } from './MessageList';
+export type {
+  MessageListProps,
+  MessageListMessage,
+  MessageListAuthor,
+  MessageListTranslations,
+} from './MessageList';
 
 // Terminal
 export { Terminal } from './Terminal';

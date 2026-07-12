@@ -23,6 +23,6 @@ export const SENDER_COLORS = {
   },
   system: {
     bg: 'transparent',
-    text: 'var(--bear-text-tertiary)',
+    text: 'var(--bear-text-tertiary, var(--bear-text-muted))',
   },
 } as const;

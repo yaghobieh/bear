@@ -2,6 +2,26 @@
 
 All notable changes to Bear UI will be documented in this file.
 
+## [1.2.5] - 2026-07-12
+
+### Added
+
+- **`MessageList`** — chat message list with consecutive-author grouping (`groupWindowMs`), day separators, auto-scroll-to-bottom, and a "new messages" affordance when scrolled up. Theme-token styling for light and dark mode. Not virtualized yet — virtualization for very long conversations is planned as future work.
+- **Toast `pauseOnHover`** — pause the auto-dismiss timer while a toast is hovered (remaining time is preserved).
+- **ToastProvider `maxToasts`** — cap the number of visible stacked toasts; `ToastProviderProps` exported.
+- **MentionsInput `multiline` / `rows`** — render a textarea composer with the same @-mention autocomplete and keyboard navigation.
+
+### Changed
+
+- **CommandPalette** — full light-mode support; previously the panel, items, group headers, kbd hints, and footer were dark-only. Dark mode is unchanged.
+
+### Fixed
+
+- **DiffSquares** — theme CSS variable fix for both modes.
+- **Chat** — `SENDER_COLORS` system text fallback token.
+
+---
+
 ## [1.2.4] - 2026-06-14
 
 ### Added

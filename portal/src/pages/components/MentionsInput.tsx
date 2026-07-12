@@ -11,6 +11,7 @@ const MENTION_OPTIONS = [
 
 const MentionsInputPage: FC = () => {
   const [value, setValue] = useState('');
+  const [multilineValue, setMultilineValue] = useState('');
 
   return (
     <div className="fade-in">
@@ -43,6 +44,30 @@ const MentionsInputPage: FC = () => {
             onChange={(v) => setValue(v)}
             options={MENTION_OPTIONS}
             placeholder="Type @ to mention..."
+          />
+        </div>
+      </ComponentPreview>
+
+      <ComponentPreview
+        title="Multiline"
+        description="Set multiline to render a textarea — ideal for chat message composers."
+        code={`<MentionsInput
+  multiline
+  rows={3}
+  value={value}
+  onChange={(v) => setValue(v)}
+  options={options}
+  placeholder="Write a message, @mention teammates..."
+/>`}
+      >
+        <div className="w-full max-w-md">
+          <MentionsInput
+            multiline
+            rows={3}
+            value={multilineValue}
+            onChange={(v) => setMultilineValue(v)}
+            options={MENTION_OPTIONS}
+            placeholder="Write a message, @mention teammates..."
           />
         </div>
       </ComponentPreview>

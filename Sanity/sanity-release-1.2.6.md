@@ -52,16 +52,6 @@
 | Click Interactions | 0 | 0 | 0 | 0 |
 | Dark Mode | 0 | 0 | 0 | 0 |
 
-### Failed Tests
-
-- ❌ `[smoke] / renders`
-- ❌ `[smoke] /components/button renders`
-- ❌ `[smoke] /components/input renders`
-- ❌ `[smoke] /components/select renders`
-- ❌ `[smoke] /theming renders`
-- ❌ `[smoke] dark class applies from Bear theme storage`
-- ❌ `[smoke] default home renders without crash in light storage`
-
 
 ---
 

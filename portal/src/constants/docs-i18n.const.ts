@@ -136,6 +136,11 @@ export const DOCS_TEXT: Record<PortalLanguage, Record<string, string>> = {
     newFile: 'New file',
     newFolder: 'New folder',
     open: 'Open',
+    categoryLandingIntro: 'Browse {category} components with short links into each docs page.',
+    categoryNotFoundTitle: 'Category not found',
+    categoryNotFoundBody: 'That component category does not exist. Return to the components overview.',
+    backToComponents: 'Back to components',
+
     import: 'Import',
     props: 'Props',
     examples: 'Examples',
@@ -277,6 +282,11 @@ export const DOCS_TEXT: Record<PortalLanguage, Record<string, string>> = {
     newFile: 'Nuevo archivo',
     newFolder: 'Nueva carpeta',
     open: 'Abrir',
+    categoryLandingIntro: 'Explora componentes de {category} con enlaces a cada página de docs.',
+    categoryNotFoundTitle: 'Categoría no encontrada',
+    categoryNotFoundBody: 'Esa categoría de componentes no existe. Vuelve al resumen de componentes.',
+    backToComponents: 'Volver a componentes',
+
     import: 'Importar',
     props: 'Props',
     examples: 'Ejemplos',

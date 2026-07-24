@@ -57,3 +57,15 @@ export const MESSAGE_LIST_NEW_MESSAGES_CLASSES =
 
 export const MESSAGE_LIST_EMPTY_CLASSES =
   'bear-flex-1 bear-flex bear-items-center bear-justify-center bear-text-sm';
+
+export const MESSAGE_LIST_VIRTUALIZE_THRESHOLD = 40;
+
+export const MESSAGE_LIST_OVERSCAN = 6;
+
+export const MESSAGE_LIST_DAY_ESTIMATE_PX = 36;
+
+export const MESSAGE_LIST_GROUP_BASE_ESTIMATE_PX = 56;
+
+export const MESSAGE_LIST_BUBBLE_ESTIMATE_PX = 36;
+
+export const MESSAGE_LIST_ITEM_GAP_PX = 12;

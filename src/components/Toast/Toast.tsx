@@ -1,15 +1,19 @@
 import { FC, createContext, useContext, useState, useCallback, useEffect, useRef, ReactNode } from 'react';
-import {cn } from '@utils';
-import type { 
-  ToastProps, 
-  ToastContainerProps, 
-  ToastContextValue, 
-  ToastProviderProps, 
-  ToastSeverity, 
-  ToastPosition 
+import type {
+  ToastProps,
+  ToastContainerProps,
+  ToastContextValue,
+  ToastProviderProps,
+  ToastSeverity,
+  ToastPosition,
 } from './Toast.types';
-
-import { generateBearId } from '@utils';
+import {
+  T_O_A_S_T_ROOT_CLASS,
+  TOAST_ARIA_LIVE,
+  TOAST_ARIA_ROLE,
+  TOAST_EXIT_MS,
+} from './Toast.const';
+import { cn, generateBearId } from '@utils';
 
 // Default icons
 const ToastIcons: Record<ToastSeverity, ReactNode> = {
@@ -112,7 +116,7 @@ const ToastItem: FC<ToastProps & { onRemove: () => void }> = ({
       setTimeout(() => {
         onRemove();
         onClose?.();
-      }, 200);
+      }, TOAST_EXIT_MS);
     }, remainingRef.current);
     return () => {
       clearTimeout(timer);
@@ -125,7 +129,7 @@ const ToastItem: FC<ToastProps & { onRemove: () => void }> = ({
     setTimeout(() => {
       onRemove();
       onClose?.();
-    }, 200);
+    }, TOAST_EXIT_MS);
   };
 
   const renderIcon = () => {
@@ -137,10 +141,13 @@ const ToastItem: FC<ToastProps & { onRemove: () => void }> = ({
   return (
     <div
       ref={rootRef}
-      role="alert"
+      role={TOAST_ARIA_ROLE[severity]}
+      aria-live={TOAST_ARIA_LIVE[severity]}
+      aria-atomic="true"
       onMouseEnter={pauseOnHover ? () => setIsPaused(true) : undefined}
       onMouseLeave={pauseOnHover ? () => setIsPaused(false) : undefined}
       className={cn(
+        T_O_A_S_T_ROOT_CLASS,
         'bear-flex bear-items-start bear-gap-3 bear-p-4 bear-rounded-lg bear-shadow-lg bear-min-w-[300px] bear-max-w-[400px]',
         'bear-transition-all bear-duration-200',
         isExiting ? 'bear-opacity-0 bear-translate-x-2' : 'bear-opacity-100 bear-translate-x-0',
@@ -207,10 +214,12 @@ export const ToastContainer: FC<ToastContainerProps> = ({
   return (
     <div
       className={cn(
+        `${T_O_A_S_T_ROOT_CLASS}__container`,
         'bear-fixed bear-z-[11000] bear-flex bear-flex-col bear-gap-2',
         POSITION_STYLES[position],
         className
       )}
+      aria-relevant="additions"
     >
       {visibleToasts.map((toast) => (
         <ToastItem
@@ -278,6 +287,4 @@ export const ToastProvider: FC<ToastProviderProps> = ({
     </ToastContext.Provider>
   );
 };
-
-export default ToastProvider;
 

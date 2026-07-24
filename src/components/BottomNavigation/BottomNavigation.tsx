@@ -1,22 +1,27 @@
 import { FC } from 'react';
-import { BottomNavigationProps } from './BottomNavigation.types';
-import {cn } from '@utils';
+import type { BottomNavigationProps } from './BottomNavigation.types';
+import {
+  BOTTOM_NAVIGATION_ROOT_CLASS,
+  BOTTOM_NAVIGATION_VARIANT_CLASSES,
+  BOTTOM_NAVIGATION_ACTIVE_CLASSES,
+  BOTTOM_NAVIGATION_INACTIVE_CLASSES,
+} from './BottomNavigation.const';
+import { cn, resolveBearId, useBearId } from '@utils';
 
-export const BottomNavigation: FC<BottomNavigationProps> = ({
+export const BottomNavigation: FC<BottomNavigationProps> = (props) => {
+  const {
+    items,
+    value,
+    onChange,
+    showLabels = 'active',
+    variant = 'default',
+    className,
+    id,
+    testId,
+  } = props;
 
-  items,
-  value,
-  onChange,
-  showLabels = 'active',
-  variant = 'default',
-  className,
-}) => {
-
-  const variantClasses = {
-    default: 'bear-bg-zinc-900 bear-border-t bear-border-zinc-800',
-    elevated: 'bear-bg-zinc-900 bear-shadow-[0_-4px_20px_rgba(0,0,0,0.3)]',
-    transparent: 'bear-bg-zinc-900/80 bear-backdrop-blur-md bear-border-t bear-border-zinc-800/50',
-  };
+  const generatedId = useBearId('BottomNavigation');
+  const domId = resolveBearId(id, generatedId);
 
   const shouldShowLabel = (isActive: boolean) => {
     if (showLabels === true || showLabels === 'always') return true;
@@ -25,21 +30,28 @@ export const BottomNavigation: FC<BottomNavigationProps> = ({
   };
 
   return (
-    <nav className={cn(
-      'bear-fixed bear-bottom-0 bear-left-0 bear-right-0 bear-z-50 bear-h-16 bear-flex bear-items-center bear-justify-around bear-px-2',
-      variantClasses[variant],
-      className
-    )}>
+    <nav
+      id={domId}
+      data-testid={testId}
+      className={cn(
+        BOTTOM_NAVIGATION_ROOT_CLASS,
+        'bear-fixed bear-bottom-0 bear-left-0 bear-right-0 bear-z-50 bear-h-16 bear-flex bear-items-center bear-justify-around bear-px-2',
+        BOTTOM_NAVIGATION_VARIANT_CLASSES[variant],
+        className
+      )}
+    >
       {items.map((item) => {
         const isActive = value === item.id;
         return (
           <button
             key={item.id}
+            type="button"
             onClick={() => !item.disabled && onChange?.(item.id)}
             disabled={item.disabled}
             className={cn(
+              `${BOTTOM_NAVIGATION_ROOT_CLASS}__item`,
               'bear-flex bear-flex-col bear-items-center bear-justify-center bear-flex-1 bear-h-full bear-py-2 bear-transition-all',
-              isActive ? 'bear-text-primary-400' : 'bear-text-zinc-500 hover:bear-text-zinc-300',
+              isActive ? BOTTOM_NAVIGATION_ACTIVE_CLASSES : BOTTOM_NAVIGATION_INACTIVE_CLASSES,
               item.disabled && 'bear-opacity-50 bear-cursor-not-allowed'
             )}
           >
@@ -54,10 +66,12 @@ export const BottomNavigation: FC<BottomNavigationProps> = ({
               )}
             </div>
             {shouldShowLabel(isActive) && (
-              <span className={cn(
-                'bear-text-xs bear-mt-1 bear-transition-all',
-                isActive ? 'bear-font-medium' : ''
-              )}>
+              <span
+                className={cn(
+                  'bear-text-xs bear-mt-1 bear-transition-all',
+                  isActive ? 'bear-font-medium' : ''
+                )}
+              >
                 {item.label}
               </span>
             )}
@@ -67,4 +81,3 @@ export const BottomNavigation: FC<BottomNavigationProps> = ({
     </nav>
   );
 };
-

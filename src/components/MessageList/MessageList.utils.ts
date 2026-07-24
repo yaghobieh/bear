@@ -3,7 +3,13 @@ import type {
   MessageListMessage,
   MessageListTranslations,
 } from './MessageList.types';
-import { MESSAGE_LIST_MS_PER_DAY } from './MessageList.const';
+import {
+  MESSAGE_LIST_BUBBLE_ESTIMATE_PX,
+  MESSAGE_LIST_DAY_ESTIMATE_PX,
+  MESSAGE_LIST_GROUP_BASE_ESTIMATE_PX,
+  MESSAGE_LIST_ITEM_GAP_PX,
+  MESSAGE_LIST_MS_PER_DAY,
+} from './MessageList.const';
 
 export const isSameDay = (a: Date, b: Date): boolean =>
   a.getFullYear() === b.getFullYear() &&
@@ -75,4 +81,46 @@ export const buildMessageListItems = (
   }
 
   return items;
+};
+
+export const estimateMessageListItemHeight = (item: MessageListItem): number => {
+  if (item.kind === 'day') {
+    return MESSAGE_LIST_DAY_ESTIMATE_PX + MESSAGE_LIST_ITEM_GAP_PX;
+  }
+  return (
+    MESSAGE_LIST_GROUP_BASE_ESTIMATE_PX +
+    item.messages.length * MESSAGE_LIST_BUBBLE_ESTIMATE_PX +
+    MESSAGE_LIST_ITEM_GAP_PX
+  );
+};
+
+export const getMessageListWindow = (
+  items: MessageListItem[],
+  scrollTop: number,
+  viewportHeight: number,
+  overscan: number
+): { startIndex: number; endIndex: number; offsetTop: number; totalHeight: number } => {
+  const heights = items.map(estimateMessageListItemHeight);
+  const totalHeight = heights.reduce((sum, h) => sum + h, 0);
+  let offset = 0;
+  let startIndex = 0;
+  for (let i = 0; i < heights.length; i += 1) {
+    if (offset + heights[i] > scrollTop) {
+      startIndex = Math.max(0, i - overscan);
+      break;
+    }
+    offset += heights[i];
+  }
+  let offsetTop = 0;
+  for (let i = 0; i < startIndex; i += 1) {
+    offsetTop += heights[i];
+  }
+  let endIndex = startIndex;
+  let covered = offsetTop;
+  while (endIndex < heights.length && covered < scrollTop + viewportHeight) {
+    covered += heights[endIndex];
+    endIndex += 1;
+  }
+  endIndex = Math.min(heights.length - 1, endIndex + overscan);
+  return { startIndex, endIndex, offsetTop, totalHeight };
 };

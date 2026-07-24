@@ -1,0 +1,29 @@
+name: Portal e2e smoke
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          cd portal && npm ci
+
+      - name: Install Playwright Chromium
+        run: cd portal && npx playwright install --with-deps chromium
+
+      - name: Build Bear
+        run: npm run build
+
+      - name: Smoke e2e
+        run: cd portal && npm run test:e2e:smoke

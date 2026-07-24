@@ -1,5 +1,5 @@
 import { FC, useEffect, useMemo, useState } from 'react';
-import { useBearThemeOptional } from '@context/BearProvider';
+import { useBearThemeOptional, useBearDirectionOptional } from '@context/BearProvider';
 import { resolveMaxVisible } from '@utils/maxVisible.utils';
 import {cn } from '@utils';
 import { Dropdown } from '../Dropdown';
@@ -22,6 +22,7 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = (props) => {
   } = props;
 
   const theme = useBearThemeOptional();
+  const { direction } = useBearDirectionOptional();
   const [ellipsisPickIndex, setEllipsisPickIndex] = useState<number | null>(null);
   const [itemDropdownPick, setItemDropdownPick] = useState<Record<number, string>>({});
   const [vw, setVw] = useState(() => (typeof window !== 'undefined' ? window.innerWidth : 1200));
@@ -41,7 +42,9 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = (props) => {
   );
 
   const renderSeparator = () => separator || (
-    <BearIcons.ChevronRightIcon className={cn(BREADCRUMBS_ICON_SIZE[size], 'bear-text-zinc-500 bear-mx-2')} />
+    direction === 'rtl'
+      ? <BearIcons.ChevronLeftIcon className={cn(BREADCRUMBS_ICON_SIZE[size], 'bear-text-zinc-500 bear-mx-2')} />
+      : <BearIcons.ChevronRightIcon className={cn(BREADCRUMBS_ICON_SIZE[size], 'bear-text-zinc-500 bear-mx-2')} />
   );
 
   const renderItem = (item: BreadcrumbItem, index: number, isLast: boolean) => {
@@ -144,7 +147,7 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = (props) => {
     ellipsisPickIndex < hiddenEndExclusive;
 
   return (
-    <nav
+    <nav dir={direction}
       data-testid={testId}
       className={cn('bear-flex bear-min-w-0 bear-items-center bear-flex-wrap', BREADCRUMBS_SIZE[size], className)}
       aria-label={ariaLabel}

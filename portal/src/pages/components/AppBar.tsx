@@ -136,6 +136,24 @@ const AppBarPage: FC = () => {
         </div>
       </ComponentPreview>
 
+      <ComponentPreview
+        title="Dense / compact"
+        description="Shorter toolbar height. When dense is omitted, BearProvider density compact applies automatically."
+        code={`<AppBar dense color="default" disableGutters={false}
+  leftContent={<Typography variant="h6">Compact</Typography>}
+  rightContent={<Button size="sm" variant="outline">Action</Button>}
+/>`}
+      >
+        <div className="w-full">
+          <AppBar
+            dense
+            color="default"
+            leftContent={<Typography variant="h6" weight="bold">Compact AppBar</Typography>}
+            rightContent={<Button size="sm" variant="outline">Action</Button>}
+          />
+        </div>
+      </ComponentPreview>
+
       <section className="mb-12">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Props</h2>
         <div className="overflow-x-auto">
@@ -153,6 +171,9 @@ const AppBarPage: FC = () => {
               <tr><td className="px-4 py-3 font-mono text-bear-600">variant</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>default | transparent | blur</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">default</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Visual style</td></tr>
               <tr><td className="px-4 py-3 font-mono text-bear-600">color</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>default | primary | dark</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">primary</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Color scheme</td></tr>
               <tr><td className="px-4 py-3 font-mono text-bear-600">elevation</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">true</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Show shadow</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">dense</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">from density</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Compact height; inherits BearProvider density when omitted</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">disableGutters</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Remove horizontal padding</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">enableColorOnDark</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Keep primary tint in dark mode for color=default</td></tr>
               <tr><td className="px-4 py-3 font-mono text-bear-600">leftContent</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Left section content</td></tr>
               <tr><td className="px-4 py-3 font-mono text-bear-600">centerContent</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Center section content</td></tr>
               <tr><td className="px-4 py-3 font-mono text-bear-600">rightContent</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Right section content</td></tr>

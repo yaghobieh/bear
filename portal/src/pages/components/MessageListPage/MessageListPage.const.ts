@@ -40,7 +40,7 @@ export const DEMO_MESSAGES: MessageListMessage[] = [
   {
     id: 'm5',
     author: DEMO_AUTHORS.me,
-    content: 'Virtualization is planned for a later release.',
+    content: 'Virtualization is in 1.2.6 via the virtualized prop.',
     timestamp: new Date(now - 8 * MS_PER_MINUTE),
   },
   {
@@ -66,6 +66,7 @@ export const MESSAGE_LIST_PROPS: PropRow[] = [
   { name: 'showAvatars', type: 'boolean', default: 'true', description: 'Show author avatars' },
   { name: 'showTimestamps', type: 'boolean', default: 'true', description: 'Show group timestamps' },
   { name: 'autoScroll', type: 'boolean', default: 'true', description: 'Stick to bottom when new messages arrive' },
+  { name: 'virtualized', type: 'boolean', description: 'Windowed rendering; auto-enabled above the message threshold' },
   { name: 'height', type: 'number | string', default: '400', description: 'Height of the scrollable area' },
   { name: 'renderMessage', type: '(message) => ReactNode', description: 'Custom message content renderer' },
   { name: 'emptyState', type: 'ReactNode', description: 'Content when there are no messages' },

@@ -55,7 +55,7 @@ const MessageListPage: FC = () => {
         <ul className="list-disc pl-5 space-y-2 text-sm text-gray-600 dark:text-gray-400">
           <li>Messages must be sorted oldest-first; grouping uses <code className="doc-code-inline">groupWindowMs</code> between consecutive messages of the same author.</li>
           <li>Auto-scroll only sticks when the user is already at the bottom — otherwise the new-messages pill appears.</li>
-          <li>Rendering is not virtualized in 1.2.5; virtualization for very long conversations is planned as future work.</li>
+          <li>Set <code className="doc-code-inline">virtualized</code> (or rely on the auto threshold) for windowed rendering on long histories.</li>
         </ul>
       </section>
 

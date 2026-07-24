@@ -11,7 +11,7 @@ const A11Y_COMPONENTS = [
   { component: 'Select / MultiSelect', features: 'role="listbox/option", aria-selected, keyboard selection' },
   { component: 'Switch', features: 'role="switch", aria-checked, keyboard toggle' },
   { component: 'Slider', features: 'role="slider", aria-valuemin/max/now, arrow keys' },
-  { component: 'Toast', features: 'role="alert" or aria-live="polite", auto-dismiss' },
+  { component: 'Toast', features: 'aria-live polite (status) vs assertive (alert) by severity; dismiss does not re-announce' },
   { component: 'Spinner / Progress', features: 'role="progressbar", aria-valuenow, aria-label' },
   { component: 'Result', features: 'role="status", appropriate heading hierarchy' },
 ];

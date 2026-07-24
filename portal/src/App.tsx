@@ -8,8 +8,8 @@ import { DocPageNav } from './components/DocPageNav';
 import { RouteSEO } from './components/RouteSEO';
 
 const BANNER_CONFIG = {
-  id: 'bear-1.2.4',
-  message: 'Bear v1.2.4 — ToggleButton, FormControl, Snackbar, Bear IDs, and provider RTL/density.',
+  id: 'bear-1.2.6',
+  message: 'Bear v1.2.6 — AppBar dense, Select native/renderValue, MessageList virtualization, Backdrop, ChipGroup, RTL, Toast a11y.',
   link: '/whats-new',
   linkText: "See what's new",
 };
@@ -279,6 +279,9 @@ const ApiComponentPage = lazy(() => import('./pages/api/ComponentApi'));
 
 // Components Overview
 const ComponentsOverviewPage = lazy(() => import('./pages/ComponentsOverview'));
+const CategoryLandingPage = lazy(() => import('./pages/components/CategoryLanding'));
+const BackdropPage = lazy(() => import('./pages/components/Backdrop'));
+const ChipGroupPage = lazy(() => import('./pages/components/ChipGroup'));
 
 // Store
 const StorePage = lazy(() => import('./pages/Store'));
@@ -410,6 +413,9 @@ function PortalLayout({
                 <Route path="/typescript" element={<TypeScriptPage />} />
                 
                 <Route path="/components" element={<ComponentsOverviewPage />} />
+                <Route path="/components/category/:categorySlug" element={<CategoryLandingPage />} />
+                <Route path="/components/backdrop" element={<BackdropPage />} />
+                <Route path="/components/chip-group" element={<ChipGroupPage />} />
                 <Route path="/components/container" element={<ContainerPage />} />
                 <Route path="/components/grid" element={<GridPage />} />
                 <Route path="/components/flex" element={<FlexPage />} />

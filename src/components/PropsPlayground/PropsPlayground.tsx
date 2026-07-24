@@ -105,7 +105,7 @@ export const PropsPlayground: FC<PropsPlaygroundProps> = ({
       </button>
 
       {!collapsed && (
-        <div className={cn('bear-bg-zinc-900/50', s.padding)}>
+        <div className={cn('bear-bg-gray-50 dark:bear-bg-zinc-900/50', s.padding)}>
           <div className={cn('bear-grid', s.gap, COLUMN_CLASSES[columns])}>
             {Object.entries(config).map(([key, spec]) => {
               const value = values[key];
@@ -244,7 +244,7 @@ export const PropsPlayground: FC<PropsPlaygroundProps> = ({
         </div>
       )}
 
-      <div className="bear-border-t bear-border-zinc-700 bear-p-6 bear-bg-zinc-900 bear-flex bear-items-center bear-justify-center bear-min-h-[180px]">
+      <div className="bear-border-t bear-border-gray-200 dark:bear-border-zinc-700 bear-p-6 bear-bg-white dark:bear-bg-zinc-900 bear-flex bear-items-center bear-justify-center bear-min-h-[180px]">
         <div className="bear-w-full">{render(values)}</div>
       </div>
     </div>

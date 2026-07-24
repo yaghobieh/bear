@@ -25,33 +25,20 @@ import {
   MESSAGE_LIST_GROUP_WINDOW_MS,
   MESSAGE_LIST_META_CLASSES,
   MESSAGE_LIST_NEW_MESSAGES_CLASSES,
+  MESSAGE_LIST_OVERSCAN,
   MESSAGE_LIST_ROOT_CLASS,
   MESSAGE_LIST_SCROLLER_CLASSES,
   MESSAGE_LIST_TIMESTAMP_CLASSES,
+  MESSAGE_LIST_VIRTUALIZE_THRESHOLD,
 } from './MessageList.const';
 import {
   buildMessageListItems,
   getDefaultDayLabel,
   getDefaultTimestamp,
+  getMessageListWindow,
 } from './MessageList.utils';
 import { cn, resolveBearId, useBearId } from '@utils';
 
-/**
- * MessageList - Chat message list with consecutive-author grouping,
- * day separators, and auto-scroll with a "new messages" affordance.
- *
- * Rendering is plain (non-virtualized); virtualization is planned as
- * future work for very long conversations.
- *
- * @example
- * ```tsx
- * <MessageList
- *   messages={messages}
- *   currentUserId="me"
- *   height={420}
- * />
- * ```
- */
 export const MessageList: FC<MessageListProps> = ({
   id,
   testId,
@@ -62,6 +49,7 @@ export const MessageList: FC<MessageListProps> = ({
   showAvatars = true,
   showTimestamps = true,
   autoScroll = true,
+  virtualized,
   height = MESSAGE_LIST_DEFAULT_HEIGHT,
   renderMessage,
   emptyState,
@@ -78,11 +66,17 @@ export const MessageList: FC<MessageListProps> = ({
   const isAtBottomRef = useRef(true);
   const lastMessageIdRef = useRef<string | null>(null);
   const [hasNewMessages, setHasNewMessages] = useState(false);
+  const [scrollTop, setScrollTop] = useState(0);
+  const [viewportHeight, setViewportHeight] = useState(
+    typeof height === 'number' ? height : MESSAGE_LIST_DEFAULT_HEIGHT
+  );
 
   const t = { ...MESSAGE_LIST_DEFAULT_TRANSLATIONS, ...translations };
   const items = buildMessageListItems(messages, currentUserId, groupWindowMs, showDaySeparators);
   const dayLabel = (date: Date) => formatDayLabel?.(date) ?? getDefaultDayLabel(date, t);
   const timeLabel = (date: Date) => formatTimestamp?.(date) ?? getDefaultTimestamp(date);
+  const shouldVirtualize =
+    virtualized ?? messages.length >= MESSAGE_LIST_VIRTUALIZE_THRESHOLD;
 
   const scrollToBottom = (smooth: boolean) => {
     const scroller = scrollerRef.current;
@@ -93,6 +87,8 @@ export const MessageList: FC<MessageListProps> = ({
   const handleScroll = () => {
     const scroller = scrollerRef.current;
     if (!scroller) return;
+    setScrollTop(scroller.scrollTop);
+    setViewportHeight(scroller.clientHeight);
     const distanceFromBottom = scroller.scrollHeight - scroller.scrollTop - scroller.clientHeight;
     const atBottom = distanceFromBottom <= MESSAGE_LIST_BOTTOM_THRESHOLD_PX;
     isAtBottomRef.current = atBottom;
@@ -100,6 +96,12 @@ export const MessageList: FC<MessageListProps> = ({
       setHasNewMessages(false);
     }
   };
+
+  useEffect(() => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+    setViewportHeight(scroller.clientHeight);
+  }, [height]);
 
   useEffect(() => {
     const lastId = messages.length > 0 ? messages[messages.length - 1].id : null;
@@ -192,6 +194,33 @@ export const MessageList: FC<MessageListProps> = ({
     </div>
   );
 
+  const renderItem = (item: (typeof items)[number]) =>
+    item.kind === 'day' ? (
+      <div
+        key={item.key}
+        className={cn(
+          `${MESSAGE_LIST_ROOT_CLASS}__day-separator`,
+          MESSAGE_LIST_DAY_SEPARATOR_CLASSES
+        )}
+      >
+        <span className={cn(`${MESSAGE_LIST_ROOT_CLASS}__day-line`, MESSAGE_LIST_DAY_LINE_CLASSES)} />
+        <span className={cn(`${MESSAGE_LIST_ROOT_CLASS}__day-label`, MESSAGE_LIST_DAY_LABEL_CLASSES)}>
+          {dayLabel(item.date)}
+        </span>
+        <span className={cn(`${MESSAGE_LIST_ROOT_CLASS}__day-line`, MESSAGE_LIST_DAY_LINE_CLASSES)} />
+      </div>
+    ) : (
+      renderGroup(item)
+    );
+
+  const windowRange = shouldVirtualize
+    ? getMessageListWindow(items, scrollTop, viewportHeight, MESSAGE_LIST_OVERSCAN)
+    : null;
+  const visibleItems =
+    windowRange === null
+      ? items
+      : items.slice(windowRange.startIndex, windowRange.endIndex + 1);
+
   return (
     <div
       id={domId}
@@ -215,24 +244,17 @@ export const MessageList: FC<MessageListProps> = ({
             )}
           </div>
         )}
-        {items.map((item) =>
-          item.kind === 'day' ? (
-            <div
-              key={item.key}
-              className={cn(
-                `${MESSAGE_LIST_ROOT_CLASS}__day-separator`,
-                MESSAGE_LIST_DAY_SEPARATOR_CLASSES
-              )}
-            >
-              <span className={cn(`${MESSAGE_LIST_ROOT_CLASS}__day-line`, MESSAGE_LIST_DAY_LINE_CLASSES)} />
-              <span className={cn(`${MESSAGE_LIST_ROOT_CLASS}__day-label`, MESSAGE_LIST_DAY_LABEL_CLASSES)}>
-                {dayLabel(item.date)}
-              </span>
-              <span className={cn(`${MESSAGE_LIST_ROOT_CLASS}__day-line`, MESSAGE_LIST_DAY_LINE_CLASSES)} />
+        {shouldVirtualize && windowRange ? (
+          <div
+            className={`${MESSAGE_LIST_ROOT_CLASS}__virtual`}
+            style={{ height: windowRange.totalHeight, position: 'relative' }}
+          >
+            <div style={{ transform: `translateY(${windowRange.offsetTop}px)` }}>
+              {visibleItems.map((item) => renderItem(item))}
             </div>
-          ) : (
-            renderGroup(item)
-          )
+          </div>
+        ) : (
+          visibleItems.map((item) => renderItem(item))
         )}
       </div>
 

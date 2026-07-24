@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
+import { PropsTable } from '@/components/PropsTable';
 import { Select } from '@forgedevstack/bear';
 
 const BASIC_OPTIONS = [
@@ -28,6 +29,8 @@ const SelectPage: FC = () => {
   const [value, setValue] = useState('');
   const [country, setCountry] = useState('');
   const [car, setCar] = useState('');
+  const [nativeValue, setNativeValue] = useState('');
+  const [emptyValue, setEmptyValue] = useState('');
 
   return (
     <div className="fade-in">
@@ -158,32 +161,79 @@ const SelectPage: FC = () => {
         </div>
       </ComponentPreview>
 
-      <section className="mb-12">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Props</h2>
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
-            <thead className="bg-gray-50 dark:bg-gray-800">
-              <tr>
-                <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Prop</th>
-                <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Type</th>
-                <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Default</th>
-                <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Description</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-              <tr><td className="px-4 py-3 font-mono text-bear-600">options</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>SelectOption[]</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Required</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Array of {`{ value, label, disabled? }`}</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">value</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Selected value</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">onChange</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>(value: string) =&gt; void</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Change handler</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">placeholder</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Select an option</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Placeholder text</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">label</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Label text</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">error</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Error message</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">size</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>sm | md | lg</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">md</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Select size</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">fullWidth</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Full width select</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">disabled</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Disabled state</td></tr>
-            </tbody>
-          </table>
+      <ComponentPreview
+        title="Native select"
+        description="Renders a native HTML select while keeping the same options API."
+        code={`<Select
+  native
+  label="Priority"
+  options={options}
+  value={value}
+  onChange={setValue}
+  displayEmpty
+  placeholder="Choose priority"
+  fullWidth
+/>`}
+        allowOverflow
+      >
+        <div className="max-w-xs w-full">
+          <Select
+            native
+            label="Priority"
+            options={BASIC_OPTIONS}
+            value={nativeValue}
+            onChange={setNativeValue}
+            displayEmpty
+            placeholder="Choose priority"
+            fullWidth
+          />
         </div>
-      </section>
+      </ComponentPreview>
+
+      <ComponentPreview
+        title="displayEmpty + renderValue"
+        description="Keep the empty option visible and customize the closed trigger label."
+        code={`<Select
+  displayEmpty
+  options={options}
+  value={value}
+  onChange={setValue}
+  renderValue={(v) => \`Selected: \${v}\`}
+  placeholder="Nothing selected"
+  fullWidth
+/>`}
+        allowOverflow
+      >
+        <div className="max-w-xs w-full">
+          <Select
+            displayEmpty
+            options={BASIC_OPTIONS}
+            value={emptyValue}
+            onChange={setEmptyValue}
+            renderValue={(v) => `Selected: ${v}`}
+            placeholder="Nothing selected"
+            fullWidth
+          />
+        </div>
+      </ComponentPreview>
+
+      <PropsTable
+        title="Props"
+        rows={[
+          { name: 'options', type: 'SelectOption[]', default: 'Required', description: 'Array of { value, label, disabled? }' },
+          { name: 'value', type: 'string', description: 'Selected value' },
+          { name: 'onChange', type: '(value: string) => void', description: 'Change handler' },
+          { name: 'placeholder', type: 'string', default: 'Select an option', description: 'Placeholder text' },
+          { name: 'label', type: 'string', description: 'Label text' },
+          { name: 'error', type: 'string', description: 'Error message' },
+          { name: 'size', type: "'sm' | 'md' | 'lg'", default: 'md', description: 'Select size' },
+          { name: 'fullWidth', type: 'boolean', default: 'false', description: 'Full width select' },
+          { name: 'disabled', type: 'boolean', default: 'false', description: 'Disabled state' },
+          { name: 'native', type: 'boolean', default: 'false', description: 'Render a native HTML select' },
+          { name: 'displayEmpty', type: 'boolean', default: 'false', description: 'Show empty/placeholder when value is empty' },
+          { name: 'renderValue', type: '(value: string) => ReactNode', description: 'Custom closed-trigger display for custom Select' },
+        ]}
+      />
     </div>
   );
 };

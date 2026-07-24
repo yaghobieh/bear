@@ -1,5 +1,5 @@
 import React, { forwardRef, useEffect, useMemo, useState } from 'react';
-import { useBearThemeOptional } from '../../context/BearProvider';
+import { useBearThemeOptional, useBearDirectionOptional } from '../../context/BearProvider';
 import { resolveMaxVisible } from '../../utils/maxVisible.utils';
 import {cn } from '@utils';
 import { Typography } from '../Typography';
@@ -81,6 +81,7 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(
   ) => {
 
     const theme = useBearThemeOptional();
+    const { direction } = useBearDirectionOptional();
     const [vw, setVw] = useState(() => (typeof window !== 'undefined' ? window.innerWidth : DEFAULT_VIEWPORT_WIDTH));
     useEffect(() => {
       const r = () => setVw(window.innerWidth);
@@ -267,7 +268,14 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(
     return (
       <div
         ref={ref}
-        className={cn(STEPPER_BASE_CLASSES, isHorizontal ? STEPPER_HORIZONTAL_CLASSES : STEPPER_VERTICAL_CLASSES, className)} data-testid={testId}
+        dir={direction}
+        className={cn(
+          STEPPER_BASE_CLASSES,
+          isHorizontal ? STEPPER_HORIZONTAL_CLASSES : STEPPER_VERTICAL_CLASSES,
+          direction === 'rtl' && isHorizontal && 'bear-flex-row-reverse',
+          className
+        )}
+        data-testid={testId}
         {...props}
       >
         {isHorizontal && !useWindow &&

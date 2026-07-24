@@ -18,6 +18,7 @@
     "build": "npx tsc && npx vite build",
     "preview": "vite preview",
     "test:e2e": "playwright test --config=e2e/playwright.config.cjs",
+    "test:e2e:smoke": "BEAR_E2E_SMOKE=1 playwright test --config=e2e/playwright.config.cjs",
     "test:e2e:ui": "playwright test --config=e2e/playwright.config.cjs --ui",
     "type-check": "npx tsc --noEmit"
   },

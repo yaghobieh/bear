@@ -2,6 +2,40 @@
 
 All notable changes to Bear UI will be documented in this file.
 
+## [1.2.6] - 2026-07-24
+
+### Added
+
+- **`Backdrop`** — scrim overlay with `open`, `invisible`, `blur`, and `zIndex` for modals/loaders.
+- **`ChipGroup`** — chip layout helper with `max` overflow count (`+N`) for avatar/tag groups.
+- **AppBar** — `dense`, `disableGutters`, `enableColorOnDark`; densifies from BearProvider `density` when `dense` is omitted.
+- **Select** — implemented `native`, `displayEmpty`, and `renderValue` (types were already public in 1.2.4).
+- **MessageList `virtualized`** — windowed rendering for long conversations (auto above threshold); API otherwise unchanged.
+- **Progress `bufferValue` / `label`** — determinate buffer track and customizable outside label.
+- **ListItem `secondaryAction`** — trailing action that stops row click propagation.
+- **Portal** — category landing routes (`/components/category/:slug`), sticky 1.2.6 top banner, search history (already wired) marked complete in Roadmap Phase 6.
+- **Playwright smoke suite** — `BEAR_E2E_SMOKE=1` critical-path e2e; Chromium install documented for sanity.
+
+### Changed
+
+- **Toast** — `aria-live` / `role` by severity (`polite`/`status` vs `assertive`/`alert`); dismiss does not announce removals.
+- **RTL** — `useBearDirection` wired into Drawer side mirroring, Input adornment logical borders, Stepper horizontal flow, Breadcrumbs separators.
+- **BottomNavigation / Chip** — dual-mode (light + dark) surface and text tokens.
+- **Portal top line / AppBar strip** — v1.2.6 announcement banner, version badge, alerts, and version popup feature list (includes AppBar dense).
+
+### Fixed
+
+- Theme audit: BottomNavigation and Chip were dark-leaning in light mode; PropsPlayground preview surface dual-mode.
+- Playwright sanity infra: webServer builds Bear before portal e2e; smoke path no longer reports 0/275 from missing Chromium alone.
+
+### Migration
+
+- Prefer `Select` `native` / `displayEmpty` / `renderValue` instead of custom wrappers.
+- Opt into MessageList virtualization with `virtualized` or rely on auto threshold for large histories.
+- Use `Backdrop` for shared scrims instead of one-off fixed overlays.
+
+---
+
 ## [1.2.5] - 2026-07-12
 
 ### Added

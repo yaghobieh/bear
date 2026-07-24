@@ -1,7 +1,7 @@
 import { FC, forwardRef, useContext, useState, useCallback, useRef, useEffect } from 'react';
 import { cn, resolveBearId, useBearId } from '@utils';
 import type { InputProps } from './Input.types';
-import { BearContext } from '../../context/BearProvider';
+import { BearContext, useBearDirectionOptional } from '../../context/BearProvider';
 import { ClearIcon } from './components/ClearIcon';
 import { applyAutoFormat } from './Input.utils';
 import { validateFieldValue } from '../Form/Form.utils';
@@ -87,6 +87,7 @@ export const Input: FC<InputProps> = forwardRef<HTMLInputElement | HTMLTextAreaE
     const currentLen = typeof value === 'string' ? value.length : (typeof defaultValue === 'string' ? defaultValue.length : 0);
     const isOverLimit = charMax != null && currentLen > charMax;
     const showClear = clearable && !disabled && currentLen > 0;
+    const { direction } = useBearDirectionOptional();
 
     const startSlot = InputProps?.startAdornment ?? leftAddon;
     const endSlot = InputProps?.endAdornment ?? rightAddon;
@@ -174,6 +175,7 @@ export const Input: FC<InputProps> = forwardRef<HTMLInputElement | HTMLTextAreaE
             disabled && 'bear-opacity-50 bear-cursor-not-allowed',
             !multiline && wrapperHeightClasses[size]
           )}
+          dir={direction}
           style={{
             backgroundColor: 'var(--bear-bg-primary)',
             borderColor: hasError ? undefined : hasSuccess ? undefined : 'var(--bear-border-default)',
@@ -184,7 +186,7 @@ export const Input: FC<InputProps> = forwardRef<HTMLInputElement | HTMLTextAreaE
               className="Bear-Input__addon Bear-Input__addon--left bear-flex bear-items-center bear-self-stretch bear-shrink-0 bear-px-3 bear-text-sm bear-font-medium bear-select-none bear-pointer-events-none"
               style={{
                 backgroundColor: 'var(--bear-bg-tertiary)',
-                borderRight: '1px solid var(--bear-border-default)',
+                borderInlineEnd: '1px solid var(--bear-border-default)',
                 color: 'var(--bear-text-secondary)',
                 ...prefixStyle,
               }}
@@ -254,7 +256,7 @@ export const Input: FC<InputProps> = forwardRef<HTMLInputElement | HTMLTextAreaE
               className="Bear-Input__addon Bear-Input__addon--right bear-flex bear-items-center bear-self-stretch bear-shrink-0 bear-px-3 bear-gap-1.5"
               style={{
                 backgroundColor: 'var(--bear-bg-tertiary)',
-                borderLeft: '1px solid var(--bear-border-default)',
+                borderInlineStart: '1px solid var(--bear-border-default)',
                 color: 'var(--bear-text-secondary)',
                 ...suffixStyle,
               }}

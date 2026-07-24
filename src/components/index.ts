@@ -202,6 +202,10 @@ export type { PopoverProps, PopoverPlacement } from './Popover';
 
 // Data Display
 export { Chip } from './Chip';
+export { ChipGroup } from './ChipGroup';
+export type { ChipGroupProps } from './ChipGroup';
+export { Backdrop } from './Backdrop';
+export type { BackdropProps } from './Backdrop';
 export type { ChipProps } from './Chip';
 
 export { TreeView } from './TreeView';

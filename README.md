@@ -6,6 +6,21 @@ Strong, reliable React UI components. Tailwind-powered, zero config required. Th
 
 Visit the [Bear UI Portal](https://bearui.com/) to explore all components, view live examples, and browse the documentation.
 
+## Sanity / Playwright
+
+```bash
+# Install browsers once (required — missing Chromium yields 0 passes)
+cd portal && npx playwright install chromium
+
+# Critical-path smoke (recommended before release)
+cd portal && npm run test:e2e:smoke
+
+# Full portal suite
+cd portal && npm run test:e2e
+```
+
+`BEAR_E2E_SMOKE=1` runs `e2e/specs/smoke.spec.ts` only. The e2e webServer builds Bear, then starts the portal on port `5174`.
+
 ## Features
 
 - **Tailwind-Powered**: Built with Tailwind CSS, zero config required

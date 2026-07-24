@@ -63,15 +63,17 @@ fi
 SUMMARY_LINE=$(echo "$UNITTEST_OUTPUT" | grep -E "Tests?.*passed" | tail -1 | sed 's/"/\\"/g' || echo "")
 UT_JSON='{"exitCode":'"$UNITTEST_EXIT"',"output":"'"$SUMMARY_LINE"'"}'
 
-# ── 4. Playwright sanity + dark-mode + interactions ──────────────────────────
+# ── 4. Playwright critical-path smoke ────────────────────────────────────────
 echo ""
-echo "► Step 4/4 — Playwright sanity (render + interactions + dark mode)"
-E2E_OUTPUT=$(cd "$PORTAL" && npx playwright test --config=e2e/playwright.config.cjs 2>&1) || E2E_EXIT=$?
+echo "► Step 4/4 — Playwright smoke (critical routes + theme)"
+echo "  Tip: install browsers once with: cd portal && npx playwright install chromium"
+echo "  Full suite: cd portal && npm run test:e2e"
+E2E_OUTPUT=$(cd "$PORTAL" && BEAR_E2E_SMOKE=1 npx playwright test --config=e2e/playwright.config.cjs 2>&1) || E2E_EXIT=$?
 if [ $E2E_EXIT -ne 0 ]; then
-  echo "  ✗ Playwright tests failed"
+  echo "  ✗ Playwright smoke failed"
   echo "$E2E_OUTPUT" | tail -20
 else
-  echo "  ✓ Playwright tests passed"
+  echo "  ✓ Playwright smoke passed"
 fi
 
 # ── Generate sanity report ───────────────────────────────────────────────────

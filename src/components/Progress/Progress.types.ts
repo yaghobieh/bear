@@ -1,26 +1,16 @@
 export interface ProgressProps {
   id?: string;
-  /** Progress value (0-100) */
   value: number;
-  /** Maximum value */
   max?: number;
-  /** Size variant */
+  bufferValue?: number;
   size?: 'sm' | 'md' | 'lg';
-  /** Color variant */
   color?: 'default' | 'success' | 'warning' | 'danger' | 'info';
-  /** Show percentage label */
   showLabel?: boolean;
-  /** Label position */
+  label?: string;
   labelPosition?: 'inside' | 'outside';
-  /** Striped animation */
   striped?: boolean;
-  /** Animated stripes */
   animated?: boolean;
-  /** Indeterminate loading state */
   indeterminate?: boolean;
-  /** Custom class name */
   className?: string;
-  /** Test ID */
   testId?: string;
 }
-

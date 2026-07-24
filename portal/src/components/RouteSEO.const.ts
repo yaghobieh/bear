@@ -10,7 +10,7 @@ export const SEO_MAP: Record<string, SEOEntry> = {
   '/installation': { title: 'Installation', description: `Install Bear UI by ${SEO_AUTHOR_NAME} in your React project. npm, yarn, pnpm setup with AeroCraft CSS and TypeScript.` },
   '/changelog': { title: 'Changelog', description: `Bear UI release notes and changelog — latest updates by ${SEO_AUTHOR_NAME}.` },
   '/skills': { title: 'Skills', description: `Cursor AI skills for Bear UI development — component patterns, code review, and portal docs by ${SEO_AUTHOR_NAME}.` },
-  '/whats-new': { title: "What's New", description: `What's new in Bear UI v1.2.4 — ToggleButton, FormControl, Snackbar, Bear IDs, and more by ${SEO_AUTHOR_NAME}.` },
+  '/whats-new': { title: "What's New", description: `What's new in Bear UI v1.2.6 — Backdrop, ChipGroup, Select native/renderValue, MessageList virtualization, and more by ${SEO_AUTHOR_NAME}.` },
   '/theming': { title: 'Theming', description: 'Customize Bear UI themes — colors, spacing, typography, dark mode, and custom variants via BearProvider.' },
   '/docs/forms': { title: 'Forms', description: 'Build forms with Bear UI, @forgedevstack/forge-form, and React useActionState.' },
   '/docs/cli': { title: 'CLI', description: 'Forge CLI — scaffold projects, add Bear components, and manage ForgeStack packages.' },

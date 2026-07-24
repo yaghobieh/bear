@@ -29,6 +29,8 @@ export interface ListItemProps extends HTMLAttributes<HTMLLIElement> {
   leading?: ReactNode;
   /** Trailing content (icon, button, badge) */
   trailing?: ReactNode;
+  /** Secondary action rendered after content; clicks do not trigger the row onClick */
+  secondaryAction?: ReactNode;
   /** Whether item is selected */
   selected?: boolean;
   /** Whether item is disabled */

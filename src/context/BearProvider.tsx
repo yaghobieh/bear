@@ -644,9 +644,25 @@ export const useBearDirection = () => {
   return { direction, setDirection };
 };
 
+export const useBearDirectionOptional = () => {
+  const context = useContext(BearContext);
+  if (context) {
+    return { direction: context.direction, setDirection: context.setDirection };
+  }
+  return { direction: 'ltr' as const, setDirection: (_: 'ltr' | 'rtl') => undefined };
+};
+
 export const useBearDensity = () => {
   const { density, setDensity } = useBear();
   return { density, setDensity };
+};
+
+export const useBearDensityOptional = () => {
+  const context = useContext(BearContext);
+  if (context) {
+    return { density: context.density, setDensity: context.setDensity };
+  }
+  return { density: DEFAULT_DENSITY, setDensity: (_: BearDensity) => undefined };
 };
 
 /**

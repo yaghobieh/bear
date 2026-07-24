@@ -10,6 +10,34 @@ export interface ChangelogEntry {
 
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
+    version: '1.2.6',
+    date: 'July 24, 2026',
+    tag: 'patch',
+    sections: [
+      {
+        title: 'Added',
+        items: [
+          'AppBar — dense, disableGutters, enableColorOnDark',
+          'Backdrop — scrim overlay with blur/invisible modes',
+          'ChipGroup — avatar/tag groups with +N overflow',
+          'Select native, displayEmpty, renderValue implementation',
+          'MessageList virtualization for long conversations',
+          'Progress bufferValue + label; ListItem secondaryAction',
+          'Portal category landings and Phase 6 docs completion',
+        ],
+      },
+      {
+        title: 'Changed',
+        items: [
+          'Toast aria-live announcements by severity',
+          'RTL wired into Drawer, Input, Stepper, Breadcrumbs',
+          'BottomNavigation and Chip dual-mode theme tokens',
+          'Portal top banner / version popup for 1.2.6',
+        ],
+      },
+    ],
+  },
+  {
     version: '1.2.4',
     date: 'June 14, 2026',
     tag: 'minor',

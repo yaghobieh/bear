@@ -17,7 +17,7 @@ export interface NavGroup {
   icon?: string;
 }
 
-export const BEAR_VERSION = '1.2.5';
+export const BEAR_VERSION = '1.2.6';
 
 /** Main Bear UI repository */
 export const GITHUB_URL = 'https://github.com/yaghobieh/bear';
@@ -61,7 +61,7 @@ export const NAVIGATION: NavGroup[] = [
     items: [
       // Layout
       {
-        path: '/components/flex',
+        path: '/components/category/layout',
         label: 'Layout',
         children: [
           { path: '/components/flex', label: 'Flex' },
@@ -79,7 +79,7 @@ export const NAVIGATION: NavGroup[] = [
       },
       // Page Layout
       {
-        path: '/components/app-bar',
+        path: '/components/category/page-layout',
         label: 'Page Layout',
         children: [
           { path: '/components/app-bar', label: 'AppBar' },
@@ -89,7 +89,7 @@ export const NAVIGATION: NavGroup[] = [
       },
       // Button
       {
-        path: '/components/button',
+        path: '/components/category/button',
         label: 'Button',
         children: [
           { path: '/components/button', label: 'Button' },
@@ -106,7 +106,7 @@ export const NAVIGATION: NavGroup[] = [
       },
       // Input
       {
-        path: '/components/input',
+        path: '/components/category/input',
         label: 'Input',
         children: [
           { path: '/components/input', label: 'Input' },
@@ -127,7 +127,7 @@ export const NAVIGATION: NavGroup[] = [
       },
       // Select
       {
-        path: '/components/select',
+        path: '/components/category/select',
         label: 'Select',
         children: [
           { path: '/components/select', label: 'Select' },
@@ -140,7 +140,7 @@ export const NAVIGATION: NavGroup[] = [
       },
       // Form Controls
       {
-        path: '/components/checkbox',
+        path: '/components/category/form-controls',
         label: 'Form Controls',
         children: [
           { path: '/components/checkbox', label: 'Checkbox' },
@@ -156,7 +156,7 @@ export const NAVIGATION: NavGroup[] = [
       },
       // Pickers
       {
-        path: '/components/date-picker',
+        path: '/components/category/pickers',
         label: 'Pickers',
         children: [
           { path: '/components/date-picker', label: 'DatePicker' },
@@ -283,6 +283,8 @@ export const NAVIGATION: NavGroup[] = [
           { path: '/components/theme-icon', label: 'ThemeIcon' },
           { path: '/components/indicator', label: 'Indicator' },
           { path: '/components/chip', label: 'Chip' },
+          { path: '/components/chip-group', label: 'ChipGroup', badge: 'New' },
+          { path: '/components/backdrop', label: 'Backdrop', badge: 'New' },
           { path: '/components/biometric', label: 'Biometric' },
         ],
       },
@@ -518,7 +520,10 @@ export const NAVIGATION: NavGroup[] = [
 ];
 
 export const VERSIONS = [
-  { value: '1.2.3', label: 'v1.2.3 (current)' },
+  { value: '1.2.6', label: 'v1.2.6 (current)' },
+  { value: '1.2.5', label: 'v1.2.5' },
+  { value: '1.2.4', label: 'v1.2.4' },
+  { value: '1.2.3', label: 'v1.2.3' },
   { value: '1.2.2', label: 'v1.2.2' },
   { value: '1.2.1', label: 'v1.2.1' },
   { value: '1.2.0', label: 'v1.2.0' },

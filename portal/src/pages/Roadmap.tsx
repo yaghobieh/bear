@@ -25,7 +25,7 @@ const PHASES = [
     items: ['PropsPlayground — live interactive prop editing', 'Terminal, JsonViewer, DiffViewer, CodeEditor', 'LinesOfCode, ComponentPreview with LivePropsBlock'],
   },
   {
-    id: '6', title: 'Portal & Docs', status: 'In Progress',
+    id: '6', title: 'Portal & Docs', status: 'Done',
     items: ['Full i18n (English + Spanish)', 'Search history + grouped results', 'Category landing pages', 'Sitemap + SEO optimization'],
   },
   {

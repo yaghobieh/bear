@@ -1,52 +1,70 @@
 import { FC } from 'react';
-import { AppBarProps } from './AppBar.types';
-import {cn } from '@utils';
+import type { AppBarProps } from './AppBar.types';
+import {
+  APP_BAR_BASE_CLASS,
+  APP_BAR_COLOR_CLASSES,
+  APP_BAR_COLOR_ON_DARK_CLASS,
+  APP_BAR_DENSE_MODIFIER_CLASS,
+  APP_BAR_ELEVATION_CLASS,
+  APP_BAR_GUTTER_X,
+  APP_BAR_GUTTER_X_DENSE,
+  APP_BAR_HEIGHT_COMFORTABLE,
+  APP_BAR_HEIGHT_DENSE,
+  APP_BAR_POSITION_CLASSES,
+  APP_BAR_ROOT_CLASS,
+  APP_BAR_SECTION_BASE_CLASS,
+  APP_BAR_SECTION_CENTER_CLASS,
+  APP_BAR_SECTION_CLASS,
+  APP_BAR_SECTION_END_CLASS,
+  APP_BAR_SECTION_GROW_CLASS,
+  APP_BAR_VARIANT_CLASSES,
+  DEFAULT_APP_BAR_COLOR,
+  DEFAULT_APP_BAR_DISABLE_GUTTERS,
+  DEFAULT_APP_BAR_ELEVATION,
+  DEFAULT_APP_BAR_ENABLE_COLOR_ON_DARK,
+  DEFAULT_APP_BAR_POSITION,
+  DEFAULT_APP_BAR_VARIANT,
+} from './AppBar.const';
+import { useBearDensityOptional } from '@context';
+import { cn, generateBearId } from '@utils';
 
-export const AppBar: FC<AppBarProps> = ({
+export const AppBar: FC<AppBarProps> = (props) => {
+  const {
+    children,
+    position = DEFAULT_APP_BAR_POSITION,
+    variant = DEFAULT_APP_BAR_VARIANT,
+    color = DEFAULT_APP_BAR_COLOR,
+    className,
+    leftContent,
+    rightContent,
+    centerContent,
+    elevation = DEFAULT_APP_BAR_ELEVATION,
+    dense,
+    disableGutters = DEFAULT_APP_BAR_DISABLE_GUTTERS,
+    enableColorOnDark = DEFAULT_APP_BAR_ENABLE_COLOR_ON_DARK,
+    id,
+    testId,
+  } = props;
 
-  children,
-  position = 'sticky',
-  variant = 'default',
-  color = 'primary',
-  className,
-  leftContent,
-  rightContent,
-  centerContent,
-  elevation = true,
-}) => {
-
-  const positionClasses = {
-    fixed: 'bear-fixed bear-top-0 bear-left-0 bear-right-0 bear-z-50',
-    sticky: 'bear-sticky bear-top-0 bear-z-50',
-    static: 'bear-static',
-    relative: 'bear-relative',
-  };
-
-  const variantClasses = {
-    default: '',
-    transparent: 'bear-bg-transparent',
-    blur: 'bear-backdrop-blur-md',
-  };
-
-  const colorClasses = {
-    default: 'bear-bg-white bear-text-gray-900 dark:bear-bg-zinc-900 dark:bear-text-white',
-    primary: 'bear-bg-primary-600 bear-text-white',
-    dark: 'bear-bg-gray-900 bear-text-white dark:bear-bg-black',
-  };
-
-  const elevationClasses = elevation
-    ? 'bear-shadow-md bear-border-b bear-border-gray-200/10'
-    : '';
+  const { density } = useBearDensityOptional();
+  const isDense = dense ?? density === 'compact';
+  const resolvedId = id || generateBearId('AppBar');
 
   return (
     <header
+      id={resolvedId}
+      data-testid={testId}
       className={cn(
-        'Bear-AppBar',
-        'bear-w-full bear-h-16 bear-px-4 bear-flex bear-items-center',
-        positionClasses[position],
-        variantClasses[variant],
-        colorClasses[color],
-        elevationClasses,
+        APP_BAR_ROOT_CLASS,
+        APP_BAR_BASE_CLASS,
+        isDense ? APP_BAR_HEIGHT_DENSE : APP_BAR_HEIGHT_COMFORTABLE,
+        !disableGutters && (isDense ? APP_BAR_GUTTER_X_DENSE : APP_BAR_GUTTER_X),
+        APP_BAR_POSITION_CLASSES[position],
+        APP_BAR_VARIANT_CLASSES[variant],
+        APP_BAR_COLOR_CLASSES[color],
+        enableColorOnDark && color === 'default' && APP_BAR_COLOR_ON_DARK_CLASS,
+        elevation && APP_BAR_ELEVATION_CLASS,
+        isDense && APP_BAR_DENSE_MODIFIER_CLASS,
         className
       )}
       style={{
@@ -55,13 +73,26 @@ export const AppBar: FC<AppBarProps> = ({
     >
       {children ?? (
         <>
-          <div className="bear-flex bear-items-center bear-gap-4">
+          <div className={cn(APP_BAR_SECTION_CLASS, APP_BAR_SECTION_BASE_CLASS)}>
             {leftContent}
           </div>
-          <div className="bear-flex-1 bear-flex bear-items-center bear-justify-center">
+          <div
+            className={cn(
+              APP_BAR_SECTION_CLASS,
+              APP_BAR_SECTION_CENTER_CLASS,
+              APP_BAR_SECTION_BASE_CLASS,
+              APP_BAR_SECTION_GROW_CLASS
+            )}
+          >
             {centerContent}
           </div>
-          <div className="bear-flex bear-items-center bear-gap-4">
+          <div
+            className={cn(
+              APP_BAR_SECTION_CLASS,
+              APP_BAR_SECTION_END_CLASS,
+              APP_BAR_SECTION_BASE_CLASS
+            )}
+          >
             {rightContent}
           </div>
         </>
@@ -69,4 +100,3 @@ export const AppBar: FC<AppBarProps> = ({
     </header>
   );
 };
-

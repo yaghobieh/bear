@@ -79,6 +79,7 @@ export const ListItem = forwardRef<HTMLLIElement, ListItemProps>(({
   secondary,
   leading,
   trailing,
+  secondaryAction,
   selected = false,
   disabled = false,
   clickable = false,
@@ -93,6 +94,7 @@ export const ListItem = forwardRef<HTMLLIElement, ListItemProps>(({
   const { dense: contextDense, hoverable } = useListContext();
   const dense = denseProp ?? contextDense;
   const isClickable = clickable || !!onClick;
+  const endContent = secondaryAction ?? trailing;
 
   return (
     <li
@@ -109,6 +111,7 @@ export const ListItem = forwardRef<HTMLLIElement, ListItemProps>(({
         }
       }}
       className={cn(
+        'Bear-ListItem',
         'bear-flex bear-items-center bear-gap-3',
         dense ? 'bear-py-1 bear-px-3' : 'bear-py-2 bear-px-4',
         isClickable && !disabled && 'bear-cursor-pointer',
@@ -122,13 +125,13 @@ export const ListItem = forwardRef<HTMLLIElement, ListItemProps>(({
       {...props}
     >
       {leading && (
-        <div className="bear-flex-shrink-0 bear-text-gray-500 dark:bear-text-gray-400">
+        <div className="Bear-ListItem__leading bear-flex-shrink-0 bear-text-gray-500 dark:bear-text-gray-400">
           {leading}
         </div>
       )}
       
       {(primary || secondary) ? (
-        <div className="bear-flex-1 bear-min-w-0">
+        <div className="Bear-ListItem__content bear-flex-1 bear-min-w-0">
           {primary && (
             <div className="bear-text-gray-900 dark:bear-text-gray-100 bear-truncate">
               {primary}
@@ -144,12 +147,16 @@ export const ListItem = forwardRef<HTMLLIElement, ListItemProps>(({
           )}
         </div>
       ) : (
-        <div className="bear-flex-1 bear-min-w-0">{children}</div>
+        <div className="Bear-ListItem__content bear-flex-1 bear-min-w-0">{children}</div>
       )}
       
-      {trailing && (
-        <div className="bear-flex-shrink-0 bear-text-gray-500 dark:bear-text-gray-400">
-          {trailing}
+      {endContent && (
+        <div
+          className="Bear-ListItem__secondary-action bear-flex-shrink-0 bear-text-gray-500 dark:bear-text-gray-400"
+          onClick={(e) => e.stopPropagation()}
+          onKeyDown={(e) => e.stopPropagation()}
+        >
+          {endContent}
         </div>
       )}
     </li>

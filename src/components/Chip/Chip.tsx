@@ -1,87 +1,68 @@
 import { FC } from 'react';
-import { ChipProps } from './Chip.types';
-import {cn } from '@utils';
+import type { ChipProps } from './Chip.types';
+import {
+  C_H_I_P_ROOT_CLASS,
+  CHIP_COLOR_CLASSES,
+  CHIP_SIZE_CLASSES,
+  CHIP_DELETE_ICON_SIZES,
+} from './Chip.const';
+import { cn, resolveBearId, useBearId } from '@utils';
 
-export const Chip: FC<ChipProps> = ({
+export const Chip: FC<ChipProps> = (props) => {
+  const {
+    children,
+    variant = 'filled',
+    color = 'default',
+    size = 'md',
+    icon,
+    avatar,
+    onDelete,
+    onClick,
+    disabled = false,
+    className,
+    id,
+    testId,
+  } = props;
 
-  children,
-  variant = 'filled',
-  color = 'default',
-  size = 'md',
-  icon,
-  avatar,
-  onDelete,
-  onClick,
-  disabled = false,
-  className,
-}) => {
-
-  const colorClasses = {
-    filled: {
-      default: 'bear-bg-zinc-600 bear-text-white',
-      primary: 'bear-bg-primary-500 bear-text-white',
-      secondary: 'bear-bg-purple-500 bear-text-white',
-      success: 'bear-bg-green-500 bear-text-white',
-      warning: 'bear-bg-yellow-500 bear-text-black',
-      error: 'bear-bg-red-500 bear-text-white',
-      info: 'bear-bg-blue-500 bear-text-white',
-    },
-    outlined: {
-      default: 'bear-border bear-border-zinc-500 bear-text-zinc-300',
-      primary: 'bear-border bear-border-primary-500 bear-text-primary-400',
-      secondary: 'bear-border bear-border-purple-500 bear-text-purple-400',
-      success: 'bear-border bear-border-green-500 bear-text-green-400',
-      warning: 'bear-border bear-border-yellow-500 bear-text-yellow-400',
-      error: 'bear-border bear-border-red-500 bear-text-red-400',
-      info: 'bear-border bear-border-blue-500 bear-text-blue-400',
-    },
-    soft: {
-      default: 'bear-bg-zinc-500/20 bear-text-zinc-300',
-      primary: 'bear-bg-primary-500/20 bear-text-primary-400',
-      secondary: 'bear-bg-purple-500/20 bear-text-purple-400',
-      success: 'bear-bg-green-500/20 bear-text-green-400',
-      warning: 'bear-bg-yellow-500/20 bear-text-yellow-400',
-      error: 'bear-bg-red-500/20 bear-text-red-400',
-      info: 'bear-bg-blue-500/20 bear-text-blue-400',
-    },
-  };
-
-  const sizeClasses = {
-    sm: 'bear-h-6 bear-text-xs bear-px-2 bear-gap-1',
-    md: 'bear-h-8 bear-text-sm bear-px-3 bear-gap-1.5',
-    lg: 'bear-h-10 bear-text-base bear-px-4 bear-gap-2',
-  };
-
-  const deleteIconSizes = { sm: 'bear-w-3 bear-h-3', md: 'bear-w-4 bear-h-4', lg: 'bear-w-5 bear-h-5' };
-
+  const generatedId = useBearId('Chip');
+  const domId = resolveBearId(id, generatedId);
   const Component = onClick ? 'button' : 'span';
 
   return (
     <Component
+      id={domId}
+      data-testid={testId}
       onClick={onClick}
       disabled={disabled}
       className={cn(
+        C_H_I_P_ROOT_CLASS,
         'bear-inline-flex bear-items-center bear-rounded-full bear-font-medium bear-transition-all',
-        sizeClasses[size],
-        colorClasses[variant][color],
+        CHIP_SIZE_CLASSES[size],
+        CHIP_COLOR_CLASSES[variant][color],
         onClick && !disabled && 'bear-cursor-pointer hover:bear-opacity-80',
         disabled && 'bear-opacity-50 bear-cursor-not-allowed',
         className
       )}
     >
-      {avatar && <span className="bear--ml-1">{avatar}</span>}
-      {icon && <span>{icon}</span>}
-      <span>{children}</span>
+      {avatar && <span className={`${C_H_I_P_ROOT_CLASS}__avatar bear--ml-1`}>{avatar}</span>}
+      {icon && <span className={`${C_H_I_P_ROOT_CLASS}__icon`}>{icon}</span>}
+      <span className={`${C_H_I_P_ROOT_CLASS}__label`}>{children}</span>
       {onDelete && (
         <button
-          onClick={(e) => { e.stopPropagation(); onDelete(); }}
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete();
+          }}
           disabled={disabled}
           className={cn(
-            'bear-ml-1 bear-rounded-full bear-p-0.5 hover:bear-bg-black/20 bear-transition-colors',
+            `${C_H_I_P_ROOT_CLASS}__delete`,
+            'bear-ml-1 bear-rounded-full bear-p-0.5 hover:bear-bg-black/10 dark:hover:bear-bg-black/20 bear-transition-colors',
             disabled && 'bear-cursor-not-allowed'
           )}
+          aria-label="Remove"
         >
-          <svg className={deleteIconSizes[size]} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg className={CHIP_DELETE_ICON_SIZES[size]} fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
@@ -89,4 +70,3 @@ export const Chip: FC<ChipProps> = ({
     </Component>
   );
 };
-

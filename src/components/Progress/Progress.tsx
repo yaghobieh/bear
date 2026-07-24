@@ -1,79 +1,83 @@
 import { FC } from 'react';
-import {cn } from '@utils';
 import type { ProgressProps } from './Progress.types';
+import {
+  PROGRESS_ROOT_CLASS,
+  PROGRESS_SIZE_CLASSES,
+  PROGRESS_COLOR_CLASSES,
+  PROGRESS_BUFFER_CLASSES,
+  PROGRESS_TRACK_CLASSES,
+  PROGRESS_DEFAULT_LABEL,
+} from './Progress.const';
+import { cn, resolveBearId, useBearId } from '@utils';
 
-const sizeClasses = {
-  sm: 'bear-h-1.5',
-  md: 'bear-h-2.5',
-  lg: 'bear-h-4',
-};
+export const Progress: FC<ProgressProps> = (props) => {
+  const {
+    id,
+    value,
+    max = 100,
+    bufferValue,
+    size = 'md',
+    color = 'default',
+    showLabel = false,
+    label = PROGRESS_DEFAULT_LABEL,
+    labelPosition = 'outside',
+    striped = false,
+    animated = false,
+    indeterminate = false,
+    className,
+    testId,
+  } = props;
 
-const colorClasses = {
-  default: 'bear-bg-bear-500',
-  success: 'bear-bg-green-500',
-  warning: 'bear-bg-amber-500',
-  danger: 'bear-bg-red-500',
-  info: 'bear-bg-blue-500',
-};
-
-/**
- * Progress - Progress bar with multiple variants
- * 
- * @example
- * ```tsx
- * <Progress value={75} showLabel />
- * <Progress value={50} color="success" striped animated />
- * <Progress indeterminate />
- * ```
- */
-export const Progress: FC<ProgressProps> = ({
-  value,
-  max = 100,
-  size = 'md',
-  color = 'default',
-  showLabel = false,
-  labelPosition = 'outside',
-  striped = false,
-  animated = false,
-  indeterminate = false,
-  className,
-      testId,
-}) => {
-
+  const generatedId = useBearId('Progress');
+  const domId = resolveBearId(id, generatedId);
   const percentage = Math.min(100, Math.max(0, (value / max) * 100));
-  
+  const bufferPercentage =
+    bufferValue == null
+      ? null
+      : Math.min(100, Math.max(percentage, Math.max(0, (bufferValue / max) * 100)));
+
   return (
-    <div className={cn('bear-w-full', className)} data-testid={testId}>
+    <div
+      id={domId}
+      className={cn(PROGRESS_ROOT_CLASS, 'bear-w-full', className)}
+      data-testid={testId}
+    >
       {showLabel && labelPosition === 'outside' && (
-        <div className="bear-flex bear-justify-between bear-mb-1">
+        <div className={`${PROGRESS_ROOT_CLASS}__label-row bear-flex bear-justify-between bear-mb-1`}>
           <span className="bear-text-sm bear-font-medium bear-text-gray-700 dark:bear-text-gray-200">
-            Progress
+            {label}
           </span>
           <span className="bear-text-sm bear-font-medium bear-text-gray-700 dark:bear-text-gray-200">
             {Math.round(percentage)}%
           </span>
         </div>
       )}
-      
-      <div
-        className={cn(
-          'bear-w-full bear-bg-gray-200 dark:bear-bg-gray-700 bear-rounded-full bear-overflow-hidden',
-          sizeClasses[size]
+
+      <div className={cn(`${PROGRESS_ROOT_CLASS}__track`, PROGRESS_TRACK_CLASSES, PROGRESS_SIZE_CLASSES[size])}>
+        {bufferPercentage != null && !indeterminate && (
+          <div
+            className={cn(
+              `${PROGRESS_ROOT_CLASS}__buffer`,
+              'bear-absolute bear-inset-y-0 bear-left-0 bear-rounded-full',
+              PROGRESS_BUFFER_CLASSES
+            )}
+            style={{ width: `${bufferPercentage}%` }}
+          />
         )}
-      >
         <div
           className={cn(
-            'bear-h-full bear-rounded-full bear-transition-all bear-duration-300 bear-ease-out',
+            `${PROGRESS_ROOT_CLASS}__bar`,
+            'bear-relative bear-h-full bear-rounded-full bear-transition-all bear-duration-300 bear-ease-out',
             'bear-flex bear-items-center bear-justify-center',
-            colorClasses[color],
+            PROGRESS_COLOR_CLASSES[color],
             striped && 'bear-bg-stripes',
             animated && 'bear-animate-stripes',
             indeterminate && 'bear-animate-indeterminate'
           )}
-          style={{ 
+          style={{
             width: indeterminate ? '50%' : `${percentage}%`,
             backgroundSize: striped ? '1rem 1rem' : undefined,
-            backgroundImage: striped 
+            backgroundImage: striped
               ? 'linear-gradient(45deg, rgba(255,255,255,.15) 25%, transparent 25%, transparent 50%, rgba(255,255,255,.15) 50%, rgba(255,255,255,.15) 75%, transparent 75%, transparent)'
               : undefined,
           }}
@@ -81,6 +85,7 @@ export const Progress: FC<ProgressProps> = ({
           aria-valuenow={indeterminate ? undefined : value}
           aria-valuemin={0}
           aria-valuemax={max}
+          aria-label={label}
         >
           {showLabel && labelPosition === 'inside' && size === 'lg' && !indeterminate && (
             <span className="bear-text-xs bear-font-medium bear-text-white">
@@ -92,4 +97,3 @@ export const Progress: FC<ProgressProps> = ({
     </div>
   );
 };
-

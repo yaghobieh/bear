@@ -1,5 +1,6 @@
 import { FC, useEffect, useCallback, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { useBearDirectionOptional } from '@context/BearProvider';
 import {cn } from '@utils';
 import { XIcon } from '../Icon';
 import type { DrawerProps } from './Drawer.types';
@@ -30,7 +31,14 @@ export const Drawer: FC<DrawerProps> = ({
   id: _id,
   testId: _testId,
 }) => {
-  const resolvedSide = anchor ?? side;
+  const { direction } = useBearDirectionOptional();
+  const rawSide = anchor ?? side;
+  const resolvedSide =
+    direction === 'rtl' && (rawSide === 'left' || rawSide === 'right')
+      ? rawSide === 'left'
+        ? 'right'
+        : 'left'
+      : rawSide;
 
   const [isMounted, setIsMounted] = useState(isOpen);
   const [isClosing, setIsClosing] = useState(false);
@@ -109,7 +117,7 @@ export const Drawer: FC<DrawerProps> = ({
         style={{ transitionDuration: `${DRAWER_ANIMATION_MS}ms` }}
       >
         {(title || showCloseButton) && (
-          <div className="bear-flex bear-items-center bear-justify-between bear-px-4 bear-py-3 bear-border-b bear-border-neutral-200 dark:bear-border-neutral-700 bear-shrink-0">
+          <div className="bear-flex bear-items-center bear-justify-between bear-px-4 bear-py-3 bear-border-b bear-border-neutral-200 dark:bear-border-neutral-700 bear-shrink-0" dir={direction}>
             {title && (
               <h2
                 id="drawer-title"

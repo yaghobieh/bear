@@ -60,6 +60,8 @@ export interface MessageListProps {
   showTimestamps?: boolean;
   /** Auto-scroll to bottom on new messages when already at the bottom */
   autoScroll?: boolean;
+  /** Enable windowed rendering for long conversations (auto when message count exceeds threshold) */
+  virtualized?: boolean;
   /** Height of the scrollable area */
   height?: number | string;
   /** Custom message content renderer */

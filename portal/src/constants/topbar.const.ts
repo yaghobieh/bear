@@ -6,24 +6,26 @@ export interface TopbarAlertItem {
 }
 
 export const NEW_COMPONENT_ALERTS: TopbarAlertItem[] = [
-  { label: 'ToggleButton', path: '/components/toggle-button', info: 'Exclusive & multi-select toggles', badge: 'New' },
-  { label: 'FormControl', path: '/components/form-control', info: 'Label, error, helper propagation', badge: 'New' },
-  { label: 'Snackbar', path: '/components/snackbar', info: 'Portal-based anchored messages', badge: 'New' },
-  { label: 'CssBaseline', path: '/theming', info: 'Global box-sizing & body reset', badge: 'New' },
-  { label: 'Skeleton variants', path: '/components/skeleton', info: 'Table, Form, Card skeletons', badge: 'New' },
-  { label: 'Bear Skills', path: '/skills', info: 'Cursor AI skills for Bear development', badge: 'New' },
+  { label: 'AppBar dense', path: '/components/app-bar', info: 'dense, disableGutters, enableColorOnDark', badge: 'New' },
+  { label: 'Backdrop', path: '/components/backdrop', info: 'Scrim overlay for modals and loaders', badge: 'New' },
+  { label: 'ChipGroup', path: '/components/chip-group', info: 'Grouped chips with overflow count', badge: 'New' },
+  { label: 'Select native', path: '/components/select', info: 'native, displayEmpty, renderValue', badge: 'New' },
+  { label: 'MessageList', path: '/components/message-list', info: 'Virtualized long conversations', badge: 'New' },
+  { label: 'Toast a11y', path: '/components/toast', info: 'aria-live polite/assertive regions', badge: 'New' },
+  { label: 'RTL wiring', path: '/theming', info: 'Provider direction in layout/forms', badge: 'New' },
 ];
 
 export const VERSION_POPUP_FEATURES = [
-  'ToggleButton',
-  'FormControl',
-  'Snackbar',
-  'Bear IDs',
-  'RTL',
-  'Density',
-  'CssBaseline',
-  'Skeletons',
+  'AppBar dense / gutters',
+  'Backdrop',
+  'ChipGroup',
+  'Select native',
+  'MessageList virtualization',
+  'Toast aria-live',
+  'RTL layout',
+  'Progress buffer',
+  'ListItem secondaryAction',
 ];
 
 export const VERSION_POPUP_DESCRIPTION =
-  'v1.2.4 — ToggleButton, FormControl, Snackbar, Bear IDs, provider RTL/density, and Cursor skills for AI-assisted development.';
+  'v1.2.6 — AppBar dense/gutters, Backdrop, ChipGroup, Select native/renderValue, MessageList virtualization, Toast a11y, RTL wiring, and theme fixes.';

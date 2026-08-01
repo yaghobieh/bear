@@ -1,4 +1,5 @@
 import { useId, useMemo } from 'react';
+import { BEAR_ID_SEPARATOR } from './generateBearId.const';
 import { formatBearId } from './generateBearId.utils';
 
 export const useBearId = (componentName: string, suffix?: string): string => {
@@ -8,7 +9,7 @@ export const useBearId = (componentName: string, suffix?: string): string => {
     if (!suffix) {
       return baseId;
     }
-    const cleanedSuffix = suffix.replace(/[^a-zA-Z0-9_]/g, '');
-    return cleanedSuffix ? `${baseId}_${cleanedSuffix}` : baseId;
+    const cleanedSuffix = suffix.replace(/[^a-zA-Z0-9]/g, '');
+    return cleanedSuffix ? `${baseId}${BEAR_ID_SEPARATOR}${cleanedSuffix}` : baseId;
   }, [componentName, reactId, suffix]);
 };

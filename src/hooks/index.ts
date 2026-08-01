@@ -92,4 +92,8 @@ export type { UseAnimateOptions, UseAnimateReturn, AnimationPreset, AnimationKey
 export { useResponsive, useResponsiveProps } from './useResponsive';
 export type { ResponsiveProp } from './useResponsive';
 
+export { useBreakpoint } from './useBreakpoint';
+export type { UseBreakpointResult, BearBreakpointKey } from './useBreakpoint';
+export { DEFAULT_BREAKPOINTS_PX } from './useBreakpoint';
+
 export { useFormControl } from './useFormControl';

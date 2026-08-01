@@ -1,7 +1,7 @@
 import { FC, forwardRef, useContext, useState, useCallback, useRef, useEffect } from 'react';
 import { cn, resolveBearId, useBearId } from '@utils';
 import type { InputProps } from './Input.types';
-import { BearContext, useBearDirectionOptional } from '../../context/BearProvider';
+import { BearContext, useBearDirectionOptional, useBearDensityOptional } from '../../context/BearProvider';
 import { ClearIcon } from './components/ClearIcon';
 import { applyAutoFormat } from './Input.utils';
 import { validateFieldValue } from '../Form/Form.utils';
@@ -10,7 +10,9 @@ import {
   INPUT_MULTILINE_MIN_ROWS,
   INPUT_ROOT_CLASS,
   INPUT_TEXT_CLASSES,
+  INPUT_TEXT_COMPACT_CLASSES,
   INPUT_WRAPPER_HEIGHT_CLASSES,
+  INPUT_WRAPPER_HEIGHT_COMPACT_CLASSES,
 } from './Input.const';
 
 export const Input: FC<InputProps> = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(
@@ -63,6 +65,8 @@ export const Input: FC<InputProps> = forwardRef<HTMLInputElement | HTMLTextAreaE
   ) => {
     const generatedId = useBearId('Input');
     const domId = resolveBearId(id, generatedId);
+    const { density } = useBearDensityOptional();
+    const isCompact = density === 'compact';
 
     const context = useContext(BearContext);
     const componentStyles = context?.components?.Input;
@@ -76,8 +80,10 @@ export const Input: FC<InputProps> = forwardRef<HTMLInputElement | HTMLTextAreaE
     const [internalError, setInternalError] = useState<string | null>(null);
     const validationPending = useRef(false);
 
-    const inputTextClasses = INPUT_TEXT_CLASSES;
-    const wrapperHeightClasses = INPUT_WRAPPER_HEIGHT_CLASSES;
+    const inputTextClasses = isCompact ? INPUT_TEXT_COMPACT_CLASSES : INPUT_TEXT_CLASSES;
+    const wrapperHeightClasses = isCompact
+      ? INPUT_WRAPPER_HEIGHT_COMPACT_CLASSES
+      : INPUT_WRAPPER_HEIGHT_CLASSES;
     const shouldValidateOnBlur = validation ? (validateOnBlur ?? true) : false;
 
     const error = errorProp || internalError;

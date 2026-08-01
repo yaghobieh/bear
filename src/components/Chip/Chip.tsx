@@ -2,11 +2,14 @@ import { FC } from 'react';
 import type { ChipProps } from './Chip.types';
 import {
   C_H_I_P_ROOT_CLASS,
+  CHIP_AVATAR_SIZE_CLASSES,
   CHIP_COLOR_CLASSES,
   CHIP_SIZE_CLASSES,
+  CHIP_SIZE_COMPACT_CLASSES,
   CHIP_DELETE_ICON_SIZES,
 } from './Chip.const';
 import { cn, resolveBearId, useBearId } from '@utils';
+import { useBearDensityOptional } from '../../context/BearProvider';
 
 export const Chip: FC<ChipProps> = (props) => {
   const {
@@ -26,6 +29,8 @@ export const Chip: FC<ChipProps> = (props) => {
 
   const generatedId = useBearId('Chip');
   const domId = resolveBearId(id, generatedId);
+  const { density } = useBearDensityOptional();
+  const sizeClasses = density === 'compact' ? CHIP_SIZE_COMPACT_CLASSES : CHIP_SIZE_CLASSES;
   const Component = onClick ? 'button' : 'span';
 
   return (
@@ -37,7 +42,8 @@ export const Chip: FC<ChipProps> = (props) => {
       className={cn(
         C_H_I_P_ROOT_CLASS,
         'bear-inline-flex bear-items-center bear-rounded-full bear-font-medium bear-transition-all',
-        CHIP_SIZE_CLASSES[size],
+        sizeClasses[size],
+        avatar && CHIP_AVATAR_SIZE_CLASSES[size],
         CHIP_COLOR_CLASSES[variant][color],
         onClick && !disabled && 'bear-cursor-pointer hover:bear-opacity-80',
         disabled && 'bear-opacity-50 bear-cursor-not-allowed',

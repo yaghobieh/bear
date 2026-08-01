@@ -25,7 +25,7 @@ Helper components that are only used by one parent belong in a `helpers/` subfol
 
 1. Create types with `id?: string`, `testId?: string`, and all public props
 2. Extract magic strings/numbers to `*.const.ts`
-3. Use `useBearId('ComponentName')` + `resolveBearId(id, generatedId)` for auto-generated DOM ids (`Bear_component_123456`)
+3. Use `useBearId('ComponentName')` + `resolveBearId(id, generatedId)` for auto-generated DOM ids (`Bear-ComponentName-a12345678901`)
 4. Use BEM `Bear-ComponentName` classes
 5. User-facing strings via props with defaults from const
 6. Register in `src/components/index.ts`

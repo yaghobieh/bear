@@ -20,9 +20,11 @@ export interface SelectProps {
   /** Select label */
   label?: string;
   /** Error message */
-  error?: string;
+  error?: string | boolean;
   /** Whether select is disabled */
   disabled?: boolean;
+  /** Whether the field is required */
+  required?: boolean;
   /** Select size */
   size?: 'sm' | 'md' | 'lg';
   /** Whether select is full width */

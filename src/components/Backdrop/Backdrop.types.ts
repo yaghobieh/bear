@@ -7,6 +7,8 @@ export interface BackdropProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onC
   invisible?: boolean;
   blur?: boolean;
   zIndex?: number;
+  transitionDuration?: number;
+  keepMounted?: boolean;
   onClick?: (event: MouseEvent<HTMLDivElement>) => void;
   children?: ReactNode;
   className?: string;

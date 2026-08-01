@@ -1,30 +1,28 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
+import { Button, ToastProvider, useToast } from '@forgedevstack/bear';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
 
+const ToastDemoButtons: FC = () => {
+  const toast = useToast();
+
+  return (
+    <div className="flex flex-wrap gap-4">
+      <Button onClick={() => toast.success('Operation completed successfully!')}>Success Toast</Button>
+      <Button onClick={() => toast.error('Something went wrong!')}>Error Toast</Button>
+      <Button onClick={() => toast.warning('Please check your input.')}>Warning Toast</Button>
+      <Button onClick={() => toast.info('Here is some information.')}>Info Toast</Button>
+    </div>
+  );
+};
+
 const ToastPage: FC = () => {
-  const [toasts, setToasts] = useState<{ id: number; message: string; severity: string }[]>([]);
-  let toastId = 0;
-
-  const showToast = (severity: string) => {
-    const id = ++toastId;
-    const messages: Record<string, string> = {
-      success: 'Operation completed successfully!',
-      error: 'Something went wrong!',
-      warning: 'Please check your input.',
-      info: 'Here is some information.',
-    };
-    setToasts((prev) => [...prev, { id, message: messages[severity], severity }]);
-    setTimeout(() => {
-      setToasts((prev) => prev.filter((t) => t.id !== id));
-    }, 3000);
-  };
-
   return (
     <div className="fade-in">
       <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Toast</h1>
       <p className="text-gray-600 dark:text-gray-400 mb-8">
-        Toast notifications for displaying brief messages to users.
+        Toast notifications for displaying brief messages to users. Severity drives shared live-region
+        politeness (`aria-live` / `role`).
       </p>
 
       <section className="mb-12">
@@ -39,73 +37,24 @@ const ToastPage: FC = () => {
       <ComponentPreview
         title="Usage"
         description="Wrap your app with ToastProvider and use the useToast hook."
-        code={`// In your root component
-import { ToastProvider } from '@forgedevstack/bear';
+        code={`import { ToastProvider, useToast, Button } from '@forgedevstack/bear';
 
 function App() {
   return (
     <ToastProvider position="top-right" maxToasts={5}>
-      <YourApp />
+      <Demo />
     </ToastProvider>
   );
 }
 
-// In any child component
-import { useToast } from '@forgedevstack/bear';
-
-function MyComponent() {
+function Demo() {
   const toast = useToast();
-
-  const handleClick = () => {
-    toast.success('Operation completed!');
-    toast.error('Something went wrong!');
-    toast.warning('Please check your input.');
-    toast.info('Here is some information.');
-  };
-
-  return <button onClick={handleClick}>Show Toast</button>;
+  return <Button onClick={() => toast.success('Done')}>Success Toast</Button>;
 }`}
       >
-        <div className="flex flex-wrap gap-4">
-          <button
-            onClick={() => showToast('success')}
-            className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
-          >
-            Success Toast
-          </button>
-          <button
-            onClick={() => showToast('error')}
-            className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
-          >
-            Error Toast
-          </button>
-          <button
-            onClick={() => showToast('warning')}
-            className="px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600"
-          >
-            Warning Toast
-          </button>
-          <button
-            onClick={() => showToast('info')}
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-          >
-            Info Toast
-          </button>
-        </div>
-        <div className="fixed top-20 right-4 flex flex-col gap-2 z-50">
-          {toasts.map((toast) => (
-            <div
-              key={toast.id}
-              className={`px-4 py-3 rounded-lg text-white shadow-lg animate-fade-in ${
-                toast.severity === 'success' ? 'bg-green-500' :
-                toast.severity === 'error' ? 'bg-red-500' :
-                toast.severity === 'warning' ? 'bg-amber-500' : 'bg-blue-500'
-              }`}
-            >
-              {toast.message}
-            </div>
-          ))}
-        </div>
+        <ToastProvider position="top-right" maxToasts={5}>
+          <ToastDemoButtons />
+        </ToastProvider>
       </ComponentPreview>
 
       <section className="mb-12">
@@ -157,4 +106,3 @@ function MyComponent() {
 };
 
 export default ToastPage;
-

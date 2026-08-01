@@ -1,8 +1,9 @@
 import { FC, useEffect, useCallback, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useBearDirectionOptional } from '@context/BearProvider';
-import {cn } from '@utils';
+import { cn, resolveBearId, useBearId } from '@utils';
 import { XIcon } from '../Icon';
+import { Backdrop } from '../Backdrop';
 import type { DrawerProps } from './Drawer.types';
 import {
   DRAWER_ANIMATION_MS,
@@ -28,9 +29,11 @@ export const Drawer: FC<DrawerProps> = ({
   closeOnEscape = true,
   className,
   container,
-  id: _id,
-  testId: _testId,
+  id,
+  testId,
 }) => {
+  const generatedId = useBearId('Drawer');
+  const domId = resolveBearId(id, generatedId);
   const { direction } = useBearDirectionOptional();
   const rawSide = anchor ?? side;
   const resolvedSide =
@@ -88,22 +91,22 @@ export const Drawer: FC<DrawerProps> = ({
   if (!isMounted) return null;
 
   const drawerContent = (
-    <div className="bear-fixed bear-inset-0 bear-z-[11000]">
-      <div
-        className={cn(
-          'bear-absolute bear-inset-0 bear-bg-black/60 bear-backdrop-blur-sm bear-transition-opacity',
-          isClosing ? 'bear-opacity-0' : 'bear-opacity-100'
-        )}
-        style={{ transitionDuration: `${DRAWER_ANIMATION_MS}ms` }}
-        onClick={closeOnBackdrop ? onClose : undefined}
-        aria-hidden="true"
+    <div id={domId} data-testid={testId} className="Bear-Drawer bear-fixed bear-inset-0 bear-z-[11000]">
+      <Backdrop
+        open={hasOpened && !isClosing}
+        keepMounted
+        blur
+        transitionDuration={DRAWER_ANIMATION_MS}
+        className="Bear-Drawer__backdrop"
+        onClick={closeOnBackdrop ? () => onClose() : undefined}
       />
 
       <div
         role="dialog"
         aria-modal="true"
-        aria-labelledby={title ? 'drawer-title' : undefined}
+        aria-labelledby={title ? `${domId}-title` : undefined}
         className={cn(
+          'Bear-Drawer__panel',
           'bear-absolute bear-bg-white dark:bear-bg-neutral-900 bear-shadow-2xl',
           'bear-border-neutral-200 dark:bear-border-neutral-700',
           'bear-flex bear-flex-col bear-overflow-hidden',
@@ -120,7 +123,7 @@ export const Drawer: FC<DrawerProps> = ({
           <div className="bear-flex bear-items-center bear-justify-between bear-px-4 bear-py-3 bear-border-b bear-border-neutral-200 dark:bear-border-neutral-700 bear-shrink-0" dir={direction}>
             {title && (
               <h2
-                id="drawer-title"
+                id={`${domId}-title`}
                 className="bear-text-lg bear-font-semibold bear-text-neutral-900 dark:bear-text-white"
               >
                 {title}

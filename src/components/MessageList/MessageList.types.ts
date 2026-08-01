@@ -62,6 +62,8 @@ export interface MessageListProps {
   autoScroll?: boolean;
   /** Enable windowed rendering for long conversations (auto when message count exceeds threshold) */
   virtualized?: boolean;
+  /** Extra items rendered above/below the viewport when virtualized */
+  overscan?: number;
   /** Height of the scrollable area */
   height?: number | string;
   /** Custom message content renderer */

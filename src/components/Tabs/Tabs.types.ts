@@ -7,6 +7,7 @@ export interface TabsContextValue {
   activeTab: string;
   setActiveTab: (id: string) => void;
   variant: 'line' | 'pills' | 'enclosed';
+  compact: boolean;
 }
 
 export interface TabsProps {

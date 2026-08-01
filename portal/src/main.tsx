@@ -6,10 +6,16 @@ import App from './App';
 import '@forgedevstack/bear/styles.css';
 import './styles/globals.css';
 
+const storedDirection =
+  typeof window !== 'undefined' && localStorage.getItem('bear-direction') === 'rtl'
+    ? 'rtl'
+    : 'ltr';
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <BearProvider 
+    <BearProvider
       defaultMode="light"
+      direction={storedDirection}
       customVariants={{
         brand: { bg: '#ec4899', bgHover: '#db2777', text: '#ffffff' },
         ocean: { bg: '#0ea5e9', bgHover: '#0284c7', text: '#ffffff' },

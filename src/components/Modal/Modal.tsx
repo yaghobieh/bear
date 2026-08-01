@@ -1,11 +1,11 @@
 import { FC, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
-import {cn } from '@utils';
+import { cn, resolveBearId, useBearId } from '@utils';
 import { CloseIcon } from '../Icon/icons/navigation';
+import { Backdrop } from '../Backdrop';
 import type { ModalProps } from './Modal.types';
 import {
   MODAL_SIZE_CLASSES,
-  MODAL_BACKDROP_CLASSES,
   MODAL_CONTAINER_CLASSES,
   MODAL_HEADER_CLASSES,
   MODAL_TITLE_CLASSES,
@@ -46,6 +46,9 @@ export const Modal: FC<ModalProps> = (props) => {
     id,
   } = props;
 
+  const generatedId = useBearId('Modal');
+  const domId = resolveBearId(id, generatedId);
+
   const shouldLockBodyScroll = lockBodyScroll && !cancelPreventScroll;
   const closeBackdropClick =
     isCancelBackgroundClick !== undefined ? isCancelBackgroundClick : closeOnBackdrop;
@@ -75,23 +78,25 @@ export const Modal: FC<ModalProps> = (props) => {
   if (!isOpen && !keepMounted) return null;
 
   const modalContent = (
-    <div 
+    <div
       className="Bear-Modal bear-fixed bear-inset-0 bear-z-[11000] bear-flex bear-items-center bear-justify-center bear-p-4"
       data-testid={testId}
-      id={id}
+      id={domId}
     >
       {!hideBackdrop && (
-      <div
-        className={cn('Bear-Modal__backdrop', MODAL_BACKDROP_CLASSES)}
-        onClick={closeBackdropClick ? onClose : undefined}
-        aria-hidden="true"
-      />
+        <Backdrop
+          open={isOpen}
+          keepMounted={keepMounted}
+          blur
+          className="Bear-Modal__backdrop"
+          onClick={closeBackdropClick ? () => onClose() : undefined}
+        />
       )}
 
       <div
         role="dialog"
         aria-modal="true"
-        aria-labelledby={title ? 'modal-title' : undefined}
+        aria-labelledby={title ? `${domId}-title` : undefined}
         className={cn(
           'Bear-Modal__container',
           MODAL_CONTAINER_CLASSES,
@@ -103,7 +108,7 @@ export const Modal: FC<ModalProps> = (props) => {
           <div className={cn('Bear-Modal__header', MODAL_HEADER_CLASSES)}>
             {title && (
               <h2
-                id="modal-title"
+                id={`${domId}-title`}
                 className={cn('Bear-Modal__title', MODAL_TITLE_CLASSES)}
               >
                 {title}

@@ -6,26 +6,26 @@ export interface TopbarAlertItem {
 }
 
 export const NEW_COMPONENT_ALERTS: TopbarAlertItem[] = [
-  { label: 'AppBar dense', path: '/components/app-bar', info: 'dense, disableGutters, enableColorOnDark', badge: 'New' },
-  { label: 'Backdrop', path: '/components/backdrop', info: 'Scrim overlay for modals and loaders', badge: 'New' },
-  { label: 'ChipGroup', path: '/components/chip-group', info: 'Grouped chips with overflow count', badge: 'New' },
-  { label: 'Select native', path: '/components/select', info: 'native, displayEmpty, renderValue', badge: 'New' },
-  { label: 'MessageList', path: '/components/message-list', info: 'Virtualized long conversations', badge: 'New' },
-  { label: 'Toast a11y', path: '/components/toast', info: 'aria-live polite/assertive regions', badge: 'New' },
-  { label: 'RTL wiring', path: '/theming', info: 'Provider direction in layout/forms', badge: 'New' },
+  { label: 'PageHeader', path: '/components/page-header', info: 'Title, description, and actions block', badge: 'New' },
+  { label: 'useBreakpoint', path: '/hooks', info: 'Named breakpoint state from BearProvider', badge: 'New' },
+  { label: 'Density compact', path: '/components/button', info: 'Button, Input, Chip, Tabs honor density', badge: 'New' },
+  { label: 'ChipGroup overflow', path: '/components/chip-group', info: 'Size presets, overflow menu, delete-all', badge: 'New' },
+  { label: 'Backdrop transitions', path: '/components/backdrop', info: 'transitionDuration + Modal/Drawer compose', badge: 'New' },
+  { label: 'Toast live regions', path: '/components/toast', info: 'Shared aria-live utilities with Snackbar', badge: 'New' },
+  { label: 'Template kits', path: '/templates/dashboard', info: 'Dashboard, form, and auth kits', badge: 'New' },
 ];
 
 export const VERSION_POPUP_FEATURES = [
-  'AppBar dense / gutters',
-  'Backdrop',
-  'ChipGroup',
-  'Select native',
-  'MessageList virtualization',
-  'Toast aria-live',
-  'RTL layout',
-  'Progress buffer',
-  'ListItem secondaryAction',
+  'PageHeader',
+  'useBreakpoint',
+  'Bear-* DOM ids',
+  'Provider density',
+  'MessageList overscan',
+  'Select FormControl',
+  'Backdrop transitions',
+  'ChipGroup overflow',
+  'Template kits',
 ];
 
 export const VERSION_POPUP_DESCRIPTION =
-  'v1.2.6 — AppBar dense/gutters, Backdrop, ChipGroup, Select native/renderValue, MessageList virtualization, Toast a11y, RTL wiring, and theme fixes.';
+  'v1.2.7 — PageHeader, useBreakpoint, hyphen PascalCase Bear DOM ids, provider density, MessageList overscan, Select FormControl parity, Backdrop transitions, ChipGroup overflow, Autocomplete light overlays, and portal template kits.';

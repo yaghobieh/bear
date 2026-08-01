@@ -26,3 +26,40 @@ test('[smoke] default home renders without crash in light storage', async ({ pag
   await expect(page.locator('body')).toBeVisible();
   expect(await page.locator('html').getAttribute('class')).not.toContain('undefined');
 });
+
+test('[smoke] RTL direction applies from Bear direction storage', async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem('bear-direction', 'rtl');
+  });
+  await page.goto('/components/button', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('body')).toBeVisible();
+  const dir =
+    (await page.locator('html').getAttribute('dir')) ||
+    (await page.locator('body').getAttribute('dir')) ||
+    (await page.locator('[dir]').first().getAttribute('dir'));
+  expect(dir).toBe('rtl');
+});
+
+test('[smoke] Toast live region announces without focus steal', async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem('bear-version-seen-1.2.7', 'true');
+    localStorage.setItem('bear-cookie-consent', 'accepted');
+  });
+  await page.goto('/components/toast', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('body')).toBeVisible();
+
+  const dismiss = page.getByRole('button', { name: /get started|accept cookies|reject/i }).first();
+  if (await dismiss.isVisible().catch(() => false)) {
+    await dismiss.click();
+  }
+
+  const trigger = page.getByRole('button', { name: /success toast|info toast|show toast/i }).first();
+  await expect(trigger).toBeVisible({ timeout: 10000 });
+  await trigger.click();
+
+  const live = page.locator('.Bear-Toast[aria-live="polite"], .Bear-Toast[aria-live="assertive"]').first();
+  await expect(live).toBeVisible({ timeout: 5000 });
+  const role = await live.getAttribute('role');
+  expect(role === 'status' || role === 'alert').toBeTruthy();
+  await expect(live).not.toBeFocused();
+});

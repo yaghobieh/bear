@@ -1,5 +1,5 @@
 import { createPortal } from 'react-dom';
-import { cn, resolveBearId, useBearId } from '@utils';
+import { cn, getBearLiveRegionProps, resolveBearId, useBearId } from '@utils';
 import { Paper } from '../Paper';
 import { Flex } from '../Flex';
 import { Typography } from '../Typography';
@@ -52,6 +52,7 @@ export const Snackbar = (props: SnackbarProps) => {
     open,
     message,
     description,
+    severity = 'default',
     action,
     autoHideDuration = SNACKBAR_DEFAULT_AUTO_HIDE_MS,
     onClose,
@@ -92,6 +93,7 @@ export const Snackbar = (props: SnackbarProps) => {
     return null;
   }
 
+  const liveRegion = getBearLiveRegionProps(severity);
   const showProgress = typeof progressValue === 'number';
   const progressBar = showProgress ? (
     <Progress
@@ -115,8 +117,8 @@ export const Snackbar = (props: SnackbarProps) => {
         ref={surfaceRef}
         id={domId}
         data-testid={testId}
-        role="status"
-        aria-live="polite"
+        role={liveRegion.role}
+        aria-live={liveRegion['aria-live']}
         elevation={4}
         rounded="lg"
         padding="none"

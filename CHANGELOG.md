@@ -2,6 +2,41 @@
 
 All notable changes to Bear UI will be documented in this file.
 
+## [1.2.7] - 2026-08-01
+
+### Added
+
+- **`PageHeader`** — title / description / actions block for app shells and portal templates.
+- **`useBreakpoint`** — named breakpoint state (`isSmUp`…`is2xlUp`, `isMobile` / `isTablet` / `isDesktop`) from BearProvider breakpoints.
+- **DOM ids** — `Bear-{PascalCaseComponent}-{alphanumeric}` format (e.g. `Bear-Button-a48293100123`); wired across public component roots.
+- **Live-region utils** — `getBearAriaLive` / `getBearAriaRole` / `getBearLiveRegionProps` shared by Toast and Snackbar.
+- **Backdrop** — `transitionDuration` + `keepMounted`; Modal and Drawer compose Backdrop for shared scrims.
+- **MessageList** — public `overscan` prop + scroll anchoring when prepending history while virtualized.
+- **ChipGroup** — `size` presets, optional overflow menu, `onDeleteAll`.
+- **Select** — `required` + FormControl context parity on native and custom paths.
+- **Portal Phase 7 kits** — dashboard / multi-step form / auth template pages (EN + ES).
+- **CI smoke** — RTL `dir` check + Toast `aria-live` / role assertions.
+
+### Changed
+
+- **Density** — Button, Input, Chip, and Tabs honor BearProvider `density="compact"` (local `size` / `compact` still win).
+- **EmptyState** — dual-mode theme tokens (no zinc-only card surfaces).
+- **Autocomplete** — listbox/input overlay tokens for light + dark.
+- **Snackbar** — optional `severity` drives shared live-region politeness.
+
+### Fixed
+
+- Autocomplete / Dropdown light-mode overlay readability (theme audit).
+- Modal / Drawer title ids scoped to generated Bear ids.
+
+### Migration
+
+- Prefer `Bear-Button-a…` style ids from `useBearId`; underscore snake_case ids are no longer generated.
+- Opt into ChipGroup overflow menus with `overflowMenu` / `onDeleteAll`.
+- Use Backdrop for shared scrims; Modal/Drawer already do.
+
+---
+
 ## [1.2.6] - 2026-07-24
 
 ### Added

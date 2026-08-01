@@ -86,7 +86,8 @@ ComponentName/
 ## 10. Component IDs
 
 - Every component accepts optional `id?: string` in `*.types.ts`.
-- Format: `Bear_{component_snake_case}_{suffix}` (e.g. `Bear_button_482931`).
+- Format: `Bear-{PascalCaseComponent}-{alphanumericSegment}` with hyphens (e.g. `Bear-Button-a48293100123`).
+- Segment is a leading letter plus digits (`a`–`z` + numeric run).
 - Always call hooks unconditionally, then resolve:
 
 ```tsx

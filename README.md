@@ -1,6 +1,6 @@
 # @forgedevstack/bear
 
-Strong, reliable React UI components. Tailwind-powered, zero config required. The protective force of ForgeStack.
+Strong, reliable React UI components. AeroCraft-powered, zero config required. The protective force of ForgeStack.
 
 ## Portal
 
@@ -19,7 +19,11 @@ cd portal && npm run test:e2e:smoke
 cd portal && npm run test:e2e
 ```
 
-`BEAR_E2E_SMOKE=1` runs `e2e/specs/smoke.spec.ts` only. The e2e webServer builds Bear, then starts the portal on port `5174`.
+`BEAR_E2E_SMOKE=1` runs `e2e/specs/smoke.spec.ts` only (includes RTL direction + Toast aria-live checks). The e2e webServer builds Bear, then starts the portal on port `5174`.
+
+### Auto DOM ids
+
+Public components generate root `id` values as `Bear-{Component}-{alphanumeric}` (e.g. `Bear-Button-a48293100123`). Pass `id` to override; keep `testId` on `data-testid`.
 
 ## Features
 

@@ -10,6 +10,34 @@ export interface ChangelogEntry {
 
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
+    version: '1.2.7',
+    date: 'August 1, 2026',
+    tag: 'patch',
+    sections: [
+      {
+        title: 'Added',
+        items: [
+          'PageHeader + useBreakpoint',
+          'Bear-{Component}-{alphanumeric} DOM ids',
+          'Shared Toast/Snackbar live-region utilities',
+          'Backdrop transitions; Modal/Drawer compose Backdrop',
+          'MessageList overscan + prepend scroll anchoring',
+          'ChipGroup size presets + overflow menu / delete-all',
+          'Portal dashboard / form / auth template kits (EN+ES)',
+          'CI smoke: RTL dir + Toast aria-live',
+        ],
+      },
+      {
+        title: 'Changed',
+        items: [
+          'Density compact honored by Button, Input, Chip, Tabs',
+          'Select native FormControl parity',
+          'Autocomplete/EmptyState dual-mode overlay tokens',
+        ],
+      },
+    ],
+  },
+  {
     version: '1.2.6',
     date: 'July 24, 2026',
     tag: 'patch',

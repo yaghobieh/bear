@@ -24,3 +24,9 @@ Use this when shipping portal/overlay changes so light and dark modes stay reada
 - BottomNavigation light surfaces
 - Chip outlined/soft readable in light mode
 - Backdrop dual-mode tint
+
+## 1.2.7 fixes
+
+- Autocomplete input + listbox use `--bear-bg-*` / `--bear-text-*` / `--bear-border-default` tokens
+- Dropdown panel already on CSS vars; verified dual-mode readability
+- EmptyState card/default surfaces moved off zinc-only classes

@@ -167,14 +167,14 @@ export const Autocomplete: FC<AutocompleteProps> = ({
           disabled={disabled}
           className={cn(
             'bear-w-full bear-px-4 bear-py-2.5 bear-pr-10 bear-rounded-lg bear-border',
-            'bear-bg-white dark:bear-bg-gray-900',
-            'bear-text-sm bear-text-gray-900 dark:bear-text-white',
-            'placeholder:bear-text-gray-400',
+            'bear-bg-[var(--bear-bg-primary)]',
+            'bear-text-sm bear-text-[var(--bear-text-primary)]',
+            'placeholder:bear-text-[var(--bear-text-muted)]',
             'bear-transition-colors bear-outline-none',
             error
               ? 'bear-border-red-500 focus:bear-ring-2 focus:bear-ring-red-500/20'
-              : 'bear-border-gray-300 dark:bear-border-gray-600 focus:bear-border-amber-500 focus:bear-ring-2 focus:bear-ring-amber-500/20',
-            disabled && 'bear-opacity-50 bear-cursor-not-allowed bear-bg-gray-100 dark:bear-bg-gray-800'
+              : 'bear-border-[var(--bear-border-default)] focus:bear-border-amber-500 focus:bear-ring-2 focus:bear-ring-amber-500/20',
+            disabled && 'bear-opacity-50 bear-cursor-not-allowed bear-bg-[var(--bear-bg-secondary)]'
           )}
         />
 
@@ -196,7 +196,7 @@ export const Autocomplete: FC<AutocompleteProps> = ({
         <Portal>
           <div
             ref={panelRef}
-            className="bear-fixed bear-rounded-lg bear-border bear-border-gray-200 dark:bear-border-gray-700 bear-shadow-lg bear-bg-white dark:bear-bg-gray-800"
+            className="bear-fixed bear-rounded-lg bear-border bear-border-[var(--bear-border-default)] bear-shadow-lg bear-bg-[var(--bear-bg-primary)]"
             style={{
               top: menuPosition.top,
               left: menuPosition.left,
@@ -213,16 +213,16 @@ export const Autocomplete: FC<AutocompleteProps> = ({
                   onClick={() => handleSelect(opt)}
                   className={cn(
                     'bear-w-full bear-px-4 bear-py-2 bear-text-left bear-text-sm bear-transition-colors',
-                    'bear-text-gray-900 dark:bear-text-white',
+                    'bear-text-[var(--bear-text-primary)]',
                     idx === highlightedIndex
-                      ? 'bear-bg-amber-50 dark:bear-bg-amber-900/20'
-                      : 'hover:bear-bg-gray-50 dark:hover:bear-bg-gray-700',
+                      ? 'bear-bg-[var(--bear-bg-tertiary)]'
+                      : 'hover:bear-bg-[var(--bear-bg-secondary)]',
                     opt.disabled && 'bear-opacity-50 bear-cursor-not-allowed'
                   )}
                 >
                   <div className="bear-font-medium">{opt.label}</div>
                   {opt.description && (
-                    <div className="bear-text-xs bear-text-gray-500 dark:bear-text-gray-400 bear-mt-0.5">
+                    <div className="bear-text-xs bear-text-[var(--bear-text-muted)] bear-mt-0.5">
                       {opt.description}
                     </div>
                   )}

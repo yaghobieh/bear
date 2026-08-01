@@ -8,8 +8,8 @@ import { DocPageNav } from './components/DocPageNav';
 import { RouteSEO } from './components/RouteSEO';
 
 const BANNER_CONFIG = {
-  id: 'bear-1.2.6',
-  message: 'Bear v1.2.6 — AppBar dense, Select native/renderValue, MessageList virtualization, Backdrop, ChipGroup, RTL, Toast a11y.',
+  id: 'bear-1.2.7',
+  message: 'Bear v1.2.7 — PageHeader, useBreakpoint, density compact, Bear DOM ids, Backdrop transitions, ChipGroup overflow, template kits.',
   link: '/whats-new',
   linkText: "See what's new",
 };
@@ -291,6 +291,10 @@ const IconsPage = lazy(() => import('./pages/Icons'));
 const HooksPage = lazy(() => import('./pages/Hooks'));
 const RoadmapPage = lazy(() => import('./pages/Roadmap'));
 const TemplatesPage = lazy(() => import('./pages/Templates'));
+const DashboardKitPage = lazy(() => import('./pages/templates/DashboardKit'));
+const FormKitPage = lazy(() => import('./pages/templates/FormKit'));
+const AuthKitPage = lazy(() => import('./pages/templates/AuthKit'));
+const PageHeaderPage = lazy(() => import('./pages/components/PageHeader'));
 
 // Customization
 const CustomizationOverviewPage = lazy(() => import('./pages/customization/Overview'));
@@ -635,6 +639,10 @@ function PortalLayout({
                 <Route path="/hooks" element={<HooksPage />} />
                 <Route path="/roadmap" element={<RoadmapPage />} />
                 <Route path="/templates" element={<TemplatesPage />} />
+                <Route path="/templates/dashboard" element={<DashboardKitPage />} />
+                <Route path="/templates/form" element={<FormKitPage />} />
+                <Route path="/templates/auth" element={<AuthKitPage />} />
+                <Route path="/components/page-header" element={<PageHeaderPage />} />
                 <Route path="/store" element={<StorePage />} />
                 
                 {/* Guides */}

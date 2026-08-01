@@ -9,11 +9,9 @@ import type {
 } from './Toast.types';
 import {
   T_O_A_S_T_ROOT_CLASS,
-  TOAST_ARIA_LIVE,
-  TOAST_ARIA_ROLE,
   TOAST_EXIT_MS,
 } from './Toast.const';
-import { cn, generateBearId } from '@utils';
+import { cn, generateBearId, getBearLiveRegionProps } from '@utils';
 
 // Default icons
 const ToastIcons: Record<ToastSeverity, ReactNode> = {
@@ -83,6 +81,8 @@ export const useToast = (): ToastContextValue => {
 
 // Individual Toast component
 const ToastItem: FC<ToastProps & { onRemove: () => void }> = ({
+  id,
+  testId,
   message,
   title,
   severity = 'info',
@@ -138,11 +138,14 @@ const ToastItem: FC<ToastProps & { onRemove: () => void }> = ({
     return ToastIcons[severity];
   };
 
+  const liveRegionProps = getBearLiveRegionProps(severity);
+
   return (
     <div
       ref={rootRef}
-      role={TOAST_ARIA_ROLE[severity]}
-      aria-live={TOAST_ARIA_LIVE[severity]}
+      id={id}
+      data-testid={testId}
+      {...liveRegionProps}
       aria-atomic="true"
       onMouseEnter={pauseOnHover ? () => setIsPaused(true) : undefined}
       onMouseLeave={pauseOnHover ? () => setIsPaused(false) : undefined}

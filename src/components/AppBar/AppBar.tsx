@@ -26,7 +26,7 @@ import {
   DEFAULT_APP_BAR_VARIANT,
 } from './AppBar.const';
 import { useBearDensityOptional } from '@context';
-import { cn, generateBearId } from '@utils';
+import { cn, resolveBearId, useBearId } from '@utils';
 
 export const AppBar: FC<AppBarProps> = (props) => {
   const {
@@ -48,7 +48,8 @@ export const AppBar: FC<AppBarProps> = (props) => {
 
   const { density } = useBearDensityOptional();
   const isDense = dense ?? density === 'compact';
-  const resolvedId = id || generateBearId('AppBar');
+  const generatedId = useBearId('AppBar');
+  const resolvedId = resolveBearId(id, generatedId);
 
   return (
     <header

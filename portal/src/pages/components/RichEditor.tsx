@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
 import { LinesOfCode } from '@/components/LinesOfCode';
-import { RichEditor, Button, Card } from '@forgedevstack/bear';
+import { RichEditor, Button, Card, BearIcons } from '@forgedevstack/bear';
 
 const RichEditorPage: FC = () => {
   const [basicValue, setBasicValue] = useState('<p>Start editing here...</p>');
@@ -17,9 +17,51 @@ const RichEditorPage: FC = () => {
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">RichEditor</h1>
         <LinesOfCode lines={500} />
       </div>
-      <p className="text-gray-600 dark:text-gray-400 mb-8">
+      <p className="text-gray-600 dark:text-gray-400 mb-6">
         A full-featured WYSIWYG rich text editor with formatting toolbar, heading styles, colors, lists, links, and image paste support.
       </p>
+
+      <Card className="mb-8 p-4 bg-gradient-to-r from-teal-50 to-emerald-50 dark:from-teal-900/20 dark:to-emerald-900/20 border-teal-200 dark:border-teal-800">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex items-start gap-3">
+            <BearIcons.EditIcon size={24} className="text-teal-500 flex-shrink-0 mt-1" />
+            <div>
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
+                ForgeStack Rich Editor: @forgedevstack/ink
+              </h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">
+                <span className="inline-flex items-center rounded-full bg-teal-100 dark:bg-teal-900/40 text-teal-700 dark:text-teal-300 px-2 py-0.5 text-xs font-semibold mr-2">
+                  +500
+                </span>
+                Dedicated rich-editor package for ForgeStack — typo auto-fix MVP, AI plugin stub, Angular entry, and WordPress stub.
+              </p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                A full-featured WYSIWYG rich text editor with formatting toolbar, heading styles, colors, lists, links, and image paste support.
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-2 flex-shrink-0">
+            <a
+              href="https://www.npmjs.com/package/@forgedevstack/ink"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium transition-colors"
+            >
+              <BearIcons.PackageIcon size={16} />
+              npm
+            </a>
+            <a
+              href="https://inkforgejs.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-800 hover:bg-gray-900 dark:bg-gray-700 dark:hover:bg-gray-600 text-white text-sm font-medium transition-colors"
+            >
+              <BearIcons.GlobeIcon size={16} />
+              inkforgejs.com
+            </a>
+          </div>
+        </div>
+      </Card>
 
       <section className="mb-12">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Import</h2>

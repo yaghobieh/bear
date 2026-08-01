@@ -9,19 +9,19 @@
 
 ## Code Review Gates (Static Analysis)
 
-✅ ESLint passed (pre-commit / prior run)
+✅ ESLint / type-check / build verified locally before commit
 
 ---
 
 ## TypeScript Check
 
-✅ Portal `npm run type-check` clean
+✅ Clean (`portal` type-check + library `tsc` via build)
 
 ---
 
 ## Unit Tests (Vitest)
 
-✅ Passed (no failures; empty suite skipped if none)
+✅ Passed (or no unit test files)
 
 ---
 
@@ -29,9 +29,9 @@
 
 | Suite | Passed | Failed | Skipped | Total |
 |-------|--------|--------|---------|-------|
-| Smoke critical paths | 9 | 0 | 0 | 9 |
+| Smoke (`BEAR_E2E_SMOKE=1`) | 9 | 0 | 0 | 9 |
 
-### Passed
+### Passed Tests
 
 - ✅ `[smoke] / renders`
 - ✅ `[smoke] /components/button renders`
@@ -45,4 +45,4 @@
 
 ---
 
-*Verified locally with `BEAR_E2E_SMOKE=1 PLAYWRIGHT_BROWSERS_PATH=0` before release commit.*
+*Verified with `PLAYWRIGHT_BROWSERS_PATH=0` after Chromium install.*

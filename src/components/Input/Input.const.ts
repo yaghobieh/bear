@@ -6,10 +6,22 @@ export const INPUT_WRAPPER_HEIGHT_CLASSES = {
   lg: 'bear-h-12',
 } as const;
 
+export const INPUT_WRAPPER_HEIGHT_COMPACT_CLASSES = {
+  sm: 'bear-h-7',
+  md: 'bear-h-8',
+  lg: 'bear-h-10',
+} as const;
+
 export const INPUT_TEXT_CLASSES = {
   sm: 'bear-text-sm bear-px-3',
   md: 'bear-text-base bear-px-4',
   lg: 'bear-text-lg bear-px-5',
+} as const;
+
+export const INPUT_TEXT_COMPACT_CLASSES = {
+  sm: 'bear-text-xs bear-px-2.5',
+  md: 'bear-text-sm bear-px-3',
+  lg: 'bear-text-base bear-px-4',
 } as const;
 
 export const INPUT_MULTILINE_MIN_ROWS = 3;

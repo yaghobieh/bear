@@ -11,7 +11,7 @@ import {
 import { ChevronDownIcon, CheckIcon } from '../Icon';
 import { Portal } from '../Portal';
 import { cn, resolveBearId, useBearId } from '@utils';
-import { useClickOutsideMultiple } from '@hooks';
+import { useClickOutsideMultiple, useFormControl } from '@hooks';
 
 export const Select: FC<SelectProps> = (props) => {
   const {
@@ -22,6 +22,7 @@ export const Select: FC<SelectProps> = (props) => {
     label,
     error,
     disabled = false,
+    required = false,
     size = 'md',
     fullWidth = false,
     displayEmpty = false,
@@ -34,6 +35,7 @@ export const Select: FC<SelectProps> = (props) => {
 
   const generatedId = useBearId('Select');
   const domId = resolveBearId(id, generatedId);
+  const formControl = useFormControl();
   const [isOpen, setIsOpen] = useState(false);
   const [menuPosition, setMenuPosition] = useState<{ top: number; left: number; width: number }>({
     top: 0,
@@ -42,13 +44,18 @@ export const Select: FC<SelectProps> = (props) => {
   });
   const selectRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
-  const hasError = Boolean(error);
+  const isDisabled = disabled || Boolean(formControl?.disabled);
+  const isRequired = required || Boolean(formControl?.required);
+  const hasError = Boolean(error) || Boolean(formControl?.error);
+  const errorMessage = typeof error === 'string' ? error : undefined;
   const selectedOption = options.find((opt) => opt.value === value);
   const isEmptyValue = value === undefined || value === '';
   const showPlaceholder = isEmptyValue || (displayEmpty && isEmptyValue);
 
   const closeDropdown = useCallback(() => setIsOpen(false), []);
-  useClickOutsideMultiple([selectRef, menuRef], closeDropdown, { enabled: isOpen && !native });
+  useClickOutsideMultiple([selectRef, menuRef], closeDropdown, {
+    enabled: isOpen && !native && !isDisabled,
+  });
 
   const handleSelect = (optionValue: string) => {
     onChange?.(optionValue);
@@ -116,7 +123,8 @@ export const Select: FC<SelectProps> = (props) => {
         )}
         <select
           id={`${domId}-native`}
-          disabled={disabled}
+          disabled={isDisabled}
+          required={isRequired}
           value={value ?? ''}
           onChange={(e) => onChange?.(e.target.value)}
           className={cn(
@@ -126,12 +134,14 @@ export const Select: FC<SelectProps> = (props) => {
             hasError
               ? 'bear-border-red-500 focus:bear-ring-red-500'
               : 'focus:bear-border-bear-500 focus:bear-ring-bear-500',
-            disabled && 'bear-opacity-50 bear-cursor-not-allowed',
+            isDisabled && 'bear-opacity-50 bear-cursor-not-allowed',
             SELECT_SIZE_CLASSES[size],
             className
           )}
           style={fieldStyle}
           aria-invalid={hasError || undefined}
+          aria-required={isRequired || undefined}
+          aria-describedby={formControl?.helperId}
         >
           {(displayEmpty || placeholder) && (
             <option value="" disabled={!displayEmpty}>
@@ -144,7 +154,7 @@ export const Select: FC<SelectProps> = (props) => {
             </option>
           ))}
         </select>
-        {error && <p className="bear-text-sm bear-text-red-500">{error}</p>}
+        {errorMessage && <p className="bear-text-sm bear-text-red-500">{errorMessage}</p>}
       </div>
     );
   }
@@ -168,8 +178,8 @@ export const Select: FC<SelectProps> = (props) => {
 
       <button
         type="button"
-        disabled={disabled}
-        onClick={() => !disabled && setIsOpen(!isOpen)}
+        disabled={isDisabled}
+        onClick={() => !isDisabled && setIsOpen(!isOpen)}
         className={cn(
           `${S_E_L_E_C_T_ROOT_CLASS}__trigger`,
           'bear-flex bear-items-center bear-justify-between bear-w-full',
@@ -178,13 +188,16 @@ export const Select: FC<SelectProps> = (props) => {
           hasError
             ? 'bear-border-red-500 focus:bear-ring-red-500'
             : 'focus:bear-border-bear-500 focus:bear-ring-bear-500 dark:focus:bear-border-bear-500 dark:focus:bear-ring-bear-500',
-          disabled && 'bear-opacity-50 bear-cursor-not-allowed',
+          isDisabled && 'bear-opacity-50 bear-cursor-not-allowed',
           SELECT_SIZE_CLASSES[size],
           className
         )}
         style={fieldStyle}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
+        aria-invalid={hasError || undefined}
+        aria-required={isRequired || undefined}
+        aria-describedby={formControl?.helperId}
       >
         <span className={`${S_E_L_E_C_T_ROOT_CLASS}__value`}>{displayContent}</span>
         <ChevronDownIcon
@@ -250,7 +263,7 @@ export const Select: FC<SelectProps> = (props) => {
         </Portal>
       )}
 
-      {error && <p className="bear-text-sm bear-text-red-500">{error}</p>}
+      {errorMessage && <p className="bear-text-sm bear-text-red-500">{errorMessage}</p>}
     </div>
   );
 };

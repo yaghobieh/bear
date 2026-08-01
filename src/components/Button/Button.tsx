@@ -3,7 +3,7 @@ import { cn, resolveBearId, useBearId } from '@utils';
 import { Spinner } from '../Spinner';
 import { Typography } from '../Typography';
 import { useBearStyles } from '@hooks';
-import { BearContext } from '../../context/BearProvider';
+import { BearContext, useBearDensityOptional } from '../../context/BearProvider';
 import type { ButtonProps } from './Button.types';
 import { BUTTON_SIZE, BUTTON_COMPACT_SIZE, BUTTON_RADIUS, BUTTON_ICON_SIZE, BUTTON_ICON_ONLY_SIZE, BUTTON_VARIANT, VARIANT_DEFAULTS } from './Button.constants';
 import { isBuiltInVariant } from './Button.utils';
@@ -30,7 +30,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       href,
       component: Component = 'button',
       tooltip,
-      compact = false,
+      compact,
       gradient,
       gradientDirection = 135,
       prefix: prefixContent,
@@ -54,6 +54,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const generatedId = useBearId('Button');
     const domId = resolveBearId(id, generatedId);
+    const { density } = useBearDensityOptional();
+    const isCompact = compact ?? density === 'compact';
     const rippleEnabled = ripple && !disableRipple;
     const isDisabled = disabled || loading;
     const mergedStyle = useBearStyles(bis, style);
@@ -152,7 +154,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           BUTTON_RADIUS[radius],
           iconOnly
             ? BUTTON_ICON_ONLY_SIZE[size]
-            : compact
+            : isCompact
               ? BUTTON_COMPACT_SIZE[size]
               : BUTTON_SIZE[size],
           isBuiltInVariant(variant)

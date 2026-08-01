@@ -11,10 +11,13 @@ export type SnackbarSize = Extract<BearSize, 'sm' | 'md' | 'lg'>;
 
 export type SnackbarProgressColor = 'default' | 'success' | 'warning' | 'danger' | 'info';
 
+export type SnackbarSeverity = 'success' | 'info' | 'warning' | 'error' | 'default';
+
 export interface SnackbarProps {
   open: boolean;
   message?: ReactNode;
   description?: ReactNode;
+  severity?: SnackbarSeverity;
   action?: ReactNode;
   autoHideDuration?: number | null;
   onClose?: () => void;

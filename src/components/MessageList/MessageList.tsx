@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Avatar } from '../Avatar';
 import { Typography } from '../Typography';
 import type {
@@ -50,6 +50,7 @@ export const MessageList: FC<MessageListProps> = ({
   showTimestamps = true,
   autoScroll = true,
   virtualized,
+  overscan = MESSAGE_LIST_OVERSCAN,
   height = MESSAGE_LIST_DEFAULT_HEIGHT,
   renderMessage,
   emptyState,
@@ -65,6 +66,8 @@ export const MessageList: FC<MessageListProps> = ({
   const scrollerRef = useRef<HTMLDivElement>(null);
   const isAtBottomRef = useRef(true);
   const lastMessageIdRef = useRef<string | null>(null);
+  const firstMessageIdRef = useRef<string | null>(null);
+  const pendingPrependAdjustRef = useRef<number | null>(null);
   const [hasNewMessages, setHasNewMessages] = useState(false);
   const [scrollTop, setScrollTop] = useState(0);
   const [viewportHeight, setViewportHeight] = useState(
@@ -104,9 +107,20 @@ export const MessageList: FC<MessageListProps> = ({
   }, [height]);
 
   useEffect(() => {
+    const firstId = messages.length > 0 ? messages[0].id : null;
     const lastId = messages.length > 0 ? messages[messages.length - 1].id : null;
     const isFirstRender = lastMessageIdRef.current === null;
+    const hasPrepended =
+      firstId !== null &&
+      firstMessageIdRef.current !== null &&
+      firstId !== firstMessageIdRef.current;
     const hasAppended = lastId !== null && lastId !== lastMessageIdRef.current;
+
+    if (hasPrepended && scrollerRef.current) {
+      pendingPrependAdjustRef.current = scrollerRef.current.scrollHeight;
+    }
+
+    firstMessageIdRef.current = firstId;
     lastMessageIdRef.current = lastId;
 
     if (!hasAppended) return;
@@ -117,6 +131,18 @@ export const MessageList: FC<MessageListProps> = ({
     }
     setHasNewMessages(true);
   }, [messages, autoScroll]);
+
+  useLayoutEffect(() => {
+    const scroller = scrollerRef.current;
+    const previousHeight = pendingPrependAdjustRef.current;
+    if (!scroller || previousHeight === null) return;
+    const delta = scroller.scrollHeight - previousHeight;
+    if (delta > 0) {
+      scroller.scrollTop += delta;
+      setScrollTop(scroller.scrollTop);
+    }
+    pendingPrependAdjustRef.current = null;
+  }, [messages]);
 
   const handleNewMessagesClick = () => {
     scrollToBottom(true);
@@ -214,7 +240,7 @@ export const MessageList: FC<MessageListProps> = ({
     );
 
   const windowRange = shouldVirtualize
-    ? getMessageListWindow(items, scrollTop, viewportHeight, MESSAGE_LIST_OVERSCAN)
+    ? getMessageListWindow(items, scrollTop, viewportHeight, overscan)
     : null;
   const visibleItems =
     windowRange === null

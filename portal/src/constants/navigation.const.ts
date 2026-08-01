@@ -17,7 +17,7 @@ export interface NavGroup {
   icon?: string;
 }
 
-export const BEAR_VERSION = '1.2.6';
+export const BEAR_VERSION = '1.2.7';
 
 /** Main Bear UI repository */
 export const GITHUB_URL = 'https://github.com/yaghobieh/bear';
@@ -51,6 +51,16 @@ export const NAVIGATION: NavGroup[] = [
       { path: '/docs/registry/github', label: 'GitHub Registry' },
       { path: '/docs/registry/mcp', label: 'MCP Server', badge: 'Soon' },
       { path: '/roadmap', label: 'Roadmap' },
+      {
+        path: '/templates',
+        label: 'Templates',
+        badge: 'New',
+        children: [
+          { path: '/templates/dashboard', label: 'Dashboard kit', badge: 'New' },
+          { path: '/templates/form', label: 'Form kit', badge: 'New' },
+          { path: '/templates/auth', label: 'Auth kit', badge: 'New' },
+        ],
+      },
     ],
   },
 
@@ -84,6 +94,7 @@ export const NAVIGATION: NavGroup[] = [
         children: [
           { path: '/components/app-bar', label: 'AppBar' },
           { path: '/components/sidebar', label: 'Sidebar' },
+          { path: '/components/page-header', label: 'PageHeader', badge: 'New' },
           { path: '/components/dock', label: 'Dock' },
         ],
       },
@@ -520,7 +531,8 @@ export const NAVIGATION: NavGroup[] = [
 ];
 
 export const VERSIONS = [
-  { value: '1.2.6', label: 'v1.2.6 (current)' },
+  { value: '1.2.7', label: 'v1.2.7 (current)' },
+  { value: '1.2.6', label: 'v1.2.6' },
   { value: '1.2.5', label: 'v1.2.5' },
   { value: '1.2.4', label: 'v1.2.4' },
   { value: '1.2.3', label: 'v1.2.3' },

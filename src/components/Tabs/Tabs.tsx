@@ -1,11 +1,15 @@
 import { FC, useState, createContext, useContext } from 'react';
-import {cn } from '@utils';
+import { cn, resolveBearId, useBearId } from '@utils';
+import { useBearDensityOptional } from '../../context/BearProvider';
 import type { TabsContextValue, TabsProps, TabProps } from './Tabs.types';
+import {
+  TABS_TAB_PADDING_CLASSES,
+  TABS_TAB_PADDING_COMPACT_CLASSES,
+} from './Tabs.const';
 
 export const TabsContext = createContext<TabsContextValue | null>(null);
 
 export const Tabs: FC<TabsProps> = ({
-
   children,
   value,
   defaultTab,
@@ -13,20 +17,25 @@ export const Tabs: FC<TabsProps> = ({
   onChange,
   className,
   testId,
+  id,
 }) => {
+  const generatedId = useBearId('Tabs');
+  const domId = resolveBearId(id, generatedId);
+  const { density } = useBearDensityOptional();
+  const compact = density === 'compact';
 
   const [internalTab, setInternalTab] = useState(defaultTab);
   const isControlled = value !== undefined;
   const activeTab = isControlled ? value : internalTab;
 
-  const setActiveTab = (id: string) => {
-    if (!isControlled) setInternalTab(id);
-    onChange?.(id);
+  const setActiveTab = (tabId: string) => {
+    if (!isControlled) setInternalTab(tabId);
+    onChange?.(tabId);
   };
 
   return (
-    <TabsContext.Provider value={{ activeTab, setActiveTab, variant }}>
-      <div className={cn('Bear-Tabs', className)} data-testid={testId}>
+    <TabsContext.Provider value={{ activeTab, setActiveTab, variant, compact }}>
+      <div id={domId} data-testid={testId} className={cn('Bear-Tabs', className)}>
         {children}
       </div>
     </TabsContext.Provider>
@@ -37,10 +46,14 @@ export const Tab: FC<TabProps> = ({ id, children, disabled = false, icon }) => {
   const context = useContext(TabsContext);
   if (!context) throw new Error('Tab must be used within Tabs');
 
-  const { activeTab, setActiveTab, variant } = context;
+  const { activeTab, setActiveTab, variant, compact } = context;
   const isActive = activeTab === id;
+  const paddingClasses = compact ? TABS_TAB_PADDING_COMPACT_CLASSES : TABS_TAB_PADDING_CLASSES;
 
-  const baseClasses = 'bear-flex bear-items-center bear-gap-2 bear-px-4 bear-py-2 bear-text-sm bear-font-medium bear-transition-colors';
+  const baseClasses = cn(
+    'bear-flex bear-items-center bear-gap-2 bear-text-sm bear-font-medium bear-transition-colors',
+    paddingClasses
+  );
 
   const variantClasses = {
     line: cn(
@@ -49,10 +62,7 @@ export const Tab: FC<TabProps> = ({ id, children, disabled = false, icon }) => {
         ? 'bear-border-primary-500 bear-text-primary-600 dark:bear-text-primary-400'
         : 'bear-border-transparent hover:bear-border-[var(--bear-border-default)]'
     ),
-    pills: cn(
-      'bear-rounded-md',
-      isActive && 'bear-shadow-sm'
-    ),
+    pills: cn('bear-rounded-md', isActive && 'bear-shadow-sm'),
     enclosed: cn(
       'bear-rounded-t-lg bear-border bear-border-transparent',
       isActive && 'bear--mb-px'

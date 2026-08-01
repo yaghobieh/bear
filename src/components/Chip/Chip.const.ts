@@ -36,6 +36,18 @@ export const CHIP_SIZE_CLASSES = {
   lg: 'bear-h-10 bear-text-base bear-px-4 bear-gap-2',
 } as const;
 
+export const CHIP_SIZE_COMPACT_CLASSES = {
+  sm: 'bear-h-5 bear-text-xs bear-px-1.5 bear-gap-0.5',
+  md: 'bear-h-6 bear-text-xs bear-px-2 bear-gap-1',
+  lg: 'bear-h-8 bear-text-sm bear-px-3 bear-gap-1.5',
+} as const;
+
+export const CHIP_AVATAR_SIZE_CLASSES = {
+  sm: '[&_.Bear-Avatar]:bear-w-4 [&_.Bear-Avatar]:bear-h-4',
+  md: '[&_.Bear-Avatar]:bear-w-5 [&_.Bear-Avatar]:bear-h-5',
+  lg: '[&_.Bear-Avatar]:bear-w-6 [&_.Bear-Avatar]:bear-h-6',
+} as const;
+
 export const CHIP_DELETE_ICON_SIZES = {
   sm: 'bear-w-3 bear-h-3',
   md: 'bear-w-4 bear-h-4',

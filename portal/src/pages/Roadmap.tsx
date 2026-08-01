@@ -29,8 +29,8 @@ const PHASES = [
     items: ['Full i18n (English + Spanish)', 'Search history + grouped results', 'Category landing pages', 'Sitemap + SEO optimization'],
   },
   {
-    id: '7', title: 'Templates & Ecosystem', status: 'Planned',
-    items: ['Dashboard layouts and form templates', 'Auth flows and e-commerce kits', '@forgedevstack/player — dedicated media player', 'Themes marketplace'],
+    id: '7', title: 'Templates & Ecosystem', status: 'In Progress',
+    items: ['Dashboard / form / auth template kits (1.2.7)', 'Auth flows and e-commerce kits', '@forgedevstack/player — dedicated media player', 'Themes marketplace'],
   },
   {
     id: '8', title: 'Platform', status: 'Planned',

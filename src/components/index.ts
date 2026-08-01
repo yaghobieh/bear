@@ -223,6 +223,9 @@ export type { StatisticProps } from './Statistic';
 export { EmptyState } from './EmptyState';
 export type { EmptyStateProps } from './EmptyState';
 
+export { PageHeader } from './PageHeader';
+export type { PageHeaderProps } from './PageHeader';
+
 export { Image } from './Image';
 export type { ImageProps } from './Image';
 

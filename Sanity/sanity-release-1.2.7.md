@@ -1,7 +1,7 @@
 # Bear Portal Sanity Report — release/1.2.7
 
 **Date:** 2026-08-01
-**Branch:** release/1.2.7
+**Branch:** main
 **Version:** 1.2.7
 **Overall Status:** ❌ FAILED
 

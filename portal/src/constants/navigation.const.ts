@@ -232,6 +232,7 @@ export const NAVIGATION: NavGroup[] = [
         label: 'Feedback',
         children: [
           { path: '/components/alert', label: 'Alert' },
+          { path: '/components/banner', label: 'Banner', badge: 'New' },
           { path: '/components/toast', label: 'Toast' },
           { path: '/components/snackbar', label: 'Snackbar', badge: 'New' },
           { path: '/components/notification-center', label: 'NotificationCenter' },

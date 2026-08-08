@@ -229,6 +229,14 @@ export type { PageHeaderProps } from './PageHeader';
 export { AppShell } from './AppShell';
 export type { AppShellProps, AppShellNavbarWidth } from './AppShell';
 
+export { Banner } from './Banner';
+export type {
+  BannerProps,
+  BannerSeverity,
+  BannerPosition,
+  BannerTranslations,
+} from './Banner';
+
 export { Image } from './Image';
 export type { ImageProps } from './Image';
 

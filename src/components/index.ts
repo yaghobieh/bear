@@ -226,6 +226,9 @@ export type { EmptyStateProps } from './EmptyState';
 export { PageHeader } from './PageHeader';
 export type { PageHeaderProps } from './PageHeader';
 
+export { AppShell } from './AppShell';
+export type { AppShellProps, AppShellNavbarWidth } from './AppShell';
+
 export { Image } from './Image';
 export type { ImageProps } from './Image';
 

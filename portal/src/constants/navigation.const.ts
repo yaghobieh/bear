@@ -93,6 +93,7 @@ export const NAVIGATION: NavGroup[] = [
         label: 'Page Layout',
         children: [
           { path: '/components/app-bar', label: 'AppBar' },
+          { path: '/components/app-shell', label: 'AppShell', badge: 'New' },
           { path: '/components/sidebar', label: 'Sidebar' },
           { path: '/components/page-header', label: 'PageHeader', badge: 'New' },
           { path: '/components/dock', label: 'Dock' },

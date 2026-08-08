@@ -295,6 +295,7 @@ const DashboardKitPage = lazy(() => import('./pages/templates/DashboardKit'));
 const FormKitPage = lazy(() => import('./pages/templates/FormKit'));
 const AuthKitPage = lazy(() => import('./pages/templates/AuthKit'));
 const PageHeaderPage = lazy(() => import('./pages/components/PageHeader'));
+const AppShellPage = lazy(() => import('./pages/components/AppShell'));
 
 // Customization
 const CustomizationOverviewPage = lazy(() => import('./pages/customization/Overview'));
@@ -643,6 +644,7 @@ function PortalLayout({
                 <Route path="/templates/form" element={<FormKitPage />} />
                 <Route path="/templates/auth" element={<AuthKitPage />} />
                 <Route path="/components/page-header" element={<PageHeaderPage />} />
+                <Route path="/components/app-shell" element={<AppShellPage />} />
                 <Route path="/store" element={<StorePage />} />
                 
                 {/* Guides */}

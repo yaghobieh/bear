@@ -7,6 +7,7 @@ All notable changes to Bear UI will be documented in this file.
 ### Added
 
 - **`AppShell`** — app chrome layout with header, navbar, main, optional aside/footer, collapsible navbar, and sticky header/footer options.
+- **`Banner`** — full-width announcement strip with severity, sticky/static position, dismissible, action slot, and shared live-region a11y.
 
 ---
 

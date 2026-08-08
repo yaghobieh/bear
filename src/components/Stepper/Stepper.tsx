@@ -34,6 +34,18 @@ import {
   STEP_LABEL_BASE,
   STEP_LABEL_SIZES,
   STEP_DESCRIPTION_CLASSES,
+  STEP_CLICKABLE_CLASSES,
+  CONNECTOR_HORIZONTAL_LAYOUT,
+  CONNECTOR_DASHED_CLASSES,
+  STEP_CONTENT_BASE,
+  STEP_CONTENT_ALTERNATIVE,
+  STEP_CONTENT_INLINE,
+  STEP_LABEL_ALTERNATIVE,
+  STEP_LABEL_INLINE,
+  STEP_VERTICAL_INDICATOR_WRAP,
+  STEP_VERTICAL_BODY,
+  STEP_VERTICAL_CONTENT,
+  STEP_OVERFLOW_ROOT,
 } from './Stepper.const';
 import { resolveStepStatus, resolveIndicatorContent } from './Stepper.utils';
 
@@ -138,7 +150,7 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(
             STEP_INDICATOR_BASE,
             sizeConfig,
             statusClasses.indicator,
-            clickable && !step.disabled && 'cursor-pointer hover:scale-105'
+            clickable && !step.disabled && STEP_CLICKABLE_CLASSES
           )}
           onClick={() => {
             if (clickable && !step.disabled && onStepClick) {
@@ -160,10 +172,9 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(
         return (
           <div
             className={cn(
-              'Bear-Stepper__connector flex-1 self-center mx-1',
-              'h-0.5 min-w-[12px] transition-colors',
+              CONNECTOR_HORIZONTAL_LAYOUT,
               isCompleted ? CONNECTOR_STATUS.completed : CONNECTOR_STATUS.pending,
-              connectorStyle === 'dashed' && 'border-t-2 border-dashed bg-transparent'
+              connectorStyle === 'dashed' && CONNECTOR_DASHED_CLASSES
             )}
           />
         );
@@ -175,7 +186,7 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(
             CONNECTOR_BASE,
             CONNECTOR_VERTICAL,
             isCompleted ? CONNECTOR_STATUS.completed : CONNECTOR_STATUS.pending,
-            connectorStyle === 'dashed' && 'border-t-2 border-dashed bg-transparent'
+            connectorStyle === 'dashed' && CONNECTOR_DASHED_CLASSES
           )}
         />
       );
@@ -211,9 +222,14 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(
     const renderStepContent = (step: Step, index: number) => {
       const status = resolveStepStatus(step, index, activeStep);
       return (
-        <div className={cn('Bear-Stepper__content flex shrink-0', alternativeLabel ? 'flex-col items-center' : 'items-center gap-2')}>
+        <div
+          className={cn(
+            STEP_CONTENT_BASE,
+            alternativeLabel ? STEP_CONTENT_ALTERNATIVE : STEP_CONTENT_INLINE
+          )}
+        >
           {renderIndicator(step, index, status)}
-          <div className={cn(alternativeLabel && 'text-center mt-2', 'whitespace-nowrap')}>
+          <div className={cn(alternativeLabel ? STEP_LABEL_ALTERNATIVE : STEP_LABEL_INLINE)}>
             {renderLabel(step, status)}
           </div>
         </div>
@@ -224,17 +240,19 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(
       const status = resolveStepStatus(step, index, activeStep);
       return (
         <>
-          <div className="flex-shrink-0 mr-4">{renderIndicator(step, index, status)}</div>
-          <div className="flex-1 pt-0.5">
+          <div className={STEP_VERTICAL_INDICATOR_WRAP}>{renderIndicator(step, index, status)}</div>
+          <div className={STEP_VERTICAL_BODY}>
             {renderLabel(step, status)}
-            {step.content && status === 'active' && <div className="mt-4">{step.content}</div>}
+            {step.content && status === 'active' && (
+              <div className={STEP_VERTICAL_CONTENT}>{step.content}</div>
+            )}
           </div>
         </>
       );
     };
 
     const renderOverflowColumn = (hidden: number[], side: 'left' | 'right') => (
-      <div key={`overflow-${side}`} className="Bear-Stepper__overflow shrink-0">
+      <div key={`overflow-${side}`} className={STEP_OVERFLOW_ROOT}>
         <Dropdown
           placement="bottom-start"
           closeOnSelect

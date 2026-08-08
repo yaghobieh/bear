@@ -1,46 +1,64 @@
 import { FC } from 'react';
-import {cn } from '@utils';
-import { StatCardProps } from './StatCard.types';
+import { cn, resolveBearId, useBearId } from '@utils';
+import type { StatCardProps } from './StatCard.types';
+import {
+  DEFAULT_STAT_CARD_ACTION_LABEL,
+  DEFAULT_STAT_CARD_COLOR,
+  STAT_CARD_ACTION_CLASS,
+  STAT_CARD_BASE_CLASSES,
+  STAT_CARD_BODY_CLASS,
+  STAT_CARD_DECORATION_CLASS,
+  STAT_CARD_GRADIENT_END_ALPHA,
+  STAT_CARD_GRADIENT_START_ALPHA,
+  STAT_CARD_ROOT_CLASS,
+  STAT_CARD_TITLE_CLASS,
+  STAT_CARD_VALUE_CLASS,
+} from './StatCard.const';
 
-/**
- * StatCard Component
- * A colorful statistics card with gradient background
- */
 export const StatCard: FC<StatCardProps> = ({
-
   title,
   value,
-  color = '#6366f1',
+  color = DEFAULT_STAT_CARD_COLOR,
   icon,
   onClick,
   className,
+  id,
+  testId,
   ...props
 }) => {
+  const generatedId = useBearId('StatCard');
+  const domId = resolveBearId(id, generatedId);
+  const background = `linear-gradient(135deg, ${color}${STAT_CARD_GRADIENT_START_ALPHA}, ${color}${STAT_CARD_GRADIENT_END_ALPHA})`;
 
   return (
     <div
-      className={cn(
-        'relative overflow-hidden rounded-2xl p-6 transition-transform hover:scale-105 cursor-pointer',
-        className
-      )}
-      style={{ background: `linear-gradient(135deg, ${color}dd, ${color}99)` }}
+      id={domId}
+      data-testid={testId}
+      role={onClick ? 'button' : undefined}
+      tabIndex={onClick ? 0 : undefined}
+      className={cn(STAT_CARD_ROOT_CLASS, STAT_CARD_BASE_CLASSES, className)}
+      style={{ background }}
       onClick={onClick}
+      onKeyDown={(event) => {
+        if (!onClick) return;
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          onClick();
+        }
+      }}
       {...props}
     >
-      {/* Background decoration */}
-      <div className="absolute top-0 right-0 w-32 h-32 -mr-8 -mt-8 rounded-full opacity-20 bg-white" />
-      
-      <div className="relative z-10">
-        <p className="text-white/80 text-sm font-medium mb-1">{title}</p>
-        <p className="text-white text-3xl font-bold mb-4">{value}</p>
+      <div className={STAT_CARD_DECORATION_CLASS} aria-hidden />
+      <div className={STAT_CARD_BODY_CLASS}>
+        <p className={STAT_CARD_TITLE_CLASS}>{title}</p>
+        <p className={STAT_CARD_VALUE_CLASS}>{value}</p>
         {onClick && (
-          <button className="flex items-center gap-2 px-4 py-1.5 bg-white/20 hover:bg-white/30 rounded-full text-white text-sm font-medium transition-colors">
+          <button type="button" className={STAT_CARD_ACTION_CLASS}>
             {icon}
-            View All
+            {DEFAULT_STAT_CARD_ACTION_LABEL}
           </button>
         )}
       </div>
     </div>
   );
 };
-

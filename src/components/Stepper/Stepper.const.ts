@@ -1,6 +1,5 @@
 import type { StepperSize, StepStatus, StepperOrientation } from './Stepper.types';
 
-// ── Defaults ─────────────────────────────────────────────
 export const DEFAULT_ORIENTATION: StepperOrientation = 'horizontal';
 export const DEFAULT_SIZE: StepperSize = 'md';
 export const DEFAULT_SHOW_NUMBERS = true;
@@ -21,7 +20,6 @@ export const LAST_STEP_OFFSET = 1;
 export const OVERFLOW_LEFT_LABEL = 'Previous steps';
 export const OVERFLOW_RIGHT_LABEL = 'More steps';
 
-// ── Icon SVGs ────────────────────────────────────────────
 export const CHECK_ICON_SIZE = 16;
 export const CHECK_ICON_VIEWBOX = '0 0 24 24';
 export const CHECK_ICON_POINTS = '20 6 9 17 4 12';
@@ -29,66 +27,77 @@ export const CHECK_ICON_POINTS = '20 6 9 17 4 12';
 export const ERROR_ICON_SIZE = 16;
 export const ERROR_ICON_VIEWBOX = '0 0 24 24';
 
-// ── Base classes ─────────────────────────────────────────
 export const STEPPER_BASE_CLASSES = 'Bear-Stepper';
-export const STEPPER_HORIZONTAL_CLASSES = 'flex w-full items-center';
-export const STEPPER_VERTICAL_CLASSES = 'flex flex-col';
+export const STEPPER_HORIZONTAL_CLASSES = 'bear-flex bear-w-full bear-items-center';
+export const STEPPER_VERTICAL_CLASSES = 'bear-flex bear-flex-col';
 
-// ── Step wrapper classes ─────────────────────────────────
-export const STEP_WRAPPER_HORIZONTAL = 'relative shrink-0 flex-1 min-w-[80px]';
-export const STEP_WRAPPER_HORIZONTAL_WINDOW = 'relative min-w-[5rem] max-w-[9rem] shrink-0';
-export const STEP_WRAPPER_VERTICAL = 'relative flex items-start pb-8 last:pb-0';
+export const STEP_WRAPPER_HORIZONTAL = 'bear-relative bear-shrink-0 bear-flex-1 bear-min-w-[80px]';
+export const STEP_WRAPPER_HORIZONTAL_WINDOW = 'bear-relative bear-min-w-[5rem] bear-max-w-[9rem] bear-shrink-0';
+export const STEP_WRAPPER_VERTICAL = 'bear-relative bear-flex bear-items-start bear-pb-8 last:bear-pb-0';
 
-// ── Step indicator classes ───────────────────────────────
-export const STEP_INDICATOR_BASE = 'Bear-Stepper__indicator flex items-center justify-center rounded-full font-medium transition-all';
+export const STEP_INDICATOR_BASE =
+  'Bear-Stepper__indicator bear-flex bear-items-center bear-justify-center bear-rounded-full bear-font-medium bear-transition-all';
 
 export const STEP_INDICATOR_SIZES: Record<StepperSize, string> = {
-  sm: 'w-6 h-6 text-xs',
-  md: 'w-8 h-8 text-sm',
-  lg: 'w-10 h-10 text-base',
+  sm: 'bear-w-6 bear-h-6 bear-text-xs',
+  md: 'bear-w-8 bear-h-8 bear-text-sm',
+  lg: 'bear-w-10 bear-h-10 bear-text-base',
 };
 
 export const STEP_STATUS_CLASSES: Record<StepStatus, { indicator: string; label: string }> = {
   pending: {
-    indicator: 'bg-gray-200 dark:bg-zinc-700 text-gray-500 dark:text-gray-400',
-    label: 'text-gray-500 dark:text-gray-400',
+    indicator:
+      'bear-bg-gray-200 dark:bear-bg-zinc-700 bear-text-gray-600 dark:bear-text-gray-400',
+    label: 'bear-text-gray-500 dark:bear-text-gray-400',
   },
   active: {
-    indicator: 'bg-primary-500 text-white shadow-lg shadow-primary-500/30',
-    label: 'text-gray-900 dark:text-white font-medium',
+    indicator:
+      'bear-bg-primary-500 dark:bear-bg-primary-500 bear-text-white bear-shadow-lg bear-shadow-primary-500/30',
+    label: 'bear-text-gray-900 dark:bear-text-white bear-font-medium',
   },
   completed: {
-    indicator: 'bg-green-500 text-white',
-    label: 'text-gray-700 dark:text-gray-300',
+    indicator: 'bear-bg-green-500 bear-text-white',
+    label: 'bear-text-gray-700 dark:bear-text-gray-300',
   },
   error: {
-    indicator: 'bg-red-500 text-white',
-    label: 'text-red-500 dark:text-red-400',
+    indicator: 'bear-bg-red-500 bear-text-white',
+    label: 'bear-text-red-500 dark:bear-text-red-400',
   },
 };
 
-// ── Connector classes ────────────────────────────────────
-export const CONNECTOR_BASE = 'Bear-Stepper__connector absolute transition-colors';
-export const CONNECTOR_HORIZONTAL = 'top-4 h-0.5 -translate-y-1/2';
-export const CONNECTOR_VERTICAL = 'left-4 top-8 w-0.5 h-full -translate-x-1/2';
+export const CONNECTOR_BASE = 'Bear-Stepper__connector bear-absolute bear-transition-colors';
+export const CONNECTOR_HORIZONTAL = 'bear-top-4 bear-h-0.5 -bear-translate-y-1/2';
+export const CONNECTOR_VERTICAL = 'bear-left-4 bear-top-8 bear-w-0.5 bear-h-full -bear-translate-x-1/2';
 
 export const CONNECTOR_STYLES = {
   solid: '',
-  dashed: 'border-dashed',
+  dashed: 'bear-border-dashed',
 };
 
 export const CONNECTOR_STATUS = {
-  pending: 'bg-gray-200 dark:bg-zinc-700',
-  completed: 'bg-green-500',
+  pending: 'bear-bg-gray-200 dark:bear-bg-zinc-700',
+  completed: 'bear-bg-green-500',
 };
 
-// ── Step label classes ───────────────────────────────────
-export const STEP_LABEL_BASE = 'Bear-Stepper__label transition-colors';
+export const STEP_LABEL_BASE = 'Bear-Stepper__label bear-transition-colors';
 export const STEP_LABEL_SIZES: Record<StepperSize, { label: string; description: string }> = {
-  sm: { label: 'text-xs', description: 'text-[10px]' },
-  md: { label: 'text-sm', description: 'text-xs' },
-  lg: { label: 'text-base', description: 'text-sm' },
+  sm: { label: 'bear-text-xs', description: 'bear-text-[10px]' },
+  md: { label: 'bear-text-sm', description: 'bear-text-xs' },
+  lg: { label: 'bear-text-base', description: 'bear-text-sm' },
 };
 
-// ── Step description ─────────────────────────────────────
-export const STEP_DESCRIPTION_CLASSES = 'text-gray-500 dark:text-gray-400 mt-0.5';
+export const STEP_DESCRIPTION_CLASSES = 'bear-text-gray-500 dark:bear-text-gray-400 bear-mt-0.5';
+
+export const STEP_CLICKABLE_CLASSES = 'bear-cursor-pointer hover:bear-scale-105';
+export const CONNECTOR_HORIZONTAL_LAYOUT =
+  'Bear-Stepper__connector bear-flex-1 bear-self-center bear-mx-1 bear-h-0.5 bear-min-w-[12px] bear-transition-colors';
+export const CONNECTOR_DASHED_CLASSES = 'bear-border-t-2 bear-border-dashed bear-bg-transparent';
+export const STEP_CONTENT_BASE = 'Bear-Stepper__content bear-flex bear-shrink-0';
+export const STEP_CONTENT_ALTERNATIVE = 'bear-flex-col bear-items-center';
+export const STEP_CONTENT_INLINE = 'bear-items-center bear-gap-2';
+export const STEP_LABEL_ALTERNATIVE = 'bear-text-center bear-mt-2 bear-whitespace-nowrap';
+export const STEP_LABEL_INLINE = 'bear-whitespace-nowrap';
+export const STEP_VERTICAL_INDICATOR_WRAP = 'bear-flex-shrink-0 bear-mr-4';
+export const STEP_VERTICAL_BODY = 'bear-flex-1 bear-pt-0.5';
+export const STEP_VERTICAL_CONTENT = 'bear-mt-4';
+export const STEP_OVERFLOW_ROOT = 'Bear-Stepper__overflow bear-shrink-0';

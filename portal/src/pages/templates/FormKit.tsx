@@ -12,6 +12,8 @@ import {
 import { usePortalLanguage } from '@/hooks/usePortalLanguage';
 import { PORTAL_TEXT } from '@/constants/portal-i18n.const';
 import { CodeBlock } from '@/components/CodeBlock';
+import { PropsTable } from '@/components/PropsTable';
+import { FORM_KIT_STEPPER_PROPS } from './FormKit.const';
 
 const FormKitPage: FC = () => {
   const { language } = usePortalLanguage();
@@ -22,10 +24,18 @@ const FormKitPage: FC = () => {
   return (
     <div className="fade-in">
       <PageHeader title={t.templateFormTitle} description={t.templateFormDesc} />
-      <div className="mb-8"><CodeBlock language="tsx" showLineNumbers={false} code={`import { FormControl, Input, Select, Stepper, Button } from '@forgedevstack/bear';`} /></div>
-      <Card variant="outlined" padding="lg" className="max-w-2xl space-y-6">
+      <div className="mb-8">
+        <CodeBlock
+          language="tsx"
+          showLineNumbers={false}
+          code={`import { FormControl, Input, Select, Stepper, Button } from '@forgedevstack/bear';`}
+        />
+      </div>
+      <Card variant="outlined" padding="lg" className="max-w-2xl space-y-6 mb-10">
         <Stepper
           activeStep={step}
+          clickable
+          onStepClick={setStep}
           steps={[
             { label: t.templateStepProfile },
             { label: t.templateStepAccess },
@@ -55,6 +65,7 @@ const FormKitPage: FC = () => {
           </Button>
         </Flex>
       </Card>
+      <PropsTable title="Stepper props" rows={FORM_KIT_STEPPER_PROPS} />
     </div>
   );
 };

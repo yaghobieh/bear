@@ -2,6 +2,14 @@
 
 All notable changes to Bear UI will be documented in this file.
 
+## [1.2.8] - Unreleased
+
+### Added
+
+- **`AppShell`** — app chrome layout with header, navbar, main, optional aside/footer, collapsible navbar, and sticky header/footer options.
+
+---
+
 ## [1.2.7] - 2026-08-01
 
 ### Added

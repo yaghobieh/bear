@@ -42,7 +42,7 @@ test('[smoke] RTL direction applies from Bear direction storage', async ({ page 
 
 test('[smoke] Toast live region announces without focus steal', async ({ page }) => {
   await page.addInitScript(() => {
-    localStorage.setItem('bear-version-seen-1.2.7', 'true');
+    localStorage.setItem('bear-version-seen-1.2.8', 'true');
     localStorage.setItem('bear-cookie-consent', 'accepted');
   });
   await page.goto('/components/toast', { waitUntil: 'domcontentloaded' });

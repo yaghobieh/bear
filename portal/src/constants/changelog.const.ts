@@ -10,6 +10,21 @@ export interface ChangelogEntry {
 
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
+    version: '1.2.8',
+    date: 'August 8, 2026',
+    tag: 'patch',
+    sections: [
+      {
+        title: 'Added',
+        items: [
+          'AppShell — header, navbar, main, aside, footer layout',
+          'Banner — severity announcement strip with dismiss + sticky',
+          'Portal docs for AppShell and Banner',
+        ],
+      },
+    ],
+  },
+  {
     version: '1.2.7',
     date: 'August 1, 2026',
     tag: 'patch',

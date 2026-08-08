@@ -8,8 +8,8 @@ import { DocPageNav } from './components/DocPageNav';
 import { RouteSEO } from './components/RouteSEO';
 
 const BANNER_CONFIG = {
-  id: 'bear-1.2.7',
-  message: 'Bear v1.2.7 — PageHeader, useBreakpoint, density compact, Bear DOM ids, Backdrop transitions, ChipGroup overflow, template kits.',
+  id: 'bear-1.2.8',
+  message: 'Bear v1.2.8 — AppShell, Banner, and portal docs for the 1.2.8 release.',
   link: '/whats-new',
   linkText: "See what's new",
 };

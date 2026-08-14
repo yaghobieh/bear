@@ -10,6 +10,28 @@ export interface ChangelogEntry {
 
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
+    version: '1.2.9',
+    date: 'August 14, 2026',
+    tag: 'patch',
+    sections: [
+      {
+        title: 'Fixed',
+        items: [
+          'StatCard bear-* prefixes so dashboard kit works in light mode',
+          'Stepper active/pending contrast in light mode',
+        ],
+      },
+      {
+        title: 'Portal',
+        items: [
+          'Kit PropsTables; clickable form Stepper',
+          'RichEditor banner → Ink',
+          'Calendar banner → Forge Calendar',
+        ],
+      },
+    ],
+  },
+  {
     version: '1.2.8',
     date: 'August 8, 2026',
     tag: 'patch',

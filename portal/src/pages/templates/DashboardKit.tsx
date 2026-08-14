@@ -13,6 +13,8 @@ import {
 import { usePortalLanguage } from '@/hooks/usePortalLanguage';
 import { PORTAL_TEXT } from '@/constants/portal-i18n.const';
 import { CodeBlock } from '@/components/CodeBlock';
+import { PropsTable } from '@/components/PropsTable';
+import { DASHBOARD_KIT_STAT_CARD_PROPS, DASHBOARD_STAT_COLORS } from './DashboardKit.const';
 
 const DashboardKitPage: FC = () => {
   const { language } = usePortalLanguage();
@@ -28,7 +30,7 @@ const DashboardKitPage: FC = () => {
           code={`import { AppBar, PageHeader, Sidebar, StatCard, Card } from '@forgedevstack/bear';`}
         />
       </div>
-      <Card variant="outlined" padding="none" className="overflow-hidden">
+      <Card variant="outlined" padding="none" className="overflow-hidden mb-10">
         <AppBar dense leftContent={<Typography className="font-semibold">Forge Ops</Typography>} />
         <Flex>
           <Sidebar
@@ -39,16 +41,28 @@ const DashboardKitPage: FC = () => {
             activeItemId="overview"
             className="w-56 min-h-[280px]"
           />
-          <div className="flex-1 p-6 space-y-4">
+          <div className="flex-1 p-6 space-y-4 bg-[var(--bear-bg-primary)]">
             <PageHeader
               title={t.templateDashboardTitle}
               description={t.templateDashboardDesc}
               actions={<Button size="sm">{t.templatePrimaryAction}</Button>}
             />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <StatCard title={t.templateStatUsers} value="12.4k" />
-              <StatCard title={t.templateStatRevenue} value="$84k" />
-              <StatCard title={t.templateStatLatency} value="128ms" />
+              <StatCard
+                title={t.templateStatUsers}
+                value="12.4k"
+                color={DASHBOARD_STAT_COLORS.users}
+              />
+              <StatCard
+                title={t.templateStatRevenue}
+                value="$84k"
+                color={DASHBOARD_STAT_COLORS.revenue}
+              />
+              <StatCard
+                title={t.templateStatLatency}
+                value="128ms"
+                color={DASHBOARD_STAT_COLORS.latency}
+              />
             </div>
             <CardBody>
               <Typography variant="body2">{t.templateDashboardBody}</Typography>
@@ -56,6 +70,7 @@ const DashboardKitPage: FC = () => {
           </div>
         </Flex>
       </Card>
+      <PropsTable title="StatCard props" rows={DASHBOARD_KIT_STAT_CARD_PROPS} />
     </div>
   );
 };

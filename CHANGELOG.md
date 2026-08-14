@@ -2,6 +2,19 @@
 
 All notable changes to Bear UI will be documented in this file.
 
+## [1.2.9] - 2026-08-14
+
+### Fixed
+
+- **`StatCard`** — replaced bare Tailwind utilities with `bear-*` prefixed classes + `Bear-StatCard` BEM so gradients/layout ship in the library CSS (dashboard kit light mode).
+- **`Stepper`** — active/pending indicators use `bear-bg-primary-*` / dual-mode tokens so step numbers stay readable in light mode.
+
+### Portal
+
+- Dashboard + form kits: PropsTable sections; dashboard StatCards use distinct colors; form Stepper is clickable.
+- **RichEditor** companion banner linking to Ink (`inkforgejs.com` + npm).
+- **Calendar** companion banner linking to Forge Calendar (`forgecalendar.com` + npm).
+
 ## [1.2.8] - 2026-08-08
 
 ### Added

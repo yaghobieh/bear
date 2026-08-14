@@ -17,7 +17,7 @@ export interface NavGroup {
   icon?: string;
 }
 
-export const BEAR_VERSION = '1.2.8';
+export const BEAR_VERSION = '1.2.9';
 
 /** Main Bear UI repository */
 export const GITHUB_URL = 'https://github.com/yaghobieh/bear';
@@ -533,7 +533,8 @@ export const NAVIGATION: NavGroup[] = [
 ];
 
 export const VERSIONS = [
-  { value: '1.2.8', label: 'v1.2.8 (current)' },
+  { value: '1.2.9', label: 'v1.2.9 (current)' },
+  { value: '1.2.8', label: 'v1.2.8' },
   { value: '1.2.7', label: 'v1.2.7' },
   { value: '1.2.6', label: 'v1.2.6' },
   { value: '1.2.5', label: 'v1.2.5' },

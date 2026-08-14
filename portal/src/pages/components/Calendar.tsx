@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
 import { LinesOfCode } from '@/components/LinesOfCode';
-import { Calendar } from '@forgedevstack/bear';
+import { Calendar, Card, BearIcons } from '@forgedevstack/bear';
 
 const CalendarPage: FC = () => {
   const [viewDate, setViewDate] = useState(new Date());
@@ -14,9 +14,46 @@ const CalendarPage: FC = () => {
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Calendar</h1>
         <LinesOfCode lines={180} />
       </div>
-      <p className="text-gray-600 dark:text-gray-400 mb-8">
+      <p className="text-gray-600 dark:text-gray-400 mb-6">
         Standalone calendar with customizable slots. Use with DatePicker or alone for date display and selection.
       </p>
+
+      <Card className="mb-8 p-4 bg-gradient-to-r from-teal-50 to-emerald-50 dark:from-teal-900/20 dark:to-emerald-900/20 border-teal-200 dark:border-teal-800">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex items-start gap-3">
+            <BearIcons.CalendarIcon size={24} className="text-teal-600 flex-shrink-0 mt-1" />
+            <div>
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
+                ForgeStack Scheduler: @forgedevstack/calendar
+              </h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Forge Calendar is the dedicated scheduler for ForgeStack — month, week, day, and agenda views with timed events.
+                Bear Calendar stays the date-picker widget.
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-2 flex-shrink-0">
+            <a
+              href="https://www.npmjs.com/package/@forgedevstack/calendar"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium transition-colors"
+            >
+              <BearIcons.PackageIcon size={16} />
+              npm
+            </a>
+            <a
+              href="https://forgecalendar.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-800 hover:bg-gray-900 dark:bg-gray-700 dark:hover:bg-gray-600 text-white text-sm font-medium transition-colors"
+            >
+              <BearIcons.GlobeIcon size={16} />
+              forgecalendar.com
+            </a>
+          </div>
+        </div>
+      </Card>
 
       <section className="mb-12">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Import</h2>

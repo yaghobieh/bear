@@ -2,7 +2,7 @@
 
 All notable changes to Bear UI will be documented in this file.
 
-## [Unreleased]
+## [1.2.9] - 2026-08-14
 
 ### Fixed
 
@@ -12,6 +12,8 @@ All notable changes to Bear UI will be documented in this file.
 ### Portal
 
 - Dashboard + form kits: PropsTable sections; dashboard StatCards use distinct colors; form Stepper is clickable.
+- **RichEditor** companion banner linking to Ink (`inkforgejs.com` + npm).
+- **Calendar** companion banner linking to Forge Calendar (`forgecalendar.com` + npm).
 
 ## [1.2.8] - 2026-08-08
 

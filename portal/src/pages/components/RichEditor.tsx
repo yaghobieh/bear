@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
 import { LinesOfCode } from '@/components/LinesOfCode';
-import { RichEditor, Button, Card } from '@forgedevstack/bear';
+import { RichEditor, Button, Card, BearIcons } from '@forgedevstack/bear';
 
 const RichEditorPage: FC = () => {
   const [basicValue, setBasicValue] = useState('<p>Start editing here...</p>');
@@ -17,9 +17,46 @@ const RichEditorPage: FC = () => {
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">RichEditor</h1>
         <LinesOfCode lines={500} />
       </div>
-      <p className="text-gray-600 dark:text-gray-400 mb-8">
+      <p className="text-gray-600 dark:text-gray-400 mb-6">
         A full-featured WYSIWYG rich text editor with formatting toolbar, heading styles, colors, lists, links, and image paste support.
       </p>
+
+      <Card className="mb-8 p-4 bg-gradient-to-r from-pink-50 to-purple-50 dark:from-pink-900/20 dark:to-purple-900/20 border-pink-200 dark:border-pink-800">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex items-start gap-3">
+            <BearIcons.EditIcon size={24} className="text-pink-500 flex-shrink-0 mt-1" />
+            <div>
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
+                ForgeStack Editor: @forgedevstack/ink
+              </h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Ink is the dedicated rich text editor for ForgeStack — tables, track changes, comments, block handles, and pluggable AI.
+                Fully typed and designed to work with Bear UI. Bear RichEditor stays the lightweight in-library editor.
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-2 flex-shrink-0">
+            <a
+              href="https://www.npmjs.com/package/@forgedevstack/ink"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-pink-500 hover:bg-pink-600 text-white text-sm font-medium transition-colors"
+            >
+              <BearIcons.PackageIcon size={16} />
+              npm
+            </a>
+            <a
+              href="https://inkforgejs.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-800 hover:bg-gray-900 dark:bg-gray-700 dark:hover:bg-gray-600 text-white text-sm font-medium transition-colors"
+            >
+              <BearIcons.GlobeIcon size={16} />
+              inkforgejs.com
+            </a>
+          </div>
+        </div>
+      </Card>
 
       <section className="mb-12">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Import</h2>

@@ -24,4 +24,4 @@ export const VERSION_POPUP_FEATURES = [
 ];
 
 export const VERSION_POPUP_DESCRIPTION =
-  'v1.2.8 — AppShell layout primitive, Banner announcement strip, portal pages, and release polish on top of 1.2.7 PageHeader / density / template kits.';
+  'v1.2.9 — StatCard/Stepper light-mode, kit PropsTables, RichEditor → Ink banner, Calendar → Forge Calendar banner.';

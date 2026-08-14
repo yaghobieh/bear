@@ -8,8 +8,8 @@ import { DocPageNav } from './components/DocPageNav';
 import { RouteSEO } from './components/RouteSEO';
 
 const BANNER_CONFIG = {
-  id: 'bear-1.2.8',
-  message: 'Bear v1.2.8 — AppShell, Banner, and portal docs for the 1.2.8 release.',
+  id: 'bear-1.2.9',
+  message: 'Bear v1.2.9 — kit light-mode fixes, RichEditor → Ink, Calendar → Forge Calendar.',
   link: '/whats-new',
   linkText: "See what's new",
 };

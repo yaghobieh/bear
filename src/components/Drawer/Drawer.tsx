@@ -7,6 +7,9 @@ import { Backdrop } from '../Backdrop';
 import type { DrawerProps } from './Drawer.types';
 import {
   DRAWER_ANIMATION_MS,
+  DRAWER_BACKDROP_Z_INDEX,
+  DRAWER_ROOT_CLASSES,
+  DRAWER_PANEL_Z_CLASS,
   SIZE_CLASSES,
   POSITION_CLASSES,
   TRANSFORM_OPEN,
@@ -91,11 +94,12 @@ export const Drawer: FC<DrawerProps> = ({
   if (!isMounted) return null;
 
   const drawerContent = (
-    <div id={domId} data-testid={testId} className="Bear-Drawer bear-fixed bear-inset-0 bear-z-[11000]">
+    <div id={domId} data-testid={testId} className={DRAWER_ROOT_CLASSES}>
       <Backdrop
         open={hasOpened && !isClosing}
         keepMounted
         blur
+        zIndex={DRAWER_BACKDROP_Z_INDEX}
         transitionDuration={DRAWER_ANIMATION_MS}
         className="Bear-Drawer__backdrop"
         onClick={closeOnBackdrop ? () => onClose() : undefined}
@@ -107,6 +111,7 @@ export const Drawer: FC<DrawerProps> = ({
         aria-labelledby={title ? `${domId}-title` : undefined}
         className={cn(
           'Bear-Drawer__panel',
+          DRAWER_PANEL_Z_CLASS,
           'bear-absolute bear-bg-white dark:bear-bg-neutral-900 bear-shadow-2xl',
           'bear-border-neutral-200 dark:bear-border-neutral-700',
           'bear-flex bear-flex-col bear-overflow-hidden',

@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { cn, resolveBearId, useBearId } from '@utils';
 import { CloseIcon } from '../Icon/icons/navigation';
 import { Backdrop } from '../Backdrop';
+import { BACKDROP_NESTED_Z_INDEX } from '../Backdrop/Backdrop.const';
 import type { ModalProps } from './Modal.types';
 import {
   MODAL_SIZE_CLASSES,
@@ -12,6 +13,8 @@ import {
   MODAL_CLOSE_CLASSES,
   MODAL_BODY_CLASSES,
   MODAL_FOOTER_CLASSES,
+  MODAL_ROOT_CLASSES,
+  MODAL_PANEL_STACK_CLASSES,
 } from './Modal.const';
 
 /**
@@ -79,7 +82,7 @@ export const Modal: FC<ModalProps> = (props) => {
 
   const modalContent = (
     <div
-      className="Bear-Modal bear-fixed bear-inset-0 bear-z-[11000] bear-flex bear-items-center bear-justify-center bear-p-4"
+      className={MODAL_ROOT_CLASSES}
       data-testid={testId}
       id={domId}
     >
@@ -88,6 +91,7 @@ export const Modal: FC<ModalProps> = (props) => {
           open={isOpen}
           keepMounted={keepMounted}
           blur
+          zIndex={BACKDROP_NESTED_Z_INDEX}
           className="Bear-Modal__backdrop"
           onClick={closeBackdropClick ? () => onClose() : undefined}
         />
@@ -99,6 +103,7 @@ export const Modal: FC<ModalProps> = (props) => {
         aria-labelledby={title ? `${domId}-title` : undefined}
         className={cn(
           'Bear-Modal__container',
+          MODAL_PANEL_STACK_CLASSES,
           MODAL_CONTAINER_CLASSES,
           MODAL_SIZE_CLASSES[size],
           className

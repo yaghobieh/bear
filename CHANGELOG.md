@@ -2,6 +2,12 @@
 
 All notable changes to Bear UI will be documented in this file.
 
+## [1.3.0] - Unreleased
+
+### Fixed
+
+- **Modal** — dialog panel stacks above the Backdrop blur (FORGE-84).
+
 ## [1.2.9] - 2026-08-14
 
 ### Fixed

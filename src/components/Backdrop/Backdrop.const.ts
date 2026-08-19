@@ -1,5 +1,6 @@
 export const BACKDROP_ROOT_CLASS = 'Bear-Backdrop';
 export const BACKDROP_DEFAULT_Z_INDEX = 11000;
+export const BACKDROP_NESTED_Z_INDEX = 0;
 export const BACKDROP_DEFAULT_TRANSITION_MS = 200;
 export const BACKDROP_BASE_CLASSES = 'bear-fixed bear-inset-0 bear-flex bear-items-center bear-justify-center bear-transition-opacity';
 export const BACKDROP_VISIBLE_CLASSES = 'bear-opacity-100 bear-pointer-events-auto';

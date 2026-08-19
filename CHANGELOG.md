@@ -2,11 +2,17 @@
 
 All notable changes to Bear UI will be documented in this file.
 
-## [1.3.0] - Unreleased
+## [1.3.0] - 2026-08-19
+
+### Added
+
+- **ModalsProvider** — `useModals()` `open` / `confirm` / `close` / `closeAll` without local `isOpen` state; stack-safe z-index and focus restore (FORGE-9).
 
 ### Fixed
 
-- **SignPad** — pointer capture for drawing; overlay chrome no longer blocks strokes; resize/theme no longer wipe the signature (FORGE-87).
+- **Modal / Drawer** — nested Backdrop is `position: absolute` at z-index 0; the panel uses inline z-index 1 inside an isolated stacking context so `backdrop-filter` no longer blurs the dialog (FORGE-84, FORGE-85).
+- **Toast / Snackbar** — shipped surface CSS (no unshipped color utilities); Snackbar uses `--bear-bg-tertiary` and secondary description text in dark mode (FORGE-86).
+- **SignPad** — restored mouse and touch drawing; overlay chrome cannot steal pointers; resize/theme no longer wipe the signature (FORGE-87).
 
 ## [1.2.9] - 2026-08-14
 

@@ -10,6 +10,27 @@ export interface ChangelogEntry {
 
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
+    version: '1.3.0',
+    date: 'August 19, 2026',
+    tag: 'minor',
+    sections: [
+      {
+        title: 'Added',
+        items: [
+          'ModalsProvider — imperative open, confirm, close, and closeAll (FORGE-9)',
+        ],
+      },
+      {
+        title: 'Fixed',
+        items: [
+          'Modal and Drawer sit above backdrop blur (FORGE-84, FORGE-85)',
+          'SignPad captures mouse and touch signatures again (FORGE-87)',
+          'Toast and Snackbar surfaces and description contrast in dark and light (FORGE-86)',
+        ],
+      },
+    ],
+  },
+  {
     version: '1.2.9',
     date: 'August 14, 2026',
     tag: 'patch',

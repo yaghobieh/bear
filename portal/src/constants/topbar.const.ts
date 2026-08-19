@@ -6,22 +6,18 @@ export interface TopbarAlertItem {
 }
 
 export const NEW_COMPONENT_ALERTS: TopbarAlertItem[] = [
-  { label: 'AppShell', path: '/components/app-shell', info: 'Header, navbar, main, aside, footer layout', badge: 'New' },
-  { label: 'Banner', path: '/components/banner', info: 'Announcement strip with severity and dismiss', badge: 'New' },
-  { label: 'PageHeader', path: '/components/page-header', info: 'Title, description, and actions block', badge: 'New' },
-  { label: 'useBreakpoint', path: '/hooks', info: 'Named breakpoint state from BearProvider', badge: 'New' },
-  { label: 'Density compact', path: '/components/button', info: 'Button, Input, Chip, Tabs honor density', badge: 'New' },
-  { label: 'Template kits', path: '/templates/dashboard', info: 'Dashboard, form, and auth kits', badge: 'New' },
+  { label: 'ModalsProvider', path: '/components/modals-provider', info: 'Imperative open and confirm without local modal state', badge: 'New' },
+  { label: 'Modal / Drawer', path: '/components/modal', info: 'Dialogs sit above backdrop blur', badge: 'Fix' },
+  { label: 'SignPad', path: '/components/sign-pad', info: 'Mouse and touch drawing restored', badge: 'Fix' },
+  { label: 'Toast / Snackbar', path: '/components/toast', info: 'Readable surfaces in dark and light', badge: 'Fix' },
 ];
 
 export const VERSION_POPUP_FEATURES = [
-  'AppShell',
-  'Banner',
-  'PageHeader',
-  'useBreakpoint',
-  'Provider density',
-  'Template kits',
+  'ModalsProvider',
+  'Modal and Drawer above blur',
+  'SignPad drawing',
+  'Toast and Snackbar surfaces',
 ];
 
 export const VERSION_POPUP_DESCRIPTION =
-  'v1.2.9 — StatCard/Stepper light-mode, kit PropsTables, RichEditor → Ink banner, Calendar → Forge Calendar banner.';
+  'v1.3.0 — ModalsProvider, overlay stacking, SignPad capture, Toast/Snackbar contrast.';

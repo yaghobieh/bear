@@ -7,6 +7,9 @@ import { Backdrop } from '../Backdrop';
 import type { DrawerProps } from './Drawer.types';
 import {
   DRAWER_ANIMATION_MS,
+  DRAWER_Z_INDEX,
+  DRAWER_PANEL_Z_INDEX,
+  DRAWER_ROOT_CLASSES,
   SIZE_CLASSES,
   POSITION_CLASSES,
   TRANSFORM_OPEN,
@@ -91,11 +94,17 @@ export const Drawer: FC<DrawerProps> = ({
   if (!isMounted) return null;
 
   const drawerContent = (
-    <div id={domId} data-testid={testId} className="Bear-Drawer bear-fixed bear-inset-0 bear-z-[11000]">
+    <div
+      id={domId}
+      data-testid={testId}
+      className={DRAWER_ROOT_CLASSES}
+      style={{ zIndex: DRAWER_Z_INDEX }}
+    >
       <Backdrop
         open={hasOpened && !isClosing}
         keepMounted
         blur
+        nested
         transitionDuration={DRAWER_ANIMATION_MS}
         className="Bear-Drawer__backdrop"
         onClick={closeOnBackdrop ? () => onClose() : undefined}
@@ -117,7 +126,10 @@ export const Drawer: FC<DrawerProps> = ({
           hasOpened && !isClosing ? TRANSFORM_OPEN[resolvedSide] : TRANSFORM_CLOSED[resolvedSide],
           className
         )}
-        style={{ transitionDuration: `${DRAWER_ANIMATION_MS}ms` }}
+        style={{
+          transitionDuration: `${DRAWER_ANIMATION_MS}ms`,
+          zIndex: DRAWER_PANEL_Z_INDEX,
+        }}
       >
         {(title || showCloseButton) && (
           <div className="bear-flex bear-items-center bear-justify-between bear-px-4 bear-py-3 bear-border-b bear-border-neutral-200 dark:bear-border-neutral-700 bear-shrink-0" dir={direction}>

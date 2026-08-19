@@ -1,4 +1,8 @@
-import { HTMLAttributes } from 'react';
+import type { HTMLAttributes, MouseEvent, TouchEvent } from 'react';
+
+export type SignPadDrawEvent =
+  | MouseEvent<HTMLDivElement>
+  | TouchEvent<HTMLDivElement>;
 
 export interface SignPadProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
   /** Callback when signature changes - receives base64 image data */

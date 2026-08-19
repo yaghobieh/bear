@@ -1,3 +1,6 @@
+import type { SnackbarSeverity } from './Snackbar.types';
+import type { TypographyProps } from '../Typography/Typography.types';
+
 export const SNACKBAR_ROOT_CLASS = 'Bear-Snackbar';
 
 export const SNACKBAR_DEFAULT_AUTO_HIDE_MS = 6000;
@@ -20,8 +23,21 @@ export const SNACKBAR_SIZE_PADDING: Record<'sm' | 'md' | 'lg', string> = {
   lg: 'bear-px-5 bear-py-4',
 };
 
-export const SNACKBAR_SURFACE_CLASSES =
-  'bear-bg-[var(--bear-bg-primary)] bear-text-[var(--bear-text-primary)]';
+export const SNACKBAR_PAPER_BACKGROUND = 'default';
+
+export const SNACKBAR_SURFACE_CLASSES = 'bear-shadow-xl';
+
+export const SNACKBAR_BORDER_CLASSES = 'bear-border';
+
+export const SNACKBAR_SEVERITY_MODIFIER: Record<SnackbarSeverity, string> = {
+  default: `${SNACKBAR_ROOT_CLASS}--default`,
+  success: `${SNACKBAR_ROOT_CLASS}--success`,
+  info: `${SNACKBAR_ROOT_CLASS}--info`,
+  warning: `${SNACKBAR_ROOT_CLASS}--warning`,
+  error: `${SNACKBAR_ROOT_CLASS}--error`,
+};
+
+export const SNACKBAR_DESCRIPTION_COLOR: NonNullable<TypographyProps['color']> = 'secondary';
 
 export const SNACKBAR_COUNTDOWN_TICK_MS = 50;
 

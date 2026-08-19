@@ -3,6 +3,15 @@ import type { DrawerSide, DrawerSize } from './Drawer.types';
 
 export const DRAWER_SIDES: DrawerSide[] = ['left', 'right', 'top', 'bottom'];
 
+export const DRAWER_SIDE_LABELS: Record<DrawerSide, string> = {
+  left: 'Left',
+  right: 'Right',
+  top: 'Top',
+  bottom: 'Bottom',
+};
+
+export const DRAWER_TITLE_PREFIX = 'Drawer — ';
+
 export const DRAWER_SIZES: DrawerSize[] = ['sm', 'md', 'lg', 'xl'];
 
 export const DRAWER_PROPS: PropRow[] = [

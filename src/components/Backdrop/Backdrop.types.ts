@@ -6,6 +6,7 @@ export interface BackdropProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onC
   open?: boolean;
   invisible?: boolean;
   blur?: boolean;
+  nested?: boolean;
   zIndex?: number;
   transitionDuration?: number;
   keepMounted?: boolean;

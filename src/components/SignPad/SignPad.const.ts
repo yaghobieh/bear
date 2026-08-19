@@ -25,9 +25,9 @@ export const SIGN_PAD_CANVAS_WRAPPER_HOVER = 'hover:bear-border-primary-400 dark
 
 export const SIGN_PAD_PLACEHOLDER_CLASSES = 'bear-absolute bear-inset-0 bear-flex bear-items-center bear-justify-center bear-text-gray-400 dark:bear-text-zinc-500 bear-text-sm bear-pointer-events-none';
 
-export const SIGN_PAD_LINE_CLASSES = 'bear-absolute bear-bottom-8 bear-left-4 bear-right-4 bear-border-b bear-border-gray-300 dark:bear-border-zinc-600';
+export const SIGN_PAD_LINE_CLASSES = 'bear-absolute bear-bottom-8 bear-left-4 bear-right-4 bear-border-b bear-border-gray-300 dark:bear-border-zinc-600 bear-pointer-events-none';
 
-export const SIGN_PAD_X_MARK_CLASSES = 'bear-absolute bear-bottom-6 bear-left-4 bear-text-gray-400 dark:bear-text-zinc-500 bear-text-lg bear-font-bold';
+export const SIGN_PAD_X_MARK_CLASSES = 'bear-absolute bear-bottom-6 bear-left-4 bear-text-gray-400 dark:bear-text-zinc-500 bear-text-lg bear-font-bold bear-pointer-events-none';
 
 export const SIGN_PAD_ACTIONS_CLASSES = 'bear-flex bear-gap-2 bear-justify-end';
 
@@ -35,4 +35,9 @@ export const SIGN_PAD_OVERLAY_POINTER_CLASS = 'bear-pointer-events-none';
 export const SIGN_PAD_TRANSPARENT_FILL = 'rgba(0,0,0,0)';
 export const SIGN_PAD_EMPTY_SIZE = 0;
 export const SIGN_PAD_UNIT_SCALE = 1;
+export const SIGN_PAD_HTML_DARK_CLASS = 'dark';
+export const SIGN_PAD_BEAR_DARK_CLASS = 'bear-dark';
+export const SIGN_PAD_OVERLAY_STYLE = { pointerEvents: 'none' as const };
+export const SIGN_PAD_STROKE_RADIUS_DIVISOR = 2;
+export const SIGN_PAD_FULL_CIRCLE_RADIANS = Math.PI * 2;
 

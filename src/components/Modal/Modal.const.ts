@@ -1,7 +1,9 @@
 import type { ModalSize } from './Modal.types';
 
-// Z-index
-export const MODAL_Z_INDEX = 50;
+export const MODAL_Z_INDEX = 11000;
+export const MODAL_PANEL_Z_INDEX = 1;
+export const MODAL_ROOT_CLASSES =
+  'Bear-Modal bear-fixed bear-inset-0 bear-flex bear-items-center bear-justify-center bear-p-4';
 
 // Size classes
 export const MODAL_SIZE_CLASSES: Record<ModalSize, string> = {

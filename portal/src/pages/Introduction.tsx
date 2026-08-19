@@ -13,6 +13,7 @@ const HERO_TITLE = 'The Foundation for your React UI';
 const HERO_DESCRIPTION = '100+ accessible, customizable React components with TypeScript, AeroCraft CSS, responsive hooks, and a powerful theming system. Start here, then make it your own.';
 const INSTALL_CMD = 'npm install @forgedevstack/bear';
 const VERSION_LABEL = `Introducing Bear v${BEAR_VERSION}`;
+const VERSION_HIGHLIGHT = 'ModalsProvider · overlays above blur · SignPad';
 
 const STATS = [
   { value: '100+', label: 'Components', color: 'text-pink-500' },
@@ -38,7 +39,7 @@ const THEME_BULLETS = [
 ];
 
 const COMPONENT_TAGS = [
-  'Button', 'Card', 'Modal', 'Drawer', 'Tooltip', 'Badge', 'Avatar', 'Input', 'Select', 'Checkbox',
+  'Button', 'Card', 'Modal', 'ModalsProvider', 'Drawer', 'Tooltip', 'Badge', 'Avatar', 'Input', 'Select', 'Checkbox',
   'Radio', 'Switch', 'Rating', 'Tabs', 'Accordion', 'Menu', 'Dropdown', 'Alert', 'Progress', 'Spinner',
   'DataTable', 'Carousel', 'List', 'Typography', 'Divider', 'Paper', 'Grid', 'Flex', 'Container',
   'SpeedDial', 'TransferList', 'MultiSelect', 'Autocomplete', 'FAB', 'Link', 'RichEditor', 'SignPad',
@@ -106,6 +107,8 @@ const Introduction: FC = () => {
           className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-xs font-medium text-gray-600 dark:text-gray-400 hover:border-pink-300 dark:hover:border-pink-800 hover:text-pink-600 dark:hover:text-pink-400 transition-colors mb-8"
         >
           {VERSION_LABEL}
+          <span className="text-gray-400 dark:text-gray-500">·</span>
+          {VERSION_HIGHLIGHT}
           <ArrowRightIcon size={12} />
         </Link>
 

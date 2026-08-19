@@ -1,0 +1,130 @@
+.Bear-Toast--success {
+  background-color: var(--bear-success-50);
+  color: var(--bear-success-700);
+  border: 1px solid var(--bear-success-500);
+}
+
+.Bear-Toast--info {
+  background-color: var(--bear-info-50);
+  color: var(--bear-info-700);
+  border: 1px solid var(--bear-info-500);
+}
+
+.Bear-Toast--warning {
+  background-color: var(--bear-warning-50);
+  color: var(--bear-warning-700);
+  border: 1px solid var(--bear-warning-500);
+}
+
+.Bear-Toast--error {
+  background-color: var(--bear-danger-50);
+  color: var(--bear-danger-700);
+  border: 1px solid var(--bear-danger-500);
+}
+
+.bear-dark .Bear-Toast--success,
+.dark .Bear-Toast--success {
+  background-color: var(--bear-success-500);
+  color: #ffffff;
+  border-color: var(--bear-success-500);
+}
+
+.bear-dark .Bear-Toast--info,
+.dark .Bear-Toast--info {
+  background-color: var(--bear-info-500);
+  color: #ffffff;
+  border-color: var(--bear-info-500);
+}
+
+.bear-dark .Bear-Toast--warning,
+.dark .Bear-Toast--warning {
+  background-color: var(--bear-warning-500);
+  color: #ffffff;
+  border-color: var(--bear-warning-500);
+}
+
+.bear-dark .Bear-Toast--error,
+.dark .Bear-Toast--error {
+  background-color: var(--bear-danger-500);
+  color: #ffffff;
+  border-color: var(--bear-danger-500);
+}
+
+.Bear-Snackbar,
+.Bear-Snackbar.bear-bg-white,
+.Bear-Snackbar.bear-bg-transparent {
+  background-color: var(--bear-bg-tertiary);
+  color: var(--bear-text-primary);
+  border-color: var(--bear-neutral-300);
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.18), 0 4px 6px -4px rgb(0 0 0 / 0.12);
+}
+
+.bear-dark .Bear-Snackbar,
+.dark .Bear-Snackbar {
+  background-color: var(--bear-bg-tertiary);
+  border-color: var(--bear-neutral-500);
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.45), 0 4px 6px -4px rgb(0 0 0 / 0.35);
+}
+
+.Bear-Snackbar__description {
+  color: var(--bear-text-secondary);
+}
+
+.Bear-Snackbar--success {
+  background-color: var(--bear-success-50);
+  border-color: var(--bear-success-500);
+}
+
+.Bear-Snackbar--info {
+  background-color: var(--bear-info-50);
+  border-color: var(--bear-info-500);
+}
+
+.Bear-Snackbar--warning {
+  background-color: var(--bear-warning-50);
+  border-color: var(--bear-warning-500);
+}
+
+.Bear-Snackbar--error {
+  background-color: var(--bear-danger-50);
+  border-color: var(--bear-danger-500);
+}
+
+.bear-dark .Bear-Snackbar--success,
+.dark .Bear-Snackbar--success {
+  background-color: var(--bear-success-500);
+  color: #ffffff;
+  border-color: var(--bear-success-500);
+}
+
+.bear-dark .Bear-Snackbar--info,
+.dark .Bear-Snackbar--info {
+  background-color: var(--bear-info-500);
+  color: #ffffff;
+  border-color: var(--bear-info-500);
+}
+
+.bear-dark .Bear-Snackbar--warning,
+.dark .Bear-Snackbar--warning {
+  background-color: var(--bear-warning-500);
+  color: #ffffff;
+  border-color: var(--bear-warning-500);
+}
+
+.bear-dark .Bear-Snackbar--error,
+.dark .Bear-Snackbar--error {
+  background-color: var(--bear-danger-500);
+  color: #ffffff;
+  border-color: var(--bear-danger-500);
+}
+
+.bear-dark .Bear-Snackbar--success .Bear-Snackbar__description,
+.dark .Bear-Snackbar--success .Bear-Snackbar__description,
+.bear-dark .Bear-Snackbar--info .Bear-Snackbar__description,
+.dark .Bear-Snackbar--info .Bear-Snackbar__description,
+.bear-dark .Bear-Snackbar--warning .Bear-Snackbar__description,
+.dark .Bear-Snackbar--warning .Bear-Snackbar__description,
+.bear-dark .Bear-Snackbar--error .Bear-Snackbar__description,
+.dark .Bear-Snackbar--error .Bear-Snackbar__description {
+  color: #ffffff;
+}

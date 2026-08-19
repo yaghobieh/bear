@@ -5,49 +5,36 @@ import { BEAR_VERSION } from '@/constants/navigation.const';
 
 const RELEASE_ITEMS = [
   {
-    title: 'ToggleButton & ToggleButtonGroup',
-    path: '/components/toggle-button',
-    icon: BearIcons.ToggleButtonIcon,
-    description: 'Exclusive or multi-select toggles with theme-aware selected states.',
+    title: 'ModalsProvider',
+    path: '/components/modals-provider',
+    icon: BearIcons.LayersIcon,
+    description: 'useModals() open, confirm, close, and closeAll — no local isOpen state. Stack-safe z-index and focus restore.',
   },
   {
-    title: 'FormControl',
-    path: '/components/form-control',
-    icon: BearIcons.FormControlIcon,
-    description: 'Label, error, helper, disabled, and required propagation via context.',
+    title: 'Modal and Drawer stacking',
+    path: '/components/modal',
+    icon: BearIcons.MaximizeIcon,
+    description: 'Dialogs sit above backdrop blur. Nested Backdrop is absolute; the panel is isolated so filter no longer covers the content.',
   },
   {
-    title: 'Snackbar',
-    path: '/components/snackbar',
+    title: 'SignPad drawing',
+    path: '/components/sign-pad',
+    icon: BearIcons.EditIcon,
+    description: 'Mouse and touch write on the canvas again. Overlay chrome cannot steal pointers; resize and theme no longer wipe the signature.',
+  },
+  {
+    title: 'Toast and Snackbar surfaces',
+    path: '/components/toast',
     icon: BearIcons.SnackbarIcon,
-    description: 'Anchored messages with createPortal and custom container support.',
-  },
-  {
-    title: 'CssBaseline',
-    path: '/theming',
-    icon: BearIcons.PaletteIcon,
-    description: 'Global box-sizing and body reset from theme CSS variables.',
-  },
-  {
-    title: 'Skeleton variants',
-    path: '/components/skeleton',
-    icon: BearIcons.SparklesIcon,
-    description: 'TableSkeleton, FormSkeleton, and CardSkeleton loading placeholders.',
-  },
-  {
-    title: 'Bear IDs',
-    path: '/typescript',
-    icon: BearIcons.SettingsIcon,
-    description: 'useBearId generates Bear_component_123456 — stable, prefixed DOM ids.',
+    description: 'Shipped surface CSS in light and dark. Snackbar uses tertiary background and readable description text.',
   },
 ];
 
-const ENHANCEMENTS = [
-  'BearProvider: defaultProps, direction (RTL), density, controlled mode',
-  'Input multiline: rows, minRows, maxRows, readOnly, inputRef',
-  'Button: disableRipple, href, component polymorphism',
-  'Modal & Drawer: MUI-parity props (disableEscapeKeyDown, anchor, variant)',
-  'Gauge refactor: useGauge hook + GaugeArcSvg helper',
+const FIXES = [
+  'Modal and Drawer: nested Backdrop at z-index 0, panel at z-index 1 inside an isolated stacking context (FORGE-84, FORGE-85)',
+  'Toast: BEM severity modifiers instead of unshipped color utilities (FORGE-86)',
+  'Snackbar: --bear-bg-tertiary surface and secondary description color in dark mode (FORGE-86)',
+  'SignPad: pointer events on the wrapper; overlay chrome is pointer-events none (FORGE-87)',
 ];
 
 const WhatsNew124Page: FC = () => (
@@ -56,12 +43,12 @@ const WhatsNew124Page: FC = () => (
       <Badge variant="primary" className="mb-4">v{BEAR_VERSION}</Badge>
       <Typography variant="h1" className="mb-3">What&apos;s new in Bear {BEAR_VERSION}</Typography>
       <Typography variant="body1" className="text-gray-600 dark:text-gray-400">
-        MUI-parity release — new form primitives, provider enhancements, and a standardized ID system.
+        Imperative modals, overlay stacking that survives backdrop blur, SignPad capture, and Toast/Snackbar contrast in dark and light.
       </Typography>
     </div>
 
     <section>
-      <Typography variant="h2" className="mb-6">New components</Typography>
+      <Typography variant="h2" className="mb-6">This release</Typography>
       <div className="grid gap-4 sm:grid-cols-2">
         {RELEASE_ITEMS.map((item) => {
           const Icon = item.icon;
@@ -89,29 +76,16 @@ const WhatsNew124Page: FC = () => (
     </section>
 
     <section>
-      <Typography variant="h2" className="mb-4">Enhancements</Typography>
+      <Typography variant="h2" className="mb-4">Fixes</Typography>
       <Card className="p-6">
         <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-          {ENHANCEMENTS.map((line) => (
+          {FIXES.map((line) => (
             <li key={line} className="flex items-start gap-2">
               <BearIcons.CheckIcon size={16} className="text-emerald-500 mt-0.5 shrink-0" />
               <span>{line}</span>
             </li>
           ))}
         </ul>
-      </Card>
-    </section>
-
-    <section>
-      <Typography variant="h2" className="mb-4">Code review workflow</Typography>
-      <Card className="p-6">
-        <Typography variant="body2" className="text-gray-600 dark:text-gray-400 mb-3">
-          Use <code className="text-pink-500">/bear-code-review</code> in Cursor to audit components against Bear standards —
-          hooks placement, SVG helpers, PropsTable docs, and ID format.
-        </Typography>
-        <Link to="/components/form-control" className="text-pink-500 hover:underline text-sm font-medium">
-          See FormControl as reference →
-        </Link>
       </Card>
     </section>
   </div>

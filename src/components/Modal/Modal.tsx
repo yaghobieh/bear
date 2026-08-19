@@ -12,6 +12,9 @@ import {
   MODAL_CLOSE_CLASSES,
   MODAL_BODY_CLASSES,
   MODAL_FOOTER_CLASSES,
+  MODAL_ROOT_CLASSES,
+  MODAL_Z_INDEX,
+  MODAL_PANEL_Z_INDEX,
 } from './Modal.const';
 
 /**
@@ -40,6 +43,7 @@ export const Modal: FC<ModalProps> = (props) => {
     hideBackdrop = false,
     keepMounted = false,
     isCancelBackgroundClick,
+    zIndex = MODAL_Z_INDEX,
     className,
     footer,
     testId,
@@ -79,15 +83,17 @@ export const Modal: FC<ModalProps> = (props) => {
 
   const modalContent = (
     <div
-      className="Bear-Modal bear-fixed bear-inset-0 bear-z-[11000] bear-flex bear-items-center bear-justify-center bear-p-4"
+      className={MODAL_ROOT_CLASSES}
       data-testid={testId}
       id={domId}
+      style={{ zIndex }}
     >
       {!hideBackdrop && (
         <Backdrop
           open={isOpen}
           keepMounted={keepMounted}
           blur
+          nested
           className="Bear-Modal__backdrop"
           onClick={closeBackdropClick ? () => onClose() : undefined}
         />
@@ -103,6 +109,7 @@ export const Modal: FC<ModalProps> = (props) => {
           MODAL_SIZE_CLASSES[size],
           className
         )}
+        style={{ zIndex: MODAL_PANEL_Z_INDEX }}
       >
         {(title || showCloseButton) && (
           <div className={cn('Bear-Modal__header', MODAL_HEADER_CLASSES)}>

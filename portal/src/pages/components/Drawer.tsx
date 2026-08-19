@@ -5,7 +5,7 @@ import { ComponentPreview } from '@/components/ComponentPreview';
 import { PropsTable } from '@/components/PropsTable';
 import { usePortalLanguage } from '@/hooks/usePortalLanguage';
 import { DOCS_TEXT } from '@/constants/docs-i18n.const';
-import { DRAWER_SIDES, DRAWER_SIZES, DRAWER_PROPS } from './Drawer.const';
+import { DRAWER_SIDES, DRAWER_SIZES, DRAWER_PROPS, DRAWER_SIDE_LABELS, DRAWER_TITLE_PREFIX } from './Drawer.const';
 import type { DrawerDemoProps } from './Drawer.types';
 
 const DrawerDemo: FC<DrawerDemoProps> = (props) => {
@@ -13,16 +13,17 @@ const DrawerDemo: FC<DrawerDemoProps> = (props) => {
   const [open, setOpen] = useState(false);
   const { language } = usePortalLanguage();
   const t = DOCS_TEXT[language];
+  const sideLabel = DRAWER_SIDE_LABELS[side];
 
   return (
     <>
       <Button size="sm" variant="secondary" onClick={() => setOpen(true)}>
-        {t.drawerOpen} ({side})
+        {t.drawerOpen} ({sideLabel})
       </Button>
       <Drawer
         isOpen={open}
         onClose={() => setOpen(false)}
-        title={`Drawer — ${side}`}
+        title={`${DRAWER_TITLE_PREFIX}${sideLabel}`}
         side={side}
         size={size}
         container={container}

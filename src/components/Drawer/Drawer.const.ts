@@ -4,6 +4,9 @@ type DrawerSide = NonNullable<DrawerProps['side']>;
 type DrawerSize = NonNullable<DrawerProps['size']>;
 
 export const DRAWER_ANIMATION_MS = 300;
+export const DRAWER_Z_INDEX = 11000;
+export const DRAWER_PANEL_Z_INDEX = 1;
+export const DRAWER_ROOT_CLASSES = 'Bear-Drawer bear-fixed bear-inset-0';
 
 export const SIZE_CLASSES: Record<DrawerSide, Record<DrawerSize, string>> = {
   left: {

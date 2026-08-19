@@ -14,6 +14,10 @@ import {
   SNACKBAR_ROOT_CLASS,
   SNACKBAR_SIZE_PADDING,
   SNACKBAR_SURFACE_CLASSES,
+  SNACKBAR_BORDER_CLASSES,
+  SNACKBAR_PAPER_BACKGROUND,
+  SNACKBAR_SEVERITY_MODIFIER,
+  SNACKBAR_DESCRIPTION_COLOR,
   SNACKBAR_Z_INDEX,
 } from './Snackbar.const';
 import { useSnackbar } from './hooks/useSnackbar';
@@ -122,12 +126,13 @@ export const Snackbar = (props: SnackbarProps) => {
         elevation={4}
         rounded="lg"
         padding="none"
-        background="transparent"
+        background={SNACKBAR_PAPER_BACKGROUND}
         className={cn(
           SNACKBAR_ROOT_CLASS,
+          SNACKBAR_SEVERITY_MODIFIER[severity],
           SNACKBAR_SURFACE_CLASSES,
+          SNACKBAR_BORDER_CLASSES,
           'bear-fixed bear-flex bear-flex-col bear-overflow-hidden',
-          'bear-border bear-border-[var(--bear-border-default)]',
           SNACKBAR_SIZE_PADDING[size],
           className
         )}
@@ -142,7 +147,7 @@ export const Snackbar = (props: SnackbarProps) => {
               </Typography>
             )}
             {description && (
-              <Typography variant="caption" color="muted" className="Bear-Snackbar__description">
+              <Typography variant="caption" color={SNACKBAR_DESCRIPTION_COLOR} className="Bear-Snackbar__description">
                 {description}
               </Typography>
             )}

@@ -1,0 +1,24 @@
+.Bear-Modal,
+.Bear-Drawer,
+.Bear-AlertDialog {
+  isolation: isolate;
+}
+
+.Bear-Backdrop--nested {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.Bear-Modal__container,
+.Bear-Drawer__panel,
+.Bear-AlertDialog__container {
+  position: relative;
+  z-index: 1;
+}
+
+.Bear-SignPad__placeholder,
+.Bear-SignPad__line,
+.Bear-SignPad__x-mark {
+  pointer-events: none;
+}

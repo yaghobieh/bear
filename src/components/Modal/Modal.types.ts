@@ -23,6 +23,7 @@ export interface ModalProps {
   hideBackdrop?: boolean;
   keepMounted?: boolean;
   lockBodyScroll?: boolean;
+  zIndex?: number;
   /** When true, the page behind the modal stays scrollable (same as lockBodyScroll: false) */
   cancelPreventScroll?: boolean;
   /** When provided, sets whether clicking the backdrop closes the modal (overrides closeOnBackdrop) */

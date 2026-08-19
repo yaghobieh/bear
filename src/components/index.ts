@@ -79,6 +79,15 @@ export type { BearLogoProps, EmberLogoProps } from './BearLogo';
 export { Modal } from './Modal';
 export type { ModalProps } from './Modal';
 
+export { ModalsProvider, useModals } from './ModalsProvider';
+export type {
+  ConfirmModalOptions,
+  ModalsContextValue,
+  ModalsProviderProps,
+  ModalsTranslations,
+  OpenModalOptions,
+} from './ModalsProvider';
+
 export { Drawer } from './Drawer';
 export type { DrawerProps } from './Drawer';
 

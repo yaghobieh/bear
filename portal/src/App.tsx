@@ -8,8 +8,8 @@ import { DocPageNav } from './components/DocPageNav';
 import { RouteSEO } from './components/RouteSEO';
 
 const BANNER_CONFIG = {
-  id: 'bear-1.2.9',
-  message: 'Bear v1.2.9 — kit light-mode fixes, RichEditor → Ink, Calendar → Forge Calendar.',
+  id: 'bear-1.3.0',
+  message: 'Bear v1.3.0 — ModalsProvider, Modal/Drawer above blur, SignPad drawing, Toast/Snackbar surfaces.',
   link: '/whats-new',
   linkText: "See what's new",
 };
@@ -72,6 +72,7 @@ const SpinnerPage = lazy(() => import('./pages/components/Spinner'));
 const ProgressPage = lazy(() => import('./pages/components/Progress'));
 const BearLoaderPage = lazy(() => import('./pages/components/BearLoaderPage'));
 const ModalPage = lazy(() => import('./pages/components/Modal'));
+const ModalsProviderPage = lazy(() => import('./pages/components/ModalsProvider'));
 const ContextMenuPage = lazy(() => import('./pages/components/ContextMenuPage'));
 const DrawerPage = lazy(() => import('./pages/components/Drawer'));
 
@@ -465,6 +466,7 @@ function PortalLayout({
                 <Route path="/components/progress" element={<ProgressPage />} />
                 <Route path="/components/bear-loader" element={<BearLoaderPage />} />
                 <Route path="/components/modal" element={<ModalPage />} />
+                <Route path="/components/modals-provider" element={<ModalsProviderPage />} />
                 <Route path="/components/context-menu" element={<ContextMenuPage />} />
                 <Route path="/components/drawer" element={<DrawerPage />} />
                 

@@ -19,7 +19,15 @@ import {
   SIGN_PAD_STROKE_DARK,
   SIGN_PAD_BG_LIGHT,
   SIGN_PAD_BG_DARK,
+  SIGN_PAD_OVERLAY_POINTER_CLASS,
+  SIGN_PAD_EMPTY_SIZE,
 } from './SignPad.const';
+import {
+  fillCanvasBackground,
+  getCanvasPoint,
+  strokeCanvasSegment,
+  syncCanvasSize,
+} from './SignPad.utils';
 
 /**
  * SignPad - Digital signature capture component
@@ -58,6 +66,7 @@ export const SignPad: FC<SignPadProps> = (props) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const lastPointRef = useRef<{ x: number; y: number } | null>(null);
   const isDrawingRef = useRef(false);
+  const hasSignatureRef = useRef(false);
 
   const [hasSignature, setHasSignature] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -77,10 +86,8 @@ export const SignPad: FC<SignPadProps> = (props) => {
 
   const fillCanvas = useCallback(() => {
     const canvas = canvasRef.current;
-    const ctx = canvas?.getContext('2d');
-    if (!canvas || !ctx) return;
-    ctx.fillStyle = backgroundColor === 'transparent' ? 'rgba(0,0,0,0)' : backgroundColor;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    if (!canvas) return;
+    fillCanvasBackground(canvas, backgroundColor);
   }, [backgroundColor]);
 
   useEffect(() => {
@@ -92,11 +99,8 @@ export const SignPad: FC<SignPadProps> = (props) => {
       const rect = wrapper.getBoundingClientRect();
       const w = widthProp ?? Math.round(rect.width);
       const h = heightProp;
-      if (canvas.width !== w || canvas.height !== h) {
-        canvas.width = w;
-        canvas.height = h;
-        fillCanvas();
-      }
+      if (w <= SIGN_PAD_EMPTY_SIZE || h <= SIGN_PAD_EMPTY_SIZE) return;
+      syncCanvasSize(canvas, w, h, backgroundColor, hasSignatureRef.current);
     };
 
     syncSize();
@@ -104,9 +108,10 @@ export const SignPad: FC<SignPadProps> = (props) => {
     const ro = new ResizeObserver(syncSize);
     ro.observe(wrapper);
     return () => ro.disconnect();
-  }, [widthProp, heightProp, fillCanvas]);
+  }, [widthProp, heightProp, backgroundColor]);
 
   useEffect(() => {
+    if (hasSignatureRef.current) return;
     fillCanvas();
   }, [fillCanvas, isDarkMode]);
 
@@ -122,55 +127,37 @@ export const SignPad: FC<SignPadProps> = (props) => {
     };
   }, [disabled, readOnly]);
 
-  const getPointFromEvent = useCallback((e: React.MouseEvent | React.TouchEvent): { x: number; y: number } => {
+  const getPointFromEvent = useCallback((e: React.PointerEvent<HTMLCanvasElement>): { x: number; y: number } => {
     const canvas = canvasRef.current;
-    if (!canvas) return { x: 0, y: 0 };
-    const rect = canvas.getBoundingClientRect();
-    const scaleX = canvas.width / rect.width;
-    const scaleY = canvas.height / rect.height;
-
-    if ('touches' in e) {
-      const touch = e.touches[0];
-      return {
-        x: (touch.clientX - rect.left) * scaleX,
-        y: (touch.clientY - rect.top) * scaleY,
-      };
-    }
-    return {
-      x: (e.clientX - rect.left) * scaleX,
-      y: (e.clientY - rect.top) * scaleY,
-    };
+    if (!canvas) return { x: SIGN_PAD_EMPTY_SIZE, y: SIGN_PAD_EMPTY_SIZE };
+    return getCanvasPoint(canvas, e.clientX, e.clientY);
   }, []);
 
-  const startDrawing = useCallback((e: React.MouseEvent | React.TouchEvent) => {
+  const startDrawing = useCallback((e: React.PointerEvent<HTMLCanvasElement>) => {
     if (disabled || readOnly) return;
+    e.currentTarget.setPointerCapture(e.pointerId);
     const point = getPointFromEvent(e);
     isDrawingRef.current = true;
     lastPointRef.current = point;
   }, [disabled, readOnly, getPointFromEvent]);
 
-  const draw = useCallback((e: React.MouseEvent | React.TouchEvent) => {
+  const draw = useCallback((e: React.PointerEvent<HTMLCanvasElement>) => {
     if (!isDrawingRef.current || disabled || readOnly) return;
     const canvas = canvasRef.current;
-    const ctx = canvas?.getContext('2d');
     const lp = lastPointRef.current;
-    if (!canvas || !ctx || !lp) return;
+    if (!canvas || !lp) return;
 
     const point = getPointFromEvent(e);
-    ctx.beginPath();
-    ctx.moveTo(lp.x, lp.y);
-    ctx.lineTo(point.x, point.y);
-    ctx.strokeStyle = strokeColor;
-    ctx.lineWidth = strokeWidth;
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-    ctx.stroke();
-
+    strokeCanvasSegment(canvas, lp, point, strokeColor, strokeWidth);
     lastPointRef.current = point;
+    hasSignatureRef.current = true;
     setHasSignature(true);
   }, [disabled, readOnly, strokeColor, strokeWidth, getPointFromEvent]);
 
-  const stopDrawing = useCallback(() => {
+  const stopDrawing = useCallback((e?: React.PointerEvent<HTMLCanvasElement>) => {
+    if (e && e.currentTarget.hasPointerCapture(e.pointerId)) {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    }
     if (isDrawingRef.current) {
       const canvas = canvasRef.current;
       if (canvas && onChange) {
@@ -186,8 +173,9 @@ export const SignPad: FC<SignPadProps> = (props) => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d');
     if (!canvas || !ctx) return;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(SIGN_PAD_EMPTY_SIZE, SIGN_PAD_EMPTY_SIZE, canvas.width, canvas.height);
     fillCanvas();
+    hasSignatureRef.current = false;
     setHasSignature(false);
     onChange?.(null);
   }, [fillCanvas, onChange]);
@@ -225,23 +213,20 @@ export const SignPad: FC<SignPadProps> = (props) => {
           ref={canvasRef}
           className="Bear-SignPad__canvas bear-block bear-rounded-lg bear-w-full bear-touch-none"
           style={{ height: heightProp }}
-          onMouseDown={startDrawing}
-          onMouseMove={draw}
-          onMouseUp={stopDrawing}
-          onMouseLeave={stopDrawing}
-          onTouchStart={startDrawing}
-          onTouchMove={draw}
-          onTouchEnd={stopDrawing}
+          onPointerDown={startDrawing}
+          onPointerMove={draw}
+          onPointerUp={stopDrawing}
+          onPointerCancel={stopDrawing}
         />
 
         {!hasSignature && (
-          <div className={cn('Bear-SignPad__placeholder', SIGN_PAD_PLACEHOLDER_CLASSES)}>
+          <div className={cn('Bear-SignPad__placeholder', SIGN_PAD_PLACEHOLDER_CLASSES, SIGN_PAD_OVERLAY_POINTER_CLASS)}>
             {placeholder}
           </div>
         )}
 
-        <div className={cn('Bear-SignPad__line', SIGN_PAD_LINE_CLASSES)} />
-        <span className={cn('Bear-SignPad__x-mark', SIGN_PAD_X_MARK_CLASSES)}>×</span>
+        <div className={cn('Bear-SignPad__line', SIGN_PAD_LINE_CLASSES, SIGN_PAD_OVERLAY_POINTER_CLASS)} />
+        <span className={cn('Bear-SignPad__x-mark', SIGN_PAD_X_MARK_CLASSES, SIGN_PAD_OVERLAY_POINTER_CLASS)}>×</span>
       </div>
 
       {(showClear || showSave) && (

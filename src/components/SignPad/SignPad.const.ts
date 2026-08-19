@@ -31,3 +31,8 @@ export const SIGN_PAD_X_MARK_CLASSES = 'bear-absolute bear-bottom-6 bear-left-4 
 
 export const SIGN_PAD_ACTIONS_CLASSES = 'bear-flex bear-gap-2 bear-justify-end';
 
+export const SIGN_PAD_OVERLAY_POINTER_CLASS = 'bear-pointer-events-none';
+export const SIGN_PAD_TRANSPARENT_FILL = 'rgba(0,0,0,0)';
+export const SIGN_PAD_EMPTY_SIZE = 0;
+export const SIGN_PAD_UNIT_SCALE = 1;
+

@@ -1,3 +1,5 @@
+import type { SnackbarSeverity } from './Snackbar.types';
+
 export const SNACKBAR_ROOT_CLASS = 'Bear-Snackbar';
 
 export const SNACKBAR_DEFAULT_AUTO_HIDE_MS = 6000;
@@ -21,7 +23,15 @@ export const SNACKBAR_SIZE_PADDING: Record<'sm' | 'md' | 'lg', string> = {
 };
 
 export const SNACKBAR_SURFACE_CLASSES =
-  'bear-bg-[var(--bear-bg-primary)] bear-text-[var(--bear-text-primary)]';
+  'bear-shadow-xl';
+
+export const SNACKBAR_SEVERITY_MODIFIER: Record<SnackbarSeverity, string> = {
+  default: `${SNACKBAR_ROOT_CLASS}--default`,
+  success: `${SNACKBAR_ROOT_CLASS}--success`,
+  info: `${SNACKBAR_ROOT_CLASS}--info`,
+  warning: `${SNACKBAR_ROOT_CLASS}--warning`,
+  error: `${SNACKBAR_ROOT_CLASS}--error`,
+};
 
 export const SNACKBAR_COUNTDOWN_TICK_MS = 50;
 

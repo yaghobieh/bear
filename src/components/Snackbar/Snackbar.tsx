@@ -14,6 +14,7 @@ import {
   SNACKBAR_ROOT_CLASS,
   SNACKBAR_SIZE_PADDING,
   SNACKBAR_SURFACE_CLASSES,
+  SNACKBAR_SEVERITY_MODIFIER,
   SNACKBAR_Z_INDEX,
 } from './Snackbar.const';
 import { useSnackbar } from './hooks/useSnackbar';
@@ -125,6 +126,7 @@ export const Snackbar = (props: SnackbarProps) => {
         background="transparent"
         className={cn(
           SNACKBAR_ROOT_CLASS,
+          SNACKBAR_SEVERITY_MODIFIER[severity],
           SNACKBAR_SURFACE_CLASSES,
           'bear-fixed bear-flex bear-flex-col bear-overflow-hidden',
           'bear-border bear-border-[var(--bear-border-default)]',

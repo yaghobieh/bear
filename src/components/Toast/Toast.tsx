@@ -10,6 +10,9 @@ import type {
 import {
   T_O_A_S_T_ROOT_CLASS,
   TOAST_EXIT_MS,
+  TOAST_ITEM_CLASSES,
+  TOAST_POSITION_CLASSES,
+  TOAST_SEVERITY_MODIFIER,
 } from './Toast.const';
 import { cn, generateBearId, getBearLiveRegionProps } from '@utils';
 
@@ -51,21 +54,9 @@ const CloseIcon = () => (
   </svg>
 );
 
-const SEVERITY_STYLES: Record<ToastSeverity, string> = {
-  success: 'bear-bg-green-500 bear-text-white',
-  info: 'bear-bg-blue-500 bear-text-white',
-  warning: 'bear-bg-amber-500 bear-text-white',
-  error: 'bear-bg-red-500 bear-text-white',
-};
+const SEVERITY_STYLES: Record<ToastSeverity, string> = TOAST_SEVERITY_MODIFIER;
 
-const POSITION_STYLES: Record<ToastPosition, string> = {
-  'top-left': 'bear-top-4 bear-left-4',
-  'top-center': 'bear-top-4 bear-left-1/2 bear-transform bear--translate-x-1/2',
-  'top-right': 'bear-top-4 bear-right-4',
-  'bottom-left': 'bear-bottom-4 bear-left-4',
-  'bottom-center': 'bear-bottom-4 bear-left-1/2 bear-transform bear--translate-x-1/2',
-  'bottom-right': 'bear-bottom-4 bear-right-4',
-};
+const POSITION_STYLES: Record<ToastPosition, string> = TOAST_POSITION_CLASSES;
 
 // Context
 const ToastContext = createContext<ToastContextValue | null>(null);
@@ -151,8 +142,7 @@ const ToastItem: FC<ToastProps & { onRemove: () => void }> = ({
       onMouseLeave={pauseOnHover ? () => setIsPaused(false) : undefined}
       className={cn(
         T_O_A_S_T_ROOT_CLASS,
-        'bear-flex bear-items-start bear-gap-3 bear-p-4 bear-rounded-lg bear-shadow-lg bear-min-w-[300px] bear-max-w-[400px]',
-        'bear-transition-all bear-duration-200',
+        TOAST_ITEM_CLASSES,
         isExiting ? 'bear-opacity-0 bear-translate-x-2' : 'bear-opacity-100 bear-translate-x-0',
         SEVERITY_STYLES[severity],
         className
@@ -185,7 +175,7 @@ const ToastItem: FC<ToastProps & { onRemove: () => void }> = ({
         <button
           type="button"
           onClick={handleClose}
-          className="bear-flex-shrink-0 bear-p-1 bear-rounded hover:bear-bg-white/20 bear-transition-colors bear-bg-transparent bear-border-none bear-cursor-pointer"
+          className="bear-flex-shrink-0 bear-p-1 bear-rounded hover:bear-bg-black/10 dark:hover:bear-bg-white/20 bear-transition-colors bear-bg-transparent bear-border-none bear-cursor-pointer"
           aria-label="Close"
         >
           <CloseIcon />

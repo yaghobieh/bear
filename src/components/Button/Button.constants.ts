@@ -1,4 +1,4 @@
-import type { BearSize, BearVariant } from '../../types';
+import type { BearSize, BearVariant } from '@types';
 import type { ButtonRadius } from './Button.types';
 
 export const BUTTON_SIZE: Record<BearSize, string> = {

@@ -1,4 +1,4 @@
-import type { BearVariant } from '../../types';
+import type { BearVariant } from '@types';
 import type { FlexGap, FlexJustify } from '../Flex/Flex.types';
 import type { ModalSize } from '../Modal/Modal.types';
 import type { TypographyVariant } from '../Typography/Typography.types';

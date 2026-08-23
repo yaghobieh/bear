@@ -1,0 +1,1 @@
+export { BiometricIcon } from './BiometricIcon';

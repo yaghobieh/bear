@@ -1,4 +1,5 @@
-/** Dropdown variant: columns (scrollable lists), dial (clock face), auto (responsive). */
+import type { OverlayEffectProps } from '@hooks/useFixedAnchorPosition';
+
 export type TimePickerDropdownVariant = 'columns' | 'dial' | 'auto';
 
 /** Time format: 12-hour with AM/PM or 24-hour. */
@@ -40,7 +41,7 @@ export interface TimePickerDialProps extends TimePickerColumnsProps {
   minuteStep: number;
 }
 
-export interface TimePickerProps {
+export interface TimePickerProps extends OverlayEffectProps {
   /** Time string (e.g. "02:30 PM") */
   value?: string | null;
   onChange?: (time: string | null) => void;
@@ -63,7 +64,8 @@ export interface TimePickerProps {
   dropdownVariantBreakpoint?: number;
   /** Custom icon to replace the default clock icon (ReactNode). */
   icon?: React.ReactNode;
-  /** Translation overrides for selectTime, hour, minute, period, cancel, ok. */
   translations?: TimePickerTranslations;
+  testId?: string;
+  id?: string;
 }
 

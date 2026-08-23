@@ -1,4 +1,7 @@
-import { HTMLAttributes, ReactNode } from 'react';
+import type { HTMLAttributes, ReactNode } from 'react';
+import type { ActiveBarVariant, CompactBearSize } from '@types';
+
+export type { ActiveBarVariant, CompactBearSize };
 
 export interface ActiveBarItem {
   id: string;
@@ -13,9 +16,8 @@ export interface ActiveBarProps extends HTMLAttributes<HTMLDivElement> {
   items: ActiveBarItem[];
   activeId?: string;
   onItemClick?: (item: ActiveBarItem) => void;
-  variant?: 'default' | 'pills' | 'underline';
-  size?: 'sm' | 'md' | 'lg';
+  variant?: ActiveBarVariant;
+  size?: CompactBearSize;
   fullWidth?: boolean;
   animated?: boolean;
 }
-

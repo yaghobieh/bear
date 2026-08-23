@@ -1,4 +1,4 @@
-import type { BearSize } from '../../types';
+import type { BearSize } from '@types';
 
 export const ROOT_CLASS = 'Bear-PropsPlayground';
 

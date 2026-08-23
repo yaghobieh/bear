@@ -1,14 +1,14 @@
 import { FC } from 'react';
-import { BANNER_ICON_SIZE, BANNER_ICON_STROKE_WIDTH } from '../Banner.const';
+import { TWENTY, TWO } from '@const';
 
 export const BannerInfoSvg: FC = () => (
   <svg
-    width={BANNER_ICON_SIZE}
-    height={BANNER_ICON_SIZE}
+    width={TWENTY}
+    height={TWENTY}
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
-    strokeWidth={BANNER_ICON_STROKE_WIDTH}
+    strokeWidth={TWO}
     aria-hidden="true"
   >
     <circle cx="12" cy="12" r="10" />

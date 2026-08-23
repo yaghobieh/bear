@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import {cn } from '@utils';
-import type { BearSize } from '../../types';
+import type { BearSize } from '@types';
 import type { CardProps, CardHeaderProps, CardBodyProps, CardFooterProps } from './Card.types';
 import {
   CARD_PADDING_CLASSES,

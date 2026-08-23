@@ -14,7 +14,7 @@ Adding a new component, enhancing props, or refactoring an existing component in
 Every component folder under `src/components/ComponentName/`:
 
 1. `ComponentName.types.ts` — all props and interfaces
-2. `ComponentName.const.ts` — BEM classes, sizes, defaults, translations
+2. `ComponentName.const.ts` — defaults, keymaps, translations (never CSS class dumps)
 3. `ComponentName.tsx` — implementation (named export only)
 4. `index.ts` — barrel re-export
 
@@ -24,7 +24,7 @@ Helper components that are only used by one parent belong in a `helpers/` subfol
 ## Implementation checklist
 
 1. Create types with `id?: string`, `testId?: string`, and all public props
-2. Extract magic strings/numbers to `*.const.ts`
+2. Extract magic numbers/strings to `@const` or `*.const.ts`. Write `Bear-*` classes directly
 3. Use `useBearId('ComponentName')` + `resolveBearId(id, generatedId)` for auto-generated DOM ids (`Bear-ComponentName-a12345678901`)
 4. Use BEM `Bear-ComponentName` classes
 5. User-facing strings via props with defaults from const
@@ -52,13 +52,14 @@ Rules:
 
 ## One const + one types file per component folder
 
-- Always create `ComponentName.const.ts` and `ComponentName.types.ts` for every component or page
-- A single `constants/strings.const.ts` file per feature folder can hold shared string constants like `EMPTY_STRING`, `PACKAGE_NAME`, etc.
+- Always create `ComponentName.types.ts`. Add `ComponentName.const.ts` only for defaults, keymaps, and translations — never CSS class strings
+- Shared numbers/strings live in `@const` (`src/constants/numbers.const.ts`, `generals.const.ts`)
+- Delete a const file if it only held `Bear-*` / `bear-*` class dumps — write those classes on the element
 - If a component needs SVGs, put them in a `helpers/` subfolder with one SVG per file: `ComponentNameBellSvg.tsx`
 
 ## Code quality gates
 
-1. **No inline magic strings** — move to const
+1. **No inline magic strings/numbers** — move to `@const` or feature `*.const.ts`. Do not store CSS classes in const files
 2. **No raw `as` casts** — use typed resolvers
 3. **No HTML comments in JSX** — remove `{/* ... */}` comment blocks from rendered markup
 4. **No `<>` fragment when a structural element is needed** — use `<div>` or `<header>` etc.

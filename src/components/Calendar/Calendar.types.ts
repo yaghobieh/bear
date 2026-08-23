@@ -1,4 +1,6 @@
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
+import type { BisProp } from '@types';
+import type { OverlayEffectProps } from '@hooks/useFixedAnchorPosition';
 
 export interface CalendarDayProps {
   testId?: string;
@@ -59,7 +61,7 @@ export interface CalendarSlots {
   todayButton?: (props: { onClick: () => void }) => ReactNode;
 }
 
-export interface CalendarProps {
+export interface CalendarProps extends OverlayEffectProps {
   /** Currently viewed month (controls calendar view) */
   viewDate: Date;
   /** Selected date */
@@ -85,11 +87,9 @@ export interface CalendarProps {
   /** Show Today button in footer */
   showTodayButton?: boolean;
   onToday?: () => void;
-  /** Bear Inner Style - sx-like overrides */
-  bis?: import('../../types/bis.types').BisProp;
-  /** Inline styles */
-  style?: React.CSSProperties;
-  /** When true, render as block (no absolute). Use when embedding in DateTimePicker etc. */
+  bis?: BisProp;
+  style?: CSSProperties;
   inline?: boolean;
   className?: string;
+  open?: boolean;
 }

@@ -2,11 +2,12 @@ import { FC, useState } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
 import { LinesOfCode } from '@/components/LinesOfCode';
-import { Calendar, Card, BearIcons } from '@forgedevstack/bear';
+import { Button, Calendar, Card, BearIcons } from '@forgedevstack/bear';
 
 const CalendarPage: FC = () => {
   const [viewDate, setViewDate] = useState(new Date());
   const [value, setValue] = useState<Date | null>(null);
+  const [effectOpen, setEffectOpen] = useState(true);
 
   return (
     <div className="fade-in">
@@ -114,6 +115,36 @@ const CalendarPage: FC = () => {
       </ComponentPreview>
 
       <ComponentPreview
+        title="Open and close effects"
+        description="When open is controlled, pick the same overlay motions used by DatePicker."
+        code={`<Calendar
+  open={isOpen}
+  openEffect="slide-down"
+  closeEffect="fade"
+  effect={{ open: 'scale', close: 'slide-down' }}
+  ...
+/>`}
+      >
+        <div className="flex flex-col gap-3">
+          <Button size="sm" onClick={() => setEffectOpen((current) => !current)}>
+            {effectOpen ? 'Close calendar' : 'Open calendar'}
+          </Button>
+          <Calendar
+            viewDate={viewDate}
+            onViewChange={setViewDate}
+            value={value}
+            onSelect={setValue}
+            onClear={() => setValue(null)}
+            onToday={() => { setValue(new Date()); setViewDate(new Date()); }}
+            inline
+            open={effectOpen}
+            openEffect="slide-down"
+            closeEffect="fade"
+          />
+        </div>
+      </ComponentPreview>
+
+      <ComponentPreview
         title="Week starts Monday"
         description="firstDayOfWeek and custom weekday labels."
         code={`<Calendar
@@ -155,6 +186,10 @@ const CalendarPage: FC = () => {
               <tr><td className="px-4 py-3 font-mono text-bear-600">minDate / maxDate</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>Date</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Restrict selectable range</td></tr>
               <tr><td className="px-4 py-3 font-mono text-bear-600">firstDayOfWeek</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>number</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">0=Sun, 1=Mon, etc.</td></tr>
               <tr><td className="px-4 py-3 font-mono text-bear-600">weekdayLabels</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string[]</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Custom weekday headers</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">open</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Controlled visibility for overlay motion</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">openEffect</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>none | fade | slide-down | scale</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Open animation when open is controlled</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">closeEffect</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>none | fade | slide-down | scale</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Close animation when open is controlled</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">effect</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>{'{ open?, close? }'}</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Open and close motion in one prop</td></tr>
             </tbody>
           </table>
         </div>

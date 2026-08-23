@@ -1,2 +1,1 @@
-export { ToolbarDropdown, default } from './ToolbarDropdown';
-
+export { ToolbarDropdown } from './ToolbarDropdown';

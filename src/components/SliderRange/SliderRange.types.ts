@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from 'react';
-import type { BearSize, BearVariant } from '../../types';
+import type { BearSize, BearVariant } from '@types';
 
 export type SliderRangeValue = [number, number];
 

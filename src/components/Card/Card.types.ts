@@ -1,5 +1,5 @@
 import type { HTMLAttributes, ReactNode } from 'react';
-import type { BearSize } from '../../types';
+import type { BearSize } from '@types';
 
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
   id?: string;

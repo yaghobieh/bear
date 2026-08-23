@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from 'react';
-import type { ResponsiveProp } from '../../types';
+import type { ResponsiveProp } from '@types';
 
 export type FlexDirection = 'row' | 'row-reverse' | 'column' | 'column-reverse';
 export type FlexWrap = 'nowrap' | 'wrap' | 'wrap-reverse';

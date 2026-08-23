@@ -1,99 +1,84 @@
-import { FC, useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
-import {cn } from '@utils';
+import { AFFIX_DEFAULT_Z_INDEX, BOOLEAN_FALSE, POSITION_TOP, ZERO } from '@const';
+import { useWindowLayout } from '@hooks';
+import { cn } from '@utils';
 import type { AffixProps } from './Affix.types';
-import {
-  ROOT_CLASS,
-  DEFAULT_OFFSET,
-  DEFAULT_Z_INDEX,
-  WRAPPER_CLASSES,
-  POSITION_TOP_CLASSES,
-  POSITION_BOTTOM_CLASSES,
-} from './Affix.const';
+import { resolveAffixHeight, resolveAffixLayoutChange } from './Affix.utils';
 
-export const Affix: FC<AffixProps> = (props) => {
+export const Affix = (props: AffixProps) => {
   const {
     children,
-    position = 'top',
-    offset = DEFAULT_OFFSET,
-    zIndex = DEFAULT_Z_INDEX,
-    withinPortal = false,
+    position = POSITION_TOP,
+    offset = ZERO,
+    zIndex = AFFIX_DEFAULT_Z_INDEX,
+    withinPortal = BOOLEAN_FALSE,
     className,
     testId,
     ...rest
   } = props;
 
-  const [isFixed, setIsFixed] = useState(false);
-  const [placeholderHeight, setPlaceholderHeight] = useState(0);
+  const [isFixed, setIsFixed] = useState(BOOLEAN_FALSE);
+  const [placeholderHeight, setPlaceholderHeight] = useState(ZERO);
   const placeholderRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
   const checkScroll = useCallback(() => {
     const placeholderEl = placeholderRef.current;
     const contentEl = contentRef.current;
-    if (!placeholderEl) return;
+    if (!placeholderEl) {
+      return;
+    }
 
     const rect = placeholderEl.getBoundingClientRect();
-
-    if (position === 'top') {
-      if (!isFixed) {
-        if (rect.top <= offset) {
-          const height = contentEl?.offsetHeight ?? placeholderEl.offsetHeight ?? 0;
-          setPlaceholderHeight(height);
-          setIsFixed(true);
-        }
-      } else {
-        if (rect.top > offset) {
-          setIsFixed(false);
-          setPlaceholderHeight(0);
-        }
-      }
-    } else {
-      const viewportBottom = window.innerHeight;
-      if (!isFixed) {
-        if (rect.bottom >= viewportBottom - offset) {
-          const height = contentEl?.offsetHeight ?? placeholderEl.offsetHeight ?? 0;
-          setPlaceholderHeight(height);
-          setIsFixed(true);
-        }
-      } else {
-        if (rect.bottom < viewportBottom - offset) {
-          setIsFixed(false);
-          setPlaceholderHeight(0);
-        }
-      }
+    const next = resolveAffixLayoutChange({
+      position,
+      isFixed,
+      offset,
+      rectTop: rect.top,
+      rectBottom: rect.bottom,
+      viewportBottom: window.innerHeight,
+      measuredHeight: resolveAffixHeight(contentEl, placeholderEl),
+    });
+    if (!next) {
+      return;
     }
+    setIsFixed(next.isFixed);
+    setPlaceholderHeight(next.placeholderHeight);
   }, [offset, position, isFixed]);
 
-  useEffect(() => {
-    checkScroll();
-    window.addEventListener('scroll', checkScroll, { passive: true });
-    window.addEventListener('resize', checkScroll);
-    return () => {
-      window.removeEventListener('scroll', checkScroll);
-      window.removeEventListener('resize', checkScroll);
-    };
-  }, [checkScroll]);
-
-  const positionClasses = position === 'top' ? POSITION_TOP_CLASSES : POSITION_BOTTOM_CLASSES;
+  useWindowLayout({ onLayout: checkScroll });
 
   const content = (
-    <>
+    <div className="Bear-Affix">
       <div
         ref={placeholderRef}
         style={isFixed ? { height: placeholderHeight } : undefined}
-        className={cn(!isFixed && 'bear-contents')}
+        className={cn('Bear-Affix__placeholder', !isFixed && 'bear-contents')}
         aria-hidden={isFixed}
       >
         {!isFixed && (
-          <div ref={contentRef} className={cn(ROOT_CLASS, WRAPPER_CLASSES, positionClasses, className)} data-testid={testId} {...rest}>
+          <div
+            ref={contentRef}
+            className={cn(
+              'Bear-Affix__content bear-bg-white dark:bear-bg-zinc-900 bear-transition-[top,bottom] bear-duration-200',
+              position === POSITION_TOP ? 'bear-top-0 bear-left-0 bear-right-0' : 'bear-bottom-0 bear-left-0 bear-right-0',
+              className
+            )}
+            data-testid={testId}
+            {...rest}
+          >
             {children}
           </div>
         )}
       </div>
       {isFixed && (
         <div
-          className={cn(ROOT_CLASS, WRAPPER_CLASSES, positionClasses, 'bear-fixed', className)}
+          className={cn(
+            'Bear-Affix__content bear-bg-white dark:bear-bg-zinc-900 bear-transition-[top,bottom] bear-duration-200 bear-fixed',
+            position === POSITION_TOP ? 'bear-top-0 bear-left-0 bear-right-0' : 'bear-bottom-0 bear-left-0 bear-right-0',
+            className
+          )}
           style={{
             [position]: offset,
             zIndex,
@@ -104,7 +89,7 @@ export const Affix: FC<AffixProps> = (props) => {
           {children}
         </div>
       )}
-    </>
+    </div>
   );
 
   if (withinPortal) {

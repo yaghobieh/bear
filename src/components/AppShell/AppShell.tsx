@@ -1,46 +1,32 @@
-import { FC } from 'react';
 import type { AppShellProps } from './AppShell.types';
+import { APP_SHELL_NAVBAR_WIDTH_CLASSES } from './AppShell.const';
 import {
-  APP_SHELL_ASIDE_CLASSES,
-  APP_SHELL_BASE_CLASSES,
-  APP_SHELL_BODY_CLASSES,
-  APP_SHELL_DEFAULT_NAVBAR_COLLAPSED,
-  APP_SHELL_DEFAULT_NAVBAR_WIDTH,
-  APP_SHELL_DEFAULT_PADDING,
-  APP_SHELL_DEFAULT_STICKY_FOOTER,
-  APP_SHELL_DEFAULT_STICKY_HEADER,
-  APP_SHELL_FOOTER_CLASSES,
-  APP_SHELL_FOOTER_STICKY_CLASS,
-  APP_SHELL_HEADER_CLASSES,
-  APP_SHELL_HEADER_STICKY_CLASS,
-  APP_SHELL_MAIN_CLASSES,
-  APP_SHELL_MAIN_PADDING_CLASS,
-  APP_SHELL_NAVBAR_BASE_CLASSES,
-  APP_SHELL_NAVBAR_COLLAPSED_CLASS,
-  APP_SHELL_NAVBAR_WIDTH_CLASSES,
-  APP_SHELL_ROOT_CLASS,
-} from './AppShell.const';
+  BOOLEAN_FALSE,
+  BOOLEAN_TRUE,
+  COMPONENT_NAME_APP_SHELL,
+  SIZE_MD,
+} from '@const';
 import { cn, resolveBearId, useBearId } from '@utils';
 
-export const AppShell: FC<AppShellProps> = (props) => {
+export const AppShell = (props: AppShellProps) => {
   const {
     header,
     navbar,
     aside,
     footer,
     children,
-    navbarCollapsed = APP_SHELL_DEFAULT_NAVBAR_COLLAPSED,
-    navbarWidth = APP_SHELL_DEFAULT_NAVBAR_WIDTH,
-    stickyHeader = APP_SHELL_DEFAULT_STICKY_HEADER,
-    stickyFooter = APP_SHELL_DEFAULT_STICKY_FOOTER,
-    padding = APP_SHELL_DEFAULT_PADDING,
+    navbarCollapsed = BOOLEAN_FALSE,
+    navbarWidth = SIZE_MD,
+    stickyHeader = BOOLEAN_TRUE,
+    stickyFooter = BOOLEAN_FALSE,
+    padding = BOOLEAN_TRUE,
     className,
     id,
     testId,
     ...rest
   } = props;
 
-  const generatedId = useBearId('AppShell');
+  const generatedId = useBearId(COMPONENT_NAME_APP_SHELL);
   const domId = resolveBearId(id, generatedId);
 
   return (
@@ -48,25 +34,28 @@ export const AppShell: FC<AppShellProps> = (props) => {
       {...rest}
       id={domId}
       data-testid={testId}
-      className={cn(APP_SHELL_ROOT_CLASS, APP_SHELL_BASE_CLASSES, className)}
+      className={cn(
+        'Bear-AppShell bear-flex bear-flex-col bear-min-h-0 bear-w-full bear-bg-[var(--bear-bg-primary)] bear-text-[var(--bear-text-primary)]',
+        className
+      )}
     >
       {header && (
         <div
           className={cn(
-            APP_SHELL_HEADER_CLASSES,
-            stickyHeader && APP_SHELL_HEADER_STICKY_CLASS
+            'Bear-AppShell__header bear-w-full bear-z-30 bear-bg-[var(--bear-bg-primary)] bear-border-b bear-border-[var(--bear-border-default)]',
+            stickyHeader && 'bear-sticky bear-top-0'
           )}
         >
           {header}
         </div>
       )}
-      <div className={APP_SHELL_BODY_CLASSES}>
+      <div className="Bear-AppShell__body bear-flex bear-flex-1 bear-min-h-0 bear-w-full">
         {navbar !== undefined && (
           <aside
             className={cn(
-              APP_SHELL_NAVBAR_BASE_CLASSES,
+              'Bear-AppShell__navbar bear-flex-shrink-0 bear-overflow-y-auto bear-border-e bear-border-[var(--bear-border-default)] bear-bg-[var(--bear-bg-secondary)]',
               navbarCollapsed
-                ? APP_SHELL_NAVBAR_COLLAPSED_CLASS
+                ? 'bear-w-0 bear-overflow-hidden bear-border-e-0'
                 : APP_SHELL_NAVBAR_WIDTH_CLASSES[navbarWidth]
             )}
             aria-hidden={navbarCollapsed || undefined}
@@ -76,19 +65,23 @@ export const AppShell: FC<AppShellProps> = (props) => {
         )}
         <main
           className={cn(
-            APP_SHELL_MAIN_CLASSES,
-            padding && APP_SHELL_MAIN_PADDING_CLASS
+            'Bear-AppShell__main bear-flex-1 bear-min-w-0 bear-overflow-auto',
+            padding && 'bear-p-4 md:bear-p-6'
           )}
         >
           {children}
         </main>
-        {aside && <aside className={APP_SHELL_ASIDE_CLASSES}>{aside}</aside>}
+        {aside && (
+          <aside className="Bear-AppShell__aside bear-w-64 bear-flex-shrink-0 bear-overflow-y-auto bear-border-s bear-border-[var(--bear-border-default)] bear-bg-[var(--bear-bg-secondary)] bear-hidden lg:bear-block">
+            {aside}
+          </aside>
+        )}
       </div>
       {footer && (
         <div
           className={cn(
-            APP_SHELL_FOOTER_CLASSES,
-            stickyFooter && APP_SHELL_FOOTER_STICKY_CLASS
+            'Bear-AppShell__footer bear-w-full bear-z-20 bear-bg-[var(--bear-bg-primary)] bear-border-t bear-border-[var(--bear-border-default)]',
+            stickyFooter && 'bear-sticky bear-bottom-0'
           )}
         >
           {footer}

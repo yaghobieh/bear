@@ -1,161 +1,115 @@
-import { FC, useState, useRef, useEffect, KeyboardEvent, ChangeEvent } from 'react';
-import {cn } from '@utils';
+import type { KeyboardEvent, ChangeEvent } from 'react';
+import {
+  BACKDROP_DEFAULT_Z_INDEX,
+  BOOLEAN_FALSE,
+  EMPTY_STRING,
+  KEY_ARROW_DOWN,
+  KEY_ARROW_UP,
+  KEY_ENTER,
+  KEY_ESCAPE,
+  PLACEHOLDER_START_TYPING,
+} from '@const';
+import { cn } from '@utils';
 import { Portal } from '../Portal';
-import type { AutocompleteOption, AutocompleteProps } from './Autocomplete.types';
-import { defaultFilter } from './Autocomplete.utils';
-import { AUTOCOMPLETE_PANEL_Z } from './Autocomplete.const';
+import type { AutocompleteProps } from './Autocomplete.types';
+import { useAutocomplete } from './hooks';
 
-/**
- * Autocomplete - Text input with suggestions
- * 
- * @example
- * ```tsx
- * <Autocomplete
- *   label="Country"
- *   options={countries}
- *   value={country}
- *   onChange={setCountry}
- *   onSelect={(opt) => console.log('Selected:', opt)}
- * />
- * ```
- */
-export const Autocomplete: FC<AutocompleteProps> = ({
+const KEY_HANDLERS: Record<string, 'next' | 'previous' | 'confirm' | 'close'> = {
+  [KEY_ARROW_DOWN]: 'next',
+  [KEY_ARROW_UP]: 'previous',
+  [KEY_ENTER]: 'confirm',
+  [KEY_ESCAPE]: 'close',
+};
 
-  options,
-  value = '',
-  onChange,
-  onSelect,
-  placeholder = 'Start typing...',
-  label,
-  helperText,
-  error,
-  disabled = false,
-  freeSolo = false,
-  loading = false,
-  filterOptions = defaultFilter,
-  className,
-  testId,
-}) => {
+export const Autocomplete = (props: AutocompleteProps) => {
+  const {
+    options,
+    value = EMPTY_STRING,
+    onChange,
+    onSelect,
+    placeholder = PLACEHOLDER_START_TYPING,
+    label,
+    helperText,
+    error,
+    disabled = BOOLEAN_FALSE,
+    freeSolo = BOOLEAN_FALSE,
+    loading = BOOLEAN_FALSE,
+    filterOptions,
+    className,
+    testId,
+  } = props;
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [highlightedIndex, setHighlightedIndex] = useState(-1);
-  const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0, width: 0 });
-  const containerRef = useRef<HTMLDivElement>(null);
-  const inputWrapRef = useRef<HTMLDivElement>(null);
-  const panelRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const listRef = useRef<HTMLDivElement>(null);
-
-  const filteredOptions = filterOptions(options, value);
-
-  const showListPanel = isOpen && !disabled && filteredOptions.length > 0;
-  const showEmptyPanel = isOpen && !disabled && filteredOptions.length === 0 && Boolean(value) && !loading;
-
-  useEffect(() => {
-    if (!showListPanel && !showEmptyPanel) return;
-    const updatePosition = () => {
-      const rect = inputWrapRef.current?.getBoundingClientRect();
-      if (!rect) return;
-      setMenuPosition({
-        top: rect.bottom + 4,
-        left: Math.max(8, Math.min(rect.left, window.innerWidth - rect.width - 8)),
-        width: rect.width,
-      });
-    };
-    updatePosition();
-    window.addEventListener('resize', updatePosition);
-    window.addEventListener('scroll', updatePosition, true);
-    return () => {
-      window.removeEventListener('resize', updatePosition);
-      window.removeEventListener('scroll', updatePosition, true);
-    };
-  }, [showListPanel, showEmptyPanel]);
-
-  useEffect(() => {
-    if (!isOpen) return;
-    const handleClickOutside = (e: MouseEvent) => {
-      const t = e.target as Node;
-      if (containerRef.current?.contains(t)) return;
-      if (panelRef.current?.contains(t)) return;
-      setIsOpen(false);
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [isOpen]);
-
-  // Reset highlighted index when options change
-  useEffect(() => {
-    setHighlightedIndex(-1);
-  }, [value]);
-
-  // Scroll highlighted option into view
-  useEffect(() => {
-    if (highlightedIndex >= 0 && listRef.current) {
-      const item = listRef.current.children[highlightedIndex] as HTMLElement;
-      if (item) {
-        item.scrollIntoView({ block: 'nearest' });
-      }
-    }
-  }, [highlightedIndex]);
+  const {
+    isOpen,
+    setIsOpen,
+    highlightedIndex,
+    containerRef,
+    inputWrapRef,
+    panelRef,
+    inputRef,
+    listRef,
+    filteredOptions,
+    showListPanel,
+    showEmptyPanel,
+    overlayStyle,
+    handleSelect,
+    highlightNext,
+    highlightPrevious,
+    confirmHighlight,
+  } = useAutocomplete({
+    options,
+    value,
+    onChange,
+    onSelect,
+    disabled,
+    freeSolo,
+    loading,
+    filterOptions,
+  });
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.value;
-    onChange?.(newValue);
+    onChange?.(e.target.value);
     setIsOpen(true);
-  };
-
-  const handleSelect = (option: AutocompleteOption) => {
-    onChange?.(option.label);
-    onSelect?.(option);
-    setIsOpen(false);
-    inputRef.current?.blur();
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (!isOpen) {
-      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      if (e.key === KEY_ARROW_DOWN || e.key === KEY_ARROW_UP) {
         setIsOpen(true);
         e.preventDefault();
       }
       return;
     }
 
-    switch (e.key) {
-      case 'ArrowDown':
-        e.preventDefault();
-        setHighlightedIndex((prev) =>
-          prev < filteredOptions.length - 1 ? prev + 1 : 0
-        );
-        break;
-      case 'ArrowUp':
-        e.preventDefault();
-        setHighlightedIndex((prev) =>
-          prev > 0 ? prev - 1 : filteredOptions.length - 1
-        );
-        break;
-      case 'Enter':
-        e.preventDefault();
-        if (highlightedIndex >= 0 && filteredOptions[highlightedIndex]) {
-          handleSelect(filteredOptions[highlightedIndex]);
-        } else if (freeSolo && value) {
-          setIsOpen(false);
-        }
-        break;
-      case 'Escape':
-        setIsOpen(false);
-        break;
+    const action = KEY_HANDLERS[e.key];
+    if (!action) {
+      return;
     }
+    e.preventDefault();
+    if (action === 'next') {
+      highlightNext();
+      return;
+    }
+    if (action === 'previous') {
+      highlightPrevious();
+      return;
+    }
+    if (action === 'confirm') {
+      confirmHighlight();
+      return;
+    }
+    setIsOpen(BOOLEAN_FALSE);
   };
 
   return (
-    <div className={cn('bear-w-full bear-relative', className)} ref={containerRef} data-testid={testId}>
+    <div className={cn('Bear-Autocomplete bear-w-full bear-relative', className)} ref={containerRef} data-testid={testId}>
       {label && (
-        <label className="bear-block bear-text-sm bear-font-medium bear-text-gray-700 dark:bear-text-gray-200 bear-mb-1.5">
+        <label className="Bear-Autocomplete__label bear-block bear-text-sm bear-font-medium bear-text-gray-700 dark:bear-text-gray-200 bear-mb-1.5">
           {label}
         </label>
       )}
 
-      <div className="bear-relative" ref={inputWrapRef}>
+      <div className="Bear-Autocomplete__field bear-relative" ref={inputWrapRef}>
         <input
           ref={inputRef}
           type="text"
@@ -177,31 +131,16 @@ export const Autocomplete: FC<AutocompleteProps> = ({
             disabled && 'bear-opacity-50 bear-cursor-not-allowed bear-bg-[var(--bear-bg-secondary)]'
           )}
         />
-
-        <div className="bear-absolute bear-right-3 bear-top-1/2 bear-transform bear--translate-y-1/2">
-          {loading ? (
-            <svg className="bear-animate-spin bear-w-4 bear-h-4 bear-text-gray-400" viewBox="0 0 24 24" fill="none">
-              <circle className="bear-opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-              <path className="bear-opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-            </svg>
-          ) : (
-            <svg className="bear-w-4 bear-h-4 bear-text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-          )}
-        </div>
       </div>
 
       {showListPanel && (
         <Portal>
           <div
             ref={panelRef}
-            className="bear-fixed bear-rounded-lg bear-border bear-border-[var(--bear-border-default)] bear-shadow-lg bear-bg-[var(--bear-bg-primary)]"
+            className="Bear-Autocomplete__panel bear-fixed bear-rounded-lg bear-border bear-border-[var(--bear-border-default)] bear-shadow-lg bear-bg-[var(--bear-bg-primary)]"
             style={{
-              top: menuPosition.top,
-              left: menuPosition.left,
-              width: menuPosition.width,
-              zIndex: AUTOCOMPLETE_PANEL_Z,
+              ...overlayStyle,
+              zIndex: BACKDROP_DEFAULT_Z_INDEX,
             }}
           >
             <div ref={listRef} className="bear-max-h-60 bear-overflow-auto bear-py-1">
@@ -237,12 +176,10 @@ export const Autocomplete: FC<AutocompleteProps> = ({
         <Portal>
           <div
             ref={panelRef}
-            className="bear-fixed bear-py-3 bear-px-4 bear-bg-white dark:bear-bg-gray-800 bear-border bear-border-gray-200 dark:bear-border-gray-700 bear-rounded-lg bear-shadow-lg bear-text-sm bear-text-gray-500"
+            className="Bear-Autocomplete__empty bear-fixed bear-py-3 bear-px-4 bear-bg-white dark:bear-bg-gray-800 bear-border bear-border-gray-200 dark:bear-border-gray-700 bear-rounded-lg bear-shadow-lg bear-text-sm bear-text-gray-500"
             style={{
-              top: menuPosition.top,
-              left: menuPosition.left,
-              width: menuPosition.width,
-              zIndex: AUTOCOMPLETE_PANEL_Z,
+              ...overlayStyle,
+              zIndex: BACKDROP_DEFAULT_Z_INDEX,
             }}
           >
             {freeSolo ? 'Press Enter to use this value' : 'No results found'}
@@ -261,4 +198,3 @@ export const Autocomplete: FC<AutocompleteProps> = ({
     </div>
   );
 };
-

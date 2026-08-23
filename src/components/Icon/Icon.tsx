@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import {cn } from '@utils';
-import type { BearSize } from '../../types';
+import type { BearSize } from '@types';
 import type { IconProps } from './Icon.types';
 
 const sizeMap: Record<BearSize, number> = {

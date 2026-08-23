@@ -1,7 +1,34 @@
+import { Typography } from '../Typography';
+import {
+  BLOCK_BLOCKQUOTE,
+  BLOCK_H1,
+  BLOCK_H2,
+  BLOCK_H3,
+  BLOCK_H4,
+  BLOCK_H5,
+  BLOCK_H6,
+  BLOCK_PARAGRAPH,
+  BLOCK_PRE,
+  COMMAND_BOLD,
+  COMMAND_CREATE_LINK,
+  COMMAND_FORE_COLOR,
+  COMMAND_FORMAT_BLOCK,
+  COMMAND_HILITE_COLOR,
+  COMMAND_INDENT,
+  COMMAND_INSERT_ORDERED_LIST,
+  COMMAND_INSERT_UNORDERED_LIST,
+  COMMAND_ITALIC,
+  COMMAND_JUSTIFY_CENTER,
+  COMMAND_JUSTIFY_FULL,
+  COMMAND_JUSTIFY_LEFT,
+  COMMAND_JUSTIFY_RIGHT,
+  COMMAND_OUTDENT,
+  COMMAND_REMOVE_FORMAT,
+  COMMAND_STRIKE_THROUGH,
+  COMMAND_UNDERLINE,
+  SIX_HUNDRED_FORTY,
+} from '@const';
 import type { ToolbarOption, DropdownOption } from './RichEditor.types';
-
-// Default height settings
-export const RICH_EDITOR_MIN_HEIGHT = 150;
 
 // Default toolbar configuration - Compact with "more" for additional options
 export const RICH_EDITOR_DEFAULT_TOOLBAR: ToolbarOption[] = [
@@ -30,6 +57,7 @@ export const RICH_EDITOR_DEFAULT_TOOLBAR: ToolbarOption[] = [
   'code',
   'link',
   'image',
+  'signature',
   'divider',
   'clearFormat',
 ];
@@ -51,6 +79,7 @@ export const RICH_EDITOR_COMPACT_TOOLBAR: ToolbarOption[] = [
   'divider',
   'link',
   'image',
+  'signature',
   'divider',
   'more',
 ];
@@ -87,12 +116,12 @@ export const RICH_EDITOR_MOBILE_MORE_ITEMS: ToolbarOption[] = [
   'code',
   'link',
   'image',
+  'signature',
   'divider',
   'clearFormat',
 ];
 
-// Breakpoint for mobile toolbar (px)
-export const RICH_EDITOR_MOBILE_BREAKPOINT = 640;
+export const RICH_EDITOR_MOBILE_BREAKPOINT = SIX_HUNDRED_FORTY;
 
 // Simple toolbar configuration
 export const RICH_EDITOR_SIMPLE_TOOLBAR: ToolbarOption[] = [
@@ -104,81 +133,92 @@ export const RICH_EDITOR_SIMPLE_TOOLBAR: ToolbarOption[] = [
   'orderedList',
 ];
 
-// CSS class constants - Light mode first, then dark mode overrides
-// Using standard Tailwind classes for better portal compatibility
-export const RICH_EDITOR_ROOT_CLASSES = 'Bear-RichEditor rounded-lg border border-gray-200 dark:border-zinc-700 overflow-hidden bg-white dark:bg-zinc-900 shadow-sm';
-
-export const RICH_EDITOR_TOOLBAR_CLASSES = 'flex flex-wrap items-center gap-0.5 p-2 border-b border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-800 overflow-x-auto overflow-y-hidden';
-
-export const RICH_EDITOR_CONTENT_CLASSES = 'p-4 outline-none max-w-none text-gray-900 dark:text-gray-100 bg-white dark:bg-zinc-900 min-h-[100px]';
-
-export const RICH_EDITOR_DIVIDER_CLASSES = 'w-px h-5 bg-gray-300 dark:bg-zinc-600 mx-1';
-
-export const RICH_EDITOR_BUTTON_BASE_CLASSES = 'p-1.5 rounded transition-colors';
-
-export const RICH_EDITOR_BUTTON_ACTIVE_CLASSES = 'bg-primary-500 text-white';
-
-export const RICH_EDITOR_BUTTON_INACTIVE_CLASSES = 'text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-zinc-700';
-
-export const RICH_EDITOR_BUTTON_DISABLED_CLASSES = 'opacity-50 cursor-not-allowed';
-
-// Color picker z-index for proper layering
-export const RICH_EDITOR_COLOR_PICKER_Z_INDEX = 9999;
-
-// Heading dropdown options - H1-H6 and body text variants
 export const RICH_EDITOR_HEADING_OPTIONS: DropdownOption[] = [
-  { value: 'p', label: 'Paragraph', preview: <span className="bear-text-sm bear-font-normal">Normal text</span> },
-  { value: 'h1', label: 'Heading 1', preview: <span className="bear-text-2xl bear-font-bold">Heading 1</span> },
-  { value: 'h2', label: 'Heading 2', preview: <span className="bear-text-xl bear-font-bold">Heading 2</span> },
-  { value: 'h3', label: 'Heading 3', preview: <span className="bear-text-lg bear-font-semibold">Heading 3</span> },
-  { value: 'h4', label: 'Heading 4', preview: <span className="bear-text-base bear-font-semibold">Heading 4</span> },
-  { value: 'h5', label: 'Heading 5', preview: <span className="bear-text-sm bear-font-semibold">Heading 5</span> },
-  { value: 'h6', label: 'Heading 6', preview: <span className="bear-text-xs bear-font-semibold bear-uppercase">Heading 6</span> },
+  { value: BLOCK_PARAGRAPH, label: 'Paragraph', preview: <Typography variant="body2">Normal text</Typography> },
+  { value: BLOCK_H1, label: 'Heading 1', preview: <Typography variant="h1">Heading 1</Typography> },
+  { value: BLOCK_H2, label: 'Heading 2', preview: <Typography variant="h2">Heading 2</Typography> },
+  { value: BLOCK_H3, label: 'Heading 3', preview: <Typography variant="h3">Heading 3</Typography> },
+  { value: BLOCK_H4, label: 'Heading 4', preview: <Typography variant="h4">Heading 4</Typography> },
+  { value: BLOCK_H5, label: 'Heading 5', preview: <Typography variant="h5">Heading 5</Typography> },
+  { value: BLOCK_H6, label: 'Heading 6', preview: <Typography variant="h6">Heading 6</Typography> },
 ];
 
 // Toolbar button configurations
 export const RICH_EDITOR_BUTTON_CONFIG = {
-  bold: { title: 'Bold (Ctrl+B)', command: 'bold' },
-  italic: { title: 'Italic (Ctrl+I)', command: 'italic' },
-  underline: { title: 'Underline (Ctrl+U)', command: 'underline' },
-  strikethrough: { title: 'Strikethrough', command: 'strikeThrough' },
-  heading1: { title: 'Heading 1', command: 'formatBlock', value: 'h1' },
-  heading2: { title: 'Heading 2', command: 'formatBlock', value: 'h2' },
-  heading3: { title: 'Heading 3', command: 'formatBlock', value: 'h3' },
-  heading4: { title: 'Heading 4', command: 'formatBlock', value: 'h4' },
-  heading5: { title: 'Heading 5', command: 'formatBlock', value: 'h5' },
-  heading6: { title: 'Heading 6', command: 'formatBlock', value: 'h6' },
-  paragraph: { title: 'Paragraph', command: 'formatBlock', value: 'p' },
-  bulletList: { title: 'Bullet List', command: 'insertUnorderedList' },
-  orderedList: { title: 'Numbered List', command: 'insertOrderedList' },
-  blockquote: { title: 'Quote', command: 'formatBlock', value: 'blockquote' },
-  code: { title: 'Code Block', command: 'formatBlock', value: 'pre' },
-  link: { title: 'Insert Link', command: 'createLink' },
+  bold: { title: 'Bold (Ctrl+B)', command: COMMAND_BOLD },
+  italic: { title: 'Italic (Ctrl+I)', command: COMMAND_ITALIC },
+  underline: { title: 'Underline (Ctrl+U)', command: COMMAND_UNDERLINE },
+  strikethrough: { title: 'Strikethrough', command: COMMAND_STRIKE_THROUGH },
+  heading1: { title: 'Heading 1', command: COMMAND_FORMAT_BLOCK, value: BLOCK_H1 },
+  heading2: { title: 'Heading 2', command: COMMAND_FORMAT_BLOCK, value: BLOCK_H2 },
+  heading3: { title: 'Heading 3', command: COMMAND_FORMAT_BLOCK, value: BLOCK_H3 },
+  heading4: { title: 'Heading 4', command: COMMAND_FORMAT_BLOCK, value: BLOCK_H4 },
+  heading5: { title: 'Heading 5', command: COMMAND_FORMAT_BLOCK, value: BLOCK_H5 },
+  heading6: { title: 'Heading 6', command: COMMAND_FORMAT_BLOCK, value: BLOCK_H6 },
+  paragraph: { title: 'Paragraph', command: COMMAND_FORMAT_BLOCK, value: BLOCK_PARAGRAPH },
+  bulletList: { title: 'Bullet List', command: COMMAND_INSERT_UNORDERED_LIST },
+  orderedList: { title: 'Numbered List', command: COMMAND_INSERT_ORDERED_LIST },
+  blockquote: { title: 'Quote', command: COMMAND_FORMAT_BLOCK, value: BLOCK_BLOCKQUOTE },
+  code: { title: 'Code Block', command: COMMAND_FORMAT_BLOCK, value: BLOCK_PRE },
+  link: { title: 'Insert Link', command: COMMAND_CREATE_LINK },
   image: { title: 'Insert Image', command: 'insertImage' },
-  textColor: { title: 'Text Color', command: 'foreColor' },
-  highlightColor: { title: 'Highlight Color', command: 'hiliteColor' },
-  alignLeft: { title: 'Align Left', command: 'justifyLeft' },
-  alignCenter: { title: 'Align Center', command: 'justifyCenter' },
-  alignRight: { title: 'Align Right', command: 'justifyRight' },
-  alignJustify: { title: 'Justify', command: 'justifyFull' },
-  indent: { title: 'Increase Indent', command: 'indent' },
-  outdent: { title: 'Decrease Indent', command: 'outdent' },
-  clearFormat: { title: 'Clear Formatting', command: 'removeFormat' },
+  textColor: { title: 'Text Color', command: COMMAND_FORE_COLOR },
+  highlightColor: { title: 'Highlight Color', command: COMMAND_HILITE_COLOR },
+  alignLeft: { title: 'Align Left', command: COMMAND_JUSTIFY_LEFT },
+  alignCenter: { title: 'Align Center', command: COMMAND_JUSTIFY_CENTER },
+  alignRight: { title: 'Align Right', command: COMMAND_JUSTIFY_RIGHT },
+  alignJustify: { title: 'Justify', command: COMMAND_JUSTIFY_FULL },
+  indent: { title: 'Increase Indent', command: COMMAND_INDENT },
+  outdent: { title: 'Decrease Indent', command: COMMAND_OUTDENT },
+  clearFormat: { title: 'Clear Formatting', command: COMMAND_REMOVE_FORMAT },
   table: { title: 'Insert Table', command: 'insertTable' },
 } as const;
 
-// Format block mappings
 export const FORMAT_BLOCK_MAP: Record<string, string> = {
-  heading1: 'h1',
-  heading2: 'h2',
-  heading3: 'h3',
-  heading4: 'h4',
-  heading5: 'h5',
-  heading6: 'h6',
-  paragraph: 'p',
-  blockquote: 'blockquote',
-  code: 'pre',
+  heading1: BLOCK_H1,
+  heading2: BLOCK_H2,
+  heading3: BLOCK_H3,
+  heading4: BLOCK_H4,
+  heading5: BLOCK_H5,
+  heading6: BLOCK_H6,
+  paragraph: BLOCK_PARAGRAPH,
+  blockquote: BLOCK_BLOCKQUOTE,
+  code: BLOCK_PRE,
 };
+
+export const RICH_EDITOR_DESKTOP_MORE_ITEMS: ToolbarOption[] = [
+  'alignLeft',
+  'alignCenter',
+  'alignRight',
+  'alignJustify',
+  'indent',
+  'outdent',
+  'blockquote',
+  'code',
+  'clearFormat',
+];
+
+export const TITLE_TEXT_STYLE = 'Text Style';
+export const TITLE_TEXT_COLOR = 'Text Color';
+export const TITLE_HIGHLIGHT_COLOR = 'Highlight Color';
+export const TITLE_INSERT_LINK = 'Insert Link';
+export const TITLE_INSERT_IMAGE = 'Insert Image';
+export const TITLE_INSERT_SIGNATURE = 'Insert signature';
+export const TITLE_MORE_OPTIONS = 'More options';
+export const TITLE_CANCEL = 'Cancel';
+export const TITLE_INSERT = 'Insert';
+export const TITLE_ALIGN_LEFT = 'Align Left';
+export const TITLE_ALIGN_CENTER = 'Align Center';
+export const TITLE_ALIGN_RIGHT = 'Align Right';
+export const TITLE_JUSTIFY = 'Justify';
+export const TITLE_INCREASE_INDENT = 'Increase Indent';
+export const TITLE_DECREASE_INDENT = 'Decrease Indent';
+export const TITLE_CLEAR_FORMATTING = 'Clear Formatting';
+export const PROMPT_ENTER_URL = 'Enter URL:';
+export const URL_HTTPS_PREFIX = 'https://';
+export const INPUT_TYPE_FILE = 'file';
+export const INPUT_ACCEPT_IMAGE = 'image/*';
+export const IMAGE_MIME_PREFIX = 'image/';
 
 // Color palette for text and highlight colors
 export const RICH_EDITOR_COLORS = [
@@ -199,146 +239,3 @@ export const RICH_EDITOR_COLORS = [
   // Row 8: Pinks
   '#9d174d', '#db2777', '#ec4899', '#f472b6', '#f9a8d4', '#fbcfe8',
 ];
-
-// Content styles for proper heading/list rendering
-export const RICH_EDITOR_CONTENT_STYLES = `
-  .Bear-RichEditor__content {
-    line-height: 1.6;
-  }
-  .Bear-RichEditor__content h1 { 
-    font-size: 2rem; 
-    font-weight: bold; 
-    margin: 0.67em 0; 
-    line-height: 1.2;
-  }
-  .Bear-RichEditor__content h2 { 
-    font-size: 1.5rem; 
-    font-weight: bold; 
-    margin: 0.83em 0; 
-    line-height: 1.3;
-  }
-  .Bear-RichEditor__content h3 { 
-    font-size: 1.25rem; 
-    font-weight: 600; 
-    margin: 1em 0; 
-    line-height: 1.4;
-  }
-  .Bear-RichEditor__content h4 { 
-    font-size: 1.125rem; 
-    font-weight: 600; 
-    margin: 1.33em 0;
-  }
-  .Bear-RichEditor__content h5 { 
-    font-size: 1rem; 
-    font-weight: 600; 
-    margin: 1.67em 0;
-  }
-  .Bear-RichEditor__content h6 { 
-    font-size: 0.875rem; 
-    font-weight: 600; 
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin: 2em 0;
-  }
-  .Bear-RichEditor__content p { 
-    margin: 0.5em 0; 
-  }
-  .Bear-RichEditor__content ul { 
-    list-style-type: disc !important; 
-    padding-left: 1.5em !important; 
-    margin: 0.5em 0 !important; 
-    display: block !important;
-  }
-  .Bear-RichEditor__content ol { 
-    list-style-type: decimal !important; 
-    padding-left: 1.5em !important; 
-    margin: 0.5em 0 !important;
-    display: block !important;
-  }
-  .Bear-RichEditor__content li { 
-    margin: 0.25em 0 !important;
-    display: list-item !important;
-  }
-  .Bear-RichEditor__content blockquote { 
-    border-left: 4px solid #ec4899; 
-    padding-left: 1em; 
-    margin: 1em 0; 
-    color: #6b7280; 
-    font-style: italic;
-    background: rgba(236, 72, 153, 0.05);
-    padding: 0.5em 1em;
-    border-radius: 0 0.375rem 0.375rem 0;
-  }
-  .Bear-RichEditor__content pre { 
-    background: #f3f4f6; 
-    color: #374151;
-    padding: 1em; 
-    border-radius: 0.5rem; 
-    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace; 
-    font-size: 0.875em;
-    overflow-x: auto; 
-    margin: 1em 0;
-    white-space: pre-wrap;
-    word-break: break-word;
-    border: 1px solid #e5e7eb;
-  }
-  .Bear-RichEditor__content code {
-    background: #f3f4f6;
-    color: #374151;
-    padding: 0.125em 0.25em;
-    border-radius: 0.25rem;
-    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-    font-size: 0.875em;
-  }
-  .Bear-RichEditor__content a { 
-    color: #ec4899; 
-    text-decoration: underline;
-    cursor: pointer;
-  }
-  .Bear-RichEditor__content a:hover {
-    color: #db2777;
-  }
-  .Bear-RichEditor__content img { 
-    max-width: 100%; 
-    height: auto; 
-    border-radius: 0.5rem; 
-    margin: 1em 0;
-    display: block;
-  }
-  .Bear-RichEditor__content table {
-    border-collapse: collapse;
-    width: 100%;
-    margin: 1em 0;
-  }
-  .Bear-RichEditor__content th,
-  .Bear-RichEditor__content td {
-    border: 1px solid #d1d5db;
-    padding: 0.5em;
-    text-align: left;
-  }
-  .Bear-RichEditor__content th {
-    background: #f3f4f6;
-    font-weight: 600;
-  }
-  /* Dark mode styles */
-  .dark .Bear-RichEditor__content pre {
-    background: #1f2937;
-    color: #e5e7eb;
-    border-color: #374151;
-  }
-  .dark .Bear-RichEditor__content code {
-    background: #374151;
-    color: #e5e7eb;
-  }
-  .dark .Bear-RichEditor__content blockquote {
-    color: #9ca3af;
-    background: rgba(236, 72, 153, 0.1);
-  }
-  .dark .Bear-RichEditor__content th {
-    background: #374151;
-  }
-  .dark .Bear-RichEditor__content th,
-  .dark .Bear-RichEditor__content td {
-    border-color: #4b5563;
-  }
-`;

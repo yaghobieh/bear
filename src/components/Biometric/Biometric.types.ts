@@ -2,10 +2,12 @@ export type BiometricType = 'fingerprint' | 'face' | 'iris';
 
 export type BiometricStatus = 'idle' | 'scanning' | 'success' | 'error';
 
+export type BiometricSize = 'sm' | 'md' | 'lg' | 'xl';
+
 export interface BiometricProps {
   id?: string;
   type?: BiometricType;
-  size?: 'sm' | 'md' | 'lg' | 'xl';
+  size?: BiometricSize;
   status?: BiometricStatus;
   label?: string;
   successLabel?: string;

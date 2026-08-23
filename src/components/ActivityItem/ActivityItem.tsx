@@ -1,48 +1,56 @@
-import { FC } from 'react';
-import {cn } from '@utils';
-import { ActivityItemProps } from './ActivityItem.types';
+import { ACTIVITY_ICON_BG } from '@const';
+import { cn } from '@utils';
+import { Box } from '../Box';
+import { Flex } from '../Flex';
+import { Typography } from '../Typography';
+import type { ActivityItemProps } from './ActivityItem.types';
 
-/**
- * ActivityItem Component
- * A single activity/event item for activity feeds
- */
-export const ActivityItem: FC<ActivityItemProps> = ({
-
-  icon,
-  iconBg = 'rgba(16, 185, 129, 0.2)',
-  title,
-  description,
-  user,
-  time,
-  onClick,
-  className,
-  ...props
-}) => {
+export const ActivityItem = (props: ActivityItemProps) => {
+  const {
+    icon,
+    iconBg = ACTIVITY_ICON_BG,
+    title,
+    description,
+    user,
+    time,
+    onClick,
+    className,
+    ...rest
+  } = props;
 
   return (
-    <div
+    <Flex
       className={cn(
-        'flex items-start gap-4 p-4 hover:bg-slate-700/30 dark:hover:bg-slate-700/30 rounded-xl transition-colors cursor-pointer',
+        'Bear-ActivityItem bear-items-start bear-gap-4 bear-p-4 hover:bear-bg-slate-700/30 dark:hover:bear-bg-slate-700/30 bear-rounded-xl bear-transition-colors bear-cursor-pointer',
         className
       )}
       onClick={onClick}
-      {...props}
+      {...rest}
     >
-      <div
-        className="flex items-center justify-center w-10 h-10 rounded-xl flex-shrink-0"
+      <Flex
+        className="Bear-ActivityItem__icon bear-items-center bear-justify-center bear-w-10 bear-h-10 bear-rounded-xl bear-flex-shrink-0"
         style={{ background: iconBg }}
       >
         {icon}
-      </div>
-      <div className="flex-1 min-w-0">
-        <p className="text-gray-900 dark:text-white font-medium truncate">{title}</p>
-        <p className="text-gray-500 dark:text-slate-400 text-sm truncate">{description}</p>
-      </div>
-      <div className="text-right flex-shrink-0">
-        <p className="text-gray-500 dark:text-slate-400 text-sm">{time}</p>
-        {user && <p className="text-gray-400 dark:text-slate-500 text-xs">{user}</p>}
-      </div>
-    </div>
+      </Flex>
+      <Box className="Bear-ActivityItem__body bear-flex-1 bear-min-w-0">
+        <Typography className="Bear-ActivityItem__title bear-text-gray-900 dark:bear-text-white bear-font-medium bear-truncate">
+          {title}
+        </Typography>
+        <Typography className="Bear-ActivityItem__description bear-text-gray-500 dark:bear-text-slate-400 bear-text-sm bear-truncate">
+          {description}
+        </Typography>
+      </Box>
+      <Box className="Bear-ActivityItem__meta bear-text-right bear-flex-shrink-0">
+        <Typography className="Bear-ActivityItem__time bear-text-gray-500 dark:bear-text-slate-400 bear-text-sm">
+          {time}
+        </Typography>
+        {user && (
+          <Typography className="Bear-ActivityItem__user bear-text-gray-400 dark:bear-text-slate-500 bear-text-xs">
+            {user}
+          </Typography>
+        )}
+      </Box>
+    </Flex>
   );
 };
-

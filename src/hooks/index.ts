@@ -96,4 +96,38 @@ export { useBreakpoint } from './useBreakpoint';
 export type { UseBreakpointResult, BearBreakpointKey } from './useBreakpoint';
 export { DEFAULT_BREAKPOINTS_PX } from './useBreakpoint';
 
+export { useDocumentDarkClass } from './useDocumentDarkClass';
+export { usePointerDrag } from './usePointerDrag';
+export type {
+  PointerDragStart,
+  UsePointerDragOptions,
+  UsePointerDragReturn,
+} from './usePointerDrag';
+export { useWindowLayout } from './useWindowLayout';
+export type { UseWindowLayoutOptions } from './useWindowLayout';
+
+export {
+  useFixedAnchorPosition,
+  resolveOverlayEffects,
+  ANCHOR_DEFAULT_Z_INDEX,
+  ANCHOR_EDGE_PAD_PX,
+  ANCHOR_OFFSET_PX,
+  OVERLAY_OPEN_EFFECT_DEFAULT,
+  OVERLAY_OPEN_EFFECT_FADE,
+  OVERLAY_OPEN_EFFECT_NONE,
+  OVERLAY_OPEN_EFFECT_SCALE,
+  OVERLAY_OPEN_EFFECT_SLIDE_DOWN,
+} from './useFixedAnchorPosition';
+export type {
+  OverlayCloseEffect,
+  OverlayCoords,
+  OverlayEffectConfig,
+  OverlayEffectProps,
+  OverlayMotionEffect,
+  OverlayOpenEffect,
+  OverlayPlacement,
+  UseFixedAnchorPositionOptions,
+  UseFixedAnchorPositionReturn,
+} from './useFixedAnchorPosition';
+
 export { useFormControl } from './useFormControl';

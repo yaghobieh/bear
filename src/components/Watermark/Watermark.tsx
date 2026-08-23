@@ -1,6 +1,8 @@
-import { FC, useMemo, useCallback, useEffect, useRef, useState, useContext } from 'react';
-import { BearContext } from '../../context/BearProvider';
-import {cn } from '@utils';
+import { useMemo, useCallback, useEffect, useRef, useContext } from 'react';
+import { COLOR_DARK } from '@const';
+import { BearContext } from '@context/BearProvider';
+import { useDocumentDarkClass } from '@hooks';
+import { cn } from '@utils';
 import type { WatermarkProps } from './Watermark.types';
 import {
   DEFAULT_FONT_SIZE,
@@ -26,7 +28,7 @@ import {
  * Watermark - Overlay watermark text or image on content.
  * Auto-adapts to dark mode and uses BearProvider theme font.
  */
-export const Watermark: FC<WatermarkProps> = (props) => {
+export const Watermark = (props: WatermarkProps) => {
   const {
     children,
     text,
@@ -50,30 +52,8 @@ export const Watermark: FC<WatermarkProps> = (props) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const watermarkRef = useRef<HTMLDivElement>(null);
   const bear = useContext(BearContext);
-  const [isDarkFallback, setIsDarkFallback] = useState(false);
-
-  useEffect(() => {
-    if (bear) return;
-    const mq = window.matchMedia('(prefers-color-scheme: dark)');
-    const checkDark = () => {
-      const root = document.documentElement;
-      const dark =
-        root.classList.contains('dark') ||
-        root.classList.contains('bear-dark') ||
-        mq.matches;
-      setIsDarkFallback(dark);
-    };
-    checkDark();
-    const observer = new MutationObserver(checkDark);
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-    mq.addEventListener('change', checkDark);
-    return () => {
-      observer.disconnect();
-      mq.removeEventListener('change', checkDark);
-    };
-  }, [bear]);
-
-  const isDark = bear ? bear.mode === 'dark' : isDarkFallback;
+  const isDarkFallback = useDocumentDarkClass(!bear);
+  const isDark = bear ? bear.mode === COLOR_DARK : isDarkFallback;
 
   // Resolve font from theme CSS variable
   const resolvedFont = useMemo(() => {

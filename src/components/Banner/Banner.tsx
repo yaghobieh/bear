@@ -1,53 +1,30 @@
-import { FC, useState, type ReactNode } from 'react';
-import type { BannerProps, BannerSeverity } from './Banner.types';
-import {
-  BANNER_ACTION_CLASS,
-  BANNER_BASE_CLASSES,
-  BANNER_CONTENT_CLASS,
-  BANNER_DEFAULT_DISMISSIBLE,
-  BANNER_DEFAULT_FULL_WIDTH,
-  BANNER_DEFAULT_OPEN,
-  BANNER_DEFAULT_POSITION,
-  BANNER_DEFAULT_SEVERITY,
-  BANNER_DEFAULT_SHOW_ICON,
-  BANNER_DEFAULT_TRANSLATIONS,
-  BANNER_DISMISS_CLASS,
-  BANNER_FULL_WIDTH_CLASS,
-  BANNER_ICON_CLASS,
-  BANNER_MESSAGE_CLASS,
-  BANNER_POSITION_CLASSES,
-  BANNER_ROOT_CLASS,
-  BANNER_SEVERITY_CLASSES,
-  BANNER_TITLE_CLASS,
-} from './Banner.const';
-import {
-  BannerErrorSvg,
-  BannerInfoSvg,
-  BannerSuccessSvg,
-  BannerWarningSvg,
-} from './helpers';
+import { useState } from 'react';
+import { BOOLEAN_FALSE, BOOLEAN_TRUE, INFO, STATIC } from '@const';
+import { Box } from '../Box';
 import { CloseButton } from '../CloseButton';
+import { Flex } from '../Flex';
+import { Typography } from '../Typography';
 import { cn, getBearLiveRegionProps, resolveBearId, useBearId } from '@utils';
+import {
+  BANNER_DEFAULT_ICON_MAP,
+  BANNER_DEFAULT_TRANSLATIONS,
+  BANNER_POSITION_CLASSES,
+  BANNER_SEVERITY_CLASSES,
+} from './Banner.const';
+import type { BannerProps } from './Banner.types';
 
-const DEFAULT_ICONS: Record<BannerSeverity, ReactNode> = {
-  info: <BannerInfoSvg />,
-  success: <BannerSuccessSvg />,
-  warning: <BannerWarningSvg />,
-  error: <BannerErrorSvg />,
-};
-
-export const Banner: FC<BannerProps> = (props) => {
+export const Banner = (props: BannerProps) => {
   const {
-    severity = BANNER_DEFAULT_SEVERITY,
+    severity = INFO,
     title,
     children,
     action,
-    icon = BANNER_DEFAULT_SHOW_ICON,
-    dismissible = BANNER_DEFAULT_DISMISSIBLE,
+    icon = BOOLEAN_TRUE,
+    dismissible = BOOLEAN_FALSE,
     onDismiss,
     open,
-    position = BANNER_DEFAULT_POSITION,
-    fullWidth = BANNER_DEFAULT_FULL_WIDTH,
+    position = STATIC,
+    fullWidth = BOOLEAN_TRUE,
     translations,
     className,
     id,
@@ -55,7 +32,7 @@ export const Banner: FC<BannerProps> = (props) => {
     ...rest
   } = props;
 
-  const [internalOpen, setInternalOpen] = useState(BANNER_DEFAULT_OPEN);
+  const [internalOpen, setInternalOpen] = useState(BOOLEAN_TRUE);
   const isOpen = open ?? internalOpen;
   const generatedId = useBearId('Banner');
   const domId = resolveBearId(id, generatedId);
@@ -68,49 +45,61 @@ export const Banner: FC<BannerProps> = (props) => {
 
   const handleDismiss = () => {
     if (open === undefined) {
-      setInternalOpen(false);
+      setInternalOpen(BOOLEAN_FALSE);
     }
     onDismiss?.();
   };
 
   const renderIcon = () => {
-    if (icon === false) {
+    if (icon === BOOLEAN_FALSE) {
       return null;
     }
-    if (icon !== true) {
+    if (icon !== BOOLEAN_TRUE) {
       return icon;
     }
-    return DEFAULT_ICONS[severity];
+    const IconComponent = BANNER_DEFAULT_ICON_MAP[severity];
+    return <IconComponent />;
   };
 
   const iconNode = renderIcon();
 
   return (
-    <div
+    <Flex
       {...rest}
       {...liveRegionProps}
       id={domId}
       data-testid={testId}
       className={cn(
-        BANNER_ROOT_CLASS,
-        BANNER_BASE_CLASSES,
+        'Bear-Banner bear-items-center bear-gap-3 bear-px-4 bear-py-3 bear-border-b bear-border-[var(--bear-border-default)]',
         BANNER_SEVERITY_CLASSES[severity],
         BANNER_POSITION_CLASSES[position],
-        fullWidth && BANNER_FULL_WIDTH_CLASS,
+        fullWidth && 'bear-w-full',
         className
       )}
     >
-      {iconNode && <span className={BANNER_ICON_CLASS}>{iconNode}</span>}
-      <div className={BANNER_CONTENT_CLASS}>
-        {title && <div className={BANNER_TITLE_CLASS}>{title}</div>}
-        {children && <div className={BANNER_MESSAGE_CLASS}>{children}</div>}
-      </div>
-      {action && <div className={BANNER_ACTION_CLASS}>{action}</div>}
-      {dismissible && (
-        <div className={BANNER_DISMISS_CLASS}>
-          <CloseButton size="sm" onClick={handleDismiss} aria-label={dismissLabel} />
-        </div>
+      {iconNode && (
+        <Box as="span" className="Bear-Banner__icon bear-flex-shrink-0 bear-w-5 bear-h-5">
+          {iconNode}
+        </Box>
       )}
-    </div>
+      <Box className="Bear-Banner__content bear-flex-1 bear-min-w-0 bear-text-sm">
+        {title && (
+          <Typography weight="semibold" className="Bear-Banner__title bear-mb-0.5">
+            {title}
+          </Typography>
+        )}
+        {children && (
+          <Typography className="Bear-Banner__message">
+            {children}
+          </Typography>
+        )}
+      </Box>
+      {action && <Box className="Bear-Banner__action bear-flex-shrink-0">{action}</Box>}
+      {dismissible && (
+        <Box className="Bear-Banner__dismiss bear-flex-shrink-0">
+          <CloseButton size="sm" onClick={handleDismiss} aria-label={dismissLabel} />
+        </Box>
+      )}
+    </Flex>
   );
 };

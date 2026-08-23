@@ -1,17 +1,40 @@
 import { FC, useState, useRef, useEffect, useCallback } from 'react';
-import { createPortal } from 'react-dom';
-import {cn } from '@utils';
+import { cn } from '@utils';
+import { resolveOverlayEffects, useClickOutsideMultiple, useFixedAnchorPosition } from '@hooks';
+import {
+  BOOLEAN_FALSE,
+  BOOLEAN_TRUE,
+  EMPTY_STRING,
+  HOURS_MIDNIGHT,
+  LABEL_CLEAR,
+  LAST_MONTH_INDEX,
+  NEGATIVE_ONE,
+  ONE,
+  PICKING_START,
+  PLACEHOLDER_SELECT_DATE_RANGE,
+  PRESET_SIDEBAR_MIN_WIDTH_PX,
+  SIZE_MD,
+  ZERO,
+} from '@const';
+import { CalendarIcon } from '../Icon';
+import { OverlayPortal } from '../OverlayPortal';
 import type { DateRangePickerProps, DateRange } from './DateRangePicker.types';
 import {
-  DAY_LABELS, MONTH_LABELS, SIZE_CLASSES,
-  ROOT_CLASSES, TRIGGER_CLASSES,
-  CALENDAR_HEADER_CLASSES, NAV_BTN_CLASSES,
-  DAY_BASE_CLASSES, DAY_SELECTED_CLASSES, DAY_IN_RANGE_CLASSES,
-  DAY_HOVER_CLASSES, DAY_DISABLED_CLASSES, DAY_TODAY_CLASSES,
-  PRESET_BTN_CLASSES, LABEL_CLASSES, ERROR_CLASSES, HELPER_CLASSES,
-  getDefaultPresets,
+  DAY_LABELS,
+  MONTH_LABELS,
+  SIZE_CLASSES,
+  DATERANGE_DROPDOWN_ATTR,
+  DATERANGE_DROPDOWN_HEIGHT_PX,
+  DATERANGE_DROPDOWN_Z_INDEX,
 } from './DateRangePicker.const';
-import { isSameDay, isInRange, formatDate, getCalendarDays } from './DateRangePicker.utils';
+import {
+  isSameDay,
+  isInRange,
+  formatDate,
+  getCalendarDays,
+  getDefaultPresets,
+  resolveRightMonth,
+} from './DateRangePicker.utils';
 
 const CalendarMonth: FC<{
   year: number;
@@ -24,16 +47,16 @@ const CalendarMonth: FC<{
 }> = ({ year, month, range, onDayClick, onNav, minDate, maxDate }) => {
   const days = getCalendarDays(year, month);
   const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  today.setHours(HOURS_MIDNIGHT, HOURS_MIDNIGHT, HOURS_MIDNIGHT, HOURS_MIDNIGHT);
 
   return (
     <div className="bear-w-64">
-      <div className={CALENDAR_HEADER_CLASSES}>
-        <button type="button" onClick={() => onNav(-1)} className={NAV_BTN_CLASSES} aria-label="Previous month">
+      <div className="bear-flex bear-items-center bear-justify-between bear-mb-2">
+        <button type="button" onClick={() => onNav(NEGATIVE_ONE)} className="bear-p-1 bear-rounded hover:bear-bg-gray-100 dark:hover:bear-bg-zinc-700 bear-text-gray-500 dark:bear-text-zinc-400" aria-label="Previous month">
           <svg className="bear-w-4 bear-h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
         </button>
         <span className="bear-text-sm bear-font-semibold bear-text-gray-900 dark:bear-text-white">{MONTH_LABELS[month]} {year}</span>
-        <button type="button" onClick={() => onNav(1)} className={NAV_BTN_CLASSES} aria-label="Next month">
+        <button type="button" onClick={() => onNav(ONE)} className="bear-p-1 bear-rounded hover:bear-bg-gray-100 dark:hover:bear-bg-zinc-700 bear-text-gray-500 dark:bear-text-zinc-400" aria-label="Next month">
           <svg className="bear-w-4 bear-h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
         </button>
       </div>
@@ -56,11 +79,11 @@ const CalendarMonth: FC<{
               disabled={!!disabled}
               onClick={() => onDayClick(day)}
               className={cn(
-                DAY_BASE_CLASSES,
-                disabled ? DAY_DISABLED_CLASSES : DAY_HOVER_CLASSES,
-                selected && DAY_SELECTED_CLASSES,
-                !selected && inRange && DAY_IN_RANGE_CLASSES,
-                !selected && !inRange && isToday && DAY_TODAY_CLASSES,
+                'bear-w-8 bear-h-8 bear-text-sm bear-rounded-full bear-transition-colors bear-cursor-pointer',
+                disabled ? 'bear-text-gray-300 dark:bear-text-zinc-600 bear-cursor-not-allowed' : 'hover:bear-bg-gray-100 dark:hover:bear-bg-zinc-700',
+                selected && 'bear-bg-primary-500 bear-text-white',
+                !selected && inRange && 'bear-bg-primary-100 dark:bear-bg-primary-900/30 bear-text-primary-800 dark:bear-text-primary-200',
+                !selected && !inRange && isToday && 'bear-ring-1 bear-ring-primary-400',
                 !selected && !inRange && !disabled && 'bear-text-gray-700 dark:bear-text-zinc-300',
               )}
             >
@@ -78,74 +101,51 @@ export const DateRangePicker: FC<DateRangePickerProps> = (props) => {
     value,
     onChange,
     label,
-    placeholder = 'Select date range',
-    disabled = false,
-    clearable = true,
+    placeholder = PLACEHOLDER_SELECT_DATE_RANGE,
+    disabled = BOOLEAN_FALSE,
+    clearable = BOOLEAN_TRUE,
     minDate,
     maxDate,
     presets,
-    showPresets = true,
-    size = 'md',
+    showPresets = BOOLEAN_TRUE,
+    size = SIZE_MD,
     error,
     helperText,
     className,
-      testId,
+    testId,
+    openEffect: _openEffect,
+    closeEffect: _closeEffect,
+    effect: _effect,
     ...rest
   } = props;
+  const { openEffect, closeEffect } = resolveOverlayEffects(props);
 
   const [isOpen, setIsOpen] = useState(false);
-  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
   const [range, setRange] = useState<DateRange>(value ?? { start: null, end: null });
-  const [picking, setPicking] = useState<'start' | 'end'>('start');
+  const [picking, setPicking] = useState<'start' | 'end'>(PICKING_START);
   const containerRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const { style: overlayStyle, ready } = useFixedAnchorPosition({
+    anchorRef: triggerRef,
+    open: isOpen,
+    estimatedHeightPx: DATERANGE_DROPDOWN_HEIGHT_PX,
+  });
 
   const now = new Date();
   const [leftMonth, setLeftMonth] = useState(now.getMonth());
   const [leftYear, setLeftYear] = useState(now.getFullYear());
 
-  const rightMonth = leftMonth === 11 ? 0 : leftMonth + 1;
-  const rightYear = leftMonth === 11 ? leftYear + 1 : leftYear;
+  const rightMonthView = resolveRightMonth(leftMonth);
+  const rightMonth = rightMonthView.month;
+  const rightYear = leftYear + rightMonthView.yearDelta;
 
   useEffect(() => {
     if (value) setRange(value);
   }, [value]);
 
-  useEffect(() => {
-    if (!isOpen || !triggerRef.current) return;
-    const padding = 8;
-    const dropdownHeight = 420;
-    const update = () => {
-      const rect = triggerRef.current!.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-      const spaceBelow = viewportHeight - rect.bottom;
-      const showAbove = spaceBelow < dropdownHeight && rect.top > dropdownHeight;
-      let top = showAbove ? rect.top - dropdownHeight - padding : rect.bottom + padding;
-      top = Math.max(8, Math.min(top, viewportHeight - dropdownHeight - 8));
-      const estW = Math.min(640, window.innerWidth - 16);
-      let left = Math.max(8, Math.min(rect.left, window.innerWidth - estW - 8));
-      setDropdownPosition({ top, left });
-    };
-    update();
-    window.addEventListener('resize', update);
-    window.addEventListener('scroll', update, true);
-    return () => {
-      window.removeEventListener('resize', update);
-      window.removeEventListener('scroll', update, true);
-    };
-  }, [isOpen]);
-
-  useEffect(() => {
-    const handleClick = (e: MouseEvent) => {
-      const target = e.target as Node;
-      if (containerRef.current?.contains(target)) return;
-      if (dropdownRef.current?.contains(target)) return;
-      setIsOpen(false);
-    };
-    document.addEventListener('mousedown', handleClick);
-    return () => document.removeEventListener('mousedown', handleClick);
-  }, []);
+  const close = useCallback(() => setIsOpen(false), []);
+  useClickOutsideMultiple([containerRef, dropdownRef], close, { enabled: isOpen });
 
   const handleDayClick = useCallback((day: Date) => {
     if (picking === 'start') {
@@ -178,8 +178,8 @@ export const DateRangePicker: FC<DateRangePickerProps> = (props) => {
   const navLeft = useCallback((dir: number) => {
     let m = leftMonth + dir;
     let y = leftYear;
-    if (m < 0) { m = 11; y--; }
-    if (m > 11) { m = 0; y++; }
+    if (m < ZERO) { m = LAST_MONTH_INDEX; y -= ONE; }
+    if (m > LAST_MONTH_INDEX) { m = ZERO; y += ONE; }
     setLeftMonth(m);
     setLeftYear(y);
   }, [leftMonth, leftYear]);
@@ -190,50 +190,55 @@ export const DateRangePicker: FC<DateRangePickerProps> = (props) => {
     : placeholder;
 
   return (
-    <div ref={containerRef} className={cn(ROOT_CLASSES, className)} data-testid={testId} {...rest}>
-      {label && <label className={LABEL_CLASSES}>{label}</label>}
+    <div ref={containerRef} className={cn('Bear-DateRangePicker bear-relative bear-inline-block', className)} data-testid={testId} {...rest}>
+      {label && <label className="Bear-DateRangePicker__label bear-block bear-text-sm bear-font-medium bear-text-gray-700 dark:bear-text-zinc-300 bear-mb-1.5">{label}</label>}
       <button
         ref={triggerRef}
         type="button"
         disabled={disabled}
         onClick={() => !disabled && setIsOpen(!isOpen)}
-        className={cn(TRIGGER_CLASSES, SIZE_CLASSES[size], disabled && 'bear-opacity-50 bear-cursor-not-allowed')}
+        className={cn(
+          'bear-w-full bear-flex bear-items-center bear-justify-between bear-rounded-lg bear-border bear-border-gray-300 dark:bear-border-zinc-600 bear-bg-white dark:bear-bg-zinc-800 bear-text-gray-900 dark:bear-text-white bear-transition-colors focus:bear-ring-2 focus:bear-ring-primary-500 bear-outline-none',
+          SIZE_CLASSES[size],
+          disabled && 'bear-opacity-50 bear-cursor-not-allowed'
+        )}
       >
         <span className={cn(!range.start && 'bear-text-gray-400 dark:bear-text-zinc-500')}>{displayText}</span>
-        <svg className="bear-w-4 bear-h-4 bear-ml-2 bear-text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+        <CalendarIcon className="bear-w-4 bear-h-4 bear-ml-2 bear-text-gray-400" />
       </button>
 
-      {isOpen &&
-        typeof document !== 'undefined' &&
-        createPortal(
-          <div
-            ref={dropdownRef}
-            data-bear-daterangepicker-dropdown
-            className={cn(
-              'bear-fixed bear-z-[10000] bear-max-w-[calc(100vw-16px)] bear-bg-white dark:bear-bg-zinc-800 bear-border bear-border-gray-200 dark:bear-border-zinc-700 bear-rounded-xl bear-shadow-xl bear-p-4 bear-overflow-x-auto'
-            )}
-            style={{ top: dropdownPosition.top, left: dropdownPosition.left }}
-          >
-            <div className="bear-flex bear-gap-4">
-              {activePresets.length > 0 && (
-                <div className="bear-border-r bear-border-gray-200 dark:bear-border-zinc-700 bear-pr-3 bear-space-y-1 bear-min-w-[120px]">
-                  {activePresets.map((p) => (
-                    <button key={p.label} type="button" onClick={() => handlePreset(p.range())} className={PRESET_BTN_CLASSES}>{p.label}</button>
-                  ))}
-                  {clearable && range.start && (
-                    <button type="button" onClick={handleClear} className={cn(PRESET_BTN_CLASSES, 'bear-text-red-500')}>Clear</button>
-                  )}
-                </div>
+      <OverlayPortal
+        open={isOpen}
+        ready={ready}
+        style={overlayStyle}
+        zIndex={DATERANGE_DROPDOWN_Z_INDEX}
+        openEffect={openEffect}
+        closeEffect={closeEffect}
+        panelRef={dropdownRef}
+        className="bear-max-w-[calc(100vw-16px)] bear-bg-white dark:bear-bg-zinc-800 bear-border bear-border-gray-200 dark:bear-border-zinc-700 bear-rounded-xl bear-shadow-xl bear-p-4 bear-overflow-x-auto"
+        attributes={{ [DATERANGE_DROPDOWN_ATTR]: EMPTY_STRING }}
+      >
+        <div className="bear-flex bear-gap-4">
+          {activePresets.length > ZERO && (
+            <div
+              className="bear-border-r bear-border-gray-200 dark:bear-border-zinc-700 bear-pr-3 bear-space-y-1"
+              style={{ minWidth: PRESET_SIDEBAR_MIN_WIDTH_PX }}
+            >
+              {activePresets.map((p) => (
+                <button key={p.label} type="button" onClick={() => handlePreset(p.range())} className="bear-w-full bear-text-left bear-px-3 bear-py-1.5 bear-text-sm bear-rounded bear-transition-colors hover:bear-bg-primary-50 dark:hover:bear-bg-primary-900/20 bear-text-gray-700 dark:bear-text-zinc-300">{p.label}</button>
+              ))}
+              {clearable && range.start && (
+                <button type="button" onClick={handleClear} className="bear-w-full bear-text-left bear-px-3 bear-py-1.5 bear-text-sm bear-rounded bear-transition-colors hover:bear-bg-primary-50 dark:hover:bear-bg-primary-900/20 bear-text-red-500">{LABEL_CLEAR}</button>
               )}
-              <CalendarMonth year={leftYear} month={leftMonth} range={range} onDayClick={handleDayClick} onNav={navLeft} minDate={minDate} maxDate={maxDate} />
-              <CalendarMonth year={rightYear} month={rightMonth} range={range} onDayClick={handleDayClick} onNav={() => {}} minDate={minDate} maxDate={maxDate} />
             </div>
-          </div>,
-          document.body
-        )}
+          )}
+          <CalendarMonth year={leftYear} month={leftMonth} range={range} onDayClick={handleDayClick} onNav={navLeft} minDate={minDate} maxDate={maxDate} />
+          <CalendarMonth year={rightYear} month={rightMonth} range={range} onDayClick={handleDayClick} onNav={() => {}} minDate={minDate} maxDate={maxDate} />
+        </div>
+      </OverlayPortal>
 
-      {error && <p className={ERROR_CLASSES}>{error}</p>}
-      {!error && helperText && <p className={HELPER_CLASSES}>{helperText}</p>}
+      {error && <p className="bear-mt-1 bear-text-xs bear-text-red-500">{error}</p>}
+      {!error && helperText && <p className="bear-mt-1 bear-text-xs bear-text-gray-500 dark:bear-text-zinc-500">{helperText}</p>}
     </div>
   );
 };

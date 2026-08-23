@@ -2,6 +2,27 @@
 
 All notable changes to Bear UI will be documented in this file.
 
+## [1.3.1] - 2026-08-23
+
+### Added
+
+- **`openEffect`**, **`closeEffect`**, and **`effect={{ open, close }}`** on DatePicker, DateRangePicker, TimePicker, Select, Dropdown, and Calendar — `slide-down` (default), `fade`, `scale`, or `none`. Close can differ from open.
+- **`useFixedAnchorPosition`** — shared fixed coords from the trigger, with scroll/resize listeners.
+
+### Fixed
+
+- **DatePicker** — calendar stays on the input while the page or drawer scrolls (FORGE-117, GH #65).
+- **TimePicker** — dropdown portals above cards and drawers (FORGE-118, GH #64).
+- **Select / Dropdown** — menus no longer flash from the top-left before the first layout (FORGE-120).
+- **GradientText** — clip after `backgroundImage` so letters show; the `background` shorthand no longer wipes the clip (FORGE-115, GH #63).
+- **SegmentedControl** — selected chip is visible in light and dark (no ghost Button inline override).
+- **RichEditor** — heading and color menus portal above the textarea; toolbar tooltips on hover; signature control opens SignPad.
+- **SignPad** — X mark and baseline sit above the canvas.
+
+### Changed
+
+- **Code review** — Rating, ResizablePanel, ResizableTextarea, Result, RingProgress, ScrollArea, SegmentedControl, RichEditor, TreeSelect, TreeView, and Typography aligned with Bear gates (const/types split, named hooks, Bear icons, no inline layout style).
+
 ## [1.3.0] - 2026-08-19
 
 ### Added

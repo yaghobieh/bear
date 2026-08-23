@@ -1,102 +1,124 @@
 import { forwardRef, useRef, useState, useEffect } from 'react';
-import { ActiveBarProps } from './ActiveBar.types';
+import {
+  BOOLEAN_FALSE,
+  BOOLEAN_TRUE,
+  EMPTY_STRING,
+  NEGATIVE_ONE,
+  QUERY_BUTTON,
+  SIZE_MD,
+  VARIANT_DEFAULT,
+  VARIANT_UNDERLINE,
+} from '@const';
+import { cn } from '@utils';
+import { Box } from '../Box';
+import { Button } from '../Button';
+import { Typography } from '../Typography';
+import {
+  ACTIVE_BAR_SHAPE_CLASSES,
+  ACTIVE_BAR_SIZE_CLASSES,
+  ACTIVE_BAR_VARIANT_CLASSES,
+} from './ActiveBar.const';
+import type { ActiveBarItem, ActiveBarProps } from './ActiveBar.types';
 
-const sizeClasses = {
-  sm: 'text-sm px-3 py-1.5',
-  md: 'text-sm px-4 py-2',
-  lg: 'text-base px-5 py-2.5',
+const renderActiveBarItem = (
+  item: ActiveBarItem,
+  isActive: boolean,
+  fullWidth: boolean,
+  size: NonNullable<ActiveBarProps['size']>,
+  variant: NonNullable<ActiveBarProps['variant']>,
+  onItemClick?: ActiveBarProps['onItemClick']
+) => {
+  const tone = isActive
+    ? ACTIVE_BAR_VARIANT_CLASSES[variant].active
+    : ACTIVE_BAR_VARIANT_CLASSES[variant].inactive;
+
+  return (
+    <Button
+      key={item.id}
+      variant="ghost"
+      onClick={() => onItemClick?.(item)}
+      className={cn(
+        fullWidth && 'bear-flex-1',
+        ACTIVE_BAR_SIZE_CLASSES[size],
+        tone,
+        ACTIVE_BAR_SHAPE_CLASSES[variant],
+        'bear-flex bear-items-center bear-justify-center bear-gap-2 bear-transition-all bear-duration-200'
+      )}
+    >
+      {item.icon}
+      <Typography>{item.label}</Typography>
+      {item.badge !== undefined && (
+        <Box
+          as="span"
+          className="bear-px-1.5 bear-py-0.5 bear-text-xs bear-rounded-full bear-bg-primary-100 dark:bear-bg-primary-900/30 bear-text-primary-600 dark:bear-text-primary-400"
+        >
+          {item.badge}
+        </Box>
+      )}
+    </Button>
+  );
 };
 
-export const ActiveBar = forwardRef<HTMLDivElement, ActiveBarProps>(({
-
-  items,
-  activeId,
-  onItemClick,
-  variant = 'default',
-  size = 'md',
-  fullWidth = false,
-  animated = true,
-  className = '',
-  ...props
-}, ref) => {
+export const ActiveBar = forwardRef<HTMLDivElement, ActiveBarProps>((props, ref) => {
+  const {
+    items,
+    activeId,
+    onItemClick,
+    variant = VARIANT_DEFAULT,
+    size = SIZE_MD,
+    fullWidth = BOOLEAN_FALSE,
+    animated = BOOLEAN_TRUE,
+    className = EMPTY_STRING,
+    ...rest
+  } = props;
 
   const containerRef = useRef<HTMLDivElement>(null);
   const [indicatorStyle, setIndicatorStyle] = useState<React.CSSProperties>({});
 
   useEffect(() => {
-    if (!animated || variant !== 'underline') return;
+    if (!animated || variant !== VARIANT_UNDERLINE) {
+      return;
+    }
 
-    const activeIndex = items.findIndex(item => item.id === activeId);
-    if (activeIndex === -1 || !containerRef.current) return;
+    const activeIndex = items.findIndex((item) => item.id === activeId);
+    if (activeIndex === NEGATIVE_ONE || !containerRef.current) {
+      return;
+    }
 
-    const buttons = containerRef.current.querySelectorAll('button');
+    const buttons = containerRef.current.querySelectorAll(QUERY_BUTTON);
     const activeButton = buttons[activeIndex];
     if (activeButton) {
       setIndicatorStyle({
-        left: activeButton.offsetLeft,
-        width: activeButton.offsetWidth,
+        left: (activeButton as HTMLElement).offsetLeft,
+        width: (activeButton as HTMLElement).offsetWidth,
       });
     }
   }, [activeId, items, animated, variant]);
 
-  const getVariantClasses = (isActive: boolean) => {
-    switch (variant) {
-      case 'pills':
-        return isActive
-          ? 'bg-primary-500 text-white shadow-lg shadow-primary-500/30'
-          : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800';
-      case 'underline':
-        return isActive
-          ? 'text-primary-500 font-medium'
-          : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200';
-      default:
-        return isActive
-          ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white font-medium'
-          : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50';
-    }
-  };
-
   return (
     <div
       ref={ref}
-      className={`bear-active-bar relative ${fullWidth ? 'w-full' : 'inline-flex'} ${className}`.trim()}
-      {...props}
+      className={cn('Bear-ActiveBar bear-relative', fullWidth ? 'bear-w-full' : 'bear-inline-flex', className)}
+      {...rest}
     >
       <div
         ref={containerRef}
-        className={`flex ${fullWidth ? 'w-full' : ''} ${variant === 'underline' ? 'border-b border-gray-200 dark:border-gray-700' : 'gap-1'}`}
+        className={cn(
+          'Bear-ActiveBar__list bear-flex',
+          fullWidth && 'bear-w-full',
+          variant === VARIANT_UNDERLINE
+            ? 'bear-border-b bear-border-gray-200 dark:bear-border-gray-700'
+            : 'bear-gap-1'
+        )}
       >
-        {items.map((item) => {
-          const isActive = item.id === activeId;
-
-          return (
-            <button
-              key={item.id}
-              onClick={() => onItemClick?.(item)}
-              className={`
-                ${fullWidth ? 'flex-1' : ''}
-                ${sizeClasses[size]}
-                ${getVariantClasses(isActive)}
-                ${variant === 'pills' ? 'rounded-full' : variant === 'underline' ? 'relative pb-3' : 'rounded-lg'}
-                flex items-center justify-center gap-2
-                transition-all duration-200
-              `}
-            >
-              {item.icon}
-              <span>{item.label}</span>
-              {item.badge !== undefined && (
-                <span className="px-1.5 py-0.5 text-xs rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400">
-                  {item.badge}
-                </span>
-              )}
-            </button>
-          );
-        })}
+        {items.map((item) =>
+          renderActiveBarItem(item, item.id === activeId, fullWidth, size, variant, onItemClick)
+        )}
       </div>
 
-      {animated && variant === 'underline' && (
+      {animated && variant === VARIANT_UNDERLINE && (
         <div
-          className="absolute bottom-0 h-0.5 bg-primary-500 transition-all duration-300 ease-out"
+          className="Bear-ActiveBar__indicator bear-absolute bear-bottom-0 bear-h-0.5 bear-bg-primary-500 bear-transition-all bear-duration-300 bear-ease-out"
           style={indicatorStyle}
         />
       )}
@@ -105,4 +127,3 @@ export const ActiveBar = forwardRef<HTMLDivElement, ActiveBarProps>(({
 });
 
 ActiveBar.displayName = 'ActiveBar';
-

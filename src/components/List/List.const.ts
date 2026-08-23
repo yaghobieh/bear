@@ -1,4 +1,4 @@
-import type { BearSize } from '../../types';
+import type { BearSize } from '@types';
 
 export const L_I_S_T_ROOT_CLASS = 'Bear-List';
 

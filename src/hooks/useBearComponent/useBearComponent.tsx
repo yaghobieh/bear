@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useCallback, useMemo, ReactNode, CSSProperties } from 'react';
 import { BearContext } from '../../context/BearProvider';
-import type { BearComponentOverrides, ButtonVariantsConfig } from '../../types/component.types';
+import type { BearComponentOverrides, ButtonVariantsConfig } from '@types';
 import type { UseBearComponentReturn, BearComponentContextValue } from './useBearComponent.types';
 
 // Create context

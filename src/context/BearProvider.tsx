@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useCallback, useMemo, ReactNode, useEffect, startTransition } from 'react';
-import type { BearTheme, BearThemeOverride, BearColorScale, CustomVariant, CustomVariantsMap } from '../types';
-import type { BearComponentOverrides, ButtonVariantsConfig, BearDefaultPropsMap } from '../types/component.types';
+import type { BearTheme, BearThemeOverride, BearColorScale, CustomVariant, CustomVariantsMap } from '@types';
+import type { BearComponentOverrides, ButtonVariantsConfig, BearDefaultPropsMap } from '@types';
 import type { CustomTypography, CustomTypographyMap } from '../components/Typography/Typography.types';
 import type { BearDirection, BearDensity } from './bearProvider.types';
 import {

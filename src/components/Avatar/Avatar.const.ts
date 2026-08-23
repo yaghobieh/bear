@@ -1,6 +1,4 @@
-/**
- * Avatar component constants
- */
+import { AVATAR_ALT, AVATAR_MAX_INITIALS, AVATAR_VARIANT_CIRCLE, SIZE_MD } from '@const';
 
 export const AVATAR_SIZE = {
   xs: 'bear-w-6 bear-h-6 bear-text-xs',
@@ -25,9 +23,8 @@ export const AVATAR_STATUS = {
 } as const;
 
 export const AVATAR_DEFAULTS = {
-  SIZE: 'md' as const,
-  VARIANT: 'circle' as const,
-  ALT: 'Avatar',
-  MAX_INITIALS: 2,
-} as const;
-
+  SIZE: SIZE_MD,
+  VARIANT: AVATAR_VARIANT_CIRCLE,
+  ALT: AVATAR_ALT,
+  MAX_INITIALS: AVATAR_MAX_INITIALS,
+};

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { BearSize } from '../../types';
+import type { BearSize } from '@types';
 
 export type PropControlType = 'boolean' | 'string' | 'number' | 'select';
 

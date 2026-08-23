@@ -1,21 +1,16 @@
-/**
- * BackTop component defaults
- * Uses Bear Button for consistent styling
- */
+import { BOOLEAN_TRUE, SIZE_LG, SIZE_MD, SIZE_SM, VARIANT_PRIMARY } from '@const';
+import type { CompactBearSize } from '@types';
+
 export const BACKTOP_DEFAULTS = {
   BOTTOM: 40,
   RIGHT: 40,
   VISIBLE_AT: 400,
   DURATION: 300,
-  SIZE: 'md' as const,
-  VARIANT: 'primary' as const,
-  ANIMATED: true,
-} as const;
+  SIZE: SIZE_MD,
+  VARIANT: VARIANT_PRIMARY,
+  ANIMATED: BOOLEAN_TRUE,
+};
 
-/**
- * BackTop size configurations
- * Controls the button dimensions and icon size
- */
 export const BACKTOP_SIZES = {
   sm: {
     width: 36,
@@ -32,4 +27,10 @@ export const BACKTOP_SIZES = {
     height: 52,
     iconSize: 24,
   },
-} as const;
+};
+
+export const BACKTOP_BUTTON_SIZE: Record<CompactBearSize, CompactBearSize> = {
+  [SIZE_SM]: SIZE_SM,
+  [SIZE_MD]: SIZE_MD,
+  [SIZE_LG]: SIZE_LG,
+};

@@ -1,83 +1,57 @@
-import { FC, useState, useRef, useEffect, useCallback, useMemo } from 'react';
-import {cn } from '@utils';
-import { Portal } from '../Portal';
-import type { TreeSelectProps, TreeNode } from './TreeSelect.types';
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import {
-  DEFAULT_MAX_HEIGHT, INDENT_PX, SIZE_CLASSES,
-  ROOT_CLASSES, TRIGGER_CLASSES, DROPDOWN_CLASSES, SEARCH_CLASSES,
-  NODE_CLASSES, NODE_SELECTED_CLASSES, NODE_DISABLED_CLASSES,
-  CHEVRON_CLASSES, TAG_CLASSES, LABEL_CLASSES, ERROR_CLASSES, HELPER_CLASSES,
-} from './TreeSelect.const';
+  BOOLEAN_FALSE,
+  BOOLEAN_TRUE,
+  EIGHT,
+  ELEVEN_THOUSAND,
+  EMPTY_STRING,
+  FOUR,
+  SIZE_MD,
+  TREE_SELECT_MAX_HEIGHT_PX,
+  ZERO,
+} from '@const';
+import { cn } from '@utils';
+import { Box } from '../Box';
+import { Button } from '../Button';
+import { ChevronDownIcon } from '../Icon';
+import { Flex } from '../Flex';
+import { Portal } from '../Portal';
+import { Typography } from '../Typography';
+import { TreeNodeRow } from './components';
+import { SIZE_CLASSES } from './TreeSelect.const';
+import type { TreeSelectProps } from './TreeSelect.types';
 import { findNodeById, filterNodes, collectAllIds } from './TreeSelect.utils';
 
-const TREE_SELECT_PANEL_Z = 10000;
-
-const TreeNodeRow: FC<{
-  node: TreeNode;
-  depth: number;
-  selected: Set<string>;
-  expanded: Set<string>;
-  multiple: boolean;
-  onToggleExpand: (id: string) => void;
-  onSelect: (id: string) => void;
-}> = ({ node, depth, selected, expanded, multiple, onToggleExpand, onSelect }) => {
-  const hasChildren = node.children && node.children.length > 0;
-  const isExpanded = expanded.has(node.id);
-  const isSelected = selected.has(node.id);
-
-  return (
-    <>
-      <div
-        className={cn(NODE_CLASSES, isSelected && NODE_SELECTED_CLASSES, node.disabled && NODE_DISABLED_CLASSES)}
-        style={{ paddingLeft: depth * INDENT_PX + 12 }}
-        onClick={() => !node.disabled && onSelect(node.id)}
-        role="treeitem"
-        aria-selected={isSelected}
-        aria-expanded={hasChildren ? isExpanded : undefined}
-      >
-        {hasChildren ? (
-          <svg
-            className={cn(CHEVRON_CLASSES, isExpanded && 'bear-rotate-90')}
-            onClick={(e) => { e.stopPropagation(); onToggleExpand(node.id); }}
-            fill="none" viewBox="0 0 24 24" stroke="currentColor"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        ) : (
-          <span className="bear-w-4 bear-mr-1" />
-        )}
-        {multiple && (
-          <span className={cn('bear-w-4 bear-h-4 bear-mr-2 bear-border bear-rounded bear-flex bear-items-center bear-justify-center bear-text-xs', isSelected ? 'bear-bg-primary-500 bear-border-primary-500 bear-text-white' : 'bear-border-gray-300 dark:bear-border-zinc-600')}>
-            {isSelected && '✓'}
-          </span>
-        )}
-        {node.icon && <span className="bear-mr-1.5">{node.icon}</span>}
-        <span className="bear-truncate">{node.label}</span>
-      </div>
-      {hasChildren && isExpanded && node.children!.map((child) => (
-        <TreeNodeRow key={child.id} node={child} depth={depth + 1} selected={selected} expanded={expanded} multiple={multiple} onToggleExpand={onToggleExpand} onSelect={onSelect} />
-      ))}
-    </>
-  );
-};
-
-export const TreeSelect: FC<TreeSelectProps> = (props) => {
+export const TreeSelect = (props: TreeSelectProps) => {
   const {
-    nodes, value, onChange, multiple = false, label, placeholder = 'Select…',
-    disabled = false, clearable = true, searchable = true, expandAll = false,
-    size = 'md', error, helperText, maxHeight = DEFAULT_MAX_HEIGHT,
-    className, testId, ...rest
+    nodes,
+    value,
+    onChange,
+    multiple = BOOLEAN_FALSE,
+    label,
+    placeholder = 'Select…',
+    disabled = BOOLEAN_FALSE,
+    clearable = BOOLEAN_TRUE,
+    searchable = BOOLEAN_TRUE,
+    expandAll = BOOLEAN_FALSE,
+    size = SIZE_MD,
+    error,
+    helperText,
+    maxHeight = TREE_SELECT_MAX_HEIGHT_PX,
+    className,
+    testId,
+    ...rest
   } = props;
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [search, setSearch] = useState('');
+  const [isOpen, setIsOpen] = useState(BOOLEAN_FALSE);
+  const [search, setSearch] = useState(EMPTY_STRING);
   const containerRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0, width: 0 });
+  const [menuPosition, setMenuPosition] = useState({ top: ZERO, left: ZERO, width: ZERO });
 
   const allIds = useMemo(() => collectAllIds(nodes), [nodes]);
-  const [expanded, setExpanded] = useState<Set<string>>(() => expandAll ? allIds : new Set());
+  const [expanded, setExpanded] = useState<Set<string>>(() => (expandAll ? allIds : new Set()));
 
   const selected = useMemo(() => {
     if (!value) return new Set<string>();
@@ -90,8 +64,8 @@ export const TreeSelect: FC<TreeSelectProps> = (props) => {
       const rect = triggerRef.current?.getBoundingClientRect();
       if (!rect) return;
       setMenuPosition({
-        top: rect.bottom + 4,
-        left: Math.max(8, Math.min(rect.left, window.innerWidth - rect.width - 8)),
+        top: rect.bottom + FOUR,
+        left: Math.max(EIGHT, Math.min(rect.left, window.innerWidth - rect.width - EIGHT)),
         width: rect.width,
       });
     };
@@ -106,116 +80,165 @@ export const TreeSelect: FC<TreeSelectProps> = (props) => {
 
   useEffect(() => {
     if (!isOpen) return;
-    const handleClick = (e: MouseEvent) => {
-      const t = e.target as Node;
-      if (containerRef.current?.contains(t)) return;
-      if (dropdownRef.current?.contains(t)) return;
-      setIsOpen(false);
-      setSearch('');
+    const handleClick = (event: MouseEvent) => {
+      const target = event.target as Node;
+      if (containerRef.current?.contains(target)) return;
+      if (dropdownRef.current?.contains(target)) return;
+      setIsOpen(BOOLEAN_FALSE);
+      setSearch(EMPTY_STRING);
     };
     document.addEventListener('mousedown', handleClick);
     return () => document.removeEventListener('mousedown', handleClick);
   }, [isOpen]);
 
   const onToggleExpand = useCallback((id: string) => {
-    setExpanded((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) { next.delete(id); } else { next.add(id); }
+    setExpanded((previous) => {
+      const next = new Set(previous);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
       return next;
     });
   }, []);
 
-  const onSelect = useCallback((id: string) => {
-    if (multiple) {
-      const next = new Set(selected);
-      if (next.has(id)) { next.delete(id); } else { next.add(id); }
-      onChange?.(Array.from(next));
-    } else {
+  const onSelect = useCallback(
+    (id: string) => {
+      if (multiple) {
+        const next = new Set(selected);
+        if (next.has(id)) {
+          next.delete(id);
+        } else {
+          next.add(id);
+        }
+        onChange?.(Array.from(next));
+        return;
+      }
       onChange?.(id);
-      setIsOpen(false);
-      setSearch('');
-    }
-  }, [multiple, selected, onChange]);
+      setIsOpen(BOOLEAN_FALSE);
+      setSearch(EMPTY_STRING);
+    },
+    [multiple, selected, onChange],
+  );
 
   const handleClear = useCallback(() => {
-    onChange?.(multiple ? [] : '');
+    onChange?.(multiple ? [] : EMPTY_STRING);
   }, [multiple, onChange]);
 
   const filteredNodes = search ? filterNodes(nodes, search) : nodes;
-
-  const displayValue = (): React.ReactNode => {
-    if (selected.size === 0) return <span className="bear-text-gray-400 dark:bear-text-zinc-500">{placeholder}</span>;
-    if (multiple) {
-      return (
-        <div className="bear-flex bear-flex-wrap bear-gap-1">
-          {Array.from(selected).map((id) => {
-            const node = findNodeById(nodes, id);
-            return node ? <span key={id} className={TAG_CLASSES}>{node.label}</span> : null;
-          })}
-        </div>
-      );
-    }
-    const node = findNodeById(nodes, Array.from(selected)[0]);
-    return node?.label ?? placeholder;
-  };
+  const selectedNode = findNodeById(nodes, Array.from(selected)[ZERO] ?? EMPTY_STRING);
+  const hasSelection = selected.size > ZERO;
 
   return (
-    <div ref={containerRef} className={cn(ROOT_CLASSES, className)} data-testid={testId} {...rest}>
-      {label && <label className={LABEL_CLASSES}>{label}</label>}
-      <button
+    <Box
+      ref={containerRef}
+      className={cn('Bear-TreeSelect bear-relative bear-inline-block bear-w-full', className)}
+      data-testid={testId}
+      {...rest}
+    >
+      {label ? (
+        <Typography className="Bear-TreeSelect__label bear-block bear-text-sm bear-font-medium bear-text-gray-700 dark:bear-text-zinc-300 bear-mb-1.5">
+          {label}
+        </Typography>
+      ) : null}
+      <Button
         ref={triggerRef}
         type="button"
         disabled={disabled}
         onClick={() => !disabled && setIsOpen(!isOpen)}
-        className={cn(TRIGGER_CLASSES, SIZE_CLASSES[size], disabled && 'bear-opacity-50 bear-cursor-not-allowed')}
+        className={cn(
+          'bear-w-full bear-flex bear-items-center bear-justify-between bear-rounded-lg bear-border bear-border-gray-300 dark:bear-border-zinc-600 bear-bg-white dark:bear-bg-zinc-800 bear-text-gray-900 dark:bear-text-white bear-transition-colors focus:bear-ring-2 focus:bear-ring-primary-500 bear-outline-none',
+          SIZE_CLASSES[size],
+          disabled && 'bear-opacity-50 bear-cursor-not-allowed',
+        )}
       >
-        <span className="bear-flex-1 bear-text-left bear-truncate">{displayValue()}</span>
-        <div className="bear-flex bear-items-center bear-gap-1">
-          {clearable && selected.size > 0 && (
-            <span className="bear-text-gray-400 hover:bear-text-gray-600 bear-cursor-pointer" onClick={(e) => { e.stopPropagation(); handleClear(); }}>✕</span>
+        <Typography className="bear-flex-1 bear-text-left bear-truncate">
+          {hasSelection && multiple ? (
+            <Flex className="bear-flex-wrap bear-gap-1">
+              {Array.from(selected).map((id) => {
+                const node = findNodeById(nodes, id);
+                return node ? (
+                  <Typography
+                    key={id}
+                    className="bear-inline-flex bear-items-center bear-gap-1 bear-bg-primary-100 dark:bear-bg-primary-900/30 bear-text-primary-700 dark:bear-text-primary-300 bear-rounded bear-px-1.5 bear-py-0.5 bear-text-xs"
+                  >
+                    {node.label}
+                  </Typography>
+                ) : null;
+              })}
+            </Flex>
+          ) : null}
+          {hasSelection && !multiple ? selectedNode?.label ?? placeholder : null}
+          {hasSelection ? null : (
+            <Typography className="bear-text-gray-400 dark:bear-text-zinc-500">{placeholder}</Typography>
           )}
-          <svg className={cn('bear-w-4 bear-h-4 bear-text-gray-400 bear-transition-transform', isOpen && 'bear-rotate-180')} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-          </svg>
-        </div>
-      </button>
+        </Typography>
+        <Flex align="center" className="bear-gap-1">
+          {clearable && hasSelection ? (
+            <Box
+              className="bear-text-gray-400 hover:bear-text-gray-600 bear-cursor-pointer"
+              onClick={(event) => {
+                event.stopPropagation();
+                handleClear();
+              }}
+            >
+              ✕
+            </Box>
+          ) : null}
+          <ChevronDownIcon
+            className={cn('bear-w-4 bear-h-4 bear-text-gray-400 bear-transition-transform', isOpen && 'bear-rotate-180')}
+          />
+        </Flex>
+      </Button>
 
-      {isOpen && (
+      {isOpen ? (
         <Portal>
-          <div
+          <Box
             ref={dropdownRef}
-            className={cn(DROPDOWN_CLASSES, 'bear-fixed')}
+            className="bear-fixed bear-bg-white dark:bear-bg-zinc-800 bear-border bear-border-gray-200 dark:bear-border-zinc-700 bear-rounded-xl bear-shadow-xl bear-overflow-hidden"
             style={{
               top: menuPosition.top,
               left: menuPosition.left,
               width: menuPosition.width,
-              zIndex: TREE_SELECT_PANEL_Z,
+              zIndex: ELEVEN_THOUSAND,
             }}
           >
-            {searchable && (
+            {searchable ? (
               <input
-                className={SEARCH_CLASSES}
+                className="bear-w-full bear-px-3 bear-py-2 bear-text-sm bear-bg-transparent bear-border-b bear-border-gray-200 dark:bear-border-zinc-700 bear-outline-none bear-text-gray-900 dark:bear-text-white"
                 placeholder="Search…"
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(event) => setSearch(event.target.value)}
                 autoFocus
               />
-            )}
-            <div style={{ maxHeight }} className="bear-overflow-y-auto" role="tree">
-              {filteredNodes.length > 0 ? filteredNodes.map((node) => (
-                <TreeNodeRow key={node.id} node={node} depth={0} selected={selected} expanded={expanded} multiple={multiple} onToggleExpand={onToggleExpand} onSelect={onSelect} />
-              )) : (
-                <div className="bear-py-6 bear-text-center bear-text-sm bear-text-gray-400">No results</div>
+            ) : null}
+            <Box style={{ maxHeight }} className="bear-overflow-y-auto" role="tree">
+              {filteredNodes.length > ZERO ? (
+                filteredNodes.map((node) => (
+                  <TreeNodeRow
+                    key={node.id}
+                    node={node}
+                    depth={ZERO}
+                    selected={selected}
+                    expanded={expanded}
+                    multiple={multiple}
+                    onToggleExpand={onToggleExpand}
+                    onSelect={onSelect}
+                  />
+                ))
+              ) : (
+                <Typography className="bear-py-6 bear-text-center bear-text-sm bear-text-gray-400">No results</Typography>
               )}
-            </div>
-          </div>
+            </Box>
+          </Box>
         </Portal>
-      )}
+      ) : null}
 
-      {error && <p className={ERROR_CLASSES}>{error}</p>}
-      {!error && helperText && <p className={HELPER_CLASSES}>{helperText}</p>}
-    </div>
+      {error ? <Typography className="bear-mt-1 bear-text-xs bear-text-red-500">{error}</Typography> : null}
+      {!error && helperText ? (
+        <Typography className="bear-mt-1 bear-text-xs bear-text-gray-500 dark:bear-text-zinc-500">{helperText}</Typography>
+      ) : null}
+    </Box>
   );
 };
-
-export default TreeSelect;

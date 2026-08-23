@@ -23,11 +23,11 @@ export const SIGN_PAD_CANVAS_WRAPPER_CLASSES = 'bear-relative bear-rounded-lg be
 
 export const SIGN_PAD_CANVAS_WRAPPER_HOVER = 'hover:bear-border-primary-400 dark:hover:bear-border-primary-500';
 
-export const SIGN_PAD_PLACEHOLDER_CLASSES = 'bear-absolute bear-inset-0 bear-flex bear-items-center bear-justify-center bear-text-gray-400 dark:bear-text-zinc-500 bear-text-sm bear-pointer-events-none';
+export const SIGN_PAD_PLACEHOLDER_CLASSES = 'bear-absolute bear-inset-0 bear-z-[1] bear-flex bear-items-center bear-justify-center bear-text-gray-400 dark:bear-text-zinc-500 bear-text-sm bear-pointer-events-none';
 
-export const SIGN_PAD_LINE_CLASSES = 'bear-absolute bear-bottom-8 bear-left-4 bear-right-4 bear-border-b bear-border-gray-300 dark:bear-border-zinc-600 bear-pointer-events-none';
+export const SIGN_PAD_LINE_CLASSES = 'bear-absolute bear-bottom-8 bear-left-4 bear-right-4 bear-z-[1] bear-border-b bear-border-gray-300 dark:bear-border-zinc-600 bear-pointer-events-none';
 
-export const SIGN_PAD_X_MARK_CLASSES = 'bear-absolute bear-bottom-6 bear-left-4 bear-text-gray-400 dark:bear-text-zinc-500 bear-text-lg bear-font-bold bear-pointer-events-none';
+export const SIGN_PAD_X_MARK_CLASSES = 'bear-absolute bear-bottom-6 bear-left-4 bear-z-[1] bear-text-gray-400 dark:bear-text-zinc-500 bear-text-lg bear-font-bold bear-pointer-events-none';
 
 export const SIGN_PAD_ACTIONS_CLASSES = 'bear-flex bear-gap-2 bear-justify-end';
 

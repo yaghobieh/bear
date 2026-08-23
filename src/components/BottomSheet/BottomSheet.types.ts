@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react';
 
+export type BottomSheetSize = 'sm' | 'md' | 'lg' | 'full';
+
 export interface BottomSheetProps {
   testId?: string;
   id?: string;
@@ -7,7 +9,7 @@ export interface BottomSheetProps {
   onClose: () => void;
   title?: ReactNode;
   children: ReactNode;
-  size?: 'sm' | 'md' | 'lg' | 'full';
+  size?: BottomSheetSize;
   showCloseButton?: boolean;
   closeOnBackdrop?: boolean;
   closeOnEscape?: boolean;

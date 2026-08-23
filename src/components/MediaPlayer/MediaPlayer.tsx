@@ -4,7 +4,7 @@ import { BearIcons } from '../Icon';
 import type { MediaPlayerProps, PlaylistItem } from './MediaPlayer.types';
 import { DEFAULT_ACCENT, PROGRESS_HEIGHT, CENTER_ICON_SIZE, SIZE_MAP } from './MediaPlayer.const';
 import { formatTime } from './MediaPlayer.utils';
-import { useBearStyles } from '../../hooks/useBearStyles';
+import { useBearStyles } from '@hooks/useBearStyles';
 
 const DEFAULT_STICKY_SIZE = 320;
 const STICKY_GAP = 16;

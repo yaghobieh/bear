@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { BearVariant } from '../../types';
+import type { BearVariant } from '@types';
 import type { ModalSize } from '../Modal/Modal.types';
 
 export interface ModalsTranslations {

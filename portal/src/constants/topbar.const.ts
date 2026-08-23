@@ -6,18 +6,18 @@ export interface TopbarAlertItem {
 }
 
 export const NEW_COMPONENT_ALERTS: TopbarAlertItem[] = [
-  { label: 'ModalsProvider', path: '/components/modals-provider', info: 'Imperative open and confirm without local modal state', badge: 'New' },
-  { label: 'Modal / Drawer', path: '/components/modal', info: 'Dialogs sit above backdrop blur', badge: 'Fix' },
-  { label: 'SignPad', path: '/components/sign-pad', info: 'Mouse and touch drawing restored', badge: 'Fix' },
-  { label: 'Toast / Snackbar', path: '/components/toast', info: 'Readable surfaces in dark and light', badge: 'Fix' },
+  { label: 'Select / Dropdown', path: '/components/select', info: 'Pick open and close motion independently', badge: 'New' },
+  { label: 'DatePicker', path: '/components/date-picker', info: 'Calendar overlay stays put and animates out', badge: 'New' },
+  { label: 'TimePicker', path: '/components/time-picker', info: 'Portaled dropdown with open and close effects', badge: 'New' },
+  { label: 'Calendar', path: '/components/calendar', info: 'Controlled open with the same overlay effects', badge: 'New' },
 ];
 
 export const VERSION_POPUP_FEATURES = [
-  'ModalsProvider',
-  'Modal and Drawer above blur',
-  'SignPad drawing',
-  'Toast and Snackbar surfaces',
+  'Open and close overlay effects',
+  'Select, Dropdown, DatePicker',
+  'TimePicker and DateRangePicker',
+  'Calendar controlled motion',
 ];
 
 export const VERSION_POPUP_DESCRIPTION =
-  'v1.3.0 — ModalsProvider, overlay stacking, SignPad capture, Toast/Snackbar contrast.';
+  'v1.3.1 — Overlay open and close effects on Select, DatePicker, Calendar, and other dropdowns.';

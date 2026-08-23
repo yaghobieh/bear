@@ -1,1 +1,5 @@
-export const S_E_G_M_E_N_T_E_D_C_O_N_T_R_O_L_ROOT_CLASS = 'Bear-SegmentedControl';
+export const SEGMENTED_SIZE_MODIFIER = {
+  sm: 'Bear-SegmentedControl__item--sm',
+  md: 'Bear-SegmentedControl__item--md',
+  lg: 'Bear-SegmentedControl__item--lg',
+} as const;

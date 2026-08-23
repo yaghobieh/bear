@@ -1,0 +1,70 @@
+.Bear-SegmentedControl {
+  position: relative;
+  display: inline-flex;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+  background: var(--bear-bg-tertiary);
+}
+
+.Bear-SegmentedControl--full {
+  width: 100%;
+}
+
+.Bear-SegmentedControl--disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.Bear-SegmentedControl__item {
+  position: relative;
+  flex: 1 1 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 0.375rem;
+  background: transparent;
+  color: var(--bear-text-secondary);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.Bear-SegmentedControl__item:hover {
+  color: var(--bear-text-primary);
+}
+
+.Bear-SegmentedControl__item--active {
+  background: var(--bear-bg-primary);
+  color: var(--bear-text-primary);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.12);
+}
+
+.bear-dark .Bear-SegmentedControl__item--active,
+.dark .Bear-SegmentedControl__item--active {
+  background: var(--bear-bg-secondary);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+}
+
+.Bear-SegmentedControl__item--disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.Bear-SegmentedControl__item--sm {
+  min-height: 2rem;
+  padding: 0 0.75rem;
+  font-size: 0.875rem;
+}
+
+.Bear-SegmentedControl__item--md {
+  min-height: 2.5rem;
+  padding: 0 1rem;
+  font-size: 1rem;
+}
+
+.Bear-SegmentedControl__item--lg {
+  min-height: 3rem;
+  padding: 0 1.25rem;
+  font-size: 1.125rem;
+}

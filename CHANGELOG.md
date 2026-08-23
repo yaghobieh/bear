@@ -2,6 +2,16 @@
 
 All notable changes to Bear UI will be documented in this file.
 
+## [1.3.2] - TBD
+
+### Added
+
+- (in progress) Portal PropsTable coverage, Menubar / NavigationMenu.
+
+### Fixed
+
+- (in progress) Overlay focus trap / restore.
+
 ## [1.3.1] - 2026-08-23
 
 ### Added

@@ -2,7 +2,7 @@
  * List Component Types
  */
 import type { HTMLAttributes, ReactNode } from 'react';
-import type { BearSize } from '../../types';
+import type { BearSize } from '@types';
 
 export interface ListProps extends HTMLAttributes<HTMLUListElement> {
   id?: string;

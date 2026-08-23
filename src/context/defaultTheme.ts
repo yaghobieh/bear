@@ -1,4 +1,4 @@
-import type { BearTheme, BearColorScale } from '../types';
+import type { BearTheme, BearColorScale } from '@types';
 
 /**
  * Bear pink color palette - signature pink

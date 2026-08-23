@@ -1,5 +1,7 @@
 import { ReactNode } from 'react';
 
+export type BottomNavigationVariant = 'default' | 'elevated' | 'transparent';
+
 export interface BottomNavItem {
   id: string;
   label: string;
@@ -15,7 +17,7 @@ export interface BottomNavigationProps {
   value?: string;
   onChange?: (id: string) => void;
   showLabels?: boolean | 'always' | 'active';
-  variant?: 'default' | 'elevated' | 'transparent';
+  variant?: BottomNavigationVariant;
   className?: string;
 }
 

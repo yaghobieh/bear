@@ -8,8 +8,8 @@ import { DocPageNav } from './components/DocPageNav';
 import { RouteSEO } from './components/RouteSEO';
 
 const BANNER_CONFIG = {
-  id: 'bear-1.3.0',
-  message: 'Bear v1.3.0 — ModalsProvider, Modal/Drawer above blur, SignPad drawing, Toast/Snackbar surfaces.',
+  id: 'bear-1.3.1',
+  message: 'Bear v1.3.1 — Dropdown open and close effects on Select, DatePicker, Calendar, and more.',
   link: '/whats-new',
   linkText: "See what's new",
 };

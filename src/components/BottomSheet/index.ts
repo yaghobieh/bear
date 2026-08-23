@@ -1,2 +1,2 @@
 export { BottomSheet } from './BottomSheet';
-export type { BottomSheetProps } from './BottomSheet.types';
+export type { BottomSheetProps, BottomSheetSize } from './BottomSheet.types';

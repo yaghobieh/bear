@@ -46,3 +46,4 @@ export const DEG_TO_RAD = Math.PI / 180;
 /** Min / max pattern repeat per axis */
 export const PATTERN_REPEAT_MIN = 1;
 export const PATTERN_REPEAT_MAX = 4;
+

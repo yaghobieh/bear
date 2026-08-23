@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { BearVariant, BearSize } from '../../types';
+import type { BearVariant, BearSize } from '@types';
 
 export interface ThemeIconProps {
   id?: string;

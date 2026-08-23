@@ -217,6 +217,34 @@ const SelectPage: FC = () => {
         </div>
       </ComponentPreview>
 
+      <ComponentPreview
+        title="Open and close effects"
+        description="Menu stays on the trigger. Pick open and close motion independently."
+        code={`<Select openEffect="slide-down" closeEffect="fade" options={options} />
+<Select effect={{ open: 'scale', close: 'slide-down' }} options={options} />`}
+        allowOverflow
+      >
+        <div className="flex flex-col gap-4 max-w-xs w-full">
+          <Select
+            options={BASIC_OPTIONS}
+            value={value}
+            onChange={setValue}
+            placeholder="open slide-down, close fade"
+            openEffect="slide-down"
+            closeEffect="fade"
+            fullWidth
+          />
+          <Select
+            options={BASIC_OPTIONS}
+            value={value}
+            onChange={setValue}
+            placeholder="effect open scale, close slide-down"
+            effect={{ open: 'scale', close: 'slide-down' }}
+            fullWidth
+          />
+        </div>
+      </ComponentPreview>
+
       <PropsTable
         title="Props"
         rows={[
@@ -232,6 +260,9 @@ const SelectPage: FC = () => {
           { name: 'native', type: 'boolean', default: 'false', description: 'Render a native HTML select' },
           { name: 'displayEmpty', type: 'boolean', default: 'false', description: 'Show empty/placeholder when value is empty' },
           { name: 'renderValue', type: '(value: string) => ReactNode', description: 'Custom closed-trigger display for custom Select' },
+          { name: 'openEffect', type: "'none' | 'fade' | 'slide-down' | 'scale'", default: 'slide-down', description: 'Menu open animation' },
+          { name: 'closeEffect', type: "'none' | 'fade' | 'slide-down' | 'scale'", default: 'same as openEffect', description: 'Menu close animation' },
+          { name: 'effect', type: '{ open?: OverlayMotionEffect; close?: OverlayMotionEffect }', description: 'Open and close motion in one prop' },
         ]}
       />
     </div>

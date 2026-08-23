@@ -1,7 +1,9 @@
 import { FC, useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import type { TimePickerProps } from './TimePicker.types';
-import {cn } from '@utils';
-import { useMediaQuery } from '@hooks/useMediaQuery';
+import { cn } from '@utils';
+import { resolveOverlayEffects, useClickOutsideMultiple, useFixedAnchorPosition, useMediaQuery } from '@hooks';
+import { ClockIcon } from '../Icon';
+import { OverlayPortal } from '../OverlayPortal';
 import { formatTime } from './TimePicker.utils';
 import {
   sizeClasses,
@@ -20,15 +22,13 @@ import {
   TIMEPICKER_VARIANT_AUTO,
   TIMEPICKER_VARIANT_DIAL,
   TIMEPICKER_VARIANT_COLUMNS,
+  TIMEPICKER_DROPDOWN_ATTR,
+  TIMEPICKER_DROPDOWN_HEIGHT_PX,
+  TIMEPICKER_DROPDOWN_Z_INDEX,
+  TIMEPICKER_CLOCK_ICON_CLASS,
 } from './TimePicker.constants';
 import { TimePickerColumnsDropdown } from './components/TimePickerColumnsDropdown';
 import { TimePickerDialDropdown } from './components/TimePickerDialDropdown';
-
-const DEFAULT_CLOCK_ICON = (
-  <svg className="bear-w-5 bear-h-5 bear-text-gray-400 dark:bear-text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>
-);
 
 export const TimePicker: FC<TimePickerProps> = (incomingProps) => {
   const props: TimePickerProps = {
@@ -49,7 +49,12 @@ export const TimePicker: FC<TimePickerProps> = (incomingProps) => {
     dropdownVariantBreakpoint: incomingProps.dropdownVariantBreakpoint ?? TIMEPICKER_DEFAULT_BREAKPOINT,
     icon: incomingProps.icon,
     translations: incomingProps.translations,
+    openEffect: incomingProps.openEffect,
+    closeEffect: incomingProps.closeEffect,
+    effect: incomingProps.effect,
+    testId: incomingProps.testId,
   };
+  const { openEffect, closeEffect } = resolveOverlayEffects(incomingProps);
 
   const {
     value,
@@ -69,6 +74,7 @@ export const TimePicker: FC<TimePickerProps> = (incomingProps) => {
     dropdownVariantBreakpoint,
     icon,
     translations,
+    testId,
   } = props;
 
   const isWideScreen = useMediaQuery(`(min-width: ${dropdownVariantBreakpoint}px)`);
@@ -85,6 +91,13 @@ export const TimePicker: FC<TimePickerProps> = (incomingProps) => {
   const [selectedMinute, setSelectedMinute] = useState(0);
   const [period, setPeriod] = useState<'AM' | 'PM'>('AM');
   const containerRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const { style: overlayStyle, ready } = useFixedAnchorPosition({
+    anchorRef: buttonRef,
+    open: isOpen,
+    estimatedHeightPx: TIMEPICKER_DROPDOWN_HEIGHT_PX,
+  });
 
   useEffect(() => {
     if (timeValue && typeof timeValue === 'string') {
@@ -96,15 +109,8 @@ export const TimePicker: FC<TimePickerProps> = (incomingProps) => {
     }
   }, [timeValue]);
 
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  const close = useCallback(() => setIsOpen(false), []);
+  useClickOutsideMultiple([containerRef, dropdownRef], close, { enabled: isOpen });
 
   const handleConfirm = useCallback(() => {
     onChange?.(formatTime(selectedHour, selectedMinute, period, format ?? TIMEPICKER_FORMAT_12H));
@@ -156,9 +162,10 @@ export const TimePicker: FC<TimePickerProps> = (incomingProps) => {
   }, [isOpen, effectiveVariant, commonProps, resolvedMinuteStep]);
 
   return (
-    <div ref={containerRef} className={cn(TIMEPICKER_ROOT_CLASSES, className)}>
+    <div ref={containerRef} className={cn(TIMEPICKER_ROOT_CLASSES, className)} data-testid={testId}>
       {label && <label className={TIMEPICKER_LABEL_CLASSES}>{label}</label>}
       <button
+        ref={buttonRef}
         type="button"
         onClick={() => !disabled && setIsOpen(!isOpen)}
         disabled={disabled}
@@ -172,11 +179,22 @@ export const TimePicker: FC<TimePickerProps> = (incomingProps) => {
         )}
       >
         <span>{timeValue || placeholder}</span>
-        {icon ?? DEFAULT_CLOCK_ICON}
+        {icon ?? <ClockIcon className={TIMEPICKER_CLOCK_ICON_CLASS} />}
       </button>
       {error && <p className={TIMEPICKER_ERROR_CLASSES}>{error}</p>}
       {helperText && !error && <p className={TIMEPICKER_HELPER_CLASSES}>{helperText}</p>}
-      {renderDropdown()}
+      <OverlayPortal
+        open={isOpen}
+        ready={ready}
+        style={overlayStyle}
+        zIndex={TIMEPICKER_DROPDOWN_Z_INDEX}
+        openEffect={openEffect}
+        closeEffect={closeEffect}
+        panelRef={dropdownRef}
+        attributes={{ [TIMEPICKER_DROPDOWN_ATTR]: '' }}
+      >
+        {renderDropdown()}
+      </OverlayPortal>
     </div>
   );
 };

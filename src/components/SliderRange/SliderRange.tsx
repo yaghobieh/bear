@@ -1,7 +1,7 @@
 import { FC, useState, useRef, useCallback, useEffect } from 'react';
 import {cn } from '@utils';
 import type { SliderRangeProps, SliderRangeValue } from './SliderRange.types';
-import type { BearSize, BearVariant } from '../../types';
+import type { BearSize, BearVariant } from '@types';
 
 const SIZE_STYLES: Record<BearSize, { track: string; thumb: string; height: string }> = {
   xs: { track: 'bear-h-1', thumb: 'bear-w-3 bear-h-3', height: 'bear-h-6' },

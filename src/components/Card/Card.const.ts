@@ -1,4 +1,4 @@
-import type { BearSize } from '../../types';
+import type { BearSize } from '@types';
 
 export type CardRadius = 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 export type CardVariant = 'elevated' | 'outlined' | 'filled' | 'ghost';

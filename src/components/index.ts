@@ -685,6 +685,9 @@ export type { VisuallyHiddenProps } from './VisuallyHidden';
 export { Portal } from './Portal';
 export type { PortalProps } from './Portal';
 
+export { OverlayPortal } from './OverlayPortal';
+export type { OverlayPortalProps } from './OverlayPortal';
+
 // v1.2.2 Components
 
 // AnimatedCounter

@@ -1,21 +1,10 @@
-import { FC } from 'react';
-import {cn } from '@utils';
+import { cn } from '@utils';
 import { Typography } from '../Typography';
 import type { ResultProps } from './Result.types';
-import {
-  ROOT_CLASS,
-  CONTAINER_CLASSES,
-  ICON_WRAPPER_CLASSES,
-  ICON_SIZE_CLASSES,
-  STATUS_ICON_COLORS,
-  STATUS_TEXT_CLASSES,
-  TITLE_CLASSES,
-  SUBTITLE_CLASSES,
-  EXTRA_CLASSES,
-} from './Result.const';
-import { getStatusIcon } from './Result.icons';
+import { STATUS_ICON_COLORS } from './Result.const';
+import { getStatusIcon, isTextStatus } from './Result.utils';
 
-export const Result: FC<ResultProps> = (props) => {
+export const Result = (props: ResultProps) => {
   const {
     status,
     title,
@@ -23,33 +12,42 @@ export const Result: FC<ResultProps> = (props) => {
     icon,
     extra,
     className,
-      testId,
+    testId,
     ...rest
   } = props;
 
-  const statusIcon = icon ?? getStatusIcon(status, STATUS_TEXT_CLASSES);
+  const statusIcon = icon ?? getStatusIcon(status);
   const colorClass = STATUS_ICON_COLORS[status];
-  const isTextStatus = status === '404' || status === '403' || status === '500';
 
   return (
     <div
-      className={cn(ROOT_CLASS, CONTAINER_CLASSES, className)} data-testid={testId}
+      className={cn(
+        'Bear-Result bear-flex bear-flex-col bear-items-center bear-justify-center bear-text-center bear-py-16 bear-px-6',
+        className
+      )}
+      data-testid={testId}
       {...rest}
     >
-      <div className={cn(ICON_WRAPPER_CLASSES, !isTextStatus && ICON_SIZE_CLASSES, colorClass)}>
+      <div
+        className={cn(
+          'bear-mb-4 bear-flex bear-items-center bear-justify-center',
+          !isTextStatus(status) && 'bear-w-16 bear-h-16',
+          colorClass
+        )}
+      >
         {statusIcon}
       </div>
-      <Typography variant="h4" className={cn(TITLE_CLASSES, 'bear-text-gray-900 dark:bear-text-zinc-100')}>
+      <Typography variant="h4" className="bear-mb-2">
         {title}
       </Typography>
       {subtitle && (
-        <Typography variant="body1" color="secondary" className={SUBTITLE_CLASSES}>
+        <Typography variant="body1" color="secondary" className="bear-mb-6 bear-max-w-md">
           {subtitle}
         </Typography>
       )}
-      {extra && <div className={EXTRA_CLASSES}>{extra}</div>}
+      {extra && (
+        <div className="bear-flex bear-flex-wrap bear-gap-2 bear-justify-center">{extra}</div>
+      )}
     </div>
   );
 };
-
-export default Result;

@@ -1,149 +1,139 @@
+import {
+  BLOCK_BLOCKQUOTE,
+  BLOCK_H1,
+  BLOCK_H2,
+  BLOCK_H3,
+  BLOCK_H4,
+  BLOCK_H5,
+  BLOCK_PARAGRAPH,
+  BLOCK_PRE,
+  BOOLEAN_FALSE,
+  COMMAND_BOLD,
+  COMMAND_CREATE_LINK,
+  COMMAND_FORE_COLOR,
+  COMMAND_FORMAT_BLOCK,
+  COMMAND_HILITE_COLOR,
+  COMMAND_INSERT_HTML,
+  COMMAND_INSERT_ORDERED_LIST,
+  COMMAND_INSERT_UNORDERED_LIST,
+  COMMAND_ITALIC,
+  COMMAND_REMOVE_FORMAT,
+  COMMAND_STRIKE_THROUGH,
+  COMMAND_UNDERLINE,
+  COMMAND_UNLINK,
+  EMPTY_STRING,
+  TOOLBAR_ITEM_BOLD,
+  TOOLBAR_ITEM_BULLET_LIST,
+  TOOLBAR_ITEM_ITALIC,
+  TOOLBAR_ITEM_ORDERED_LIST,
+  TOOLBAR_ITEM_STRIKETHROUGH,
+  TOOLBAR_ITEM_UNDERLINE,
+} from '@const';
 import type { ToolbarOption } from '../RichEditor.types';
 
-/**
- * Execute a document command for rich text editing
- */
 export const execCommand = (command: string, value?: string): boolean => {
-  return document.execCommand(command, false, value);
+  return document.execCommand(command, BOOLEAN_FALSE, value);
 };
 
-/**
- * Query the state of a document command
- */
 export const queryCommandState = (command: string): boolean => {
   return document.queryCommandState(command);
 };
 
-/**
- * Query the value of a document command
- */
 export const queryCommandValue = (command: string): string => {
   return document.queryCommandValue(command);
 };
 
-/**
- * Get current block format (p, h1, h2, etc.)
- */
 export const getCurrentBlockFormat = (): string => {
-  const value = queryCommandValue('formatBlock');
-  return value.toLowerCase().replace(/[<>]/g, '');
+  const value = queryCommandValue(COMMAND_FORMAT_BLOCK);
+  return value.toLowerCase().replace(/[<>]/g, EMPTY_STRING);
 };
 
-/**
- * Apply a format command based on toolbar option
- */
+const FORMAT_COMMAND_MAP: Partial<Record<ToolbarOption, { command: string; value?: string }>> = {
+  bold: { command: COMMAND_BOLD },
+  italic: { command: COMMAND_ITALIC },
+  underline: { command: COMMAND_UNDERLINE },
+  strikethrough: { command: COMMAND_STRIKE_THROUGH },
+  heading1: { command: COMMAND_FORMAT_BLOCK, value: BLOCK_H1 },
+  heading2: { command: COMMAND_FORMAT_BLOCK, value: BLOCK_H2 },
+  heading3: { command: COMMAND_FORMAT_BLOCK, value: BLOCK_H3 },
+  heading4: { command: COMMAND_FORMAT_BLOCK, value: BLOCK_H4 },
+  heading5: { command: COMMAND_FORMAT_BLOCK, value: BLOCK_H5 },
+  paragraph: { command: COMMAND_FORMAT_BLOCK, value: BLOCK_PARAGRAPH },
+  bulletList: { command: COMMAND_INSERT_UNORDERED_LIST },
+  orderedList: { command: COMMAND_INSERT_ORDERED_LIST },
+  blockquote: { command: COMMAND_FORMAT_BLOCK, value: BLOCK_BLOCKQUOTE },
+  code: { command: COMMAND_FORMAT_BLOCK, value: BLOCK_PRE },
+};
+
 export const applyFormat = (format: ToolbarOption, editorRef?: React.RefObject<HTMLDivElement>): boolean => {
   editorRef?.current?.focus();
-
-  switch (format) {
-    case 'bold':
-      return execCommand('bold');
-    case 'italic':
-      return execCommand('italic');
-    case 'underline':
-      return execCommand('underline');
-    case 'strikethrough':
-      return execCommand('strikeThrough');
-    case 'heading1':
-      return execCommand('formatBlock', 'h1');
-    case 'heading2':
-      return execCommand('formatBlock', 'h2');
-    case 'heading3':
-      return execCommand('formatBlock', 'h3');
-    case 'heading4':
-      return execCommand('formatBlock', 'h4');
-    case 'heading5':
-      return execCommand('formatBlock', 'h5');
-    case 'paragraph':
-      return execCommand('formatBlock', 'p');
-    case 'bulletList':
-      return execCommand('insertUnorderedList');
-    case 'orderedList':
-      return execCommand('insertOrderedList');
-    case 'blockquote':
-      return execCommand('formatBlock', 'blockquote');
-    case 'code':
-      return execCommand('formatBlock', 'pre');
-    default:
-      return false;
+  const config = FORMAT_COMMAND_MAP[format];
+  if (!config) {
+    return BOOLEAN_FALSE;
   }
+  return execCommand(config.command, config.value);
 };
 
-/**
- * Insert a link at current selection
- */
+const PROTOCOL_HTTP = 'http://';
+const PROTOCOL_HTTPS = 'https://';
+const PROTOCOL_MAILTO = 'mailto:';
+
 export const insertLink = (url: string): boolean => {
-  if (!url) return false;
-  
-  // Ensure URL has protocol
-  const formattedUrl = url.startsWith('http://') || url.startsWith('https://') || url.startsWith('mailto:')
-    ? url
-    : `https://${url}`;
-  
-  return execCommand('createLink', formattedUrl);
+  if (!url) {
+    return BOOLEAN_FALSE;
+  }
+  const hasProtocol =
+    url.startsWith(PROTOCOL_HTTP) || url.startsWith(PROTOCOL_HTTPS) || url.startsWith(PROTOCOL_MAILTO);
+  const formattedUrl = hasProtocol ? url : `${PROTOCOL_HTTPS}${url}`;
+  return execCommand(COMMAND_CREATE_LINK, formattedUrl);
 };
 
-/**
- * Remove link from current selection
- */
 export const removeLink = (): boolean => {
-  return execCommand('unlink');
+  return execCommand(COMMAND_UNLINK);
 };
 
-/**
- * Set text color
- */
 export const setTextColor = (color: string): boolean => {
   if (!color) {
-    return execCommand('removeFormat');
+    return execCommand(COMMAND_REMOVE_FORMAT);
   }
-  return execCommand('foreColor', color);
+  return execCommand(COMMAND_FORE_COLOR, color);
 };
 
-/**
- * Set background/highlight color
- */
 export const setHighlightColor = (color: string): boolean => {
   if (!color) {
-    return execCommand('removeFormat');
+    return execCommand(COMMAND_REMOVE_FORMAT);
   }
-  return execCommand('hiliteColor', color);
+  return execCommand(COMMAND_HILITE_COLOR, color);
 };
 
-/**
- * Get active formats from current selection
- */
+const ACTIVE_FORMAT_COMMANDS = [
+  { command: COMMAND_BOLD, format: TOOLBAR_ITEM_BOLD },
+  { command: COMMAND_ITALIC, format: TOOLBAR_ITEM_ITALIC },
+  { command: COMMAND_UNDERLINE, format: TOOLBAR_ITEM_UNDERLINE },
+  { command: COMMAND_STRIKE_THROUGH, format: TOOLBAR_ITEM_STRIKETHROUGH },
+  { command: COMMAND_INSERT_UNORDERED_LIST, format: TOOLBAR_ITEM_BULLET_LIST },
+  { command: COMMAND_INSERT_ORDERED_LIST, format: TOOLBAR_ITEM_ORDERED_LIST },
+] as const;
+
 export const getActiveFormats = (): Set<string> => {
   const formats = new Set<string>();
-  
-  if (queryCommandState('bold')) formats.add('bold');
-  if (queryCommandState('italic')) formats.add('italic');
-  if (queryCommandState('underline')) formats.add('underline');
-  if (queryCommandState('strikeThrough')) formats.add('strikethrough');
-  if (queryCommandState('insertUnorderedList')) formats.add('bulletList');
-  if (queryCommandState('insertOrderedList')) formats.add('orderedList');
-  
+  ACTIVE_FORMAT_COMMANDS.forEach(({ command, format }) => {
+    if (queryCommandState(command)) {
+      formats.add(format);
+    }
+  });
   return formats;
 };
 
-/**
- * Insert HTML at current cursor position
- */
 export const insertHTML = (html: string): boolean => {
-  return execCommand('insertHTML', html);
+  return execCommand(COMMAND_INSERT_HTML, html);
 };
 
-/**
- * Insert image at current cursor position
- */
 export const insertImage = (src: string, alt?: string): boolean => {
-  const imgHtml = `<img src="${src}" alt="${alt || ''}" style="max-width: 100%; height: auto;" />`;
+  const imgHtml = `<img src="${src}" alt="${alt || EMPTY_STRING}" />`;
   return insertHTML(imgHtml);
 };
 
-/**
- * Convert file to base64 data URL
- */
 export const fileToDataUrl = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -153,18 +143,18 @@ export const fileToDataUrl = (file: File): Promise<string> => {
   });
 };
 
-/**
- * Handle paste event to process images
- */
 export const handlePasteImages = async (event: ClipboardEvent): Promise<string[]> => {
   const items = event.clipboardData?.items;
-  if (!items) return [];
+  if (!items) {
+    return [];
+  }
 
   const images: string[] = [];
+  const imagePrefix = 'image/';
+  const itemList = Array.from(items);
 
-  for (let i = 0; i < items.length; i++) {
-    const item = items[i];
-    if (item.type.startsWith('image/')) {
+  for (const item of itemList) {
+    if (item.type.startsWith(imagePrefix)) {
       const file = item.getAsFile();
       if (file) {
         const dataUrl = await fileToDataUrl(file);
@@ -175,4 +165,3 @@ export const handlePasteImages = async (event: ClipboardEvent): Promise<string[]
 
   return images;
 };
-

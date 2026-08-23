@@ -1,2 +1,2 @@
-export { ToolbarButton, default } from './ToolbarButton';
+export { ToolbarButton } from './ToolbarButton';
 

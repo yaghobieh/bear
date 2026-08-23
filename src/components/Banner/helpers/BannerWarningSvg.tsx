@@ -1,14 +1,14 @@
 import { FC } from 'react';
-import { BANNER_ICON_SIZE, BANNER_ICON_STROKE_WIDTH } from '../Banner.const';
+import { TWENTY, TWO } from '@const';
 
 export const BannerWarningSvg: FC = () => (
   <svg
-    width={BANNER_ICON_SIZE}
-    height={BANNER_ICON_SIZE}
+    width={TWENTY}
+    height={TWENTY}
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
-    strokeWidth={BANNER_ICON_STROKE_WIDTH}
+    strokeWidth={TWO}
     aria-hidden="true"
   >
     <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />

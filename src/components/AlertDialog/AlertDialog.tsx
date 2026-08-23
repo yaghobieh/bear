@@ -1,59 +1,67 @@
-import { FC, useEffect, useCallback, useId, useRef } from 'react';
+import { useEffect, useCallback, useId, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import {cn } from '@utils';
+import {
+  ALERT_DESC_ID_PREFIX,
+  ALERT_TITLE_ID_PREFIX,
+  BOOLEAN_FALSE,
+  BOOLEAN_TRUE,
+  KEY_ESCAPE,
+  KEY_TAB,
+  LABEL_CANCEL,
+  LABEL_CONFIRM,
+  VARIANT_DANGER,
+  ZERO,
+} from '@const';
+import { cn } from '@utils';
 import { Button } from '../Button';
 import { Typography } from '../Typography';
 import type { AlertDialogProps } from './AlertDialog.types';
-import {
-  ALERT_DIALOG_BACKDROP_CLASSES,
-  ALERT_DIALOG_CONTAINER_CLASSES,
-  ALERT_DIALOG_TITLE_CLASSES,
-  ALERT_DIALOG_DESCRIPTION_CLASSES,
-  ALERT_DIALOG_FOOTER_CLASSES,
-} from './AlertDialog.const';
 
-export const AlertDialog: FC<AlertDialogProps> = (props) => {
+export const AlertDialog = (props: AlertDialogProps) => {
   const {
     isOpen,
     onClose,
     onConfirm,
     title,
     description,
-    confirmText = 'Confirm',
-    cancelText = 'Cancel',
-    confirmVariant = 'danger',
-    loading = false,
+    confirmText = LABEL_CONFIRM,
+    cancelText = LABEL_CANCEL,
+    confirmVariant = VARIANT_DANGER,
+    loading = BOOLEAN_FALSE,
     loadingText,
-    closeOnBackdrop = false,
-    closeOnEscape = true,
+    closeOnBackdrop = BOOLEAN_FALSE,
+    closeOnEscape = BOOLEAN_TRUE,
     icon,
     className,
     testId,
   } = props;
 
   const uid = useId();
-  const titleId = `bear-alert-title-${uid}`;
-  const descId = `bear-alert-desc-${uid}`;
+  const titleId = `${ALERT_TITLE_ID_PREFIX}${uid}`;
+  const descId = `${ALERT_DESC_ID_PREFIX}${uid}`;
   const dialogRef = useRef<HTMLDivElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
 
   const handleEscape = useCallback(
     (event: KeyboardEvent) => {
-      if (closeOnEscape && event.key === 'Escape' && !loading) {
+      if (closeOnEscape && event.key === KEY_ESCAPE && !loading) {
         onClose();
       }
     },
     [closeOnEscape, onClose, loading],
   );
 
-  // Focus trap: keep Tab within the dialog
   const handleTab = useCallback((event: KeyboardEvent) => {
-    if (event.key !== 'Tab' || !dialogRef.current) return;
+    if (event.key !== KEY_TAB || !dialogRef.current) {
+      return;
+    }
     const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
       'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
     );
-    if (focusable.length === 0) return;
-    const first = focusable[0];
+    if (focusable.length === ZERO) {
+      return;
+    }
+    const first = focusable[ZERO];
     const last = focusable[focusable.length - 1];
     if (event.shiftKey && document.activeElement === first) {
       event.preventDefault();
@@ -70,7 +78,6 @@ export const AlertDialog: FC<AlertDialogProps> = (props) => {
       document.addEventListener('keydown', handleEscape);
       document.addEventListener('keydown', handleTab);
       document.body.style.overflow = 'hidden';
-      // Auto-focus the dialog container for screen readers
       requestAnimationFrame(() => dialogRef.current?.focus());
     }
     return () => {
@@ -81,7 +88,9 @@ export const AlertDialog: FC<AlertDialogProps> = (props) => {
     };
   }, [isOpen, handleEscape, handleTab]);
 
-  if (!isOpen) return null;
+  if (!isOpen) {
+    return null;
+  }
 
   const dialogContent = (
     <div
@@ -89,7 +98,7 @@ export const AlertDialog: FC<AlertDialogProps> = (props) => {
       data-testid={testId}
     >
       <div
-        className={cn('Bear-AlertDialog__backdrop', ALERT_DIALOG_BACKDROP_CLASSES)}
+        className="Bear-AlertDialog__backdrop bear-absolute bear-inset-0 bear-bg-black/60 bear-backdrop-blur-sm bear-transition-opacity animate-fade-in"
         onClick={closeOnBackdrop && !loading ? onClose : undefined}
         aria-hidden="true"
       />
@@ -101,7 +110,10 @@ export const AlertDialog: FC<AlertDialogProps> = (props) => {
         aria-labelledby={titleId}
         aria-describedby={description ? descId : undefined}
         tabIndex={-1}
-        className={cn('Bear-AlertDialog__container', ALERT_DIALOG_CONTAINER_CLASSES, 'bear-p-6', className)}
+        className={cn(
+          'Bear-AlertDialog__container bear-relative bear-w-full bear-max-w-md bear-bg-white dark:bear-bg-zinc-900 bear-rounded-xl bear-shadow-2xl bear-border bear-border-gray-200 dark:bear-border-zinc-700 bear-transform bear-transition-all animate-alert-dialog-in bear-p-6',
+          className
+        )}
       >
         {icon && (
           <div className="Bear-AlertDialog__icon bear-mb-4 bear-flex bear-justify-center">
@@ -112,7 +124,7 @@ export const AlertDialog: FC<AlertDialogProps> = (props) => {
         <Typography
           variant="h6"
           id={titleId}
-          className={cn('Bear-AlertDialog__title', ALERT_DIALOG_TITLE_CLASSES, icon && 'bear-text-center')}
+          className={cn('Bear-AlertDialog__title bear-text-lg bear-font-semibold bear-text-gray-900 dark:bear-text-white', icon && 'bear-text-center')}
         >
           {title}
         </Typography>
@@ -121,13 +133,13 @@ export const AlertDialog: FC<AlertDialogProps> = (props) => {
           <Typography
             variant="body2"
             id={descId}
-            className={cn('Bear-AlertDialog__description', ALERT_DIALOG_DESCRIPTION_CLASSES, icon && 'bear-text-center')}
+            className={cn('Bear-AlertDialog__description bear-text-sm bear-text-gray-600 dark:bear-text-gray-400 bear-mt-2', icon && 'bear-text-center')}
           >
             {description}
           </Typography>
         )}
 
-        <div className={cn('Bear-AlertDialog__footer', ALERT_DIALOG_FOOTER_CLASSES)}>
+        <div className="Bear-AlertDialog__footer bear-flex bear-items-center bear-justify-end bear-gap-3 bear-pt-6">
           <Button
             variant="ghost"
             onClick={onClose}

@@ -1,8 +1,12 @@
 import { FC, useCallback, useMemo } from 'react';
 import type { CalendarProps, CalendarDayProps, CalendarNavActions, HeaderLabelRFC } from './Calendar.types';
-import {cn } from '@utils';
-import { useBearStyles } from '@hooks';
+import { BOOLEAN_TRUE, ZERO } from '@const';
+import { cn } from '@utils';
+import { OVERLAY_OPEN_EFFECT_NONE, resolveOverlayEffects, useBearStyles } from '@hooks';
 import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon } from '../Icon';
+import { OVERLAY_EFFECT_TRANSITION } from '../OverlayPortal/OverlayPortal.const';
+import { Transition } from '../Transition';
+import { DEFAULT_DURATION } from '../Transition/Transition.const';
 import { CALENDAR_DROPDOWN_Z_INDEX, DEFAULT_WEEKDAYS, MONTHS, NUMBER, WEEKEND_LABELS } from './Calendar.const';
 import { buildCalendarGrid, isSameDay, isWeekendDay, reorderWeekdays } from './Calendar.utils';
 import { DefaultHeaderLabel } from './Calendar.helpers';
@@ -29,7 +33,9 @@ export const Calendar: FC<CalendarProps> = (props) => {
     style,
     inline = false,
     className,
+    open: controlledOpen,
   } = props;
+  const { openEffect, closeEffect } = resolveOverlayEffects(props);
   const year = viewDate.getFullYear();
   const mergedStyle = useBearStyles(bis, style);
   const month = viewDate.getMonth();
@@ -317,5 +323,39 @@ export const Calendar: FC<CalendarProps> = (props) => {
   const baseStyle = Object.keys(mergedStyle).length ? mergedStyle : undefined;
   const rootStyle = dropdownStyle ? { ...baseStyle, ...dropdownStyle } : baseStyle;
   const root = slots.root ? slots.root({ children: content, className: rootCn }) : <div className={rootCn} style={rootStyle}>{content}</div>;
-  return root;
+  const isOpenControlled = controlledOpen !== undefined;
+  const showPanel = controlledOpen ?? BOOLEAN_TRUE;
+  const hasMotion =
+    isOpenControlled &&
+    (openEffect !== OVERLAY_OPEN_EFFECT_NONE || closeEffect !== OVERLAY_OPEN_EFFECT_NONE);
+  if (!hasMotion) {
+    return root;
+  }
+
+  const activeEffect = showPanel ? openEffect : closeEffect;
+  const motionName =
+    activeEffect === OVERLAY_OPEN_EFFECT_NONE
+      ? openEffect === OVERLAY_OPEN_EFFECT_NONE
+        ? closeEffect === OVERLAY_OPEN_EFFECT_NONE
+          ? undefined
+          : OVERLAY_EFFECT_TRANSITION[closeEffect]
+        : OVERLAY_EFFECT_TRANSITION[openEffect]
+      : OVERLAY_EFFECT_TRANSITION[activeEffect];
+  const skipDuration =
+    (showPanel && openEffect === OVERLAY_OPEN_EFFECT_NONE) ||
+    (!showPanel && closeEffect === OVERLAY_OPEN_EFFECT_NONE);
+
+  if (!motionName) {
+    return root;
+  }
+
+  return (
+    <Transition
+      show={showPanel}
+      name={motionName}
+      duration={skipDuration ? ZERO : DEFAULT_DURATION}
+    >
+      {root}
+    </Transition>
+  );
 };

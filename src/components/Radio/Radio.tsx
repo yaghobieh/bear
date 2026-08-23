@@ -1,6 +1,6 @@
 import { FC, createContext, useContext, useState, useCallback, forwardRef } from 'react';
 import { cn, resolveBearId, useBearId } from '@utils';
-import type { BearSize, BearVariant } from '../../types';
+import type { BearSize, BearVariant } from '@types';
 import type { RadioProps, RadioGroupProps } from './Radio.types';
 
 const SIZE_CLASSES: Record<BearSize, string> = {

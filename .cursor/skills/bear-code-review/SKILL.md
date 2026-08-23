@@ -18,7 +18,7 @@ description: Structured code review workflow for Bear components — hooks, SVG 
 | Concern | Location |
 |---------|----------|
 | Props & interfaces | `ComponentName.types.ts` |
-| Constants, BEM classes, defaults | `ComponentName.const.ts` |
+| Constants, defaults, keymaps | `ComponentName.const.ts` or `@const` — **not** CSS class dumps |
 | Main render only | `ComponentName.tsx` |
 | Context object | `ComponentName.context.ts` |
 | Context hook | `hooks/useComponentName/useComponentName.ts` |
@@ -61,7 +61,7 @@ Extract multi-hook logic into `use{Name}` with JSDoc when the component has geom
 ### 5. UI primitives
 
 - Use Bear `Box`, `Flex`, `Typography`, `Paper` — not raw `<span>` / `<div>` for structure
-- BEM root class in `*.const.ts`: `Bear-ComponentName`
+- BEM root class written directly: `Bear-ComponentName` / `Bear-ComponentName__`
 - Theme tokens: `var(--bear-primary-500)`, `var(--bear-text-primary)`, etc.
 
 ### 6. Portals & overlays
@@ -100,7 +100,7 @@ Rules:
 
 | Gate | Rule |
 |------|------|
-| **G1 — No magic strings/numbers** | Every literal string or number shared across 2+ places belongs in `*.const.ts` |
+| **G1 — No magic strings/numbers** | Shared numbers/strings live in `@const` (`numbers.const.ts`, `generals.const.ts`). No CSS class constants — write `Bear-*` classes on the element |
 | **G2 — No `as` casts on LiveProps** | Use a typed resolver in `*.utils.ts` |
 | **G3 — No HTML comments in JSX** | Remove all `{/* ... */}` blocks inside rendered markup |
 | **G4 — No bare `<>` for layout** | Replace `<>` with `<div>` / `<header>` / semantic element when structure is needed |
@@ -109,7 +109,13 @@ Rules:
 | **G7 — One component per `.tsx`** | A helper used only by one parent lives in `helpers/HelperName.tsx` |
 | **G8 — SVGs in helper files** | Inline SVG that is not a trivial 1-liner belongs in `helpers/ComponentNameXxxSvg.tsx` |
 | **G9 — Translations** | All user-visible text (labels, buttons, table headers, placeholders) goes through `DOCS_TEXT` or `PORTAL_TEXT` — no hardcoded English or Spanish strings in components |
-| **G10 — 1 const + 1 types file per folder** | Every component or page folder must have `*.const.ts` and `*.types.ts` |
+| **G10 — 1 types file per folder** | Every component or page folder has `*.types.ts`. Add `*.const.ts` only for non-class tokens/keymaps. Delete const files that only store class strings |
+| **G11 — Alias imports** | Types via `@types`, constants via `@const`, hooks via `@hooks`, context via `@context` / `@context/BearProvider`. No `../../types`, `../../hooks`, or `../../context` |
+| **G12 — Descriptive names** | Loop and callback params use real names (`node`, `child`, `item`). Never `n`, `t`, or other one-letter identifiers except event `e` |
+| **G13 — No if/else in JSX** | Do not branch with `? :` / `&&` for markup that has two different elements. Extract an RFC (`helpers/` or `components/Name/`) |
+| **G14 — Default icons in const** | Default icon class names and tokens live in `*.const.ts`. Render Bear icons (`ChevronRightIcon`, `ClockIcon`, …) — no inline SVG in the component file |
+| **G15 — Shared numeric tokens** | z-index, indent, max-height, overscan, and other numbers come from `@const` (`numbers.const.ts`). Do not declare local `PANEL_Z = 10000` |
+| **G16 — No inline layout style** | Do not use `style={{}}` for layout chrome (`width`, `height`, `minHeight`, `maxHeight`, flex). Use CSS classes or apply size on the element via a helper/ref. Dynamic paint values (chart stroke, color swatch) may use style |
 
 ### 10. Review levels
 

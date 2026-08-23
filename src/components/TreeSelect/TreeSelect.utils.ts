@@ -1,17 +1,18 @@
+import { ZERO } from '@const';
 import type { TreeNode } from './TreeSelect.types';
 
 export const flattenNodes = (nodes: TreeNode[]): TreeNode[] =>
-  nodes.reduce<TreeNode[]>((acc, n) => {
-    acc.push(n);
-    if (n.children) acc.push(...flattenNodes(n.children));
-    return acc;
+  nodes.reduce<TreeNode[]>((accumulator, node) => {
+    accumulator.push(node);
+    if (node.children) accumulator.push(...flattenNodes(node.children));
+    return accumulator;
   }, []);
 
 export const findNodeById = (nodes: TreeNode[], id: string): TreeNode | undefined => {
-  for (const n of nodes) {
-    if (n.id === id) return n;
-    if (n.children) {
-      const found = findNodeById(n.children, id);
+  for (const node of nodes) {
+    if (node.id === id) return node;
+    if (node.children) {
+      const found = findNodeById(node.children, id);
       if (found) return found;
     }
   }
@@ -20,20 +21,20 @@ export const findNodeById = (nodes: TreeNode[], id: string): TreeNode | undefine
 
 export const filterNodes = (nodes: TreeNode[], query: string): TreeNode[] => {
   const lower = query.toLowerCase();
-  return nodes.reduce<TreeNode[]>((acc, node) => {
+  return nodes.reduce<TreeNode[]>((accumulator, node) => {
     const children = node.children ? filterNodes(node.children, query) : [];
-    if (node.label.toLowerCase().includes(lower) || children.length > 0) {
-      acc.push({ ...node, children: children.length > 0 ? children : node.children });
+    if (node.label.toLowerCase().includes(lower) || children.length > ZERO) {
+      accumulator.push({ ...node, children: children.length > ZERO ? children : node.children });
     }
-    return acc;
+    return accumulator;
   }, []);
 };
 
 export const collectAllIds = (nodes: TreeNode[]): Set<string> => {
-  const set = new Set<string>();
-  for (const n of nodes) {
-    set.add(n.id);
-    if (n.children) collectAllIds(n.children).forEach((id) => set.add(id));
+  const ids = new Set<string>();
+  for (const node of nodes) {
+    ids.add(node.id);
+    if (node.children) collectAllIds(node.children).forEach((childId) => ids.add(childId));
   }
-  return set;
+  return ids;
 };

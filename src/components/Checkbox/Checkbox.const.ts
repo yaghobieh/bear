@@ -1,4 +1,4 @@
-import type { BearSize, BearVariant } from '../../types';
+import type { BearSize, BearVariant } from '@types';
 import type { CheckboxIndicator } from './Checkbox.types';
 
 export const C_H_E_C_K_B_O_X_ROOT_CLASS = 'Bear-Checkbox';

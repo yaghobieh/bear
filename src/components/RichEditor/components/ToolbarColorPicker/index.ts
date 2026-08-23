@@ -1,2 +1,2 @@
-export { ToolbarColorPicker, default } from './ToolbarColorPicker';
+export { ToolbarColorPicker } from './ToolbarColorPicker';
 

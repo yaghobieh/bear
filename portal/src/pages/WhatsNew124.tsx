@@ -5,36 +5,36 @@ import { BEAR_VERSION } from '@/constants/navigation.const';
 
 const RELEASE_ITEMS = [
   {
-    title: 'ModalsProvider',
-    path: '/components/modals-provider',
+    title: 'Open and close effects',
+    path: '/components/select',
     icon: BearIcons.LayersIcon,
-    description: 'useModals() open, confirm, close, and closeAll — no local isOpen state. Stack-safe z-index and focus restore.',
+    description: 'Select, Dropdown, DatePicker, DateRangePicker, TimePicker, and Calendar take openEffect, closeEffect, or effect={{ open, close }}.',
   },
   {
-    title: 'Modal and Drawer stacking',
-    path: '/components/modal',
+    title: 'DatePicker overlay',
+    path: '/components/date-picker',
     icon: BearIcons.MaximizeIcon,
-    description: 'Dialogs sit above backdrop blur. Nested Backdrop is absolute; the panel is isolated so filter no longer covers the content.',
+    description: 'The calendar stays on the trigger while the page scrolls and plays the close motion you pick.',
   },
   {
-    title: 'SignPad drawing',
-    path: '/components/sign-pad',
+    title: 'TimePicker portal',
+    path: '/components/time-picker',
     icon: BearIcons.EditIcon,
-    description: 'Mouse and touch write on the canvas again. Overlay chrome cannot steal pointers; resize and theme no longer wipe the signature.',
+    description: 'The time dropdown portals above cards and drawers with the same open and close effects.',
   },
   {
-    title: 'Toast and Snackbar surfaces',
-    path: '/components/toast',
+    title: 'Select and Dropdown',
+    path: '/components/dropdown',
     icon: BearIcons.SnackbarIcon,
-    description: 'Shipped surface CSS in light and dark. Snackbar uses tertiary background and readable description text.',
+    description: 'Menus no longer flash from the top-left. Pick slide-down, fade, scale, or none for open and close.',
   },
 ];
 
 const FIXES = [
-  'Modal and Drawer: nested Backdrop at z-index 0, panel at z-index 1 inside an isolated stacking context (FORGE-84, FORGE-85)',
-  'Toast: BEM severity modifiers instead of unshipped color utilities (FORGE-86)',
-  'Snackbar: --bear-bg-tertiary surface and secondary description color in dark mode (FORGE-86)',
-  'SignPad: pointer events on the wrapper; overlay chrome is pointer-events none (FORGE-87)',
+  'DatePicker: calendar stays on the input while the page or drawer scrolls (FORGE-117)',
+  'TimePicker: dropdown portals above cards and drawers (FORGE-118)',
+  'Select / Dropdown: no first-layout flash at the top-left (FORGE-120)',
+  'GradientText: clip after backgroundImage so the letters show, not a solid fill (FORGE-115)',
 ];
 
 const WhatsNew124Page: FC = () => (
@@ -43,7 +43,7 @@ const WhatsNew124Page: FC = () => (
       <Badge variant="primary" className="mb-4">v{BEAR_VERSION}</Badge>
       <Typography variant="h1" className="mb-3">What&apos;s new in Bear {BEAR_VERSION}</Typography>
       <Typography variant="body1" className="text-gray-600 dark:text-gray-400">
-        Imperative modals, overlay stacking that survives backdrop blur, SignPad capture, and Toast/Snackbar contrast in dark and light.
+        Dropdown overlays now accept independent open and close effects. Pick slide-down, fade, scale, or none.
       </Typography>
     </div>
 

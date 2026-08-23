@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import {cn } from '@utils';
-import type { BearVariant } from '../../types';
+import type { BearVariant } from '@types';
 import type { LinkProps } from './Link.types';
 
 const VARIANT_CLASSES: Record<BearVariant | 'inherit', string> = {

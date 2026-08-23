@@ -31,6 +31,11 @@ export default function GradientTextPage() {
             <GradientText preset={preset} animate={animate} as="h1" weight="extrabold" className="text-5xl">
               Bear UI
             </GradientText>
+            <div className="mt-6 flex justify-center gap-8">
+              <GradientText preset={preset} as="span" weight="bold" className="text-4xl">12</GradientText>
+              <GradientText preset={preset} as="span" weight="bold" className="text-4xl">0</GradientText>
+              <GradientText preset={preset} as="span" weight="bold" className="text-4xl">48</GradientText>
+            </div>
           </div>
         </section>
 

@@ -46,7 +46,13 @@ export const TIMEPICKER_LABEL_CLASSES = 'Bear-TimePicker__label bear-block bear-
 
 export const TIMEPICKER_BUTTON_CLASSES = 'Bear-TimePicker__trigger bear-w-full bear-flex bear-items-center bear-justify-between bear-rounded-lg bear-border bear-text-left bear-transition-colors';
 
-export const TIMEPICKER_DROPDOWN_CLASSES = 'Bear-TimePicker__dropdown bear-absolute bear-z-[9999] bear-mt-1 bear-bg-white dark:bear-bg-zinc-800 bear-border bear-border-gray-200 dark:bear-border-zinc-700 bear-rounded-lg bear-shadow-xl bear-p-3 bear-w-64';
+export const TIMEPICKER_DROPDOWN_HEIGHT_PX = 360;
+
+export const TIMEPICKER_DROPDOWN_Z_INDEX = 11000;
+
+export const TIMEPICKER_DROPDOWN_ATTR = 'data-bear-timepicker-dropdown';
+
+export const TIMEPICKER_DROPDOWN_CLASSES = 'Bear-TimePicker__dropdown bear-bg-white dark:bear-bg-zinc-800 bear-border bear-border-gray-200 dark:bear-border-zinc-700 bear-rounded-lg bear-shadow-xl bear-p-3 bear-w-64';
 
 export const TIMEPICKER_COLUMN_HEADER_CLASSES = 'Bear-TimePicker__column-header bear-text-xs bear-text-gray-500 dark:bear-text-zinc-500 bear-mb-1 bear-text-center';
 
@@ -67,3 +73,6 @@ export const TIMEPICKER_CONFIRM_BUTTON_CLASSES = 'Bear-TimePicker__confirm bear-
 export const TIMEPICKER_ERROR_CLASSES = 'Bear-TimePicker__error bear-mt-1 bear-text-xs bear-text-red-500';
 
 export const TIMEPICKER_HELPER_CLASSES = 'Bear-TimePicker__helper bear-mt-1 bear-text-xs bear-text-gray-500 dark:bear-text-zinc-500';
+
+export const TIMEPICKER_CLOCK_ICON_CLASS =
+  'bear-w-5 bear-h-5 bear-text-gray-400 dark:bear-text-zinc-400';

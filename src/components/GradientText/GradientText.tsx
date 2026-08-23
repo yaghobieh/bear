@@ -9,6 +9,7 @@ import {
   WEIGHT_MAP,
   DEFAULT_WEIGHT,
   COLOR_REPEAT_COUNT,
+  GRADIENT_TEXT_CLIP_STYLE,
 } from './GradientText.const';
 
 /**
@@ -53,14 +54,16 @@ export const GradientText: FC<GradientTextProps> = (props) => {
         className,
       )}
       style={{
-        background: gradientCSS,
+        backgroundImage: gradientCSS,
+        ...GRADIENT_TEXT_CLIP_STYLE,
         fontWeight: WEIGHT_MAP[weight] ?? DEFAULT_WEIGHT,
         ...(animate && {
           backgroundSize: ANIMATED_BG_SIZE,
           animation: `bear-gradient-shift ${animationSpeed}s ease infinite`,
         }),
         ...style,
-      }} data-testid={testId}
+      }}
+      data-testid={testId}
     >
       {children}
     </Tag>

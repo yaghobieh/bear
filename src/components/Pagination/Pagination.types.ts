@@ -1,5 +1,5 @@
 import { HTMLAttributes } from 'react';
-import { BearSize, BearVariant } from '../../types';
+import { BearSize, BearVariant } from '@types';
 
 export interface PaginationProps extends Omit<HTMLAttributes<HTMLElement>, 'onChange'> {
   id?: string;

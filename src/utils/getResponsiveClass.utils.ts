@@ -1,4 +1,4 @@
-import type { ResponsiveProp } from '../types';
+import type { ResponsiveProp } from '@types';
 
 export const getResponsiveClass = <T extends string | number>(
   value: ResponsiveProp<T> | undefined,

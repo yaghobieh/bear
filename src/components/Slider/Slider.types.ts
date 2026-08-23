@@ -1,5 +1,5 @@
 import { HTMLAttributes } from 'react';
-import { BearSize, BearVariant } from '../../types';
+import { BearSize, BearVariant } from '@types';
 
 export interface SliderProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
   id?: string;

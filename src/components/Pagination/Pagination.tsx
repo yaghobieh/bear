@@ -1,7 +1,7 @@
 import { FC, useState, useMemo } from 'react';
 import {cn } from '@utils';
 import type { PaginationProps } from './Pagination.types';
-import type { BearSize, BearVariant } from '../../types';
+import type { BearSize, BearVariant } from '@types';
 
 // Icons
 const ChevronLeftIcon = () => (

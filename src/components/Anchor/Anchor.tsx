@@ -1,26 +1,25 @@
-import { FC, useEffect, useState, useCallback, useRef } from 'react';
-import {cn } from '@utils';
+import { useEffect, useState, useCallback, useRef } from 'react';
+import {
+  ANCHOR_OBSERVER_THRESHOLDS,
+  BOOLEAN_FALSE,
+  KEY_ENTER,
+  ROOT_MARGIN_BOTTOM_HALF,
+  SCROLL_BEHAVIOR_SMOOTH,
+  UNIT_PX,
+  ZERO,
+} from '@const';
+import { cn } from '@utils';
 import { Typography } from '../Typography';
 import type { AnchorProps, AnchorLink } from './Anchor.types';
-import {
-  ROOT_CLASS,
-  DEFAULT_OFFSET,
-  DEFAULT_AFFIX_TOP,
-  DEFAULT_TARGET_OFFSET,
-  ROOT_CLASSES,
-  LINK_CLASSES,
-  ACTIVE_LINK_CLASSES,
-  NESTED_LINK_INDENT,
-} from './Anchor.const';
 import { collectIds } from './Anchor.utils';
 
-export const Anchor: FC<AnchorProps> = (props) => {
+export const Anchor = (props: AnchorProps) => {
   const {
     links,
-    offset = DEFAULT_OFFSET,
-    affix = false,
-    affixTop = DEFAULT_AFFIX_TOP,
-    targetOffset = DEFAULT_TARGET_OFFSET,
+    offset = ZERO,
+    affix = BOOLEAN_FALSE,
+    affixTop = ZERO,
+    targetOffset = ZERO,
     onClick,
     className,
     testId,
@@ -36,7 +35,7 @@ export const Anchor: FC<AnchorProps> = (props) => {
       const el = document.getElementById(id);
       if (el) {
         const top = el.getBoundingClientRect().top + window.scrollY - targetOffset;
-        window.scrollTo({ top, behavior: 'smooth' });
+        window.scrollTo({ top, behavior: SCROLL_BEHAVIOR_SMOOTH });
       }
       onClick?.(id);
     },
@@ -44,7 +43,9 @@ export const Anchor: FC<AnchorProps> = (props) => {
   );
 
   useEffect(() => {
-    if (ids.length === 0) return;
+    if (ids.length === ZERO) {
+      return;
+    }
 
     observerRef.current = new IntersectionObserver(
       (entries) => {
@@ -55,18 +56,25 @@ export const Anchor: FC<AnchorProps> = (props) => {
             const bTop = b.boundingClientRect.top;
             return Math.abs(aTop - offset) - Math.abs(bTop - offset);
           });
-        if (visible.length > 0) {
-          const first = visible[0];
+        if (visible.length > ZERO) {
+          const first = visible[ZERO];
           const id = (first.target as HTMLElement).id;
-          if (ids.includes(id)) setActiveId(id);
+          if (ids.includes(id)) {
+            setActiveId(id);
+          }
         }
       },
-      { rootMargin: `-${offset}px 0px -50% 0px`, threshold: [0, 0.25, 0.5, 0.75, 1] }
+      {
+        rootMargin: `-${offset}${UNIT_PX} ${ZERO}${UNIT_PX} ${ROOT_MARGIN_BOTTOM_HALF} ${ZERO}${UNIT_PX}`,
+        threshold: ANCHOR_OBSERVER_THRESHOLDS,
+      }
     );
 
     ids.forEach((id) => {
       const el = document.getElementById(id);
-      if (el) observerRef.current?.observe(el);
+      if (el) {
+        observerRef.current?.observe(el);
+      }
     });
 
     return () => {
@@ -78,13 +86,16 @@ export const Anchor: FC<AnchorProps> = (props) => {
   const renderLink = (link: AnchorLink, isNested: boolean) => {
     const isActive = activeId === link.id;
     return (
-      <div key={link.id} className={cn(isNested && NESTED_LINK_INDENT)}>
+      <div key={link.id} className={cn(isNested && 'bear-pl-4')}>
         <div
           role="button"
-          tabIndex={0}
+          tabIndex={ZERO}
           onClick={() => scrollTo(link.id)}
-          onKeyDown={(e) => e.key === 'Enter' && scrollTo(link.id)}
-          className={cn(LINK_CLASSES, isActive && ACTIVE_LINK_CLASSES)}
+          onKeyDown={(e) => e.key === KEY_ENTER && scrollTo(link.id)}
+          className={cn(
+            'bear-py-1 bear-px-2 bear-text-sm bear-transition-colors bear-cursor-pointer bear-rounded bear-text-gray-600 dark:bear-text-zinc-400 hover:bear-text-gray-900 dark:hover:bear-text-zinc-100',
+            isActive && 'bear-text-primary-500 dark:bear-text-primary-400 bear-font-medium bear-border-l-2 bear-border-primary-500 dark:bear-border-primary-400 bear-pl-3 bear--ml-0.5'
+          )}
         >
           <Typography variant="body2" className={cn(isActive && 'bear-font-medium')}>
             {link.label}
@@ -95,16 +106,14 @@ export const Anchor: FC<AnchorProps> = (props) => {
     );
   };
 
-  const rootClasses = cn(ROOT_CLASS, ROOT_CLASSES, affix && 'bear-sticky', className);
-
   return (
     <nav
-      className={rootClasses}
+      className={cn('Bear-Anchor bear-flex bear-flex-col', affix && 'bear-sticky', className)}
       style={affix ? { top: affixTop } : undefined}
       data-testid={testId}
       {...rest}
     >
-      {links.map((link) => renderLink(link, false))}
+      {links.map((link) => renderLink(link, BOOLEAN_FALSE))}
     </nav>
   );
 };

@@ -5,7 +5,7 @@
 
 import { useMemo } from 'react';
 import type { CSSProperties } from 'react';
-import type { BisProp } from '../types/bis.types';
+import type { BisProp } from '@types';
 import { useBearThemeOptional } from '../context/BearProvider';
 
 /**

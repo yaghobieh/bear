@@ -112,13 +112,13 @@ const TimePickerPage: FC = () => {
       </ComponentPreview>
 
       <ComponentPreview
-        title="Open effects"
-        description="Portaled dropdown with choosable enter animation."
-        code={`<TimePicker openEffect="slide-down" />`}
+        title="Open and close effects"
+        description="Portaled dropdown with choosable open and close animation."
+        code={`<TimePicker openEffect="slide-down" closeEffect="fade" />`}
         allowOverflow
       >
         <div className="w-full max-w-xs">
-          <TimePicker value={time ?? undefined} onChange={setTime} openEffect="slide-down" />
+          <TimePicker value={time ?? undefined} onChange={setTime} openEffect="slide-down" closeEffect="fade" />
         </div>
       </ComponentPreview>
 
@@ -143,6 +143,8 @@ const TimePickerPage: FC = () => {
               <tr><td className="px-4 py-3 font-mono text-bear-600">icon</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Custom icon to replace default clock</td></tr>
               <tr><td className="px-4 py-3 font-mono text-bear-600">translations</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>TimePickerTranslations</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">selectTime, hour, minute, period, cancel, ok</td></tr>
               <tr><td className="px-4 py-3 font-mono text-bear-600">openEffect</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>none | fade | slide-down | scale</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">slide-down</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Dropdown open animation</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">closeEffect</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>none | fade | slide-down | scale</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">same as openEffect</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Dropdown close animation</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">effect</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>{'{ open?, close? }'}</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Open and close motion in one prop</td></tr>
               <tr><td className="px-4 py-3 font-mono text-bear-600">disabled</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Disable the picker</td></tr>
             </tbody>
           </table>

@@ -1,0 +1,1 @@
+export { useDocumentDarkClass } from './useDocumentDarkClass';

@@ -1,4 +1,4 @@
-import type { OverlayOpenEffect } from '../../hooks/useFixedAnchorPosition';
+import type { OverlayEffectProps } from '@hooks/useFixedAnchorPosition';
 
 export type TimePickerDropdownVariant = 'columns' | 'dial' | 'auto';
 
@@ -41,7 +41,7 @@ export interface TimePickerDialProps extends TimePickerColumnsProps {
   minuteStep: number;
 }
 
-export interface TimePickerProps {
+export interface TimePickerProps extends OverlayEffectProps {
   /** Time string (e.g. "02:30 PM") */
   value?: string | null;
   onChange?: (time: string | null) => void;
@@ -65,7 +65,6 @@ export interface TimePickerProps {
   /** Custom icon to replace the default clock icon (ReactNode). */
   icon?: React.ReactNode;
   translations?: TimePickerTranslations;
-  openEffect?: OverlayOpenEffect;
   testId?: string;
   id?: string;
 }

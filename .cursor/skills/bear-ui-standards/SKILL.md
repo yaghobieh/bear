@@ -13,7 +13,8 @@ description: Bear UI component standards — types, constants, structure, BEM, t
 
 ## 2. Constants in .const.ts or .constants.ts
 
-- No magic numbers or string literals. Put them in const files.
+- No magic numbers or string literals. Shared tokens live in `@const` (`src/constants/numbers.const.ts`, `generals.const.ts`). Feature tokens stay in `*.const.ts`.
+- **Do not store CSS class strings in const files.** Write `Bear-*` / `bear-*` classes directly on the element. Keep keymap objects (variant → classes) when 3+ branches share a key. Delete a const file if it only held class dumps.
 - **Format strings**: `TIMEPICKER_FORMAT_12H = '12h'`, `TIMEPICKER_FORMAT_24H = '24h'`.
 - **Numbers**: `CLOCK_RADIUS = 80`, `CLOCK_CENTER = 100`, `CLOCK_HOURS_12 = [12, 1, 2, ...]`.
 - **Default translations**: `DEFAULT_TRANSLATIONS = { selectTime: 'SELECT TIME', cancel: 'CANCEL', ok: 'OK', hour: 'Hour', minute: 'Minute', period: 'Period' }`.
@@ -76,10 +77,15 @@ ComponentName/
 
 - No `export default` in component modules. Use named exports only.
 - Keep interfaces and public prop types only in `*.types.ts`.
-- Keep reusable constants only in `*.const.ts` (size maps, class maps, z-indexes, magic numbers).
+- Keep reusable constants only in `*.const.ts` or `@const` (defaults, keymaps, z-indexes, magic numbers). Never dump CSS class strings into const files.
 - Keep reusable pure helpers in `*.utils.ts`.
 - If a component file becomes large, move view-independent logic into a hook in `hooks/use{Name}.ts`.
-- Prefer aliases over long relative imports when going more than one directory up.
+- Prefer aliases over long relative imports when going more than one directory up (`@types`, `@const`, `@hooks`, `@context`).
+- Loop variables use real names (`node`, `child`, `item`) — never `n`.
+- Do not put if/else markup in JSX. Extract an RFC.
+- Default icon class names belong in `*.const.ts`. Use shipped Bear icons.
+- z-index and numeric tokens come from `@const` (`numbers.const.ts`).
+- No inline `style={{}}` for layout chrome. Use CSS classes or apply size via a helper/ref.
 - For dropdown-like item lists, support selected state in item data and reflect it visually.
 - For popovers/tooltips, compose with Bear primitives (`Card`, `Typography`, `Portal`) instead of raw ad-hoc markup.
 

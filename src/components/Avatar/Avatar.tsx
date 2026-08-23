@@ -1,18 +1,45 @@
-import React, { FC, useState } from 'react';
-import {cn } from '@utils';
-import type { AvatarProps, AvatarGroupProps } from './Avatar.types';
+import { useState } from 'react';
+import { AVATAR_MAX_INITIALS, BOOLEAN_FALSE } from '@const';
+import { cn } from '@utils';
+import { Box } from '../Box';
+import { UserIcon } from '../Icon';
+import type { AvatarProps } from './Avatar.types';
 import { AVATAR_SIZE, AVATAR_VARIANT, AVATAR_STATUS, AVATAR_DEFAULTS } from './Avatar.const';
 
-/**
- * Avatar - User profile image with fallback
- * 
- * @example
- * ```tsx
- * <Avatar src="/user.jpg" alt="John Doe" size="md" status="online" />
- * <Avatar initials="JD" size="lg" variant="rounded" />
- * ```
- */
-export const Avatar: FC<AvatarProps> = (props) => {
+const renderAvatarContent = (args: {
+  showFallback: boolean;
+  initials?: string;
+  src?: string;
+  alt: string;
+  rest: Record<string, unknown>;
+  onImageError: () => void;
+}) => {
+  const { showFallback, initials, src, alt, rest, onImageError } = args;
+
+  if (!showFallback) {
+    return (
+      <img
+        src={src}
+        alt={alt}
+        onError={onImageError}
+        className="Bear-Avatar__image bear-w-full bear-h-full bear-object-cover"
+        {...rest}
+      />
+    );
+  }
+
+  if (initials) {
+    return (
+      <Box as="span" className="Bear-Avatar__initials bear-font-medium bear-text-gray-600 dark:bear-text-gray-300 bear-uppercase">
+        {initials.slice(0, AVATAR_MAX_INITIALS)}
+      </Box>
+    );
+  }
+
+  return <UserIcon className="Bear-Avatar__placeholder bear-w-3/5 bear-h-3/5 bear-text-gray-400" />;
+};
+
+export const Avatar = (props: AvatarProps) => {
   const {
     src,
     alt = AVATAR_DEFAULTS.ALT,
@@ -20,15 +47,15 @@ export const Avatar: FC<AvatarProps> = (props) => {
     size = AVATAR_DEFAULTS.SIZE,
     variant = AVATAR_DEFAULTS.VARIANT,
     status,
-    bordered = false,
+    bordered = BOOLEAN_FALSE,
     className,
     testId,
     ...rest
   } = props;
 
-  const [hasError, setHasError] = useState(false);
+  const [hasError, setHasError] = useState(BOOLEAN_FALSE);
   const showFallback = !src || hasError;
-  
+
   return (
     <div
       className={cn(
@@ -43,26 +70,15 @@ export const Avatar: FC<AvatarProps> = (props) => {
       )}
       data-testid={testId}
     >
-      {showFallback ? (
-        initials ? (
-          <span className="Bear-Avatar__initials bear-font-medium bear-text-gray-600 dark:bear-text-gray-300 bear-uppercase">
-            {initials.slice(0, AVATAR_DEFAULTS.MAX_INITIALS)}
-          </span>
-        ) : (
-          <svg className="Bear-Avatar__placeholder bear-w-3/5 bear-h-3/5 bear-text-gray-400" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-          </svg>
-        )
-      ) : (
-        <img
-          src={src}
-          alt={alt}
-          onError={() => setHasError(true)}
-          className="Bear-Avatar__image bear-w-full bear-h-full bear-object-cover"
-          {...rest}
-        />
-      )}
-      
+      {renderAvatarContent({
+        showFallback,
+        initials,
+        src,
+        alt,
+        rest: rest as Record<string, unknown>,
+        onImageError: () => setHasError(true),
+      })}
+
       {status && (
         <span
           className={cn(
@@ -74,47 +90,6 @@ export const Avatar: FC<AvatarProps> = (props) => {
             AVATAR_STATUS[status]
           )}
         />
-      )}
-    </div>
-  );
-};
-
-/**
- * AvatarGroup - Stack of overlapping avatars
- */
-export const AvatarGroup: FC<AvatarGroupProps> = (props) => {
-  const {
-    children,
-    max,
-    size = AVATAR_DEFAULTS.SIZE,
-    className,
-  } = props;
-
-  const avatars = React.Children.toArray(children);
-  const visible = max ? avatars.slice(0, max) : avatars;
-  const remaining = max ? avatars.length - max : 0;
-  
-  return (
-    <div className={cn('Bear-AvatarGroup bear-flex bear--space-x-2', className)}>
-      {visible.map((child, index) => (
-        <div key={index} className="Bear-AvatarGroup__item bear-relative" style={{ zIndex: visible.length - index }}>
-          {child}
-        </div>
-      ))}
-      {remaining > 0 && (
-        <div
-          className={cn(
-            'Bear-AvatarGroup__overflow',
-            'bear-relative bear-inline-flex bear-items-center bear-justify-center',
-            'bear-bg-gray-200 dark:bear-bg-gray-700 bear-rounded-full',
-            'bear-ring-2 bear-ring-white dark:bear-ring-gray-900',
-            'bear-text-gray-600 dark:bear-text-gray-300 bear-font-medium',
-            AVATAR_SIZE[size]
-          )}
-          style={{ zIndex: 0 }}
-        >
-          +{remaining}
-        </div>
       )}
     </div>
   );

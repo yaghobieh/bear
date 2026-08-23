@@ -1,26 +1,36 @@
-import { FC, useEffect, useRef, useState, useCallback } from 'react';
-import {cn } from '@utils';
+import { useEffect, useRef, useState, useCallback } from 'react';
+import {
+  ANIMATED_COUNTER_DECIMALS,
+  ANIMATED_COUNTER_DURATION,
+  BOOLEAN_TRUE,
+  EASING_OUT,
+  EMPTY_STRING,
+  INTERSECTION_THRESHOLD_LOW,
+  ONE,
+  THOUSANDS_SEPARATOR,
+  ZERO,
+} from '@const';
+import { cn } from '@utils';
 import { Typography } from '../Typography';
 import type { AnimatedCounterProps } from './AnimatedCounter.types';
-import { DEFAULT_DURATION, DEFAULT_DECIMALS, DEFAULT_SEPARATOR, DEFAULT_EASING } from './AnimatedCounter.const';
 import { EASING_FUNCTIONS, formatNumber } from './AnimatedCounter.utils';
 
-export const AnimatedCounter: FC<AnimatedCounterProps> = ({
-
-  value,
-  from = 0,
-  duration = DEFAULT_DURATION,
-  decimals = DEFAULT_DECIMALS,
-  prefix = '',
-  suffix = '',
-  separator = DEFAULT_SEPARATOR,
-  easing = DEFAULT_EASING,
-  animateOnView = true,
-  typographyProps,
-  testId,
-  className,
-  ...rest
-}) => {
+export const AnimatedCounter = (props: AnimatedCounterProps) => {
+  const {
+    value,
+    from = ZERO,
+    duration = ANIMATED_COUNTER_DURATION,
+    decimals = ANIMATED_COUNTER_DECIMALS,
+    prefix = EMPTY_STRING,
+    suffix = EMPTY_STRING,
+    separator = THOUSANDS_SEPARATOR,
+    easing = EASING_OUT,
+    animateOnView = BOOLEAN_TRUE,
+    typographyProps,
+    testId,
+    className,
+    ...rest
+  } = props;
 
   const [displayValue, setDisplayValue] = useState(from);
   const [hasStarted, setHasStarted] = useState(!animateOnView);
@@ -32,9 +42,11 @@ export const AnimatedCounter: FC<AnimatedCounterProps> = ({
     const diff = value - from;
     const tick = (now: number) => {
       const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
+      const progress = Math.min(elapsed / duration, ONE);
       setDisplayValue(from + diff * easeFn(progress));
-      if (progress < 1) requestAnimationFrame(tick);
+      if (progress < ONE) {
+        requestAnimationFrame(tick);
+      }
     };
     requestAnimationFrame(tick);
   }, [value, from, duration, easeFn]);
@@ -45,15 +57,17 @@ export const AnimatedCounter: FC<AnimatedCounterProps> = ({
       return;
     }
     const el = ref.current;
-    if (!el) return;
+    if (!el) {
+      return;
+    }
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && !hasStarted) {
-          setHasStarted(true);
+          setHasStarted(BOOLEAN_TRUE);
           animate();
         }
       },
-      { threshold: 0.1 }
+      { threshold: INTERSECTION_THRESHOLD_LOW }
     );
     observer.observe(el);
     return () => observer.disconnect();

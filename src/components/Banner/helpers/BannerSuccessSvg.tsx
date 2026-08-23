@@ -1,14 +1,14 @@
 import { FC } from 'react';
-import { BANNER_ICON_SIZE, BANNER_ICON_STROKE_WIDTH } from '../Banner.const';
+import { TWENTY, TWO } from '@const';
 
 export const BannerSuccessSvg: FC = () => (
   <svg
-    width={BANNER_ICON_SIZE}
-    height={BANNER_ICON_SIZE}
+    width={TWENTY}
+    height={TWENTY}
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
-    strokeWidth={BANNER_ICON_STROKE_WIDTH}
+    strokeWidth={TWO}
     aria-hidden="true"
   >
     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />

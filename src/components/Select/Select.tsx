@@ -10,8 +10,7 @@ import {
 import { ChevronDownIcon, CheckIcon } from '../Icon';
 import { OverlayPortal } from '../OverlayPortal';
 import { cn, resolveBearId, useBearId } from '@utils';
-import { useClickOutsideMultiple, useFixedAnchorPosition, useFormControl } from '@hooks';
-import { OVERLAY_OPEN_EFFECT_DEFAULT } from '../../hooks/useFixedAnchorPosition';
+import { resolveOverlayEffects, useClickOutsideMultiple, useFixedAnchorPosition, useFormControl } from '@hooks';
 
 export const Select: FC<SelectProps> = (props) => {
   const {
@@ -31,8 +30,8 @@ export const Select: FC<SelectProps> = (props) => {
     className,
     id,
     testId,
-    openEffect = OVERLAY_OPEN_EFFECT_DEFAULT,
   } = props;
+  const { openEffect, closeEffect } = resolveOverlayEffects(props);
 
   const generatedId = useBearId('Select');
   const domId = resolveBearId(id, generatedId);
@@ -198,6 +197,7 @@ export const Select: FC<SelectProps> = (props) => {
         }}
         zIndex={SELECT_MENU_Z_INDEX}
         openEffect={openEffect}
+        closeEffect={closeEffect}
         panelRef={menuRef}
         className={`${S_E_L_E_C_T_ROOT_CLASS}__menu bear-rounded-lg bear-border bear-shadow-lg bear-overflow-hidden`}
         attributes={{ role: 'listbox' }}

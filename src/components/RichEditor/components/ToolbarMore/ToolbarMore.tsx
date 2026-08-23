@@ -1,11 +1,6 @@
 import { FC, useState, useRef, useEffect, ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { cn } from '@utils';
-import {
-  RICH_EDITOR_BUTTON_BASE_CLASSES,
-  RICH_EDITOR_BUTTON_INACTIVE_CLASSES,
-  RICH_EDITOR_BUTTON_DISABLED_CLASSES,
-} from '../../RichEditor.const';
 
 export interface ToolbarMoreProps {
   children: ReactNode;
@@ -72,12 +67,11 @@ export const ToolbarMore: FC<ToolbarMoreProps> = ({ children, disabled, isMobile
         disabled={disabled}
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          'Bear-RichEditor__more-trigger',
-          RICH_EDITOR_BUTTON_BASE_CLASSES,
-          RICH_EDITOR_BUTTON_INACTIVE_CLASSES,
+          'Bear-RichEditor__more-trigger p-1.5 rounded transition-colors',
+          'text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-zinc-700',
           'flex items-center justify-center',
           isOpen && 'bg-primary-500 text-white',
-          disabled && `Bear-RichEditor__more-trigger--disabled ${RICH_EDITOR_BUTTON_DISABLED_CLASSES}`
+          disabled && 'Bear-RichEditor__more-trigger--disabled opacity-50 cursor-not-allowed'
         )}
       >
         <EllipsisIcon />

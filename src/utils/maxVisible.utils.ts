@@ -1,4 +1,4 @@
-import type { BearTheme } from '../types';
+import type { BearTheme } from '@types';
 
 export type MaxVisibleByBreakpoint = {
   mobile?: number;

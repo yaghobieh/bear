@@ -1,7 +1,4 @@
-import type { BearSize, BearVariant } from '../../types';
-
-/** Dot size utility classes (bear-w-1.5 bear-h-1.5). */
-export const BADGE_DOT_SIZE_CLASSES = 'bear-w-1.5 bear-h-1.5';
+import type { BearSize, BearVariant } from '@types';
 
 export const sizeClasses: Record<Exclude<BearSize, 'xl'>, string> = {
   xs: 'bear-px-1.5 bear-py-0.5 bear-text-[10px]',

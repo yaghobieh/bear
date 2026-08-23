@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react';
 import type { CalendarSlots } from '../Calendar/Calendar.types';
-import type { BisProp } from '../../types/bis.types';
-import type { OverlayOpenEffect } from '../../hooks/useFixedAnchorPosition';
+import type { BisProp } from '@types';
+import type { OverlayEffectProps } from '@hooks/useFixedAnchorPosition';
 
-export interface DatePickerProps {
+export interface DatePickerProps extends OverlayEffectProps {
   testId?: string;
   id?: string;
   value?: Date | null;
@@ -35,5 +35,4 @@ export interface DatePickerProps {
   size?: 'sm' | 'md' | 'lg';
   variant?: 'default' | 'filled' | 'outline';
   icon?: ReactNode;
-  openEffect?: OverlayOpenEffect;
 }

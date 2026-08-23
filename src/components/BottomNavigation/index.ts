@@ -1,3 +1,3 @@
 export { BottomNavigation } from './BottomNavigation';
-export type { BottomNavigationProps, BottomNavItem } from './BottomNavigation.types';
+export type { BottomNavigationProps, BottomNavItem, BottomNavigationVariant } from './BottomNavigation.types';
 

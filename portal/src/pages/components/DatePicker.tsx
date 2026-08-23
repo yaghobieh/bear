@@ -86,17 +86,15 @@ const DatePickerPage: FC = () => {
       </ComponentPreview>
 
       <ComponentPreview
-        title="Open effects"
-        description="Choose slide-down, fade, scale, or none."
-        code={`<DatePicker openEffect="slide-down" />
-<DatePicker openEffect="fade" />
-<DatePicker openEffect="scale" />`}
+        title="Open and close effects"
+        description="Choose slide-down, fade, scale, or none for open and close."
+        code={`<DatePicker openEffect="slide-down" closeEffect="fade" />
+<DatePicker effect={{ open: 'scale', close: 'slide-down' }} />`}
         allowOverflow
       >
         <div className="flex flex-col gap-4 w-full max-w-xs">
-          <DatePicker value={date} onChange={setDate} openEffect="slide-down" label="slide-down" />
-          <DatePicker value={date} onChange={setDate} openEffect="fade" label="fade" />
-          <DatePicker value={date} onChange={setDate} openEffect="scale" label="scale" />
+          <DatePicker value={date} onChange={setDate} openEffect="slide-down" closeEffect="fade" label="open slide-down, close fade" />
+          <DatePicker value={date} onChange={setDate} effect={{ open: 'scale', close: 'slide-down' }} label="effect scale / slide-down" />
         </div>
       </ComponentPreview>
 
@@ -120,6 +118,8 @@ const DatePickerPage: FC = () => {
               <tr><td className="px-4 py-3 font-mono text-bear-600">maxDate</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>Date</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Maximum selectable date</td></tr>
               <tr><td className="px-4 py-3 font-mono text-bear-600">icon</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Custom icon to replace default calendar</td></tr>
               <tr><td className="px-4 py-3 font-mono text-bear-600">openEffect</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>none | fade | slide-down | scale</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">slide-down</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Calendar open animation</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">closeEffect</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>none | fade | slide-down | scale</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">same as openEffect</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Calendar close animation</td></tr>
+              <tr><td className="px-4 py-3 font-mono text-bear-600">effect</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>{'{ open?, close? }'}</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">-</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Open and close motion in one prop</td></tr>
               <tr><td className="px-4 py-3 font-mono text-bear-600">disabled</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">false</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Disable the picker</td></tr>
             </tbody>
           </table>

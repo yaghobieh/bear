@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import {cn } from '@utils';
-import type { BearSize } from '../../types';
+import type { BearSize } from '@types';
 import type { SpinnerProps } from './Spinner.types';
 
 const sizeClasses: Record<BearSize, string> = {

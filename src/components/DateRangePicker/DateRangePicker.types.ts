@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from 'react';
-import type { OverlayOpenEffect } from '../../hooks/useFixedAnchorPosition';
+import type { OverlayEffectProps } from '@hooks';
 
 export interface DateRange {
   start: Date | null;
@@ -11,7 +11,7 @@ export interface DateRangePreset {
   range: () => DateRange;
 }
 
-export interface DateRangePickerProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
+export interface DateRangePickerProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>, OverlayEffectProps {
   id?: string;
   value?: DateRange;
   onChange?: (range: DateRange) => void;
@@ -28,5 +28,4 @@ export interface DateRangePickerProps extends Omit<HTMLAttributes<HTMLDivElement
   error?: string;
   helperText?: string;
   testId?: string;
-  openEffect?: OverlayOpenEffect;
 }

@@ -1,19 +1,10 @@
-import { FC, useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { cn } from '@utils';
+import { ChevronDownIcon } from '../../../Icon';
+import { TWELVE } from '@const';
 import type { ToolbarDropdownProps, DropdownOption } from '../../RichEditor.types';
-import {
-  RICH_EDITOR_BUTTON_BASE_CLASSES,
-  RICH_EDITOR_BUTTON_INACTIVE_CLASSES,
-  RICH_EDITOR_BUTTON_DISABLED_CLASSES,
-} from '../../RichEditor.const';
 
-const ChevronDownIcon = () => (
-  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-    <path d="M6 9l6 6 6-6" />
-  </svg>
-);
-
-export const ToolbarDropdown: FC<ToolbarDropdownProps> = (props) => {
+export const ToolbarDropdown = (props: ToolbarDropdownProps) => {
   const { options, value, onChange, title, disabled, icon } = props;
 
   const [isOpen, setIsOpen] = useState(false);
@@ -45,18 +36,17 @@ export const ToolbarDropdown: FC<ToolbarDropdownProps> = (props) => {
         disabled={disabled}
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          'Bear-RichEditor__dropdown-trigger',
-          RICH_EDITOR_BUTTON_BASE_CLASSES,
-          RICH_EDITOR_BUTTON_INACTIVE_CLASSES,
+          'Bear-RichEditor__dropdown-trigger p-1.5 rounded transition-colors',
+          'text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-zinc-700',
           'flex items-center gap-1 min-w-[80px]',
-          disabled && `Bear-RichEditor__dropdown-trigger--disabled ${RICH_EDITOR_BUTTON_DISABLED_CLASSES}`
+          disabled && 'Bear-RichEditor__dropdown-trigger--disabled opacity-50 cursor-not-allowed'
         )}
       >
         {icon && <span className="Bear-RichEditor__dropdown-icon">{icon}</span>}
         <span className="Bear-RichEditor__dropdown-label text-xs truncate">
           {selectedOption?.label || 'Normal'}
         </span>
-        <ChevronDownIcon />
+        <ChevronDownIcon size={TWELVE} />
       </button>
 
       {isOpen && (

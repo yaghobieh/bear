@@ -38,7 +38,6 @@ export const useFixedAnchorPosition = (
   useLayoutEffect(() => {
     if (!open) {
       setReady(false);
-      setCoords(EMPTY_COORDS);
       return;
     }
 

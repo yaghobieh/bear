@@ -1,45 +1,58 @@
-import { FC, useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { cn } from '@utils';
-import type { ToolbarColorPickerProps } from '../../RichEditor.types';
-import {
-  RICH_EDITOR_BUTTON_BASE_CLASSES,
-  RICH_EDITOR_BUTTON_INACTIVE_CLASSES,
-  RICH_EDITOR_BUTTON_DISABLED_CLASSES,
-  RICH_EDITOR_COLORS,
-} from '../../RichEditor.const';
 import { useMediaQuery } from '@hooks/useMediaQuery';
-import { FormatColorTextIcon, HighlightIcon } from '../../../Icon/icons/editor';
-import { CheckIcon } from '../../../Icon/icons/status';
+import {
+  COLOR_BLACK,
+  COLOR_HIGHLIGHT_YELLOW,
+  COLOR_TYPE_TEXT,
+  SIXTEEN,
+  TWELVE,
+  ZERO,
+} from '@const';
+import { CheckIcon, FormatColorTextIcon, HighlightIcon } from '../../../Icon';
+import type { ToolbarColorPickerProps } from '../../RichEditor.types';
+import { RICH_EDITOR_COLORS } from '../../RichEditor.const';
+import {
+  COLOR_MENU_EDGE_PAD,
+  COLOR_MENU_GAP,
+  COLOR_MENU_HEIGHT,
+  COLOR_MENU_HEIGHT_OFFSET,
+  COLOR_MENU_WIDTH,
+  COLOR_PICKER_MOBILE_QUERY,
+  COLOR_RECENT_MAX,
+} from './ToolbarColorPicker.const';
 
-export const ToolbarColorPicker: FC<ToolbarColorPickerProps> = (props) => {
+export const ToolbarColorPicker = (props: ToolbarColorPickerProps) => {
   const {
     value,
     onChange,
     title,
     disabled,
-    type = 'text',
+    type = COLOR_TYPE_TEXT,
     recentColors = [],
     onApplyLast,
   } = props;
 
   const [isOpen, setIsOpen] = useState(false);
-  const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
+  const [menuPosition, setMenuPosition] = useState({ top: ZERO, left: ZERO });
   const pickerRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
-  const isMobile = useMediaQuery('(max-width: 640px)');
+  const isMobile = useMediaQuery(COLOR_PICKER_MOBILE_QUERY);
 
   useEffect(() => {
-    if (isOpen && isMobile && triggerRef.current && typeof document !== 'undefined') {
-      const rect = triggerRef.current.getBoundingClientRect();
-      const spaceAbove = rect.top;
-      const spaceBelow = window.innerHeight - rect.bottom;
-      if (spaceBelow >= 240 || spaceBelow >= spaceAbove) {
-        setMenuPosition({ top: rect.bottom + 4, left: Math.max(8, Math.min(rect.left, window.innerWidth - 220)) });
-      } else {
-        setMenuPosition({ top: rect.top - 244, left: Math.max(8, Math.min(rect.left, window.innerWidth - 220)) });
-      }
+    if (!isOpen || !isMobile || !triggerRef.current) {
+      return;
     }
+    const rect = triggerRef.current.getBoundingClientRect();
+    const spaceAbove = rect.top;
+    const spaceBelow = window.innerHeight - rect.bottom;
+    const left = Math.max(COLOR_MENU_EDGE_PAD, Math.min(rect.left, window.innerWidth - COLOR_MENU_WIDTH));
+    if (spaceBelow >= COLOR_MENU_HEIGHT || spaceBelow >= spaceAbove) {
+      setMenuPosition({ top: rect.bottom + COLOR_MENU_GAP, left });
+      return;
+    }
+    setMenuPosition({ top: rect.top - COLOR_MENU_HEIGHT_OFFSET, left });
   }, [isOpen, isMobile]);
 
   useEffect(() => {
@@ -48,7 +61,6 @@ export const ToolbarColorPicker: FC<ToolbarColorPickerProps> = (props) => {
         setIsOpen(false);
       }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
@@ -58,24 +70,26 @@ export const ToolbarColorPicker: FC<ToolbarColorPickerProps> = (props) => {
     setIsOpen(false);
   };
 
-  const Icon = type === 'text' ? FormatColorTextIcon : HighlightIcon;
-  const lastColor = recentColors[0] || value;
+  const Icon = type === COLOR_TYPE_TEXT ? FormatColorTextIcon : HighlightIcon;
+  const lastColor = recentColors[ZERO] || value;
+  const fallbackSwatch = type === COLOR_TYPE_TEXT ? COLOR_BLACK : COLOR_HIGHLIGHT_YELLOW;
 
   const menuContent = (
     <div
+      ref={isMobile ? pickerRef : undefined}
       className={cn(
         'Bear-RichEditor__color-menu p-3 bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-lg shadow-xl min-w-[200px] max-w-[min(90vw,240px)]',
         isMobile ? 'fixed z-[9999]' : 'absolute bottom-full left-0 mb-1'
       )}
       style={isMobile ? { top: menuPosition.top, left: menuPosition.left } : undefined}
     >
-      {recentColors.length > 0 && (
+      {recentColors.length > ZERO && (
         <div className="mb-3">
           <p className="text-xs text-gray-500 dark:text-gray-400 mb-1.5">Recent</p>
           <div className="flex gap-1 flex-wrap">
-            {recentColors.slice(0, 6).map((color, idx) => (
+            {recentColors.slice(ZERO, COLOR_RECENT_MAX).map((color, index) => (
               <button
-                key={`recent-${idx}`}
+                key={`recent-${index}`}
                 type="button"
                 onClick={() => handleSelect(color)}
                 className={cn(
@@ -111,7 +125,7 @@ export const ToolbarColorPicker: FC<ToolbarColorPickerProps> = (props) => {
         onClick={() => handleSelect('')}
         className="w-full mt-2 px-2 py-1.5 text-xs text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-zinc-700 rounded transition-colors touch-manipulation"
       >
-        Remove {type === 'text' ? 'color' : 'highlight'}
+        Remove {type === COLOR_TYPE_TEXT ? 'color' : 'highlight'}
       </button>
     </div>
   );
@@ -125,43 +139,33 @@ export const ToolbarColorPicker: FC<ToolbarColorPickerProps> = (props) => {
         disabled={disabled}
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          'Bear-RichEditor__color-trigger',
-          RICH_EDITOR_BUTTON_BASE_CLASSES,
-          RICH_EDITOR_BUTTON_INACTIVE_CLASSES,
+          'Bear-RichEditor__color-trigger p-1.5 rounded transition-colors',
+          'text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-zinc-700',
           'flex items-center gap-0.5',
-          disabled && `Bear-RichEditor__color-trigger--disabled ${RICH_EDITOR_BUTTON_DISABLED_CLASSES}`
+          disabled && 'Bear-RichEditor__color-trigger--disabled opacity-50 cursor-not-allowed'
         )}
       >
-        <Icon size={16} />
-        <span 
-          className="w-3 h-1 rounded-sm mt-0.5" 
-          style={{ backgroundColor: value || (type === 'text' ? '#000000' : '#fef08a') }}
-        />
+        <Icon size={SIXTEEN} />
+        <span className="w-3 h-1 rounded-sm mt-0.5" style={{ backgroundColor: value || fallbackSwatch }} />
       </button>
 
       {lastColor && onApplyLast && (
         <button
           type="button"
-          title={`Apply ${type === 'text' ? 'text' : 'highlight'} color`}
+          title={`Apply ${type === COLOR_TYPE_TEXT ? 'text' : 'highlight'} color`}
           disabled={disabled}
           onClick={() => onApplyLast(lastColor)}
           className={cn(
-            'Bear-RichEditor__color-apply',
-            'p-0.5 rounded transition-colors',
+            'Bear-RichEditor__color-apply p-0.5 rounded transition-colors',
             'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-zinc-700',
             disabled && 'opacity-50 cursor-not-allowed'
           )}
         >
-          <CheckIcon size={12} />
+          <CheckIcon size={TWELVE} />
         </button>
       )}
 
-      {isOpen && (isMobile && typeof document !== 'undefined'
-        ? createPortal(menuContent, document.body)
-        : menuContent
-      )}
+      {isOpen && (isMobile ? createPortal(menuContent, document.body) : menuContent)}
     </div>
   );
 };
-
-export default ToolbarColorPicker;

@@ -1,35 +1,41 @@
 import type { ReactElement } from 'react';
 import { useState, useCallback, useRef } from 'react';
+import { ONE, ZERO } from '@const';
 import { cn } from '@utils';
 import { useResizeObserver } from '@hooks';
 import type { VirtualListProps } from './VirtualList.types';
-import { VIRTUAL_LIST_FALLBACK_HEIGHT } from './VirtualList.const';
+import { VIRTUAL_LIST_FALLBACK_HEIGHT, VIRTUAL_LIST_OVERSCAN } from './VirtualList.const';
 
-export function VirtualList<T>({
-  items,
-  itemHeight,
-  overscan = 3,
-  height,
-  renderItem,
-  keyExtractor = (_, i) => i,
-  className,
-}: VirtualListProps<T>): ReactElement {
-  const [scrollTop, setScrollTop] = useState(0);
+export function VirtualList<T>(props: VirtualListProps<T>): ReactElement {
+  const {
+    items,
+    itemHeight,
+    overscan = VIRTUAL_LIST_OVERSCAN,
+    height,
+    renderItem,
+    keyExtractor = (_, index) => index,
+    className,
+  } = props;
+  const [scrollTop, setScrollTop] = useState(ZERO);
   const containerRef = useRef<HTMLDivElement>(null);
   const { height: observedHeight } = useResizeObserver(containerRef, {
     enabled: typeof height === 'string',
   });
 
   const containerHeight =
-    typeof height === 'number' ? height : (observedHeight > 0 ? observedHeight : VIRTUAL_LIST_FALLBACK_HEIGHT);
+    typeof height === 'number'
+      ? height
+      : observedHeight > ZERO
+        ? observedHeight
+        : VIRTUAL_LIST_FALLBACK_HEIGHT;
 
   const totalHeight = items.length * itemHeight;
-  const startIndex = Math.max(0, Math.floor(scrollTop / itemHeight) - overscan);
+  const startIndex = Math.max(ZERO, Math.floor(scrollTop / itemHeight) - overscan);
   const endIndex = Math.min(
-    items.length - 1,
-    Math.ceil((scrollTop + containerHeight) / itemHeight) + overscan
+    items.length - ONE,
+    Math.ceil((scrollTop + containerHeight) / itemHeight) + overscan,
   );
-  const visibleItems = items.slice(startIndex, endIndex + 1);
+  const visibleItems = items.slice(startIndex, endIndex + ONE);
   const offsetY = startIndex * itemHeight;
 
   const handleScroll = useCallback(() => {
@@ -47,8 +53,8 @@ export function VirtualList<T>({
     >
       <div className="bear-relative" style={{ height: `${totalHeight}px` }}>
         <div style={{ transform: `translateY(${offsetY}px)` }}>
-          {visibleItems.map((item, i) => {
-            const index = startIndex + i;
+          {visibleItems.map((item, offset) => {
+            const index = startIndex + offset;
             return (
               <div key={keyExtractor(item, index)} style={{ height: `${itemHeight}px` }}>
                 {renderItem(item, index)}

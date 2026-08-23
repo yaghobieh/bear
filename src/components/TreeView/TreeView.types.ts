@@ -9,6 +9,35 @@ export interface TreeNode {
   data?: unknown;
 }
 
+export interface TreeViewExpandControlProps {
+  hasChildren: boolean;
+  isExpanded: boolean;
+  nodeId: string;
+  iconClassName: string;
+  onToggle: (nodeId: string) => void;
+}
+
+export interface TreeViewNodeIconProps {
+  icon?: ReactNode;
+  hasChildren: boolean;
+  isExpanded: boolean;
+  iconClassName: string;
+}
+
+export interface TreeViewNodeProps {
+  node: TreeNode;
+  depth: number;
+  size: NonNullable<TreeViewProps['size']>;
+  selectedId?: string;
+  checkedIds: string[];
+  expandedIds: Set<string>;
+  showCheckboxes: boolean;
+  showLines: boolean;
+  onSelect?: (node: TreeNode) => void;
+  onCheck?: (nodeId: string, checked: boolean) => void;
+  onToggle: (nodeId: string) => void;
+}
+
 export interface TreeViewProps {
   testId?: string;
   id?: string;

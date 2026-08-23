@@ -1,25 +1,35 @@
+import type { CSSProperties } from 'react';
+import {
+  DIRECTION_HORIZONTAL,
+  PERCENT_ONE_HUNDRED,
+  PERCENT_UNIT,
+  ZERO,
+} from '@const';
 import type { ResizablePanelProps } from './ResizablePanel.types';
-import { PERCENTAGE_SCALE } from './ResizablePanel.const';
 
-/**
- * Compute first pane size as a percentage (0–100) from pointer position and container rect.
- * Used for both horizontal and vertical layouts.
- */
-export function getResizePercentage(
+export const getResizePercentage = (
   rect: DOMRect,
   direction: NonNullable<ResizablePanelProps['direction']>,
   clientX: number,
   clientY: number
-): number {
-  if (direction === 'horizontal') {
-    return ((clientX - rect.left) / rect.width) * PERCENTAGE_SCALE;
+): number => {
+  if (direction === DIRECTION_HORIZONTAL) {
+    return ((clientX - rect.left) / rect.width) * PERCENT_ONE_HUNDRED;
   }
-  return ((clientY - rect.top) / rect.height) * PERCENTAGE_SCALE;
-}
+  return ((clientY - rect.top) / rect.height) * PERCENT_ONE_HUNDRED;
+};
 
-/**
- * Clamp a value between min and max (inclusive).
- */
-export function clampSize(value: number, min: number, max: number): number {
-  return Math.min(max, Math.max(min, value));
-}
+export const getPaneStyle = (isHorizontal: boolean, size: number): CSSProperties => {
+  const paneSize = `${size}${PERCENT_UNIT}`;
+  if (isHorizontal) {
+    return { width: paneSize, minWidth: ZERO };
+  }
+  return { height: paneSize, minHeight: ZERO };
+};
+
+export const getHandleStyle = (isHorizontal: boolean, handleSize: number): CSSProperties => {
+  if (isHorizontal) {
+    return { width: handleSize };
+  }
+  return { height: handleSize };
+};

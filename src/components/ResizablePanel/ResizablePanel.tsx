@@ -1,90 +1,57 @@
-import { FC, useState, useCallback, useRef } from 'react';
-import type { ResizablePanelProps } from './ResizablePanel.types';
+import { cn } from '@utils';
 import {
-  DEFAULT_FIRST_SIZE,
-  DEFAULT_DIRECTION,
-  MIN_SIZE,
-  MAX_SIZE,
-  HANDLE_WIDTH,
-  EVENT_POINTER_MOVE,
-  EVENT_POINTER_UP,
-} from './ResizablePanel.const';
-import { getResizePercentage, clampSize } from './ResizablePanel.utils';
-import {cn } from '@utils';
+  DIRECTION_HORIZONTAL,
+  FIFTY,
+  NINETY,
+  PERCENT_ONE_HUNDRED,
+  SIX,
+  TEN,
+} from '@const';
+import type { ResizablePanelProps } from './ResizablePanel.types';
+import { DEFAULT_DIRECTION } from './ResizablePanel.const';
+import { getHandleStyle, getPaneStyle } from './ResizablePanel.utils';
+import { useResizablePanel } from './useResizablePanel';
 
-/**
- * Two-pane resizable layout with a draggable divider.
- * Supports horizontal and vertical directions; respects min/max size and dark/light theme.
- *
- * @example
- * ```tsx
- * <ResizablePanel
- *   first={<Sidebar />}
- *   second={<Main />}
- *   direction="horizontal"
- *   defaultSize={30}
- * />
- * ```
- */
-export const ResizablePanel: FC<ResizablePanelProps> = (props) => {
+export const ResizablePanel = (props: ResizablePanelProps) => {
   const {
     first,
     second,
     direction = DEFAULT_DIRECTION,
-    defaultSize = DEFAULT_FIRST_SIZE,
-    minSize = MIN_SIZE,
-    maxSize = MAX_SIZE,
+    defaultSize = FIFTY,
+    minSize = TEN,
+    maxSize = NINETY,
     onResize,
     className,
-      testId,
+    testId,
   } = props;
 
-  const [size, setSize] = useState(defaultSize);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const { size, containerRef, onPointerDown } = useResizablePanel({
+    direction,
+    defaultSize,
+    minSize,
+    maxSize,
+    onResize,
+  });
 
-  const clamp = useCallback((n: number) => clampSize(n, minSize, maxSize), [minSize, maxSize]);
+  const isHorizontal = direction === DIRECTION_HORIZONTAL;
+  const firstStyle = getPaneStyle(isHorizontal, size);
+  const secondStyle = getPaneStyle(isHorizontal, PERCENT_ONE_HUNDRED - size);
+  const handleStyle = getHandleStyle(isHorizontal, SIX);
 
-  const handlePointerDown = useCallback(
-    (e: React.PointerEvent) => {
-      e.preventDefault();
-      const target = e.target as HTMLElement;
-      target.setPointerCapture?.(e.pointerId);
-
-      const onMove = (ev: PointerEvent) => {
-        if (!containerRef.current) return;
-        const rect = containerRef.current.getBoundingClientRect();
-        const pct = getResizePercentage(rect, direction, ev.clientX, ev.clientY);
-        const clamped = clamp(pct);
-        setSize(clamped);
-        onResize?.(clamped);
-      };
-
-      const onUp = () => {
-        target.releasePointerCapture?.(e.pointerId);
-        window.removeEventListener(EVENT_POINTER_MOVE, onMove);
-        window.removeEventListener(EVENT_POINTER_UP, onUp);
-      };
-
-      window.addEventListener(EVENT_POINTER_MOVE, onMove);
-      window.addEventListener(EVENT_POINTER_UP, onUp);
-    },
-    [direction, clamp, onResize]
-  );
-
-  const isHorizontal = direction === 'horizontal';
-  const firstStyle = isHorizontal
-    ? { width: `${size}%`, minWidth: 0 }
-    : { height: `${size}%`, minHeight: 0 };
-  const secondStyle = isHorizontal
-    ? { width: `${100 - size}%`, minWidth: 0 }
-    : { height: `${100 - size}%`, minHeight: 0 };
+  let layoutClass = 'bear-flex-col';
+  let handleClass = 'bear-h-1.5 bear-w-full bear-cursor-row-resize';
+  if (isHorizontal) {
+    layoutClass = 'bear-flex-row';
+    handleClass = 'bear-w-1.5 bear-cursor-col-resize';
+  }
 
   return (
     <div
-      ref={containerRef} data-testid={testId}
+      ref={containerRef}
+      data-testid={testId}
       className={cn(
         'Bear-ResizablePanel bear-flex bear-w-full bear-h-full bear-overflow-hidden',
-        isHorizontal ? 'bear-flex-row' : 'bear-flex-col',
+        layoutClass,
         className
       )}
     >
@@ -97,12 +64,12 @@ export const ResizablePanel: FC<ResizablePanelProps> = (props) => {
         aria-valuemin={minSize}
         aria-valuemax={maxSize}
         tabIndex={0}
-        onPointerDown={handlePointerDown}
+        onPointerDown={onPointerDown}
         className={cn(
-          'Bear-ResizablePanel__handle bear-shrink-0 bear-bg-gray-200 dark:bear-bg-gray-700 hover:bear-bg-primary-500/30 bear-transition-colors bear-cursor-col-resize',
-          isHorizontal ? 'bear-w-1.5' : 'bear-h-1.5 bear-w-full bear-cursor-row-resize'
+          'Bear-ResizablePanel__handle bear-shrink-0 bear-bg-gray-200 dark:bear-bg-gray-700 hover:bear-bg-primary-500/30 bear-transition-colors',
+          handleClass
         )}
-        style={isHorizontal ? { width: HANDLE_WIDTH } : { height: HANDLE_WIDTH }}
+        style={handleStyle}
       />
       <div className="bear-overflow-auto bear-shrink-0 bear-flex-1" style={secondStyle}>
         {second}

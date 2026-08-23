@@ -1,5 +1,5 @@
 import type { HTMLAttributes, ReactNode } from 'react';
-import type { BisProp } from '../../types/bis.types';
+import type { BisProp } from '@types';
 
 export type MediaType = 'video' | 'audio';
 

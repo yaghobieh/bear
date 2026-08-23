@@ -73,3 +73,6 @@ export const TIMEPICKER_CONFIRM_BUTTON_CLASSES = 'Bear-TimePicker__confirm bear-
 export const TIMEPICKER_ERROR_CLASSES = 'Bear-TimePicker__error bear-mt-1 bear-text-xs bear-text-red-500';
 
 export const TIMEPICKER_HELPER_CLASSES = 'Bear-TimePicker__helper bear-mt-1 bear-text-xs bear-text-gray-500 dark:bear-text-zinc-500';
+
+export const TIMEPICKER_CLOCK_ICON_CLASS =
+  'bear-w-5 bear-h-5 bear-text-gray-400 dark:bear-text-zinc-400';

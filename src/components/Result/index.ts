@@ -1,2 +1,2 @@
-export { Result, default } from './Result';
+export { Result } from './Result';
 export type { ResultProps, ResultStatus } from './Result.types';

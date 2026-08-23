@@ -102,5 +102,3 @@ export const SPINNER_SIZE_MAP: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', 'xs' | '
   lg: 'sm',
   xl: 'md',
 };
-
-export const ROOT_CLASS = 'Bear-ActionIcon bear-inline-flex bear-items-center bear-justify-center bear-transition-all bear-duration-200 bear-outline-none disabled:bear-opacity-50 disabled:bear-cursor-not-allowed';

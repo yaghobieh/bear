@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import type { BearComponentOverrides, ButtonVariantsConfig } from '../../types/component.types';
+import type { BearComponentOverrides, ButtonVariantsConfig } from '@types';
 
 /**
  * Component part style definition

@@ -1,12 +1,10 @@
 import { FC, useState, useRef, useCallback } from 'react';
 import type { DatePickerProps } from './DatePicker.types';
 import { Calendar } from '../Calendar';
+import { CalendarIcon } from '../Icon';
 import { OverlayPortal } from '../OverlayPortal';
 import { cn } from '@utils';
-import { useBearStyles, useClickOutsideMultiple, useFixedAnchorPosition } from '@hooks';
-import {
-  OVERLAY_OPEN_EFFECT_DEFAULT,
-} from '../../hooks/useFixedAnchorPosition';
+import { resolveOverlayEffects, useBearStyles, useClickOutsideMultiple, useFixedAnchorPosition } from '@hooks';
 import { formatDate } from './DatePicker.utils';
 import {
   D_A_T_E_P_I_C_K_E_R_ROOT_CLASS,
@@ -45,9 +43,9 @@ export const DatePicker: FC<DatePickerProps> = (props) => {
     size = 'md',
     variant = 'default',
     icon,
-    openEffect = OVERLAY_OPEN_EFFECT_DEFAULT,
     testId,
   } = props;
+  const { openEffect, closeEffect } = resolveOverlayEffects(props);
 
   const [isOpen, setIsOpen] = useState(false);
   const [viewDate, setViewDate] = useState(value ?? new Date());
@@ -111,11 +109,7 @@ export const DatePicker: FC<DatePickerProps> = (props) => {
           {value ? formatDate(value, format) : placeholder}
         </span>
         <span className={`${D_A_T_E_P_I_C_K_E_R_ROOT_CLASS}__icon`}>
-          {icon ?? (
-            <svg className="bear-w-5 bear-h-5 bear-text-zinc-400 bear-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-          )}
+          {icon ?? <CalendarIcon className="bear-w-5 bear-h-5 bear-text-zinc-400 bear-shrink-0" />}
         </span>
       </button>
       {error && <p className={`${D_A_T_E_P_I_C_K_E_R_ROOT_CLASS}__error bear-mt-1 bear-text-xs bear-text-red-400`}>{error}</p>}
@@ -128,6 +122,7 @@ export const DatePicker: FC<DatePickerProps> = (props) => {
         style={overlayStyle}
         zIndex={DATEPICKER_DROPDOWN_Z_INDEX}
         openEffect={openEffect}
+        closeEffect={closeEffect}
         className={`${D_A_T_E_P_I_C_K_E_R_ROOT_CLASS}__dropdown`}
         panelRef={dropdownRef}
         attributes={{ [DATEPICKER_CALENDAR_ATTR]: '' }}

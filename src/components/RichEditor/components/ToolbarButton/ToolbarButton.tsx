@@ -1,14 +1,7 @@
-import { FC } from 'react';
 import { cn } from '@utils';
 import type { ToolbarButtonProps } from '../../RichEditor.types';
-import {
-  RICH_EDITOR_BUTTON_BASE_CLASSES,
-  RICH_EDITOR_BUTTON_ACTIVE_CLASSES,
-  RICH_EDITOR_BUTTON_INACTIVE_CLASSES,
-  RICH_EDITOR_BUTTON_DISABLED_CLASSES,
-} from '../../RichEditor.const';
 
-export const ToolbarButton: FC<ToolbarButtonProps> = (props) => {
+export const ToolbarButton = (props: ToolbarButtonProps) => {
   const { icon, title, active, onClick, disabled } = props;
 
   return (
@@ -18,18 +11,14 @@ export const ToolbarButton: FC<ToolbarButtonProps> = (props) => {
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        'Bear-RichEditor__button',
-        RICH_EDITOR_BUTTON_BASE_CLASSES,
-        active 
-          ? `Bear-RichEditor__button--active ${RICH_EDITOR_BUTTON_ACTIVE_CLASSES}`
-          : RICH_EDITOR_BUTTON_INACTIVE_CLASSES,
-        disabled && `Bear-RichEditor__button--disabled ${RICH_EDITOR_BUTTON_DISABLED_CLASSES}`
+        'Bear-RichEditor__button p-1.5 rounded transition-colors',
+        active
+          ? 'Bear-RichEditor__button--active bg-primary-500 text-white'
+          : 'text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-zinc-700',
+        disabled && 'Bear-RichEditor__button--disabled opacity-50 cursor-not-allowed'
       )}
     >
       {icon}
     </button>
   );
 };
-
-export default ToolbarButton;
-

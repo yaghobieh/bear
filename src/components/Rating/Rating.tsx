@@ -1,218 +1,136 @@
-import { forwardRef, useState, useCallback, useMemo } from 'react';
-import {cn } from '@utils';
+import { useState } from 'react';
+import { cn } from '@utils';
+import {
+  BOOLEAN_FALSE,
+  BOOLEAN_TRUE,
+  FIVE,
+  HALF,
+  ONE,
+  SIZE_MD,
+  ZERO,
+} from '@const';
+import { useBearTheme } from '@context/BearProvider';
 import type { RatingProps } from './Rating.types';
 import {
-  RATING_BASE_CLASSES,
-  RATING_SIZE_CLASSES,
-  RATING_STAR_BASE_CLASSES,
-  RATING_STAR_DISABLED_CLASSES,
-  RATING_STAR_READONLY_CLASSES,
-  RATING_DEFAULT_COLOR,
-  RATING_DEFAULT_EMPTY_COLOR,
-  RATING_DEFAULT_MAX,
   RATING_DEFAULT_LABELS,
+  RATING_SIZE_ICON,
+  RATING_SIZE_TEXT,
+  RATING_THEME_EMPTY_SHADE,
+  RATING_THEME_FILLED_SHADE,
 } from './Rating.const';
+import { formatRatingLabel, getStarState, isLeftHalfClick, resolveRatingIcon } from './Rating.utils';
+import { StarIcon } from './components/StarIcon';
 
-// Star icon component
-const StarIcon = ({ size, filled, half, color, emptyColor }: {
-  size: number;
-  filled: boolean;
-  half?: boolean;
-  color: string;
-  emptyColor: string;
-}) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    {half ? (
-      <>
-        <defs>
-          <linearGradient id={`half-${size}`}>
-            <stop offset="50%" stopColor={color} />
-            <stop offset="50%" stopColor={emptyColor} />
-          </linearGradient>
-        </defs>
-        <path
-          d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
-          fill={`url(#half-${size})`}
-          stroke={color}
-          strokeWidth="1"
-        />
-      </>
-    ) : (
-      <path
-        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
-        fill={filled ? color : emptyColor}
-        stroke={filled ? color : emptyColor}
-        strokeWidth="1"
-      />
-    )}
-  </svg>
-);
+export const Rating = (props: RatingProps) => {
+  const {
+    value: controlledValue,
+    defaultValue = ZERO,
+    max = FIVE,
+    size = SIZE_MD,
+    onChange,
+    allowHalf = BOOLEAN_FALSE,
+    allowClear = BOOLEAN_TRUE,
+    disabled = BOOLEAN_FALSE,
+    readOnly = BOOLEAN_FALSE,
+    filledIcon,
+    emptyIcon,
+    halfIcon,
+    color: colorProp,
+    emptyColor: emptyColorProp,
+    showValue = BOOLEAN_FALSE,
+    labelFormatter,
+    labels = RATING_DEFAULT_LABELS,
+    testId,
+    className,
+    ...rest
+  } = props;
 
-/**
- * Rating - Star rating component
- * 
- * @example
- * ```tsx
- * const [rating, setRating] = useState(3);
- * 
- * <Rating value={rating} onChange={setRating} />
- * <Rating value={3.5} allowHalf readOnly />
- * ```
- */
-export const Rating = forwardRef<HTMLDivElement, RatingProps>(
-  (
-    {
-      value: controlledValue,
-      defaultValue = 0,
-      max = RATING_DEFAULT_MAX,
-      size = 'md',
-      onChange,
-      allowHalf = false,
-      allowClear = true,
-      disabled = false,
-      readOnly = false,
-      filledIcon,
-      emptyIcon,
-      halfIcon,
-      color = RATING_DEFAULT_COLOR,
-      emptyColor = RATING_DEFAULT_EMPTY_COLOR,
-      showValue = false,
-      labelFormatter,
-      labels = RATING_DEFAULT_LABELS,
-      testId,
-      className,
-      ...props
-    },
-    ref
-  ) => {
+  const theme = useBearTheme();
+  const color = colorProp ?? theme.colors.warning[RATING_THEME_FILLED_SHADE];
+  const emptyColor = emptyColorProp ?? theme.colors.neutral[RATING_THEME_EMPTY_SHADE];
 
-    const [internalValue, setInternalValue] = useState(defaultValue);
-    const [hoverValue, setHoverValue] = useState<number | null>(null);
+  const [internalValue, setInternalValue] = useState(defaultValue);
+  const [hoverValue, setHoverValue] = useState<number | null>(null);
 
-    const value = controlledValue !== undefined ? controlledValue : internalValue;
-    const displayValue = hoverValue !== null ? hoverValue : value;
+  const value = controlledValue !== undefined ? controlledValue : internalValue;
+  const displayValue = hoverValue !== null ? hoverValue : value;
+  const iconSize = RATING_SIZE_ICON[size];
+  const formattedLabel = formatRatingLabel(displayValue, labels, labelFormatter);
 
-    const sizeConfig = RATING_SIZE_CLASSES[size];
+  const handleClick = (index: number, isHalf: boolean) => {
+    if (disabled || readOnly) {
+      return;
+    }
+    const nextValue = isHalf && allowHalf ? index + HALF : index + ONE;
+    const finalValue = allowClear && nextValue === value ? ZERO : nextValue;
+    setInternalValue(finalValue);
+    onChange?.(finalValue);
+  };
 
-    const handleClick = useCallback(
-      (index: number, isHalf: boolean = false) => {
-        if (disabled || readOnly) return;
+  const handleMouseMove = (index: number, event: React.MouseEvent<HTMLSpanElement>) => {
+    if (disabled || readOnly) {
+      return;
+    }
+    const rect = event.currentTarget.getBoundingClientRect();
+    if (allowHalf && isLeftHalfClick(event.clientX, rect.left, rect.width)) {
+      setHoverValue(index + HALF);
+      return;
+    }
+    setHoverValue(index + ONE);
+  };
 
-        const newValue = isHalf && allowHalf ? index + 0.5 : index + 1;
-        const finalValue = allowClear && newValue === value ? 0 : newValue;
-
-        setInternalValue(finalValue);
-        onChange?.(finalValue);
-      },
-      [disabled, readOnly, allowHalf, allowClear, value, onChange]
-    );
-
-    const handleMouseMove = useCallback(
-      (index: number, event: React.MouseEvent<HTMLSpanElement>) => {
-        if (disabled || readOnly) return;
-
-        const rect = event.currentTarget.getBoundingClientRect();
-        const isLeftHalf = event.clientX - rect.left < rect.width / 2;
-        
-        if (allowHalf && isLeftHalf) {
-          setHoverValue(index + 0.5);
-        } else {
-          setHoverValue(index + 1);
-        }
-      },
-      [disabled, readOnly, allowHalf]
-    );
-
-    const handleMouseLeave = useCallback(() => {
-      setHoverValue(null);
-    }, []);
-
-    const getStarState = (index: number): 'filled' | 'half' | 'empty' => {
-      if (displayValue >= index + 1) return 'filled';
-      if (displayValue >= index + 0.5 && allowHalf) return 'half';
-      return 'empty';
-    };
-
-    const formatLabel = useMemo(() => {
-      if (labelFormatter) return labelFormatter(displayValue);
-      const labelIndex = Math.ceil(displayValue) - 1;
-      return labels[labelIndex] || '';
-    }, [displayValue, labelFormatter, labels]);
-
-    const stars = useMemo(() => {
-      return Array.from({ length: max }).map((_, index) => {
-        const state = getStarState(index);
-        
-        const starClasses = cn(
-          RATING_STAR_BASE_CLASSES,
-          disabled && RATING_STAR_DISABLED_CLASSES,
-          readOnly && RATING_STAR_READONLY_CLASSES,
-          !disabled && !readOnly && 'hover:scale-110'
-        );
-
-        const renderIcon = () => {
-          if (state === 'filled' && filledIcon) return filledIcon;
-          if (state === 'half' && halfIcon) return halfIcon;
-          if (state === 'empty' && emptyIcon) return emptyIcon;
-          
-          return (
-            <StarIcon
-              size={sizeConfig.icon}
-              filled={state === 'filled'}
-              half={state === 'half'}
-              color={color}
-              emptyColor={emptyColor}
-            />
-          );
-        };
-
-        return (
-          <span
-            key={index}
-            className={starClasses}
-            onClick={(e) => {
-              const rect = e.currentTarget.getBoundingClientRect();
-              const isLeftHalf = e.clientX - rect.left < rect.width / 2;
-              handleClick(index, isLeftHalf);
-            }}
-            onMouseMove={(e) => handleMouseMove(index, e)}
-            onMouseLeave={handleMouseLeave}
-            role="radio"
-            aria-checked={value >= index + 1}
-            aria-label={labels[index]}
-          >
-            {renderIcon()}
-          </span>
-        );
-      });
-    }, [max, displayValue, disabled, readOnly, filledIcon, emptyIcon, halfIcon, sizeConfig, color, emptyColor, handleClick, handleMouseMove, handleMouseLeave, value, labels, allowHalf]);
+  const stars = Array.from({ length: max }).map((_, index) => {
+    const state = getStarState(displayValue, index, allowHalf);
+    const customIcon = resolveRatingIcon(state, { filled: filledIcon, half: halfIcon, empty: emptyIcon });
 
     return (
-      <div
-        ref={ref}
-        className={cn(RATING_BASE_CLASSES, className)}
-        role="radiogroup"
-        aria-label="Rating" data-testid={testId}
-        {...props}
-      >
-        {stars}
-        {showValue && (
-          <span className={cn('Bear-Rating__value ml-2 text-gray-600 dark:text-gray-400', sizeConfig.text)}>
-            {displayValue.toFixed(allowHalf ? 1 : 0)}
-            {formatLabel && <span className="ml-1 text-gray-400 dark:text-gray-500">({formatLabel})</span>}
-          </span>
+      <span
+        key={index}
+        className={cn(
+          'Bear-Rating__star cursor-pointer transition-all duration-150',
+          disabled && 'cursor-not-allowed opacity-50',
+          readOnly && 'cursor-default',
+          !disabled && !readOnly && 'hover:scale-110'
         )}
-      </div>
+        onClick={(event) => {
+          const rect = event.currentTarget.getBoundingClientRect();
+          handleClick(index, isLeftHalfClick(event.clientX, rect.left, rect.width));
+        }}
+        onMouseMove={(event) => handleMouseMove(index, event)}
+        onMouseLeave={() => setHoverValue(null)}
+        role="radio"
+        aria-checked={value >= index + ONE}
+        aria-label={labels[index]}
+      >
+        {customIcon ?? (
+          <StarIcon
+            size={iconSize}
+            state={state}
+            color={color}
+            emptyColor={emptyColor}
+          />
+        )}
+      </span>
     );
-  }
-);
+  });
 
-Rating.displayName = 'Rating';
-
-export default Rating;
+  return (
+    <div
+      className={cn('Bear-Rating inline-flex items-center gap-1', className)}
+      role="radiogroup"
+      aria-label="Rating"
+      data-testid={testId}
+      {...rest}
+    >
+      {stars}
+      {showValue && (
+        <span className={cn('Bear-Rating__value ml-2 text-gray-600 dark:text-gray-400', RATING_SIZE_TEXT[size])}>
+          {displayValue.toFixed(allowHalf ? ONE : ZERO)}
+          {formattedLabel && (
+            <span className="ml-1 text-gray-400 dark:text-gray-500">({formattedLabel})</span>
+          )}
+        </span>
+      )}
+    </div>
+  );
+};

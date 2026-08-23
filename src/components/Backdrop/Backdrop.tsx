@@ -1,31 +1,25 @@
-import { FC } from 'react';
 import type { BackdropProps } from './Backdrop.types';
 import {
-  BACKDROP_ROOT_CLASS,
   BACKDROP_DEFAULT_Z_INDEX,
   BACKDROP_NESTED_Z_INDEX,
-  BACKDROP_DEFAULT_TRANSITION_MS,
-  BACKDROP_BASE_CLASSES,
-  BACKDROP_POSITION_FIXED_CLASS,
-  BACKDROP_POSITION_ABSOLUTE_CLASS,
-  BACKDROP_VISIBLE_CLASSES,
-  BACKDROP_HIDDEN_CLASSES,
-  BACKDROP_TINT_CLASSES,
-  BACKDROP_BLUR_CLASSES,
-} from './Backdrop.const';
+  BACKDROP_TRANSITION_MS,
+  BOOLEAN_FALSE,
+  BOOLEAN_TRUE,
+  COMPONENT_NAME_BACKDROP,
+} from '@const';
 import { cn, resolveBearId, useBearId } from '@utils';
 
-export const Backdrop: FC<BackdropProps> = (props) => {
+export const Backdrop = (props: BackdropProps) => {
   const {
     id,
     testId,
-    open = true,
-    invisible = false,
-    blur = false,
-    nested = false,
+    open = BOOLEAN_TRUE,
+    invisible = BOOLEAN_FALSE,
+    blur = BOOLEAN_FALSE,
+    nested = BOOLEAN_FALSE,
     zIndex: zIndexProp,
-    transitionDuration = BACKDROP_DEFAULT_TRANSITION_MS,
-    keepMounted = false,
+    transitionDuration = BACKDROP_TRANSITION_MS,
+    keepMounted = BOOLEAN_FALSE,
     onClick,
     children,
     className,
@@ -33,7 +27,7 @@ export const Backdrop: FC<BackdropProps> = (props) => {
     ...rest
   } = props;
 
-  const generatedId = useBearId('Backdrop');
+  const generatedId = useBearId(COMPONENT_NAME_BACKDROP);
   const domId = resolveBearId(id, generatedId);
   const zIndex = zIndexProp ?? (nested ? BACKDROP_NESTED_Z_INDEX : BACKDROP_DEFAULT_Z_INDEX);
 
@@ -49,13 +43,13 @@ export const Backdrop: FC<BackdropProps> = (props) => {
       aria-hidden={!open}
       onClick={onClick}
       className={cn(
-        BACKDROP_ROOT_CLASS,
-        nested ? BACKDROP_POSITION_ABSOLUTE_CLASS : BACKDROP_POSITION_FIXED_CLASS,
-        BACKDROP_BASE_CLASSES,
-        open ? BACKDROP_VISIBLE_CLASSES : BACKDROP_HIDDEN_CLASSES,
-        !invisible && BACKDROP_TINT_CLASSES,
-        blur && BACKDROP_BLUR_CLASSES,
-        nested && `${BACKDROP_ROOT_CLASS}--nested`,
+        'Bear-Backdrop',
+        nested ? 'bear-absolute' : 'bear-fixed',
+        'bear-inset-0 bear-flex bear-items-center bear-justify-center bear-transition-opacity',
+        open ? 'bear-opacity-100 bear-pointer-events-auto' : 'bear-opacity-0 bear-pointer-events-none',
+        !invisible && 'bear-bg-black/50 dark:bear-bg-black/60',
+        blur && 'bear-backdrop-blur-sm',
+        nested && 'Bear-Backdrop--nested',
         className
       )}
       style={{

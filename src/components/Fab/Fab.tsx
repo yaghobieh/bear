@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import {cn } from '@utils';
-import type { BearVariant } from '../../types';
+import type { BearVariant } from '@types';
 import type { FabProps } from './Fab.types';
 
 const SIZE_CLASSES = {

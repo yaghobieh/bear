@@ -43,9 +43,17 @@ export const Transition: FC<TransitionProps> = ({
     show ? 'idle' : 'exit-active'
   );
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const hasMountedRef = useRef(false);
 
   useEffect(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
+
+    if (!hasMountedRef.current) {
+      hasMountedRef.current = true;
+      if (!show) {
+        return;
+      }
+    }
 
     if (show) {
       setMounted(true);

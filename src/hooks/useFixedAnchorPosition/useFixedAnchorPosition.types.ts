@@ -1,6 +1,21 @@
 import type { CSSProperties, RefObject } from 'react';
 
-export type OverlayOpenEffect = 'none' | 'fade' | 'slide-down' | 'scale';
+export type OverlayMotionEffect = 'none' | 'fade' | 'slide-down' | 'scale';
+
+export type OverlayOpenEffect = OverlayMotionEffect;
+
+export type OverlayCloseEffect = OverlayMotionEffect;
+
+export interface OverlayEffectConfig {
+  open?: OverlayMotionEffect;
+  close?: OverlayMotionEffect;
+}
+
+export interface OverlayEffectProps {
+  openEffect?: OverlayMotionEffect;
+  closeEffect?: OverlayMotionEffect;
+  effect?: OverlayEffectConfig;
+}
 
 export type OverlayPlacement =
   | 'bottom-start'

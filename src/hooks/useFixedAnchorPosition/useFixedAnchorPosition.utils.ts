@@ -1,9 +1,24 @@
 import {
+  OVERLAY_OPEN_EFFECT_DEFAULT,
   PLACEMENT_BOTTOM,
   PLACEMENT_END,
   PLACEMENT_TOP,
 } from './useFixedAnchorPosition.const';
-import type { OverlayCoords, OverlayPlacement } from './useFixedAnchorPosition.types';
+import type {
+  OverlayCoords,
+  OverlayEffectProps,
+  OverlayMotionEffect,
+  OverlayPlacement,
+} from './useFixedAnchorPosition.types';
+
+export const resolveOverlayEffects = (
+  input: OverlayEffectProps,
+  fallback: OverlayMotionEffect = OVERLAY_OPEN_EFFECT_DEFAULT,
+): { openEffect: OverlayMotionEffect; closeEffect: OverlayMotionEffect } => {
+  const openEffect = input.effect?.open ?? input.openEffect ?? fallback;
+  const closeEffect = input.effect?.close ?? input.closeEffect ?? openEffect;
+  return { openEffect, closeEffect };
+};
 
 export const resolveOverlayCoords = (params: {
   rect: DOMRect;

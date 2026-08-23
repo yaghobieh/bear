@@ -128,3 +128,7 @@
 .dark .Bear-Snackbar--error .Bear-Snackbar__description {
   color: #ffffff;
 }
+
+.Bear-ResizableTextarea__handle--grip {
+  background: linear-gradient(135deg, transparent 50%, currentColor 50%);
+}

@@ -1,9 +1,38 @@
 import { FC, useState } from 'react';
+import { Button, Dropdown } from '@forgedevstack/bear';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
+import { PropsTable } from '@/components/PropsTable';
+
+const MENU_ITEMS = [
+  { key: 'edit', label: 'Edit' },
+  { key: 'duplicate', label: 'Duplicate' },
+  { key: 'delete', label: 'Delete', danger: true },
+];
+
+const TEAM_ITEMS = [
+  { key: 'eng', label: 'Engineering' },
+  { key: 'design', label: 'Design' },
+  { key: 'pm', label: 'Product' },
+  { key: 'qa', label: 'QA' },
+  { key: 'devops', label: 'DevOps' },
+];
+
+const TAG_ITEMS = [
+  { key: 'react', label: 'React' },
+  { key: 'ts', label: 'TypeScript' },
+  { key: 'node', label: 'Node.js' },
+  { key: 'vite', label: 'Vite' },
+];
+
+const ACCOUNT_ITEMS = [
+  { key: 'profile', label: 'Profile', description: 'View and edit your profile' },
+  { key: 'settings', label: 'Settings', description: 'App preferences' },
+  { key: 'logout', label: 'Log out', danger: true },
+];
 
 const DropdownPage: FC = () => {
-  const [open, setOpen] = useState(false);
+  const [selectedKeys, setSelectedKeys] = useState<string[]>(['react', 'ts']);
 
   return (
     <div className="fade-in">
@@ -19,219 +48,145 @@ const DropdownPage: FC = () => {
 
       <ComponentPreview
         title="Basic Usage"
-        description="Simple dropdown with items."
+        description="Open the menu as a card from a trigger button."
         code={`<Dropdown
-  trigger={<Button>Options ▼</Button>}
+  trigger={<Button>Options</Button>}
   items={[
-    { label: 'Edit', onClick: handleEdit },
-    { label: 'Duplicate', onClick: handleDuplicate },
-    { divider: true },
-    { label: 'Delete', onClick: handleDelete, variant: 'danger' },
+    { key: 'edit', label: 'Edit' },
+    { key: 'duplicate', label: 'Duplicate' },
+    { key: 'delete', label: 'Delete', danger: true },
   ]}
 />`}
+        allowOverflow
       >
-        <div className="flex justify-center relative">
-          <button 
-            onClick={() => setOpen(!open)}
-            className="px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors flex items-center gap-2"
-          >
-            Options <span className="text-xs">▼</span>
-          </button>
-          {open && (
-            <>
-              <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
-              <div className="absolute top-full mt-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl overflow-hidden min-w-[160px] z-50">
-                <button className="w-full px-4 py-2 text-left text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Edit</button>
-                <button className="w-full px-4 py-2 text-left text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Duplicate</button>
-                <hr className="border-gray-200 dark:border-gray-700" />
-                <button className="w-full px-4 py-2 text-left text-red-500 hover:bg-gray-100 dark:hover:bg-gray-700">Delete</button>
-              </div>
-            </>
-          )}
+        <Dropdown trigger={<Button>Options</Button>} items={MENU_ITEMS} />
+      </ComponentPreview>
+
+      <ComponentPreview
+        title="Open and close effects"
+        description="Pick motion independently: none, fade, slide-down, or scale."
+        code={`<Dropdown trigger={<Button>Fade</Button>} openEffect="fade" closeEffect="fade" items={items} />
+<Dropdown trigger={<Button>Slide</Button>} openEffect="slide-down" closeEffect="slide-down" items={items} />
+<Dropdown trigger={<Button>Scale</Button>} openEffect="scale" closeEffect="scale" items={items} />
+<Dropdown trigger={<Button>None</Button>} openEffect="none" closeEffect="none" items={items} />
+<Dropdown
+  trigger={<Button>Mixed</Button>}
+  effect={{ open: 'scale', close: 'fade' }}
+  items={items}
+/>`}
+        allowOverflow
+      >
+        <div className="flex flex-wrap gap-3 justify-center">
+          <Dropdown trigger={<Button>Fade</Button>} openEffect="fade" closeEffect="fade" items={MENU_ITEMS} />
+          <Dropdown trigger={<Button>Slide</Button>} openEffect="slide-down" closeEffect="slide-down" items={MENU_ITEMS} />
+          <Dropdown trigger={<Button>Scale</Button>} openEffect="scale" closeEffect="scale" items={MENU_ITEMS} />
+          <Dropdown trigger={<Button>None</Button>} openEffect="none" closeEffect="none" items={MENU_ITEMS} />
+          <Dropdown trigger={<Button>Mixed</Button>} effect={{ open: 'scale', close: 'fade' }} items={MENU_ITEMS} />
         </div>
       </ComponentPreview>
 
       <ComponentPreview
-        title="With Icons"
-        description="Dropdown items with icons."
+        title="Searchable"
+        description="Enable search/filter within dropdown items."
         code={`<Dropdown
-  trigger={<Button icon={<MoreIcon />} />}
-  items={[
-    { label: 'Edit', icon: <EditIcon />, onClick: handleEdit },
-    { label: 'Share', icon: <ShareIcon />, onClick: handleShare },
-    { divider: true },
-    { label: 'Delete', icon: <DeleteIcon />, variant: 'danger' },
-  ]}
-/>`}
-      >
-        <div className="max-w-[180px] mx-auto bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg overflow-hidden">
-          <button className="w-full px-4 py-2 text-left text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-3">
-            <span>✏️</span> Edit
-          </button>
-          <button className="w-full px-4 py-2 text-left text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-3">
-            <span>📤</span> Share
-          </button>
-          <hr className="border-gray-200 dark:border-gray-700" />
-          <button className="w-full px-4 py-2 text-left text-red-500 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-3">
-            <span>🗑️</span> Delete
-          </button>
-        </div>
-      </ComponentPreview>
-
-      <ComponentPreview
-        title="Searchable (v1.2.3)"
-        description="Enable search/filter within dropdown items. Users can type to narrow down options."
-        code={`<Dropdown
-  trigger={<Button>Select Team ▼</Button>}
+  trigger={<Button>Select Team</Button>}
   searchable
   searchPlaceholder="Filter teams..."
-  items={[
-    { key: 'eng', label: 'Engineering' },
-    { key: 'design', label: 'Design' },
-    { key: 'pm', label: 'Product' },
-    { key: 'qa', label: 'QA' },
-    { key: 'devops', label: 'DevOps' },
-  ]}
+  items={teamItems}
 />`}
+        allowOverflow
       >
-        <div className="max-w-[220px] mx-auto bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg overflow-hidden">
-          <div className="px-3 py-2 border-b border-gray-200 dark:border-gray-700">
-            <input className="w-full text-sm bg-transparent outline-none text-gray-700 dark:text-gray-300 placeholder-gray-400" placeholder="Filter teams..." />
-          </div>
-          <button className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Engineering</button>
-          <button className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Design</button>
-          <button className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Product</button>
-          <button className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">QA</button>
-          <button className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">DevOps</button>
-        </div>
+        <Dropdown
+          trigger={<Button>Select Team</Button>}
+          searchable
+          searchPlaceholder="Filter teams..."
+          items={TEAM_ITEMS}
+        />
       </ComponentPreview>
 
       <ComponentPreview
-        title="Multi-Select (v1.2.3)"
-        description="Toggle multiple items on click with checkmarks. Selected keys are tracked via onSelectionChange."
+        title="Multi-Select"
+        description="Toggle multiple items on click. Selected keys are tracked via onSelectionChange."
         code={`<Dropdown
-  trigger={<Button>Tags ▼</Button>}
+  trigger={<Button>Tags</Button>}
   multiSelect
-  selectedKeys={['react', 'ts']}
+  selectedKeys={selectedKeys}
   onSelectionChange={setSelectedKeys}
-  items={[
-    { key: 'react', label: 'React' },
-    { key: 'ts', label: 'TypeScript' },
-    { key: 'node', label: 'Node.js' },
-    { key: 'vite', label: 'Vite' },
-  ]}
+  items={tagItems}
 />`}
+        allowOverflow
       >
-        <div className="max-w-[200px] mx-auto bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg overflow-hidden">
-          <button className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2"><span className="text-pink-500">&#10003;</span> React</button>
-          <button className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2"><span className="text-pink-500">&#10003;</span> TypeScript</button>
-          <button className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2"><span className="opacity-0">&#10003;</span> Node.js</button>
-          <button className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2"><span className="opacity-0">&#10003;</span> Vite</button>
-        </div>
+        <Dropdown
+          trigger={<Button>Tags</Button>}
+          multiSelect
+          selectedKeys={selectedKeys}
+          onSelectionChange={setSelectedKeys}
+          items={TAG_ITEMS}
+        />
       </ComponentPreview>
 
       <ComponentPreview
-        title="Loading & Empty States (v1.2.3)"
+        title="Loading & Empty States"
         description="Show a loading spinner during async fetch, and custom empty text when no items match."
-        code={`<Dropdown
-  trigger={<Button>Async ▼</Button>}
-  loading
-  loadingText="Fetching options..."
-  items={[]}
-/>
-
-<Dropdown
-  trigger={<Button>Search ▼</Button>}
-  searchable
-  emptyText="No results found"
-  items={[]}
-/>`}
+        code={`<Dropdown trigger={<Button>Async</Button>} loading loadingText="Fetching options..." items={[]} />
+<Dropdown trigger={<Button>Search</Button>} searchable emptyText="No results found" items={[]} />`}
+        allowOverflow
       >
-        <div className="flex gap-4 justify-center">
-          <div className="w-[200px] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg overflow-hidden">
-            <div className="flex items-center justify-center py-6 text-sm text-gray-400 gap-2">
-              <span className="animate-spin w-4 h-4 border-2 border-gray-300 border-t-pink-500 rounded-full" />
-              Fetching options...
-            </div>
-          </div>
-          <div className="w-[200px] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg overflow-hidden">
-            <div className="px-3 py-2 border-b border-gray-200 dark:border-gray-700">
-              <input className="w-full text-sm bg-transparent outline-none text-gray-700 dark:text-gray-300 placeholder-gray-400" placeholder="Search..." value="zzz" readOnly />
-            </div>
-            <div className="flex items-center justify-center py-6 text-sm text-gray-400">No results found</div>
-          </div>
+        <div className="flex flex-wrap gap-3 justify-center">
+          <Dropdown trigger={<Button>Async</Button>} loading loadingText="Fetching options..." items={[]} />
+          <Dropdown trigger={<Button>Search</Button>} searchable emptyText="No results found" items={[]} />
         </div>
       </ComponentPreview>
 
       <ComponentPreview
-        title="Header, Footer & Item Descriptions (v1.2.3)"
-        description="Add a header/footer to the dropdown and descriptions to items for richer menus."
+        title="Header, Footer & Item Descriptions"
+        description="Add a header/footer to the dropdown and descriptions to items."
         code={`<Dropdown
-  trigger={<Button>Account ▼</Button>}
-  header={<div className="px-3 py-2 text-xs font-semibold text-gray-500">ACCOUNT</div>}
-  footer={<div className="px-3 py-2 border-t text-xs text-gray-400">v1.2.3</div>}
-  items={[
-    { key: 'profile', label: 'Profile', description: 'View and edit your profile' },
-    { key: 'settings', label: 'Settings', description: 'App preferences' },
-    { key: 'logout', label: 'Log out', danger: true },
-  ]}
+  trigger={<Button>Account</Button>}
+  header={<div>ACCOUNT</div>}
+  footer={<div>v1.3.1</div>}
+  items={accountItems}
 />`}
+        allowOverflow
       >
-        <div className="max-w-[240px] mx-auto bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg overflow-hidden">
-          <div className="px-3 py-2 text-xs font-semibold text-gray-400 uppercase tracking-wide">Account</div>
-          <button className="w-full px-4 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-700">
-            <div className="text-sm text-gray-700 dark:text-gray-300">Profile</div>
-            <div className="text-xs text-gray-400">View and edit your profile</div>
-          </button>
-          <button className="w-full px-4 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-700">
-            <div className="text-sm text-gray-700 dark:text-gray-300">Settings</div>
-            <div className="text-xs text-gray-400">App preferences</div>
-          </button>
-          <hr className="border-gray-200 dark:border-gray-700" />
-          <button className="w-full px-4 py-2 text-left text-sm text-red-500 hover:bg-gray-100 dark:hover:bg-gray-700">Log out</button>
-          <div className="px-3 py-2 border-t border-gray-200 dark:border-gray-700 text-xs text-gray-400">v1.2.3</div>
-        </div>
+        <Dropdown
+          trigger={<Button>Account</Button>}
+          header={<div className="px-3 py-2 text-xs font-semibold uppercase tracking-wide">Account</div>}
+          footer={<div className="px-3 py-2 text-xs">v1.3.1</div>}
+          items={ACCOUNT_ITEMS}
+        />
       </ComponentPreview>
 
-      <section className="mb-12">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Props</h2>
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
-            <thead className="bg-gray-50 dark:bg-gray-800">
-              <tr>
-                <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Prop</th>
-                <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Type</th>
-                <th className="px-4 py-3 font-medium text-gray-900 dark:text-white">Description</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-              <tr><td className="px-4 py-3 font-mono text-bear-600">trigger</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Trigger element</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">items</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>DropdownItem[]</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Menu items</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">placement</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>bottom-start | bottom-end | top | ...</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Menu position relative to trigger</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">open</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Controlled open state</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">size</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>xs | sm | md | lg | xl</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Size variant</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">matchWidth</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Match trigger width</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">maxHeight</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>number</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Max height before scroll</td></tr>
-              <tr><td className="px-4 py-3 font-mono text-bear-600">closeOnSelect</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Close on item click</td></tr>
-              <tr className="bg-blue-50 dark:bg-blue-900/20"><td className="px-4 py-3 font-mono text-bear-600">searchable</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Enable search/filter input</td></tr>
-              <tr className="bg-blue-50 dark:bg-blue-900/20"><td className="px-4 py-3 font-mono text-bear-600">searchPlaceholder</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Placeholder for search input</td></tr>
-              <tr className="bg-blue-50 dark:bg-blue-900/20"><td className="px-4 py-3 font-mono text-bear-600">filterFn</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>(item, query) =&gt; boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Custom filter function</td></tr>
-              <tr className="bg-blue-50 dark:bg-blue-900/20"><td className="px-4 py-3 font-mono text-bear-600">loading</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Show loading spinner inside dropdown</td></tr>
-              <tr className="bg-blue-50 dark:bg-blue-900/20"><td className="px-4 py-3 font-mono text-bear-600">emptyText</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Text shown when no items match</td></tr>
-              <tr className="bg-blue-50 dark:bg-blue-900/20"><td className="px-4 py-3 font-mono text-bear-600">renderItem</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>(item, index) =&gt; ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Custom item renderer</td></tr>
-              <tr className="bg-blue-50 dark:bg-blue-900/20"><td className="px-4 py-3 font-mono text-bear-600">multiSelect</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Enable multi-select mode</td></tr>
-              <tr className="bg-blue-50 dark:bg-blue-900/20"><td className="px-4 py-3 font-mono text-bear-600">selectedKeys</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>string[]</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Controlled selected keys (multiSelect)</td></tr>
-              <tr className="bg-blue-50 dark:bg-blue-900/20"><td className="px-4 py-3 font-mono text-bear-600">onSelectionChange</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>(keys: string[]) =&gt; void</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Callback when selection changes</td></tr>
-              <tr className="bg-blue-50 dark:bg-blue-900/20"><td className="px-4 py-3 font-mono text-bear-600">header</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Header content above items</td></tr>
-              <tr className="bg-blue-50 dark:bg-blue-900/20"><td className="px-4 py-3 font-mono text-bear-600">footer</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>ReactNode</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Footer content below items</td></tr>
-              <tr className="bg-blue-50 dark:bg-blue-900/20"><td className="px-4 py-3 font-mono text-bear-600">virtualized</td><td className="px-4 py-3 text-gray-600 dark:text-gray-400"><code>boolean</code></td><td className="px-4 py-3 text-gray-600 dark:text-gray-400">Virtual scrolling for large lists</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+      <PropsTable
+        title="Props"
+        rows={[
+          { name: 'trigger', type: 'ReactNode', default: 'Required', description: 'Trigger element' },
+          { name: 'items', type: 'DropdownItem[]', default: 'Required', description: 'Menu items' },
+          { name: 'placement', type: "'bottom-start' | 'bottom-end' | 'top' | ...", default: 'bottom-start', description: 'Menu position relative to trigger' },
+          { name: 'open', type: 'boolean', description: 'Controlled open state' },
+          { name: 'size', type: "'xs' | 'sm' | 'md' | 'lg' | 'xl'", default: 'md', description: 'Size variant' },
+          { name: 'matchWidth', type: 'boolean', default: 'false', description: 'Match trigger width' },
+          { name: 'maxHeight', type: 'number', description: 'Max height before scroll' },
+          { name: 'closeOnSelect', type: 'boolean', default: 'true', description: 'Close on item click' },
+          { name: 'openEffect', type: "'none' | 'fade' | 'slide-down' | 'scale'", default: 'slide-down', description: 'Menu open animation' },
+          { name: 'closeEffect', type: "'none' | 'fade' | 'slide-down' | 'scale'", default: 'same as openEffect', description: 'Menu close animation' },
+          { name: 'effect', type: '{ open?: OverlayMotionEffect; close?: OverlayMotionEffect }', description: 'Open and close motion in one prop' },
+          { name: 'searchable', type: 'boolean', default: 'false', description: 'Enable search/filter input' },
+          { name: 'searchPlaceholder', type: 'string', description: 'Placeholder for search input' },
+          { name: 'filterFn', type: '(item, query) => boolean', description: 'Custom filter function' },
+          { name: 'loading', type: 'boolean', default: 'false', description: 'Show loading spinner inside dropdown' },
+          { name: 'emptyText', type: 'string', description: 'Text shown when no items match' },
+          { name: 'renderItem', type: '(item, index) => ReactNode', description: 'Custom item renderer' },
+          { name: 'multiSelect', type: 'boolean', default: 'false', description: 'Enable multi-select mode' },
+          { name: 'selectedKeys', type: 'string[]', description: 'Controlled selected keys (multiSelect)' },
+          { name: 'onSelectionChange', type: '(keys: string[]) => void', description: 'Callback when selection changes' },
+          { name: 'header', type: 'ReactNode', description: 'Header content above items' },
+          { name: 'footer', type: 'ReactNode', description: 'Footer content below items' },
+          { name: 'virtualized', type: 'boolean', default: 'false', description: 'Virtual scrolling for large lists' },
+        ]}
+      />
     </div>
   );
 };
 
 export default DropdownPage;
-

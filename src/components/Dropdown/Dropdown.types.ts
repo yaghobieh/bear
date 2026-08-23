@@ -2,8 +2,8 @@
  * Dropdown Component Types
  */
 import type { HTMLAttributes, ReactNode } from 'react';
-import type { BearSize } from '../../types';
-import type { OverlayOpenEffect } from '../../hooks/useFixedAnchorPosition';
+import type { BearSize } from '@types';
+import type { OverlayEffectProps } from '@hooks/useFixedAnchorPosition';
 
 export interface DropdownItem {
   /** Unique key */
@@ -34,7 +34,7 @@ export interface DropdownItem {
   items?: DropdownItem[];
 }
 
-export interface DropdownProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
+export interface DropdownProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>, OverlayEffectProps {
   id?: string;
   /** Dropdown trigger element */
   trigger: ReactNode;
@@ -91,6 +91,5 @@ export interface DropdownProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onC
   /** Virtual scrolling for large lists (renders only visible items) */
   virtualized?: boolean;
   testId?: string;
-  openEffect?: OverlayOpenEffect;
 }
 

@@ -10,6 +10,35 @@ export interface ChangelogEntry {
 
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
+    version: '1.3.1',
+    date: 'August 23, 2026',
+    tag: 'patch',
+    sections: [
+      {
+        title: 'Added',
+        items: [
+          'openEffect, closeEffect, and effect={{ open, close }} on Select, Dropdown, DatePicker, DateRangePicker, TimePicker, and Calendar',
+          'OverlayPortal stays mounted through the close animation',
+        ],
+      },
+      {
+        title: 'Fixed',
+        items: [
+          'DatePicker calendar stays on the input while the page or drawer scrolls',
+          'TimePicker dropdown portals above cards and drawers',
+          'Select and Dropdown no longer flash from the top-left before the first layout',
+          'GradientText WebKit clip so short strings stay readable',
+        ],
+      },
+      {
+        title: 'Changed',
+        items: [
+          'Code review pass on Rating, Resizable, Result, RingProgress, ScrollArea, SegmentedControl, RichEditor, TreeSelect, TreeView, and Typography',
+        ],
+      },
+    ],
+  },
+  {
     version: '1.3.0',
     date: 'August 19, 2026',
     tag: 'minor',

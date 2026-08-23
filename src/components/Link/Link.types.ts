@@ -1,5 +1,5 @@
 import type { AnchorHTMLAttributes, ReactNode } from 'react';
-import type { BearVariant } from '../../types';
+import type { BearVariant } from '@types';
 
 export interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   id?: string;

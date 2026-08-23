@@ -1,8 +1,8 @@
 import { FC, useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import type { TimePickerProps } from './TimePicker.types';
 import { cn } from '@utils';
-import { useClickOutsideMultiple, useFixedAnchorPosition, useMediaQuery } from '@hooks';
-import { OVERLAY_OPEN_EFFECT_DEFAULT } from '../../hooks/useFixedAnchorPosition';
+import { resolveOverlayEffects, useClickOutsideMultiple, useFixedAnchorPosition, useMediaQuery } from '@hooks';
+import { ClockIcon } from '../Icon';
 import { OverlayPortal } from '../OverlayPortal';
 import { formatTime } from './TimePicker.utils';
 import {
@@ -25,15 +25,10 @@ import {
   TIMEPICKER_DROPDOWN_ATTR,
   TIMEPICKER_DROPDOWN_HEIGHT_PX,
   TIMEPICKER_DROPDOWN_Z_INDEX,
+  TIMEPICKER_CLOCK_ICON_CLASS,
 } from './TimePicker.constants';
 import { TimePickerColumnsDropdown } from './components/TimePickerColumnsDropdown';
 import { TimePickerDialDropdown } from './components/TimePickerDialDropdown';
-
-const DEFAULT_CLOCK_ICON = (
-  <svg className="bear-w-5 bear-h-5 bear-text-gray-400 dark:bear-text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>
-);
 
 export const TimePicker: FC<TimePickerProps> = (incomingProps) => {
   const props: TimePickerProps = {
@@ -54,9 +49,12 @@ export const TimePicker: FC<TimePickerProps> = (incomingProps) => {
     dropdownVariantBreakpoint: incomingProps.dropdownVariantBreakpoint ?? TIMEPICKER_DEFAULT_BREAKPOINT,
     icon: incomingProps.icon,
     translations: incomingProps.translations,
-    openEffect: incomingProps.openEffect ?? OVERLAY_OPEN_EFFECT_DEFAULT,
+    openEffect: incomingProps.openEffect,
+    closeEffect: incomingProps.closeEffect,
+    effect: incomingProps.effect,
     testId: incomingProps.testId,
   };
+  const { openEffect, closeEffect } = resolveOverlayEffects(incomingProps);
 
   const {
     value,
@@ -76,7 +74,6 @@ export const TimePicker: FC<TimePickerProps> = (incomingProps) => {
     dropdownVariantBreakpoint,
     icon,
     translations,
-    openEffect,
     testId,
   } = props;
 
@@ -182,7 +179,7 @@ export const TimePicker: FC<TimePickerProps> = (incomingProps) => {
         )}
       >
         <span>{timeValue || placeholder}</span>
-        {icon ?? DEFAULT_CLOCK_ICON}
+        {icon ?? <ClockIcon className={TIMEPICKER_CLOCK_ICON_CLASS} />}
       </button>
       {error && <p className={TIMEPICKER_ERROR_CLASSES}>{error}</p>}
       {helperText && !error && <p className={TIMEPICKER_HELPER_CLASSES}>{helperText}</p>}
@@ -192,6 +189,7 @@ export const TimePicker: FC<TimePickerProps> = (incomingProps) => {
         style={overlayStyle}
         zIndex={TIMEPICKER_DROPDOWN_Z_INDEX}
         openEffect={openEffect}
+        closeEffect={closeEffect}
         panelRef={dropdownRef}
         attributes={{ [TIMEPICKER_DROPDOWN_ATTR]: '' }}
       >

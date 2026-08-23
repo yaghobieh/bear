@@ -1,5 +1,5 @@
 import type { ReactNode, RefObject } from 'react';
-import type { BearSize } from '../../types';
+import type { BearSize } from '@types';
 
 export type SnackbarAnchorOriginVertical = 'top' | 'bottom';
 

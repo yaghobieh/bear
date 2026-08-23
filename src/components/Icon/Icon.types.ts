@@ -1,5 +1,5 @@
 import type { SVGAttributes, ReactNode } from 'react';
-import type { BearSize } from '../../types';
+import type { BearSize } from '@types';
 
 export interface IconProps extends SVGAttributes<SVGElement> {
   id?: string;

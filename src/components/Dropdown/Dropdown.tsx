@@ -1,8 +1,7 @@
 import { FC, useState, useRef, useCallback, useEffect, cloneElement, isValidElement, ReactElement, useMemo } from 'react';
 import { cn } from '@utils';
-import { useClickOutsideMultiple, useFixedAnchorPosition } from '@hooks';
-import { OVERLAY_OPEN_EFFECT_DEFAULT } from '../../hooks/useFixedAnchorPosition';
-import type { OverlayPlacement } from '../../hooks/useFixedAnchorPosition';
+import { resolveOverlayEffects, useClickOutsideMultiple, useFixedAnchorPosition } from '@hooks';
+import type { OverlayPlacement } from '@hooks/useFixedAnchorPosition';
 import { OverlayPortal } from '../OverlayPortal';
 import type { DropdownProps, DropdownItem } from './Dropdown.types';
 import {
@@ -28,26 +27,30 @@ import {
  * />
  * ```
  */
-export const Dropdown: FC<DropdownProps> = ({
-  trigger,
-  items,
-  open: controlledOpen,
-  defaultOpen = false,
-  placement = 'bottom-start',
-  offset = DROPDOWN_DEFAULT_OFFSET_PX,
-  matchWidth = false,
-  minWidth = DROPDOWN_DEFAULT_MIN_WIDTH_PX,
-  maxHeight = DROPDOWN_DEFAULT_MAX_HEIGHT_PX,
-  size = 'md',
-  closeOnSelect = true,
-  closeOnClickOutside = true,
-  disabled = false,
-  onOpenChange,
-  className,
-  testId,
-  openEffect = OVERLAY_OPEN_EFFECT_DEFAULT,
-  ...props
-}) => {
+export const Dropdown: FC<DropdownProps> = (props) => {
+  const {
+    trigger,
+    items,
+    open: controlledOpen,
+    defaultOpen = false,
+    placement = 'bottom-start',
+    offset = DROPDOWN_DEFAULT_OFFSET_PX,
+    matchWidth = false,
+    minWidth = DROPDOWN_DEFAULT_MIN_WIDTH_PX,
+    maxHeight = DROPDOWN_DEFAULT_MAX_HEIGHT_PX,
+    size = 'md',
+    closeOnSelect = true,
+    closeOnClickOutside = true,
+    disabled = false,
+    onOpenChange,
+    className,
+    testId,
+    openEffect: _openEffect,
+    closeEffect: _closeEffect,
+    effect: _effect,
+    ...rest
+  } = props;
+  const { openEffect, closeEffect } = resolveOverlayEffects(props);
 
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
   const [focusedIndex, setFocusedIndex] = useState(-1);
@@ -244,7 +247,7 @@ export const Dropdown: FC<DropdownProps> = ({
     <div
       ref={containerRef}
       className={cn('bear-relative bear-inline-block', className)} data-testid={testId}
-      {...props}
+      {...rest}
     >
       {triggerElement}
 
@@ -259,6 +262,7 @@ export const Dropdown: FC<DropdownProps> = ({
         }}
         zIndex={DROPDOWN_Z_INDEX}
         openEffect={openEffect}
+        closeEffect={closeEffect}
         panelRef={menuRef}
         className="bear-border bear-rounded-lg bear-shadow-lg bear-py-1 bear-overflow-y-auto"
         attributes={{ role: 'menu' }}

@@ -1,5 +1,5 @@
 import { useMemo, useContext } from 'react';
-import type { ResponsiveProp } from '../types/theme.types';
+import type { ResponsiveProp } from '@types';
 import { useMediaQuery } from './useMediaQuery';
 import { BearContext } from '../context/BearProvider';
 

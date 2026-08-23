@@ -1,29 +1,19 @@
-import { FC } from 'react';
-import {cn } from '@utils';
+import { BOOLEAN_FALSE, SIZE_SM, VARIANT_NEUTRAL } from '@const';
+import { cn } from '@utils';
 import type { BadgeProps } from './Badge.types';
-import { sizeClasses, variantClasses, dotVariantColors, BADGE_DOT_SIZE_CLASSES } from './Badge.constants';
+import { sizeClasses, variantClasses, dotVariantColors } from './Badge.constants';
 
-/**
- * Badge component for labels and status indicators
- *
- * @example
- * ```tsx
- * <Badge variant="success">Active</Badge>
- * <Badge variant="warning" size="sm" pill>Beta</Badge>
- * <Badge variant="danger" dot>Error</Badge>
- * ```
- */
-export const Badge: FC<BadgeProps> = ({
-
-  variant = 'neutral',
-  size = 'sm',
-  pill = false,
-  dot = false,
-  className,
-  children,
-  testId,
-  ...props
-}) => {
+export const Badge = (props: BadgeProps) => {
+  const {
+    variant = VARIANT_NEUTRAL,
+    size = SIZE_SM,
+    pill = BOOLEAN_FALSE,
+    dot = BOOLEAN_FALSE,
+    className,
+    children,
+    testId,
+    ...rest
+  } = props;
 
   return (
     <span
@@ -36,13 +26,13 @@ export const Badge: FC<BadgeProps> = ({
         className
       )}
       data-testid={testId}
-      {...props}
+      {...rest}
     >
       {dot && (
         <span
           className={cn(
             'Bear-Badge__dot',
-            BADGE_DOT_SIZE_CLASSES,
+            'bear-w-1.5 bear-h-1.5',
             'bear-rounded-full',
             dotVariantColors[variant]
           )}

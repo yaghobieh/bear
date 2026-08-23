@@ -1,6 +1,6 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
-import type { BearSize, BearVariant } from '../../types';
-import type { BisProp } from '../../types/bis.types';
+import type { BearSize, BearVariant } from '@types';
+import type { BisProp } from '@types';
 import type { TypographyVariant } from '../Typography/Typography.types';
 
 export type ButtonRadius = 'default' | 'pill' | 'square' | 'none';

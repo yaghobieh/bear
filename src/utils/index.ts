@@ -1,4 +1,5 @@
 export { cn, styleForge } from './cn';
+export { clamp } from './clamp.utils';
 export { deepMerge } from './deepMerge';
 export { createSlots } from './createSlots';
 export type { SlotDefinition, SlotComponent } from './createSlots';

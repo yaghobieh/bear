@@ -1,5 +1,5 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
-import type { BearVariant } from '../../types';
+import type { BearVariant } from '@types';
 
 export interface FabProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   id?: string;

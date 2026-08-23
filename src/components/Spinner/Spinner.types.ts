@@ -1,4 +1,4 @@
-import type { BearSize } from '../../types';
+import type { BearSize } from '@types';
 
 export interface SpinnerProps {
   testId?: string;

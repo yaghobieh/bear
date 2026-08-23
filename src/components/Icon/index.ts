@@ -27,6 +27,7 @@ import * as CommerceIcons from './icons/commerce';
 export const CheckIcon = StatusIcons.CheckIcon;
 export const CloseIcon = NavigationIcons.CloseIcon;
 export const EditIcon = ActionIcons.EditIcon;
+export const MoreHorizIcon = ActionIcons.MoreHorizIcon;
 export const ChevronDownIcon = NavigationIcons.ChevronDownIcon;
 export const ChevronRightIcon = NavigationIcons.ChevronRightIcon;
 export const ChevronLeftIcon = NavigationIcons.ChevronLeftIcon;

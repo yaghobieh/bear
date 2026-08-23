@@ -55,6 +55,7 @@ export type ToolbarOption =
   // Links & Media
   | 'link'
   | 'image'
+  | 'signature'
   // Colors
   | 'textColor'
   | 'highlightColor'

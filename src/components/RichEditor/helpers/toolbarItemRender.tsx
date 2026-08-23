@@ -21,6 +21,7 @@ import {
   TOOLBAR_ITEM_LINK,
   TOOLBAR_ITEM_MORE,
   TOOLBAR_ITEM_OUTDENT,
+  TOOLBAR_ITEM_SIGNATURE,
   TOOLBAR_ITEM_TEXT_COLOR,
 } from '@const';
 import {
@@ -35,7 +36,7 @@ import {
   InsertPhotoIcon,
   TextIcon,
 } from '../../Icon/icons/editor';
-import { ToolbarButton, ToolbarColorPicker, ToolbarDropdown, ToolbarMore } from '../components';
+import { ToolbarButton, ToolbarColorPicker, ToolbarDropdown, ToolbarMore, ToolbarSignature } from '../components';
 import {
   RICH_EDITOR_BUTTON_CONFIG,
   RICH_EDITOR_DESKTOP_MORE_ITEMS,
@@ -50,6 +51,7 @@ import {
   TITLE_INCREASE_INDENT,
   TITLE_INSERT_IMAGE,
   TITLE_INSERT_LINK,
+  TITLE_INSERT_SIGNATURE,
   TITLE_JUSTIFY,
   TITLE_TEXT_COLOR,
   TITLE_TEXT_STYLE,
@@ -124,6 +126,14 @@ export const createToolbarItemRenderer = (ctx: ToolbarRenderContext) => {
         title={TITLE_INSERT_IMAGE}
         onClick={ctx.handleImageUpload}
         disabled={isLocked}
+      />
+    ),
+    [TOOLBAR_ITEM_SIGNATURE]: () => (
+      <ToolbarSignature
+        key={TOOLBAR_ITEM_SIGNATURE}
+        title={TITLE_INSERT_SIGNATURE}
+        disabled={isLocked}
+        onInsert={ctx.handleInsertSignature}
       />
     ),
     [TOOLBAR_ITEM_ALIGN_LEFT]: () => (

@@ -28,6 +28,9 @@ export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
           'TimePicker dropdown portals above cards and drawers',
           'Select and Dropdown no longer flash from the top-left before the first layout',
           'GradientText WebKit clip so short strings stay readable',
+          'SegmentedControl selected chip is visible in light and dark',
+          'RichEditor heading and color menus sit above the textarea, with toolbar tooltips and SignPad insert',
+          'SignPad X mark and baseline sit above the canvas',
         ],
       },
       {

@@ -244,6 +244,15 @@ export const useRichEditor = (options: UseRichEditorOptions): UseRichEditorRetur
     input.click();
   };
 
+  const handleInsertSignature = (dataUrl: string) => {
+    if (disabled || readOnly || !dataUrl) {
+      return;
+    }
+    editorRef.current?.focus();
+    insertImage(dataUrl);
+    handleInput();
+  };
+
   const execAlign = (command: string) => {
     editorRef.current?.focus();
     execCommand(command);
@@ -272,6 +281,7 @@ export const useRichEditor = (options: UseRichEditorOptions): UseRichEditorRetur
     handleApplyLastHighlightColor,
     handlePaste,
     handleImageUpload,
+    handleInsertSignature,
     execAlign,
   };
 };

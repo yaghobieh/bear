@@ -132,3 +132,14 @@
 .Bear-ResizableTextarea__handle--grip {
   background: linear-gradient(135deg, transparent 50%, currentColor 50%);
 }
+
+.Bear-SignPad__canvas {
+  position: relative;
+  z-index: 0;
+}
+
+.Bear-SignPad__placeholder,
+.Bear-SignPad__line,
+.Bear-SignPad__x-mark {
+  z-index: 1;
+}

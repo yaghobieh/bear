@@ -57,6 +57,7 @@ export const RICH_EDITOR_DEFAULT_TOOLBAR: ToolbarOption[] = [
   'code',
   'link',
   'image',
+  'signature',
   'divider',
   'clearFormat',
 ];
@@ -78,6 +79,7 @@ export const RICH_EDITOR_COMPACT_TOOLBAR: ToolbarOption[] = [
   'divider',
   'link',
   'image',
+  'signature',
   'divider',
   'more',
 ];
@@ -114,6 +116,7 @@ export const RICH_EDITOR_MOBILE_MORE_ITEMS: ToolbarOption[] = [
   'code',
   'link',
   'image',
+  'signature',
   'divider',
   'clearFormat',
 ];
@@ -200,6 +203,10 @@ export const TITLE_TEXT_COLOR = 'Text Color';
 export const TITLE_HIGHLIGHT_COLOR = 'Highlight Color';
 export const TITLE_INSERT_LINK = 'Insert Link';
 export const TITLE_INSERT_IMAGE = 'Insert Image';
+export const TITLE_INSERT_SIGNATURE = 'Insert signature';
+export const TITLE_MORE_OPTIONS = 'More options';
+export const TITLE_CANCEL = 'Cancel';
+export const TITLE_INSERT = 'Insert';
 export const TITLE_ALIGN_LEFT = 'Align Left';
 export const TITLE_ALIGN_CENTER = 'Align Center';
 export const TITLE_ALIGN_RIGHT = 'Align Right';

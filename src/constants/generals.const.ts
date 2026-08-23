@@ -90,6 +90,7 @@ export const TOOLBAR_ITEM_TEXT_COLOR = 'textColor';
 export const TOOLBAR_ITEM_HIGHLIGHT_COLOR = 'highlightColor';
 export const TOOLBAR_ITEM_LINK = 'link';
 export const TOOLBAR_ITEM_IMAGE = 'image';
+export const TOOLBAR_ITEM_SIGNATURE = 'signature';
 export const TOOLBAR_ITEM_ALIGN_LEFT = 'alignLeft';
 export const TOOLBAR_ITEM_ALIGN_CENTER = 'alignCenter';
 export const TOOLBAR_ITEM_ALIGN_RIGHT = 'alignRight';

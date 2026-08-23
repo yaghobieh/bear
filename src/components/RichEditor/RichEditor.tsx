@@ -50,7 +50,7 @@ export const RichEditor = (props: RichEditorProps) => {
     <div
       data-testid={testId}
       className={cn(
-        'Bear-RichEditor rounded-lg border border-gray-200 dark:border-zinc-700 overflow-hidden bg-white dark:bg-zinc-900 shadow-sm',
+        'Bear-RichEditor rounded-lg border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 shadow-sm',
         disabled && 'Bear-RichEditor--disabled',
         readOnly && 'Bear-RichEditor--readonly',
         className

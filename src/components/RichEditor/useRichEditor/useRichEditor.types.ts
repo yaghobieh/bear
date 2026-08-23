@@ -36,5 +36,6 @@ export interface UseRichEditorReturn {
   handleApplyLastHighlightColor: (color: string) => void;
   handlePaste: (event: ClipboardEvent<HTMLDivElement>) => Promise<void>;
   handleImageUpload: () => void;
+  handleInsertSignature: (dataUrl: string) => void;
   execAlign: (command: string) => void;
 }

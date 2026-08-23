@@ -15,6 +15,9 @@ All notable changes to Bear UI will be documented in this file.
 - **TimePicker** — dropdown portals above cards and drawers (FORGE-118, GH #64).
 - **Select / Dropdown** — menus no longer flash from the top-left before the first layout (FORGE-120).
 - **GradientText** — clip after `backgroundImage` so letters show; the `background` shorthand no longer wipes the clip (FORGE-115, GH #63).
+- **SegmentedControl** — selected chip is visible in light and dark (no ghost Button inline override).
+- **RichEditor** — heading and color menus portal above the textarea; toolbar tooltips on hover; signature control opens SignPad.
+- **SignPad** — X mark and baseline sit above the canvas.
 
 ### Changed
 

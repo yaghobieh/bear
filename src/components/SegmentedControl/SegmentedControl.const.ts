@@ -1,5 +1,5 @@
-export const SEGMENTED_SIZE_CLASSES = {
-  sm: 'bear-h-8 bear-text-sm',
-  md: 'bear-h-10 bear-text-base',
-  lg: 'bear-h-12 bear-text-lg',
-};
+export const SEGMENTED_SIZE_MODIFIER = {
+  sm: 'Bear-SegmentedControl__item--sm',
+  md: 'Bear-SegmentedControl__item--md',
+  lg: 'Bear-SegmentedControl__item--lg',
+} as const;

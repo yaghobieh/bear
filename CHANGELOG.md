@@ -2,6 +2,20 @@
 
 All notable changes to Bear UI will be documented in this file.
 
+## [1.3.1] - 2026-08-23
+
+### Added
+
+- **`openEffect`** on DatePicker, DateRangePicker, TimePicker, Select, and Dropdown — `slide-down` (default), `fade`, `scale`, or `none`.
+- **`useFixedAnchorPosition`** — shared fixed coords from the trigger, with scroll/resize listeners.
+
+### Fixed
+
+- **DatePicker** — calendar stays on the input while the page or drawer scrolls (FORGE-117, GH #65).
+- **TimePicker** — dropdown portals above cards and drawers (FORGE-118, GH #64).
+- **Select / Dropdown** — menus no longer flash from the top-left before the first layout (FORGE-120).
+- **GradientText** — `-webkit-background-clip: text` so numbers and short strings stay readable (FORGE-115, GH #63).
+
 ## [1.3.0] - 2026-08-19
 
 ### Added

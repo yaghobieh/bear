@@ -1,7 +1,9 @@
 import { FC, useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import type { TimePickerProps } from './TimePicker.types';
-import {cn } from '@utils';
-import { useMediaQuery } from '@hooks/useMediaQuery';
+import { cn } from '@utils';
+import { useClickOutsideMultiple, useFixedAnchorPosition, useMediaQuery } from '@hooks';
+import { OVERLAY_OPEN_EFFECT_DEFAULT } from '../../hooks/useFixedAnchorPosition';
+import { OverlayPortal } from '../OverlayPortal';
 import { formatTime } from './TimePicker.utils';
 import {
   sizeClasses,
@@ -20,6 +22,9 @@ import {
   TIMEPICKER_VARIANT_AUTO,
   TIMEPICKER_VARIANT_DIAL,
   TIMEPICKER_VARIANT_COLUMNS,
+  TIMEPICKER_DROPDOWN_ATTR,
+  TIMEPICKER_DROPDOWN_HEIGHT_PX,
+  TIMEPICKER_DROPDOWN_Z_INDEX,
 } from './TimePicker.constants';
 import { TimePickerColumnsDropdown } from './components/TimePickerColumnsDropdown';
 import { TimePickerDialDropdown } from './components/TimePickerDialDropdown';
@@ -49,6 +54,8 @@ export const TimePicker: FC<TimePickerProps> = (incomingProps) => {
     dropdownVariantBreakpoint: incomingProps.dropdownVariantBreakpoint ?? TIMEPICKER_DEFAULT_BREAKPOINT,
     icon: incomingProps.icon,
     translations: incomingProps.translations,
+    openEffect: incomingProps.openEffect ?? OVERLAY_OPEN_EFFECT_DEFAULT,
+    testId: incomingProps.testId,
   };
 
   const {
@@ -69,6 +76,8 @@ export const TimePicker: FC<TimePickerProps> = (incomingProps) => {
     dropdownVariantBreakpoint,
     icon,
     translations,
+    openEffect,
+    testId,
   } = props;
 
   const isWideScreen = useMediaQuery(`(min-width: ${dropdownVariantBreakpoint}px)`);
@@ -85,6 +94,13 @@ export const TimePicker: FC<TimePickerProps> = (incomingProps) => {
   const [selectedMinute, setSelectedMinute] = useState(0);
   const [period, setPeriod] = useState<'AM' | 'PM'>('AM');
   const containerRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const { style: overlayStyle, ready } = useFixedAnchorPosition({
+    anchorRef: buttonRef,
+    open: isOpen,
+    estimatedHeightPx: TIMEPICKER_DROPDOWN_HEIGHT_PX,
+  });
 
   useEffect(() => {
     if (timeValue && typeof timeValue === 'string') {
@@ -96,15 +112,8 @@ export const TimePicker: FC<TimePickerProps> = (incomingProps) => {
     }
   }, [timeValue]);
 
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  const close = useCallback(() => setIsOpen(false), []);
+  useClickOutsideMultiple([containerRef, dropdownRef], close, { enabled: isOpen });
 
   const handleConfirm = useCallback(() => {
     onChange?.(formatTime(selectedHour, selectedMinute, period, format ?? TIMEPICKER_FORMAT_12H));
@@ -156,9 +165,10 @@ export const TimePicker: FC<TimePickerProps> = (incomingProps) => {
   }, [isOpen, effectiveVariant, commonProps, resolvedMinuteStep]);
 
   return (
-    <div ref={containerRef} className={cn(TIMEPICKER_ROOT_CLASSES, className)}>
+    <div ref={containerRef} className={cn(TIMEPICKER_ROOT_CLASSES, className)} data-testid={testId}>
       {label && <label className={TIMEPICKER_LABEL_CLASSES}>{label}</label>}
       <button
+        ref={buttonRef}
         type="button"
         onClick={() => !disabled && setIsOpen(!isOpen)}
         disabled={disabled}
@@ -176,7 +186,17 @@ export const TimePicker: FC<TimePickerProps> = (incomingProps) => {
       </button>
       {error && <p className={TIMEPICKER_ERROR_CLASSES}>{error}</p>}
       {helperText && !error && <p className={TIMEPICKER_HELPER_CLASSES}>{helperText}</p>}
-      {renderDropdown()}
+      <OverlayPortal
+        open={isOpen}
+        ready={ready}
+        style={overlayStyle}
+        zIndex={TIMEPICKER_DROPDOWN_Z_INDEX}
+        openEffect={openEffect}
+        panelRef={dropdownRef}
+        attributes={{ [TIMEPICKER_DROPDOWN_ATTR]: '' }}
+      >
+        {renderDropdown()}
+      </OverlayPortal>
     </div>
   );
 };

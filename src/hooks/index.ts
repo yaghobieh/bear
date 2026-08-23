@@ -96,4 +96,23 @@ export { useBreakpoint } from './useBreakpoint';
 export type { UseBreakpointResult, BearBreakpointKey } from './useBreakpoint';
 export { DEFAULT_BREAKPOINTS_PX } from './useBreakpoint';
 
+export {
+  useFixedAnchorPosition,
+  ANCHOR_DEFAULT_Z_INDEX,
+  ANCHOR_EDGE_PAD_PX,
+  ANCHOR_OFFSET_PX,
+  OVERLAY_OPEN_EFFECT_DEFAULT,
+  OVERLAY_OPEN_EFFECT_FADE,
+  OVERLAY_OPEN_EFFECT_NONE,
+  OVERLAY_OPEN_EFFECT_SCALE,
+  OVERLAY_OPEN_EFFECT_SLIDE_DOWN,
+} from './useFixedAnchorPosition';
+export type {
+  OverlayCoords,
+  OverlayOpenEffect,
+  OverlayPlacement,
+  UseFixedAnchorPositionOptions,
+  UseFixedAnchorPositionReturn,
+} from './useFixedAnchorPosition';
+
 export { useFormControl } from './useFormControl';

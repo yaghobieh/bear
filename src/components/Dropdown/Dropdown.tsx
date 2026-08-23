@@ -1,9 +1,17 @@
 import { FC, useState, useRef, useCallback, useEffect, cloneElement, isValidElement, ReactElement, useMemo } from 'react';
-import {cn } from '@utils';
-import { useClickOutsideMultiple } from '@hooks';
-import { Portal } from '../Portal';
+import { cn } from '@utils';
+import { useClickOutsideMultiple, useFixedAnchorPosition } from '@hooks';
+import { OVERLAY_OPEN_EFFECT_DEFAULT } from '../../hooks/useFixedAnchorPosition';
+import type { OverlayPlacement } from '../../hooks/useFixedAnchorPosition';
+import { OverlayPortal } from '../OverlayPortal';
 import type { DropdownProps, DropdownItem } from './Dropdown.types';
-import { SIZE_CLASSES } from './Dropdown.const';
+import {
+  DROPDOWN_DEFAULT_MAX_HEIGHT_PX,
+  DROPDOWN_DEFAULT_MIN_WIDTH_PX,
+  DROPDOWN_DEFAULT_OFFSET_PX,
+  DROPDOWN_Z_INDEX,
+  SIZE_CLASSES,
+} from './Dropdown.const';
 
 /**
  * Dropdown - Contextual menu that appears on trigger click
@@ -26,29 +34,38 @@ export const Dropdown: FC<DropdownProps> = ({
   open: controlledOpen,
   defaultOpen = false,
   placement = 'bottom-start',
-  offset = 4,
+  offset = DROPDOWN_DEFAULT_OFFSET_PX,
   matchWidth = false,
-  minWidth = 150,
-  maxHeight = 300,
+  minWidth = DROPDOWN_DEFAULT_MIN_WIDTH_PX,
+  maxHeight = DROPDOWN_DEFAULT_MAX_HEIGHT_PX,
   size = 'md',
   closeOnSelect = true,
   closeOnClickOutside = true,
   disabled = false,
   onOpenChange,
   className,
-      testId,
+  testId,
+  openEffect = OVERLAY_OPEN_EFFECT_DEFAULT,
   ...props
 }) => {
 
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
   const [focusedIndex, setFocusedIndex] = useState(-1);
-  const [menuPosition, setMenuPosition] = useState<{ top: number; left: number; minWidth: number }>({ top: 0, left: 0, minWidth: minWidth });
   const containerRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLElement>(null);
-
   const isControlled = controlledOpen !== undefined;
   const isOpen = isControlled ? controlledOpen : internalOpen;
+  const overlayPlacement: OverlayPlacement =
+    placement === 'left' || placement === 'right' ? 'bottom-start' : placement;
+  const { style: overlayStyle, ready } = useFixedAnchorPosition({
+    anchorRef: triggerRef,
+    open: isOpen,
+    offsetPx: offset,
+    placement: overlayPlacement,
+    matchWidth,
+    minWidthPx: minWidth,
+  });
 
   const setOpen = useCallback((value: boolean) => {
     if (!isControlled) {
@@ -126,41 +143,6 @@ export const Dropdown: FC<DropdownProps> = ({
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, items, focusedIndex, close, handleItemClick]);
-
-  useEffect(() => {
-    if (!isOpen) return;
-
-    const updatePosition = () => {
-      const triggerRect = triggerRef.current?.getBoundingClientRect();
-      if (!triggerRect) return;
-      const viewportWidth = window.innerWidth;
-      const preferredWidth = matchWidth ? triggerRect.width : minWidth;
-      const placeEnd = placement.endsWith('end');
-      const placeCenter = placement === 'top' || placement === 'bottom';
-      const baseLeft = placeEnd
-        ? triggerRect.right - preferredWidth
-        : placeCenter
-          ? triggerRect.left + triggerRect.width / 2 - preferredWidth / 2
-          : triggerRect.left;
-      const nextLeft = Math.min(Math.max(8, baseLeft), Math.max(8, viewportWidth - preferredWidth - 8));
-      const openUp = placement.startsWith('top');
-      const nextTop = openUp ? triggerRect.top - offset : triggerRect.bottom + offset;
-
-      setMenuPosition({
-        top: nextTop,
-        left: nextLeft,
-        minWidth: preferredWidth,
-      });
-    };
-
-    updatePosition();
-    window.addEventListener('resize', updatePosition);
-    window.addEventListener('scroll', updatePosition, true);
-    return () => {
-      window.removeEventListener('resize', updatePosition);
-      window.removeEventListener('scroll', updatePosition, true);
-    };
-  }, [isOpen, matchWidth, minWidth, placement, offset]);
 
   // Reset focus when closed
   useEffect(() => {
@@ -266,31 +248,23 @@ export const Dropdown: FC<DropdownProps> = ({
     >
       {triggerElement}
 
-      {isOpen && (
-        <Portal>
-          <div
-            ref={menuRef}
-            role="menu"
-            className={cn(
-              'bear-fixed',
-              'bear-border bear-rounded-lg bear-shadow-lg',
-              'bear-py-1 bear-overflow-y-auto',
-              'bear-duration-100',
-            )}
-            style={{
-              backgroundColor: 'var(--bear-bg-primary)',
-              borderColor: 'var(--bear-border-default)',
-              minWidth: menuPosition.minWidth,
-              maxHeight,
-              top: menuPosition.top,
-              left: menuPosition.left,
-              zIndex: 11000,
-            }}
-          >
-            {items.map((item, index) => renderItem(item, index))}
-          </div>
-        </Portal>
-      )}
+      <OverlayPortal
+        open={isOpen}
+        ready={ready}
+        style={{
+          ...overlayStyle,
+          backgroundColor: 'var(--bear-bg-primary)',
+          borderColor: 'var(--bear-border-default)',
+          maxHeight,
+        }}
+        zIndex={DROPDOWN_Z_INDEX}
+        openEffect={openEffect}
+        panelRef={menuRef}
+        className="bear-border bear-rounded-lg bear-shadow-lg bear-py-1 bear-overflow-y-auto"
+        attributes={{ role: 'menu' }}
+      >
+        {items.map((item, index) => renderItem(item, index))}
+      </OverlayPortal>
     </div>
   );
 };

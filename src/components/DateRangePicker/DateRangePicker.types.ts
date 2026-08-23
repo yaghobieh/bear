@@ -1,4 +1,5 @@
 import type { HTMLAttributes } from 'react';
+import type { OverlayOpenEffect } from '../../hooks/useFixedAnchorPosition';
 
 export interface DateRange {
   start: Date | null;
@@ -27,4 +28,5 @@ export interface DateRangePickerProps extends Omit<HTMLAttributes<HTMLDivElement
   error?: string;
   helperText?: string;
   testId?: string;
+  openEffect?: OverlayOpenEffect;
 }

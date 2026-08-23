@@ -1,5 +1,11 @@
 import type { DateRangePreset } from './DateRangePicker.types';
 
+export const DATERANGE_DROPDOWN_HEIGHT_PX = 420;
+
+export const DATERANGE_DROPDOWN_Z_INDEX = 11000;
+
+export const DATERANGE_DROPDOWN_ATTR = 'data-bear-daterangepicker-dropdown';
+
 export const DAYS_IN_WEEK = 7;
 export const MONTHS_IN_YEAR = 12;
 export const CALENDAR_ROWS = 6;

@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import type { OverlayOpenEffect } from '../../hooks/useFixedAnchorPosition';
 
 export interface SelectOption {
   value: string;
@@ -33,5 +34,6 @@ export interface SelectProps {
   renderValue?: (value: string) => ReactNode;
   native?: boolean;
   className?: string;
+  openEffect?: OverlayOpenEffect;
 }
 

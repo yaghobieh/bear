@@ -44,5 +44,11 @@ export const WEIGHT_MAP: Record<string, number> = {
 /** Default font weight */
 export const DEFAULT_WEIGHT = 700;
 
-/** Number of color repetitions for seamless animation */
 export const COLOR_REPEAT_COUNT = 3;
+
+export const GRADIENT_TEXT_CLIP_STYLE = {
+  WebkitBackgroundClip: 'text',
+  backgroundClip: 'text',
+  WebkitTextFillColor: 'transparent',
+  color: 'transparent',
+} as const;

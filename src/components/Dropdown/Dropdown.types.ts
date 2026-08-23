@@ -3,6 +3,7 @@
  */
 import type { HTMLAttributes, ReactNode } from 'react';
 import type { BearSize } from '../../types';
+import type { OverlayOpenEffect } from '../../hooks/useFixedAnchorPosition';
 
 export interface DropdownItem {
   /** Unique key */
@@ -89,7 +90,7 @@ export interface DropdownProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onC
   footer?: ReactNode;
   /** Virtual scrolling for large lists (renders only visible items) */
   virtualized?: boolean;
-  /** Test ID */
   testId?: string;
+  openEffect?: OverlayOpenEffect;
 }
 

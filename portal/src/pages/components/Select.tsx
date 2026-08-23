@@ -217,6 +217,24 @@ const SelectPage: FC = () => {
         </div>
       </ComponentPreview>
 
+      <ComponentPreview
+        title="Open effects"
+        description="Menu stays on the trigger. Choose the enter animation."
+        code={`<Select openEffect="slide-down" options={options} />`}
+        allowOverflow
+      >
+        <div className="max-w-xs w-full">
+          <Select
+            options={BASIC_OPTIONS}
+            value={value}
+            onChange={setValue}
+            placeholder="slide-down"
+            openEffect="slide-down"
+            fullWidth
+          />
+        </div>
+      </ComponentPreview>
+
       <PropsTable
         title="Props"
         rows={[
@@ -232,6 +250,7 @@ const SelectPage: FC = () => {
           { name: 'native', type: 'boolean', default: 'false', description: 'Render a native HTML select' },
           { name: 'displayEmpty', type: 'boolean', default: 'false', description: 'Show empty/placeholder when value is empty' },
           { name: 'renderValue', type: '(value: string) => ReactNode', description: 'Custom closed-trigger display for custom Select' },
+          { name: 'openEffect', type: "'none' | 'fade' | 'slide-down' | 'scale'", default: 'slide-down', description: 'Menu open animation; menu stays on the trigger while scrolling' },
         ]}
       />
     </div>

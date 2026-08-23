@@ -1,17 +1,17 @@
-import { FC, useState, useRef, useCallback, useEffect } from 'react';
+import { FC, useState, useRef, useCallback } from 'react';
 import type { SelectProps } from './Select.types';
 import {
   S_E_L_E_C_T_ROOT_CLASS,
   SELECT_SIZE_CLASSES,
   SELECT_MENU_OFFSET_PX,
-  SELECT_MENU_EDGE_PAD_PX,
   SELECT_MENU_Z_INDEX,
   SELECT_DEFAULT_PLACEHOLDER,
 } from './Select.const';
 import { ChevronDownIcon, CheckIcon } from '../Icon';
-import { Portal } from '../Portal';
+import { OverlayPortal } from '../OverlayPortal';
 import { cn, resolveBearId, useBearId } from '@utils';
-import { useClickOutsideMultiple, useFormControl } from '@hooks';
+import { useClickOutsideMultiple, useFixedAnchorPosition, useFormControl } from '@hooks';
+import { OVERLAY_OPEN_EFFECT_DEFAULT } from '../../hooks/useFixedAnchorPosition';
 
 export const Select: FC<SelectProps> = (props) => {
   const {
@@ -31,19 +31,21 @@ export const Select: FC<SelectProps> = (props) => {
     className,
     id,
     testId,
+    openEffect = OVERLAY_OPEN_EFFECT_DEFAULT,
   } = props;
 
   const generatedId = useBearId('Select');
   const domId = resolveBearId(id, generatedId);
   const formControl = useFormControl();
   const [isOpen, setIsOpen] = useState(false);
-  const [menuPosition, setMenuPosition] = useState<{ top: number; left: number; width: number }>({
-    top: 0,
-    left: 0,
-    width: 0,
-  });
   const selectRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const { style: overlayStyle, ready } = useFixedAnchorPosition({
+    anchorRef: selectRef,
+    open: isOpen && !native,
+    offsetPx: SELECT_MENU_OFFSET_PX,
+    matchWidth: true,
+  });
   const isDisabled = disabled || Boolean(formControl?.disabled);
   const isRequired = required || Boolean(formControl?.required);
   const hasError = Boolean(error) || Boolean(formControl?.error);
@@ -61,29 +63,6 @@ export const Select: FC<SelectProps> = (props) => {
     onChange?.(optionValue);
     setIsOpen(false);
   };
-
-  useEffect(() => {
-    if (!isOpen || native) return;
-    const updatePosition = () => {
-      const rect = selectRef.current?.getBoundingClientRect();
-      if (!rect) return;
-      setMenuPosition({
-        top: rect.bottom + SELECT_MENU_OFFSET_PX,
-        left: Math.max(
-          SELECT_MENU_EDGE_PAD_PX,
-          Math.min(rect.left, window.innerWidth - rect.width - SELECT_MENU_EDGE_PAD_PX)
-        ),
-        width: rect.width,
-      });
-    };
-    updatePosition();
-    window.addEventListener('resize', updatePosition);
-    window.addEventListener('scroll', updatePosition, true);
-    return () => {
-      window.removeEventListener('resize', updatePosition);
-      window.removeEventListener('scroll', updatePosition, true);
-    };
-  }, [isOpen, native]);
 
   const displayContent = (() => {
     if (renderValue && !isEmptyValue) {
@@ -209,59 +188,56 @@ export const Select: FC<SelectProps> = (props) => {
         />
       </button>
 
-      {isOpen && (
-        <Portal>
-          <div
-            ref={menuRef}
-            className={`${S_E_L_E_C_T_ROOT_CLASS}__menu bear-fixed bear-rounded-lg bear-border bear-shadow-lg bear-overflow-hidden`}
-            style={{
-              backgroundColor: 'var(--bear-bg-primary)',
-              borderColor: 'var(--bear-border-default)',
-              top: menuPosition.top,
-              left: menuPosition.left,
-              width: menuPosition.width,
-              zIndex: SELECT_MENU_Z_INDEX,
-            }}
-            role="listbox"
-          >
-            <div className="bear-max-h-60 bear-overflow-y-auto">
-              {options.map((option) => (
-                <button
-                  key={option.value}
-                  type="button"
-                  disabled={option.disabled}
-                  onClick={() => !option.disabled && handleSelect(option.value)}
-                  role="option"
-                  aria-selected={option.value === value}
-                  className={cn(
-                    `${S_E_L_E_C_T_ROOT_CLASS}__option`,
-                    'bear-flex bear-items-center bear-justify-between bear-w-full bear-px-4 bear-py-2',
-                    'bear-text-left bear-transition-colors',
-                    option.disabled && 'bear-cursor-not-allowed',
-                    option.value === value &&
-                      'bear-bg-bear-100 bear-text-bear-700 dark:bear-bg-bear-600/20 dark:bear-text-bear-300',
-                    !option.disabled &&
-                      option.value !== value &&
-                      'hover:bear-bg-[var(--bear-bg-tertiary)]'
-                  )}
-                  style={
-                    option.disabled
-                      ? { color: 'var(--bear-text-muted)' }
-                      : option.value === value
-                        ? undefined
-                        : { color: 'var(--bear-text-secondary)' }
-                  }
-                >
-                  {option.label}
-                  {option.value === value && (
-                    <CheckIcon className="bear-w-4 bear-h-4 bear-shrink-0 bear-text-bear-600 dark:bear-text-bear-400" />
-                  )}
-                </button>
-              ))}
-            </div>
-          </div>
-        </Portal>
-      )}
+      <OverlayPortal
+        open={isOpen && !native}
+        ready={ready}
+        style={{
+          ...overlayStyle,
+          backgroundColor: 'var(--bear-bg-primary)',
+          borderColor: 'var(--bear-border-default)',
+        }}
+        zIndex={SELECT_MENU_Z_INDEX}
+        openEffect={openEffect}
+        panelRef={menuRef}
+        className={`${S_E_L_E_C_T_ROOT_CLASS}__menu bear-rounded-lg bear-border bear-shadow-lg bear-overflow-hidden`}
+        attributes={{ role: 'listbox' }}
+      >
+        <div className="bear-max-h-60 bear-overflow-y-auto">
+          {options.map((option) => (
+            <button
+              key={option.value}
+              type="button"
+              disabled={option.disabled}
+              onClick={() => !option.disabled && handleSelect(option.value)}
+              role="option"
+              aria-selected={option.value === value}
+              className={cn(
+                `${S_E_L_E_C_T_ROOT_CLASS}__option`,
+                'bear-flex bear-items-center bear-justify-between bear-w-full bear-px-4 bear-py-2',
+                'bear-text-left bear-transition-colors',
+                option.disabled && 'bear-cursor-not-allowed',
+                option.value === value &&
+                  'bear-bg-bear-100 bear-text-bear-700 dark:bear-bg-bear-600/20 dark:bear-text-bear-300',
+                !option.disabled &&
+                  option.value !== value &&
+                  'hover:bear-bg-[var(--bear-bg-tertiary)]'
+              )}
+              style={
+                option.disabled
+                  ? { color: 'var(--bear-text-muted)' }
+                  : option.value === value
+                    ? undefined
+                    : { color: 'var(--bear-text-secondary)' }
+              }
+            >
+              {option.label}
+              {option.value === value && (
+                <CheckIcon className="bear-w-4 bear-h-4 bear-shrink-0 bear-text-bear-600 dark:bear-text-bear-400" />
+              )}
+            </button>
+          ))}
+        </div>
+      </OverlayPortal>
 
       {errorMessage && <p className="bear-text-sm bear-text-red-500">{errorMessage}</p>}
     </div>

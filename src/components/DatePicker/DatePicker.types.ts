@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import type { CalendarSlots } from '../Calendar/Calendar.types';
 import type { BisProp } from '../../types/bis.types';
+import type { OverlayOpenEffect } from '../../hooks/useFixedAnchorPosition';
 
 export interface DatePickerProps {
   testId?: string;
@@ -33,6 +34,6 @@ export interface DatePickerProps {
   firstDayOfWeek?: number;
   size?: 'sm' | 'md' | 'lg';
   variant?: 'default' | 'filled' | 'outline';
-  /** Custom icon to replace the default calendar icon (ReactNode). */
   icon?: ReactNode;
+  openEffect?: OverlayOpenEffect;
 }

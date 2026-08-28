@@ -6,5 +6,8 @@ export interface DocPageProps {
   badge?: string;
   icon?: ReactNode;
   componentName?: string;
+  githubHref?: string;
+  figmaHref?: string;
+  showExamples?: boolean;
   children: ReactNode;
 }

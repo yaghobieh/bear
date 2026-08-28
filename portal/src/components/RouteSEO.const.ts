@@ -7,6 +7,11 @@ export interface SEOEntry {
 
 export const SEO_MAP: Record<string, SEOEntry> = {
   '/': { title: 'Home', description: `Bear UI by ${SEO_AUTHOR_NAME} — 100+ beautiful, accessible React components with TypeScript, AeroCraft CSS, 550+ icons, responsive hooks, and theming.` },
+  '/products': { title: 'Products', description: `Bear UI products — components, icons, charts, and design kits by ${SEO_AUTHOR_NAME}.` },
+  '/products/design-kits': { title: 'Design kits', description: `Figma examples and design kits for Bear UI components by ${SEO_AUTHOR_NAME}.` },
+  '/docs': { title: 'Docs', description: `Bear UI documentation — install, components, theming, and CLI by ${SEO_AUTHOR_NAME}.` },
+  '/blog': { title: 'Blog', description: `Bear UI blog and release notes by ${SEO_AUTHOR_NAME}.` },
+  '/pricing': { title: 'Pricing', description: `Bear UI pricing — Community is free forever. Pro and Team support plans by ${SEO_AUTHOR_NAME}.` },
   '/installation': { title: 'Installation', description: `Install Bear UI by ${SEO_AUTHOR_NAME} in your React project. npm, yarn, pnpm setup with AeroCraft CSS and TypeScript.` },
   '/changelog': { title: 'Changelog', description: `Bear UI release notes and changelog — latest updates by ${SEO_AUTHOR_NAME}.` },
   '/skills': { title: 'Skills', description: `Cursor AI skills for Bear UI development — component patterns, code review, and portal docs by ${SEO_AUTHOR_NAME}.` },

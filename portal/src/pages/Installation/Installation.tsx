@@ -8,6 +8,7 @@ import {
   INSTALL_COMPONENT_CODE,
   INSTALL_ICONS_FROM_BEAR_CODE,
   INSTALL_ICONS_ONLY_CODE,
+  INSTALL_NPX_BEAR,
   INSTALL_NPM_BEAR,
   INSTALL_NPM_BEAR_NO_ICONS,
   INSTALL_NPM_ICONS,
@@ -27,6 +28,12 @@ const Installation: FC = () => {
 
   return (
     <DocPage title={t.installTitle} description={t.installDesc}>
+      <section className="doc-section mb-10">
+        <Typography variant="h4" className="doc-section__title mb-3">{t.installNpxTitle}</Typography>
+        <Typography variant="body2" className="mb-4 text-gray-600 dark:text-gray-400">{t.installNpxDesc}</Typography>
+        <CodeBlock code={INSTALL_NPX_BEAR} language="bash" showLineNumbers={false} />
+      </section>
+
       <section className="doc-section mb-10">
         <Typography variant="h4" className="doc-section__title mb-3">{t.installRequirements}</Typography>
         <ul className="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-400">

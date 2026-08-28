@@ -27,5 +27,7 @@ export const FIGMA_KIT_URL = PATH_DESIGN_KITS;
 export const NPX_BEAR_COMMAND = 'npx @forgedevstack/bear';
 export const NPM_INSTALL_BEAR = 'npm install @forgedevstack/bear';
 export const NPM_INSTALL_ICONS = 'npm install @forgedevstack/bear-icons';
+export const AUTHOR_GITHUB_URL = 'https://github.com/yaghobieh';
+export const AUTHOR_DISPLAY_NAME = 'John Yaghobieh';
 
 export const GITHUB_COMPONENT_TREE = 'https://github.com/yaghobieh/bear/tree/main/src/components';

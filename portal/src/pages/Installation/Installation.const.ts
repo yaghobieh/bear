@@ -1,3 +1,7 @@
+import { NPX_BEAR_COMMAND } from '@/constants/marketing.const';
+
+export const INSTALL_NPX_BEAR = NPX_BEAR_COMMAND;
+
 export const INSTALL_NPM_BEAR = 'npm install @forgedevstack/bear';
 export const INSTALL_YARN_BEAR = 'yarn add @forgedevstack/bear';
 export const INSTALL_PNPM_BEAR = 'pnpm add @forgedevstack/bear';

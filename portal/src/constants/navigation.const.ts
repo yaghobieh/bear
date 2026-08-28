@@ -17,7 +17,15 @@ export interface NavGroup {
   icon?: string;
 }
 
-export const BEAR_VERSION = '1.3.1';
+export const BEAR_VERSION = '1.3.2';
+
+export const VERSION_HIGHLIGHT_BY_VERSION: Record<string, string> = {
+  '1.3.2': 'Drawer close effects · no-icons install · Chart views',
+  '1.3.1': 'Overlay open/close effects · Select · DatePicker',
+  '1.3.0': 'ModalsProvider · overlays above blur · SignPad',
+};
+
+export const VERSION_HIGHLIGHT_FALLBACK = 'Drawer close effects · no-icons install · Chart views';
 
 /** Main Bear UI repository */
 export const GITHUB_URL = 'https://github.com/yaghobieh/bear';
@@ -534,7 +542,8 @@ export const NAVIGATION: NavGroup[] = [
 ];
 
 export const VERSIONS = [
-  { value: '1.3.1', label: 'v1.3.1 (current)' },
+  { value: '1.3.2', label: 'v1.3.2 (current)' },
+  { value: '1.3.1', label: 'v1.3.1' },
   { value: '1.3.0', label: 'v1.3.0' },
   { value: '1.2.9', label: 'v1.2.9' },
   { value: '1.2.8', label: 'v1.2.8' },

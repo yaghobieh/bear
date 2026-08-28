@@ -5,6 +5,10 @@ import {
   BOOLEAN_TRUE,
   COMPONENT_NAME_DRAWER,
 } from '@const';
+import {
+  OVERLAY_OPEN_EFFECT_DEFAULT,
+  resolveOverlayEffects,
+} from '@hooks/useFixedAnchorPosition';
 import { Backdrop } from '../Backdrop';
 import { Box } from '../Box';
 import type { DrawerProps, DrawerSide } from './Drawer.types';
@@ -31,6 +35,7 @@ export const Drawer = (props: DrawerProps) => {
     testId,
   } = props;
 
+  const { openEffect, closeEffect } = resolveOverlayEffects(props, OVERLAY_OPEN_EFFECT_DEFAULT);
   const generatedId = useBearId(COMPONENT_NAME_DRAWER);
   const domId = resolveBearId(id, generatedId);
   const { direction } = useBearDirectionOptional();
@@ -39,7 +44,10 @@ export const Drawer = (props: DrawerProps) => {
     isOpen,
     onClose,
     closeOnEscape,
+    openEffect,
+    closeEffect,
   });
+  const activeEffect = isPanelOpen ? openEffect : closeEffect;
 
   if (!isMounted) {
     return null;
@@ -70,6 +78,7 @@ export const Drawer = (props: DrawerProps) => {
           'Bear-Drawer__panel',
           `Bear-Drawer__panel--${resolvedSide}`,
           `Bear-Drawer__panel--${size}`,
+          `Bear-Drawer__panel--effect-${activeEffect}`,
           isPanelOpen && 'Bear-Drawer__panel--open',
           className
         )}

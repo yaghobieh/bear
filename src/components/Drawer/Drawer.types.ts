@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import type { OverlayEffectProps, OverlayMotionEffect } from '@hooks/useFixedAnchorPosition';
 
 export type DrawerSide = 'left' | 'right' | 'top' | 'bottom';
 
@@ -6,6 +7,8 @@ export interface UseDrawerParams {
   isOpen: boolean;
   onClose: () => void;
   closeOnEscape: boolean;
+  openEffect: OverlayMotionEffect;
+  closeEffect: OverlayMotionEffect;
 }
 
 export interface UseDrawerResult {
@@ -13,7 +16,7 @@ export interface UseDrawerResult {
   isPanelOpen: boolean;
 }
 
-export interface DrawerProps {
+export interface DrawerProps extends OverlayEffectProps {
   isOpen: boolean;
   onClose: () => void;
   title?: string;

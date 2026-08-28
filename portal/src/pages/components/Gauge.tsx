@@ -88,6 +88,14 @@ export default function GaugePage() {
       </section>
 
       <section>
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Linear and ring</h2>
+        <div className="p-6 border border-gray-200 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800/50 flex gap-8 flex-wrap items-center">
+          <Gauge value={72} variant="linear" size={180} />
+          <Gauge value={72} variant="ring" />
+        </div>
+      </section>
+
+      <section>
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Props</h2>
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
@@ -129,6 +137,12 @@ export default function GaugePage() {
                 <td className="py-3 px-4 font-mono text-sm">number</td>
                 <td className="py-3 px-4 font-mono text-sm">270</td>
                 <td className="py-3 px-4">Arc angle in degrees</td>
+              </tr>
+              <tr className="border-b border-gray-100 dark:border-slate-800">
+                <td className="py-3 px-4 font-mono text-sm">variant</td>
+                <td className="py-3 px-4 font-mono text-sm">'arc' | 'linear' | 'ring'</td>
+                <td className="py-3 px-4 font-mono text-sm">arc</td>
+                <td className="py-3 px-4">Gauge layout</td>
               </tr>
               <tr className="border-b border-gray-100 dark:border-slate-800">
                 <td className="py-3 px-4 font-mono text-sm">gradient</td>

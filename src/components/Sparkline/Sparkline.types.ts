@@ -19,5 +19,7 @@ export interface SparklineProps extends HTMLAttributes<HTMLDivElement> {
   showExtremes?: boolean;
   /** Animate on render */
   animated?: boolean;
+  variant?: 'line' | 'area' | 'bars';
+  showLastPoint?: boolean;
 }
 

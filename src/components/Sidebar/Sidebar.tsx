@@ -94,6 +94,7 @@ export const Sidebar: FC<SidebarProps> = (props) => {
             collapsed={collapsed}
             onClick={onItemClick}
             activeVariant={activeVariant}
+            activeItemId={activeItemId}
           />
         ))}
       </nav>

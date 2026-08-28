@@ -13,5 +13,11 @@ export const SPARKLINE = {
   MIN_INDICATOR_COLOR: '#ef4444',
   MAX_INDICATOR_COLOR: '#10b981',
   INDICATOR_RADIUS: 3,
+  LAST_POINT_RADIUS: 3.5,
+  BAR_GAP_RATIO: 0.25,
 } as const;
+
+export const SPARKLINE_VARIANT_LINE = 'line';
+export const SPARKLINE_VARIANT_AREA = 'area';
+export const SPARKLINE_VARIANT_BARS = 'bars';
 

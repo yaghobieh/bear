@@ -13,7 +13,10 @@
   overflow: hidden;
   background: var(--bear-bg-primary, #fff);
   box-shadow: 0 25px 50px -12px rgb(15 23 42 / 0.25);
-  transition: transform var(--bear-drawer-duration, 300ms) ease;
+  opacity: 1;
+  transition:
+    transform var(--bear-drawer-duration, 300ms) ease,
+    opacity var(--bear-drawer-duration, 300ms) ease;
 }
 
 .bear-dark .Bear-Drawer__panel,
@@ -61,6 +64,59 @@
 .Bear-Drawer__panel--open.Bear-Drawer__panel--top,
 .Bear-Drawer__panel--open.Bear-Drawer__panel--bottom {
   transform: translateY(0);
+}
+
+.Bear-Drawer__panel--effect-none {
+  transition: none;
+}
+
+.Bear-Drawer__panel--left.Bear-Drawer__panel--effect-none,
+.Bear-Drawer__panel--right.Bear-Drawer__panel--effect-none,
+.Bear-Drawer__panel--top.Bear-Drawer__panel--effect-none,
+.Bear-Drawer__panel--bottom.Bear-Drawer__panel--effect-none {
+  transform: none;
+  opacity: 1;
+}
+
+.Bear-Drawer__panel--left.Bear-Drawer__panel--effect-fade,
+.Bear-Drawer__panel--right.Bear-Drawer__panel--effect-fade,
+.Bear-Drawer__panel--top.Bear-Drawer__panel--effect-fade,
+.Bear-Drawer__panel--bottom.Bear-Drawer__panel--effect-fade {
+  transform: none;
+  opacity: 0;
+}
+
+.Bear-Drawer__panel--effect-fade.Bear-Drawer__panel--open {
+  opacity: 1;
+}
+
+.Bear-Drawer__panel--left.Bear-Drawer__panel--effect-scale {
+  transform: scale(0.96);
+  transform-origin: left center;
+  opacity: 0;
+}
+
+.Bear-Drawer__panel--right.Bear-Drawer__panel--effect-scale {
+  transform: scale(0.96);
+  transform-origin: right center;
+  opacity: 0;
+}
+
+.Bear-Drawer__panel--top.Bear-Drawer__panel--effect-scale {
+  transform: scale(0.96);
+  transform-origin: top center;
+  opacity: 0;
+}
+
+.Bear-Drawer__panel--bottom.Bear-Drawer__panel--effect-scale {
+  transform: scale(0.96);
+  transform-origin: bottom center;
+  opacity: 0;
+}
+
+.Bear-Drawer__panel--effect-scale.Bear-Drawer__panel--open {
+  transform: scale(1);
+  opacity: 1;
 }
 
 .Bear-Drawer__header {

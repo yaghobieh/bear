@@ -2,6 +2,10 @@ export const INSTALL_NPM_BEAR = 'npm install @forgedevstack/bear';
 export const INSTALL_YARN_BEAR = 'yarn add @forgedevstack/bear';
 export const INSTALL_PNPM_BEAR = 'pnpm add @forgedevstack/bear';
 
+export const INSTALL_NPM_BEAR_NO_ICONS = 'npm install @forgedevstack/bear --omit=optional';
+export const INSTALL_YARN_BEAR_NO_ICONS = 'yarn add @forgedevstack/bear --ignore-optional';
+export const INSTALL_PNPM_BEAR_NO_ICONS = 'pnpm add @forgedevstack/bear --no-optional';
+
 export const INSTALL_NPM_ICONS = 'npm install @forgedevstack/bear-icons';
 export const INSTALL_YARN_ICONS = 'yarn add @forgedevstack/bear-icons';
 export const INSTALL_PNPM_ICONS = 'pnpm add @forgedevstack/bear-icons';

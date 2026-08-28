@@ -1,54 +1,62 @@
-import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { Typography, CardCompound as Card, Badge, BearIcons } from '@forgedevstack/bear';
-import { BEAR_VERSION } from '@/constants/navigation.const';
+import { CHANGELOG_ENTRIES } from '@/constants/changelog.const';
+
+const LATEST = CHANGELOG_ENTRIES[0];
 
 const RELEASE_ITEMS = [
   {
-    title: 'Open and close effects',
-    path: '/components/select',
+    title: 'Drawer close effects',
+    path: '/components/drawer',
     icon: BearIcons.LayersIcon,
-    description: 'Select, Dropdown, DatePicker, DateRangePicker, TimePicker, and Calendar take openEffect, closeEffect, or effect={{ open, close }}.',
+    description: 'openEffect, closeEffect, or effect={{ open, close }} — fade, scale, slide-down, or none, independent of the open motion.',
   },
   {
-    title: 'DatePicker overlay',
-    path: '/components/date-picker',
-    icon: BearIcons.MaximizeIcon,
-    description: 'The calendar stays on the trigger while the page scrolls and plays the close motion you pick.',
+    title: 'Install with or without icons',
+    path: '/installation',
+    icon: BearIcons.PackageIcon,
+    description: 'npm install @forgedevstack/bear includes icons. Skip them with --omit=optional, or install @forgedevstack/bear-icons alone.',
   },
   {
-    title: 'TimePicker portal',
-    path: '/components/time-picker',
-    icon: BearIcons.EditIcon,
-    description: 'The time dropdown portals above cards and drawers with the same open and close effects.',
+    title: 'Chart types and pie views',
+    path: '/components/chart',
+    icon: BearIcons.PieChartIcon,
+    description: 'type radar, funnel, stacked. pieView "half" | "rose", explodeIndex, and line stepped.',
   },
   {
-    title: 'Select and Dropdown',
-    path: '/components/dropdown',
-    icon: BearIcons.SnackbarIcon,
-    description: 'Menus no longer flash from the top-left. Pick slide-down, fade, scale, or none for open and close.',
+    title: 'Gauge, Sparkline, Heatmap, Timeline, Ring',
+    path: '/components/gauge',
+    icon: BearIcons.BarChartIcon,
+    description: 'Gauge linear | ring, Sparkline bars and showLastPoint, Heatmap circle cells, TimelineChart points, RingProgress half.',
   },
+];
+
+const CHART_ITEMS = [
+  { path: '/components/chart', title: 'Chart', detail: 'type="radar" | "funnel" | "stacked". pieView="half" | "rose". explodeIndex. line stepped.' },
+  { path: '/components/gauge', title: 'Gauge', detail: 'variant="linear" | "ring".' },
+  { path: '/components/sparkline', title: 'Sparkline', detail: 'variant="bars". showLastPoint.' },
+  { path: '/components/heatmap', title: 'Heatmap', detail: 'cellShape="circle".' },
+  { path: '/components/timeline-chart', title: 'TimelineChart', detail: 'variant="points".' },
+  { path: '/components/ring-progress', title: 'RingProgress', detail: 'variant="half".' },
 ];
 
 const FIXES = [
-  'DatePicker: calendar stays on the input while the page or drawer scrolls (FORGE-117)',
-  'TimePicker: dropdown portals above cards and drawers (FORGE-118)',
-  'Select / Dropdown: no first-layout flash at the top-left (FORGE-120)',
-  'GradientText: clip after backgroundImage so the letters show, not a solid fill (FORGE-115)',
+  'Right-side Drawer stays on the right and slides out to the right; close control on the inner edge (FORGE-126)',
+  'Icons live in @forgedevstack/bear-icons and still import from Bear (FORGE-127)',
 ];
 
-const WhatsNew124Page: FC = () => (
+const WhatsNew124Page = () => (
   <div className="fade-in space-y-10 max-w-4xl">
     <div>
-      <Badge variant="primary" className="mb-4">v{BEAR_VERSION}</Badge>
-      <Typography variant="h1" className="mb-3">What&apos;s new in Bear {BEAR_VERSION}</Typography>
+      <Badge variant="primary" className="mb-4">v{LATEST.version}</Badge>
+      <Typography variant="h1" className="mb-3">What&apos;s new in Bear {LATEST.version}</Typography>
       <Typography variant="body1" className="text-gray-600 dark:text-gray-400">
-        Dropdown overlays now accept independent open and close effects. Pick slide-down, fade, scale, or none.
+        Drawer close effects, install Bear with or without icons, and new views on Chart, Gauge, Sparkline, Heatmap, TimelineChart, and RingProgress.
       </Typography>
     </div>
 
     <section>
-      <Typography variant="h2" className="mb-6">This release</Typography>
+      <Typography variant="h2" className="mb-6">New</Typography>
       <div className="grid gap-4 sm:grid-cols-2">
         {RELEASE_ITEMS.map((item) => {
           const Icon = item.icon;
@@ -73,6 +81,23 @@ const WhatsNew124Page: FC = () => (
           );
         })}
       </div>
+    </section>
+
+    <section>
+      <Typography variant="h2" className="mb-4">Charts and meters</Typography>
+      <Card className="p-6">
+        <ul className="space-y-3 text-sm text-gray-600 dark:text-gray-400">
+          {CHART_ITEMS.map((item) => (
+            <li key={item.title}>
+              <Link to={item.path} className="font-medium text-gray-900 dark:text-gray-100 hover:text-pink-500">
+                {item.title}
+              </Link>
+              <span className="text-gray-400 dark:text-gray-500"> · </span>
+              <span>{item.detail}</span>
+            </li>
+          ))}
+        </ul>
+      </Card>
     </section>
 
     <section>

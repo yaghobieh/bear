@@ -14,5 +14,6 @@ export interface RingProgressProps extends HTMLAttributes<HTMLDivElement> {
   roundCaps?: boolean;
   label?: ReactNode;
   rootColor?: string;
+  variant?: 'full' | 'half';
   testId?: string;
 }

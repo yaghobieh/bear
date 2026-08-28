@@ -2,8 +2,9 @@ import React, { FC, ReactNode, lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import { CodeBlock } from '@/components/CodeBlock';
 import { HomeBentoGrid } from '@/components/HomeBentoGrid';
-import { GITHUB_URL, BEAR_VERSION } from '@/constants/navigation.const';
+import { GITHUB_URL, VERSION_HIGHLIGHT_BY_VERSION, VERSION_HIGHLIGHT_FALLBACK } from '@/constants/navigation.const';
 import { BearIcons, CheckIcon, Badge } from '@forgedevstack/bear';
+import { useNpmPackageVersion } from '@/hooks/useNpmPackageVersion';
 
 const ComparisonSection = lazy(() => import('@/components/ComparisonSection/ComparisonSection'));
 
@@ -12,8 +13,6 @@ const ArrowRightIcon = BearIcons.ArrowRightIcon;
 const HERO_TITLE = 'The Foundation for your React UI';
 const HERO_DESCRIPTION = '100+ accessible, customizable React components with TypeScript, AeroCraft CSS, responsive hooks, and a powerful theming system. Start here, then make it your own.';
 const INSTALL_CMD = 'npm install @forgedevstack/bear';
-const VERSION_LABEL = `Introducing Bear v${BEAR_VERSION}`;
-const VERSION_HIGHLIGHT = 'ModalsProvider · overlays above blur · SignPad';
 
 const STATS = [
   { value: '100+', label: 'Components', color: 'text-pink-500' },
@@ -99,6 +98,10 @@ const ComponentCard: FC<{ title: string; desc: string; path: string; preview: Re
 );
 
 const Introduction: FC = () => {
+  const { version } = useNpmPackageVersion();
+  const versionLabel = `Introducing Bear v${version}`;
+  const versionHighlight = VERSION_HIGHLIGHT_BY_VERSION[version] ?? VERSION_HIGHLIGHT_FALLBACK;
+
   return (
     <div className="fade-in overflow-x-hidden">
       <section className="text-center pt-12 md:pt-20 pb-10 md:pb-14">
@@ -106,9 +109,9 @@ const Introduction: FC = () => {
           to="/whats-new"
           className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-xs font-medium text-gray-600 dark:text-gray-400 hover:border-pink-300 dark:hover:border-pink-800 hover:text-pink-600 dark:hover:text-pink-400 transition-colors mb-8"
         >
-          {VERSION_LABEL}
+          {versionLabel}
           <span className="text-gray-400 dark:text-gray-500">·</span>
-          {VERSION_HIGHLIGHT}
+          {versionHighlight}
           <ArrowRightIcon size={12} />
         </Link>
 

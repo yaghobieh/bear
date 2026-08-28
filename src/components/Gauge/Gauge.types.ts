@@ -25,9 +25,19 @@ export interface GaugeProps extends HTMLAttributes<HTMLDivElement> {
   animated?: boolean;
   /** Fill transition duration in ms when animated */
   fillDurationMs?: number;
-  /** Arc angle (180 for half, 270 for 3/4, 360 for full) */
   arcAngle?: number;
-  /** Gradient colors [start, end] */
+  variant?: 'arc' | 'linear' | 'ring';
   gradient?: [string, string];
+}
+
+export interface GaugeLinearBarProps {
+  percentage: number;
+  color: string;
+  trackColor?: string;
+  gradient?: [string, string];
+  animated: boolean;
+  fillDurationMs: number;
+  showLabel: boolean;
+  label?: ReactNode;
 }
 

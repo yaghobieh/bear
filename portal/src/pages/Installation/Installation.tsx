@@ -9,12 +9,15 @@ import {
   INSTALL_ICONS_FROM_BEAR_CODE,
   INSTALL_ICONS_ONLY_CODE,
   INSTALL_NPM_BEAR,
+  INSTALL_NPM_BEAR_NO_ICONS,
   INSTALL_NPM_ICONS,
   INSTALL_PNPM_BEAR,
+  INSTALL_PNPM_BEAR_NO_ICONS,
   INSTALL_PNPM_ICONS,
   INSTALL_PROVIDER_CODE,
   INSTALL_STYLES_CODE,
   INSTALL_YARN_BEAR,
+  INSTALL_YARN_BEAR_NO_ICONS,
   INSTALL_YARN_ICONS,
 } from './Installation.const';
 
@@ -44,6 +47,17 @@ const Installation: FC = () => {
         <CodeBlock code={INSTALL_PNPM_BEAR} language="bash" showLineNumbers={false} />
         <Typography variant="body2" className="mt-4 mb-3 text-gray-600 dark:text-gray-400">{t.installIconsFromBearDesc}</Typography>
         <CodeBlock code={INSTALL_ICONS_FROM_BEAR_CODE} language="tsx" showLineNumbers={false} />
+      </section>
+
+      <section className="doc-section mb-10">
+        <Typography variant="h4" className="doc-section__title mb-3">{t.installNoIconsTitle}</Typography>
+        <Typography variant="body2" className="mb-4 text-gray-600 dark:text-gray-400">{t.installNoIconsDesc}</Typography>
+        <Typography variant="caption" className="mb-2 block">{t.installNpm}</Typography>
+        <CodeBlock code={INSTALL_NPM_BEAR_NO_ICONS} language="bash" showLineNumbers={false} />
+        <Typography variant="caption" className="mb-2 mt-4 block">{t.installYarn}</Typography>
+        <CodeBlock code={INSTALL_YARN_BEAR_NO_ICONS} language="bash" showLineNumbers={false} />
+        <Typography variant="caption" className="mb-2 mt-4 block">{t.installPnpm}</Typography>
+        <CodeBlock code={INSTALL_PNPM_BEAR_NO_ICONS} language="bash" showLineNumbers={false} />
       </section>
 
       <section className="doc-section mb-10">

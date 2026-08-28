@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { cn, useBearId } from '@utils';
 import { Typography } from '../Typography';
 import { Flex } from '../Flex';
@@ -11,11 +10,16 @@ import {
   GAUGE_DEFAULT_MIN,
   GAUGE_DEFAULT_SIZE,
   GAUGE_DEFAULT_STROKE_WIDTH,
+  GAUGE_RING_ARC_ANGLE,
+  GAUGE_VARIANT_ARC,
+  GAUGE_VARIANT_LINEAR,
+  GAUGE_VARIANT_RING,
 } from './Gauge.const';
 import { useGauge } from './hooks/useGauge';
 import { GaugeArcSvg } from './helpers/GaugeArcSvg';
+import { GaugeLinearBar } from './helpers/GaugeLinearBar';
 
-export const Gauge: FC<GaugeProps> = (props) => {
+export const Gauge = (props: GaugeProps) => {
   const {
     value,
     min = GAUGE_DEFAULT_MIN,
@@ -29,21 +33,46 @@ export const Gauge: FC<GaugeProps> = (props) => {
     animated = true,
     fillDurationMs = GAUGE_DEFAULT_FILL_DURATION_MS,
     arcAngle = GAUGE_DEFAULT_ARC_ANGLE,
+    variant = GAUGE_VARIANT_ARC,
     gradient,
     className,
     ...rest
   } = props;
 
+  const resolvedArcAngle = variant === GAUGE_VARIANT_RING ? (props.arcAngle ?? GAUGE_RING_ARC_ANGLE) : arcAngle;
   const gradientId = useBearId('Gauge', 'gradient');
   const gauge = useGauge({
     value,
     min,
     max,
     strokeWidth,
-    arcAngle,
+    arcAngle: resolvedArcAngle,
     animated,
     fillDurationMs,
   });
+
+  if (variant === GAUGE_VARIANT_LINEAR) {
+    return (
+      <Flex
+        align="center"
+        justify="center"
+        className={cn('bear-relative bear-inline-flex', className)}
+        style={{ width: size }}
+        {...rest}
+      >
+        <GaugeLinearBar
+          percentage={gauge.percentage}
+          color={color}
+          trackColor={trackColor}
+          gradient={gradient}
+          animated={gauge.animated}
+          fillDurationMs={gauge.fillDurationMs}
+          showLabel={showLabel}
+          label={label}
+        />
+      </Flex>
+    );
+  }
 
   return (
     <Flex

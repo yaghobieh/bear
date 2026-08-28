@@ -82,6 +82,16 @@ const RingProgressPage: FC = () => {
           <RingProgress size={160} thickness={18} sections={[{ value: 33, color: '#ef4444' }, { value: 33, color: '#f59e0b' }, { value: 34, color: '#22c55e' }]} roundCaps />
         </div>
       </ComponentPreview>
+
+      <ComponentPreview
+        title="Half ring"
+        description="Semicircle track for compact meters."
+        code={`<RingProgress variant="half" sections={[{ value: 72, color: '#ec4899' }]} />`}
+      >
+        <div className="flex justify-center">
+          <RingProgress variant="half" sections={[{ value: 72, color: '#ec4899' }]} label={<Typography variant="h6" align="center">72%</Typography>} />
+        </div>
+      </ComponentPreview>
     </div>
   );
 };

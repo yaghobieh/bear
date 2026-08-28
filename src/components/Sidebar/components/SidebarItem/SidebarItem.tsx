@@ -1,4 +1,4 @@
-import { FC, useState, useCallback } from 'react';
+import { FC, useState } from 'react';
 import { cn } from '@utils';
 import { ChevronDownIcon } from '../../../Icon';
 import type { SidebarItemComponentProps } from '../../Sidebar.types';
@@ -11,6 +11,7 @@ import {
   SIDEBAR_ITEM_INACTIVE_CLASSES,
   SIDEBAR_ITEM_DISABLED_CLASSES,
 } from '../../Sidebar.const';
+import { sidebarItemContainsId } from '../../Sidebar.utils';
 
 export const SidebarItem: FC<SidebarItemComponentProps> = (props) => {
   const {
@@ -20,13 +21,15 @@ export const SidebarItem: FC<SidebarItemComponentProps> = (props) => {
     depth = 0,
     onClick,
     activeVariant = 'fill',
+    activeItemId,
   } = props;
 
-  const [isOpen, setIsOpen] = useState(false);
-  const hasChildren = item.children && item.children.length > 0;
+  const children = item.children ?? [];
+  const hasChildren = children.length > 0;
+  const [isOpen, setIsOpen] = useState(() => sidebarItemContainsId(item, activeItemId));
   const paddingLeft = collapsed ? SIDEBAR_PADDING_BASE : SIDEBAR_PADDING_BASE + depth * SIDEBAR_DEPTH_INDENT;
 
-  const handleClick = useCallback(() => {
+  const handleClick = () => {
     if (hasChildren) {
       setIsOpen((prev) => !prev);
     }
@@ -34,33 +37,9 @@ export const SidebarItem: FC<SidebarItemComponentProps> = (props) => {
       item.onClick();
     }
     onClick?.(item);
-  }, [hasChildren, item, onClick]);
+  };
 
-  const content = (
-    <>
-      {item.icon && (
-        <span className="Bear-Sidebar__item-icon bear-shrink-0 bear-w-5 bear-h-5 bear-flex bear-items-center bear-justify-center">
-          {item.icon}
-        </span>
-      )}
-      {!collapsed && (
-        <>
-          <span className="Bear-Sidebar__item-label bear-flex-1 bear-truncate">{item.label}</span>
-          {item.badge && <span className="Bear-Sidebar__item-badge bear-ml-auto">{item.badge}</span>}
-          {hasChildren && (
-            <ChevronDownIcon
-              size={SIDEBAR_ICON_SIZE}
-              className={cn(
-                'Bear-Sidebar__item-chevron bear-ml-1 bear-transition-transform bear-duration-200',
-                isOpen && 'bear-rotate-180'
-              )}
-            />
-          )}
-        </>
-      )}
-    </>
-  );
-
+  const showChildren = hasChildren && isOpen && !collapsed;
   const activeClasses = SIDEBAR_ITEM_ACTIVE_BY_VARIANT[activeVariant];
   const itemClassName = cn(
     'Bear-Sidebar__item',
@@ -69,9 +48,8 @@ export const SidebarItem: FC<SidebarItemComponentProps> = (props) => {
       ? `Bear-Sidebar__item--active ${activeClasses}`
       : SIDEBAR_ITEM_INACTIVE_CLASSES,
     item.disabled && `Bear-Sidebar__item--disabled ${SIDEBAR_ITEM_DISABLED_CLASSES}`,
-    collapsed && 'Bear-Sidebar__item--collapsed bear-justify-center'
+    collapsed && 'Bear-Sidebar__item--collapsed bear-justify-center',
   );
-
   const Element = item.href ? 'a' : 'button';
 
   return (
@@ -84,18 +62,39 @@ export const SidebarItem: FC<SidebarItemComponentProps> = (props) => {
         style={{ paddingLeft }}
         title={collapsed ? item.label : undefined}
       >
-        {content}
+        {item.icon && (
+          <span className="Bear-Sidebar__item-icon bear-shrink-0 bear-w-5 bear-h-5 bear-flex bear-items-center bear-justify-center">
+            {item.icon}
+          </span>
+        )}
+        {!collapsed && (
+          <span className="Bear-Sidebar__item-row bear-flex bear-items-center bear-flex-1 bear-min-w-0">
+            <span className="Bear-Sidebar__item-label bear-flex-1 bear-truncate">{item.label}</span>
+            {item.badge && <span className="Bear-Sidebar__item-badge bear-ml-auto">{item.badge}</span>}
+            {hasChildren && (
+              <ChevronDownIcon
+                size={SIDEBAR_ICON_SIZE}
+                className={cn(
+                  'Bear-Sidebar__item-chevron bear-ml-1 bear-transition-transform bear-duration-200',
+                  isOpen && 'bear-rotate-180',
+                )}
+              />
+            )}
+          </span>
+        )}
       </Element>
-      {hasChildren && isOpen && !collapsed && (
+      {showChildren && (
         <div className="Bear-Sidebar__children bear-mt-1">
-          {item.children!.map((child) => (
+          {children.map((child) => (
             <SidebarItem
               key={child.id}
               item={child}
-              isActive={false}
+              isActive={child.id === activeItemId}
               collapsed={collapsed}
               depth={depth + 1}
               onClick={onClick}
+              activeVariant={activeVariant}
+              activeItemId={activeItemId}
             />
           ))}
         </div>
@@ -105,4 +104,3 @@ export const SidebarItem: FC<SidebarItemComponentProps> = (props) => {
 };
 
 export default SidebarItem;
-

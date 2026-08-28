@@ -11,7 +11,7 @@ export interface ChangelogEntry {
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
     version: '1.3.2',
-    date: 'In progress',
+    date: 'August 28, 2026',
     tag: 'patch',
     sections: [
       {
@@ -23,7 +23,14 @@ export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
       {
         title: 'Added',
         items: [
-          '@forgedevstack/bear-icons — install icons with Bear, or install the icon package alone',
+          '@forgedevstack/bear-icons — default Bear install includes icons; skip with --omit=optional, or install the icon package alone',
+          'Drawer openEffect, closeEffect, and effect={{ open, close }} (same motion set as Select)',
+          'Chart type radar, funnel, and stacked; pieView "half" | "rose"; explodeIndex; line stepped',
+          'Gauge variant linear | ring',
+          'Sparkline variant bars and showLastPoint',
+          'Heatmap cellShape circle',
+          'TimelineChart variant points',
+          'RingProgress variant half',
         ],
       },
     ],

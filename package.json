@@ -76,6 +76,7 @@
     "react-dom": ">=18.0.0"
   },
   "devDependencies": {
+    "@forgedevstack/bear-icons": "^1.0.1",
     "@forgedevstack/aerocraft": "^1.0.4",
     "@types/node": "^22.10.7",
     "@types/react": "^18.3.18",

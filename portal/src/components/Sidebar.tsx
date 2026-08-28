@@ -1,8 +1,9 @@
 import { FC, useCallback, useState, useEffect, useMemo } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { NAVIGATION, VERSIONS, BEAR_VERSION } from '@/constants/navigation.const';
+import { NAVIGATION, VERSIONS } from '@/constants/navigation.const';
 import { ICON_COUNT } from '@/constants/icons.const';
 import { useIsMobile, BearIcons } from '@forgedevstack/bear';
+import { useNpmPackageVersion } from '@/hooks/useNpmPackageVersion';
 import type { SidebarProps, NestedNavItemProps, CollapsibleGroupProps } from './Sidebar.types';
 import { GROUP_ICON_MAP } from './Sidebar.const';
 import { getNavLabel, getNavItemStorageKey, getGroupStorageKey } from './Sidebar.utils';
@@ -215,6 +216,7 @@ const CollapsibleGroup: FC<CollapsibleGroupProps> = (props) => {
 export const Sidebar: FC<SidebarProps> = (props) => {
   const { isOpen = true, onClose, topOffset = 104, hiddenDesktop = false } = props;
   const isMobile = useIsMobile();
+  const { version } = useNpmPackageVersion();
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleItemClick = useCallback(() => {
@@ -273,7 +275,7 @@ export const Sidebar: FC<SidebarProps> = (props) => {
             )}
           </div>
           <select
-            value={BEAR_VERSION}
+            value={version}
             className="w-full px-2 py-1.5 text-xs rounded-md border border-gray-200 dark:border-gray-700
               bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400
               focus:outline-none focus:ring-1 focus:ring-pink-500"

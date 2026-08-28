@@ -1,7 +1,9 @@
-import { Chart, BarChart, LineChart, PieChart } from '@forgedevstack/bear';
-import { LinesOfCode } from '../../components/LinesOfCode';
+import { Chart, Flex } from '@forgedevstack/bear';
+import { DocPage } from '@/components/DocPage';
+import { ComponentPreview } from '@/components/ComponentPreview';
+import { PropsTable } from '@/components/PropsTable';
 
-const sampleData = [
+const SAMPLE_DATA = [
   { label: 'Jan', value: 30 },
   { label: 'Feb', value: 45 },
   { label: 'Mar', value: 28 },
@@ -10,108 +12,93 @@ const sampleData = [
   { label: 'Jun', value: 75 },
 ];
 
-export default function ChartPage() {
-  return (
-    <div className="space-y-12">
-      <section>
-        <div className="flex items-center gap-3 mb-4">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Chart</h1>
-          <LinesOfCode lines={220} />
-        </div>
-        <p className="text-gray-600 dark:text-slate-400 text-lg">
-          A flexible charting component supporting bar, line, area, pie, and donut charts.
-        </p>
-      </section>
+const PIE_DATA = [
+  { label: 'Design', value: 32 },
+  { label: 'Build', value: 28 },
+  { label: 'Ship', value: 22 },
+  { label: 'Review', value: 18 },
+];
 
-      <section>
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Bar Chart</h2>
-        <div className="p-6 border border-gray-200 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800/50">
-          <Chart type="bar" data={sampleData} height={200} showLabels showValues />
-        </div>
-      </section>
+const STACKED_DATA = [
+  { label: 'Q1', value: 40, stacks: [12, 16, 12] },
+  { label: 'Q2', value: 55, stacks: [18, 20, 17] },
+  { label: 'Q3', value: 48, stacks: [14, 19, 15] },
+  { label: 'Q4', value: 62, stacks: [20, 22, 20] },
+];
 
-      <section>
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Line Chart</h2>
-        <div className="p-6 border border-gray-200 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800/50">
-          <Chart type="line" data={sampleData} height={200} showLabels />
-        </div>
-      </section>
+const RADAR_DATA = [
+  { label: 'Speed', value: 80 },
+  { label: 'Quality', value: 65 },
+  { label: 'UX', value: 90 },
+  { label: 'A11y', value: 70 },
+  { label: 'Docs', value: 55 },
+];
 
-      <section>
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Area Chart</h2>
-        <div className="p-6 border border-gray-200 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800/50">
-          <Chart type="area" data={sampleData} height={200} showLabels />
-        </div>
-      </section>
+const FUNNEL_DATA = [
+  { label: 'Visit', value: 100 },
+  { label: 'Signup', value: 64 },
+  { label: 'Activate', value: 38 },
+  { label: 'Pay', value: 18 },
+];
 
-      <section>
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Pie Chart</h2>
-        <div className="p-6 border border-gray-200 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800/50">
-          <Chart type="pie" data={sampleData} height={200} />
-        </div>
-      </section>
+const ChartPage = () => (
+  <DocPage title="Chart" description="Bar, line, area, pie, donut, radar, funnel, and stacked views." componentName="Chart">
+    <ComponentPreview title="Bar" description="Vertical columns with labels and values." code={`<Chart type="bar" data={data} showLabels showValues />`}>
+      <Chart type="bar" data={SAMPLE_DATA} height={200} showLabels showValues />
+    </ComponentPreview>
 
-      <section>
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Donut Chart</h2>
-        <div className="p-6 border border-gray-200 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800/50">
-          <Chart type="donut" data={sampleData} height={200} />
-        </div>
-      </section>
+    <ComponentPreview title="Stacked" description="Each category is a stack of segments." code={`<Chart type="stacked" data={data} />`}>
+      <Chart type="stacked" data={STACKED_DATA} height={200} showLabels showValues />
+    </ComponentPreview>
 
-      <section>
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Props</h2>
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="border-b border-gray-200 dark:border-slate-700">
-                <th className="py-3 px-4 text-gray-900 dark:text-white font-semibold">Prop</th>
-                <th className="py-3 px-4 text-gray-900 dark:text-white font-semibold">Type</th>
-                <th className="py-3 px-4 text-gray-900 dark:text-white font-semibold">Default</th>
-                <th className="py-3 px-4 text-gray-900 dark:text-white font-semibold">Description</th>
-              </tr>
-            </thead>
-            <tbody className="text-gray-600 dark:text-slate-400">
-              <tr className="border-b border-gray-100 dark:border-slate-800">
-                <td className="py-3 px-4 font-mono text-sm">type</td>
-                <td className="py-3 px-4 font-mono text-sm">'bar' | 'line' | 'area' | 'pie' | 'donut'</td>
-                <td className="py-3 px-4 font-mono text-sm">-</td>
-                <td className="py-3 px-4">Chart type</td>
-              </tr>
-              <tr className="border-b border-gray-100 dark:border-slate-800">
-                <td className="py-3 px-4 font-mono text-sm">data</td>
-                <td className="py-3 px-4 font-mono text-sm">ChartDataPoint[]</td>
-                <td className="py-3 px-4 font-mono text-sm">-</td>
-                <td className="py-3 px-4">Data points with label and value</td>
-              </tr>
-              <tr className="border-b border-gray-100 dark:border-slate-800">
-                <td className="py-3 px-4 font-mono text-sm">height</td>
-                <td className="py-3 px-4 font-mono text-sm">number</td>
-                <td className="py-3 px-4 font-mono text-sm">200</td>
-                <td className="py-3 px-4">Chart height in pixels</td>
-              </tr>
-              <tr className="border-b border-gray-100 dark:border-slate-800">
-                <td className="py-3 px-4 font-mono text-sm">animated</td>
-                <td className="py-3 px-4 font-mono text-sm">boolean</td>
-                <td className="py-3 px-4 font-mono text-sm">true</td>
-                <td className="py-3 px-4">Enable animations</td>
-              </tr>
-              <tr className="border-b border-gray-100 dark:border-slate-800">
-                <td className="py-3 px-4 font-mono text-sm">showLabels</td>
-                <td className="py-3 px-4 font-mono text-sm">boolean</td>
-                <td className="py-3 px-4 font-mono text-sm">true</td>
-                <td className="py-3 px-4">Show data labels</td>
-              </tr>
-              <tr className="border-b border-gray-100 dark:border-slate-800">
-                <td className="py-3 px-4 font-mono text-sm">showValues</td>
-                <td className="py-3 px-4 font-mono text-sm">boolean</td>
-                <td className="py-3 px-4 font-mono text-sm">false</td>
-                <td className="py-3 px-4">Show data values</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-    </div>
-  );
-}
+    <ComponentPreview title="Line and stepped" description="Smooth line or stepped path." code={`<Chart type="line" data={data} />
+<Chart type="line" data={data} stepped />`}>
+      <Flex direction="column" gap={4} className="w-full">
+        <Chart type="line" data={SAMPLE_DATA} height={160} showLabels />
+        <Chart type="line" data={SAMPLE_DATA} height={160} showLabels stepped />
+      </Flex>
+    </ComponentPreview>
 
+    <ComponentPreview title="Area" description="Filled line chart." code={`<Chart type="area" data={data} />`}>
+      <Chart type="area" data={SAMPLE_DATA} height={200} showLabels />
+    </ComponentPreview>
+
+    <ComponentPreview title="Pie, half, and rose" description="Full pie, half cake, exploded slice, and rose radii." code={`<Chart type="pie" data={data} />
+<Chart type="pie" data={data} pieView="half" />
+<Chart type="pie" data={data} pieView="rose" explodeIndex={0} />`}>
+      <Flex gap={6} wrap="wrap" justify="center">
+        <Chart type="pie" data={PIE_DATA} height={180} />
+        <Chart type="pie" data={PIE_DATA} height={180} pieView="half" />
+        <Chart type="pie" data={PIE_DATA} height={180} pieView="rose" explodeIndex={0} />
+      </Flex>
+    </ComponentPreview>
+
+    <ComponentPreview title="Donut" description="Pie with an inner hole." code={`<Chart type="donut" data={data} />`}>
+      <Chart type="donut" data={PIE_DATA} height={180} />
+    </ComponentPreview>
+
+    <ComponentPreview title="Radar" description="Polygon on equal axes." code={`<Chart type="radar" data={data} />`}>
+      <Chart type="radar" data={RADAR_DATA} height={240} showLabels />
+    </ComponentPreview>
+
+    <ComponentPreview title="Funnel" description="Stage widths follow value." code={`<Chart type="funnel" data={data} />`}>
+      <Chart type="funnel" data={FUNNEL_DATA} height={220} />
+    </ComponentPreview>
+
+    <PropsTable
+      title="Props"
+      rows={[
+        { name: 'type', type: "'bar' | 'line' | 'area' | 'pie' | 'donut' | 'radar' | 'funnel' | 'stacked'", description: 'Chart view' },
+        { name: 'data', type: 'ChartDataPoint[]', description: 'Points with label, value, optional color and stacks' },
+        { name: 'pieView', type: "'full' | 'half' | 'rose'", default: 'full', description: 'Pie / cake layout' },
+        { name: 'explodeIndex', type: 'number', description: 'Pull one pie slice out' },
+        { name: 'legendPosition', type: "'right' | 'bottom' | 'none'", default: 'right', description: 'Pie legend' },
+        { name: 'stepped', type: 'boolean', default: 'false', description: 'Step path on line charts' },
+        { name: 'stacked', type: 'boolean', default: 'false', description: 'Stack bar segments' },
+        { name: 'height', type: 'number', default: '200', description: 'Height in pixels' },
+      ]}
+    />
+  </DocPage>
+);
+
+export default ChartPage;

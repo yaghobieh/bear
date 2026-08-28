@@ -29,6 +29,6 @@ export interface TimelineChartProps extends Omit<HTMLAttributes<HTMLDivElement>,
   formatTick?: (value: number) => string;
   /** Callback when an item bar is clicked */
   onItemClick?: (item: TimelineChartItem, index: number) => void;
-  /** Test ID */
+  variant?: 'bars' | 'points';
   testId?: string;
 }

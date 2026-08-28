@@ -32,6 +32,6 @@ export interface HeatmapProps extends Omit<HTMLAttributes<HTMLDivElement>, 'chil
   onCellClick?: (cell: HeatmapCell) => void;
   /** Render custom hover content per cell */
   renderTooltip?: (cell: HeatmapCell) => ReactNode;
-  /** Test ID */
+  cellShape?: 'square' | 'circle';
   testId?: string;
 }

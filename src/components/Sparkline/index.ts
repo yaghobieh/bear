@@ -6,6 +6,7 @@ export {
   calculateSparklinePathData,
   generateSparklinePath,
   generateAreaPath,
+  calculateSparklineBars,
 } from './Sparkline.utils';
-export type { SparklinePoint, SparklinePathData } from './Sparkline.utils';
+export type { SparklinePoint, SparklinePathData, SparklineBar } from './Sparkline.utils';
 

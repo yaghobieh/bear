@@ -33,7 +33,7 @@ export default defineConfig({
       formats: ['es', 'cjs'],
     },
     rollupOptions: {
-      external: ['react', 'react-dom', 'react/jsx-runtime', '@forgedevstack/anvil'],
+      external: ['react', 'react-dom', 'react/jsx-runtime', '@forgedevstack/anvil', '@forgedevstack/bear-icons'],
       output: {
         preserveModules: true,
         preserveModulesRoot: 'src',

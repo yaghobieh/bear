@@ -12,6 +12,7 @@ const ICON_CATEGORIES = {
   Social: BearIcons.Social ?? {},
   Device: BearIcons.Device ?? {},
   Commerce: BearIcons.Commerce ?? {},
+  Charts: BearIcons.Charts ?? {},
   Misc: BearIcons.Misc ?? {},
   Bear: BearIcons.Bear ?? {},
 };

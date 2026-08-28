@@ -12,6 +12,8 @@ import {
   MONTH_LABELS,
   DAYS_IN_WEEK,
   LABEL_PAD,
+  CELL_SHAPE_CIRCLE,
+  CELL_SHAPE_SQUARE,
 } from './Heatmap.const';
 import { getWeeks, toKey } from './Heatmap.utils';
 
@@ -28,6 +30,7 @@ export const Heatmap: FC<HeatmapProps> = ({
   tooltipFormat,
   onCellClick,
   renderTooltip,
+  cellShape = CELL_SHAPE_SQUARE,
       testId,
   className,
   ...rest
@@ -118,7 +121,10 @@ export const Heatmap: FC<HeatmapProps> = ({
                   <div
                     key={di}
                     ref={(el) => { if (el) cellRefs.current.set(key, el); }}
-                    className="Bear-Heatmap__cell rounded-sm cursor-pointer transition-transform hover:scale-125"
+                    className={cn(
+                      'Bear-Heatmap__cell cursor-pointer transition-transform hover:scale-125',
+                      cellShape === CELL_SHAPE_CIRCLE ? 'rounded-full' : 'rounded-sm'
+                    )}
                     style={{ width: cellSize, height: cellSize, backgroundColor: color }}
                     title={!renderTooltip ? (cell ? (tooltipFormat ? tooltipFormat(cell) : `${key}: ${value}`) : key) : undefined}
                     onClick={() => cell && onCellClick?.(cell)}

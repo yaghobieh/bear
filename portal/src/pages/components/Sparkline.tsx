@@ -67,6 +67,20 @@ export default function SparklinePage() {
       </section>
 
       <section>
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Bars and last point</h2>
+        <div className="p-6 border border-gray-200 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800/50 space-y-4">
+          <div className="flex items-center gap-4">
+            <span className="text-gray-600 dark:text-slate-400 w-24">Bars</span>
+            <Sparkline data={data1} width={160} height={36} variant="bars" />
+          </div>
+          <div className="flex items-center gap-4">
+            <span className="text-gray-600 dark:text-slate-400 w-24">Last point</span>
+            <Sparkline data={data1} width={160} height={36} showLastPoint />
+          </div>
+        </div>
+      </section>
+
+      <section>
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Props</h2>
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
@@ -108,6 +122,18 @@ export default function SparklinePage() {
                 <td className="py-3 px-4 font-mono text-sm">boolean</td>
                 <td className="py-3 px-4 font-mono text-sm">false</td>
                 <td className="py-3 px-4">Show min/max indicators</td>
+              </tr>
+              <tr className="border-b border-gray-100 dark:border-slate-800">
+                <td className="py-3 px-4 font-mono text-sm">variant</td>
+                <td className="py-3 px-4 font-mono text-sm">'line' | 'area' | 'bars'</td>
+                <td className="py-3 px-4 font-mono text-sm">line</td>
+                <td className="py-3 px-4">Line, filled area, or bars</td>
+              </tr>
+              <tr className="border-b border-gray-100 dark:border-slate-800">
+                <td className="py-3 px-4 font-mono text-sm">showLastPoint</td>
+                <td className="py-3 px-4 font-mono text-sm">boolean</td>
+                <td className="py-3 px-4 font-mono text-sm">false</td>
+                <td className="py-3 px-4">Mark the last value</td>
               </tr>
               <tr className="border-b border-gray-100 dark:border-slate-800">
                 <td className="py-3 px-4 font-mono text-sm">color</td>

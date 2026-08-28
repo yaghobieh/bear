@@ -1,138 +1,152 @@
-import { FC, useCallback, useMemo, useState } from 'react';
+import { useState } from 'react';
+import { ONE, ZERO } from '@const';
 import { cn } from '@utils';
 import { Portal } from '../Portal';
 import { Card, CardBody, CardHeader } from '../Card';
+import { Flex } from '../Flex';
+import { Box } from '../Box';
+import { Typography } from '../Typography';
 import type { PieChartProps } from './Chart.types';
-import { getChartColor } from './Chart.utils';
+import {
+  CHART,
+  CHART_LEGEND_BOTTOM,
+  CHART_LEGEND_NONE,
+  PIE_VIEW_FULL,
+  PIE_VIEW_HALF,
+  PIE_VIEW_ROSE,
+} from './Chart.const';
+import { createArcPath, getChartColor, polarOffset } from './Chart.utils';
+import type { SliceTooltipState } from './PieChart.types';
 
-type SliceTooltipState = {
-  x: number;
-  y: number;
-  index: number;
-  label: string;
-  value: number;
-  pct: number;
-};
+export const PieChart = (props: PieChartProps) => {
+  const {
+    data,
+    height = CHART.DEFAULT_HEIGHT,
+    showLabels = true,
+    innerRadius = ZERO,
+    startAngle,
+    padAngle = CHART.DEFAULT_PAD_ANGLE,
+    animated = true,
+    pieView = PIE_VIEW_FULL,
+    explodeIndex,
+    legendPosition = 'right',
+    onSliceClick,
+    onSliceHover,
+    showSliceTooltip = true,
+    sliceTooltipTitle,
+    sliceTooltipDescription,
+    sliceTooltipContent,
+    className,
+    ...rest
+  } = props;
 
-const PIE_OUTER_RADIUS = 45;
-
-export const PieChart: FC<PieChartProps> = ({
-  data,
-  height = 200,
-  showLabels = true,
-  innerRadius = 0,
-  startAngle = -90,
-  padAngle = 2,
-  animated = true,
-  onSliceClick,
-  onSliceHover,
-  showSliceTooltip = true,
-  sliceTooltipTitle,
-  sliceTooltipDescription,
-  sliceTooltipContent,
-  className,
-  ...props
-}) => {
-  const total = data.reduce((sum, d) => sum + d.value, 0);
+  const total = data.reduce((sum, item) => sum + item.value, ZERO);
   const [tip, setTip] = useState<SliceTooltipState | null>(null);
+  const isHalf = pieView === PIE_VIEW_HALF;
+  const isRose = pieView === PIE_VIEW_ROSE;
+  const sweep = isHalf ? CHART.HALF_SWEEP : CHART.FULL_SWEEP;
+  const resolvedStart = startAngle ?? (isHalf ? CHART.HALF_PIE_START : CHART.DEFAULT_START_ANGLE);
+  const maxValue = Math.max(...data.map((item) => item.value), ONE);
+  const hideLegend = legendPosition === CHART_LEGEND_NONE || !showLabels;
+  const legendBelow = legendPosition === CHART_LEGEND_BOTTOM;
 
-  const updateTip = useCallback(
-    (clientX: number, clientY: number, index: number) => {
-      const item = data[index];
-      onSliceHover?.(item, index);
-      if (!showSliceTooltip) return;
-      const pct = Math.round((item.value / total) * 100);
-      setTip({ x: clientX, y: clientY, index, label: item.label, value: item.value, pct });
-    },
-    [data, onSliceHover, showSliceTooltip, total]
-  );
+  const updateTip = (clientX: number, clientY: number, index: number) => {
+    const item = data[index];
+    onSliceHover?.(item, index);
+    if (!showSliceTooltip) {
+      return;
+    }
+    const pct = Math.round((item.value / total) * CHART.VIEWBOX);
+    setTip({ x: clientX, y: clientY, index, label: item.label, value: item.value, pct });
+  };
 
-  const clearTip = useCallback(() => {
+  const clearTip = () => {
     setTip(null);
     onSliceHover?.(null, null);
-  }, [onSliceHover]);
-
-  const slices = useMemo(() => {
-    let currentAngle = startAngle;
-    return data.map((item, i) => {
-      const angle = (item.value / total) * 360 - padAngle;
-      const slice = {
-        startAngle: currentAngle,
-        endAngle: currentAngle + angle,
-        color: getChartColor(i, item.color),
-        ...item,
-      };
-      currentAngle += angle + padAngle;
-      return slice;
-    });
-  }, [data, total, startAngle, padAngle]);
-
-  const polarToCartesian = (angle: number, radius: number) => {
-    const rad = (angle * Math.PI) / 180;
-    return { x: 50 + radius * Math.cos(rad), y: 50 + radius * Math.sin(rad) };
   };
 
-  const createArcPath = (sliceStartAngle: number, sliceEndAngle: number) => {
-    const inner = innerRadius * PIE_OUTER_RADIUS;
-    const start = polarToCartesian(sliceStartAngle, PIE_OUTER_RADIUS);
-    const end = polarToCartesian(sliceEndAngle, PIE_OUTER_RADIUS);
-    const startInner = polarToCartesian(sliceStartAngle, inner);
-    const endInner = polarToCartesian(sliceEndAngle, inner);
-    const largeArc = sliceEndAngle - sliceStartAngle > 180 ? 1 : 0;
-    if (innerRadius > 0) {
-      return `M ${start.x},${start.y} A ${PIE_OUTER_RADIUS},${PIE_OUTER_RADIUS} 0 ${largeArc},1 ${end.x},${end.y} L ${endInner.x},${endInner.y} A ${inner},${inner} 0 ${largeArc},0 ${startInner.x},${startInner.y} Z`;
-    }
-    return `M 50,50 L ${start.x},${start.y} A ${PIE_OUTER_RADIUS},${PIE_OUTER_RADIUS} 0 ${largeArc},1 ${end.x},${end.y} Z`;
-  };
+  let currentAngle = resolvedStart;
+  const slices = data.map((item, index) => {
+    const sliceAngle = isRose
+      ? sweep / data.length - padAngle
+      : (item.value / total) * sweep - padAngle;
+    const sliceStart = currentAngle;
+    const sliceEnd = currentAngle + sliceAngle;
+    currentAngle += sliceAngle + padAngle;
+    const outerRadius = isRose
+      ? CHART.ROSE_MIN_RADIUS + (item.value / maxValue) * (CHART.OUTER_RADIUS - CHART.ROSE_MIN_RADIUS)
+      : CHART.OUTER_RADIUS;
+    return {
+      startAngle: sliceStart,
+      endAngle: sliceEnd,
+      color: getChartColor(index, item.color),
+      outerRadius,
+      ...item,
+    };
+  });
 
   return (
-    <div className={cn('relative flex max-w-full flex-wrap items-center gap-4', className)} {...props}>
-      <div style={{ width: height, height }} className="min-w-0 shrink-0">
-        <svg viewBox="0 0 100 100" className="h-full w-full">
-          {slices.map((slice, i) => (
-            <path
-              key={i}
-              d={createArcPath(slice.startAngle, slice.endAngle)}
-              fill={slice.color}
-              className={cn(
-                onSliceClick && 'cursor-pointer',
-                'transition-opacity hover:opacity-80',
-                animated && 'animate-scale-in'
-              )}
-              style={{ animationDelay: `${i * 100}ms` }}
-              onClick={() => onSliceClick?.(data[i], i)}
-              tabIndex={0}
-              role="button"
-              aria-label={`${data[i].label} ${Math.round((data[i].value / total) * 100)}%`}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  onSliceClick?.(data[i], i);
-                }
-              }}
-              onMouseEnter={(e) => updateTip(e.clientX, e.clientY, i)}
-              onMouseMove={(e) => updateTip(e.clientX, e.clientY, i)}
-              onMouseLeave={clearTip}
-            />
-          ))}
+    <Flex
+      direction={legendBelow ? 'column' : 'row'}
+      align="center"
+      gap={4}
+      wrap="wrap"
+      className={cn('Bear-Chart Bear-Chart--pie bear-relative bear-max-w-full', className)}
+      {...rest}
+    >
+      <Box style={{ width: height, height }} className="bear-min-w-0 bear-shrink-0">
+        <svg viewBox={`0 0 ${CHART.VIEWBOX} ${CHART.VIEWBOX}`} className="bear-h-full bear-w-full">
+          {slices.map((slice, index) => {
+            const midAngle = (slice.startAngle + slice.endAngle) / 2;
+            const explode = explodeIndex === index ? polarOffset(midAngle, CHART.EXPLODE_OFFSET) : { x: ZERO, y: ZERO };
+            return (
+              <g key={slice.label} transform={`translate(${explode.x} ${explode.y})`}>
+                <path
+                  d={createArcPath(slice.startAngle, slice.endAngle, innerRadius, slice.outerRadius)}
+                  fill={slice.color}
+                  className={cn(
+                    onSliceClick && 'bear-cursor-pointer',
+                    'bear-transition-opacity hover:bear-opacity-80',
+                    animated && 'animate-scale-in'
+                  )}
+                  style={{ animationDelay: `${index * CHART.SLICE_DELAY_MS}ms` }}
+                  onClick={() => onSliceClick?.(data[index], index)}
+                  tabIndex={0}
+                  role="button"
+                  aria-label={`${data[index].label} ${Math.round((data[index].value / total) * CHART.VIEWBOX)}%`}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                      event.preventDefault();
+                      onSliceClick?.(data[index], index);
+                    }
+                  }}
+                  onMouseEnter={(event) => updateTip(event.clientX, event.clientY, index)}
+                  onMouseMove={(event) => updateTip(event.clientX, event.clientY, index)}
+                  onMouseLeave={clearTip}
+                />
+              </g>
+            );
+          })}
         </svg>
-      </div>
+      </Box>
 
-      {showLabels && (
-        <div className="flex flex-col gap-2">
-          {data.map((item, i) => (
-            <div key={i} className="flex items-center gap-2">
-              <div
-                className="w-3 h-3 rounded-full"
-                style={{ backgroundColor: getChartColor(i, item.color) }}
+      {!hideLegend && (
+        <Flex direction="column" gap={2}>
+          {data.map((item, index) => (
+            <Flex key={item.label} align="center" gap={2}>
+              <Box
+                className="bear-h-3 bear-w-3 bear-rounded-full"
+                style={{ backgroundColor: getChartColor(index, item.color) }}
               />
-              <span className="text-sm text-gray-600 dark:text-slate-300">{item.label}</span>
-              <span className="text-sm text-gray-400 dark:text-slate-500">
-                {Math.round((item.value / total) * 100)}%
-              </span>
-            </div>
+              <Typography variant="body2" color="muted">
+                {item.label}
+              </Typography>
+              <Typography variant="body2" color="muted">
+                {Math.round((item.value / total) * CHART.VIEWBOX)}%
+              </Typography>
+            </Flex>
           ))}
-        </div>
+        </Flex>
       )}
 
       {tip && showSliceTooltip && (
@@ -154,6 +168,6 @@ export const PieChart: FC<PieChartProps> = ({
           </div>
         </Portal>
       )}
-    </div>
+    </Flex>
   );
 };

@@ -38,12 +38,38 @@ Public components generate root `id` values as `Bear-{Component}-{alphanumeric}`
 
 ## Installation
 
+Bear installs `@forgedevstack/bear-icons` as an **optional dependency**. The default install includes components, theme, and icons.
+
 ```bash
 npm install @forgedevstack/bear
 # or
 pnpm add @forgedevstack/bear
 # or
 yarn add @forgedevstack/bear
+```
+
+### Install without icons
+
+npm has no `--no-icons` flag. Skip the icon package with `--omit=optional`:
+
+```bash
+npm install @forgedevstack/bear --omit=optional
+# yarn
+yarn add @forgedevstack/bear --ignore-optional
+# pnpm
+pnpm add @forgedevstack/bear --no-optional
+```
+
+Do not import icons from `@forgedevstack/bear` after a no-icons install.
+
+### Icons only
+
+```bash
+npm install @forgedevstack/bear-icons
+```
+
+```tsx
+import { SearchIcon, BearIcons } from '@forgedevstack/bear-icons';
 ```
 
 ### Import CSS (Required)

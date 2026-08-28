@@ -1,7 +1,3 @@
-/**
- * Locks page scroll and returns a restore function.
- * Uses position:fixed to prevent iOS Safari body-scroll leaking.
- */
 export function lockBodyScroll(): () => void {
   const scrollY = window.scrollY;
   document.body.style.overflow = 'hidden';

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { BearIcons, Typography } from '@forgedevstack/bear';
-import { GITHUB_URL, NPM_URL, BEAR_VERSION, THEME_PRESETS } from '@/constants/navigation.const';
+import { GITHUB_URL, NPM_URL, THEME_PRESETS } from '@/constants/navigation.const';
 import { NEW_COMPONENT_ALERTS, VERSION_POPUP_DESCRIPTION, VERSION_POPUP_FEATURES } from '@/constants/topbar.const';
 import { PORTAL_TEXT } from '@/constants/portal-i18n.const';
 import { TopbarProps } from './Topbar.types';
@@ -10,10 +10,12 @@ import { BellSvg } from './helpers';
 import { TOP_NAV_LINKS } from './Topbar.const';
 import { useTopbar } from './hooks/useTopbar';
 import { usePortalLanguage } from '@/hooks/usePortalLanguage';
+import { useNpmPackageVersion } from '@/hooks/useNpmPackageVersion';
 
 export const Topbar: FC<TopbarProps> = (props) => {
   const { onMenuClick, banner, onBannerVisibilityChange } = props;
   const { language, setLanguage } = usePortalLanguage();
+  const { version } = useNpmPackageVersion();
   const t = PORTAL_TEXT[language];
   const location = useLocation();
 
@@ -69,7 +71,7 @@ export const Topbar: FC<TopbarProps> = (props) => {
                 <BearIcon size={32} />
                 <div className="flex items-baseline gap-2">
                   <Typography variant="body1" className="font-bold text-gray-900 dark:text-white" component="span">Bear UI</Typography>
-                  <Typography variant="caption" className="text-gray-400 dark:text-gray-500 font-mono" component="span">v{BEAR_VERSION}</Typography>
+                  <Typography variant="caption" className="text-gray-400 dark:text-gray-500 font-mono" component="span">v{version}</Typography>
                 </div>
               </Link>
 
@@ -414,7 +416,7 @@ export const Topbar: FC<TopbarProps> = (props) => {
           <div className="w-full max-w-md mx-4 bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
             <div className="p-6 text-center">
               <BearIcon size={56} />
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mt-4 mb-2">Bear UI v{BEAR_VERSION}</h2>
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mt-4 mb-2">Bear UI v{version}</h2>
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
                 {VERSION_POPUP_DESCRIPTION}
               </p>

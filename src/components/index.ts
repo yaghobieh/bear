@@ -340,14 +340,18 @@ export { ActivityItem } from './ActivityItem';
 export type { ActivityItemProps } from './ActivityItem';
 
 // Charts & Data Visualization
-export { Chart, BarChart, LineChart, PieChart } from './Chart';
+export { Chart, BarChart, LineChart, PieChart, RadarChart, FunnelChart } from './Chart';
 export type {
   ChartProps,
   BarChartProps,
   LineChartProps,
   PieChartProps,
+  RadarChartProps,
+  FunnelChartProps,
   ChartDataPoint,
   ChartType,
+  PieView,
+  ChartLegendPosition,
 } from './Chart';
 
 export { Sparkline } from './Sparkline';

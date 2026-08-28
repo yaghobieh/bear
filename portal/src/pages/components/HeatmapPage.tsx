@@ -18,6 +18,7 @@ const PROPS = [
   { name: 'tooltipFormat', type: '(cell: HeatmapCell) => string', description: 'Custom tooltip text formatter' },
   { name: 'onCellClick', type: '(cell: HeatmapCell) => void', description: 'Callback when a cell is clicked' },
   { name: 'renderTooltip', type: '(cell: HeatmapCell) => ReactNode', description: 'Render custom hover popover per cell' },
+  { name: 'cellShape', type: "'square' | 'circle'", default: 'square', description: 'Cell shape' },
 ];
 
 function generateData() {
@@ -71,6 +72,7 @@ const HeatmapPage: React.FC = () => {
               colorScale={['#fef2f2', '#fca5a5', '#ef4444', '#b91c1c', '#7f1d1d']}
               cellSize={14}
               cellGap={3}
+              cellShape="circle"
             />
           </div>
         </Card.Body>

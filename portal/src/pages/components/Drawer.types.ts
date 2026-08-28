@@ -8,4 +8,6 @@ export interface DrawerDemoProps {
   side?: DrawerSide;
   size?: DrawerSize;
   container?: Element | null;
+  openEffect?: DrawerProps['openEffect'];
+  closeEffect?: DrawerProps['closeEffect'];
 }

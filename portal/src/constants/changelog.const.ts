@@ -10,6 +10,32 @@ export interface ChangelogEntry {
 
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
+    version: '1.3.2',
+    date: 'August 28, 2026',
+    tag: 'patch',
+    sections: [
+      {
+        title: 'Fixed',
+        items: [
+          'Right-side Drawer stays on the right and slides out to the right; close control on the inner edge',
+        ],
+      },
+      {
+        title: 'Added',
+        items: [
+          '@forgedevstack/bear-icons — default Bear install includes icons; skip with --omit=optional, or install the icon package alone',
+          'Drawer openEffect, closeEffect, and effect={{ open, close }} (same motion set as Select)',
+          'Chart type radar, funnel, and stacked; pieView "half" | "rose"; explodeIndex; line stepped',
+          'Gauge variant linear | ring',
+          'Sparkline variant bars and showLastPoint',
+          'Heatmap cellShape circle',
+          'TimelineChart variant points',
+          'RingProgress variant half',
+        ],
+      },
+    ],
+  },
+  {
     version: '1.3.1',
     date: 'August 23, 2026',
     tag: 'patch',

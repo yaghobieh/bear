@@ -53,6 +53,6 @@ export interface SidebarItemComponentProps {
   collapsed?: boolean;
   depth?: number;
   onClick?: (item: SidebarItem) => void;
-  /** How active state is shown. Passed from Sidebar activeVariant. */
   activeVariant?: SidebarActiveVariant;
+  activeItemId?: string;
 }

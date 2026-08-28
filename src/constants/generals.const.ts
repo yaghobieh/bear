@@ -140,7 +140,11 @@ export const BORDER_STYLE_SOLID = 'solid';
 
 export const POSITION_TOP = 'top';
 export const POSITION_BOTTOM = 'bottom';
+export const POSITION_LEFT = 'left';
+export const POSITION_RIGHT = 'right';
 export const POSITION_STICKY = 'sticky';
+export const COMPONENT_NAME_DRAWER = 'Drawer';
+export const LABEL_CLOSE_DRAWER = 'Close drawer';
 
 export const SCROLL_BEHAVIOR_SMOOTH = 'smooth';
 export const SCROLL_BEHAVIOR_AUTO = 'auto';

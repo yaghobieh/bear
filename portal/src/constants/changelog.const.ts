@@ -10,6 +10,25 @@ export interface ChangelogEntry {
 
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
+    version: '1.3.2',
+    date: 'In progress',
+    tag: 'patch',
+    sections: [
+      {
+        title: 'Fixed',
+        items: [
+          'Right-side Drawer stays on the right and slides out to the right; close control on the inner edge',
+        ],
+      },
+      {
+        title: 'Added',
+        items: [
+          '@forgedevstack/bear-icons (in progress) — install alone or with Bear',
+        ],
+      },
+    ],
+  },
+  {
     version: '1.3.1',
     date: 'August 23, 2026',
     tag: 'patch',

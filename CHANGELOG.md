@@ -10,6 +10,7 @@ All notable changes to Bear UI will be documented in this file.
 
 ### Fixed
 
+- **Drawer** — right-side panel stays on the right and slides out to the right; close control sits on the inner edge (FORGE-126, GH #72). Overlay CSS no longer forces `position: relative` on the panel.
 - (in progress) Overlay focus trap / restore.
 
 ## [1.3.1] - 2026-08-23

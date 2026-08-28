@@ -1,76 +1,68 @@
-import { FC, useEffect, useCallback, useState } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useBearDirectionOptional } from '@context/BearProvider';
 import { cn, resolveBearId, useBearId } from '@utils';
-import { XIcon } from '../Icon';
-import { Backdrop } from '../Backdrop';
-import type { DrawerProps } from './Drawer.types';
 import {
-  DRAWER_ANIMATION_MS,
-  DRAWER_Z_INDEX,
-  DRAWER_PANEL_Z_INDEX,
-  DRAWER_ROOT_CLASSES,
-  SIZE_CLASSES,
-  POSITION_CLASSES,
-  TRANSFORM_OPEN,
-  TRANSFORM_CLOSED,
-  BORDER_SIDE_MAP,
-} from './Drawer.const';
+  BOOLEAN_FALSE,
+  BOOLEAN_TRUE,
+  COMPONENT_NAME_DRAWER,
+  KEY_ESCAPE,
+} from '@const';
+import { Backdrop } from '../Backdrop';
+import type { DrawerProps, DrawerSide } from './Drawer.types';
+import { DRAWER_ANIMATION_MS, DRAWER_DEFAULT_SIDE, DRAWER_DEFAULT_SIZE } from './Drawer.const';
 import { lockBodyScroll } from './Drawer.utils';
+import { DrawerHeader } from './components';
 
-export const Drawer: FC<DrawerProps> = ({
-  isOpen,
-  onClose,
-  title,
-  children,
-  side = 'right',
-  anchor,
-  variant: _variant = 'temporary',
-  size = 'md',
-  showCloseButton = true,
-  closeOnBackdrop = true,
-  closeOnEscape = true,
-  className,
-  container,
-  id,
-  testId,
-}) => {
-  const generatedId = useBearId('Drawer');
+export const Drawer = (props: DrawerProps) => {
+  const {
+    isOpen,
+    onClose,
+    title,
+    children,
+    side = DRAWER_DEFAULT_SIDE,
+    anchor,
+    variant: _variant = 'temporary',
+    size = DRAWER_DEFAULT_SIZE,
+    showCloseButton = BOOLEAN_TRUE,
+    closeOnBackdrop = BOOLEAN_TRUE,
+    closeOnEscape = BOOLEAN_TRUE,
+    className,
+    container,
+    id,
+    testId,
+  } = props;
+
+  const generatedId = useBearId(COMPONENT_NAME_DRAWER);
   const domId = resolveBearId(id, generatedId);
   const { direction } = useBearDirectionOptional();
-  const rawSide = anchor ?? side;
-  const resolvedSide =
-    direction === 'rtl' && (rawSide === 'left' || rawSide === 'right')
-      ? rawSide === 'left'
-        ? 'right'
-        : 'left'
-      : rawSide;
+  const resolvedSide: DrawerSide = anchor ?? side;
 
   const [isMounted, setIsMounted] = useState(isOpen);
-  const [isClosing, setIsClosing] = useState(false);
-  const [hasOpened, setHasOpened] = useState(false);
+  const [isClosing, setIsClosing] = useState(BOOLEAN_FALSE);
+  const [hasOpened, setHasOpened] = useState(BOOLEAN_FALSE);
 
   useEffect(() => {
     if (isOpen) {
-      setIsMounted(true);
-      setIsClosing(false);
-      const t = requestAnimationFrame(() => setHasOpened(true));
-      return () => cancelAnimationFrame(t);
+      setIsMounted(BOOLEAN_TRUE);
+      setIsClosing(BOOLEAN_FALSE);
+      const frame = requestAnimationFrame(() => setHasOpened(BOOLEAN_TRUE));
+      return () => cancelAnimationFrame(frame);
     }
     if (isMounted) {
-      setHasOpened(false);
-      setIsClosing(true);
-      const t = setTimeout(() => {
-        setIsMounted(false);
-        setIsClosing(false);
+      setHasOpened(BOOLEAN_FALSE);
+      setIsClosing(BOOLEAN_TRUE);
+      const timer = setTimeout(() => {
+        setIsMounted(BOOLEAN_FALSE);
+        setIsClosing(BOOLEAN_FALSE);
       }, DRAWER_ANIMATION_MS);
-      return () => clearTimeout(t);
+      return () => clearTimeout(timer);
     }
   }, [isOpen, isMounted]);
 
   const handleEscape = useCallback(
     (event: KeyboardEvent) => {
-      if (closeOnEscape && event.key === 'Escape') {
+      if (closeOnEscape && event.key === KEY_ESCAPE) {
         onClose();
       }
     },
@@ -91,17 +83,18 @@ export const Drawer: FC<DrawerProps> = ({
     };
   }, [isMounted, handleEscape]);
 
-  if (!isMounted) return null;
+  if (!isMounted) {
+    return null;
+  }
+
+  const isPanelOpen = hasOpened && !isClosing;
+  const showHeader = Boolean(title) || showCloseButton;
+  const titleId = `${domId}-title`;
 
   const drawerContent = (
-    <div
-      id={domId}
-      data-testid={testId}
-      className={DRAWER_ROOT_CLASSES}
-      style={{ zIndex: DRAWER_Z_INDEX }}
-    >
+    <div id={domId} data-testid={testId} className="Bear-Drawer">
       <Backdrop
-        open={hasOpened && !isClosing}
+        open={isPanelOpen}
         keepMounted
         blur
         nested
@@ -112,50 +105,28 @@ export const Drawer: FC<DrawerProps> = ({
 
       <div
         role="dialog"
-        aria-modal="true"
-        aria-labelledby={title ? `${domId}-title` : undefined}
+        aria-modal={BOOLEAN_TRUE}
+        aria-labelledby={title ? titleId : undefined}
         className={cn(
           'Bear-Drawer__panel',
-          'bear-absolute bear-bg-white dark:bear-bg-neutral-900 bear-shadow-2xl',
-          'bear-border-neutral-200 dark:bear-border-neutral-700',
-          'bear-flex bear-flex-col bear-overflow-hidden',
-          'bear-transform bear-transition-transform',
-          BORDER_SIDE_MAP[resolvedSide],
-          POSITION_CLASSES[resolvedSide],
-          SIZE_CLASSES[resolvedSide][size],
-          hasOpened && !isClosing ? TRANSFORM_OPEN[resolvedSide] : TRANSFORM_CLOSED[resolvedSide],
+          `Bear-Drawer__panel--${resolvedSide}`,
+          `Bear-Drawer__panel--${size}`,
+          isPanelOpen && 'Bear-Drawer__panel--open',
           className
         )}
-        style={{
-          transitionDuration: `${DRAWER_ANIMATION_MS}ms`,
-          zIndex: DRAWER_PANEL_Z_INDEX,
-        }}
       >
-        {(title || showCloseButton) && (
-          <div className="bear-flex bear-items-center bear-justify-between bear-px-4 bear-py-3 bear-border-b bear-border-neutral-200 dark:bear-border-neutral-700 bear-shrink-0" dir={direction}>
-            {title && (
-              <h2
-                id={`${domId}-title`}
-                className="bear-text-lg bear-font-semibold bear-text-neutral-900 dark:bear-text-white"
-              >
-                {title}
-              </h2>
-            )}
-            {showCloseButton && (
-              <button
-                onClick={onClose}
-                className="bear-p-1 bear-rounded-lg bear-text-neutral-500 dark:bear-text-neutral-400 hover:bear-text-neutral-900 dark:hover:bear-text-white hover:bear-bg-neutral-100 dark:hover:bear-bg-neutral-700 bear-transition-colors"
-                aria-label="Close drawer"
-              >
-                <XIcon className="bear-w-5 bear-h-5" />
-              </button>
-            )}
-          </div>
-        )}
+        {showHeader ? (
+          <DrawerHeader
+            side={resolvedSide}
+            title={title}
+            titleId={titleId}
+            showCloseButton={showCloseButton}
+            onClose={onClose}
+            direction={direction}
+          />
+        ) : null}
 
-        <div className="bear-flex-1 bear-min-h-0 bear-overflow-y-auto bear-overscroll-contain bear-p-4 bear-text-neutral-700 dark:bear-text-neutral-300">
-          {children}
-        </div>
+        <div className="Bear-Drawer__body">{children}</div>
       </div>
     </div>
   );

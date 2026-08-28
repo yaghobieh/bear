@@ -7,6 +7,7 @@ All notable changes to Bear UI will be documented in this file.
 ### Added
 
 - **Portal** — Products, Docs, Blog, and Pricing in the top nav; product cards for Bear, Icons, Charts, and design kits; Community/Pro/Team pricing; Figma and GitHub example actions on DocPage (FORGE-143–FORGE-147).
+- **Portal** — Home hero uses Lato, shows `npx @forgedevstack/bear`, product strip (Bear, Icons, Charts), and CTAs to Docs, Products, and Pricing. Installation and CLI docs cover the Bear installer (FORGE-149).
 
 ## [1.3.2] - 2026-08-28
 

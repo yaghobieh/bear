@@ -154,6 +154,11 @@ body {
   color: #111827;
 }
 
+.font-lato,
+.font-lato .Bear-Typography {
+  font-family: 'Lato', 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
 .dark body,
 body.dark,
 html.dark body {

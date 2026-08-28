@@ -1,3 +1,5 @@
+import { NPX_BEAR_COMMAND } from '../marketing.const';
+
 export const FORGE_FORM_INSTALL = 'npm install @forgedevstack/forge-form';
 
 export const FORGE_FORM_QUICK_START = `import { useForm } from '@forgedevstack/forge-form';
@@ -91,6 +93,8 @@ function ContactForm() {
     </form>
   );
 }`;
+
+export const CLI_BEAR_CMD = NPX_BEAR_COMMAND;
 
 export const CLI_CREATE_CMD = `npx create-forge my-app
 

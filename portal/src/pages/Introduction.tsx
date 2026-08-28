@@ -2,17 +2,24 @@ import React, { FC, ReactNode, lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import { CodeBlock } from '@/components/CodeBlock';
 import { HomeBentoGrid } from '@/components/HomeBentoGrid';
+import { HomeProductStrip } from '@/components/HomeProductStrip';
 import { GITHUB_URL, VERSION_HIGHLIGHT_BY_VERSION, VERSION_HIGHLIGHT_FALLBACK } from '@/constants/navigation.const';
-import { BearIcons, CheckIcon, Badge } from '@forgedevstack/bear';
+import {
+  AUTHOR_DISPLAY_NAME,
+  AUTHOR_GITHUB_URL,
+  NPX_BEAR_COMMAND,
+  PATH_DOCS,
+  PATH_PRICING,
+  PATH_PRODUCTS,
+} from '@/constants/marketing.const';
+import { PORTAL_TEXT } from '@/constants/portal-i18n.const';
+import { usePortalLanguage } from '@/hooks/usePortalLanguage';
+import { BearIcons, CheckIcon, Badge, Typography } from '@forgedevstack/bear';
 import { useNpmPackageVersion } from '@/hooks/useNpmPackageVersion';
 
 const ComparisonSection = lazy(() => import('@/components/ComparisonSection/ComparisonSection'));
 
 const ArrowRightIcon = BearIcons.ArrowRightIcon;
-
-const HERO_TITLE = 'The Foundation for your React UI';
-const HERO_DESCRIPTION = '100+ accessible, customizable React components with TypeScript, AeroCraft CSS, responsive hooks, and a powerful theming system. Start here, then make it your own.';
-const INSTALL_CMD = 'npm install @forgedevstack/bear';
 
 const STATS = [
   { value: '100+', label: 'Components', color: 'text-pink-500' },
@@ -98,13 +105,15 @@ const ComponentCard: FC<{ title: string; desc: string; path: string; preview: Re
 );
 
 const Introduction: FC = () => {
+  const { language } = usePortalLanguage();
+  const t = PORTAL_TEXT[language];
   const { version } = useNpmPackageVersion();
   const versionLabel = `Introducing Bear v${version}`;
   const versionHighlight = VERSION_HIGHLIGHT_BY_VERSION[version] ?? VERSION_HIGHLIGHT_FALLBACK;
 
   return (
     <div className="fade-in overflow-x-hidden">
-      <section className="text-center pt-12 md:pt-20 pb-10 md:pb-14">
+      <section className="font-lato text-center pt-12 md:pt-20 pb-10 md:pb-14">
         <Link
           to="/whats-new"
           className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-xs font-medium text-gray-600 dark:text-gray-400 hover:border-pink-300 dark:hover:border-pink-800 hover:text-pink-600 dark:hover:text-pink-400 transition-colors mb-8"
@@ -115,39 +124,53 @@ const Introduction: FC = () => {
           <ArrowRightIcon size={12} />
         </Link>
 
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-5 leading-[1.1] tracking-tight max-w-3xl mx-auto">
-          {HERO_TITLE}
+        <h1 className="font-lato text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-5 leading-[1.1] tracking-tight max-w-3xl mx-auto">
+          {t.heroTitle}
         </h1>
 
         <p className="text-base sm:text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto mb-8 leading-relaxed">
-          {HERO_DESCRIPTION}
+          {t.heroDesc}
         </p>
+
+        <div className="max-w-xl mx-auto mb-8 text-left">
+          <Typography variant="caption" className="mb-2 block">{t.cliNpxHint}</Typography>
+          <CodeBlock code={NPX_BEAR_COMMAND} language="bash" showLineNumbers={false} />
+        </div>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-6">
           <Link
-            to="/installation"
+            to={PATH_DOCS}
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-medium text-sm hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors"
           >
-            Get Started
+            {t.heroGetStarted}
             <ArrowRightIcon size={16} />
           </Link>
           <Link
-            to="/components"
+            to={PATH_PRODUCTS}
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-900 font-medium text-sm transition-colors"
           >
-            Explore Components
+            {t.heroExploreProducts}
+          </Link>
+          <Link
+            to={PATH_PRICING}
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-900 font-medium text-sm transition-colors"
+          >
+            {t.heroSeePricing}
           </Link>
         </div>
 
         <p className="text-xs text-gray-400 dark:text-gray-500">
-          Built by{' '}
-          <a href="https://github.com/yaghobieh" className="text-pink-600 dark:text-pink-400 hover:underline">
-            John Yaghobieh
+          {t.heroBuiltBy}
+          {' '}
+          <a href={AUTHOR_GITHUB_URL} className="text-pink-600 dark:text-pink-400 hover:underline">
+            {AUTHOR_DISPLAY_NAME}
           </a>
           {' · '}
-          Part of ForgeStack
+          {t.heroPartOf}
         </p>
       </section>
+
+      <HomeProductStrip className="mb-14 md:mb-20" />
 
       <HomeBentoGrid />
 
@@ -325,7 +348,7 @@ const BrandCard = bearStyled(Card, {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">1. Install</p>
-            <CodeBlock code={INSTALL_CMD} language="bash" showLineNumbers={false} />
+            <CodeBlock code={NPX_BEAR_COMMAND} language="bash" showLineNumbers={false} />
           </div>
           <div>
             <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">2. Use</p>

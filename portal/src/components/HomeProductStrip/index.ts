@@ -1,0 +1,1 @@
+export { HomeProductStrip } from './HomeProductStrip';

@@ -4,7 +4,7 @@ import { DocPage } from '@/components/DocPage';
 import { CodeBlock } from '@/components/CodeBlock';
 import { usePortalLanguage } from '@/hooks/usePortalLanguage';
 import { DOCS_TEXT } from '@/constants/docs-i18n.const';
-import { CLI_CREATE_CMD, CLI_ADD_CMD, CLI_COMMANDS } from '@/constants/docs';
+import { CLI_BEAR_CMD, CLI_CREATE_CMD, CLI_ADD_CMD, CLI_COMMANDS } from '@/constants/docs';
 
 const CliDocsPage: FC = () => {
   const { language } = usePortalLanguage();
@@ -12,6 +12,12 @@ const CliDocsPage: FC = () => {
 
   return (
     <DocPage title={t.cliTitle} description={t.cliDesc}>
+      <section className="doc-section mb-10">
+        <Typography variant="h4" className="doc-section__title mb-3">{t.cliBearTitle}</Typography>
+        <Typography variant="body2" className="mb-4 text-gray-600 dark:text-gray-400">{t.cliBearDesc}</Typography>
+        <CodeBlock code={CLI_BEAR_CMD} language="bash" showLineNumbers={false} />
+      </section>
+
       <section className="doc-section mb-10">
         <Typography variant="h4" className="doc-section__title mb-3">{t.cliInit}</Typography>
         <CodeBlock code={CLI_CREATE_CMD} language="bash" showLineNumbers={false} />

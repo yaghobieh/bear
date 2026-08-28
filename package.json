@@ -46,8 +46,12 @@
     "./postcss": "./dist/postcss/bear-plugin.cjs"
   },
   "files": [
-    "dist"
+    "dist",
+    "bin"
   ],
+  "bin": {
+    "bear": "./bin/bear.mjs"
+  },
   "scripts": {
     "dev": "vite build --watch",
     "build": "tsc && vite build && npm run build:css && npm run build:modules",

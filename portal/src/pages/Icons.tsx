@@ -14,6 +14,7 @@ const ICON_CATEGORIES = {
   Social: Object.entries(BearIcons.Social ?? {}),
   Device: Object.entries(BearIcons.Device ?? {}),
   Commerce: Object.entries(BearIcons.Commerce ?? {}),
+  Charts: Object.entries(BearIcons.Charts ?? {}),
   Misc: Object.entries(BearIcons.Misc ?? {}),
   Bear: Object.entries(BearIcons.Bear ?? {}),
 };
@@ -116,20 +117,45 @@ const Icons: FC = () => {
   return (
     <div className="fade-in">
       <Typography variant="h1" className="text-gray-900 dark:text-white mb-2">Icons</Typography>
-      <Typography variant="body1" className="text-gray-600 dark:text-gray-400 mb-8">
-        {totalIcons}+ SVG icons across {CATEGORY_NAMES.length} categories. Click any icon to copy its import statement.
-      </Typography>
+        <Typography variant="body1" className="text-gray-600 dark:text-gray-400 mb-8">
+          {totalIcons}+ SVG icons across {CATEGORY_NAMES.length} categories. Click any icon to copy its import statement.
+        </Typography>
 
-      <section className="mb-8">
-        <CodeBlock
-          code={`import { SearchIcon, HomeIcon, BearIcons } from '@forgedevstack/bear';
+        <section className="mb-8 space-y-6">
+          <div>
+            <Typography variant="h4" className="mb-2">Install with Bear (icons included)</Typography>
+            <Typography variant="body2" className="mb-3 text-gray-600 dark:text-gray-400">
+              One package: components, theme, and the full icon set re-exported from Bear.
+            </Typography>
+            <CodeBlock code={`npm install @forgedevstack/bear
 
-<SearchIcon size={24} className="text-pink-500" />
-<BearIcons.Social.GithubIcon size={20} />
-<BearIcons.Commerce.ShoppingCartIcon size={32} />`}
-          language="tsx"
-        />
-      </section>
+import { SearchIcon, BearIcons } from '@forgedevstack/bear';
+
+<SearchIcon size={24} />
+<BearIcons.Charts.CakeIcon size={20} />`} language="tsx" />
+          </div>
+          <div>
+            <Typography variant="h4" className="mb-2">Install Bear without icons</Typography>
+            <Typography variant="body2" className="mb-3 text-gray-600 dark:text-gray-400">
+              npm has no --no-icons flag. Use --omit=optional so @forgedevstack/bear-icons is not installed.
+            </Typography>
+            <CodeBlock code={`npm install @forgedevstack/bear --omit=optional
+yarn add @forgedevstack/bear --ignore-optional
+pnpm add @forgedevstack/bear --no-optional`} language="bash" />
+          </div>
+          <div>
+            <Typography variant="h4" className="mb-2">Install icons only</Typography>
+            <Typography variant="body2" className="mb-3 text-gray-600 dark:text-gray-400">
+              Use the icon library without Bear components, BearProvider, or Bear CSS.
+            </Typography>
+            <CodeBlock code={`npm install @forgedevstack/bear-icons
+
+import { SearchIcon, BearIcons } from '@forgedevstack/bear-icons';
+
+<SearchIcon size={24} />
+<BearIcons.Charts.CakeIcon size={20} />`} language="tsx" />
+          </div>
+        </section>
 
       {/* Controls bar */}
       <div className="flex flex-wrap items-center gap-3 mb-6 p-3 rounded-lg border border-gray-200 dark:border-gray-700/60 bg-gray-50 dark:bg-gray-800/30">

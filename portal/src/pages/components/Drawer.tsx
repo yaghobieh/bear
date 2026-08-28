@@ -9,7 +9,7 @@ import { DRAWER_SIDES, DRAWER_SIZES, DRAWER_PROPS, DRAWER_SIDE_LABELS, DRAWER_TI
 import type { DrawerDemoProps } from './Drawer.types';
 
 const DrawerDemo: FC<DrawerDemoProps> = (props) => {
-  const { side = 'right', size = 'md', container } = props;
+  const { side = 'right', size = 'md', container, openEffect, closeEffect } = props;
   const [open, setOpen] = useState(false);
   const { language } = usePortalLanguage();
   const t = DOCS_TEXT[language];
@@ -18,7 +18,7 @@ const DrawerDemo: FC<DrawerDemoProps> = (props) => {
   return (
     <>
       <Button size="sm" variant="secondary" onClick={() => setOpen(true)}>
-        {t.drawerOpen} ({sideLabel})
+        {t.drawerOpen} ({sideLabel}{openEffect ? ` · ${openEffect}` : ''}{closeEffect ? `/${closeEffect}` : ''})
       </Button>
       <Drawer
         isOpen={open}
@@ -27,6 +27,8 @@ const DrawerDemo: FC<DrawerDemoProps> = (props) => {
         side={side}
         size={size}
         container={container}
+        openEffect={openEffect}
+        closeEffect={closeEffect}
       >
         <Typography variant="body2" color="muted">
           Portaled with createPortal. Press Escape or click the backdrop to close.
@@ -117,6 +119,20 @@ const DrawerPage: FC = () => {
             className="relative w-full max-w-md h-48 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 overflow-hidden"
           />
           <DrawerDemo side="left" size="sm" container={portalPanelRef.current} />
+        </Flex>
+      </ComponentPreview>
+
+      <ComponentPreview
+        title={t.drawerEffects}
+        description={t.drawerEffectsDesc}
+        code={`<Drawer openEffect="slide-down" closeEffect="fade" />
+<Drawer effect={{ open: 'scale', close: 'slide-down' }} />`}
+      >
+        <Flex gap={2} wrap="wrap" justify="center">
+          <DrawerDemo openEffect="slide-down" closeEffect="fade" />
+          <DrawerDemo openEffect="scale" closeEffect="slide-down" />
+          <DrawerDemo openEffect="fade" closeEffect="scale" />
+          <DrawerDemo openEffect="none" closeEffect="none" />
         </Flex>
       </ComponentPreview>
 

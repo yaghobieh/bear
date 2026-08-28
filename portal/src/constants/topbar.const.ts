@@ -6,18 +6,18 @@ export interface TopbarAlertItem {
 }
 
 export const NEW_COMPONENT_ALERTS: TopbarAlertItem[] = [
+  { label: 'Drawer', path: '/components/drawer', info: 'Independent open and close effects, like Select', badge: 'New' },
+  { label: 'Icons', path: '/icons', info: 'Install with Bear or as @forgedevstack/bear-icons', badge: 'New' },
+  { label: 'Chart', path: '/components/chart', info: 'Radar, funnel, stacked, half pie, and rose views', badge: 'New' },
   { label: 'Select / Dropdown', path: '/components/select', info: 'Pick open and close motion independently', badge: 'New' },
-  { label: 'DatePicker', path: '/components/date-picker', info: 'Calendar overlay stays put and animates out', badge: 'New' },
-  { label: 'TimePicker', path: '/components/time-picker', info: 'Portaled dropdown with open and close effects', badge: 'New' },
-  { label: 'Calendar', path: '/components/calendar', info: 'Controlled open with the same overlay effects', badge: 'New' },
 ];
 
 export const VERSION_POPUP_FEATURES = [
-  'Open and close overlay effects',
-  'Select, Dropdown, DatePicker',
-  'TimePicker and DateRangePicker',
-  'Calendar controlled motion',
+  'Drawer open and close effects',
+  '@forgedevstack/bear-icons',
+  'Chart radar, funnel, stacked, cake views',
+  'Right-side Drawer stays on the right',
 ];
 
 export const VERSION_POPUP_DESCRIPTION =
-  'v1.3.1 — Overlay open and close effects on Select, DatePicker, Calendar, and other dropdowns.';
+  'Drawer close effects, a standalone icon package, and new chart views.';

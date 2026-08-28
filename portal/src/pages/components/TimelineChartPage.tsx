@@ -30,6 +30,7 @@ const PROPS = [
   { name: 'axisTicks', type: 'number', default: '6', description: 'Number of axis ticks' },
   { name: 'formatTick', type: '(value: number) => string', description: 'Custom tick label formatter' },
   { name: 'onItemClick', type: '(item, index) => void', description: 'Callback when a bar is clicked' },
+  { name: 'variant', type: "'bars' | 'points'", default: 'bars', description: 'Bar spans or point markers' },
 ];
 
 const ITEM_PROPS = [
@@ -68,6 +69,13 @@ const TimelineChartPage: React.FC = () => {
         <Card.Header title={<Typography variant="h5">{t.quarterlyRoadmap}</Typography>} />
         <Card.Body>
           <TimelineChart items={MONTHS} min={1} max={12} formatTick={(v) => `Month ${Math.round(v)}`} barHeight={32} />
+        </Card.Body>
+      </Card>
+
+      <Card>
+        <Card.Header title={<Typography variant="h5">Points</Typography>} />
+        <Card.Body>
+          <TimelineChart items={ITEMS} min={0} max={100} variant="points" formatTick={(v) => `${v}%`} />
         </Card.Body>
       </Card>
 

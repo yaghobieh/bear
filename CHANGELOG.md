@@ -2,15 +2,26 @@
 
 All notable changes to Bear UI will be documented in this file.
 
-## [1.3.2] - TBD
+## [1.3.2] - 2026-08-28
 
 ### Added
 
-- (in progress) Portal PropsTable coverage, Menubar / NavigationMenu.
+- **`@forgedevstack/bear-icons`** — icons live in an optional dependency. Default `npm install @forgedevstack/bear` still installs icons. Skip them with `npm install @forgedevstack/bear --omit=optional` (Yarn `--ignore-optional`, pnpm `--no-optional`). Install icons alone with `npm install @forgedevstack/bear-icons`.
+- **Drawer** — `openEffect`, `closeEffect`, and `effect={{ open, close }}` (`none` | `fade` | `slide-down` | `scale`), same motion set as Select (FORGE-128).
+- **Chart** — types `radar`, `funnel`, `stacked`; pie `pieView="half" | "rose"`; `explodeIndex`; line `stepped`.
+- **Gauge** — `variant="linear" | "ring"`.
+- **Sparkline** — `variant="bars"`, `showLastPoint`.
+- **Heatmap** — `cellShape="circle"`.
+- **TimelineChart** — `variant="points"`.
+- **RingProgress** — `variant="half"`.
 
 ### Fixed
 
-- (in progress) Overlay focus trap / restore.
+- **Drawer** — right-side panel stays on the right and slides out to the right; close control sits on the inner edge (FORGE-126, GH #72). Overlay CSS no longer forces `position: relative` on the panel.
+
+### Changed
+
+- **`@forgedevstack/bear-icons`** moved from `dependencies` to `optionalDependencies`. npm has no `--no-icons` flag — use `--omit=optional` so the icon package is not installed. Do not import icons from Bear after a no-icons install.
 
 ## [1.3.1] - 2026-08-23
 

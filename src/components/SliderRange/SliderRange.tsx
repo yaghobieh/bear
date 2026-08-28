@@ -37,7 +37,7 @@ export const SliderRange: FC<SliderRangeProps> = ({
   disabled = false,
   onChange,
   onChangeCommitted,
-  valueFormatter = (v) => String(v),
+  valueFormatter: _valueFormatter = (v) => String(v),
   className,
   ...props
 }) => {

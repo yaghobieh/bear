@@ -13,9 +13,13 @@ export interface SparklinePathData {
   maxPoint: SparklinePoint | null;
 }
 
-/**
- * Calculate points for sparkline from data array
- */
+export interface SparklineBar {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
 export const calculateSparklinePoints = (data: number[]): SparklinePoint[] => {
   if (data.length === 0) return [];
 
@@ -30,9 +34,6 @@ export const calculateSparklinePoints = (data: number[]): SparklinePoint[] => {
   }));
 };
 
-/**
- * Generate smooth bezier curve path from points
- */
 export const generateSparklinePath = (points: SparklinePoint[]): string => {
   if (points.length === 0) return '';
 
@@ -47,17 +48,11 @@ export const generateSparklinePath = (points: SparklinePoint[]): string => {
   }, '');
 };
 
-/**
- * Generate area path for filled sparkline
- */
 export const generateAreaPath = (linePath: string): string => {
   if (!linePath) return '';
   return `${linePath} L ${SPARKLINE.VIEWBOX_SIZE},${SPARKLINE.VIEWBOX_SIZE} L 0,${SPARKLINE.VIEWBOX_SIZE} Z`;
 };
 
-/**
- * Calculate all sparkline path data from raw data
- */
 export const calculateSparklinePathData = (data: number[]): SparklinePathData => {
   if (data.length === 0) {
     return { path: '', areaPath: '', minPoint: null, maxPoint: null };
@@ -80,3 +75,23 @@ export const calculateSparklinePathData = (data: number[]): SparklinePathData =>
   };
 };
 
+export const calculateSparklineBars = (data: number[]): SparklineBar[] => {
+  if (data.length === 0) return [];
+
+  const max = Math.max(...data);
+  const min = Math.min(...data);
+  const range = max - min || 1;
+  const slot = SPARKLINE.VIEWBOX_SIZE / data.length;
+  const gap = slot * SPARKLINE.BAR_GAP_RATIO;
+  const width = slot - gap;
+
+  return data.map((value, index) => {
+    const height = ((value - min) / range) * SPARKLINE.Y_RANGE;
+    return {
+      x: index * slot + gap / 2,
+      y: SPARKLINE.VIEWBOX_SIZE - SPARKLINE.Y_PADDING - height,
+      width,
+      height,
+    };
+  });
+};

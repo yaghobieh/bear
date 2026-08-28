@@ -11,7 +11,6 @@
 }
 
 .Bear-Modal__container,
-.Bear-Drawer__panel,
 .Bear-AlertDialog__container {
   position: relative;
   z-index: 1;

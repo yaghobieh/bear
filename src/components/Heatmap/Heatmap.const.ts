@@ -6,3 +6,5 @@ export const DAY_LABELS = ['', 'Mon', '', 'Wed', '', 'Fri', ''];
 export const MONTH_LABELS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 export const DAYS_IN_WEEK = 7;
 export const LABEL_PAD = 4;
+export const CELL_SHAPE_SQUARE = 'square';
+export const CELL_SHAPE_CIRCLE = 'circle';

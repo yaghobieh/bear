@@ -2,7 +2,7 @@ import { FC, useMemo } from 'react';
 import {cn } from '@utils';
 import { Typography } from '../Typography';
 import type { TimelineChartProps } from './TimelineChart.types';
-import { DEFAULT_BAR_HEIGHT, DEFAULT_BAR_GAP, DEFAULT_AXIS_TICKS, LABEL_WIDTH, DEFAULT_COLORS, MIN_BAR_WIDTH } from './TimelineChart.const';
+import { DEFAULT_BAR_HEIGHT, DEFAULT_BAR_GAP, DEFAULT_AXIS_TICKS, LABEL_WIDTH, DEFAULT_COLORS, MIN_BAR_WIDTH, TIMELINE_VARIANT_BARS, TIMELINE_VARIANT_POINTS, POINT_MARKER_SIZE } from './TimelineChart.const';
 
 export const TimelineChart: FC<TimelineChartProps> = ({
   items,
@@ -14,6 +14,7 @@ export const TimelineChart: FC<TimelineChartProps> = ({
   axisTicks = DEFAULT_AXIS_TICKS,
   formatTick,
   onItemClick,
+  variant = TIMELINE_VARIANT_BARS,
       testId,
   className,
   ...rest
@@ -67,17 +68,31 @@ export const TimelineChart: FC<TimelineChartProps> = ({
               </Typography>
             </div>
             <div className="Bear-TimelineChart__track flex-1 relative h-full bg-gray-100 dark:bg-zinc-800 rounded">
-              <div
-                className="Bear-TimelineChart__bar absolute top-0 h-full rounded cursor-pointer transition-opacity hover:opacity-80"
-                style={{
-                  left: `${leftPct}%`,
-                  width: `${widthPct}%`,
-                  backgroundColor: color,
-                  minWidth: MIN_BAR_WIDTH,
-                }}
-                title={item.tooltip ?? `${item.label}: ${item.start} - ${item.end}`}
-                onClick={() => onItemClick?.(item, i)}
-              />
+              {variant === TIMELINE_VARIANT_POINTS ? (
+                <div
+                  className="Bear-TimelineChart__point absolute top-1/2 -translate-y-1/2 rounded-full cursor-pointer transition-opacity hover:opacity-80"
+                  style={{
+                    left: `${leftPct}%`,
+                    width: POINT_MARKER_SIZE,
+                    height: POINT_MARKER_SIZE,
+                    backgroundColor: color,
+                  }}
+                  title={item.tooltip ?? `${item.label}: ${item.start}`}
+                  onClick={() => onItemClick?.(item, i)}
+                />
+              ) : (
+                <div
+                  className="Bear-TimelineChart__bar absolute top-0 h-full rounded cursor-pointer transition-opacity hover:opacity-80"
+                  style={{
+                    left: `${leftPct}%`,
+                    width: `${widthPct}%`,
+                    backgroundColor: color,
+                    minWidth: MIN_BAR_WIDTH,
+                  }}
+                  title={item.tooltip ?? `${item.label}: ${item.start} - ${item.end}`}
+                  onClick={() => onItemClick?.(item, i)}
+                />
+              )}
             </div>
           </div>
         );

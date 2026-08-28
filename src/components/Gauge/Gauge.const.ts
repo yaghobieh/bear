@@ -15,3 +15,9 @@ export const GAUGE_DEFAULT_FILL_DURATION_MS = 900;
 export const GAUGE_VIEWBOX_CENTER = 50;
 
 export const GAUGE_ANIMATION_EASING = 'cubic-bezier(0.4, 0, 0.2, 1)';
+
+export const GAUGE_VARIANT_ARC = 'arc';
+export const GAUGE_VARIANT_LINEAR = 'linear';
+export const GAUGE_VARIANT_RING = 'ring';
+export const GAUGE_RING_ARC_ANGLE = 360;
+export const GAUGE_LINEAR_TRACK_HEIGHT = 8;

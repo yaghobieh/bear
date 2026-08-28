@@ -1,7 +1,7 @@
 import { cn } from '@utils';
 import { BOOLEAN_FALSE, ZERO } from '@const';
 import type { RingProgressProps } from './RingProgress.types';
-import { DEFAULT_SIZE, DEFAULT_THICKNESS } from './RingProgress.const';
+import { DEFAULT_SIZE, DEFAULT_THICKNESS, RING_HALF_SWEEP, RING_VARIANT_FULL, RING_VARIANT_HALF } from './RingProgress.const';
 import {
   FILL_NONE,
   getRingMetrics,
@@ -20,6 +20,7 @@ export const RingProgress = (props: RingProgressProps) => {
     roundCaps = BOOLEAN_FALSE,
     label,
     rootColor,
+    variant = RING_VARIANT_FULL,
     className,
     testId,
     ...rest
@@ -27,6 +28,7 @@ export const RingProgress = (props: RingProgressProps) => {
 
   const total = getRingTotal(sections);
   const { radius, circumference, center } = getRingMetrics(size, thickness);
+  const trackLength = variant === RING_VARIANT_HALF ? circumference * RING_HALF_SWEEP : circumference;
   let accumulated = ZERO;
   const lineCap = roundCaps ? STROKE_LINECAP_ROUND : STROKE_LINECAP_BUTT;
 
@@ -36,7 +38,7 @@ export const RingProgress = (props: RingProgressProps) => {
       data-testid={testId}
       {...rest}
     >
-      <svg width={size} height={size} className="bear-rotate-[-90deg]">
+      <svg width={size} height={size} className={variant === RING_VARIANT_HALF ? 'bear-rotate-[-180deg]' : 'bear-rotate-[-90deg]'}>
         <circle
           cx={center}
           cy={center}
@@ -48,7 +50,7 @@ export const RingProgress = (props: RingProgressProps) => {
         />
         {total > ZERO &&
           sections.map((section, index) => {
-            const segmentLength = getRingSegmentLength(section.value, total, circumference);
+            const segmentLength = getRingSegmentLength(section.value, total, trackLength);
             const dashOffset = -accumulated;
             accumulated += segmentLength;
 

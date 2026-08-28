@@ -7,12 +7,7 @@ import { PageBreadcrumbs } from './components/PageBreadcrumbs';
 import { DocPageNav } from './components/DocPageNav';
 import { RouteSEO } from './components/RouteSEO';
 
-const BANNER_CONFIG = {
-  id: 'bear-1.3.1',
-  message: 'Bear v1.3.1 — Dropdown open and close effects on Select, DatePicker, Calendar, and more.',
-  link: '/whats-new',
-  linkText: "See what's new",
-};
+import { useNpmPackageVersion } from './hooks/useNpmPackageVersion';
 
 // Lazy load pages - Getting Started
 const IntroductionPage = lazy(() => import('./pages/Introduction'));
@@ -375,13 +370,20 @@ function PortalLayout({
 }: PortalLayoutProps) {
   const location = useLocation();
   const isLanding = location.pathname === '/';
+  const { version } = useNpmPackageVersion();
+  const banner = {
+    id: `bear-${version}`,
+    message: `Bear v${version} — Drawer close effects, bear-icons, and new chart views.`,
+    link: '/whats-new',
+    linkText: "See what's new",
+  };
 
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950">
       <RouteSEO />
       <Topbar
         onMenuClick={() => setSidebarOpen(!sidebarOpen)}
-        banner={BANNER_CONFIG}
+        banner={banner}
         onBannerVisibilityChange={onBannerVisibilityChange}
       />
 

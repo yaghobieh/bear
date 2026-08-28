@@ -2,6 +2,12 @@
 
 All notable changes to Bear UI will be documented in this file.
 
+## [Unreleased]
+
+### Added
+
+- **Portal** — Products, Docs, Blog, and Pricing in the top nav; product cards for Bear, Icons, Charts, and design kits; Community/Pro/Team pricing; Figma and GitHub example actions on DocPage (FORGE-143–FORGE-147).
+
 ## [1.3.2] - 2026-08-28
 
 ### Added

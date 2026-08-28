@@ -1,0 +1,1 @@
+export { FigmaMarkSvg } from './FigmaMarkSvg';

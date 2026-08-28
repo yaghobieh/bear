@@ -6,11 +6,17 @@ import { Sidebar } from './components/Sidebar';
 import { PageBreadcrumbs } from './components/PageBreadcrumbs';
 import { DocPageNav } from './components/DocPageNav';
 import { RouteSEO } from './components/RouteSEO';
+import { isMarketingPath } from './constants/marketing.const';
 
 import { useNpmPackageVersion } from './hooks/useNpmPackageVersion';
 
 // Lazy load pages - Getting Started
 const IntroductionPage = lazy(() => import('./pages/Introduction'));
+const ProductsPage = lazy(() => import('./pages/Products'));
+const PricingPage = lazy(() => import('./pages/Pricing'));
+const BlogPage = lazy(() => import('./pages/Blog'));
+const DocsHubPage = lazy(() => import('./pages/DocsHub'));
+const DesignKitsPage = lazy(() => import('./pages/DesignKits'));
 const WhatsNew124Page = lazy(() => import('./pages/WhatsNew124'));
 const ChangelogPage = lazy(() => import('./pages/Changelog'));
 const SkillsPage = lazy(() => import('./pages/Skills'));
@@ -369,7 +375,7 @@ function PortalLayout({
   onBannerVisibilityChange,
 }: PortalLayoutProps) {
   const location = useLocation();
-  const isLanding = location.pathname === '/';
+  const isLanding = isMarketingPath(location.pathname);
   const { version } = useNpmPackageVersion();
   const banner = {
     id: `bear-${version}`,
@@ -405,6 +411,11 @@ function PortalLayout({
             <Suspense fallback={<PageLoader />}>
               <Routes>
                 <Route path="/" element={<IntroductionPage />} />
+                <Route path="/products" element={<ProductsPage />} />
+                <Route path="/products/design-kits" element={<DesignKitsPage />} />
+                <Route path="/docs" element={<DocsHubPage />} />
+                <Route path="/blog" element={<BlogPage />} />
+                <Route path="/pricing" element={<PricingPage />} />
                 <Route path="/whats-new" element={<WhatsNew124Page />} />
                 <Route path="/changelog" element={<ChangelogPage />} />
                 <Route path="/skills" element={<SkillsPage />} />
@@ -677,7 +688,7 @@ function PortalLayout({
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </Suspense>
-            <DocPageNav />
+            {!isLanding && <DocPageNav />}
           </div>
         </main>
       </div>

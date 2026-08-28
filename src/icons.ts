@@ -1,2 +1,2 @@
-export { Icon, BearIcons } from './components/Icon';
-export type { IconProps } from './components/Icon';
+export * from '@forgedevstack/bear-icons';
+export type { IconProps, IconSize } from '@forgedevstack/bear-icons';

@@ -23,7 +23,7 @@ export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
       {
         title: 'Added',
         items: [
-          '@forgedevstack/bear-icons (in progress) — install alone or with Bear',
+          '@forgedevstack/bear-icons — install icons with Bear, or install the icon package alone',
         ],
       },
     ],

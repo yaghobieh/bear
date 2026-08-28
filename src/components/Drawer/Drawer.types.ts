@@ -2,13 +2,15 @@ import type { ReactNode } from 'react';
 
 export type DrawerSide = 'left' | 'right' | 'top' | 'bottom';
 
-export interface DrawerHeaderProps {
-  side: DrawerSide;
-  title?: string;
-  titleId: string;
-  showCloseButton: boolean;
+export interface UseDrawerParams {
+  isOpen: boolean;
   onClose: () => void;
-  direction?: string;
+  closeOnEscape: boolean;
+}
+
+export interface UseDrawerResult {
+  isMounted: boolean;
+  isPanelOpen: boolean;
 }
 
 export interface DrawerProps {

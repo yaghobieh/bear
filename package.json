@@ -98,7 +98,8 @@
     "vitest": "^2.1.8"
   },
   "dependencies": {
-    "@forgedevstack/anvil": "^1.0.0"
+    "@forgedevstack/anvil": "^1.0.0",
+    "@forgedevstack/bear-icons": "^1.0.0"
   },
   "keywords": [
     "react",

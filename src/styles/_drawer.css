@@ -1,7 +1,7 @@
 .Bear-Drawer {
   position: fixed;
   inset: 0;
-  z-index: 11000;
+  z-index: var(--bear-z-overlay, 11000);
   isolation: isolate;
 }
 
@@ -13,7 +13,7 @@
   overflow: hidden;
   background: var(--bear-bg-primary, #fff);
   box-shadow: 0 25px 50px -12px rgb(15 23 42 / 0.25);
-  transition: transform 300ms ease;
+  transition: transform var(--bear-drawer-duration, 300ms) ease;
 }
 
 .bear-dark .Bear-Drawer__panel,
@@ -77,6 +77,10 @@
   font-size: 1.125rem;
   font-weight: 600;
   color: var(--bear-text-primary, #171717);
+}
+
+.Bear-Drawer__header--close-start {
+  flex-direction: row-reverse;
 }
 
 .Bear-Drawer__close {

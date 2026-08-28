@@ -1,18 +1,16 @@
-import { useEffect, useCallback, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useBearDirectionOptional } from '@context/BearProvider';
 import { cn, resolveBearId, useBearId } from '@utils';
 import {
-  BOOLEAN_FALSE,
   BOOLEAN_TRUE,
   COMPONENT_NAME_DRAWER,
-  KEY_ESCAPE,
 } from '@const';
 import { Backdrop } from '../Backdrop';
+import { Box } from '../Box';
 import type { DrawerProps, DrawerSide } from './Drawer.types';
 import { DRAWER_ANIMATION_MS, DRAWER_DEFAULT_SIDE, DRAWER_DEFAULT_SIZE } from './Drawer.const';
-import { lockBodyScroll } from './Drawer.utils';
-import { DrawerHeader } from './components';
+import { DrawerOptionalHeader } from './helpers';
+import { useDrawer } from './hooks';
 
 export const Drawer = (props: DrawerProps) => {
   const {
@@ -37,62 +35,23 @@ export const Drawer = (props: DrawerProps) => {
   const domId = resolveBearId(id, generatedId);
   const { direction } = useBearDirectionOptional();
   const resolvedSide: DrawerSide = anchor ?? side;
-
-  const [isMounted, setIsMounted] = useState(isOpen);
-  const [isClosing, setIsClosing] = useState(BOOLEAN_FALSE);
-  const [hasOpened, setHasOpened] = useState(BOOLEAN_FALSE);
-
-  useEffect(() => {
-    if (isOpen) {
-      setIsMounted(BOOLEAN_TRUE);
-      setIsClosing(BOOLEAN_FALSE);
-      const frame = requestAnimationFrame(() => setHasOpened(BOOLEAN_TRUE));
-      return () => cancelAnimationFrame(frame);
-    }
-    if (isMounted) {
-      setHasOpened(BOOLEAN_FALSE);
-      setIsClosing(BOOLEAN_TRUE);
-      const timer = setTimeout(() => {
-        setIsMounted(BOOLEAN_FALSE);
-        setIsClosing(BOOLEAN_FALSE);
-      }, DRAWER_ANIMATION_MS);
-      return () => clearTimeout(timer);
-    }
-  }, [isOpen, isMounted]);
-
-  const handleEscape = useCallback(
-    (event: KeyboardEvent) => {
-      if (closeOnEscape && event.key === KEY_ESCAPE) {
-        onClose();
-      }
-    },
-    [closeOnEscape, onClose]
-  );
-
-  useEffect(() => {
-    if (isMounted) {
-      document.addEventListener('keydown', handleEscape);
-      const unlock = lockBodyScroll();
-      return () => {
-        document.removeEventListener('keydown', handleEscape);
-        unlock();
-      };
-    }
-    return () => {
-      document.removeEventListener('keydown', handleEscape);
-    };
-  }, [isMounted, handleEscape]);
+  const { isMounted, isPanelOpen } = useDrawer({
+    isOpen,
+    onClose,
+    closeOnEscape,
+  });
 
   if (!isMounted) {
     return null;
   }
 
-  const isPanelOpen = hasOpened && !isClosing;
   const showHeader = Boolean(title) || showCloseButton;
   const titleId = `${domId}-title`;
+  const handleBackdropClick = closeOnBackdrop ? () => onClose() : undefined;
+  const labelledBy = title ? titleId : undefined;
 
   const drawerContent = (
-    <div id={domId} data-testid={testId} className="Bear-Drawer">
+    <Box id={domId} testId={testId} className="Bear-Drawer">
       <Backdrop
         open={isPanelOpen}
         keepMounted
@@ -100,13 +59,13 @@ export const Drawer = (props: DrawerProps) => {
         nested
         transitionDuration={DRAWER_ANIMATION_MS}
         className="Bear-Drawer__backdrop"
-        onClick={closeOnBackdrop ? () => onClose() : undefined}
+        onClick={handleBackdropClick}
       />
 
-      <div
+      <Box
         role="dialog"
         aria-modal={BOOLEAN_TRUE}
-        aria-labelledby={title ? titleId : undefined}
+        aria-labelledby={labelledBy}
         className={cn(
           'Bear-Drawer__panel',
           `Bear-Drawer__panel--${resolvedSide}`,
@@ -115,20 +74,19 @@ export const Drawer = (props: DrawerProps) => {
           className
         )}
       >
-        {showHeader ? (
-          <DrawerHeader
-            side={resolvedSide}
-            title={title}
-            titleId={titleId}
-            showCloseButton={showCloseButton}
-            onClose={onClose}
-            direction={direction}
-          />
-        ) : null}
+        <DrawerOptionalHeader
+          showHeader={showHeader}
+          side={resolvedSide}
+          title={title}
+          titleId={titleId}
+          showCloseButton={showCloseButton}
+          onClose={onClose}
+          direction={direction}
+        />
 
-        <div className="Bear-Drawer__body">{children}</div>
-      </div>
-    </div>
+        <Box className="Bear-Drawer__body">{children}</Box>
+      </Box>
+    </Box>
   );
 
   return createPortal(drawerContent, container ?? document.body);

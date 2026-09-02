@@ -2,6 +2,10 @@
 
 Strong, reliable React UI components. AeroCraft-powered, zero config required. The protective force of ForgeStack.
 
+[![Support ForgeStack on Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/forgestack)
+
+Sponsor Bear on [Ko-fi](https://ko-fi.com/forgestack).
+
 ## Portal
 
 Visit the [Bear UI Portal](https://bearui.com/) to explore all components, view live examples, and browse the documentation.

@@ -2,6 +2,12 @@
 
 All notable changes to Bear UI will be documented in this file.
 
+## [Unreleased]
+
+### Added
+
+- **CLI** — `npx @forgedevstack/bear` shows a Bear banner and installs into a new Vite app or an existing folder (FORGE-148).
+
 ## [1.3.2] - 2026-08-28
 
 ### Added

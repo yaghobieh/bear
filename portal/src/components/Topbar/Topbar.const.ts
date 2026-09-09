@@ -1,16 +1,21 @@
 import { BEAR_VERSION } from '@/constants/navigation.const';
+import {
+  PATH_BLOG,
+  PATH_DOCS,
+  PATH_PRICING,
+  PATH_PRODUCTS,
+} from '@/constants/marketing.const';
 
 export interface TopNavLink {
-  label: string;
+  labelKey: 'navProducts' | 'navDocs' | 'navBlog' | 'navPricing';
   path: string;
 }
 
 export const TOP_NAV_LINKS: TopNavLink[] = [
-  { label: 'Docs', path: '/installation' },
-  { label: 'Components', path: '/components' },
-  { label: 'Hooks', path: '/hooks' },
-  { label: 'Skills', path: '/skills' },
-  { label: 'Changelog', path: '/changelog' },
+  { labelKey: 'navProducts', path: PATH_PRODUCTS },
+  { labelKey: 'navDocs', path: PATH_DOCS },
+  { labelKey: 'navBlog', path: PATH_BLOG },
+  { labelKey: 'navPricing', path: PATH_PRICING },
 ];
 
 export const THEME_TOAST_DURATION_MS = 10000;

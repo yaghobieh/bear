@@ -1,18 +1,25 @@
-export const EMPTY_STATE_ROOT_CLASS = 'Bear-EmptyState';
+import type { ComponentType } from 'react';
+import {
+  EMPTY_STATE_PRESET_EMPTY,
+  EMPTY_STATE_PRESET_ERROR,
+  EMPTY_STATE_PRESET_INBOX,
+  EMPTY_STATE_PRESET_SEARCH,
+  SIZE_MD,
+  VARIANT_DEFAULT,
+} from '@const';
+import { EmptyStateErrorSvg, EmptyStateInboxSvg, EmptyStateSearchSvg } from './helpers';
+import type { EmptyStatePreset } from './EmptyState.types';
 
-export const EMPTY_STATE_BASE_CLASSES =
-  'bear-flex bear-flex-col bear-items-center bear-text-center';
+export const EMPTY_STATE_DEFAULT_SIZE = SIZE_MD;
+export const EMPTY_STATE_DEFAULT_VARIANT = VARIANT_DEFAULT;
+export const EMPTY_STATE_DEFAULT_PRESET: EmptyStatePreset = EMPTY_STATE_PRESET_EMPTY;
 
-export const EMPTY_STATE_CARD_CLASSES =
-  'bear-bg-[var(--bear-bg-secondary)] bear-rounded-xl bear-border bear-border-[var(--bear-border-default)]';
-
-export const EMPTY_STATE_ICON_CLASSES = 'bear-text-[var(--bear-text-muted)] bear-mb-4';
-
-export const EMPTY_STATE_TITLE_CLASSES =
-  'bear-font-semibold bear-text-[var(--bear-text-primary)] bear-mb-2';
-
-export const EMPTY_STATE_DESCRIPTION_CLASSES =
-  'bear-text-[var(--bear-text-secondary)] bear-max-w-md bear-mb-6';
+export const EMPTY_STATE_PRESET_ICON: Record<EmptyStatePreset, ComponentType<{ className?: string }>> = {
+  [EMPTY_STATE_PRESET_EMPTY]: EmptyStateInboxSvg,
+  [EMPTY_STATE_PRESET_INBOX]: EmptyStateInboxSvg,
+  [EMPTY_STATE_PRESET_SEARCH]: EmptyStateSearchSvg,
+  [EMPTY_STATE_PRESET_ERROR]: EmptyStateErrorSvg,
+};
 
 export const EMPTY_STATE_SIZE_CLASSES = {
   sm: {

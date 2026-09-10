@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useCallback, useMemo, ReactNode, u
 import type { BearTheme, BearThemeOverride, BearColorScale, CustomVariant, CustomVariantsMap } from '@types';
 import type { BearComponentOverrides, ButtonVariantsConfig, BearDefaultPropsMap } from '@types';
 import type { CustomTypography, CustomTypographyMap } from '../components/Typography/Typography.types';
-import type { BearDirection, BearDensity } from './bearProvider.types';
+import type { BearColorScheme, BearDirection, BearDensity, BearResolvedMode } from './bearProvider.types';
 import {
   DEFAULT_DIRECTION,
   DEFAULT_DENSITY,
@@ -11,11 +11,23 @@ import {
   DENSITY_SCALE_COMPACT,
 } from './bearProvider.const';
 import { defaultLightTheme, defaultDarkTheme } from './defaultTheme';
+import {
+  BOOLEAN_FALSE,
+  COLOR_SCHEME_DARK,
+  COLOR_SCHEME_LIGHT,
+  COLOR_SCHEME_SYSTEM,
+  DOCUMENT_CLASS_REDUCED_MOTION,
+  PREFERS_COLOR_SCHEME_DARK,
+  PREFERS_REDUCED_MOTION,
+} from '@const';
 
 interface BearContextValue {
   theme: BearTheme;
-  mode: 'light' | 'dark';
-  setMode: (mode: 'light' | 'dark') => void;
+  mode: BearResolvedMode;
+  colorScheme: BearColorScheme;
+  setColorScheme: (scheme: BearColorScheme) => void;
+  reducedMotion: boolean;
+  setMode: (mode: BearResolvedMode) => void;
   toggleMode: () => void;
   updateTheme: (overrides: BearThemeOverride) => void;
   direction: BearDirection;
@@ -48,9 +60,13 @@ export const BearContext = createContext<BearContextValue | null>(null);
 
 interface BearProviderProps {
   children: ReactNode;
-  defaultMode?: 'light' | 'dark';
-  mode?: 'light' | 'dark';
-  onModeChange?: (mode: 'light' | 'dark') => void;
+  defaultMode?: BearResolvedMode;
+  mode?: BearResolvedMode;
+  onModeChange?: (mode: BearResolvedMode) => void;
+  defaultColorScheme?: BearColorScheme;
+  colorScheme?: BearColorScheme;
+  onColorSchemeChange?: (scheme: BearColorScheme) => void;
+  reducedMotion?: boolean;
   direction?: BearDirection;
   density?: BearDensity;
   theme?: BearThemeOverride;
@@ -323,11 +339,40 @@ const buildThemeCssVars = (
  * }
  * ```
  */
+const readSystemMode = (): BearResolvedMode => {
+  if (typeof window === 'undefined') {
+    return COLOR_SCHEME_LIGHT;
+  }
+  return window.matchMedia(PREFERS_COLOR_SCHEME_DARK).matches ? COLOR_SCHEME_DARK : COLOR_SCHEME_LIGHT;
+};
+
+const readStoredColorScheme = (key: string): BearColorScheme | null => {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+  const stored = localStorage.getItem(key);
+  if (stored === COLOR_SCHEME_LIGHT || stored === COLOR_SCHEME_DARK || stored === COLOR_SCHEME_SYSTEM) {
+    return stored;
+  }
+  return null;
+};
+
+const readSystemReducedMotion = () => {
+  if (typeof window === 'undefined') {
+    return BOOLEAN_FALSE;
+  }
+  return window.matchMedia(PREFERS_REDUCED_MOTION).matches;
+};
+
 export const BearProvider = ({
   children,
-  defaultMode = 'light',
+  defaultMode = COLOR_SCHEME_LIGHT,
   mode: controlledMode,
   onModeChange,
+  defaultColorScheme,
+  colorScheme: controlledColorScheme,
+  onColorSchemeChange,
+  reducedMotion: controlledReducedMotion,
   direction = DEFAULT_DIRECTION,
   density = DEFAULT_DENSITY,
   theme: themeOverrides,
@@ -339,23 +384,28 @@ export const BearProvider = ({
   persistPreference = true,
   storageKey = STORAGE_KEY_DEFAULT,
 }: BearProviderProps) => {
-  const [internalMode, setInternalModeState] = useState<'light' | 'dark'>(() => {
+  const [internalColorScheme, setInternalColorScheme] = useState<BearColorScheme>(() => {
+    if (controlledColorScheme !== undefined) {
+      return controlledColorScheme;
+    }
     if (controlledMode !== undefined) {
       return controlledMode;
     }
-    if (typeof window !== 'undefined' && persistPreference) {
-      const stored = localStorage.getItem(storageKey);
-      if (stored === 'light' || stored === 'dark') {
+    if (persistPreference) {
+      const stored = readStoredColorScheme(storageKey);
+      if (stored) {
         return stored;
       }
-      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        return 'dark';
-      }
     }
-    return defaultMode;
+    return defaultColorScheme ?? defaultMode;
   });
 
-  const mode = controlledMode ?? internalMode;
+  const [systemMode, setSystemMode] = useState<BearResolvedMode>(readSystemMode);
+  const [systemReducedMotion, setSystemReducedMotion] = useState(readSystemReducedMotion);
+  const colorScheme = controlledColorScheme ?? internalColorScheme;
+  const resolvedFromScheme = colorScheme === COLOR_SCHEME_SYSTEM ? systemMode : colorScheme;
+  const mode = controlledMode ?? resolvedFromScheme;
+  const reducedMotion = controlledReducedMotion ?? systemReducedMotion;
 
   const [directionState, setDirectionState] = useState<BearDirection>(direction);
   const [densityState, setDensityState] = useState<BearDensity>(density);
@@ -426,15 +476,24 @@ export const BearProvider = ({
     [resolvedDarkTheme, variants, customVariants, densityState]
   );
 
-  const setMode = useCallback((newMode: 'light' | 'dark') => {
-    if (controlledMode === undefined) {
-      setInternalModeState(newMode);
+  const setColorScheme = useCallback((scheme: BearColorScheme) => {
+    if (controlledColorScheme === undefined) {
+      setInternalColorScheme(scheme);
     }
-    onModeChange?.(newMode);
+    onColorSchemeChange?.(scheme);
     if (typeof window !== 'undefined' && persistPreference) {
-      localStorage.setItem(storageKey, newMode);
+      localStorage.setItem(storageKey, scheme);
     }
-  }, [controlledMode, onModeChange, persistPreference, storageKey]);
+    if (scheme !== COLOR_SCHEME_SYSTEM) {
+      onModeChange?.(scheme);
+    } else {
+      onModeChange?.(readSystemMode());
+    }
+  }, [controlledColorScheme, onColorSchemeChange, onModeChange, persistPreference, storageKey]);
+
+  const setMode = useCallback((newMode: BearResolvedMode) => {
+    setColorScheme(newMode);
+  }, [setColorScheme]);
 
   const setDirection = useCallback((newDirection: BearDirection) => {
     setDirectionState(newDirection);
@@ -446,22 +505,11 @@ export const BearProvider = ({
 
   // Toggle between light and dark
   const toggleMode = useCallback(() => {
-    if (controlledMode !== undefined) {
-      const next = controlledMode === 'light' ? 'dark' : 'light';
-      onModeChange?.(next);
-      return;
-    }
+    const next = mode === COLOR_SCHEME_LIGHT ? COLOR_SCHEME_DARK : COLOR_SCHEME_LIGHT;
     startTransition(() => {
-      setInternalModeState((prev) => {
-        const next = prev === 'light' ? 'dark' : 'light';
-        onModeChange?.(next);
-        if (typeof window !== 'undefined' && persistPreference) {
-          localStorage.setItem(storageKey, next);
-        }
-        return next;
-      });
+      setColorScheme(next);
     });
-  }, [controlledMode, onModeChange, persistPreference, storageKey]);
+  }, [mode, setColorScheme]);
 
   // Update theme with overrides
   const updateTheme = useCallback((overrides: BearThemeOverride) => {
@@ -533,10 +581,26 @@ export const BearProvider = ({
   }, []);
 
   useEffect(() => {
-    if (controlledMode !== undefined) {
-      setInternalModeState(controlledMode);
+    if (controlledColorScheme !== undefined) {
+      setInternalColorScheme(controlledColorScheme);
     }
-  }, [controlledMode]);
+  }, [controlledColorScheme]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+    const colorQuery = window.matchMedia(PREFERS_COLOR_SCHEME_DARK);
+    const motionQuery = window.matchMedia(PREFERS_REDUCED_MOTION);
+    const handleColor = () => setSystemMode(readSystemMode());
+    const handleMotion = () => setSystemReducedMotion(readSystemReducedMotion());
+    colorQuery.addEventListener('change', handleColor);
+    motionQuery.addEventListener('change', handleMotion);
+    return () => {
+      colorQuery.removeEventListener('change', handleColor);
+      motionQuery.removeEventListener('change', handleMotion);
+    };
+  }, []);
 
   useEffect(() => {
     if (typeof document === 'undefined') return;
@@ -560,11 +624,15 @@ export const BearProvider = ({
     root.setAttribute('dir', directionState);
     root.classList.toggle('bear-rtl', directionState === 'rtl');
     root.classList.toggle('bear-density-compact', densityState === 'compact');
-  }, [mode, directionState, densityState]);
+    root.classList.toggle(DOCUMENT_CLASS_REDUCED_MOTION, reducedMotion);
+  }, [mode, directionState, densityState, reducedMotion]);
 
   const value = useMemo(() => ({
     theme,
     mode,
+    colorScheme,
+    setColorScheme,
+    reducedMotion,
     setMode,
     toggleMode,
     updateTheme,
@@ -585,7 +653,7 @@ export const BearProvider = ({
     addTypography,
     registerComponent,
     registerVariant,
-  }), [theme, mode, setMode, toggleMode, updateTheme, directionState, setDirection, densityState, setDensity, defaultProps, components, variants, customVariants, hasVariant, getVariant, addVariant, customTypography, hasTypography, getTypography, addTypography, registerComponent, registerVariant]);
+  }), [theme, mode, colorScheme, setColorScheme, reducedMotion, setMode, toggleMode, updateTheme, directionState, setDirection, densityState, setDensity, defaultProps, components, variants, customVariants, hasVariant, getVariant, addVariant, customTypography, hasTypography, getTypography, addTypography, registerComponent, registerVariant]);
 
   return (
     <BearContext.Provider value={value}>
@@ -635,8 +703,8 @@ export const useBearThemeOptional = (): BearTheme => {
  * Hook to access just the mode and toggle function
  */
 export const useBearMode = () => {
-  const { mode, setMode, toggleMode } = useBear();
-  return { mode, setMode, toggleMode };
+  const { mode, setMode, toggleMode, colorScheme, setColorScheme, reducedMotion } = useBear();
+  return { mode, setMode, toggleMode, colorScheme, setColorScheme, reducedMotion };
 };
 
 export const useBearDirection = () => {

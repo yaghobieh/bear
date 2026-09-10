@@ -17,15 +17,16 @@ export interface NavGroup {
   icon?: string;
 }
 
-export const BEAR_VERSION = '1.3.2';
+export const BEAR_VERSION = '1.3.3';
 
 export const VERSION_HIGHLIGHT_BY_VERSION: Record<string, string> = {
+  '1.3.3': 'AI chat kit · Drawer variants · system theme',
   '1.3.2': 'Drawer close effects · no-icons install · Chart views',
   '1.3.1': 'Overlay open/close effects · Select · DatePicker',
   '1.3.0': 'ModalsProvider · overlays above blur · SignPad',
 };
 
-export const VERSION_HIGHLIGHT_FALLBACK = 'Drawer close effects · no-icons install · Chart views';
+export const VERSION_HIGHLIGHT_FALLBACK = 'AI chat kit · Drawer variants · system theme';
 
 /** Main Bear UI repository */
 export const GITHUB_URL = 'https://github.com/yaghobieh/bear';
@@ -393,9 +394,14 @@ export const NAVIGATION: NavGroup[] = [
         path: '/components/chat',
         label: 'Chat',
         children: [
-          { path: '/components/chat', label: 'Chat' },
+          { path: '/components/chat', label: 'Chat', badge: 'New' },
           { path: '/components/floating-chat', label: 'FloatingChat' },
-          { path: '/components/message-list', label: 'MessageList', badge: 'New' },
+          { path: '/components/message-list', label: 'MessageList' },
+          { path: '/components/ai-chat', label: 'AI chat kit', badge: 'New' },
+          { path: '/components/prompt-composer', label: 'PromptComposer' },
+          { path: '/components/streaming-message', label: 'StreamingMessage' },
+          { path: '/components/thinking-block', label: 'ThinkingBlock' },
+          { path: '/components/theme-switcher', label: 'ThemeSwitcher', badge: 'New' },
         ],
       },
     ],
@@ -542,7 +548,8 @@ export const NAVIGATION: NavGroup[] = [
 ];
 
 export const VERSIONS = [
-  { value: '1.3.2', label: 'v1.3.2 (current)' },
+  { value: '1.3.3', label: 'v1.3.3 (current)' },
+  { value: '1.3.2', label: 'v1.3.2' },
   { value: '1.3.1', label: 'v1.3.1' },
   { value: '1.3.0', label: 'v1.3.0' },
   { value: '1.2.9', label: 'v1.2.9' },

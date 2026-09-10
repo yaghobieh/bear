@@ -2,6 +2,25 @@
 
 All notable changes to Bear UI will be documented in this file.
 
+## [1.3.3] - 2026-09-10
+
+### Added
+
+- **AI chat kit** — `PromptComposer`, `StreamingMessage`, `ThinkingBlock`, `PromptSuggestions`, `MessageActions`, `ChatError`, `ToolCall`, `CitationList`, `ApprovalCard`, `ModelSelect`, `ContextMeter`, `ArtifactCard`, and public `ChatBubble`.
+- **Chat / FloatingChat** — tokenized `Bear-Chat` surfaces, stick-to-bottom only when already at the bottom, live region for streaming, attach/stop, prompt suggestions, and `useBearId`.
+- **Drawer** — `variant="temporary" | "persistent" | "permanent"` (backdrop overlay, overlay without backdrop, in-flow panel).
+- **ThemeSwitcher** plus `BearProvider` `colorScheme` (`light` | `dark` | `system`) and `reducedMotion`.
+- **EmptyState** — `preset="empty" | "search" | "inbox" | "error"`.
+
+### Fixed
+
+- **Select** — chevron and check chrome no longer import `@forgedevstack/bear-icons`, so `--omit=optional` does not break the field (GH #80).
+- **Chat** — no longer force-scrolls on every message; `isLoading` vs `isTyping` is documented in props.
+
+### Portal
+
+- Version **1.3.3** docs for Chat, the AI chat kit, PromptComposer, StreamingMessage, ThinkingBlock, ThemeSwitcher, and Drawer variants.
+
 ## [1.3.2] - 2026-08-28
 
 ### Added

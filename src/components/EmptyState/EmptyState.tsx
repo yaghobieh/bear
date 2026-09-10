@@ -1,68 +1,62 @@
-import { FC } from 'react';
-import type { EmptyStateProps } from './EmptyState.types';
-import {
-  EMPTY_STATE_BASE_CLASSES,
-  EMPTY_STATE_CARD_CLASSES,
-  EMPTY_STATE_DESCRIPTION_CLASSES,
-  EMPTY_STATE_ICON_CLASSES,
-  EMPTY_STATE_ROOT_CLASS,
-  EMPTY_STATE_SIZE_CLASSES,
-  EMPTY_STATE_TITLE_CLASSES,
-} from './EmptyState.const';
+import { Box } from '../Box';
+import { Flex } from '../Flex';
+import { Typography } from '../Typography';
 import { cn, resolveBearId, useBearId } from '@utils';
+import {
+  EMPTY_STATE_DEFAULT_PRESET,
+  EMPTY_STATE_DEFAULT_SIZE,
+  EMPTY_STATE_DEFAULT_VARIANT,
+  EMPTY_STATE_PRESET_ICON,
+  EMPTY_STATE_SIZE_CLASSES,
+} from './EmptyState.const';
+import type { EmptyStateProps } from './EmptyState.types';
 
-const DefaultIcon: FC<{ className?: string }> = ({ className }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={1.5}
-      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-    />
-  </svg>
-);
+export const EmptyState = (props: EmptyStateProps) => {
+  const {
+    icon,
+    title,
+    description,
+    action,
+    secondaryAction,
+    className,
+    size = EMPTY_STATE_DEFAULT_SIZE,
+    variant = EMPTY_STATE_DEFAULT_VARIANT,
+    preset = EMPTY_STATE_DEFAULT_PRESET,
+    id,
+    testId,
+  } = props;
 
-export const EmptyState: FC<EmptyStateProps> = ({
-  icon,
-  title,
-  description,
-  action,
-  secondaryAction,
-  className,
-  size = 'md',
-  variant = 'default',
-  id,
-  testId,
-}) => {
   const generatedId = useBearId('EmptyState');
   const domId = resolveBearId(id, generatedId);
   const sizeClasses = EMPTY_STATE_SIZE_CLASSES[size];
+  const PresetIcon = EMPTY_STATE_PRESET_ICON[preset];
+  const iconNode = icon ?? <PresetIcon className="bear-w-full bear-h-full" />;
 
   return (
-    <div
+    <Box
       id={domId}
       data-testid={testId}
       className={cn(
-        EMPTY_STATE_ROOT_CLASS,
-        EMPTY_STATE_BASE_CLASSES,
+        'Bear-EmptyState',
+        variant === 'card' && 'Bear-EmptyState--card',
+        `Bear-EmptyState--${preset}`,
         sizeClasses.padding,
-        variant === 'card' && EMPTY_STATE_CARD_CLASSES,
         className
       )}
     >
-      <div className={cn(EMPTY_STATE_ICON_CLASSES, sizeClasses.icon)}>
-        {icon || <DefaultIcon className="bear-w-full bear-h-full" />}
-      </div>
-      <h3 className={cn(EMPTY_STATE_TITLE_CLASSES, sizeClasses.title)}>{title}</h3>
+      <Box className={cn('Bear-EmptyState__icon', sizeClasses.icon)}>{iconNode}</Box>
+      <Typography className={cn('Bear-EmptyState__title', sizeClasses.title)}>{title}</Typography>
       {description && (
-        <p className={cn(EMPTY_STATE_DESCRIPTION_CLASSES, sizeClasses.desc)}>{description}</p>
+        <Typography className={cn('Bear-EmptyState__description', sizeClasses.desc)}>
+          {description}
+        </Typography>
       )}
       {(action || secondaryAction) && (
-        <div className={`${EMPTY_STATE_ROOT_CLASS}__actions bear-flex bear-items-center bear-gap-3`}>
+        <Flex className="Bear-EmptyState__actions" align="center" gap={3}>
           {action}
           {secondaryAction}
-        </div>
+        </Flex>
       )}
-    </div>
+    </Box>
   );
 };

@@ -5,11 +5,11 @@ import { ComponentPreview } from '@/components/ComponentPreview';
 import { PropsTable } from '@/components/PropsTable';
 import { usePortalLanguage } from '@/hooks/usePortalLanguage';
 import { DOCS_TEXT } from '@/constants/docs-i18n.const';
-import { DRAWER_SIDES, DRAWER_SIZES, DRAWER_PROPS, DRAWER_SIDE_LABELS, DRAWER_TITLE_PREFIX } from './Drawer.const';
+import { DRAWER_SIDES, DRAWER_SIZES, DRAWER_PROPS, DRAWER_SIDE_LABELS, DRAWER_TITLE_PREFIX, DRAWER_VARIANTS } from './Drawer.const';
 import type { DrawerDemoProps } from './Drawer.types';
 
 const DrawerDemo: FC<DrawerDemoProps> = (props) => {
-  const { side = 'right', size = 'md', container, openEffect, closeEffect } = props;
+  const { side = 'right', size = 'md', variant, container, openEffect, closeEffect } = props;
   const [open, setOpen] = useState(false);
   const { language } = usePortalLanguage();
   const t = DOCS_TEXT[language];
@@ -26,6 +26,7 @@ const DrawerDemo: FC<DrawerDemoProps> = (props) => {
         title={`${DRAWER_TITLE_PREFIX}${sideLabel}`}
         side={side}
         size={size}
+        variant={variant}
         container={container}
         openEffect={openEffect}
         closeEffect={closeEffect}
@@ -119,6 +120,20 @@ const DrawerPage: FC = () => {
             className="relative w-full max-w-md h-48 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 overflow-hidden"
           />
           <DrawerDemo side="left" size="sm" container={portalPanelRef.current} />
+        </Flex>
+      </ComponentPreview>
+
+      <ComponentPreview
+        title={t.drawerVariants}
+        description={t.drawerVariantsDesc}
+        code={`<Drawer variant="temporary" />
+<Drawer variant="persistent" />
+<Drawer variant="permanent" />`}
+      >
+        <Flex gap={2} wrap="wrap" justify="center">
+          {DRAWER_VARIANTS.map((variant) => (
+            <DrawerDemo key={variant} variant={variant} size="sm" />
+          ))}
         </Flex>
       </ComponentPreview>
 

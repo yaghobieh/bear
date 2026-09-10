@@ -89,7 +89,7 @@ export type {
 } from './ModalsProvider';
 
 export { Drawer } from './Drawer';
-export type { DrawerProps } from './Drawer';
+export type { DrawerProps, DrawerVariant } from './Drawer';
 
 export { Tooltip } from './Tooltip';
 export type { TooltipProps } from './Tooltip';
@@ -230,7 +230,7 @@ export { Statistic } from './Statistic';
 export type { StatisticProps } from './Statistic';
 
 export { EmptyState } from './EmptyState';
-export type { EmptyStateProps } from './EmptyState';
+export type { EmptyStatePreset, EmptyStateProps } from './EmptyState';
 
 export { PageHeader } from './PageHeader';
 export type { PageHeaderProps } from './PageHeader';
@@ -493,11 +493,57 @@ export type { DiffViewerProps, DiffViewMode, DiffLine, DiffStats, DiffSpacing } 
 
 // Chat
 export { Chat } from './Chat';
-export type { ChatProps, ChatMessage, ChatBubbleProps } from './Chat';
+export type { ChatProps, ChatMessage, ChatTranslations } from './Chat';
+
+export { ChatBubble } from './ChatBubble';
+export type { ChatBubbleProps } from './ChatBubble';
+
+export { PromptComposer } from './PromptComposer';
+export type { PromptComposerProps, PromptComposerTranslations } from './PromptComposer';
+
+export { StreamingMessage } from './StreamingMessage';
+export type {
+  StreamingMessageProps,
+  StreamingMessageSender,
+  StreamingMessageTranslations,
+} from './StreamingMessage';
+
+export { ThinkingBlock } from './ThinkingBlock';
+export type { ThinkingBlockProps, ThinkingBlockTranslations } from './ThinkingBlock';
+
+export { PromptSuggestions } from './PromptSuggestions';
+export type { PromptSuggestionItem, PromptSuggestionsProps } from './PromptSuggestions';
+
+export { MessageActions } from './MessageActions';
+export type { MessageActionsProps, MessageActionsTranslations } from './MessageActions';
+
+export { ChatError } from './ChatError';
+export type { ChatErrorProps, ChatErrorTranslations } from './ChatError';
+
+export { ToolCall } from './ToolCall';
+export type { ToolCallKind, ToolCallProps, ToolCallStatus, ToolCallTranslations } from './ToolCall';
+
+export { CitationList } from './CitationList';
+export type { CitationItem, CitationListProps } from './CitationList';
+
+export { ApprovalCard } from './ApprovalCard';
+export type { ApprovalCardProps, ApprovalCardTranslations } from './ApprovalCard';
+
+export { ModelSelect } from './ModelSelect';
+export type { ModelSelectOption, ModelSelectProps } from './ModelSelect';
+
+export { ContextMeter } from './ContextMeter';
+export type { ContextMeterProps, ContextMeterTranslations } from './ContextMeter';
+
+export { ArtifactCard } from './ArtifactCard';
+export type { ArtifactCardKind, ArtifactCardProps, ArtifactCardTranslations } from './ArtifactCard';
+
+export { ThemeSwitcher } from './ThemeSwitcher';
+export type { ThemeSwitcherProps, ThemeSwitcherTranslations } from './ThemeSwitcher';
 
 // FloatingChat
 export { FloatingChat } from './FloatingChat';
-export type { FloatingChatProps } from './FloatingChat';
+export type { FloatingChatProps, FloatingChatTranslations } from './FloatingChat';
 
 // MessageList
 export { MessageList } from './MessageList';

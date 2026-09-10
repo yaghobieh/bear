@@ -6,12 +6,18 @@ import { lockBodyScroll } from '../Drawer.utils';
 import type { UseDrawerParams, UseDrawerResult } from '../Drawer.types';
 
 export const useDrawer = (params: UseDrawerParams): UseDrawerResult => {
-  const { isOpen, onClose, closeOnEscape, openEffect, closeEffect } = params;
-  const [isMounted, setIsMounted] = useState(isOpen);
+  const { isOpen, onClose, closeOnEscape, openEffect, closeEffect, lockScroll, alwaysMounted } = params;
+  const [isMounted, setIsMounted] = useState(isOpen || alwaysMounted);
   const [isClosing, setIsClosing] = useState(BOOLEAN_FALSE);
-  const [hasOpened, setHasOpened] = useState(BOOLEAN_FALSE);
+  const [hasOpened, setHasOpened] = useState(alwaysMounted ? BOOLEAN_TRUE : BOOLEAN_FALSE);
 
   useEffect(() => {
+    if (alwaysMounted) {
+      setIsMounted(BOOLEAN_TRUE);
+      setHasOpened(isOpen);
+      setIsClosing(BOOLEAN_FALSE);
+      return;
+    }
     if (isOpen) {
       setIsMounted(BOOLEAN_TRUE);
       setIsClosing(BOOLEAN_FALSE);
@@ -32,7 +38,7 @@ export const useDrawer = (params: UseDrawerParams): UseDrawerResult => {
       }, closeMs);
       return () => clearTimeout(timer);
     }
-  }, [isOpen, isMounted, openEffect, closeEffect]);
+  }, [alwaysMounted, isOpen, isMounted, openEffect, closeEffect]);
 
   const handleEscape = useCallback(
     (event: KeyboardEvent) => {
@@ -44,21 +50,18 @@ export const useDrawer = (params: UseDrawerParams): UseDrawerResult => {
   );
 
   useEffect(() => {
-    if (isMounted) {
+    if (isMounted && closeOnEscape) {
       document.addEventListener('keydown', handleEscape);
-      const unlock = lockBodyScroll();
-      return () => {
-        document.removeEventListener('keydown', handleEscape);
-        unlock();
-      };
     }
+    const unlock = lockScroll && isMounted ? lockBodyScroll() : undefined;
     return () => {
       document.removeEventListener('keydown', handleEscape);
+      unlock?.();
     };
-  }, [isMounted, handleEscape]);
+  }, [isMounted, handleEscape, closeOnEscape, lockScroll]);
 
   return {
     isMounted,
-    isPanelOpen: hasOpened && !isClosing,
+    isPanelOpen: alwaysMounted ? isOpen : hasOpened && !isClosing,
   };
 };

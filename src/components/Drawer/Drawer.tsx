@@ -2,8 +2,11 @@ import { createPortal } from 'react-dom';
 import { useBearDirectionOptional } from '@context/BearProvider';
 import { cn, resolveBearId, useBearId } from '@utils';
 import {
+  BOOLEAN_FALSE,
   BOOLEAN_TRUE,
   COMPONENT_NAME_DRAWER,
+  DRAWER_VARIANT_PERMANENT,
+  DRAWER_VARIANT_TEMPORARY,
 } from '@const';
 import {
   OVERLAY_OPEN_EFFECT_DEFAULT,
@@ -12,7 +15,7 @@ import {
 import { Backdrop } from '../Backdrop';
 import { Box } from '../Box';
 import type { DrawerProps, DrawerSide } from './Drawer.types';
-import { DRAWER_ANIMATION_MS, DRAWER_DEFAULT_SIDE, DRAWER_DEFAULT_SIZE } from './Drawer.const';
+import { DRAWER_ANIMATION_MS, DRAWER_DEFAULT_SIDE, DRAWER_DEFAULT_SIZE, DRAWER_DEFAULT_VARIANT } from './Drawer.const';
 import { DrawerOptionalHeader } from './helpers';
 import { useDrawer } from './hooks';
 
@@ -24,7 +27,7 @@ export const Drawer = (props: DrawerProps) => {
     children,
     side = DRAWER_DEFAULT_SIDE,
     anchor,
-    variant: _variant = 'temporary',
+    variant = DRAWER_DEFAULT_VARIANT,
     size = DRAWER_DEFAULT_SIZE,
     showCloseButton = BOOLEAN_TRUE,
     closeOnBackdrop = BOOLEAN_TRUE,
@@ -35,17 +38,21 @@ export const Drawer = (props: DrawerProps) => {
     testId,
   } = props;
 
+  const isPermanent = variant === DRAWER_VARIANT_PERMANENT;
+  const isTemporary = variant === DRAWER_VARIANT_TEMPORARY;
   const { openEffect, closeEffect } = resolveOverlayEffects(props, OVERLAY_OPEN_EFFECT_DEFAULT);
   const generatedId = useBearId(COMPONENT_NAME_DRAWER);
   const domId = resolveBearId(id, generatedId);
   const { direction } = useBearDirectionOptional();
   const resolvedSide: DrawerSide = anchor ?? side;
   const { isMounted, isPanelOpen } = useDrawer({
-    isOpen,
+    isOpen: isPermanent ? BOOLEAN_TRUE : isOpen,
     onClose,
-    closeOnEscape,
+    closeOnEscape: isPermanent ? BOOLEAN_FALSE : closeOnEscape,
     openEffect,
     closeEffect,
+    lockScroll: isTemporary,
+    alwaysMounted: isPermanent,
   });
   const activeEffect = isPanelOpen ? openEffect : closeEffect;
 
@@ -55,24 +62,31 @@ export const Drawer = (props: DrawerProps) => {
 
   const showHeader = Boolean(title) || showCloseButton;
   const titleId = `${domId}-title`;
-  const handleBackdropClick = closeOnBackdrop ? () => onClose() : undefined;
+  const handleBackdropClick = closeOnBackdrop && isTemporary ? () => onClose() : undefined;
   const labelledBy = title ? titleId : undefined;
+  const panelRole = isPermanent ? 'complementary' : 'dialog';
 
   const drawerContent = (
-    <Box id={domId} testId={testId} className="Bear-Drawer">
-      <Backdrop
-        open={isPanelOpen}
-        keepMounted
-        blur
-        nested
-        transitionDuration={DRAWER_ANIMATION_MS}
-        className="Bear-Drawer__backdrop"
-        onClick={handleBackdropClick}
-      />
+    <Box
+      id={domId}
+      data-testid={testId}
+      className={cn('Bear-Drawer', `Bear-Drawer--${variant}`)}
+    >
+      {isTemporary && (
+        <Backdrop
+          open={isPanelOpen}
+          keepMounted
+          blur
+          nested
+          transitionDuration={DRAWER_ANIMATION_MS}
+          className="Bear-Drawer__backdrop"
+          onClick={handleBackdropClick}
+        />
+      )}
 
       <Box
-        role="dialog"
-        aria-modal={BOOLEAN_TRUE}
+        role={panelRole}
+        aria-modal={isTemporary ? BOOLEAN_TRUE : BOOLEAN_FALSE}
         aria-labelledby={labelledBy}
         className={cn(
           'Bear-Drawer__panel',
@@ -88,7 +102,7 @@ export const Drawer = (props: DrawerProps) => {
           side={resolvedSide}
           title={title}
           titleId={titleId}
-          showCloseButton={showCloseButton}
+          showCloseButton={isPermanent ? BOOLEAN_FALSE : showCloseButton}
           onClose={onClose}
           direction={direction}
         />
@@ -97,6 +111,10 @@ export const Drawer = (props: DrawerProps) => {
       </Box>
     </Box>
   );
+
+  if (isPermanent) {
+    return drawerContent;
+  }
 
   return createPortal(drawerContent, container ?? document.body);
 };

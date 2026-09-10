@@ -193,6 +193,11 @@ const DiffSquaresPage = lazy(() => import('./pages/components/DiffSquares'));
 const ChatPage = lazy(() => import('./pages/components/ChatPage'));
 const FloatingChatPage = lazy(() => import('./pages/components/FloatingChatPage'));
 const MessageListPage = lazy(() => import('./pages/components/MessageListPage'));
+const AiChatPage = lazy(() => import('./pages/components/AiChatPage'));
+const PromptComposerPage = lazy(() => import('./pages/components/PromptComposerPage'));
+const StreamingMessagePage = lazy(() => import('./pages/components/StreamingMessagePage'));
+const ThinkingBlockPage = lazy(() => import('./pages/components/ThinkingBlockPage'));
+const ThemeSwitcherPage = lazy(() => import('./pages/components/ThemeSwitcherPage'));
 const TerminalPage = lazy(() => import('./pages/components/TerminalPage'));
 
 // New v1.0.9 - Map, CodeEditor, Cropper, Carousel, Animation
@@ -552,6 +557,11 @@ function PortalLayout({
                 <Route path="/components/chat" element={<ChatPage />} />
                 <Route path="/components/floating-chat" element={<FloatingChatPage />} />
                 <Route path="/components/message-list" element={<MessageListPage />} />
+                <Route path="/components/ai-chat" element={<AiChatPage />} />
+                <Route path="/components/prompt-composer" element={<PromptComposerPage />} />
+                <Route path="/components/streaming-message" element={<StreamingMessagePage />} />
+                <Route path="/components/thinking-block" element={<ThinkingBlockPage />} />
+                <Route path="/components/theme-switcher" element={<ThemeSwitcherPage />} />
                 <Route path="/components/terminal" element={<TerminalPage />} />
                 
                 {/* v1.0.9 - Media & Animation */}

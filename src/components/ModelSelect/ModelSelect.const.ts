@@ -1,0 +1,1 @@
+export const MODEL_SELECT_DEFAULT_PLACEHOLDER = 'Model';

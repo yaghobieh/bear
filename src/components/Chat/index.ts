@@ -1,2 +1,3 @@
 export { Chat } from './Chat';
-export type { ChatProps, ChatMessage, ChatBubbleProps } from './Chat.types';
+export type { ChatMessage, ChatProps, ChatTranslations } from './Chat.types';
+export type { ChatBubbleProps } from '../ChatBubble/ChatBubble.types';

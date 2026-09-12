@@ -1,5 +1,6 @@
 import { ZERO, ONE } from '@const';
-import { cn } from '@utils';
+import { cn, resolveBearId, useBearId } from '@utils';
+import type { CSSProperties } from 'react';
 import type { BarChartProps } from './Chart.types';
 import { CHART } from './Chart.const';
 import { getChartColor, getStackTotal } from './Chart.utils';
@@ -17,48 +18,49 @@ export const BarChart = (props: BarChartProps) => {
     barGap = CHART.DEFAULT_BAR_GAP,
     stacked = false,
     className,
+    id,
+    testId,
     ...rest
   } = props;
 
+  const generatedId = useBearId('BarChart');
+  const domId = resolveBearId(id, generatedId);
   const totals = data.map((item) => getStackTotal(item.stacks, item.value));
   const maxValue = Math.max(...totals, ONE);
   const isVertical = orientation === 'vertical';
+  const rootStyle = {
+    '--Bear-Chart-height': `${height}px`,
+    '--Bear-Chart-gap': `${barGap}rem`,
+  } as CSSProperties;
 
   return (
-    <div className={cn('Bear-Chart Bear-Chart--bar bear-w-full', className)} style={{ height }} {...rest}>
-      <div
-        className={cn('bear-h-full', isVertical ? 'bear-flex bear-items-end bear-justify-between' : 'bear-flex bear-flex-col bear-justify-between')}
-        style={{ gap: `${barGap}rem` }}
-      >
+    <div
+      id={domId}
+      data-testid={testId}
+      className={cn(
+        'Bear-Chart Bear-Chart--bar',
+        isVertical ? 'Bear-Chart--vertical' : 'Bear-Chart--horizontal',
+        className
+      )}
+      style={rootStyle}
+      {...rest}
+    >
+      <div className="Bear-Chart__track">
         {data.map((item, index) => {
           const segments = stacked && item.stacks && item.stacks.length > ZERO ? item.stacks : [item.value];
           const total = totals[index];
           const sizePct = (total / maxValue) * CHART.VIEWBOX;
+          const colStyle = {
+            '--Bear-Chart-size': `${sizePct}%`,
+          } as CSSProperties;
 
           return (
-            <div
-              key={item.label}
-              className={cn(
-                isVertical ? 'bear-flex-1 bear-flex bear-flex-col bear-items-center bear-gap-1' : 'bear-flex-1 bear-flex bear-items-center bear-gap-2'
-              )}
-            >
-              {showLabels && !isVertical && (
-                <span className="bear-w-16 bear-truncate bear-text-xs bear-text-gray-600 dark:bear-text-slate-300">
-                  {item.label}
-                </span>
-              )}
-              <div
-                className={cn(
-                  isVertical ? 'bear-w-full bear-flex-1 bear-flex bear-items-end' : 'bear-flex-1 bear-h-full bear-flex bear-items-center'
-                )}
-              >
+            <div key={item.label} className="Bear-Chart__col">
+              {showLabels && !isVertical && <span className="Bear-Chart__label">{item.label}</span>}
+              <div className="Bear-Chart__plot">
                 <div
-                  className={cn(
-                    'bear-flex',
-                    isVertical ? 'bear-w-full bear-flex-col-reverse' : 'bear-h-3/4 bear-flex-row',
-                    animated && (isVertical ? 'animate-grow-up' : 'animate-grow-right')
-                  )}
-                  style={isVertical ? { height: `${sizePct}%` } : { width: `${sizePct}%` }}
+                  className={cn('Bear-Chart__stack', animated && (isVertical ? 'animate-grow-up' : 'animate-grow-right'))}
+                  style={colStyle}
                 >
                   {segments.map((segment, segmentIndex) => {
                     const segmentPct = total > ZERO ? (segment / total) * CHART.VIEWBOX : ZERO;
@@ -75,30 +77,23 @@ export const BarChart = (props: BarChartProps) => {
                       : isVertical
                         ? `${barRadius}px ${barRadius}px 0 0`
                         : `0 ${barRadius}px ${barRadius}px 0`;
+                    const segmentStyle = {
+                      '--Bear-Chart-segment': `${segmentPct}%`,
+                      '--Bear-Chart-color': getChartColor(stacked ? segmentIndex : index, item.color || color),
+                      '--Bear-Chart-radius': isFirst && !stacked ? radius : radius,
+                    } as CSSProperties;
                     return (
                       <div
                         key={`${item.label}-${segmentIndex}`}
-                        className="bear-transition-all bear-duration-500 bear-ease-out"
-                        style={{
-                          [isVertical ? 'height' : 'width']: `${segmentPct}%`,
-                          [isVertical ? 'width' : 'height']: '100%',
-                          backgroundColor: getChartColor(stacked ? segmentIndex : index, item.color || color),
-                          borderRadius: isFirst && !stacked ? radius : radius,
-                          opacity: 0.9,
-                        }}
+                        className="Bear-Chart__segment"
+                        style={segmentStyle}
                       />
                     );
                   })}
                 </div>
               </div>
-              {showValues && (
-                <span className="bear-text-xs bear-text-gray-500 dark:bear-text-slate-400">{total}</span>
-              )}
-              {showLabels && isVertical && (
-                <span className="bear-max-w-full bear-truncate bear-text-xs bear-text-gray-600 dark:bear-text-slate-300">
-                  {item.label}
-                </span>
-              )}
+              {showValues && <span className="Bear-Chart__value">{total}</span>}
+              {showLabels && isVertical && <span className="Bear-Chart__label">{item.label}</span>}
             </div>
           );
         })}

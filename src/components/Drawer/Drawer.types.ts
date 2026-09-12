@@ -3,12 +3,16 @@ import type { OverlayEffectProps, OverlayMotionEffect } from '@hooks/useFixedAnc
 
 export type DrawerSide = 'left' | 'right' | 'top' | 'bottom';
 
+export type DrawerVariant = 'temporary' | 'persistent' | 'permanent';
+
 export interface UseDrawerParams {
   isOpen: boolean;
   onClose: () => void;
   closeOnEscape: boolean;
   openEffect: OverlayMotionEffect;
   closeEffect: OverlayMotionEffect;
+  lockScroll: boolean;
+  alwaysMounted: boolean;
 }
 
 export interface UseDrawerResult {
@@ -23,7 +27,7 @@ export interface DrawerProps extends OverlayEffectProps {
   children: ReactNode;
   side?: DrawerSide;
   anchor?: DrawerSide;
-  variant?: 'temporary' | 'persistent' | 'permanent';
+  variant?: DrawerVariant;
   size?: 'sm' | 'md' | 'lg' | 'xl';
   showCloseButton?: boolean;
   closeOnBackdrop?: boolean;

@@ -1,4 +1,6 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
+
+export type EmptyStatePreset = 'empty' | 'search' | 'inbox' | 'error';
 
 export interface EmptyStateProps {
   testId?: string;
@@ -11,5 +13,5 @@ export interface EmptyStateProps {
   className?: string;
   size?: 'sm' | 'md' | 'lg';
   variant?: 'default' | 'card';
+  preset?: EmptyStatePreset;
 }
-

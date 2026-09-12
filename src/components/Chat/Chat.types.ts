@@ -1,8 +1,6 @@
-/**
- * Chat component types
- */
-
 import type { ReactNode } from 'react';
+import type { ChatBubbleProps as ChatBubbleComponentProps } from '../ChatBubble/ChatBubble.types';
+import type { PromptSuggestionItem } from '../PromptSuggestions/PromptSuggestions.types';
 
 export interface ChatMessage {
   id: string;
@@ -15,49 +13,41 @@ export interface ChatMessage {
   metadata?: Record<string, unknown>;
 }
 
-export interface ChatProps {
-  id?: string;
-  /** Array of messages */
-  messages: ChatMessage[];
-  /** Callback when user sends a message */
-  onSend?: (message: string) => void;
-  /** Loading state (e.g., waiting for bot response) */
-  isLoading?: boolean;
-  /** Placeholder text for input */
-  placeholder?: string;
-  /** Chat header content */
-  header?: ReactNode;
-  /** Chat footer content (below input) */
-  footer?: ReactNode;
-  /** Show timestamps */
-  showTimestamps?: boolean;
-  /** Show message status */
-  showStatus?: boolean;
-  /** Show avatars */
-  showAvatars?: boolean;
-  /** User avatar URL */
-  userAvatar?: string;
-  /** Bot avatar URL */
-  botAvatar?: string;
-  /** Typing indicator */
-  isTyping?: boolean;
-  /** Typing indicator text */
-  typingText?: string;
-  /** Custom class name */
-  className?: string;
-  /** Height of the chat container */
-  height?: number | string;
-  /** Test ID */
-  testId?: string;
-  /** Disable input */
-  disabled?: boolean;
+export interface ChatTranslations {
+  placeholder: string;
+  typingText: string;
+  newMessagesLabel: string;
 }
 
-export interface ChatBubbleProps {
-  message: ChatMessage;
-  showTimestamp?: boolean;
+export interface ChatProps {
+  id?: string;
+  testId?: string;
+  messages: ChatMessage[];
+  onSend?: (message: string) => void;
+  onStop?: () => void;
+  onAttach?: (files: File[]) => void;
+  isLoading?: boolean;
+  isStreaming?: boolean;
+  isTyping?: boolean;
+  placeholder?: string;
+  header?: ReactNode;
+  footer?: ReactNode;
+  showTimestamps?: boolean;
   showStatus?: boolean;
-  showAvatar?: boolean;
+  showAvatars?: boolean;
   userAvatar?: string;
   botAvatar?: string;
+  typingText?: string;
+  className?: string;
+  height?: number | string;
+  disabled?: boolean;
+  allowAttach?: boolean;
+  suggestions?: PromptSuggestionItem[];
+  onSuggestionSelect?: (id: string) => void;
+  errorTitle?: string;
+  errorMessage?: ReactNode;
+  onRetry?: () => void;
+  translations?: Partial<ChatTranslations>;
 }
+
+export type ChatBubbleProps = ChatBubbleComponentProps;

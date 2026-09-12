@@ -42,9 +42,11 @@
 
   /* Danger colors */
   --bear-danger-50: #fef2f2;
+  --bear-danger-200: #fecaca;
   --bear-danger-500: #ef4444;
   --bear-danger-600: #dc2626;
   --bear-danger-700: #b91c1c;
+  --bear-danger-800: #991b1b;
 
   /* Info colors */
   --bear-info-50: #eff6ff;

@@ -1,28 +1,28 @@
+import {
+  BOOLEAN_FALSE,
+  BOOLEAN_TRUE,
+  CHAT_STICK_THRESHOLD_PX,
+  FOUR_HUNDRED,
+  LABEL_NEW_MESSAGES,
+  PLACEHOLDER_START_TYPING,
+} from '@const';
+import type { ChatTranslations } from './Chat.types';
+
 export const CHAT_DEFAULTS = {
-  PLACEHOLDER: 'Type a message...',
-  HEIGHT: 400,
+  PLACEHOLDER: PLACEHOLDER_START_TYPING,
+  HEIGHT: FOUR_HUNDRED,
   TYPING_TEXT: 'is typing...',
 } as const;
 
-export const MESSAGE_STATUS_ICONS = {
-  sending: '○',
-  sent: '✓',
-  delivered: '✓✓',
-  read: '✓✓',
-  error: '!',
-} as const;
+export const CHAT_DEFAULT_TRANSLATIONS: ChatTranslations = {
+  placeholder: CHAT_DEFAULTS.PLACEHOLDER,
+  typingText: CHAT_DEFAULTS.TYPING_TEXT,
+  newMessagesLabel: LABEL_NEW_MESSAGES,
+};
 
-export const SENDER_COLORS = {
-  user: {
-    bg: 'var(--bear-primary-500)',
-    text: 'white',
-  },
-  bot: {
-    bg: 'var(--bear-bg-secondary)',
-    text: 'var(--bear-text-primary)',
-  },
-  system: {
-    bg: 'transparent',
-    text: 'var(--bear-text-tertiary, var(--bear-text-muted))',
-  },
-} as const;
+export const CHAT_STICK_THRESHOLD = CHAT_STICK_THRESHOLD_PX;
+export const CHAT_DEFAULT_SHOW_TIMESTAMPS = BOOLEAN_TRUE;
+export const CHAT_DEFAULT_SHOW_STATUS = BOOLEAN_TRUE;
+export const CHAT_DEFAULT_SHOW_AVATARS = BOOLEAN_TRUE;
+export const CHAT_DEFAULT_DISABLED = BOOLEAN_FALSE;
+export const CHAT_HEIGHT_VAR = '--Bear-Chat-height';

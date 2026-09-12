@@ -1,7 +1,7 @@
 import { FC, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { cn, resolveBearId, useBearId } from '@utils';
-import { CloseIcon } from '../Icon/icons/navigation';
+import { CloseIcon } from '@forgedevstack/bear-icons/navigation';
 import { Backdrop } from '../Backdrop';
 import type { ModalProps } from './Modal.types';
 import {

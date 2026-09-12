@@ -15,7 +15,7 @@ export interface ChartDataPoint {
 
 export interface ChartProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
   testId?: string;
-  type: ChartType;
+  type?: ChartType;
   data: ChartDataPoint[];
   height?: number;
   showLabels?: boolean;

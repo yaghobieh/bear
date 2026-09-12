@@ -1,7 +1,13 @@
 import { FC } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { BearIcons, Typography } from '@forgedevstack/bear';
-import { GITHUB_URL, NPM_URL, THEME_PRESETS } from '@/constants/navigation.const';
+import { BearIcons, SandboxIcon, StorybookIcon, Typography } from '@forgedevstack/bear';
+import {
+  GITHUB_URL,
+  NPM_URL,
+  THEME_PRESETS,
+  resolveStorybookHrefForPath,
+} from '@/constants/navigation.const';
+import { openCodeSandbox } from '@/pages/Sandbox/openCodeSandbox';
 import { NEW_COMPONENT_ALERTS, VERSION_POPUP_DESCRIPTION, VERSION_POPUP_FEATURES } from '@/constants/topbar.const';
 import { PORTAL_TEXT } from '@/constants/portal-i18n.const';
 import { TopbarProps } from './Topbar.types';
@@ -71,7 +77,7 @@ export const Topbar: FC<TopbarProps> = (props) => {
                 <BearIcon size={32} />
                 <div className="flex items-baseline gap-2">
                   <Typography variant="body1" className="font-bold text-gray-900 dark:text-white" component="span">Bear UI</Typography>
-                  <Typography variant="caption" className="text-gray-400 dark:text-gray-500 font-mono" component="span">v{version}</Typography>
+                  <Typography variant="caption" className="hidden sm:inline text-gray-400 dark:text-gray-500 font-mono" component="span">v{version}</Typography>
                 </div>
               </Link>
 
@@ -108,6 +114,25 @@ export const Topbar: FC<TopbarProps> = (props) => {
             </nav>
 
             <div className="Bear-Topbar__right flex items-center gap-0.5">
+              <a
+                href={resolveStorybookHrefForPath(location.pathname)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-md transition-colors"
+                aria-label={t.storybookLink}
+                title={t.storybookLink}
+              >
+                <StorybookIcon size={18} />
+              </a>
+              <button
+                type="button"
+                onClick={() => openCodeSandbox(location.pathname)}
+                className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-md transition-colors"
+                aria-label={t.sandboxLink}
+                title={t.sandboxLink}
+              >
+                <SandboxIcon size={18} />
+              </button>
               <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-md transition-colors" aria-label="GitHub" title="GitHub">
                 <BearIcons.GithubIcon size={18} />
               </a>

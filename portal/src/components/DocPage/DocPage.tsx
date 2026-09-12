@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { CopyImport } from '@/components/CopyImport';
+import { ComponentSandboxLink } from '@/components/ComponentSandboxLink';
 import type { DocPageProps } from './DocPage.types';
 
 export const DocPage: FC<DocPageProps> = (props) => {
@@ -12,6 +13,7 @@ export const DocPage: FC<DocPageProps> = (props) => {
           {icon}
           <h1 className="doc-page__title">{title}</h1>
           {badge && <span className="doc-page__badge">{badge}</span>}
+          <ComponentSandboxLink />
         </div>
         <p className="doc-page__description">{description}</p>
         {componentName && (

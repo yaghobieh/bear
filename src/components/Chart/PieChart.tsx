@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import type { CSSProperties } from 'react';
 import { ONE, ZERO } from '@const';
-import { cn } from '@utils';
+import { cn, resolveBearId, useBearId } from '@utils';
 import { Portal } from '../Portal';
 import { Card, CardBody, CardHeader } from '../Card';
 import { Flex } from '../Flex';
@@ -37,9 +38,13 @@ export const PieChart = (props: PieChartProps) => {
     sliceTooltipDescription,
     sliceTooltipContent,
     className,
+    id,
+    testId,
     ...rest
   } = props;
 
+  const generatedId = useBearId('PieChart');
+  const domId = resolveBearId(id, generatedId);
   const total = data.reduce((sum, item) => sum + item.value, ZERO);
   const [tip, setTip] = useState<SliceTooltipState | null>(null);
   const isHalf = pieView === PIE_VIEW_HALF;
@@ -65,6 +70,20 @@ export const PieChart = (props: PieChartProps) => {
     onSliceHover?.(null, null);
   };
 
+  if (data.length === ZERO || total === ZERO) {
+    return (
+      <Flex
+        id={domId}
+        data-testid={testId}
+        align="center"
+        justify="center"
+        className={cn('Bear-Chart Bear-Chart--pie Bear-Chart--empty', className)}
+        style={{ '--Bear-Chart-height': `${height}px` } as CSSProperties}
+        {...rest}
+      />
+    );
+  }
+
   let currentAngle = resolvedStart;
   const slices = data.map((item, index) => {
     const sliceAngle = isRose
@@ -87,15 +106,18 @@ export const PieChart = (props: PieChartProps) => {
 
   return (
     <Flex
+      id={domId}
+      data-testid={testId}
       direction={legendBelow ? 'column' : 'row'}
       align="center"
       gap={4}
       wrap="wrap"
-      className={cn('Bear-Chart Bear-Chart--pie bear-relative bear-max-w-full', className)}
+      className={cn('Bear-Chart Bear-Chart--pie', className)}
+      style={{ '--Bear-Chart-height': `${height}px` } as CSSProperties}
       {...rest}
     >
-      <Box style={{ width: height, height }} className="bear-min-w-0 bear-shrink-0">
-        <svg viewBox={`0 0 ${CHART.VIEWBOX} ${CHART.VIEWBOX}`} className="bear-h-full bear-w-full">
+      <Box className="Bear-Chart__pie-canvas">
+        <svg viewBox={`0 0 ${CHART.VIEWBOX} ${CHART.VIEWBOX}`} className="Bear-Chart__svg">
           {slices.map((slice, index) => {
             const midAngle = (slice.startAngle + slice.endAngle) / 2;
             const explode = explodeIndex === index ? polarOffset(midAngle, CHART.EXPLODE_OFFSET) : { x: ZERO, y: ZERO };
@@ -135,8 +157,8 @@ export const PieChart = (props: PieChartProps) => {
           {data.map((item, index) => (
             <Flex key={item.label} align="center" gap={2}>
               <Box
-                className="bear-h-3 bear-w-3 bear-rounded-full"
-                style={{ backgroundColor: getChartColor(index, item.color) }}
+                className="Bear-Chart__swatch"
+                style={{ '--Bear-Chart-color': getChartColor(index, item.color) } as CSSProperties}
               />
               <Typography variant="body2" color="muted">
                 {item.label}

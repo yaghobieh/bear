@@ -1,210 +1,128 @@
-import { FC, useState, useCallback } from 'react';
+import { useState } from 'react';
 import { createPortal } from 'react-dom';
-import {cn } from '@utils';
-import { useBear } from '../../context/BearProvider';
-import { Button } from '../Button';
-import { Avatar } from '../Avatar';
-import { Typography } from '../Typography';
-import { Badge } from '../Badge';
-import { BearIcons } from '../Icon';
+import {
+  BOOLEAN_FALSE,
+  COMPONENT_NAME_FLOATING_CHAT,
+} from '@const';
+import { cn, resolveBearId, useBearId } from '@utils';
+import { Box } from '../Box';
 import { Chat } from '../Chat';
+import { Typography } from '../Typography';
+import {
+  CHAT_WINDOW_SIZE,
+  FLOATING_CHAT_DEFAULT_OPEN,
+  FLOATING_CHAT_DEFAULT_TRANSLATIONS,
+  FLOATING_CHAT_CHROME_PX,
+  FLOATING_CHAT_DEFAULTS,
+  FLOATING_CHAT_POWERED_BY,
+  FLOATING_CHAT_WELCOME_ID,
+} from './FloatingChat.const';
 import type { FloatingChatProps } from './FloatingChat.types';
-import { FLOATING_CHAT_DEFAULTS, CHAT_WINDOW_SIZE } from './FloatingChat.const';
+import { resolveFloatingChatVars } from './FloatingChat.utils';
+import { FloatingChatHeader } from './helpers/FloatingChatHeader';
+import { FloatingChatTrigger } from './helpers/FloatingChatTrigger';
 
-/**
- * FloatingChat - Floating chat widget bubble
- * 
- * @example
- * ```tsx
- * <FloatingChat
- *   messages={messages}
- *   onSend={handleSend}
- *   title="Support"
- *   subtitle="We're here to help!"
- *   position="bottom-right"
- *   badgeCount={2}
- * />
- * ```
- */
-export const FloatingChat: FC<FloatingChatProps> = ({
-  messages,
-  onSend,
-  isLoading = false,
-  isTyping = false,
-  title = FLOATING_CHAT_DEFAULTS.TITLE,
-  subtitle = FLOATING_CHAT_DEFAULTS.SUBTITLE,
-  avatar,
-  position = FLOATING_CHAT_DEFAULTS.POSITION,
-  bottom = FLOATING_CHAT_DEFAULTS.BOTTOM,
-  side = FLOATING_CHAT_DEFAULTS.SIDE,
-  defaultOpen = false,
-  open: controlledOpen,
-  onOpenChange,
-  trigger,
-  badgeCount,
-  header,
-  welcomeMessage = FLOATING_CHAT_DEFAULTS.WELCOME_MESSAGE,
-  poweredBy,
-  className,
-      testId,
-}) => {
+export const FloatingChat = (props: FloatingChatProps) => {
+  const {
+    id,
+    testId,
+    messages,
+    onSend,
+    onStop,
+    onAttach,
+    isLoading = BOOLEAN_FALSE,
+    isStreaming = BOOLEAN_FALSE,
+    isTyping = BOOLEAN_FALSE,
+    title = FLOATING_CHAT_DEFAULTS.TITLE,
+    subtitle = FLOATING_CHAT_DEFAULTS.SUBTITLE,
+    avatar,
+    position = FLOATING_CHAT_DEFAULTS.POSITION,
+    bottom = FLOATING_CHAT_DEFAULTS.BOTTOM,
+    side = FLOATING_CHAT_DEFAULTS.SIDE,
+    defaultOpen = FLOATING_CHAT_DEFAULT_OPEN,
+    open,
+    onOpenChange,
+    trigger,
+    badgeCount,
+    header,
+    welcomeMessage = FLOATING_CHAT_DEFAULTS.WELCOME_MESSAGE,
+    poweredBy = FLOATING_CHAT_POWERED_BY,
+    allowAttach,
+    className,
+    translations,
+  } = props;
 
-  const { mode } = useBear();
-  const isDark = mode === 'dark';
+  const generatedId = useBearId(COMPONENT_NAME_FLOATING_CHAT);
+  const domId = resolveBearId(id, generatedId);
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
-  const [isAnimating, setIsAnimating] = useState(false);
+  const isOpen = open ?? internalOpen;
+  const labels = { ...FLOATING_CHAT_DEFAULT_TRANSLATIONS, ...translations };
+  const displayMessages =
+    messages.length === 0 && welcomeMessage
+      ? [{ id: FLOATING_CHAT_WELCOME_ID, content: welcomeMessage, sender: 'bot' as const, timestamp: new Date() }]
+      : messages;
 
-  const isOpen = controlledOpen ?? internalOpen;
-
-  const handleToggle = useCallback(() => {
-    const newOpen = !isOpen;
-    setIsAnimating(true);
-    setInternalOpen(newOpen);
-    onOpenChange?.(newOpen);
-    setTimeout(() => setIsAnimating(false), 300);
-  }, [isOpen, onOpenChange]);
-
-  const handleClose = useCallback(() => {
-    setIsAnimating(true);
-    setInternalOpen(false);
-    onOpenChange?.(false);
-    setTimeout(() => setIsAnimating(false), 300);
-  }, [onOpenChange]);
-
-  // Add welcome message if empty
-  const displayMessages = messages.length === 0 && welcomeMessage
-    ? [{ id: 'welcome', content: welcomeMessage, sender: 'bot' as const, timestamp: new Date() }]
-    : messages;
-
-  const positionStyles = {
-    bottom: `${bottom}px`,
-    [position === 'bottom-right' ? 'right' : 'left']: `${side}px`,
+  const setOpen = (next: boolean) => {
+    if (open === undefined) {
+      setInternalOpen(next);
+    }
+    onOpenChange?.(next);
   };
 
-  const chatWindowStyles = {
-    bottom: `${bottom + 70}px`,
-    [position === 'bottom-right' ? 'right' : 'left']: `${side}px`,
-    width: CHAT_WINDOW_SIZE.width,
-    height: CHAT_WINDOW_SIZE.height,
-  };
+  if (typeof document === 'undefined') {
+    return null;
+  }
 
-  const content = (
-    <div className={cn('Bear-FloatingChat', className)} data-testid={testId}>
-      {/* Chat Window */}
-      {(isOpen || isAnimating) && (
-        <div
-          className={cn(
-            'fixed z-50 rounded-2xl overflow-hidden shadow-2xl',
-            'transition-all duration-300 ease-out',
-            isOpen && !isAnimating 
-              ? 'opacity-100 translate-y-0 scale-100' 
-              : 'opacity-0 translate-y-4 scale-95 pointer-events-none'
-          )}
-          style={chatWindowStyles}
-        >
-          {/* Custom Header or Default */}
-          {header ? (
-            <div className={cn(
-              'px-4 py-3',
-              isDark ? 'bg-gray-800' : 'bg-[var(--bear-primary-500)]'
-            )}>
-              {header}
-            </div>
-          ) : (
-            <div 
-              className={cn(
-                'px-4 py-3 flex items-center gap-3',
-                'bg-[var(--bear-primary-500)] text-white'
-              )}
-            >
-              <Avatar 
-                src={avatar} 
-                initials={title[0]} 
-                size="sm" 
-                className="ring-2 ring-white/20"
-              />
-              <div className="flex-1">
-                <Typography variant="subtitle2" className="text-white font-semibold">
-                  {title}
-                </Typography>
-                <Typography variant="caption" className="text-white/70">
-                  {subtitle}
-                </Typography>
-              </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleClose}
-                className="!text-white hover:!bg-white/10"
-              >
-                <BearIcons.XIcon size={18} />
-              </Button>
-            </div>
-          )}
-          
-          {/* Chat Body */}
-          <Chat
-            messages={displayMessages}
-            onSend={onSend}
-            isLoading={isLoading}
-            isTyping={isTyping}
-            showAvatars={false}
-            height={CHAT_WINDOW_SIZE.height - 140}
-            className="!rounded-none !border-0"
-          />
-          
-          {/* Powered by */}
-          {poweredBy && (
-            <div className="px-3 py-2 text-center border-t border-gray-200 dark:border-gray-700">
-              <Typography variant="caption" className="opacity-50">
-                Powered by {poweredBy}
-              </Typography>
-            </div>
-          )}
-        </div>
+  return createPortal(
+    <Box
+      id={domId}
+      data-testid={testId}
+      className={cn(
+        'Bear-FloatingChat',
+        position === 'bottom-left' && 'Bear-FloatingChat--left',
+        className
       )}
-
-      {/* Trigger Button */}
-      <div className="fixed z-50" style={positionStyles}>
-        {trigger ? (
-          <div onClick={handleToggle}>{trigger}</div>
-        ) : (
-          <div className="relative">
-            <Button
-              variant="primary"
-              onClick={handleToggle}
-              className={cn(
-                '!w-14 !h-14 !rounded-full !p-0 shadow-lg',
-                'transition-transform duration-200',
-                isOpen && 'rotate-180'
-              )}
-            >
-              {isOpen ? (
-                <BearIcons.XIcon size={24} />
-              ) : (
-                <BearIcons.ChatIcon size={24} />
-              )}
-            </Button>
-            
-            {/* Badge */}
-            {!isOpen && badgeCount && badgeCount > 0 && (
-              <Badge
-                variant="danger"
-                size="sm"
-                className="absolute -top-1 -right-1 !min-w-[20px] !h-5"
-              >
-                {badgeCount > 99 ? '99+' : badgeCount}
-              </Badge>
-            )}
-          </div>
+      style={resolveFloatingChatVars(bottom, side)}
+    >
+      <Box
+        className={cn('Bear-FloatingChat__window', !isOpen && 'Bear-FloatingChat__window--closed')}
+      >
+        <FloatingChatHeader
+          header={header}
+          title={title}
+          subtitle={subtitle}
+          avatar={avatar}
+          closeLabel={labels.closeLabel}
+          onClose={() => setOpen(BOOLEAN_FALSE)}
+        />
+        <Chat
+          messages={displayMessages}
+          onSend={onSend}
+          onStop={onStop}
+          onAttach={onAttach}
+          isLoading={isLoading}
+          isStreaming={isStreaming}
+          isTyping={isTyping}
+          showAvatars={BOOLEAN_FALSE}
+          height={CHAT_WINDOW_SIZE.height - FLOATING_CHAT_CHROME_PX}
+          allowAttach={allowAttach}
+          className="Bear-FloatingChat__chat"
+        />
+        {poweredBy && (
+          <Typography variant="caption" className="Bear-FloatingChat__powered" color="secondary">
+            {poweredBy}
+          </Typography>
         )}
-      </div>
-    </div>
+      </Box>
+      <FloatingChatTrigger
+        isOpen={isOpen}
+        trigger={trigger}
+        badgeCount={badgeCount}
+        openLabel={labels.openLabel}
+        closeLabel={labels.closeLabel}
+        onToggle={() => setOpen(!isOpen)}
+      />
+    </Box>,
+    document.body
   );
-
-  // Render in portal
-  if (typeof document === 'undefined') return null;
-  return createPortal(content, document.body);
 };
-
-export default FloatingChat;

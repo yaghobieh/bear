@@ -7,6 +7,7 @@ export type DrawerSize = NonNullable<DrawerProps['size']>;
 export interface DrawerDemoProps {
   side?: DrawerSide;
   size?: DrawerSize;
+  variant?: DrawerProps['variant'];
   container?: Element | null;
   openEffect?: DrawerProps['openEffect'];
   closeEffect?: DrawerProps['closeEffect'];

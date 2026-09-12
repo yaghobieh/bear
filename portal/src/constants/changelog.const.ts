@@ -10,6 +10,30 @@ export interface ChangelogEntry {
 
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
+    version: '1.3.3',
+    date: 'September 10, 2026',
+    tag: 'patch',
+    sections: [
+      {
+        title: 'Added',
+        items: [
+          'AI chat kit: PromptComposer, StreamingMessage, ThinkingBlock, PromptSuggestions, MessageActions, ChatError, ToolCall, CitationList, ApprovalCard, ModelSelect, ContextMeter, ArtifactCard, ChatBubble',
+          'Chat and FloatingChat tokenized surfaces, stick-to-bottom, live region, attach/stop',
+          'Drawer temporary, persistent, and permanent variants',
+          'ThemeSwitcher plus BearProvider colorScheme (light / dark / system) and reducedMotion',
+          'EmptyState presets: empty, search, inbox, error',
+        ],
+      },
+      {
+        title: 'Fixed',
+        items: [
+          'Select chevron and check work when bear-icons is omitted',
+          'Chat no longer force-scrolls unless the user is already at the bottom',
+        ],
+      },
+    ],
+  },
+  {
     version: '1.3.2',
     date: 'August 28, 2026',
     tag: 'patch',

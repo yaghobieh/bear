@@ -1,26 +1,40 @@
 import { type ChangeEvent, FC, useState, useMemo, useCallback } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
-import { BearIcons, Typography, Tabs, TabList, Tab, TabPanel, Dropdown } from '@forgedevstack/bear';
+import { BearIcons, ComponentsIcon, SandboxIcon, StorybookIcon, Typography, Tabs, TabList, Tab, TabPanel } from '@forgedevstack/bear';
+
+type IconComponentType = FC<{ size?: number | string; className?: string; [key: string]: unknown }>;
+
+const isIconComponent = (value: unknown): value is IconComponentType => typeof value === 'function';
+
+const entriesFrom = (group: Record<string, unknown> | undefined): Array<[string, IconComponentType]> => {
+  return Object.entries(group ?? {}).filter((entry): entry is [string, IconComponentType] => isIconComponent(entry[1]));
+};
 
 const ICON_CATEGORIES = {
-  Action: Object.entries(BearIcons.Action ?? {}),
-  Navigation: Object.entries(BearIcons.Navigation ?? {}),
-  Communication: Object.entries(BearIcons.Communication ?? {}),
-  Status: Object.entries(BearIcons.Status ?? {}),
-  Media: Object.entries(BearIcons.Media ?? {}),
-  Content: Object.entries(BearIcons.Content ?? {}),
-  Editor: Object.entries(BearIcons.Editor ?? {}),
-  File: Object.entries(BearIcons.File ?? {}),
-  Social: Object.entries(BearIcons.Social ?? {}),
-  Device: Object.entries(BearIcons.Device ?? {}),
-  Commerce: Object.entries(BearIcons.Commerce ?? {}),
-  Charts: Object.entries(BearIcons.Charts ?? {}),
-  Misc: Object.entries(BearIcons.Misc ?? {}),
-  Bear: Object.entries(BearIcons.Bear ?? {}),
+  Product: [
+    ['StorybookIcon', StorybookIcon],
+    ['SandboxIcon', SandboxIcon],
+    ['ComponentsIcon', ComponentsIcon],
+  ] as Array<[string, IconComponentType]>,
+  Action: entriesFrom(BearIcons.Action as Record<string, unknown>),
+  Navigation: entriesFrom(BearIcons.Navigation as Record<string, unknown>),
+  Communication: entriesFrom(BearIcons.Communication as Record<string, unknown>),
+  Status: entriesFrom(BearIcons.Status as Record<string, unknown>),
+  Media: entriesFrom(BearIcons.Media as Record<string, unknown>),
+  Content: entriesFrom(BearIcons.Content as Record<string, unknown>),
+  Editor: entriesFrom(BearIcons.Editor as Record<string, unknown>),
+  File: entriesFrom(BearIcons.File as Record<string, unknown>),
+  Social: entriesFrom(BearIcons.Social as Record<string, unknown>),
+  Device: entriesFrom(BearIcons.Device as Record<string, unknown>),
+  Commerce: entriesFrom(BearIcons.Commerce as Record<string, unknown>),
+  Charts: entriesFrom((BearIcons as { Charts?: Record<string, unknown> }).Charts),
+  Misc: entriesFrom(BearIcons.Misc as Record<string, unknown>),
+  Bear: entriesFrom(BearIcons.Bear as Record<string, unknown>),
 };
 
 const CATEGORY_NAMES = Object.keys(ICON_CATEGORIES) as Array<keyof typeof ICON_CATEGORIES>;
-const VISIBLE_TAB_COUNT = 5;
+const DEFAULT_ICON_TAB = 'Product';
+const ICON_IMPORT_TEMPLATE = (name: string) => `import { ${name} } from '@forgedevstack/bear';`;
 
 const ICON_COLORS = [
   { label: 'Default', value: '' },
@@ -35,8 +49,6 @@ const ICON_COLORS = [
 
 const ICON_SIZES = [16, 20, 24, 32, 40];
 
-type IconComponentType = FC<{ size?: number | string; className?: string; [key: string]: unknown }>;
-
 const IconPreview: FC<{
   name: string;
   IconComponent: IconComponentType;
@@ -47,7 +59,7 @@ const IconPreview: FC<{
   const [copied, setCopied] = useState(false);
 
   const handleCopy = useCallback(async () => {
-    await navigator.clipboard.writeText(`import { ${name} } from '@forgedevstack/bear';`);
+    await navigator.clipboard.writeText(ICON_IMPORT_TEMPLATE(name));
     setCopied(true);
     setTimeout(() => setCopied(false), 3000);
   }, [name]);
@@ -85,7 +97,7 @@ const IconPreview: FC<{
 
 const Icons: FC = () => {
   const [search, setSearch] = useState('');
-  const [activeTab, setActiveTab] = useState<string>('all');
+  const [activeTab, setActiveTab] = useState<string>(DEFAULT_ICON_TAB);
   const [colorIdx, setColorIdx] = useState(0);
   const [sizeIdx, setSizeIdx] = useState(2);
   const [showCircle, setShowCircle] = useState(false);
@@ -106,11 +118,9 @@ const Icons: FC = () => {
     return result;
   }, [search]);
 
-  const categoriesToShow: Record<string, Array<[string, IconComponentType]>> = activeTab === 'all'
-    ? filteredBySearch
-    : filteredBySearch[activeTab]
-      ? { [activeTab]: filteredBySearch[activeTab] }
-      : {};
+  const categoriesToShow: Record<string, Array<[string, IconComponentType]>> = filteredBySearch[activeTab]
+    ? { [activeTab]: filteredBySearch[activeTab] }
+    : {};
 
   const totalIcons = Object.values(ICON_CATEGORIES).flat().length;
 
@@ -235,70 +245,16 @@ import { SearchIcon, BearIcons } from '@forgedevstack/bear-icons';
       </div>
 
       {/* Category tabs + grid */}
-      <Tabs value={activeTab} defaultTab="all" onChange={setActiveTab} variant="pills">
-        <TabList className="flex flex-wrap items-center gap-1 border-b border-gray-200 dark:border-gray-700/60 pb-0 mb-4">
-          <Tab id="all">All ({totalIcons})</Tab>
-          {CATEGORY_NAMES.slice(0, VISIBLE_TAB_COUNT - 1).map((category) => (
+      <Tabs value={activeTab} defaultTab={DEFAULT_ICON_TAB} onChange={setActiveTab} variant="pills">
+        <TabList wrap className="mb-4">
+          {CATEGORY_NAMES.map((category) => (
             <Tab key={category} id={category}>
               {category} ({ICON_CATEGORIES[category].length})
             </Tab>
           ))}
-          {CATEGORY_NAMES.length > VISIBLE_TAB_COUNT - 1 && (
-            <Dropdown
-              placement="bottom-start"
-              closeOnSelect
-              trigger={
-                <button
-                  type="button"
-                  role="tab"
-                  aria-haspopup="listbox"
-                  aria-label="More categories"
-                  className={`flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-md transition-colors border-0 cursor-pointer
-                    ${activeTab !== 'all' && !(CATEGORY_NAMES as readonly string[]).slice(0, VISIBLE_TAB_COUNT - 1).includes(activeTab)
-                      ? 'bg-pink-500 text-white'
-                      : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white bg-transparent'
-                    }`}
-                >
-                  More
-                  <BearIcons.ChevronDownIcon size={14} />
-                </button>
-              }
-              items={CATEGORY_NAMES.slice(VISIBLE_TAB_COUNT - 1).map((category) => ({
-                key: category,
-                label: `${category} (${ICON_CATEGORIES[category].length})`,
-                onClick: () => setActiveTab(category),
-              }))}
-            />
-          )}
         </TabList>
 
-        <TabPanel tabId="all" className="pt-2">
-          {Object.entries(categoriesToShow).length === 0 ? (
-            <div className="text-center py-16 text-gray-500 dark:text-gray-400">
-              {search.trim() ? `No icons found matching "${search}"` : 'No icons available.'}
-            </div>
-          ) : (
-            Object.entries(categoriesToShow).map(([category, icons]) => (
-              <section key={category} className="mb-8">
-                <div className="flex items-center gap-2 mb-3">
-                  <Typography variant="h4" className="text-gray-900 dark:text-white">
-                    {category}
-                  </Typography>
-                  <span className="text-xs font-medium text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded-full">
-                    {icons.length}
-                  </span>
-                </div>
-                <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2">
-                  {icons.map(([name, IconComponent]) => (
-                    <IconPreview key={name} name={name} IconComponent={IconComponent} colorClass={colorClass} iconSize={iconSize} showCircle={showCircle} />
-                  ))}
-                </div>
-              </section>
-            ))
-          )}
-        </TabPanel>
-
-        {Object.keys(ICON_CATEGORIES).map((category) => (
+        {CATEGORY_NAMES.map((category) => (
           <TabPanel key={category} tabId={category} className="pt-2">
             {categoriesToShow[category] ? (
               <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2">

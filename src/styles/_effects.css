@@ -30,13 +30,13 @@
 }
 
 @keyframes grow-up {
-  from { height: 0%; opacity: 0; }
-  to { opacity: 1; }
+  from { transform: scaleY(0); opacity: 0; }
+  to { transform: scaleY(1); opacity: 1; }
 }
 
 @keyframes grow-right {
-  from { width: 0%; opacity: 0; }
-  to { opacity: 1; }
+  from { transform: scaleX(0); opacity: 0; }
+  to { transform: scaleX(1); opacity: 1; }
 }
 
 @keyframes draw-line {
@@ -69,10 +69,14 @@
 
 /* Animation utility classes */
 .animate-grow-up {
+  transform-origin: bottom center;
+  transform-box: fill-box;
   animation: grow-up 0.5s ease-out forwards;
 }
 
 .animate-grow-right {
+  transform-origin: left center;
+  transform-box: fill-box;
   animation: grow-right 0.5s ease-out forwards;
 }
 

@@ -7,7 +7,7 @@ import {
   SELECT_MENU_Z_INDEX,
   SELECT_DEFAULT_PLACEHOLDER,
 } from './Select.const';
-import { ChevronDownIcon, CheckIcon } from '../Icon';
+import { SelectCheckSvg, SelectChevronDownSvg } from './helpers';
 import { OverlayPortal } from '../OverlayPortal';
 import { cn, resolveBearId, useBearId } from '@utils';
 import { resolveOverlayEffects, useClickOutsideMultiple, useFixedAnchorPosition, useFormControl } from '@hooks';
@@ -178,12 +178,11 @@ export const Select: FC<SelectProps> = (props) => {
         aria-describedby={formControl?.helperId}
       >
         <span className={`${S_E_L_E_C_T_ROOT_CLASS}__value`}>{displayContent}</span>
-        <ChevronDownIcon
+        <SelectChevronDownSvg
           className={cn(
             'bear-w-4 bear-h-4 bear-shrink-0 bear-transition-transform',
             isOpen && 'bear-rotate-180'
           )}
-          style={{ color: 'var(--bear-text-muted)' }}
         />
       </button>
 
@@ -232,7 +231,7 @@ export const Select: FC<SelectProps> = (props) => {
             >
               {option.label}
               {option.value === value && (
-                <CheckIcon className="bear-w-4 bear-h-4 bear-shrink-0 bear-text-bear-600 dark:bear-text-bear-400" />
+                <SelectCheckSvg className="bear-w-4 bear-h-4 bear-shrink-0 bear-text-bear-600 dark:bear-text-bear-400" />
               )}
             </button>
           ))}

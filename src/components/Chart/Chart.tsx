@@ -1,3 +1,4 @@
+import { resolveBearId, useBearId } from '@utils';
 import type { ChartProps, ChartType } from './Chart.types';
 import { BarChart } from './BarChart';
 import { LineChart } from './LineChart';
@@ -18,7 +19,9 @@ const CHART_RENDERERS: Record<ChartType, (props: Omit<ChartProps, 'type'>) => JS
 };
 
 export const Chart = (props: ChartProps) => {
-  const { type, ...chartProps } = props;
+  const { type = CHART_TYPES.BAR, id, ...chartProps } = props;
+  const generatedId = useBearId('Chart');
+  const domId = resolveBearId(id, generatedId);
   const render = CHART_RENDERERS[type] ?? CHART_RENDERERS[CHART_TYPES.BAR];
-  return render(chartProps);
+  return render({ ...chartProps, id: domId });
 };

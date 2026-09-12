@@ -1,31 +1,27 @@
-import { FC } from 'react';
 import { cn, resolveBearId, useBearId } from '@utils';
+import { Button } from '../Button';
+import { Typography } from '../Typography';
 import type { StatCardProps } from './StatCard.types';
 import {
   DEFAULT_STAT_CARD_ACTION_LABEL,
   DEFAULT_STAT_CARD_COLOR,
-  STAT_CARD_ACTION_CLASS,
-  STAT_CARD_BASE_CLASSES,
-  STAT_CARD_BODY_CLASS,
-  STAT_CARD_DECORATION_CLASS,
   STAT_CARD_GRADIENT_END_ALPHA,
   STAT_CARD_GRADIENT_START_ALPHA,
-  STAT_CARD_ROOT_CLASS,
-  STAT_CARD_TITLE_CLASS,
-  STAT_CARD_VALUE_CLASS,
 } from './StatCard.const';
+import { handleStatCardKeyDown } from './StatCard.utils';
 
-export const StatCard: FC<StatCardProps> = ({
-  title,
-  value,
-  color = DEFAULT_STAT_CARD_COLOR,
-  icon,
-  onClick,
-  className,
-  id,
-  testId,
-  ...props
-}) => {
+export const StatCard = (props: StatCardProps) => {
+  const {
+    title,
+    value,
+    color = DEFAULT_STAT_CARD_COLOR,
+    icon,
+    onClick,
+    className,
+    id,
+    testId,
+    ...htmlProps
+  } = props;
   const generatedId = useBearId('StatCard');
   const domId = resolveBearId(id, generatedId);
   const background = `linear-gradient(135deg, ${color}${STAT_CARD_GRADIENT_START_ALPHA}, ${color}${STAT_CARD_GRADIENT_END_ALPHA})`;
@@ -36,27 +32,30 @@ export const StatCard: FC<StatCardProps> = ({
       data-testid={testId}
       role={onClick ? 'button' : undefined}
       tabIndex={onClick ? 0 : undefined}
-      className={cn(STAT_CARD_ROOT_CLASS, STAT_CARD_BASE_CLASSES, className)}
+      className={cn('Bear-StatCard', className)}
       style={{ background }}
       onClick={onClick}
-      onKeyDown={(event) => {
-        if (!onClick) return;
-        if (event.key === 'Enter' || event.key === ' ') {
-          event.preventDefault();
-          onClick();
-        }
-      }}
-      {...props}
+      onKeyDown={(event) => handleStatCardKeyDown(event, onClick)}
+      {...htmlProps}
     >
-      <div className={STAT_CARD_DECORATION_CLASS} aria-hidden />
-      <div className={STAT_CARD_BODY_CLASS}>
-        <p className={STAT_CARD_TITLE_CLASS}>{title}</p>
-        <p className={STAT_CARD_VALUE_CLASS}>{value}</p>
+      <div className="Bear-StatCard__decoration" aria-hidden />
+      <div className="Bear-StatCard__body">
+        <Typography className="Bear-StatCard__title">{title}</Typography>
+        <Typography className="Bear-StatCard__value">{value}</Typography>
         {onClick && (
-          <button type="button" className={STAT_CARD_ACTION_CLASS}>
-            {icon}
+          <Button
+            type="button"
+            size="sm"
+            variant="ghost"
+            className="Bear-StatCard__action"
+            icon={icon}
+            onClick={(event) => {
+              event.stopPropagation();
+              onClick();
+            }}
+          >
             {DEFAULT_STAT_CARD_ACTION_LABEL}
-          </button>
+          </Button>
         )}
       </div>
     </div>

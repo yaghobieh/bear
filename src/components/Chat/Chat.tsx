@@ -1,205 +1,121 @@
-import { FC, useState, useRef, useEffect, useCallback, KeyboardEvent } from 'react';
-import {cn } from '@utils';
-import { useBear } from '../../context/BearProvider';
+import { useEffect, useRef, useState } from 'react';
+import {
+  BOOLEAN_FALSE,
+  BOOLEAN_TRUE,
+  COMPONENT_NAME_CHAT,
+} from '@const';
+import { cn, getBearLiveRegionProps, resolveBearId, useBearId } from '@utils';
+import { Box } from '../Box';
 import { Button } from '../Button';
-import { Input } from '../Input';
-import { Avatar } from '../Avatar';
-import { Typography } from '../Typography';
-import { BearIcons } from '../Icon';
-import type { ChatProps, ChatBubbleProps } from './Chat.types';
-import { CHAT_DEFAULTS, MESSAGE_STATUS_ICONS, SENDER_COLORS } from './Chat.const';
+import { ChatBubble } from '../ChatBubble';
+import { ChatError } from '../ChatError';
+import { PromptComposer } from '../PromptComposer';
+import { PromptSuggestions } from '../PromptSuggestions';
+import {
+  CHAT_DEFAULT_DISABLED,
+  CHAT_DEFAULT_SHOW_AVATARS,
+  CHAT_DEFAULT_SHOW_STATUS,
+  CHAT_DEFAULT_SHOW_TIMESTAMPS,
+  CHAT_DEFAULT_TRANSLATIONS,
+  CHAT_DEFAULTS,
+} from './Chat.const';
+import type { ChatProps } from './Chat.types';
+import { isChatScrollerAtBottom, resolveChatHeightVar } from './Chat.utils';
+import { ChatTypingIndicator } from './helpers/ChatTypingIndicator';
 
-/**
- * ChatBubble - Single message bubble
- */
-const ChatBubble: FC<ChatBubbleProps> = ({
-  message,
-  showTimestamp = true,
-  showStatus = true,
-  showAvatar = true,
-  userAvatar,
-  botAvatar,
-}) => {
-  const isUser = message.sender === 'user';
-  const isSystem = message.sender === 'system';
-  const colors = SENDER_COLORS[message.sender];
+export const Chat = (props: ChatProps) => {
+  const {
+    id,
+    testId,
+    messages,
+    onSend,
+    onStop,
+    onAttach,
+    isLoading = BOOLEAN_FALSE,
+    isStreaming = BOOLEAN_FALSE,
+    isTyping = BOOLEAN_FALSE,
+    placeholder,
+    header,
+    footer,
+    showTimestamps = CHAT_DEFAULT_SHOW_TIMESTAMPS,
+    showStatus = CHAT_DEFAULT_SHOW_STATUS,
+    showAvatars = CHAT_DEFAULT_SHOW_AVATARS,
+    userAvatar,
+    botAvatar,
+    typingText,
+    className,
+    height = CHAT_DEFAULTS.HEIGHT,
+    disabled = CHAT_DEFAULT_DISABLED,
+    allowAttach,
+    suggestions,
+    onSuggestionSelect,
+    errorTitle,
+    errorMessage,
+    onRetry,
+    translations,
+  } = props;
 
-  if (isSystem) {
-    return (
-      <div className="flex justify-center my-2">
-        <Typography 
-          variant="caption" 
-          className="px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-800"
-          style={{ color: colors.text }}
-        >
-          {message.content}
-        </Typography>
-      </div>
-    );
-  }
+  const generatedId = useBearId(COMPONENT_NAME_CHAT);
+  const domId = resolveBearId(id, generatedId);
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const isAtBottomRef = useRef(BOOLEAN_TRUE);
+  const lastMessageIdRef = useRef<string | null>(null);
+  const [hasNewMessages, setHasNewMessages] = useState(BOOLEAN_FALSE);
+  const labels = { ...CHAT_DEFAULT_TRANSLATIONS, ...translations };
+  const streaming = isStreaming || isLoading;
+  const lastMessage = messages[messages.length - 1];
+  const liveText = streaming && typeof lastMessage?.content === 'string' ? lastMessage.content : undefined;
+  const liveProps = getBearLiveRegionProps('info');
 
-  const avatar = isUser ? userAvatar : botAvatar;
-  const statusIcon = message.status ? MESSAGE_STATUS_ICONS[message.status] : null;
+  const scrollToBottom = () => {
+    const scroller = scrollerRef.current;
+    if (!scroller) {
+      return;
+    }
+    scroller.scrollTop = scroller.scrollHeight;
+    isAtBottomRef.current = BOOLEAN_TRUE;
+    setHasNewMessages(BOOLEAN_FALSE);
+  };
 
-  return (
-    <div 
-      className={cn(
-        'flex gap-2 mb-3',
-        isUser ? 'flex-row-reverse' : 'flex-row'
-      )}
-    >
-      {showAvatar && (
-        <Avatar 
-          src={avatar} 
-          initials={message.name?.[0] || (isUser ? 'U' : 'B')}
-          size="sm"
-          className="flex-shrink-0"
-        />
-      )}
-      
-      <div className={cn('flex flex-col max-w-[70%]', isUser ? 'items-end' : 'items-start')}>
-        {message.name && (
-          <Typography variant="caption" className="mb-1 opacity-60">
-            {message.name}
-          </Typography>
-        )}
-        
-        <div 
-          className={cn(
-            'px-4 py-2 rounded-2xl',
-            isUser ? 'rounded-br-sm' : 'rounded-bl-sm'
-          )}
-          style={{ 
-            backgroundColor: colors.bg,
-            color: colors.text,
-          }}
-        >
-          {typeof message.content === 'string' ? (
-            <Typography variant="body2">{message.content}</Typography>
-          ) : (
-            message.content
-          )}
-        </div>
-        
-        <div className="flex items-center gap-1 mt-1">
-          {showTimestamp && message.timestamp && (
-            <Typography variant="caption" className="opacity-50 text-xs">
-              {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-            </Typography>
-          )}
-          {showStatus && statusIcon && isUser && (
-            <span 
-              className={cn(
-                'text-xs',
-                message.status === 'read' ? 'text-blue-500' : 'opacity-50',
-                message.status === 'error' && 'text-red-500'
-              )}
-            >
-              {statusIcon}
-            </span>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
+  const handleScroll = () => {
+    const scroller = scrollerRef.current;
+    if (!scroller) {
+      return;
+    }
+    const atBottom = isChatScrollerAtBottom(scroller);
+    isAtBottomRef.current = atBottom;
+    if (atBottom) {
+      setHasNewMessages(BOOLEAN_FALSE);
+    }
+  };
 
-/**
- * TypingIndicator - Shows when someone is typing
- */
-const TypingIndicator: FC<{ text?: string }> = ({ text = CHAT_DEFAULTS.TYPING_TEXT }) => (
-  <div className="flex items-center gap-2 mb-3">
-    <div className="flex gap-1 px-4 py-3 bg-gray-100 dark:bg-gray-800 rounded-2xl rounded-bl-sm">
-      <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-      <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-      <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
-    </div>
-    <Typography variant="caption" className="opacity-50">{text}</Typography>
-  </div>
-);
-
-/**
- * Chat - Chat interface component
- * 
- * @example
- * ```tsx
- * const [messages, setMessages] = useState<ChatMessage[]>([
- *   { id: '1', content: 'Hello!', sender: 'bot', timestamp: new Date() },
- * ]);
- * 
- * <Chat
- *   messages={messages}
- *   onSend={(msg) => setMessages([...messages, { id: Date.now().toString(), content: msg, sender: 'user' }])}
- *   isTyping={false}
- *   showAvatars
- * />
- * ```
- */
-export const Chat: FC<ChatProps> = ({
-
-  messages,
-  onSend,
-  isLoading = false,
-  placeholder = CHAT_DEFAULTS.PLACEHOLDER,
-  header,
-  footer,
-  showTimestamps = true,
-  showStatus = true,
-  showAvatars = true,
-  userAvatar,
-  botAvatar,
-  isTyping = false,
-  typingText,
-  className,
-  height = CHAT_DEFAULTS.HEIGHT,
-  testId,
-  disabled = false,
-}) => {
-
-  const { mode } = useBear();
-  const isDark = mode === 'dark';
-  const [inputValue, setInputValue] = useState('');
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  // Auto-scroll to bottom
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, isTyping]);
-
-  const handleSend = useCallback(() => {
-    if (inputValue.trim() && onSend && !disabled && !isLoading) {
-      onSend(inputValue.trim());
-      setInputValue('');
+    const lastId = lastMessage?.id ?? null;
+    const isFirstRender = lastMessageIdRef.current === null;
+    const hasAppended = lastId !== null && lastId !== lastMessageIdRef.current;
+    lastMessageIdRef.current = lastId;
+    if (!hasAppended) {
+      return;
     }
-  }, [inputValue, onSend, disabled, isLoading]);
-
-  const handleKeyDown = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSend();
+    if (isFirstRender || isAtBottomRef.current) {
+      scrollToBottom();
+      return;
     }
-  }, [handleSend]);
+    setHasNewMessages(BOOLEAN_TRUE);
+  }, [messages, lastMessage?.id]);
 
   return (
-    <div 
-      className={cn(
-        'Bear-Chat',
-        'flex flex-col rounded-xl overflow-hidden border',
-        isDark ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-200',
-        className
-      )}
-      style={{ height: typeof height === 'number' ? `${height}px` : height }}
+    <Box
+      id={domId}
       data-testid={testId}
+      className={cn('Bear-Chat', className)}
+      style={resolveChatHeightVar(height)}
     >
-      {/* Header */}
-      {header && (
-        <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
-          {header}
-        </div>
-      )}
-      
-      {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4">
+      {header && <Box className="Bear-Chat__header">{header}</Box>}
+      <Box ref={scrollerRef} className="Bear-Chat__messages" onScroll={handleScroll}>
+        <Box className="Bear-Chat__live" {...liveProps}>
+          {liveText}
+        </Box>
         {messages.map((message) => (
           <ChatBubble
             key={message.id}
@@ -211,40 +127,41 @@ export const Chat: FC<ChatProps> = ({
             botAvatar={botAvatar}
           />
         ))}
-        
-        {isTyping && <TypingIndicator text={typingText} />}
-        
-        <div ref={messagesEndRef} />
-      </div>
-      
-      {/* Input */}
-      <div className="p-3 border-t border-gray-200 dark:border-gray-700">
-        <div className="flex gap-2">
-          <Input
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder={placeholder}
-            disabled={disabled || isLoading}
-            className="flex-1"
-          />
-          <Button
-            variant="primary"
-            onClick={handleSend}
-            disabled={!inputValue.trim() || disabled || isLoading}
-          >
-            <BearIcons.SendIcon size={18} />
-          </Button>
-        </div>
-        
-        {footer && (
-          <div className="mt-2">
-            {footer}
-          </div>
+        {isTyping && !streaming && <ChatTypingIndicator text={typingText ?? labels.typingText} />}
+        {errorMessage && (
+          <ChatError title={errorTitle} onRetry={onRetry}>
+            {errorMessage}
+          </ChatError>
         )}
-      </div>
-    </div>
+        {hasNewMessages && (
+          <Button
+            type="button"
+            variant="primary"
+            size="sm"
+            className="Bear-Chat__new-messages"
+            onClick={scrollToBottom}
+          >
+            {labels.newMessagesLabel}
+          </Button>
+        )}
+      </Box>
+      {suggestions && suggestions.length > 0 && (
+        <Box className="Bear-Chat__suggestions">
+          <PromptSuggestions suggestions={suggestions} onSelect={onSuggestionSelect} />
+        </Box>
+      )}
+      <Box className="Bear-Chat__composer">
+        <PromptComposer
+          onSubmit={onSend}
+          onStop={onStop}
+          onAttach={onAttach}
+          isStreaming={streaming}
+          disabled={disabled}
+          allowAttach={allowAttach}
+          placeholder={placeholder ?? labels.placeholder}
+        />
+        {footer}
+      </Box>
+    </Box>
   );
 };
-
-export default Chat;

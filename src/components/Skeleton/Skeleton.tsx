@@ -5,7 +5,6 @@ import {
   SKELETON_BASE_CLASSES,
   SKELETON_VARIANT_CLASSES,
   SKELETON_ANIMATION_CLASSES,
-  SKELETON_BG_CLASSES,
   SKELETON_TEXT_HEIGHT,
   SKELETON_AVATAR_SIZES,
 } from './Skeleton.const';
@@ -53,8 +52,8 @@ export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
     const skeletonClasses = cn(
       SKELETON_BASE_CLASSES,
       SKELETON_VARIANT_CLASSES[variant],
+      animation === 'pulse' && 'Bear-Skeleton--pulse',
       SKELETON_ANIMATION_CLASSES[animation],
-      SKELETON_BG_CLASSES,
       className
     );
 

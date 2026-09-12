@@ -495,3 +495,151 @@ html.dark body {
   justify-content: center;
 }
 
+.Bear-Catalog__title {
+  margin-bottom: 0.5rem;
+}
+
+.Bear-Catalog__lead {
+  margin-bottom: 0.35rem;
+}
+
+.Bear-Catalog__note {
+  margin-bottom: 1.75rem;
+}
+
+.Bear-Catalog__toolbar {
+  margin-bottom: 1.75rem;
+}
+
+.Bear-Catalog__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .Bear-Catalog__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .Bear-Catalog__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.Bear-CatalogCard {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  text-decoration: none;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  background: #ffffff;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.dark .Bear-CatalogCard {
+  border-color: #374151;
+  background: rgba(31, 41, 55, 0.55);
+}
+
+.Bear-CatalogCard:hover {
+  border-color: #f472b6;
+  box-shadow: 0 8px 24px rgba(236, 72, 153, 0.1);
+}
+
+.Bear-CatalogCard__preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 8.5rem;
+  padding: 1rem;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(249, 250, 251, 0.9), rgba(243, 244, 246, 0.65));
+}
+
+.dark .Bear-CatalogCard__preview {
+  background:
+    linear-gradient(180deg, rgba(17, 24, 39, 0.7), rgba(17, 24, 39, 0.35));
+}
+
+.Bear-CatalogCard__preview > * {
+  max-width: 100%;
+}
+
+.Bear-CatalogCard__meta {
+  padding: 0.7rem 0.85rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.dark .Bear-CatalogCard__meta {
+  border-top-color: #374151;
+}
+
+.Bear-CatalogCard__name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #111827;
+}
+
+.dark .Bear-CatalogCard__name {
+  color: #f3f4f6;
+}
+
+.Bear-CatalogCard__badge {
+  flex-shrink: 0;
+  padding: 0.1rem 0.4rem;
+  border-radius: 999px;
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: #db2777;
+  background: #fce7f3;
+}
+
+.dark .Bear-CatalogCard__badge {
+  color: #f9a8d4;
+  background: rgba(131, 24, 67, 0.4);
+}
+
+.Bear-CatalogCard__fallback {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.75rem;
+  background: rgba(236, 72, 153, 0.08);
+}
+
+.Bear-Storybook__frame {
+  width: 100%;
+  min-height: calc(100vh - 8rem);
+  border: 1px solid var(--bear-border-default, #e5e7eb);
+  border-radius: 0.75rem;
+  background: #ffffff;
+}
+
+.Bear-Storybook__chip {
+  width: 4.5rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--bear-border-default, #e5e7eb);
+}
+
+.Bear-Storybook__swatch {
+  min-width: 6.5rem;
+}
+
+.Bear-Sandbox__preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 8rem;
+  padding: 1.25rem;
+  border: 1px solid var(--bear-border-default, #e5e7eb);
+  border-radius: 0.75rem;
+  background: var(--bear-bg-secondary, #f9fafb);
+}
+

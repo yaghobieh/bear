@@ -3,6 +3,8 @@
   "buildCommand": "npm run portal:build",
   "outputDirectory": "portal/dist",
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/storybook", "destination": "/storybook/index.html" },
+    { "source": "/storybook/", "destination": "/storybook/index.html" },
+    { "source": "/((?!storybook(?:/|$)).*)", "destination": "/index.html" }
   ]
 }

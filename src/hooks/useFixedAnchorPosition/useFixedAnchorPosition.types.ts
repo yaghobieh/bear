@@ -1,6 +1,6 @@
 import type { CSSProperties, RefObject } from 'react';
 
-export type OverlayMotionEffect = 'none' | 'fade' | 'slide-down' | 'scale';
+export type OverlayMotionEffect = 'none' | 'fade' | 'slide-down' | 'scale' | 'fold';
 
 export type OverlayOpenEffect = OverlayMotionEffect;
 

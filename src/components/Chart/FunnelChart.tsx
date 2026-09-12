@@ -1,5 +1,6 @@
 import { ONE } from '@const';
-import { cn } from '@utils';
+import { cn, resolveBearId, useBearId } from '@utils';
+import type { CSSProperties } from 'react';
 import { Box } from '../Box';
 import { Flex } from '../Flex';
 import { Typography } from '../Typography';
@@ -16,36 +17,39 @@ export const FunnelChart = (props: FunnelChartProps) => {
     animated = true,
     color,
     className,
+    id,
+    testId,
     ...rest
   } = props;
 
+  const generatedId = useBearId('FunnelChart');
+  const domId = resolveBearId(id, generatedId);
   const maxValue = Math.max(...data.map((item) => item.value), ONE);
+  const rootStyle = { '--Bear-Chart-height': `${height}px` } as CSSProperties;
 
   return (
     <Flex
+      id={domId}
+      data-testid={testId}
       direction="column"
       gap={1}
       justify="center"
-      className={cn('Bear-Chart Bear-Chart--funnel bear-w-full', className)}
-      style={{ height }}
+      className={cn('Bear-Chart Bear-Chart--funnel', className)}
+      style={rootStyle}
       {...rest}
     >
       {data.map((item, index) => {
         const widthPct = Math.max((item.value / maxValue) * CHART.VIEWBOX, CHART.FUNNEL_MIN_WIDTH);
-        const barColor = getChartColor(index, item.color || color);
+        const stepStyle = {
+          '--Bear-Chart-size': `${widthPct}%`,
+          '--Bear-Chart-step-height': `${CHART.VIEWBOX / Math.max(data.length, ONE) / 2}%`,
+          '--Bear-Chart-color': getChartColor(index, item.color || color),
+        } as CSSProperties;
         return (
           <Flex key={item.label} direction="column" align="center" gap={1} className="bear-w-full">
             <Box
-              className={cn(
-                'Bear-Chart__funnel-step bear-rounded-md',
-                animated && 'animate-grow-right'
-              )}
-              style={{
-                width: `${widthPct}%`,
-                height: `${CHART.VIEWBOX / Math.max(data.length, ONE) / 2}%`,
-                minHeight: CHART.FUNNEL_MIN_WIDTH,
-                backgroundColor: barColor,
-              }}
+              className={cn('Bear-Chart__funnel-step bear-rounded-md', animated && 'animate-grow-right')}
+              style={stepStyle}
             />
             {showLabels && (
               <Typography variant="caption" color="muted">

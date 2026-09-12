@@ -4,6 +4,7 @@ import { BearLoader } from './components/BearLoader';
 import { Topbar } from './components/Topbar/Topbar';
 import { Sidebar } from './components/Sidebar';
 import { PageBreadcrumbs } from './components/PageBreadcrumbs';
+import { ComponentSandboxLink } from './components/ComponentSandboxLink';
 import { DocPageNav } from './components/DocPageNav';
 import { RouteSEO } from './components/RouteSEO';
 
@@ -138,7 +139,7 @@ const DropdownPage = lazy(() => import('./pages/components/Dropdown'));
 const SpeedDialPage = lazy(() => import('./pages/components/SpeedDial'));
 
 // Charts & Graphs
-const ChartPage = lazy(() => import('./pages/components/Chart'));
+const ChartPage = lazy(() => import('./pages/components/ChartPage'));
 const SparklinePage = lazy(() => import('./pages/components/Sparkline'));
 const GaugePage = lazy(() => import('./pages/components/Gauge'));
 
@@ -193,6 +194,11 @@ const DiffSquaresPage = lazy(() => import('./pages/components/DiffSquares'));
 const ChatPage = lazy(() => import('./pages/components/ChatPage'));
 const FloatingChatPage = lazy(() => import('./pages/components/FloatingChatPage'));
 const MessageListPage = lazy(() => import('./pages/components/MessageListPage'));
+const AiChatPage = lazy(() => import('./pages/components/AiChatPage'));
+const PromptComposerPage = lazy(() => import('./pages/components/PromptComposerPage'));
+const StreamingMessagePage = lazy(() => import('./pages/components/StreamingMessagePage'));
+const ThinkingBlockPage = lazy(() => import('./pages/components/ThinkingBlockPage'));
+const ThemeSwitcherPage = lazy(() => import('./pages/components/ThemeSwitcherPage'));
 const TerminalPage = lazy(() => import('./pages/components/TerminalPage'));
 
 // New v1.0.9 - Map, CodeEditor, Cropper, Carousel, Animation
@@ -275,6 +281,22 @@ const ApiComponentPage = lazy(() => import('./pages/api/ComponentApi'));
 
 // Components Overview
 const ComponentsOverviewPage = lazy(() => import('./pages/ComponentsOverview'));
+const StorybookPage = lazy(() => import('./pages/Storybook'));
+const ActivityItemPage = lazy(() => import('./pages/components/ActivityItemPage'));
+const ApprovalCardPage = lazy(() => import('./pages/components/ApprovalCardPage'));
+const ArtifactCardPage = lazy(() => import('./pages/components/ArtifactCardPage'));
+const CardSkeletonPage = lazy(() => import('./pages/components/CardSkeletonPage'));
+const ChatBubblePage = lazy(() => import('./pages/components/ChatBubblePage'));
+const ChatErrorPage = lazy(() => import('./pages/components/ChatErrorPage'));
+const CitationListPage = lazy(() => import('./pages/components/CitationListPage'));
+const ContextMeterPage = lazy(() => import('./pages/components/ContextMeterPage'));
+const FormSkeletonPage = lazy(() => import('./pages/components/FormSkeletonPage'));
+const MessageActionsPage = lazy(() => import('./pages/components/MessageActionsPage'));
+const ModelSelectPage = lazy(() => import('./pages/components/ModelSelectPage'));
+const PromptSuggestionsPage = lazy(() => import('./pages/components/PromptSuggestionsPage'));
+const StatCardPage = lazy(() => import('./pages/components/StatCardPage'));
+const TableSkeletonPage = lazy(() => import('./pages/components/TableSkeletonPage'));
+const ToolCallPage = lazy(() => import('./pages/components/ToolCallPage'));
 const CategoryLandingPage = lazy(() => import('./pages/components/CategoryLanding'));
 const BackdropPage = lazy(() => import('./pages/components/Backdrop'));
 const ChipGroupPage = lazy(() => import('./pages/components/ChipGroup'));
@@ -370,6 +392,8 @@ function PortalLayout({
 }: PortalLayoutProps) {
   const location = useLocation();
   const isLanding = location.pathname === '/';
+  const isStorybook = location.pathname === '/storybook';
+  const isWide = isLanding || isStorybook;
   const { version } = useNpmPackageVersion();
   const banner = {
     id: `bear-${version}`,
@@ -400,12 +424,26 @@ function PortalLayout({
         />
 
         <main className="flex-1 min-w-0">
-          <div className={isLanding ? 'max-w-7xl mx-auto px-6 py-10' : 'max-w-3xl mx-auto px-6 py-10 doc-layout'}>
-            {!isLanding && <PageBreadcrumbs />}
+          <div
+            className={
+              isStorybook
+                ? 'w-full px-4 py-4'
+                : isWide
+                  ? 'max-w-7xl mx-auto px-6 py-10'
+                  : 'max-w-3xl mx-auto px-6 py-10 doc-layout'
+            }
+          >
+            {!isLanding && !isStorybook && (
+              <div className="flex items-center justify-between gap-3 mb-2">
+                <PageBreadcrumbs />
+                <ComponentSandboxLink />
+              </div>
+            )}
             <Suspense fallback={<PageLoader />}>
               <Routes>
                 <Route path="/" element={<IntroductionPage />} />
                 <Route path="/whats-new" element={<WhatsNew124Page />} />
+                <Route path="/storybook" element={<StorybookPage />} />
                 <Route path="/changelog" element={<ChangelogPage />} />
                 <Route path="/skills" element={<SkillsPage />} />
                 <Route path="/docs/forms" element={<FormsDocsPage />} />
@@ -552,6 +590,26 @@ function PortalLayout({
                 <Route path="/components/chat" element={<ChatPage />} />
                 <Route path="/components/floating-chat" element={<FloatingChatPage />} />
                 <Route path="/components/message-list" element={<MessageListPage />} />
+                <Route path="/components/ai-chat" element={<AiChatPage />} />
+                <Route path="/components/prompt-composer" element={<PromptComposerPage />} />
+                <Route path="/components/streaming-message" element={<StreamingMessagePage />} />
+                <Route path="/components/thinking-block" element={<ThinkingBlockPage />} />
+                <Route path="/components/theme-switcher" element={<ThemeSwitcherPage />} />
+                <Route path="/components/chat-bubble" element={<ChatBubblePage />} />
+                <Route path="/components/prompt-suggestions" element={<PromptSuggestionsPage />} />
+                <Route path="/components/message-actions" element={<MessageActionsPage />} />
+                <Route path="/components/chat-error" element={<ChatErrorPage />} />
+                <Route path="/components/tool-call" element={<ToolCallPage />} />
+                <Route path="/components/citation-list" element={<CitationListPage />} />
+                <Route path="/components/approval-card" element={<ApprovalCardPage />} />
+                <Route path="/components/model-select" element={<ModelSelectPage />} />
+                <Route path="/components/context-meter" element={<ContextMeterPage />} />
+                <Route path="/components/artifact-card" element={<ArtifactCardPage />} />
+                <Route path="/components/card-skeleton" element={<CardSkeletonPage />} />
+                <Route path="/components/form-skeleton" element={<FormSkeletonPage />} />
+                <Route path="/components/table-skeleton" element={<TableSkeletonPage />} />
+                <Route path="/components/stat-card" element={<StatCardPage />} />
+                <Route path="/components/activity-item" element={<ActivityItemPage />} />
                 <Route path="/components/terminal" element={<TerminalPage />} />
                 
                 {/* v1.0.9 - Media & Animation */}
@@ -610,6 +668,8 @@ function PortalLayout({
                 <Route path="/components/bar-chart" element={<ChartPage />} />
                 <Route path="/components/line-chart" element={<ChartPage />} />
                 <Route path="/components/pie-chart" element={<ChartPage />} />
+                <Route path="/components/radar-chart" element={<ChartPage />} />
+                <Route path="/components/funnel-chart" element={<ChartPage />} />
                 <Route path="/components/sparkline" element={<SparklinePage />} />
                 <Route path="/components/gauge" element={<GaugePage />} />
                 

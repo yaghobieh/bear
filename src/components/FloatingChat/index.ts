@@ -1,2 +1,2 @@
 export { FloatingChat } from './FloatingChat';
-export type { FloatingChatProps } from './FloatingChat.types';
+export type { FloatingChatProps, FloatingChatTranslations } from './FloatingChat.types';

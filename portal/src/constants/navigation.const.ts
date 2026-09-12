@@ -30,6 +30,57 @@ export const VERSION_HIGHLIGHT_FALLBACK = 'AI chat kit · Drawer variants · sys
 
 /** Main Bear UI repository */
 export const GITHUB_URL = 'https://github.com/yaghobieh/bear';
+export const STORYBOOK_DEV_URL = 'http://localhost:6006';
+export const STORYBOOK_PROD_PATH = '/storybook/';
+
+export const resolveStorybookHref = (): string => {
+  if (import.meta.env.DEV) {
+    return STORYBOOK_DEV_URL;
+  }
+  return STORYBOOK_PROD_PATH;
+};
+
+export const STORYBOOK_QUERY_PATH = 'path';
+export const STORYBOOK_DOCS_PREFIX = '/docs/';
+export const STORYBOOK_DOCS_SUFFIX = '--docs';
+export const COMPONENTS_PATH_PREFIX = '/components/';
+export const COMPONENTS_CATEGORY_SEGMENT = '/category/';
+
+export const STORYBOOK_EXPORT_BY_SLUG: Record<string, string> = {
+  fab: 'Fab',
+  'hover-card': 'HoverCard',
+  'context-menu': 'ContextMenu',
+  'otp-input': 'OTPInput',
+  'qr-code': 'QRCode',
+  'json-viewer': 'JsonViewer',
+};
+
+const toComponentExportName = (slug: string): string => {
+  if (STORYBOOK_EXPORT_BY_SLUG[slug]) {
+    return STORYBOOK_EXPORT_BY_SLUG[slug];
+  }
+  return slug
+    .split('-')
+    .filter(Boolean)
+    .map((part) => `${part.slice(0, 1).toUpperCase()}${part.slice(1)}`)
+    .join('');
+};
+
+export const isComponentDocsPath = (pathname: string): boolean =>
+  pathname.startsWith(COMPONENTS_PATH_PREFIX) && !pathname.includes(COMPONENTS_CATEGORY_SEGMENT);
+
+export const resolveStorybookHrefForPath = (pathname: string): string => {
+  const base = resolveStorybookHref();
+  if (!isComponentDocsPath(pathname)) {
+    return base;
+  }
+  const slug = pathname.split('/').filter(Boolean).pop() ?? '';
+  const exportName = toComponentExportName(slug);
+  const storyId = `components-${exportName.toLowerCase()}${STORYBOOK_DOCS_SUFFIX}`;
+  const root = base.endsWith('/') ? base : `${base}/`;
+  return `${root}?${STORYBOOK_QUERY_PATH}=${STORYBOOK_DOCS_PREFIX}${storyId}`;
+};
+
 export const NPM_URL = 'https://www.npmjs.com/package/@forgedevstack/bear';
 export const CLI_NPM_URL = 'https://www.npmjs.com/package/@forgedevstack/forge-cli';
 export const FORGESTACK_URL = 'https://forgedevstack.com';
@@ -257,6 +308,9 @@ export const NAVIGATION: NavGroup[] = [
           { path: '/components/progress', label: 'Progress' },
           { path: '/components/ring-progress', label: 'RingProgress' },
           { path: '/components/skeleton', label: 'Skeleton', badge: 'New' },
+          { path: '/components/card-skeleton', label: 'CardSkeleton' },
+          { path: '/components/form-skeleton', label: 'FormSkeleton' },
+          { path: '/components/table-skeleton', label: 'TableSkeleton' },
           { path: '/components/bear-loader', label: 'BearLoader' },
           { path: '/components/loading-overlay', label: 'LoadingOverlay' },
         ],
@@ -325,6 +379,8 @@ export const NAVIGATION: NavGroup[] = [
           { path: '/components/kanban', label: 'Kanban' },
           { path: '/components/descriptions', label: 'Descriptions' },
           { path: '/components/number-formatter', label: 'NumberFormatter' },
+          { path: '/components/stat-card', label: 'StatCard' },
+          { path: '/components/activity-item', label: 'ActivityItem' },
         ],
       },
       // Misc
@@ -395,12 +451,22 @@ export const NAVIGATION: NavGroup[] = [
         label: 'Chat',
         children: [
           { path: '/components/chat', label: 'Chat', badge: 'New' },
+          { path: '/components/chat-bubble', label: 'ChatBubble' },
           { path: '/components/floating-chat', label: 'FloatingChat' },
           { path: '/components/message-list', label: 'MessageList' },
           { path: '/components/ai-chat', label: 'AI chat kit', badge: 'New' },
           { path: '/components/prompt-composer', label: 'PromptComposer' },
+          { path: '/components/prompt-suggestions', label: 'PromptSuggestions' },
           { path: '/components/streaming-message', label: 'StreamingMessage' },
           { path: '/components/thinking-block', label: 'ThinkingBlock' },
+          { path: '/components/message-actions', label: 'MessageActions' },
+          { path: '/components/chat-error', label: 'ChatError' },
+          { path: '/components/tool-call', label: 'ToolCall' },
+          { path: '/components/citation-list', label: 'CitationList' },
+          { path: '/components/approval-card', label: 'ApprovalCard' },
+          { path: '/components/model-select', label: 'ModelSelect' },
+          { path: '/components/context-meter', label: 'ContextMeter' },
+          { path: '/components/artifact-card', label: 'ArtifactCard' },
           { path: '/components/theme-switcher', label: 'ThemeSwitcher', badge: 'New' },
         ],
       },
@@ -416,6 +482,8 @@ export const NAVIGATION: NavGroup[] = [
       { path: '/components/bar-chart', label: 'BarChart' },
       { path: '/components/line-chart', label: 'LineChart' },
       { path: '/components/pie-chart', label: 'PieChart' },
+      { path: '/components/radar-chart', label: 'RadarChart' },
+      { path: '/components/funnel-chart', label: 'FunnelChart' },
       { path: '/components/sparkline', label: 'Sparkline' },
       { path: '/components/gauge', label: 'Gauge' },
       { path: '/components/heatmap', label: 'Heatmap' },

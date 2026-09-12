@@ -1,0 +1,90 @@
+.Bear-Skeleton {
+  display: block;
+  background-color: var(--bear-bg-tertiary, #e5e7eb);
+  border-radius: 0.25rem;
+}
+
+.dark .Bear-Skeleton,
+.bear-dark .Bear-Skeleton {
+  background-color: var(--bear-neutral-700, #3f3f46);
+}
+
+.Bear-Skeleton--pulse {
+  animation: bear-skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes bear-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.bear-reduced-motion .Bear-Skeleton--pulse {
+  animation: none;
+}
+
+.Bear-FormSkeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.Bear-FormSkeleton__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.Bear-FormSkeleton__label {
+  width: 30%;
+}
+
+.Bear-FormSkeleton__control {
+  width: 100%;
+}
+
+.Bear-StatCard {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid var(--bear-border-default);
+  color: #fff;
+}
+
+.Bear-StatCard__decoration {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8rem;
+  height: 8rem;
+  margin-top: -2rem;
+  margin-right: -2rem;
+  border-radius: 999px;
+  background: #fff;
+  opacity: 0.2;
+}
+
+.Bear-StatCard__body {
+  position: relative;
+  z-index: 1;
+}
+
+.Bear-StatCard__title {
+  margin: 0 0 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.Bear-StatCard__value {
+  margin: 0 0 1rem;
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #fff;
+}

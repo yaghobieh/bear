@@ -50,6 +50,9 @@ export type { RatingProps } from './Rating';
 export { 
   Icon,
   BearIcons,
+  StorybookIcon,
+  SandboxIcon,
+  ComponentsIcon,
 } from './Icon';
 export type { IconProps } from './Icon';
 
@@ -61,15 +64,15 @@ export {
   ChevronLeftIcon,
   MenuIcon,
   CloseIcon as XIcon,
-} from './Icon/icons/navigation';
+} from '@forgedevstack/bear-icons/navigation';
 export { 
   AddIcon as PlusIcon, 
   RemoveIcon as MinusIcon,
   SearchIcon,
   SettingsIcon,
-} from './Icon/icons/action';
-export { CheckIcon } from './Icon/icons/status';
-export { BearPawIcon } from './Icon/icons/misc';
+} from '@forgedevstack/bear-icons/action';
+export { CheckIcon } from '@forgedevstack/bear-icons/status';
+export { BearPawIcon } from '@forgedevstack/bear-icons/misc';
 
 // Logo
 export { BearLogo, EmberLogo } from './BearLogo';

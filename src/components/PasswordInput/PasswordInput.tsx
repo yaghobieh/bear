@@ -1,7 +1,7 @@
 import { FC, useState, useCallback, useEffect, ReactNode } from 'react';
 import {cn } from '@utils';
 import { Input } from '../Input';
-import { VisibilityIcon, VisibilityOffIcon } from '../Icon/icons/action';
+import { VisibilityIcon, VisibilityOffIcon } from '@forgedevstack/bear-icons/action';
 import type { PasswordInputProps } from './PasswordInput.types';
 
 const SHIFT_INDICATOR_CLASSES = cn(

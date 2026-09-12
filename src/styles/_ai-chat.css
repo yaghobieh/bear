@@ -265,10 +265,22 @@
 
 .Bear-ChatError {
   border: 1px solid var(--bear-danger-500);
-  background-color: var(--bear-danger-50);
-  color: var(--bear-danger-800);
+  background-color: color-mix(in srgb, var(--bear-danger-500) 12%, var(--bear-bg-primary));
+  color: var(--bear-danger-700);
   border-radius: var(--bear-radius-md, 0.5rem);
   padding: 0.75rem 1rem;
+}
+
+.Bear-ChatError .Bear-Typography,
+.Bear-ChatError .Bear-Button {
+  color: inherit;
+}
+
+.dark .Bear-ChatError,
+.bear-dark .Bear-ChatError {
+  background-color: color-mix(in srgb, var(--bear-danger-500) 20%, var(--bear-bg-secondary));
+  color: var(--bear-danger-200);
+  border-color: var(--bear-danger-500);
 }
 
 .Bear-ToolCall {

@@ -2,8 +2,14 @@ import React, { FC, ReactNode, lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import { CodeBlock } from '@/components/CodeBlock';
 import { HomeBentoGrid } from '@/components/HomeBentoGrid';
-import { GITHUB_URL, VERSION_HIGHLIGHT_BY_VERSION, VERSION_HIGHLIGHT_FALLBACK } from '@/constants/navigation.const';
-import { BearIcons, CheckIcon, Badge } from '@forgedevstack/bear';
+import {
+  GITHUB_URL,
+  VERSION_HIGHLIGHT_BY_VERSION,
+  VERSION_HIGHLIGHT_FALLBACK,
+  resolveStorybookHref,
+} from '@/constants/navigation.const';
+import { openCodeSandbox } from '@/pages/Sandbox/openCodeSandbox';
+import { Badge, BearIcons, CheckIcon, SandboxIcon, StorybookIcon } from '@forgedevstack/bear';
 import { useNpmPackageVersion } from '@/hooks/useNpmPackageVersion';
 
 const ComparisonSection = lazy(() => import('@/components/ComparisonSection/ComparisonSection'));
@@ -137,6 +143,38 @@ const Introduction: FC = () => {
           >
             Explore Components
           </Link>
+        </div>
+
+        <div className="flex items-center justify-center gap-3 mb-6">
+          <a
+            href={resolveStorybookHref()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-md transition-colors"
+            aria-label="Storybook"
+            title="Storybook"
+          >
+            <StorybookIcon size={20} />
+          </a>
+          <button
+            type="button"
+            onClick={() => openCodeSandbox()}
+            className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-md transition-colors"
+            aria-label="Sandbox"
+            title="Sandbox"
+          >
+            <SandboxIcon size={20} />
+          </button>
+          <a
+            href={GITHUB_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-md transition-colors"
+            aria-label="GitHub"
+            title="GitHub"
+          >
+            <BearIcons.GithubIcon size={20} />
+          </a>
         </div>
 
         <p className="text-xs text-gray-400 dark:text-gray-500">

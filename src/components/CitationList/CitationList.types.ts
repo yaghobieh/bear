@@ -11,3 +11,7 @@ export interface CitationListProps {
   citations: CitationItem[];
   className?: string;
 }
+
+export interface CitationListTitleProps {
+  citation: CitationItem;
+}

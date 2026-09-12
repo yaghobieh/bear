@@ -53,10 +53,16 @@ export const TRANSITION_PRESETS: Record<TransitionName, TransitionStyles> = {
     exitActive: { opacity: 0, transform: 'scale(0.9)' },
   },
   'scale-y': {
-    enter: { opacity: 0, transform: 'scaleY(0)' },
-    enterActive: { opacity: 1, transform: 'scaleY(1)' },
-    exit: { opacity: 1, transform: 'scaleY(1)' },
-    exitActive: { opacity: 0, transform: 'scaleY(0)' },
+    enter: { opacity: 0, transform: 'scaleY(0.02)', transformOrigin: 'top center' },
+    enterActive: { opacity: 1, transform: 'scaleY(1)', transformOrigin: 'top center' },
+    exit: { opacity: 1, transform: 'scaleY(1)', transformOrigin: 'top center' },
+    exitActive: { opacity: 0, transform: 'scaleY(0.02)', transformOrigin: 'top center' },
+  },
+  fold: {
+    enter: { opacity: 0, transform: 'scaleY(0.02)', transformOrigin: 'top center' },
+    enterActive: { opacity: 1, transform: 'scaleY(1)', transformOrigin: 'top center' },
+    exit: { opacity: 1, transform: 'scaleY(1)', transformOrigin: 'top center' },
+    exitActive: { opacity: 0, transform: 'scaleY(0.02)', transformOrigin: 'top center' },
   },
   'scale-x': {
     enter: { opacity: 0, transform: 'scaleX(0)' },

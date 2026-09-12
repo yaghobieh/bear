@@ -63,3 +63,9 @@ test('[smoke] Toast live region announces without focus steal', async ({ page })
   expect(role === 'status' || role === 'alert').toBeTruthy();
   await expect(live).not.toBeFocused();
 });
+
+test('[smoke] component docs storybook link opens that component story', async ({ page }) => {
+  await page.goto('/components/breadcrumbs', { waitUntil: 'domcontentloaded' });
+  const storybookLink = page.getByRole('link', { name: 'Storybook' }).first();
+  await expect(storybookLink).toHaveAttribute('href', /path=\/docs\/components-breadcrumbs--docs/);
+});

@@ -35,7 +35,7 @@ import {
   InsertLinkIcon,
   InsertPhotoIcon,
   TextIcon,
-} from '../../Icon/icons/editor';
+} from '@forgedevstack/bear-icons/editor';
 import { ToolbarButton, ToolbarColorPicker, ToolbarDropdown, ToolbarMore, ToolbarSignature } from '../components';
 import {
   RICH_EDITOR_BUTTON_CONFIG,

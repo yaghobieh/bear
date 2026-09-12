@@ -21,7 +21,7 @@ import {
   StrikethroughIcon,
   TableIcon,
   UnderlineIcon,
-} from '../../Icon/icons/editor';
+} from '@forgedevstack/bear-icons/editor';
 
 export const RICH_EDITOR_ICONS: Record<string, JSX.Element> = {
   bold: <BoldIcon size={SIXTEEN} />,

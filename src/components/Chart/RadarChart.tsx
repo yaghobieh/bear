@@ -1,5 +1,6 @@
 import { ZERO, ONE } from '@const';
-import { cn } from '@utils';
+import { cn, resolveBearId, useBearId } from '@utils';
+import type { CSSProperties } from 'react';
 import type { RadarChartProps } from './Chart.types';
 import { CHART } from './Chart.const';
 import { getChartColor, polarToCartesian } from './Chart.utils';
@@ -13,12 +14,25 @@ export const RadarChart = (props: RadarChartProps) => {
     animated = true,
     color,
     className,
+    id,
+    testId,
     ...rest
   } = props;
 
+  const generatedId = useBearId('RadarChart');
+  const domId = resolveBearId(id, generatedId);
   const count = data.length;
+  const rootStyle = { '--Bear-Chart-height': `${height}px` } as CSSProperties;
   if (count === ZERO) {
-    return null;
+    return (
+      <div
+        id={domId}
+        data-testid={testId}
+        className={cn('Bear-Chart Bear-Chart--radar Bear-Chart--empty', className)}
+        style={rootStyle}
+        {...rest}
+      />
+    );
   }
 
   const maxValue = Math.max(...data.map((item) => item.value), ONE);
@@ -38,8 +52,14 @@ export const RadarChart = (props: RadarChartProps) => {
   });
 
   return (
-    <div className={cn('Bear-Chart Bear-Chart--radar bear-flex bear-flex-col bear-items-center', className)} style={{ height }} {...rest}>
-      <svg viewBox={`0 0 ${CHART.VIEWBOX} ${CHART.VIEWBOX}`} className="bear-h-full bear-w-full">
+    <div
+      id={domId}
+      data-testid={testId}
+      className={cn('Bear-Chart Bear-Chart--radar', className)}
+      style={rootStyle}
+      {...rest}
+    >
+      <svg viewBox={`0 0 ${CHART.VIEWBOX} ${CHART.VIEWBOX}`} className="Bear-Chart__svg">
         {rings.map((ring, ringIndex) => (
           <polygon
             key={ringIndex}

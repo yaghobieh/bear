@@ -1,0 +1,144 @@
+.Bear-Chart {
+  width: 100%;
+}
+
+.Bear-Chart--bar,
+.Bear-Chart--line,
+.Bear-Chart--radar,
+.Bear-Chart--funnel {
+  height: var(--Bear-Chart-height, 200px);
+}
+
+.Bear-Chart__track {
+  height: 100%;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: var(--Bear-Chart-gap, 0.2rem);
+}
+
+.Bear-Chart--horizontal .Bear-Chart__track {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.Bear-Chart__col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  gap: 0.25rem;
+}
+
+.Bear-Chart--horizontal .Bear-Chart__col {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.Bear-Chart__plot {
+  width: 100%;
+  flex: 1 1 auto;
+  display: flex;
+  align-items: flex-end;
+  min-height: 0;
+}
+
+.Bear-Chart--horizontal .Bear-Chart__plot {
+  height: 100%;
+  align-items: center;
+}
+
+.Bear-Chart__stack {
+  display: flex;
+  width: 100%;
+  height: var(--Bear-Chart-size);
+  flex-direction: column-reverse;
+  transform-origin: bottom center;
+}
+
+.Bear-Chart--horizontal .Bear-Chart__stack {
+  width: var(--Bear-Chart-size);
+  height: 75%;
+  flex-direction: row;
+  transform-origin: left center;
+}
+
+.Bear-Chart__segment {
+  background-color: var(--Bear-Chart-color);
+  opacity: 0.9;
+  border-radius: var(--Bear-Chart-radius, 0);
+}
+
+.Bear-Chart--vertical .Bear-Chart__segment {
+  width: 100%;
+  height: var(--Bear-Chart-segment);
+}
+
+.Bear-Chart--horizontal .Bear-Chart__segment {
+  height: 100%;
+  width: var(--Bear-Chart-segment);
+}
+
+.Bear-Chart__svg {
+  width: 100%;
+  height: 100%;
+}
+
+.Bear-Chart__labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+
+.Bear-Chart__label,
+.Bear-Chart__value {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.75rem;
+  color: var(--bear-text-secondary, #4b5563);
+}
+
+.Bear-Chart--horizontal .Bear-Chart__label {
+  width: 4rem;
+  flex-shrink: 0;
+}
+
+.Bear-Chart--pie {
+  position: relative;
+  max-width: 100%;
+}
+
+.Bear-Chart__pie-canvas {
+  flex-shrink: 0;
+  min-width: 0;
+  width: var(--Bear-Chart-height, 200px);
+  height: var(--Bear-Chart-height, 200px);
+}
+
+.Bear-Chart__swatch {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 999px;
+  background-color: var(--Bear-Chart-color);
+}
+
+.Bear-Chart__funnel-step {
+  width: var(--Bear-Chart-size);
+  min-height: 18px;
+  height: var(--Bear-Chart-step-height);
+  background-color: var(--Bear-Chart-color);
+  transform-origin: left center;
+}
+
+.Bear-Chart--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--Bear-Chart-height, 200px);
+}

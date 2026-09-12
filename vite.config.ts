@@ -3,12 +3,25 @@ import react from '@vitejs/plugin-react';
 import dts from 'vite-plugin-dts';
 import { resolve } from 'path';
 
+const rewriteBearIconsImports = () => ({
+  name: 'rewrite-bear-icons-imports',
+  generateBundle(_options: unknown, bundle: Record<string, { type: string; code?: string }>) {
+    const pattern = /(?:\.\.\/)+node_modules\/@forgedevstack\/bear-icons\/dist\/([^"']+)\.js/g;
+    for (const file of Object.values(bundle)) {
+      if (file.type === 'chunk' && typeof file.code === 'string') {
+        file.code = file.code.replace(pattern, '@forgedevstack/bear-icons/$1');
+      }
+    }
+  },
+});
+
 export default defineConfig({
   plugins: [
     react(),
     dts({
       insertTypesEntry: true,
     }),
+    rewriteBearIconsImports(),
   ],
   resolve: {
     alias: {
@@ -33,7 +46,14 @@ export default defineConfig({
       formats: ['es', 'cjs'],
     },
     rollupOptions: {
-      external: ['react', 'react-dom', 'react/jsx-runtime', '@forgedevstack/anvil', '@forgedevstack/bear-icons'],
+      external: [
+        'react',
+        'react-dom',
+        'react/jsx-runtime',
+        '@forgedevstack/anvil',
+        '@forgedevstack/bear-icons',
+        /^@forgedevstack\/bear-icons\//,
+      ],
       output: {
         preserveModules: true,
         preserveModulesRoot: 'src',

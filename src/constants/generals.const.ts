@@ -27,6 +27,10 @@ export const VARIANT_NEUTRAL = 'neutral' as const;
 export const VARIANT_DANGER = 'danger' as const;
 export const VARIANT_PRIMARY = 'primary' as const;
 
+export const ANIMATION_PULSE = 'pulse' as const;
+export const ANIMATION_WAVE = 'wave' as const;
+export const ANIMATION_NONE = 'none' as const;
+
 export const COLOR_DEFAULT = 'default' as const;
 export const COLOR_PRIMARY = 'primary';
 export const COLOR_DARK = 'dark';

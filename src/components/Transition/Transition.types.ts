@@ -12,6 +12,7 @@ export type TransitionName =
   | 'scale'
   | 'scale-y'
   | 'scale-x'
+  | 'fold'
   | 'rotate'
   | 'flip'
   | 'collapse';

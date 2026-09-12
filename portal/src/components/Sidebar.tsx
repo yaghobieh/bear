@@ -103,6 +103,28 @@ const NestedNavItem: FC<NestedNavItemProps> = (props) => {
     );
   }
 
+  const itemClassName =
+    'flex items-center justify-between px-3 py-1.5 text-[13px] rounded-md mx-1 transition-colors text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-pink-50/50 dark:hover:bg-pink-950/20';
+
+  if (item.external) {
+    return (
+      <a
+        href={item.path}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={onItemClick}
+        className={itemClassName}
+      >
+        <span>{item.label}</span>
+        {item.badge && (
+          <span className={`doc-nav-badge ${item.badge === 'New' || item.badge === 'Hot' ? 'doc-nav-badge--new' : ''}`}>
+            {item.badge === 'icons' ? ICON_COUNT : item.badge}
+          </span>
+        )}
+      </a>
+    );
+  }
+
   return (
     <NavLink
       to={item.path}

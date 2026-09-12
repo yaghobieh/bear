@@ -2,10 +2,11 @@
 
 All notable changes to Bear UI will be documented in this file.
 
-## [1.3.3] - 2026-09-10
+## [1.3.3] - 2026-09-12
 
 ### Added
 
+- **`@forgedevstack/bear-icons` 1.0.2** — `StorybookIcon`, `SandboxIcon`, and `ComponentsIcon`.
 - **AI chat kit** — `PromptComposer`, `StreamingMessage`, `ThinkingBlock`, `PromptSuggestions`, `MessageActions`, `ChatError`, `ToolCall`, `CitationList`, `ApprovalCard`, `ModelSelect`, `ContextMeter`, `ArtifactCard`, and public `ChatBubble`.
 - **Chat / FloatingChat** — tokenized `Bear-Chat` surfaces, stick-to-bottom only when already at the bottom, live region for streaming, attach/stop, prompt suggestions, and `useBearId`.
 - **Drawer** — `variant="temporary" | "persistent" | "permanent"` (backdrop overlay, overlay without backdrop, in-flow panel).
@@ -15,11 +16,22 @@ All notable changes to Bear UI will be documented in this file.
 ### Fixed
 
 - **Select** — chevron and check chrome no longer import `@forgedevstack/bear-icons`, so `--omit=optional` does not break the field (GH #80).
+- **PasswordInput / Modal / RichEditor** — icon imports stay on `@forgedevstack/bear-icons/*` instead of a rewritten `dist/node_modules/...` path that Storybook and the portal could not resolve.
 - **Chat** — no longer force-scrolls on every message; `isLoading` vs `isTyping` is documented in props.
+- **Chart** — grow animations used `height`/`width` with `forwards`, which left bars and funnel steps at zero size after the first frame. Motion now scales from the baseline. Line gradients use unique ids. Empty pie/radar data no longer paints `NaN` paths. Chart `type` defaults to `bar`.
+- **ChatError** — dark mode uses mixed danger surfaces and `--bear-danger-200` so the banner stays readable.
+- **FormSkeleton / Skeleton** — placeholders use Bear skeleton paint instead of unscoped Tailwind `bg-gray-*`, so bars actually show.
+- **PromptSuggestions** — `selectedId` highlights the chosen chip; docs demo fills `PromptComposer`.
+- **MessageActions** — docs demo runs copy / retry / good / bad instead of no-ops.
 
 ### Portal
 
 - Version **1.3.3** docs for Chat, the AI chat kit, PromptComposer, StreamingMessage, ThinkingBlock, ThemeSwitcher, and Drawer variants.
+- **Component catalog** — searchable `/components` grid with category chips and live previews.
+- **Storybook** — real Storybook (`portal/.storybook`) with Brand (logo + every color token) and a story for every catalog component. Dev runs on port 6006; Vercel serves `/storybook/`.
+- **Sandbox** — docs and topbar open a real [CodeSandbox](https://codesandbox.io/) project for the current component. There is no in-portal sandbox page.
+- Docs pages for ChatBubble, PromptSuggestions, MessageActions, ChatError, ToolCall, CitationList, ApprovalCard, ModelSelect, ContextMeter, ArtifactCard, CardSkeleton, FormSkeleton, TableSkeleton, StatCard, and ActivityItem.
+- Chart docs cover radar and funnel; those views have their own nav entries.
 
 ## [1.3.2] - 2026-08-28
 

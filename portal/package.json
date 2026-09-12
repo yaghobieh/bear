@@ -4,9 +4,8 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@codesandbox/sandpack-react": "^2.20.0",
     "@forgedevstack/bear": "file:..",
-    "@forgedevstack/bear-icons": "^1.0.2",
+    "@forgedevstack/bear-icons": "^1.0.1",
     "@forgedevstack/grid-table": "1.0.2",
     "lz-string": "^1.5.0",
     "react": "^18.2.0",

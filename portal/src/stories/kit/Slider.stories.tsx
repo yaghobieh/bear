@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Slider, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { Slider, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Slider> = {
   title: 'Components/Slider',
@@ -15,6 +15,26 @@ const meta: Meta<typeof Slider> = {
       },
     },
   },
+  args: {
+    value: 42,
+    defaultValue: 42,
+    min: 0,
+    max: 100,
+    step: 1,
+    showValue: true,
+    marks: false,
+    disabled: false,
+    orientation: 'horizontal',
+  },
+  argTypes: {
+    color: { control: 'color' },
+    showValue: { control: 'boolean' },
+    marks: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+    orientation: { control: 'select', options: ['horizontal', 'vertical'] },
+    onChange: { action: 'onChange' },
+    onChangeCommitted: { action: 'onChangeCommitted' },
+  },
 };
 
 export default meta;
@@ -22,25 +42,19 @@ export default meta;
 type Story = StoryObj<typeof Slider>;
 
 export const Basic: Story = {
-  args: {},
+  render: (args) => <Slider {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex direction="column" gap={3}>
-      <Slider {...args} />
-      <Slider {...args} />
-    </Flex>
-  ),
+export const WithValue: Story = {
+  render: () => <Slider defaultValue={40} showValue marks min={0} max={100} step={10} ariaLabel="Progress" />,
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Slider anywhere below.</Typography>
-        <Slider {...args} />
-        <Slider {...args} />
+      <Flex direction="column" gap={5}>
+        <Slider defaultValue={25} ariaLabel="First slider" />
+        <Slider defaultValue={70} color="success" showValue ariaLabel="Reuse" />
       </Flex>
     </BearProvider>
   ),

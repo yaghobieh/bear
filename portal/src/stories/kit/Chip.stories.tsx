@@ -15,6 +15,21 @@ const meta: Meta<typeof Chip> = {
       },
     },
   },
+  args: {
+    children: 'Chip',
+    variant: 'filled',
+    color: 'default',
+    size: 'sm',
+    disabled: false,
+  },
+  argTypes: {
+    variant: { control: 'select', options: ['filled', 'outlined', 'soft'] },
+    color: { control: 'select', options: ['default', 'primary', 'secondary', 'success', 'warning', 'error', 'info'] },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    onDelete: { action: 'onDelete' },
+    onClick: { action: 'onClick' },
+    disabled: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,7 +37,7 @@ export default meta;
 type Story = StoryObj<typeof Chip>;
 
 export const Basic: Story = {
-  render: () => <Chip>React</Chip>,
+  render: (args) => <Chip {...args} />,
 };
 
 export const Variants: Story = {

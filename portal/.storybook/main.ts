@@ -6,7 +6,7 @@ const root = dirname(fileURLToPath(import.meta.url));
 const portalSrc = resolve(root, '../src');
 
 const config: StorybookConfig = {
-  stories: ['../src/stories/**/*.mdx', '../src/stories/**/*.stories.@(ts|tsx)'],
+  stories: ['../src/stories/**/*.stories.@(ts|tsx)'],
   addons: [
     '@storybook/addon-essentials',
     '@storybook/addon-a11y',

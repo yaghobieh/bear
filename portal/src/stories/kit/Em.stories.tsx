@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Em, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { Em, BearProvider, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Em> = {
   title: 'Components/Em',
@@ -15,6 +15,13 @@ const meta: Meta<typeof Em> = {
       },
     },
   },
+  args: {
+    children: 'Emphasis',
+    variant: 'default',
+  },
+  argTypes: {
+    variant: { control: 'select', options: ['default', 'strong', 'subtle'] },
+  },
 };
 
 export default meta;
@@ -22,38 +29,23 @@ export default meta;
 type Story = StoryObj<typeof Em>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <Em {...args}>
-      <Typography>Em</Typography>
-    </Em>
-  ),
+  render: (args) => <Em {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <Em {...args}>
-        <Typography>First</Typography>
-      </Em>
-      <Em>
-        <Typography>Second</Typography>
-      </Em>
-    </Flex>
+export const Strong: Story = {
+  render: () => (
+    <Typography>
+      This is <Em variant="strong">strong emphasis</Em> and this is <Em variant="subtle">subtle</Em>.
+    </Typography>
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Em anywhere below.</Typography>
-        <Em {...args}>
-          <Typography>First use</Typography>
-        </Em>
-        <Em>
-          <Typography>Second use</Typography>
-        </Em>
+      <Flex gap={2}>
+        <Em>First</Em>
+        <Em variant="strong">Reuse</Em>
       </Flex>
     </BearProvider>
   ),

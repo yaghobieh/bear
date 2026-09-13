@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { NumberInput, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { NumberInput, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof NumberInput> = {
   title: 'Components/NumberInput',
@@ -15,6 +15,29 @@ const meta: Meta<typeof NumberInput> = {
       },
     },
   },
+  args: {
+    value: 42,
+    min: 0,
+    max: 100,
+    step: 1,
+    disabled: false,
+    label: 'Label',
+    helperText: 'Helper text',
+    placeholder: 'Type here',
+    size: 'sm',
+    variant: 'default',
+    showButtons: true,
+    buttonPosition: 'sides',
+    precision: 0,
+  },
+  argTypes: {
+    onChange: { action: 'onChange' },
+    disabled: { control: 'boolean' },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    variant: { control: 'select', options: ['default', 'filled', 'outline'] },
+    showButtons: { control: 'boolean' },
+    buttonPosition: { control: 'select', options: ['sides', 'right'] },
+  },
 };
 
 export default meta;
@@ -22,25 +45,21 @@ export default meta;
 type Story = StoryObj<typeof NumberInput>;
 
 export const Basic: Story = {
-  args: {},
+  render: (args) => <NumberInput {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex direction="column" gap={3}>
-      <NumberInput {...args} />
-      <NumberInput {...args} />
-    </Flex>
+export const RightButtons: Story = {
+  render: () => (
+    <NumberInput value={4} label="Seats" showButtons buttonPosition="right" min={1} max={12} variant="filled" />
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse NumberInput anywhere below.</Typography>
-        <NumberInput {...args} />
-        <NumberInput {...args} />
+      <Flex direction="column" gap={3}>
+        <NumberInput value={8} label="First count" />
+        <NumberInput value={24} label="Reuse" size="sm" variant="outline" />
       </Flex>
     </BearProvider>
   ),

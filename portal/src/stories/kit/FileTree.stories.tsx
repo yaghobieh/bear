@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { FileTree, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { FileTree, BearProvider, Flex } from '@forgedevstack/bear';
+import type { FileTreeNode } from '@forgedevstack/bear';
 
 const meta: Meta<typeof FileTree> = {
   title: 'Components/FileTree',
@@ -15,45 +16,69 @@ const meta: Meta<typeof FileTree> = {
       },
     },
   },
+  args: {
+    size: 'sm',
+    showLines: true,
+  },
+  argTypes: {
+    onSelect: { action: 'onSelect' },
+    onExpand: { action: 'onExpand' },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    showLines: { control: 'boolean' },
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof FileTree>;
 
+const ITEMS: FileTreeNode[] = [
+  {
+    id: 'src',
+    label: 'src',
+    type: 'folder',
+    children: [
+      { id: 'src-app', label: 'App.tsx', type: 'file' },
+      { id: 'src-index', label: 'index.tsx', type: 'file' },
+      {
+        id: 'src-components',
+        label: 'components',
+        type: 'folder',
+        children: [
+          { id: 'src-components-button', label: 'Button.tsx', type: 'file' },
+          { id: 'src-components-input', label: 'Input.tsx', type: 'file' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'public',
+    label: 'public',
+    type: 'folder',
+    children: [{ id: 'public-index', label: 'index.html', type: 'file' }],
+  },
+  { id: 'package', label: 'package.json', type: 'file' },
+];
+
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <FileTree {...args}>
-      <Typography>FileTree</Typography>
-    </FileTree>
-  ),
+  args: {
+    items: ITEMS,
+  },
+  render: (args) => <FileTree {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <FileTree {...args}>
-        <Typography>First</Typography>
-      </FileTree>
-      <FileTree>
-        <Typography>Second</Typography>
-      </FileTree>
-    </Flex>
+export const WithLines: Story = {
+  render: () => (
+    <FileTree items={ITEMS} defaultExpandedIds={['src']} showLines size="lg" />
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse FileTree anywhere below.</Typography>
-        <FileTree {...args}>
-          <Typography>First use</Typography>
-        </FileTree>
-        <FileTree>
-          <Typography>Second use</Typography>
-        </FileTree>
+        <FileTree items={ITEMS} defaultExpandedIds={['src']} />
+        <FileTree items={ITEMS} defaultExpandedIds={['public']} showLines />
       </Flex>
     </BearProvider>
   ),

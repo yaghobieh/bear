@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ContextMeter, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { ContextMeter, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof ContextMeter> = {
   title: 'Components/ContextMeter',
@@ -15,6 +15,11 @@ const meta: Meta<typeof ContextMeter> = {
       },
     },
   },
+  args: {
+    used: 72,
+    max: 100,
+  },
+  argTypes: {},
 };
 
 export default meta;
@@ -22,25 +27,23 @@ export default meta;
 type Story = StoryObj<typeof ContextMeter>;
 
 export const Basic: Story = {
-  args: {},
+  args: {
+    used: 72,
+    max: 100,
+  },
+  render: (args) => <ContextMeter {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex direction="column" gap={3}>
-      <ContextMeter {...args} />
-      <ContextMeter {...args} />
-    </Flex>
-  ),
+export const HighUsage: Story = {
+  render: () => <ContextMeter used={96} max={100} />,
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse ContextMeter anywhere below.</Typography>
-        <ContextMeter {...args} />
-        <ContextMeter {...args} />
+      <Flex direction="column" gap={3}>
+        <ContextMeter used={18} max={100} />
+        <ContextMeter used={72} max={100} />
       </Flex>
     </BearProvider>
   ),

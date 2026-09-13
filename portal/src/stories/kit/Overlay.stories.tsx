@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Overlay, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { useState } from 'react';
+import { Overlay, Button, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Overlay> = {
   title: 'Components/Overlay',
@@ -15,6 +16,20 @@ const meta: Meta<typeof Overlay> = {
       },
     },
   },
+  args: {
+    visible: false,
+    opacity: 0,
+    color: '#EA0A8E',
+    blur: 0,
+    zIndex: 0,
+    fixed: false,
+  },
+  argTypes: {
+    visible: { control: 'boolean' },
+    color: { control: 'color' },
+    fixed: { control: 'boolean' },
+    onClick: { action: 'onClick' },
+  },
 };
 
 export default meta;
@@ -22,39 +37,42 @@ export default meta;
 type Story = StoryObj<typeof Overlay>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <Overlay {...args}>
-      <Typography>Overlay</Typography>
-    </Overlay>
-  ),
+  render: (args) => {
+    const [open, setOpen] = useState(Boolean(args.visible));
+    return (
+      <>
+        <Button onClick={() => setOpen(true)}>Open</Button>
+        <Overlay {...args} visible={open} onClick={() => setOpen(false)} />
+      </>
+    );
+  },
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <Overlay {...args}>
-        <Typography>First</Typography>
-      </Overlay>
-      <Overlay>
-        <Typography>Second</Typography>
-      </Overlay>
-    </Flex>
-  ),
+export const Blur: Story = {
+  render: () => {
+    const [visible, setVisible] = useState(false);
+    return (
+      <>
+        <Button variant="outline" onClick={() => setVisible(true)}>Blur overlay</Button>
+        <Overlay visible={visible} fixed blur={4} opacity={0.4} onClick={() => setVisible(false)} />
+      </>
+    );
+  },
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
-    <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Overlay anywhere below.</Typography>
-        <Overlay {...args}>
-          <Typography>First use</Typography>
-        </Overlay>
-        <Overlay>
-          <Typography>Second use</Typography>
-        </Overlay>
-      </Flex>
-    </BearProvider>
-  ),
+  render: () => {
+    const [first, setFirst] = useState(false);
+    const [second, setSecond] = useState(false);
+    return (
+      <BearProvider>
+        <Flex gap={2}>
+          <Button onClick={() => setFirst(true)}>First</Button>
+          <Button variant="outline" onClick={() => setSecond(true)}>Reuse</Button>
+          <Overlay visible={first} fixed onClick={() => setFirst(false)} />
+          <Overlay visible={second} fixed blur={4} opacity={0.4} onClick={() => setSecond(false)} />
+        </Flex>
+      </BearProvider>
+    );
+  },
 };

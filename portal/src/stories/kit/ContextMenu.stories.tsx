@@ -1,5 +1,24 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ContextMenu, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { useState } from 'react';
+import { ContextMenu, Button, BearProvider, Flex, Typography } from '@forgedevstack/bear';
+
+const ITEMS = [
+  { id: 'copy', label: 'Copy', onClick: () => undefined },
+  { id: 'paste', label: 'Paste', onClick: () => undefined },
+  { id: 'cut', label: 'Cut', onClick: () => undefined },
+];
+
+const NESTED_ITEMS = [
+  {
+    id: 'new',
+    label: 'New',
+    children: [
+      { id: 'file', label: 'File', onClick: () => undefined },
+      { id: 'folder', label: 'Folder', onClick: () => undefined },
+    ],
+  },
+  { id: 'open', label: 'Open', onClick: () => undefined },
+];
 
 const meta: Meta<typeof ContextMenu> = {
   title: 'Components/ContextMenu',
@@ -11,9 +30,17 @@ const meta: Meta<typeof ContextMenu> = {
     },
     docs: {
       description: {
-        component: 'Context Menu from @forgedevstack/bear. Wrap your tree in BearProvider so theme tokens apply, then reuse ContextMenu anywhere below the provider. The Docs table lists the public props.',
+        component: 'Overlay from @forgedevstack/bear. Wrap your tree in BearProvider so theme tokens apply, then reuse ContextMenu anywhere below the provider. The Docs table lists the public props.',
       },
     },
+  },
+  args: {
+    items: ITEMS,
+    disabled: false,
+  },
+  argTypes: {
+    disabled: { control: 'boolean' },
+    onOpenChange: { action: 'onOpenChange' },
   },
 };
 
@@ -22,37 +49,33 @@ export default meta;
 type Story = StoryObj<typeof ContextMenu>;
 
 export const Basic: Story = {
-  args: {},
   render: (args) => (
     <ContextMenu {...args}>
-      <Typography>ContextMenu</Typography>
+      <Button>Right-click me</Button>
     </ContextMenu>
   ),
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <ContextMenu {...args}>
-        <Typography>First</Typography>
+export const WithSubmenu: Story = {
+  render: () => {
+    const [open, setOpen] = useState(false);
+    return (
+      <ContextMenu items={NESTED_ITEMS} onOpenChange={setOpen}>
+        <Button variant="outline">{open ? 'Menu open' : 'Right-click for submenu'}</Button>
       </ContextMenu>
-      <ContextMenu>
-        <Typography>Second</Typography>
-      </ContextMenu>
-    </Flex>
-  ),
+    );
+  },
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse ContextMenu anywhere below.</Typography>
-        <ContextMenu {...args}>
-          <Typography>First use</Typography>
+      <Flex gap={2}>
+        <ContextMenu items={ITEMS}>
+          <Button>First</Button>
         </ContextMenu>
-        <ContextMenu>
-          <Typography>Second use</Typography>
+        <ContextMenu items={NESTED_ITEMS}>
+          <Button variant="outline">Reuse</Button>
         </ContextMenu>
       </Flex>
     </BearProvider>

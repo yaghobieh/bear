@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ApprovalCard, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { ApprovalCard, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof ApprovalCard> = {
   title: 'Components/ApprovalCard',
@@ -15,6 +15,13 @@ const meta: Meta<typeof ApprovalCard> = {
       },
     },
   },
+  args: {
+    title: 'Title',
+  },
+  argTypes: {
+    onApprove: { action: 'onApprove' },
+    onReject: { action: 'onReject' },
+  },
 };
 
 export default meta;
@@ -22,37 +29,30 @@ export default meta;
 type Story = StoryObj<typeof ApprovalCard>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <ApprovalCard {...args}>
-      <Typography>ApprovalCard</Typography>
+  render: (args) => <ApprovalCard {...args} />,
+};
+
+export const WithActions: Story = {
+  render: () => (
+    <ApprovalCard
+      title="Publish the release notes"
+      onApprove={() => undefined}
+      onReject={() => undefined}
+    >
+      Merge Chart grow animation into the catalog.
     </ApprovalCard>
   ),
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <ApprovalCard {...args}>
-        <Typography>First</Typography>
-      </ApprovalCard>
-      <ApprovalCard>
-        <Typography>Second</Typography>
-      </ApprovalCard>
-    </Flex>
-  ),
-};
-
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse ApprovalCard anywhere below.</Typography>
-        <ApprovalCard {...args}>
-          <Typography>First use</Typography>
+      <Flex direction="column" gap={3}>
+        <ApprovalCard title="First" onApprove={() => undefined} onReject={() => undefined}>
+          Apply PromptComposer.
         </ApprovalCard>
-        <ApprovalCard>
-          <Typography>Second use</Typography>
+        <ApprovalCard title="Reuse" onApprove={() => undefined} onReject={() => undefined}>
+          Same provider
         </ApprovalCard>
       </Flex>
     </BearProvider>

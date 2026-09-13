@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { StreamingMessage, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { StreamingMessage, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof StreamingMessage> = {
   title: 'Components/StreamingMessage',
@@ -15,6 +15,14 @@ const meta: Meta<typeof StreamingMessage> = {
       },
     },
   },
+  args: {
+    isStreaming: false,
+    live: false,
+  },
+  argTypes: {
+    isStreaming: { control: 'boolean' },
+    live: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,38 +30,21 @@ export default meta;
 type Story = StoryObj<typeof StreamingMessage>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <StreamingMessage {...args}>
-      <Typography>StreamingMessage</Typography>
-    </StreamingMessage>
-  ),
+  render: (args) => <StreamingMessage {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <StreamingMessage {...args}>
-        <Typography>First</Typography>
-      </StreamingMessage>
-      <StreamingMessage>
-        <Typography>Second</Typography>
-      </StreamingMessage>
-    </Flex>
+export const Streaming: Story = {
+  render: () => (
+    <StreamingMessage content="Streaming tokens land here." isStreaming sender="assistant" />
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse StreamingMessage anywhere below.</Typography>
-        <StreamingMessage {...args}>
-          <Typography>First use</Typography>
-        </StreamingMessage>
-        <StreamingMessage>
-          <Typography>Second use</Typography>
-        </StreamingMessage>
+      <Flex direction="column" gap={3}>
+        <StreamingMessage content="First reply." />
+        <StreamingMessage content="Reuse below the same provider." isStreaming />
       </Flex>
     </BearProvider>
   ),

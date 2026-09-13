@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { TimelineChart, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { TimelineChart, BearProvider, Flex } from '@forgedevstack/bear';
+import type { TimelineChartItem } from '@forgedevstack/bear';
 
 const meta: Meta<typeof TimelineChart> = {
   title: 'Components/TimelineChart',
@@ -15,33 +16,57 @@ const meta: Meta<typeof TimelineChart> = {
       },
     },
   },
+  args: {
+    min: 0,
+    max: 100,
+    barHeight: 16,
+    barGap: 2,
+    showAxis: true,
+    axisTicks: 0,
+    variant: 'bars',
+  },
+  argTypes: {
+    showAxis: { control: 'boolean' },
+    onItemClick: { action: 'onItemClick' },
+    variant: { control: 'select', options: ['bars', 'points'] },
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof TimelineChart>;
 
+const ITEMS: TimelineChartItem[] = [
+  { label: 'Research', start: 0, end: 28 },
+  { label: 'Build', start: 20, end: 64 },
+  { label: 'Ship', start: 56, end: 88 },
+];
+
+const POINTS: TimelineChartItem[] = [
+  { label: 'Kickoff', start: 8, end: 16 },
+  { label: 'Review', start: 40, end: 52 },
+];
+
 export const Basic: Story = {
   args: {
-    data: [{ label: 'A', value: 28 }, { label: 'B', value: 52 }],
+    items: ITEMS,
+    min: 0,
+    max: 100,
+    showAxis: true,
   },
+  render: (args) => <TimelineChart {...args} />,
 };
 
-export const AnotherExample: Story = {
-  args: {
-    data: [{ label: 'Q1', value: 40 }, { label: 'Q2', value: 64 }],
-  },
+export const Points: Story = {
+  render: () => <TimelineChart items={POINTS} min={0} max={80} variant="points" showAxis />,
 };
 
 export const ReuseWithProvider: Story = {
-  args: {
-    data: [{ label: 'A', value: 22 }, { label: 'B', value: 44 }],
-  },
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <TimelineChart {...args} />
-        <TimelineChart data={[{ label: 'A', value: 18 }, { label: 'B', value: 36 }]} />
+        <TimelineChart items={ITEMS} min={0} max={100} showAxis />
+        <TimelineChart items={POINTS} min={0} max={80} variant="points" showAxis />
       </Flex>
     </BearProvider>
   ),

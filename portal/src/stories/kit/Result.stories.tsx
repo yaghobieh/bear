@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Result, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { Result, BearProvider, Button, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Result> = {
   title: 'Components/Result',
@@ -15,6 +15,10 @@ const meta: Meta<typeof Result> = {
       },
     },
   },
+  args: {
+    title: 'Title',
+  },
+  argTypes: {},
 };
 
 export default meta;
@@ -22,38 +26,26 @@ export default meta;
 type Story = StoryObj<typeof Result>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <Result {...args}>
-      <Typography>Result</Typography>
-    </Result>
-  ),
+  render: (args) => <Result {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <Result {...args}>
-        <Typography>First</Typography>
-      </Result>
-      <Result>
-        <Typography>Second</Typography>
-      </Result>
-    </Flex>
+export const NotFound: Story = {
+  render: () => (
+    <Result
+      status="404"
+      title="Page not found"
+      subtitle="The page you are looking for does not exist."
+      extra={<Button>Go home</Button>}
+    />
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Result anywhere below.</Typography>
-        <Result {...args}>
-          <Typography>First use</Typography>
-        </Result>
-        <Result>
-          <Typography>Second use</Typography>
-        </Result>
+        <Result status="info" title="First" subtitle="Queued" />
+        <Result status="error" title="Reuse" subtitle="Try again" extra={<Button variant="outline">Retry</Button>} />
       </Flex>
     </BearProvider>
   ),

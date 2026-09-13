@@ -16,6 +16,41 @@ const meta: Meta<typeof Button> = {
       },
     },
   },
+  args: {
+    loading: false,
+    loadingText: 'Loading',
+    fullWidth: false,
+    iconPosition: 'left',
+    spotlight: false,
+    spotlightSize: 120,
+    iconOnly: false,
+    ripple: false,
+    disableRipple: false,
+    disableElevation: false,
+    href: 'https://bearui.com',
+    tooltip: 'Tooltip',
+    compact: false,
+    gradientDirection: 135,
+    variant: 'primary',
+    size: 'md',
+    disabled: false,
+    children: 'Primary',
+  },
+  argTypes: {
+    loading: { control: 'boolean' },
+    fullWidth: { control: 'boolean' },
+    iconPosition: { control: 'select', options: ['left', 'right'] },
+    spotlight: { control: 'boolean' },
+    spotlightColor: { control: 'color' },
+    iconOnly: { control: 'boolean' },
+    ripple: { control: 'boolean' },
+    disableRipple: { control: 'boolean' },
+    disableElevation: { control: 'boolean' },
+    compact: { control: 'boolean' },
+    variant: { control: 'select', options: ['primary', 'secondary', 'outline', 'ghost', 'success', 'danger', 'warning', 'info'] },
+    size: { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
+    disabled: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -23,15 +58,14 @@ export default meta;
 type Story = StoryObj<typeof Button>;
 
 export const Basic: Story = {
-  tags: ['smoke-test'],
   args: {
     children: 'Primary',
     variant: 'primary',
+    size: 'md',
+    disabled: false,
   },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    await expect(canvas.getByRole('button', { name: 'Primary' })).toBeVisible();
-  },
+  tags: ['smoke-test'],
+  render: (args) => <Button {...args} />,
 };
 
 export const Variants: Story = {

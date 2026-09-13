@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Container, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { Container, BearProvider, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Container> = {
   title: 'Components/Container',
@@ -15,6 +15,14 @@ const meta: Meta<typeof Container> = {
       },
     },
   },
+  args: {
+    centered: false,
+    padding: false,
+  },
+  argTypes: {
+    centered: { control: 'boolean' },
+    padding: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,37 +30,26 @@ export default meta;
 type Story = StoryObj<typeof Container>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <Container {...args}>
-      <Typography>Container</Typography>
+  render: (args) => <Container {...args} />,
+};
+
+export const Wide: Story = {
+  render: () => (
+    <Container size="xl" centered padding>
+      <Typography>Wide container for denser pages.</Typography>
     </Container>
   ),
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <Container {...args}>
-        <Typography>First</Typography>
-      </Container>
-      <Container>
-        <Typography>Second</Typography>
-      </Container>
-    </Flex>
-  ),
-};
-
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Container anywhere below.</Typography>
-        <Container {...args}>
+        <Container size="sm" centered>
           <Typography>First use</Typography>
         </Container>
-        <Container>
-          <Typography>Second use</Typography>
+        <Container size="sm" centered>
+          <Typography>Reuse</Typography>
         </Container>
       </Flex>
     </BearProvider>

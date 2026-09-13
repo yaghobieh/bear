@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { PhoneInput, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { PhoneInput, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof PhoneInput> = {
   title: 'Components/PhoneInput',
@@ -15,6 +15,25 @@ const meta: Meta<typeof PhoneInput> = {
       },
     },
   },
+  args: {
+    placeholder: 'Type here',
+    label: 'Label',
+    helperText: 'Helper text',
+    disabled: false,
+    required: false,
+    searchable: false,
+    showFlags: true,
+    showDialCode: true,
+  },
+  argTypes: {
+    onChange: { action: 'onChange' },
+    disabled: { control: 'boolean' },
+    required: { control: 'boolean' },
+    onlyCountries: { action: 'onlyCountries' },
+    searchable: { control: 'boolean' },
+    showFlags: { control: 'boolean' },
+    showDialCode: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,25 +41,27 @@ export default meta;
 type Story = StoryObj<typeof PhoneInput>;
 
 export const Basic: Story = {
-  args: {},
+  render: (args) => <PhoneInput {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex direction="column" gap={3}>
-      <PhoneInput {...args} />
-      <PhoneInput {...args} />
-    </Flex>
+export const PreferredCountries: Story = {
+  render: () => (
+    <PhoneInput
+      label="Mobile"
+      placeholder="Enter a number"
+      defaultCountry="GB"
+      preferredCountries={['GB', 'US', 'DE']}
+      searchable
+    />
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse PhoneInput anywhere below.</Typography>
-        <PhoneInput {...args} />
-        <PhoneInput {...args} />
+      <Flex direction="column" gap={3}>
+        <PhoneInput label="Work" placeholder="(555) 010-0100" defaultCountry="US" />
+        <PhoneInput label="Reuse" placeholder="Mobile" size="sm" variant="outline" />
       </Flex>
     </BearProvider>
   ),

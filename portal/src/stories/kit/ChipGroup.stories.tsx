@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ChipGroup, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { ChipGroup, Chip, Avatar, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof ChipGroup> = {
   title: 'Components/ChipGroup',
@@ -15,6 +15,16 @@ const meta: Meta<typeof ChipGroup> = {
       },
     },
   },
+  args: {
+    max: 100,
+    spacing: 'sm',
+    overflowMenu: false,
+  },
+  argTypes: {
+    spacing: { control: 'select', options: ['sm', 'md', 'lg'] },
+    overflowMenu: { control: 'boolean' },
+    onDeleteAll: { action: 'onDeleteAll' },
+  },
 };
 
 export default meta;
@@ -22,37 +32,37 @@ export default meta;
 type Story = StoryObj<typeof ChipGroup>;
 
 export const Basic: Story = {
-  args: {},
   render: (args) => (
     <ChipGroup {...args}>
-      <Typography>ChipGroup</Typography>
+      <Chip>React</Chip>
+      <Chip>Vue</Chip>
+      <Chip>Svelte</Chip>
     </ChipGroup>
   ),
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <ChipGroup {...args}>
-        <Typography>First</Typography>
-      </ChipGroup>
-      <ChipGroup>
-        <Typography>Second</Typography>
-      </ChipGroup>
-    </Flex>
+export const WithMax: Story = {
+  render: () => (
+    <ChipGroup max={3}>
+      <Chip avatar={<Avatar initials="A" size="xs" />}>Ada</Chip>
+      <Chip avatar={<Avatar initials="B" size="xs" />}>Bea</Chip>
+      <Chip avatar={<Avatar initials="C" size="xs" />}>Cam</Chip>
+      <Chip avatar={<Avatar initials="D" size="xs" />}>Dee</Chip>
+    </ChipGroup>
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse ChipGroup anywhere below.</Typography>
-        <ChipGroup {...args}>
-          <Typography>First use</Typography>
+      <Flex direction="column" gap={3}>
+        <ChipGroup>
+          <Chip>First</Chip>
+          <Chip>Group</Chip>
         </ChipGroup>
         <ChipGroup>
-          <Typography>Second use</Typography>
+          <Chip>Reuse</Chip>
+          <Chip>Below</Chip>
         </ChipGroup>
       </Flex>
     </BearProvider>

@@ -15,6 +15,16 @@ const meta: Meta<typeof PromptSuggestions> = {
       },
     },
   },
+  args: {
+    suggestions: [
+      { id: 'plan', label: 'Draft a plan' },
+      { id: 'cite', label: 'Cite sources' },
+      { id: 'fix', label: 'Fix the types' },
+    ],
+  },
+  argTypes: {
+    onSelect: { action: 'onSelect' },
+  },
 };
 
 export default meta;
@@ -28,9 +38,7 @@ const ITEMS = [
 ];
 
 export const Basic: Story = {
-  args: {
-    suggestions: ITEMS,
-  },
+  render: (args) => <PromptSuggestions {...args} />,
 };
 
 export const Selected: Story = {

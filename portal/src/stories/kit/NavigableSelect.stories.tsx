@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { NavigableSelect, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { useState } from 'react';
+import { NavigableSelect, BearProvider, Flex } from '@forgedevstack/bear';
+import type { NavigableSelectOption } from '@forgedevstack/bear';
 
 const meta: Meta<typeof NavigableSelect> = {
   title: 'Components/NavigableSelect',
@@ -15,45 +17,73 @@ const meta: Meta<typeof NavigableSelect> = {
       },
     },
   },
+  args: {
+    multiple: false,
+    searchable: false,
+    placeholder: 'Type here',
+    label: 'Label',
+    helperText: 'Helper text',
+    disabled: false,
+    fullWidth: false,
+    maxVisible: 100,
+    maxSelections: 100,
+  },
+  argTypes: {
+    onChange: { action: 'onChange' },
+    multiple: { control: 'boolean' },
+    searchable: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+    fullWidth: { control: 'boolean' },
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof NavigableSelect>;
 
+const FRUIT_OPTIONS: NavigableSelectOption[] = [
+  { value: 'apple', label: 'Apple' },
+  { value: 'banana', label: 'Banana' },
+  { value: 'cherry', label: 'Cherry' },
+  { value: 'date', label: 'Date' },
+];
+
+const COUNTRY_OPTIONS: NavigableSelectOption[] = [
+  { value: 'us', label: 'United States', group: 'Americas' },
+  { value: 'ca', label: 'Canada', group: 'Americas' },
+  { value: 'uk', label: 'United Kingdom', group: 'Europe' },
+  { value: 'de', label: 'Germany', group: 'Europe' },
+];
+
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <NavigableSelect {...args}>
-      <Typography>NavigableSelect</Typography>
-    </NavigableSelect>
-  ),
+  args: {
+    options: FRUIT_OPTIONS,
+  },
+  render: (args) => <NavigableSelect {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <NavigableSelect {...args}>
-        <Typography>First</Typography>
-      </NavigableSelect>
-      <NavigableSelect>
-        <Typography>Second</Typography>
-      </NavigableSelect>
-    </Flex>
-  ),
+export const Searchable: Story = {
+  render: () => {
+    const [value, setValue] = useState<string | string[]>('');
+    return (
+      <NavigableSelect
+        options={COUNTRY_OPTIONS}
+        value={value}
+        onChange={setValue}
+        searchable
+        label="Country"
+        placeholder="Search countries..."
+      />
+    );
+  },
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse NavigableSelect anywhere below.</Typography>
-        <NavigableSelect {...args}>
-          <Typography>First use</Typography>
-        </NavigableSelect>
-        <NavigableSelect>
-          <Typography>Second use</Typography>
-        </NavigableSelect>
+      <Flex direction="column" gap={3}>
+        <NavigableSelect options={FRUIT_OPTIONS} placeholder="First select" />
+        <NavigableSelect options={COUNTRY_OPTIONS} placeholder="Reuse below the same provider" />
       </Flex>
     </BearProvider>
   ),

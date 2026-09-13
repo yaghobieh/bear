@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { RadioCard, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { BearProvider, Flex, RadioCard, RadioCardGroup } from '@forgedevstack/bear';
 
 const meta: Meta<typeof RadioCard> = {
   title: 'Components/RadioCard',
@@ -15,6 +15,21 @@ const meta: Meta<typeof RadioCard> = {
       },
     },
   },
+  subcomponents: { RadioCardGroup },
+  args: {
+    checked: false,
+    label: 'Label',
+    disabled: false,
+    variant: 'default',
+    size: 'sm',
+  },
+  argTypes: {
+    checked: { control: 'boolean' },
+    onChange: { action: 'onChange' },
+    disabled: { control: 'boolean' },
+    variant: { control: 'select', options: ['default', 'outline', 'filled'] },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+  },
 };
 
 export default meta;
@@ -22,38 +37,26 @@ export default meta;
 type Story = StoryObj<typeof RadioCard>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <RadioCard {...args}>
-      <Typography>RadioCard</Typography>
-    </RadioCard>
-  ),
+  render: (args) => <RadioCard {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <RadioCard {...args}>
-        <Typography>First</Typography>
-      </RadioCard>
-      <RadioCard>
-        <Typography>Second</Typography>
-      </RadioCard>
-    </Flex>
+export const WithDescription: Story = {
+  render: () => (
+    <RadioCard
+      value="enterprise"
+      label="Enterprise"
+      description="Custom pricing"
+      variant="outline"
+    />
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse RadioCard anywhere below.</Typography>
-        <RadioCard {...args}>
-          <Typography>First use</Typography>
-        </RadioCard>
-        <RadioCard>
-          <Typography>Second use</Typography>
-        </RadioCard>
+      <Flex gap={3} wrap="wrap">
+        <RadioCard value="free" label="Free" description="$0/month — 1 project" />
+        <RadioCard value="pro" label="Pro" description="$19/month — unlimited" checked />
       </Flex>
     </BearProvider>
   ),

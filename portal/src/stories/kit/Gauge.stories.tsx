@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Gauge, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { Gauge, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Gauge> = {
   title: 'Components/Gauge',
@@ -15,6 +15,27 @@ const meta: Meta<typeof Gauge> = {
       },
     },
   },
+  args: {
+    value: 42,
+    min: 0,
+    max: 100,
+    size: 0,
+    strokeWidth: 320,
+    color: '#EA0A8E',
+    showLabel: true,
+    label: 'Label',
+    animated: true,
+    fillDurationMs: 0,
+    arcAngle: 0,
+    variant: 'arc',
+  },
+  argTypes: {
+    color: { control: 'color' },
+    trackColor: { control: 'color' },
+    showLabel: { control: 'boolean' },
+    animated: { control: 'boolean' },
+    variant: { control: 'select', options: ['arc', 'linear', 'ring'] },
+  },
 };
 
 export default meta;
@@ -22,25 +43,19 @@ export default meta;
 type Story = StoryObj<typeof Gauge>;
 
 export const Basic: Story = {
-  args: {},
+  render: (args) => <Gauge {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex direction="column" gap={3}>
-      <Gauge {...args} />
-      <Gauge {...args} />
-    </Flex>
-  ),
+export const Gradient: Story = {
+  render: () => <Gauge value={65} gradient={['#ec4899', '#8b5cf6']} variant="ring" />,
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Gauge anywhere below.</Typography>
-        <Gauge {...args} />
-        <Gauge {...args} />
+      <Flex gap={4} wrap="wrap">
+        <Gauge value={25} />
+        <Gauge value={75} gradient={['#10b981', '#3b82f6']} />
       </Flex>
     </BearProvider>
   ),

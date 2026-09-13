@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ActionIcon, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { ActionIcon, BearProvider, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof ActionIcon> = {
   title: 'Components/ActionIcon',
@@ -15,6 +15,16 @@ const meta: Meta<typeof ActionIcon> = {
       },
     },
   },
+  args: {
+    children: '★',
+    loading: false,
+    disabled: false,
+  },
+  argTypes: {
+    color: { control: 'color' },
+    loading: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,25 +32,35 @@ export default meta;
 type Story = StoryObj<typeof ActionIcon>;
 
 export const Basic: Story = {
-  args: {},
+  render: (args) => <ActionIcon {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex direction="column" gap={3}>
-      <ActionIcon {...args} />
-      <ActionIcon {...args} />
+export const Variants: Story = {
+  render: () => (
+    <Flex gap={2} align="center">
+      <ActionIcon aria-label="Close" variant="filled" color="primary">
+        <Typography>×</Typography>
+      </ActionIcon>
+      <ActionIcon aria-label="Edit" variant="outline" color="success">
+        <Typography>+</Typography>
+      </ActionIcon>
+      <ActionIcon aria-label="More" variant="subtle">
+        <Typography>⋯</Typography>
+      </ActionIcon>
     </Flex>
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse ActionIcon anywhere below.</Typography>
-        <ActionIcon {...args} />
-        <ActionIcon {...args} />
+      <Flex gap={2}>
+        <ActionIcon aria-label="Close">
+          <Typography>×</Typography>
+        </ActionIcon>
+        <ActionIcon aria-label="Add" variant="filled">
+          <Typography>+</Typography>
+        </ActionIcon>
       </Flex>
     </BearProvider>
   ),

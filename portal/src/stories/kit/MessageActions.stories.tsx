@@ -15,6 +15,15 @@ const meta: Meta<typeof MessageActions> = {
       },
     },
   },
+  args: {
+
+  },
+  argTypes: {
+    onCopy: { action: 'onCopy' },
+    onRetry: { action: 'onRetry' },
+    onGood: { action: 'onGood' },
+    onBad: { action: 'onBad' },
+  },
 };
 
 export default meta;
@@ -22,7 +31,7 @@ export default meta;
 type Story = StoryObj<typeof MessageActions>;
 
 export const Basic: Story = {
-  render: () => <MessageActions onCopy={() => undefined} onRetry={() => undefined} />,
+  render: (args) => <MessageActions {...args} />,
 };
 
 export const ReuseWithProvider: Story = {

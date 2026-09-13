@@ -15,6 +15,46 @@ const meta: Meta<typeof Input> = {
       },
     },
   },
+  args: {
+    label: 'Email',
+    placeholder: 'you@forge.dev',
+    helperText: 'Helper text',
+    size: 'sm',
+    fullWidth: false,
+    clearable: false,
+    showCharCount: true,
+    charCountMax: 100,
+    validateOnBlur: false,
+    validateOnChange: false,
+    loading: false,
+    copyable: false,
+    floatingLabel: false,
+    required: false,
+    multiline: false,
+    rows: 0,
+    minRows: 0,
+    maxRows: 100,
+    readOnly: false,
+    variant: 'outline',
+    disabled: false,
+  },
+  argTypes: {
+    variant: { control: 'select', options: ['outline', 'filled'] },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    fullWidth: { control: 'boolean' },
+    clearable: { control: 'boolean' },
+    onClear: { action: 'onClear' },
+    showCharCount: { control: 'boolean' },
+    validateOnBlur: { control: 'boolean' },
+    validateOnChange: { control: 'boolean' },
+    loading: { control: 'boolean' },
+    copyable: { control: 'boolean' },
+    onCopy: { action: 'onCopy' },
+    floatingLabel: { control: 'boolean' },
+    required: { control: 'boolean' },
+    multiline: { control: 'boolean' },
+    readOnly: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,13 +62,11 @@ export default meta;
 type Story = StoryObj<typeof Input>;
 
 export const Basic: Story = {
-  args: {
-    placeholder: 'Search Bear',
-  },
+  render: (args) => <Input {...args} />,
 };
 
 export const WithLabel: Story = {
-  render: () => <Input label="Email" placeholder="you@forge.dev" fullWidth />,
+  render: (args) => <Input {...args} fullWidth />,
 };
 
 export const Sizes: Story = {

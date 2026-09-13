@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ChatBubble, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { ChatBubble, BearProvider, Flex } from '@forgedevstack/bear';
+import type { ChatMessage } from '@forgedevstack/bear';
 
 const meta: Meta<typeof ChatBubble> = {
   title: 'Components/ChatBubble',
@@ -15,45 +16,52 @@ const meta: Meta<typeof ChatBubble> = {
       },
     },
   },
+  args: {
+    showTimestamp: true,
+    showStatus: true,
+    showAvatar: true,
+  },
+  argTypes: {
+    showTimestamp: { control: 'boolean' },
+    showStatus: { control: 'boolean' },
+    showAvatar: { control: 'boolean' },
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof ChatBubble>;
 
-export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <ChatBubble {...args}>
-      <Typography>ChatBubble</Typography>
-    </ChatBubble>
-  ),
+const BOT_MESSAGE: ChatMessage = {
+  id: 'bot-1',
+  content: 'Hello! How can I help you today?',
+  sender: 'bot',
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <ChatBubble {...args}>
-        <Typography>First</Typography>
-      </ChatBubble>
-      <ChatBubble>
-        <Typography>Second</Typography>
-      </ChatBubble>
-    </Flex>
-  ),
+const USER_MESSAGE: ChatMessage = {
+  id: 'user-1',
+  content: 'Show me the Chart component.',
+  sender: 'user',
+  status: 'read',
+};
+
+export const Basic: Story = {
+  args: {
+    message: BOT_MESSAGE,
+  },
+  render: (args) => <ChatBubble {...args} />,
+};
+
+export const UserMessage: Story = {
+  render: () => <ChatBubble message={USER_MESSAGE} showStatus showAvatar />,
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse ChatBubble anywhere below.</Typography>
-        <ChatBubble {...args}>
-          <Typography>First use</Typography>
-        </ChatBubble>
-        <ChatBubble>
-          <Typography>Second use</Typography>
-        </ChatBubble>
+      <Flex direction="column" gap={3}>
+        <ChatBubble message={BOT_MESSAGE} />
+        <ChatBubble message={USER_MESSAGE} showStatus />
       </Flex>
     </BearProvider>
   ),

@@ -15,6 +15,32 @@ const meta: Meta<typeof Typography> = {
       },
     },
   },
+  args: {
+    children: 'The quick brown fox',
+    weight: 'thin',
+    color: 'primary',
+    truncate: false,
+    maxLines: 100,
+    italic: false,
+    underline: false,
+    strikethrough: false,
+    noWrap: false,
+    inline: false,
+    paragraph: false,
+    lineHeight: 'tight',
+  },
+  argTypes: {
+    weight: { control: 'select', options: ['thin', 'light', 'normal', 'medium', 'semibold', 'bold', 'extrabold'] },
+    color: { control: 'select', options: ['primary', 'secondary', 'muted', 'success', 'danger', 'warning'] },
+    truncate: { control: 'boolean' },
+    italic: { control: 'boolean' },
+    underline: { control: 'boolean' },
+    strikethrough: { control: 'boolean' },
+    noWrap: { control: 'boolean' },
+    inline: { control: 'boolean' },
+    paragraph: { control: 'boolean' },
+    lineHeight: { control: 'select', options: ['tight', 'normal', 'relaxed', 'loose'] },
+  },
 };
 
 export default meta;
@@ -22,7 +48,7 @@ export default meta;
 type Story = StoryObj<typeof Typography>;
 
 export const Basic: Story = {
-  render: () => <Typography variant="h4">Bear UI</Typography>,
+  render: (args) => <Typography {...args} />,
 };
 
 export const Variants: Story = {

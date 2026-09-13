@@ -15,6 +15,24 @@ const meta: Meta<typeof Image> = {
       },
     },
   },
+  args: {
+    src: '/bear.svg',
+    alt: 'Bear demo',
+    lazy: false,
+    aspectRatio: '1:1',
+    objectFit: 'contain',
+    rounded: 'sm',
+    skeleton: false,
+  },
+  argTypes: {
+    lazy: { control: 'boolean' },
+    aspectRatio: { control: 'select', options: ['1:1', '4:3', '16:9', '21:9'] },
+    objectFit: { control: 'select', options: ['contain', 'cover', 'fill', 'none', 'scale-down'] },
+    rounded: { control: 'select', options: ['sm', 'md', 'lg', 'xl', 'full'] },
+    skeleton: { control: 'boolean' },
+    onLoad: { action: 'onLoad' },
+    onError: { action: 'onError' },
+  },
 };
 
 export default meta;
@@ -22,9 +40,7 @@ export default meta;
 type Story = StoryObj<typeof Image>;
 
 export const Basic: Story = {
-  render: () => (
-    <Image src="https://picsum.photos/seed/bear/320/180" alt="Bear demo" aspectRatio="16:9" rounded="md" />
-  ),
+  render: (args) => <Image {...args} />,
 };
 
 export const Cover: Story = {

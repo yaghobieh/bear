@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { PasswordInput, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { useArgs } from '@storybook/preview-api';
+import { PasswordInput, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof PasswordInput> = {
   title: 'Components/PasswordInput',
@@ -11,9 +12,28 @@ const meta: Meta<typeof PasswordInput> = {
     },
     docs: {
       description: {
-        component: 'PasswordInput from @forgedevstack/bear. Wrap your tree in BearProvider so theme tokens apply, then reuse PasswordInput anywhere below the provider. The Docs table lists the public props.',
+        component: 'PasswordInput from @forgedevstack/bear. Click the eye to show or hide the password. The visible control stays in sync.',
       },
     },
+  },
+  args: {
+    label: 'Password',
+    value: 'ForgeStack',
+    placeholder: 'Enter password',
+    visible: false,
+    hideToggle: false,
+    showShiftIndicator: true,
+    disabled: false,
+    size: 'md',
+  },
+  argTypes: {
+    visible: { control: 'boolean' },
+    onVisibilityChange: { action: 'onVisibilityChange' },
+    hideToggle: { control: 'boolean' },
+    showShiftIndicator: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    onChange: { action: 'onChange' },
   },
 };
 
@@ -22,25 +42,42 @@ export default meta;
 type Story = StoryObj<typeof PasswordInput>;
 
 export const Basic: Story = {
-  args: {},
+  render: (args) => {
+    const [, updateArgs] = useArgs();
+    return (
+      <PasswordInput
+        {...args}
+        onChange={(event) => updateArgs({ value: event.target.value })}
+        onVisibilityChange={(visible) => updateArgs({ visible })}
+      />
+    );
+  },
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex direction="column" gap={3}>
-      <PasswordInput {...args} />
-      <PasswordInput {...args} />
-    </Flex>
-  ),
+export const WithShiftIndicator: Story = {
+  args: {
+    label: 'New password',
+    placeholder: 'At least 8 characters',
+    showShiftIndicator: true,
+  },
+  render: (args) => {
+    const [, updateArgs] = useArgs();
+    return (
+      <PasswordInput
+        {...args}
+        onChange={(event) => updateArgs({ value: event.target.value })}
+        onVisibilityChange={(visible) => updateArgs({ visible })}
+      />
+    );
+  },
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse PasswordInput anywhere below.</Typography>
-        <PasswordInput {...args} />
-        <PasswordInput {...args} />
+      <Flex direction="column" gap={3}>
+        <PasswordInput label="Current password" placeholder="••••••••" />
+        <PasswordInput label="Reuse" placeholder="Confirm password" size="sm" />
       </Flex>
     </BearProvider>
   ),

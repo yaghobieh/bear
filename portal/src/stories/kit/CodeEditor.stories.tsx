@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { CodeEditor, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { CodeEditor, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof CodeEditor> = {
   title: 'Components/CodeEditor',
@@ -15,45 +15,69 @@ const meta: Meta<typeof CodeEditor> = {
       },
     },
   },
+  args: {
+    theme: 'dark',
+    placeholder: 'Type here',
+    showLineNumbers: true,
+    showGutter: true,
+    highlightActiveLine: false,
+    readOnly: false,
+    fontSize: 0,
+    tabSize: 0,
+    autoIndent: false,
+    autoCloseBrackets: false,
+    wordWrap: false,
+  },
+  argTypes: {
+    onChange: { action: 'onChange' },
+    theme: { control: 'select', options: ['dark', 'light'] },
+    showLineNumbers: { control: 'boolean' },
+    showGutter: { control: 'boolean' },
+    highlightActiveLine: { control: 'boolean' },
+    readOnly: { control: 'boolean' },
+    autoIndent: { control: 'boolean' },
+    autoCloseBrackets: { control: 'boolean' },
+    wordWrap: { control: 'boolean' },
+    onFocus: { action: 'onFocus' },
+    onBlur: { action: 'onBlur' },
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof CodeEditor>;
 
+const VALUE = `import { Button } from '@forgedevstack/bear';
+
+export const Demo = () => {
+  return <Button>Click me</Button>;
+};
+`;
+
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <CodeEditor {...args}>
-      <Typography>CodeEditor</Typography>
-    </CodeEditor>
-  ),
+  render: (args) => <CodeEditor {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <CodeEditor {...args}>
-        <Typography>First</Typography>
-      </CodeEditor>
-      <CodeEditor>
-        <Typography>Second</Typography>
-      </CodeEditor>
-    </Flex>
+export const Dark: Story = {
+  render: () => (
+    <CodeEditor
+      value={VALUE}
+      language="tsx"
+      theme="dark"
+      showLineNumbers
+      highlightActiveLine
+      height={220}
+      readOnly
+    />
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse CodeEditor anywhere below.</Typography>
-        <CodeEditor {...args}>
-          <Typography>First use</Typography>
-        </CodeEditor>
-        <CodeEditor>
-          <Typography>Second use</Typography>
-        </CodeEditor>
+        <CodeEditor value={VALUE} language="tsx" height={180} />
+        <CodeEditor value={VALUE} language="tsx" theme="dark" height={180} />
       </Flex>
     </BearProvider>
   ),

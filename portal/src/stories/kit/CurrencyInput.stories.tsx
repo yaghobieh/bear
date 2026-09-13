@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { CurrencyInput, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { CurrencyInput, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof CurrencyInput> = {
   title: 'Components/CurrencyInput',
@@ -15,6 +15,17 @@ const meta: Meta<typeof CurrencyInput> = {
       },
     },
   },
+  args: {
+    value: 42,
+    decimals: 0,
+    allowNegative: true,
+    max: 100,
+    min: 0,
+  },
+  argTypes: {
+    onChange: { action: 'onChange' },
+    allowNegative: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,25 +33,19 @@ export default meta;
 type Story = StoryObj<typeof CurrencyInput>;
 
 export const Basic: Story = {
-  args: {},
+  render: (args) => <CurrencyInput {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex direction="column" gap={3}>
-      <CurrencyInput {...args} />
-      <CurrencyInput {...args} />
-    </Flex>
-  ),
+export const Euro: Story = {
+  render: () => <CurrencyInput value={89.5} currency="EUR" locale="de-DE" label="Price" />,
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse CurrencyInput anywhere below.</Typography>
-        <CurrencyInput {...args} />
-        <CurrencyInput {...args} />
+      <Flex direction="column" gap={3}>
+        <CurrencyInput value={40} currency="USD" label="First amount" />
+        <CurrencyInput value={99} currency="GBP" label="Reuse" />
       </Flex>
     </BearProvider>
   ),

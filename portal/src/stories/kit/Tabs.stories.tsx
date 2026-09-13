@@ -11,9 +11,18 @@ const meta: Meta<typeof Tabs> = {
     },
     docs: {
       description: {
-        component: 'Navigation from @forgedevstack/bear. Wrap your tree in BearProvider so theme tokens apply, then reuse Tabs anywhere below the provider. The Docs table lists the public props.',
+        component: 'Tabs from @forgedevstack/bear. Wrap your tree in BearProvider so theme tokens apply, then reuse Tabs anywhere below the provider. The Docs table lists the public props.',
       },
     },
+  },
+  subcomponents: { TabList, Tab, TabPanel },
+  args: {
+    defaultTab: 'one',
+    variant: 'line',
+  },
+  argTypes: {
+    variant: { control: 'select', options: ['line', 'pills', 'enclosed'] },
+    onChange: { action: 'onChange' },
   },
 };
 
@@ -22,14 +31,14 @@ export default meta;
 type Story = StoryObj<typeof Tabs>;
 
 export const Basic: Story = {
-  render: () => (
-    <Tabs defaultTab="one">
+  render: (args) => (
+    <Tabs {...args}>
       <TabList>
         <Tab id="one">One</Tab>
         <Tab id="two">Two</Tab>
       </TabList>
-      <TabPanel id="one"><Typography>First panel</Typography></TabPanel>
-      <TabPanel id="two"><Typography>Second panel</Typography></TabPanel>
+      <TabPanel tabId="one"><Typography>First panel</Typography></TabPanel>
+      <TabPanel tabId="two"><Typography>Second panel</Typography></TabPanel>
     </Tabs>
   ),
 };
@@ -41,8 +50,8 @@ export const Pills: Story = {
         <Tab id="a">Alpha</Tab>
         <Tab id="b">Beta</Tab>
       </TabList>
-      <TabPanel id="a"><Typography>Alpha content</Typography></TabPanel>
-      <TabPanel id="b"><Typography>Beta content</Typography></TabPanel>
+      <TabPanel tabId="a"><Typography>Alpha content</Typography></TabPanel>
+      <TabPanel tabId="b"><Typography>Beta content</Typography></TabPanel>
     </Tabs>
   ),
 };
@@ -56,16 +65,16 @@ export const ReuseWithProvider: Story = {
             <Tab id="one">One</Tab>
             <Tab id="two">Two</Tab>
           </TabList>
-          <TabPanel id="one"><Typography>First tabs</Typography></TabPanel>
-          <TabPanel id="two"><Typography>More</Typography></TabPanel>
+          <TabPanel tabId="one"><Typography>First tabs</Typography></TabPanel>
+          <TabPanel tabId="two"><Typography>More</Typography></TabPanel>
         </Tabs>
         <Tabs defaultTab="x" variant="pills">
           <TabList>
             <Tab id="x">Reuse</Tab>
             <Tab id="y">Again</Tab>
           </TabList>
-          <TabPanel id="x"><Typography>Second tabs instance</Typography></TabPanel>
-          <TabPanel id="y"><Typography>Same provider</Typography></TabPanel>
+          <TabPanel tabId="x"><Typography>Second tabs instance</Typography></TabPanel>
+          <TabPanel tabId="y"><Typography>Same provider</Typography></TabPanel>
         </Tabs>
       </Flex>
     </BearProvider>

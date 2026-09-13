@@ -15,6 +15,18 @@ const meta: Meta<typeof Alert> = {
       },
     },
   },
+  args: {
+    children: 'Something needs attention.',
+    title: 'Title',
+    closable: false,
+    variant: 'standard',
+    severity: 'info',
+  },
+  argTypes: {
+    icon: { control: 'boolean' },
+    closable: { control: 'boolean' },
+    onClose: { action: 'onClose' },
+  },
 };
 
 export default meta;
@@ -22,10 +34,7 @@ export default meta;
 type Story = StoryObj<typeof Alert>;
 
 export const Basic: Story = {
-  args: {
-    children: 'Heads up from Bear',
-    severity: 'info',
-  },
+  render: (args) => <Alert {...args} />,
 };
 
 export const Severities: Story = {

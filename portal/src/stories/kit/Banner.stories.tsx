@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Banner, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { Banner, BearProvider, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Banner> = {
   title: 'Components/Banner',
@@ -15,6 +15,20 @@ const meta: Meta<typeof Banner> = {
       },
     },
   },
+  args: {
+    children: 'New Bear release is live.',
+    title: 'Title',
+    dismissible: false,
+    open: false,
+    fullWidth: false,
+  },
+  argTypes: {
+    icon: { control: 'boolean' },
+    dismissible: { control: 'boolean' },
+    onDismiss: { action: 'onDismiss' },
+    open: { control: 'boolean' },
+    fullWidth: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,38 +36,24 @@ export default meta;
 type Story = StoryObj<typeof Banner>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <Banner {...args}>
-      <Typography>Banner</Typography>
+  render: (args) => <Banner {...args} />,
+};
+
+export const Warning: Story = {
+  render: () => (
+    <Banner title="Maintenance window" severity="warning" dismissible>
+      The API will restart at 02:00 UTC. Save your work.
     </Banner>
   ),
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <Banner {...args}>
-        <Typography>First</Typography>
-      </Banner>
-      <Banner>
-        <Typography>Second</Typography>
-      </Banner>
-    </Flex>
-  ),
-};
-
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
+      <Flex direction="column" gap={3}>
         <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Banner anywhere below.</Typography>
-        <Banner {...args}>
-          <Typography>First use</Typography>
-        </Banner>
-        <Banner>
-          <Typography>Second use</Typography>
-        </Banner>
+        <Banner title="First" severity="success">Saved.</Banner>
+        <Banner title="Reuse" severity="error">Try again.</Banner>
       </Flex>
     </BearProvider>
   ),

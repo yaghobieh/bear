@@ -15,6 +15,10 @@ const meta: Meta<typeof FormSkeleton> = {
       },
     },
   },
+  args: {
+    fields: 0,
+  },
+  argTypes: {},
 };
 
 export default meta;
@@ -22,9 +26,7 @@ export default meta;
 type Story = StoryObj<typeof FormSkeleton>;
 
 export const Basic: Story = {
-  args: {
-    fields: 3,
-  },
+  render: (args) => <FormSkeleton {...args} />,
 };
 
 export const Static: Story = {

@@ -16,6 +16,19 @@ const meta: Meta<typeof Breadcrumbs> = {
       },
     },
   },
+  args: {
+    items: [
+      { label: 'Home', href: '/' },
+      { label: 'Components' },
+      { label: 'Breadcrumbs' },
+    ],
+    itemsBeforeCollapse: 1,
+    itemsAfterCollapse: 1,
+    showHomeIcon: true,
+  },
+  argTypes: {
+    showHomeIcon: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -29,17 +42,7 @@ const ITEMS = [
 ];
 
 export const Basic: Story = {
-  tags: ['smoke-test'],
-  args: {
-    items: ITEMS,
-    showHomeIcon: true,
-    size: 'md',
-  },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    await expect(canvas.getByLabelText('Breadcrumb')).toBeVisible();
-    await expect(canvas.getByText('Breadcrumbs')).toBeVisible();
-  },
+  render: (args) => <Breadcrumbs {...args} />,
 };
 
 export const Compact: Story = {

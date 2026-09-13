@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Kanban, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { Kanban, BearProvider, Flex } from '@forgedevstack/bear';
+import type { KanbanColumn } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Kanban> = {
   title: 'Components/Kanban',
@@ -15,45 +16,50 @@ const meta: Meta<typeof Kanban> = {
       },
     },
   },
+  args: {
+    disabled: false,
+  },
+  argTypes: {
+    onColumnsChange: { action: 'onColumnsChange' },
+    onCardMove: { action: 'onCardMove' },
+    disabled: { control: 'boolean' },
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof Kanban>;
 
+const COLUMNS: KanbanColumn[] = [
+  {
+    id: 'todo',
+    title: 'To Do',
+    cards: [
+      { id: '1', title: 'Task 1', description: 'Description' },
+      { id: '2', title: 'Task 2' },
+    ],
+  },
+  { id: 'doing', title: 'In Progress', cards: [{ id: '3', title: 'Task 3' }] },
+  { id: 'done', title: 'Done', cards: [{ id: '4', title: 'Task 4', meta: 'Completed' }] },
+];
+
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <Kanban {...args}>
-      <Typography>Kanban</Typography>
-    </Kanban>
-  ),
+  args: {
+    columns: COLUMNS,
+  },
+  render: (args) => <Kanban {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <Kanban {...args}>
-        <Typography>First</Typography>
-      </Kanban>
-      <Kanban>
-        <Typography>Second</Typography>
-      </Kanban>
-    </Flex>
-  ),
+export const Disabled: Story = {
+  render: () => <Kanban columns={COLUMNS} disabled />,
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Kanban anywhere below.</Typography>
-        <Kanban {...args}>
-          <Typography>First use</Typography>
-        </Kanban>
-        <Kanban>
-          <Typography>Second use</Typography>
-        </Kanban>
+        <Kanban columns={COLUMNS} />
+        <Kanban columns={COLUMNS} disabled />
       </Flex>
     </BearProvider>
   ),

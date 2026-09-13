@@ -15,6 +15,18 @@ const meta: Meta<typeof ButtonGroup> = {
       },
     },
   },
+  args: {
+    variant: 'outline',
+    orientation: 'horizontal',
+    disabled: false,
+    fullWidth: false,
+  },
+  argTypes: {
+    variant: { control: 'select', options: ['outline', 'ghost'] },
+    orientation: { control: 'select', options: ['horizontal', 'vertical'] },
+    disabled: { control: 'boolean' },
+    fullWidth: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,8 +34,8 @@ export default meta;
 type Story = StoryObj<typeof ButtonGroup>;
 
 export const Basic: Story = {
-  render: () => (
-    <ButtonGroup>
+  render: (args) => (
+    <ButtonGroup {...args}>
       <Button>One</Button>
       <Button>Two</Button>
       <Button>Three</Button>

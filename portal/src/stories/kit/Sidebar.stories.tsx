@@ -1,5 +1,25 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Sidebar, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { BearProvider, Flex, Sidebar, SidebarGroup } from '@forgedevstack/bear';
+
+const ITEMS = [
+  { id: 'home', label: 'Home' },
+  { id: 'users', label: 'Users' },
+  { id: 'settings', label: 'Settings' },
+  { id: 'about', label: 'About' },
+];
+
+const NESTED_ITEMS = [
+  { id: 'home', label: 'Home' },
+  {
+    id: 'settings',
+    label: 'Settings',
+    children: [
+      { id: 'profile', label: 'Profile' },
+      { id: 'security', label: 'Security' },
+      { id: 'notifications', label: 'Notifications' },
+    ],
+  },
+];
 
 const meta: Meta<typeof Sidebar> = {
   title: 'Components/Sidebar',
@@ -15,6 +35,21 @@ const meta: Meta<typeof Sidebar> = {
       },
     },
   },
+  subcomponents: { SidebarGroup },
+  args: {
+    collapsed: false,
+    width: 320,
+    collapsedWidth: 320,
+    showHeader: true,
+    fullHeight: false,
+  },
+  argTypes: {
+    collapsed: { control: 'boolean' },
+    onCollapsedChange: { action: 'onCollapsedChange' },
+    showHeader: { control: 'boolean' },
+    onItemClick: { action: 'onItemClick' },
+    fullHeight: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,38 +57,22 @@ export default meta;
 type Story = StoryObj<typeof Sidebar>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <Sidebar {...args}>
-      <Typography>Sidebar</Typography>
-    </Sidebar>
-  ),
+  args: {
+    items: ITEMS,
+  },
+  render: (args) => <Sidebar {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <Sidebar {...args}>
-        <Typography>First</Typography>
-      </Sidebar>
-      <Sidebar>
-        <Typography>Second</Typography>
-      </Sidebar>
-    </Flex>
-  ),
+export const Collapsed: Story = {
+  render: () => <Sidebar items={NESTED_ITEMS} collapsed activeItemId="home" variant="bordered" />,
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Sidebar anywhere below.</Typography>
-        <Sidebar {...args}>
-          <Typography>First use</Typography>
-        </Sidebar>
-        <Sidebar>
-          <Typography>Second use</Typography>
-        </Sidebar>
+      <Flex gap={4}>
+        <Sidebar items={ITEMS} activeItemId="home" />
+        <Sidebar items={NESTED_ITEMS} activeItemId="profile" variant="floating" />
       </Flex>
     </BearProvider>
   ),

@@ -1,5 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { SpeedDial, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { SpeedDial, BearProvider, Flex, Typography } from '@forgedevstack/bear';
+
+const ACTIONS = [
+  { label: 'Edit', icon: <Typography>E</Typography>, onClick: () => undefined },
+  { label: 'Share', icon: <Typography>S</Typography>, onClick: () => undefined },
+  { label: 'Delete', icon: <Typography>D</Typography>, onClick: () => undefined },
+];
 
 const meta: Meta<typeof SpeedDial> = {
   title: 'Components/SpeedDial',
@@ -15,6 +21,21 @@ const meta: Meta<typeof SpeedDial> = {
       },
     },
   },
+  args: {
+    position: 'bottom-right',
+    fixed: false,
+    openOnHover: false,
+    open: false,
+    showLabels: true,
+  },
+  argTypes: {
+    position: { control: 'select', options: ['bottom-right', 'bottom-left', 'top-right', 'top-left'] },
+    fixed: { control: 'boolean' },
+    openOnHover: { control: 'boolean' },
+    open: { control: 'boolean' },
+    onOpenChange: { action: 'onOpenChange' },
+    showLabels: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,38 +43,19 @@ export default meta;
 type Story = StoryObj<typeof SpeedDial>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <SpeedDial {...args}>
-      <Typography>SpeedDial</Typography>
-    </SpeedDial>
-  ),
+  render: (args) => <SpeedDial {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <SpeedDial {...args}>
-        <Typography>First</Typography>
-      </SpeedDial>
-      <SpeedDial>
-        <Typography>Second</Typography>
-      </SpeedDial>
-    </Flex>
-  ),
+export const Left: Story = {
+  render: () => <SpeedDial actions={ACTIONS} direction="left" fixed={false} showLabels size="sm" />,
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse SpeedDial anywhere below.</Typography>
-        <SpeedDial {...args}>
-          <Typography>First use</Typography>
-        </SpeedDial>
-        <SpeedDial>
-          <Typography>Second use</Typography>
-        </SpeedDial>
+      <Flex gap={8}>
+        <SpeedDial actions={ACTIONS} fixed={false} />
+        <SpeedDial actions={ACTIONS} direction="right" fixed={false} showLabels />
       </Flex>
     </BearProvider>
   ),

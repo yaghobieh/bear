@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { InputGroup, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { InputGroup, Input, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof InputGroup> = {
   title: 'Components/InputGroup',
@@ -15,6 +15,16 @@ const meta: Meta<typeof InputGroup> = {
       },
     },
   },
+  args: {
+    label: 'Label',
+    helperText: 'Helper text',
+    required: false,
+    fullWidth: false,
+  },
+  argTypes: {
+    required: { control: 'boolean' },
+    fullWidth: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,37 +32,35 @@ export default meta;
 type Story = StoryObj<typeof InputGroup>;
 
 export const Basic: Story = {
-  args: {},
   render: (args) => (
-    <InputGroup {...args}>
-      <Typography>InputGroup</Typography>
+    <InputGroup {...args} label="Full Name" helperText="Enter your first and last name" fullWidth>
+      <Input placeholder="John Doe" fullWidth />
     </InputGroup>
   ),
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <InputGroup {...args}>
-        <Typography>First</Typography>
-      </InputGroup>
-      <InputGroup>
-        <Typography>Second</Typography>
-      </InputGroup>
-    </Flex>
+export const Required: Story = {
+  render: () => (
+    <InputGroup
+      label="Email"
+      description="Used for account recovery."
+      required
+      fullWidth
+    >
+      <Input type="email" placeholder="you@example.com" fullWidth />
+    </InputGroup>
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse InputGroup anywhere below.</Typography>
-        <InputGroup {...args}>
-          <Typography>First use</Typography>
+      <Flex direction="column" gap={3}>
+        <InputGroup label="First" fullWidth>
+          <Input placeholder="First group" fullWidth />
         </InputGroup>
-        <InputGroup>
-          <Typography>Second use</Typography>
+        <InputGroup label="Reuse" fullWidth>
+          <Input placeholder="Same provider" fullWidth />
         </InputGroup>
       </Flex>
     </BearProvider>

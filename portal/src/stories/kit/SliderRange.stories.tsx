@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { SliderRange, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { SliderRange, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof SliderRange> = {
   title: 'Components/SliderRange',
@@ -15,6 +15,18 @@ const meta: Meta<typeof SliderRange> = {
       },
     },
   },
+  args: {
+    min: 0,
+    max: 100,
+    step: 1,
+    disabled: false,
+  },
+  argTypes: {
+    color: { control: 'color' },
+    disabled: { control: 'boolean' },
+    onChange: { action: 'onChange' },
+    onChangeCommitted: { action: 'onChangeCommitted' },
+  },
 };
 
 export default meta;
@@ -22,25 +34,19 @@ export default meta;
 type Story = StoryObj<typeof SliderRange>;
 
 export const Basic: Story = {
-  args: {},
+  render: (args) => <SliderRange {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex direction="column" gap={3}>
-      <SliderRange {...args} />
-      <SliderRange {...args} />
-    </Flex>
-  ),
+export const Success: Story = {
+  render: () => <SliderRange defaultValue={[20, 70]} color="success" size="lg" />,
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse SliderRange anywhere below.</Typography>
-        <SliderRange {...args} />
-        <SliderRange {...args} />
+      <Flex direction="column" gap={5}>
+        <SliderRange defaultValue={[10, 40]} />
+        <SliderRange defaultValue={[30, 80]} color="info" size="sm" />
       </Flex>
     </BearProvider>
   ),

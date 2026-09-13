@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { MentionsInput, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { useState } from 'react';
+import { MentionsInput, BearProvider, Flex } from '@forgedevstack/bear';
+import type { MentionOption } from '@forgedevstack/bear';
 
 const meta: Meta<typeof MentionsInput> = {
   title: 'Components/MentionsInput',
@@ -15,32 +17,65 @@ const meta: Meta<typeof MentionsInput> = {
       },
     },
   },
+  args: {
+    placeholder: 'Type here',
+    disabled: false,
+    maxSuggestions: 100,
+    size: 'sm',
+    fullWidth: false,
+    multiline: false,
+    rows: 0,
+  },
+  argTypes: {
+    onChange: { action: 'onChange' },
+    onMentionSelect: { action: 'onMentionSelect' },
+    disabled: { control: 'boolean' },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    fullWidth: { control: 'boolean' },
+    multiline: { control: 'boolean' },
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof MentionsInput>;
 
+const OPTIONS: MentionOption[] = [
+  { value: 'alice', label: 'Alice Johnson' },
+  { value: 'bob', label: 'Bob Smith' },
+  { value: 'carol', label: 'Carol Williams' },
+];
+
 export const Basic: Story = {
-  args: {},
+  args: {
+    options: OPTIONS,
+    placeholder: 'Type @ to mention...',
+  },
+  render: (args) => <MentionsInput {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex direction="column" gap={3}>
-      <MentionsInput {...args} />
-      <MentionsInput {...args} />
-    </Flex>
-  ),
+export const Multiline: Story = {
+  render: () => {
+    const [value, setValue] = useState('');
+    return (
+      <MentionsInput
+        multiline
+        rows={3}
+        value={value}
+        onChange={(next) => setValue(next)}
+        options={OPTIONS}
+        placeholder="Write a message, @mention teammates..."
+      />
+    );
+  },
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse MentionsInput anywhere below.</Typography>
-        <MentionsInput {...args} />
-        <MentionsInput {...args} />
+      <Flex direction="column" gap={3}>
+        <MentionsInput options={OPTIONS} placeholder="First mention field" />
+        <MentionsInput options={OPTIONS} placeholder="Reuse below the same provider" />
       </Flex>
     </BearProvider>
   ),

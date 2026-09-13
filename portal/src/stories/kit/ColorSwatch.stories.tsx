@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ColorSwatch, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { BearProvider, ColorSwatch, ColorSwatchGroup, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof ColorSwatch> = {
   title: 'Components/ColorSwatch',
@@ -15,6 +15,19 @@ const meta: Meta<typeof ColorSwatch> = {
       },
     },
   },
+  subcomponents: { ColorSwatchGroup },
+  args: {
+    color: '#EA0A8E',
+    selected: false,
+    rounded: false,
+    label: 'Label',
+  },
+  argTypes: {
+    color: { control: 'color' },
+    selected: { control: 'boolean' },
+    rounded: { control: 'boolean' },
+    onClick: { action: 'onClick' },
+  },
 };
 
 export default meta;
@@ -22,25 +35,26 @@ export default meta;
 type Story = StoryObj<typeof ColorSwatch>;
 
 export const Basic: Story = {
-  args: {},
+  render: (args) => <ColorSwatch {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex direction="column" gap={3}>
-      <ColorSwatch {...args} />
-      <ColorSwatch {...args} />
+export const Sizes: Story = {
+  render: () => (
+    <Flex gap={3} align="center">
+      <ColorSwatch color="#ef4444" size="sm" />
+      <ColorSwatch color="#22c55e" size="md" selected />
+      <ColorSwatch color="#3b82f6" size="lg" />
+      <ColorSwatch color="#EA0A8E" size="xl" label="Pink" />
     </Flex>
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse ColorSwatch anywhere below.</Typography>
-        <ColorSwatch {...args} />
-        <ColorSwatch {...args} />
+      <Flex gap={3}>
+        <ColorSwatch color="#EA0A8E" />
+        <ColorSwatch color="#3b82f6" selected />
       </Flex>
     </BearProvider>
   ),

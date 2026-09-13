@@ -15,6 +15,25 @@ const meta: Meta<typeof Fab> = {
       },
     },
   },
+  args: {
+    children: '+',
+    size: 'sm',
+    color: '#EA0A8E',
+    extended: false,
+    position: 'bottom-right',
+    disabled: false,
+    shadow: false,
+    animated: true,
+  },
+  argTypes: {
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    color: { control: 'color' },
+    extended: { control: 'boolean' },
+    position: { control: 'select', options: ['bottom-right', 'bottom-left', 'top-right', 'top-left', 'bottom-center', 'relative'] },
+    disabled: { control: 'boolean' },
+    shadow: { control: 'boolean' },
+    animated: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,11 +41,7 @@ export default meta;
 type Story = StoryObj<typeof Fab>;
 
 export const Basic: Story = {
-  render: () => (
-    <Fab position="relative" aria-label="Add">
-      +
-    </Fab>
-  ),
+  render: (args) => <Fab {...args} />,
 };
 
 export const Variants: Story = {

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ThemeIcon, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { ThemeIcon, BearProvider, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof ThemeIcon> = {
   title: 'Components/ThemeIcon',
@@ -15,6 +15,13 @@ const meta: Meta<typeof ThemeIcon> = {
       },
     },
   },
+  args: {
+    children: '★',
+    radius: 'sm',
+  },
+  argTypes: {
+    radius: { control: 'select', options: ['sm', 'md', 'lg', 'xl', 'full'] },
+  },
 };
 
 export default meta;
@@ -22,37 +29,34 @@ export default meta;
 type Story = StoryObj<typeof ThemeIcon>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <ThemeIcon {...args}>
-      <Typography>ThemeIcon</Typography>
-    </ThemeIcon>
-  ),
+  render: (args) => <ThemeIcon {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <ThemeIcon {...args}>
-        <Typography>First</Typography>
+export const Variants: Story = {
+  render: () => (
+    <Flex gap={3} align="center">
+      <ThemeIcon variant="primary">
+        <Typography>★</Typography>
       </ThemeIcon>
-      <ThemeIcon>
-        <Typography>Second</Typography>
+      <ThemeIcon variant="success">
+        <Typography>✓</Typography>
+      </ThemeIcon>
+      <ThemeIcon variant="warning" size="lg">
+        <Typography>!</Typography>
       </ThemeIcon>
     </Flex>
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse ThemeIcon anywhere below.</Typography>
-        <ThemeIcon {...args}>
-          <Typography>First use</Typography>
+      <Flex gap={3}>
+        <ThemeIcon variant="primary">
+          <Typography>×</Typography>
         </ThemeIcon>
-        <ThemeIcon>
-          <Typography>Second use</Typography>
+        <ThemeIcon variant="info">
+          <Typography>i</Typography>
         </ThemeIcon>
       </Flex>
     </BearProvider>

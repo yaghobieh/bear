@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { TreeView, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { TreeView, BearProvider, Flex } from '@forgedevstack/bear';
+import type { TreeNode } from '@forgedevstack/bear';
 
 const meta: Meta<typeof TreeView> = {
   title: 'Components/TreeView',
@@ -15,45 +16,73 @@ const meta: Meta<typeof TreeView> = {
       },
     },
   },
+  args: {
+    multiSelect: false,
+    showCheckboxes: true,
+    size: 'sm',
+    showLines: true,
+  },
+  argTypes: {
+    onSelect: { action: 'onSelect' },
+    onExpand: { action: 'onExpand' },
+    multiSelect: { control: 'boolean' },
+    showCheckboxes: { control: 'boolean' },
+    onCheck: { action: 'onCheck' },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    showLines: { control: 'boolean' },
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof TreeView>;
 
+const DATA: TreeNode[] = [
+  {
+    id: '1',
+    label: 'Documents',
+    children: [
+      {
+        id: '1-1',
+        label: 'Projects',
+        children: [
+          { id: '1-1-1', label: 'Project A' },
+          { id: '1-1-2', label: 'Project B' },
+        ],
+      },
+      { id: '1-2', label: 'Reports' },
+    ],
+  },
+  { id: '2', label: 'Downloads' },
+  {
+    id: '3',
+    label: 'Pictures',
+    children: [
+      { id: '3-1', label: 'Vacation' },
+      { id: '3-2', label: 'Family' },
+    ],
+  },
+];
+
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <TreeView {...args}>
-      <Typography>TreeView</Typography>
-    </TreeView>
-  ),
+  args: {
+    data: DATA,
+  },
+  render: (args) => <TreeView {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <TreeView {...args}>
-        <Typography>First</Typography>
-      </TreeView>
-      <TreeView>
-        <Typography>Second</Typography>
-      </TreeView>
-    </Flex>
+export const WithLines: Story = {
+  render: () => (
+    <TreeView data={DATA} defaultExpandedIds={['1', '3']} showLines showCheckboxes />
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse TreeView anywhere below.</Typography>
-        <TreeView {...args}>
-          <Typography>First use</Typography>
-        </TreeView>
-        <TreeView>
-          <Typography>Second use</Typography>
-        </TreeView>
+        <TreeView data={DATA} defaultExpandedIds={['1']} />
+        <TreeView data={DATA} defaultExpandedIds={['3']} showLines />
       </Flex>
     </BearProvider>
   ),

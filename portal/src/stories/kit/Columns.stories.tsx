@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Columns, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { BearProvider, Column, Columns, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Columns> = {
   title: 'Components/Columns',
@@ -15,6 +15,15 @@ const meta: Meta<typeof Columns> = {
       },
     },
   },
+  subcomponents: { Column },
+  args: {
+    gap: 'none',
+    fill: false,
+  },
+  argTypes: {
+    gap: { control: 'select', options: ['none', 'xs', 'sm', 'md', 'lg', 'xl'] },
+    fill: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,37 +31,35 @@ export default meta;
 type Story = StoryObj<typeof Columns>;
 
 export const Basic: Story = {
-  args: {},
   render: (args) => (
-    <Columns {...args}>
-      <Typography>Columns</Typography>
+    <Columns {...args} count={2} gap="md">
+      <Typography>First column. Magazine-style text flows down this pane.</Typography>
+      <Typography>Second column. Use Columns when you want newspaper layout.</Typography>
     </Columns>
   ),
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <Columns {...args}>
-        <Typography>First</Typography>
-      </Columns>
-      <Columns>
-        <Typography>Second</Typography>
-      </Columns>
-    </Flex>
+export const ThreeColumns: Story = {
+  render: () => (
+    <Columns count={3} gap="lg">
+      <Typography>Alpha</Typography>
+      <Typography>Beta</Typography>
+      <Typography>Gamma</Typography>
+    </Columns>
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Columns anywhere below.</Typography>
-        <Columns {...args}>
+        <Columns count={2}>
           <Typography>First use</Typography>
+          <Typography>Left / right</Typography>
         </Columns>
-        <Columns>
-          <Typography>Second use</Typography>
+        <Columns count={2}>
+          <Typography>Reuse</Typography>
+          <Typography>Same provider</Typography>
         </Columns>
       </Flex>
     </BearProvider>

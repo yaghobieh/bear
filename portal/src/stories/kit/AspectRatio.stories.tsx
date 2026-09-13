@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { AspectRatio, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { AspectRatio, BearProvider, Flex, Paper, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof AspectRatio> = {
   title: 'Components/AspectRatio',
@@ -15,6 +15,10 @@ const meta: Meta<typeof AspectRatio> = {
       },
     },
   },
+  args: {
+    ratio: 0,
+  },
+  argTypes: {},
 };
 
 export default meta;
@@ -22,37 +26,32 @@ export default meta;
 type Story = StoryObj<typeof AspectRatio>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <AspectRatio {...args}>
-      <Typography>AspectRatio</Typography>
+  render: (args) => <AspectRatio {...args} />,
+};
+
+export const Square: Story = {
+  render: () => (
+    <AspectRatio ratio={1} maxWidth={240}>
+      <Paper padding="md" elevation={1}>
+        <Typography>1:1 square</Typography>
+      </Paper>
     </AspectRatio>
   ),
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <AspectRatio {...args}>
-        <Typography>First</Typography>
-      </AspectRatio>
-      <AspectRatio>
-        <Typography>Second</Typography>
-      </AspectRatio>
-    </Flex>
-  ),
-};
-
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse AspectRatio anywhere below.</Typography>
-        <AspectRatio {...args}>
-          <Typography>First use</Typography>
+      <Flex gap={4} wrap="wrap">
+        <AspectRatio ratio={16 / 9} maxWidth={220}>
+          <Paper padding="sm">
+            <Typography>First</Typography>
+          </Paper>
         </AspectRatio>
-        <AspectRatio>
-          <Typography>Second use</Typography>
+        <AspectRatio ratio={4 / 3} maxWidth={220}>
+          <Paper padding="sm">
+            <Typography>Reuse</Typography>
+          </Paper>
         </AspectRatio>
       </Flex>
     </BearProvider>

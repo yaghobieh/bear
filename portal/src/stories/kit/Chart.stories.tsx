@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Chart, BearProvider, Flex, Typography } from '@forgedevstack/bear';
+import { BarChart, BearProvider, Chart, Flex, FunnelChart, LineChart, PieChart, RadarChart, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Chart> = {
   title: 'Components/Chart',
@@ -15,6 +15,27 @@ const meta: Meta<typeof Chart> = {
       },
     },
   },
+  subcomponents: { BarChart, LineChart, PieChart, RadarChart, FunnelChart },
+  args: {
+    height: 240,
+    showLabels: true,
+    showValues: true,
+    animated: true,
+    color: '#EA0A8E',
+    showGrid: true,
+    explodeIndex: 0,
+    stepped: false,
+    stacked: false,
+  },
+  argTypes: {
+    showLabels: { control: 'boolean' },
+    showValues: { control: 'boolean' },
+    animated: { control: 'boolean' },
+    color: { control: 'color' },
+    showGrid: { control: 'boolean' },
+    stepped: { control: 'boolean' },
+    stacked: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -28,6 +49,7 @@ export const Basic: Story = {
     height: 180,
     showLabels: true,
   },
+  render: (args) => <Chart {...args} />,
 };
 
 export const Line: Story = {

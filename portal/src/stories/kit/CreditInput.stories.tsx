@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { CreditInput, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { CreditInput, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof CreditInput> = {
   title: 'Components/CreditInput',
@@ -15,6 +15,21 @@ const meta: Meta<typeof CreditInput> = {
       },
     },
   },
+  args: {
+    showName: true,
+    disabled: false,
+    required: false,
+    label: 'Label',
+    helperText: 'Helper text',
+    validateOnInput: false,
+  },
+  argTypes: {
+    onChange: { action: 'onChange' },
+    showName: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+    required: { control: 'boolean' },
+    validateOnInput: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,25 +37,26 @@ export default meta;
 type Story = StoryObj<typeof CreditInput>;
 
 export const Basic: Story = {
-  args: {},
+  render: (args) => <CreditInput {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex direction="column" gap={3}>
-      <CreditInput {...args} />
-      <CreditInput {...args} />
-    </Flex>
+export const Split: Story = {
+  render: () => (
+    <CreditInput
+      mode="split"
+      showName
+      label="Checkout"
+      helperText="Name, number, expiry, and CVC"
+    />
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse CreditInput anywhere below.</Typography>
-        <CreditInput {...args} />
-        <CreditInput {...args} />
+        <CreditInput label="Primary card" />
+        <CreditInput label="Reuse" size="sm" variant="outline" />
       </Flex>
     </BearProvider>
   ),

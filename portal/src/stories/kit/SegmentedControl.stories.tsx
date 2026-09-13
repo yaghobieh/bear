@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { SegmentedControl, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { useState } from 'react';
+import { SegmentedControl, BearProvider, Flex } from '@forgedevstack/bear';
+import type { SegmentedControlItem } from '@forgedevstack/bear';
 
 const meta: Meta<typeof SegmentedControl> = {
   title: 'Components/SegmentedControl',
@@ -15,45 +17,54 @@ const meta: Meta<typeof SegmentedControl> = {
       },
     },
   },
+  args: {
+    size: 'sm',
+    fullWidth: false,
+    disabled: false,
+  },
+  argTypes: {
+    onChange: { action: 'onChange' },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    fullWidth: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof SegmentedControl>;
 
+const VIEW_ITEMS: SegmentedControlItem[] = [
+  { value: 'list', label: 'List' },
+  { value: 'grid', label: 'Grid' },
+  { value: 'map', label: 'Map' },
+];
+
+const SIZE_ITEMS: SegmentedControlItem[] = [
+  { value: 'a', label: 'Option A' },
+  { value: 'b', label: 'Option B' },
+  { value: 'c', label: 'Option C' },
+];
+
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <SegmentedControl {...args}>
-      <Typography>SegmentedControl</Typography>
-    </SegmentedControl>
-  ),
+  args: {
+    items: VIEW_ITEMS,
+  },
+  render: (args) => <SegmentedControl {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <SegmentedControl {...args}>
-        <Typography>First</Typography>
-      </SegmentedControl>
-      <SegmentedControl>
-        <Typography>Second</Typography>
-      </SegmentedControl>
-    </Flex>
+export const FullWidth: Story = {
+  render: () => (
+    <SegmentedControl items={SIZE_ITEMS} defaultValue="a" fullWidth />
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse SegmentedControl anywhere below.</Typography>
-        <SegmentedControl {...args}>
-          <Typography>First use</Typography>
-        </SegmentedControl>
-        <SegmentedControl>
-          <Typography>Second use</Typography>
-        </SegmentedControl>
+      <Flex direction="column" gap={3}>
+        <SegmentedControl items={VIEW_ITEMS} defaultValue="list" />
+        <SegmentedControl items={SIZE_ITEMS} defaultValue="b" />
       </Flex>
     </BearProvider>
   ),

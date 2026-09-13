@@ -1,5 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { AppShell, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { AppShell, Sidebar, PageHeader, BearProvider, Flex, Typography, Button } from '@forgedevstack/bear';
+
+const NAV_ITEMS = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'reports', label: 'Reports' },
+  { id: 'settings', label: 'Settings' },
+];
+
+const ASIDE_ITEMS = [
+  { id: 'activity', label: 'Activity' },
+  { id: 'files', label: 'Files' },
+];
 
 const meta: Meta<typeof AppShell> = {
   title: 'Components/AppShell',
@@ -15,6 +26,18 @@ const meta: Meta<typeof AppShell> = {
       },
     },
   },
+  args: {
+    navbarCollapsed: false,
+    stickyHeader: false,
+    stickyFooter: false,
+    padding: false,
+  },
+  argTypes: {
+    navbarCollapsed: { control: 'boolean' },
+    stickyHeader: { control: 'boolean' },
+    stickyFooter: { control: 'boolean' },
+    padding: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,37 +45,39 @@ export default meta;
 type Story = StoryObj<typeof AppShell>;
 
 export const Basic: Story = {
-  args: {},
   render: (args) => (
-    <AppShell {...args}>
-      <Typography>AppShell</Typography>
+    <AppShell {...args}
+      header={<Typography>Forge Ops</Typography>}
+      navbar={<Sidebar items={NAV_ITEMS} activeItemId="overview" />}
+      footer={<Typography>© ForgeStack</Typography>}
+    >
+      <PageHeader title="Overview" description="App chrome with header, nav, and main." />
     </AppShell>
   ),
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <AppShell {...args}>
-        <Typography>First</Typography>
-      </AppShell>
-      <AppShell>
-        <Typography>Second</Typography>
-      </AppShell>
-    </Flex>
+export const WithAside: Story = {
+  render: () => (
+    <AppShell
+      header={<Typography>Forge Ops</Typography>}
+      navbar={<Sidebar items={NAV_ITEMS} activeItemId="reports" />}
+      aside={<Sidebar items={ASIDE_ITEMS} activeItemId="activity" position="right" />}
+      navbarWidth="sm"
+    >
+      <PageHeader title="Reports" actions={<Button size="sm">Export</Button>} />
+    </AppShell>
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse AppShell anywhere below.</Typography>
-        <AppShell {...args}>
-          <Typography>First use</Typography>
+        <AppShell header={<Typography>First</Typography>} navbar={<Sidebar items={NAV_ITEMS} activeItemId="overview" />}>
+          <Typography>First shell</Typography>
         </AppShell>
-        <AppShell>
-          <Typography>Second use</Typography>
+        <AppShell header={<Typography>Reuse</Typography>} navbar={<Sidebar items={NAV_ITEMS} activeItemId="settings" />}>
+          <Typography>Second shell, same provider</Typography>
         </AppShell>
       </Flex>
     </BearProvider>

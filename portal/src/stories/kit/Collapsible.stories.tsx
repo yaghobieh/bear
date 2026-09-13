@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Collapsible, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { Collapsible, BearProvider, Button, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Collapsible> = {
   title: 'Components/Collapsible',
@@ -15,6 +15,18 @@ const meta: Meta<typeof Collapsible> = {
       },
     },
   },
+  args: {
+    open: false,
+    defaultOpen: false,
+    disabled: false,
+    animationDuration: 0,
+  },
+  argTypes: {
+    open: { control: 'boolean' },
+    defaultOpen: { control: 'boolean' },
+    onOpenChange: { action: 'onOpenChange' },
+    disabled: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,37 +34,26 @@ export default meta;
 type Story = StoryObj<typeof Collapsible>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <Collapsible {...args}>
-      <Typography>Collapsible</Typography>
+  render: (args) => <Collapsible {...args} />,
+};
+
+export const Closed: Story = {
+  render: () => (
+    <Collapsible trigger={<Button variant="ghost">Show more</Button>}>
+      <Typography>Starts closed. Click the trigger to expand.</Typography>
     </Collapsible>
   ),
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <Collapsible {...args}>
-        <Typography>First</Typography>
-      </Collapsible>
-      <Collapsible>
-        <Typography>Second</Typography>
-      </Collapsible>
-    </Flex>
-  ),
-};
-
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Collapsible anywhere below.</Typography>
-        <Collapsible {...args}>
+        <Collapsible trigger={<Button>First</Button>} defaultOpen>
           <Typography>First use</Typography>
         </Collapsible>
-        <Collapsible>
-          <Typography>Second use</Typography>
+        <Collapsible trigger={<Button variant="outline">Reuse</Button>}>
+          <Typography>Same provider</Typography>
         </Collapsible>
       </Flex>
     </BearProvider>

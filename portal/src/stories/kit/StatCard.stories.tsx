@@ -15,6 +15,14 @@ const meta: Meta<typeof StatCard> = {
       },
     },
   },
+  args: {
+    title: 'Title',
+    color: '#EA0A8E',
+  },
+  argTypes: {
+    color: { control: 'color' },
+    onClick: { action: 'onClick' },
+  },
 };
 
 export default meta;
@@ -22,10 +30,7 @@ export default meta;
 type Story = StoryObj<typeof StatCard>;
 
 export const Basic: Story = {
-  args: {
-    title: 'Users',
-    value: '1.2k',
-  },
+  render: (args) => <StatCard {...args} />,
 };
 
 export const Clickable: Story = {

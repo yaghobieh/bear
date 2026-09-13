@@ -1,5 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { DateRangePicker, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { DateRangePicker, BearProvider, Flex, Typography } from '@forgedevstack/bear';
+
+const RANGE = {
+  start: new Date('2026-09-01'),
+  end: new Date('2026-09-12'),
+};
 
 const meta: Meta<typeof DateRangePicker> = {
   title: 'Components/DateRangePicker',
@@ -15,6 +20,25 @@ const meta: Meta<typeof DateRangePicker> = {
       },
     },
   },
+  args: {
+    value: RANGE,
+    label: 'Label',
+    placeholder: 'Type here',
+    disabled: false,
+    clearable: false,
+    minDate: new Date('2026-09-12'),
+    maxDate: new Date('2026-09-12'),
+    showPresets: true,
+    size: 'sm',
+    helperText: 'Helper text',
+  },
+  argTypes: {
+    onChange: { action: 'onChange' },
+    disabled: { control: 'boolean' },
+    clearable: { control: 'boolean' },
+    showPresets: { control: 'boolean' },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+  },
 };
 
 export default meta;
@@ -22,38 +46,28 @@ export default meta;
 type Story = StoryObj<typeof DateRangePicker>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <DateRangePicker {...args}>
-      <Typography>DateRangePicker</Typography>
-    </DateRangePicker>
-  ),
+  render: (args) => <DateRangePicker {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <DateRangePicker {...args}>
-        <Typography>First</Typography>
-      </DateRangePicker>
-      <DateRangePicker>
-        <Typography>Second</Typography>
-      </DateRangePicker>
-    </Flex>
+export const WithPresets: Story = {
+  render: () => (
+    <DateRangePicker
+      label="Booking period"
+      helperText="Select check-in and check-out"
+      value={RANGE}
+      showPresets
+      clearable
+    />
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
         <Typography variant="subtitle2">Wrap once in BearProvider, then reuse DateRangePicker anywhere below.</Typography>
-        <DateRangePicker {...args}>
-          <Typography>First use</Typography>
-        </DateRangePicker>
-        <DateRangePicker>
-          <Typography>Second use</Typography>
-        </DateRangePicker>
+        <DateRangePicker value={RANGE} placeholder="First range" />
+        <DateRangePicker value={RANGE} size="sm" placeholder="Reuse" />
       </Flex>
     </BearProvider>
   ),

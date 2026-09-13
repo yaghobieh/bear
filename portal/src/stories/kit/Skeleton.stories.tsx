@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Skeleton, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { BearProvider, Flex, Skeleton, SkeletonAvatar, SkeletonCard, SkeletonText } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Skeleton> = {
   title: 'Components/Skeleton',
@@ -15,6 +15,15 @@ const meta: Meta<typeof Skeleton> = {
       },
     },
   },
+  subcomponents: { SkeletonAvatar, SkeletonText, SkeletonCard },
+  args: {
+    width: 320,
+    height: 240,
+    borderRadius: 0,
+    count: 0,
+    gap: 2,
+  },
+  argTypes: {},
 };
 
 export default meta;
@@ -22,25 +31,27 @@ export default meta;
 type Story = StoryObj<typeof Skeleton>;
 
 export const Basic: Story = {
-  args: {},
+  render: (args) => <Skeleton {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex direction="column" gap={3}>
-      <Skeleton {...args} />
-      <Skeleton {...args} />
+export const Circular: Story = {
+  render: () => (
+    <Flex gap={3} align="center">
+      <Skeleton variant="circular" width={48} height={48} />
+      <Flex direction="column" gap={2}>
+        <Skeleton width={180} height={14} />
+        <Skeleton width={120} height={12} />
+      </Flex>
     </Flex>
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Skeleton anywhere below.</Typography>
-        <Skeleton {...args} />
-        <Skeleton {...args} />
+      <Flex direction="column" gap={3}>
+        <Skeleton width={220} height={16} />
+        <Skeleton variant="rounded" width={220} height={72} />
       </Flex>
     </BearProvider>
   ),

@@ -15,6 +15,19 @@ const meta: Meta<typeof BottomNavigation> = {
       },
     },
   },
+  args: {
+    items: [
+      { id: 'home', label: 'Home', icon: <Typography>•</Typography> },
+      { id: 'search', label: 'Search', icon: <Typography>•</Typography> },
+      { id: 'more', label: 'More', icon: <Typography>•</Typography> },
+    ],
+    value: 'home',
+    showLabels: 'always',
+  },
+  argTypes: {
+    onChange: { action: 'onChange' },
+    showLabels: { control: 'select', options: ['always', 'active'] },
+  },
 };
 
 export default meta;
@@ -28,10 +41,7 @@ const ITEMS = [
 ];
 
 export const Basic: Story = {
-  args: {
-    items: ITEMS,
-    value: 'home',
-  },
+  render: (args) => <BottomNavigation {...args} />,
 };
 
 export const AlwaysLabels: Story = {

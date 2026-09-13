@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Highlight, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { Highlight, BearProvider, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Highlight> = {
   title: 'Components/Highlight',
@@ -15,6 +15,14 @@ const meta: Meta<typeof Highlight> = {
       },
     },
   },
+  args: {
+    children: 'Search match',
+    animated: true,
+  },
+  argTypes: {
+    color: { control: 'color' },
+    animated: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,38 +30,27 @@ export default meta;
 type Story = StoryObj<typeof Highlight>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <Highlight {...args}>
-      <Typography>Highlight</Typography>
-    </Highlight>
-  ),
+  render: (args) => <Highlight {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <Highlight {...args}>
-        <Typography>First</Typography>
-      </Highlight>
-      <Highlight>
-        <Typography>Second</Typography>
+export const Colors: Story = {
+  render: () => (
+    <Flex gap={2} wrap="wrap">
+      <Highlight color="yellow">Yellow</Highlight>
+      <Highlight color="pink">Pink</Highlight>
+      <Highlight color="primary" animated>
+        Primary pulse
       </Highlight>
     </Flex>
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Highlight anywhere below.</Typography>
-        <Highlight {...args}>
-          <Typography>First use</Typography>
-        </Highlight>
-        <Highlight>
-          <Typography>Second use</Typography>
-        </Highlight>
+      <Flex gap={2}>
+        <Highlight>First</Highlight>
+        <Highlight color="green">Reuse</Highlight>
       </Flex>
     </BearProvider>
   ),

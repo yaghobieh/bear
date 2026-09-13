@@ -15,6 +15,14 @@ const meta: Meta<typeof Spinner> = {
       },
     },
   },
+  args: {
+    color: '#EA0A8E',
+    label: 'Label',
+    size: 'md',
+  },
+  argTypes: {
+    color: { control: 'color' },
+  },
 };
 
 export default meta;
@@ -22,7 +30,7 @@ export default meta;
 type Story = StoryObj<typeof Spinner>;
 
 export const Basic: Story = {
-  args: {},
+  render: (args) => <Spinner {...args} />,
 };
 
 export const Sizes: Story = {

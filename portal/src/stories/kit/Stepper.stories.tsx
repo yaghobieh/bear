@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Stepper, BearProvider, Flex, Typography } from '@forgedevstack/bear';
+import { useArgs } from '@storybook/preview-api';
+import { BearProvider, Flex, Stepper, StepperControls, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Stepper> = {
   title: 'Components/Stepper',
@@ -15,6 +16,28 @@ const meta: Meta<typeof Stepper> = {
       },
     },
   },
+  subcomponents: { StepperControls },
+  args: {
+    steps: [
+      { label: 'Account' },
+      { label: 'Details' },
+      { label: 'Done' },
+    ],
+    activeStep: 1,
+    showNumbers: true,
+    clickable: false,
+    showConnectors: true,
+    connectorStyle: 'solid',
+    alternativeLabel: false,
+  },
+  argTypes: {
+    onStepClick: { action: 'onStepClick' },
+    showNumbers: { control: 'boolean' },
+    clickable: { control: 'boolean' },
+    showConnectors: { control: 'boolean' },
+    connectorStyle: { control: 'select', options: ['solid', 'dashed'] },
+    alternativeLabel: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -29,16 +52,23 @@ const STEPS = [
 
 export const Basic: Story = {
   args: {
-    steps: STEPS,
-    activeStep: 1,
+    clickable: true,
+  },
+  render: (args) => {
+    const [, updateArgs] = useArgs();
+    return <Stepper {...args} onStepClick={(activeStep) => updateArgs({ activeStep })} />;
   },
 };
 
 export const Vertical: Story = {
   args: {
-    steps: STEPS,
     activeStep: 0,
     orientation: 'vertical',
+    clickable: true,
+  },
+  render: (args) => {
+    const [, updateArgs] = useArgs();
+    return <Stepper {...args} onStepClick={(activeStep) => updateArgs({ activeStep })} />;
   },
 };
 

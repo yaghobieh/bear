@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Card, BearProvider, Flex, Typography } from '@forgedevstack/bear';
+import { BearProvider, Card, CardBody, CardFooter, CardHeader, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Card> = {
   title: 'Components/Card',
@@ -15,6 +15,17 @@ const meta: Meta<typeof Card> = {
       },
     },
   },
+  subcomponents: { CardHeader, CardBody, CardFooter },
+  args: {
+    variant: 'elevated',
+    interactive: false,
+    radius: 'sm',
+  },
+  argTypes: {
+    variant: { control: 'select', options: ['elevated', 'outlined', 'filled', 'ghost'] },
+    interactive: { control: 'boolean' },
+    radius: { control: 'select', options: ['sm', 'md', 'lg', 'xl', '2xl', 'none'] },
+  },
 };
 
 export default meta;
@@ -22,8 +33,8 @@ export default meta;
 type Story = StoryObj<typeof Card>;
 
 export const Basic: Story = {
-  render: () => (
-    <Card padding="md">
+  render: (args) => (
+    <Card {...args} padding="md">
       <Typography variant="h6">Card</Typography>
       <Typography color="muted">Real Bear Card with children.</Typography>
     </Card>

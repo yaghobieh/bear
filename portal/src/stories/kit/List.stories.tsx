@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { List, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { BearProvider, Flex, List, ListItem, ListItemButton, ListItemIcon, ListItemText, ListSubheader } from '@forgedevstack/bear';
 
 const meta: Meta<typeof List> = {
   title: 'Components/List',
@@ -15,6 +15,19 @@ const meta: Meta<typeof List> = {
       },
     },
   },
+  subcomponents: { ListItem, ListSubheader, ListItemText, ListItemIcon, ListItemButton },
+  args: {
+    variant: 'default',
+    hoverable: false,
+    dense: false,
+    disablePadding: false,
+  },
+  argTypes: {
+    variant: { control: 'select', options: ['default', 'bordered', 'divided', 'laminated'] },
+    hoverable: { control: 'boolean' },
+    dense: { control: 'boolean' },
+    disablePadding: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,37 +35,36 @@ export default meta;
 type Story = StoryObj<typeof List>;
 
 export const Basic: Story = {
-  args: {},
   render: (args) => (
     <List {...args}>
-      <Typography>List</Typography>
+      <ListItem primary="Inbox" secondary="You have 3 new messages" />
+      <ListItem primary="Drafts" />
+      <ListItem primary="Sent" secondary="Last sent: 2 days ago" />
     </List>
   ),
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <List {...args}>
-        <Typography>First</Typography>
-      </List>
-      <List>
-        <Typography>Second</Typography>
-      </List>
-    </Flex>
+export const Divided: Story = {
+  render: () => (
+    <List variant="divided" hoverable>
+      <ListItem leading={<span>📥</span>} primary="Inbox" clickable />
+      <ListItem leading={<span>📤</span>} primary="Sent" clickable />
+      <ListItem leading={<span>⚙️</span>} primary="Settings" clickable />
+    </List>
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse List anywhere below.</Typography>
-        <List {...args}>
-          <Typography>First use</Typography>
+        <List variant="bordered">
+          <ListItem primary="Inbox" />
+          <ListItem primary="Drafts" />
         </List>
-        <List>
-          <Typography>Second use</Typography>
+        <List variant="divided">
+          <ListItem primary="Sent" />
+          <ListItem primary="Archive" />
         </List>
       </Flex>
     </BearProvider>

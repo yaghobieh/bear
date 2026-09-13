@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { useArgs } from '@storybook/preview-api';
 import { Select, BearProvider, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Select> = {
@@ -15,6 +16,31 @@ const meta: Meta<typeof Select> = {
       },
     },
   },
+  args: {
+    options: [
+      { value: 'react', label: 'React' },
+      { value: 'vue', label: 'Vue' },
+      { value: 'svelte', label: 'Svelte' },
+    ],
+    value: 'react',
+    placeholder: 'Choose one',
+    label: 'Framework',
+    disabled: false,
+    required: false,
+    size: 'md',
+    fullWidth: false,
+    displayEmpty: false,
+    native: false,
+  },
+  argTypes: {
+    onChange: { action: 'onChange' },
+    disabled: { control: 'boolean' },
+    required: { control: 'boolean' },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    fullWidth: { control: 'boolean' },
+    displayEmpty: { control: 'boolean' },
+    native: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -28,11 +54,17 @@ const OPTIONS = [
 ];
 
 export const Basic: Story = {
-  render: () => <Select options={OPTIONS} placeholder="Pick a stack" />,
+  render: (args) => {
+    const [, updateArgs] = useArgs();
+    return <Select {...args} onChange={(value) => updateArgs({ value })} />;
+  },
 };
 
 export const WithLabel: Story = {
-  render: () => <Select options={OPTIONS} label="Framework" placeholder="Choose one" fullWidth />,
+  render: (args) => {
+    const [, updateArgs] = useArgs();
+    return <Select {...args} fullWidth onChange={(value) => updateArgs({ value })} />;
+  },
 };
 
 export const ReuseWithProvider: Story = {

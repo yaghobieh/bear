@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Descriptions, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { Descriptions, BearProvider, Flex } from '@forgedevstack/bear';
+import type { DescriptionItem } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Descriptions> = {
   title: 'Components/Descriptions',
@@ -15,45 +16,50 @@ const meta: Meta<typeof Descriptions> = {
       },
     },
   },
+  args: {
+    title: 'Title',
+    bordered: false,
+    size: 'sm',
+    layout: 'horizontal',
+    labelWidth: 320,
+  },
+  argTypes: {
+    bordered: { control: 'boolean' },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    layout: { control: 'select', options: ['horizontal', 'vertical'] },
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof Descriptions>;
 
+const ITEMS: DescriptionItem[] = [
+  { label: 'Name', value: 'Ada Lovelace' },
+  { label: 'Email', value: 'ada@forge.dev' },
+  { label: 'Role', value: 'Engineer' },
+  { label: 'Status', value: 'Active' },
+];
+
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <Descriptions {...args}>
-      <Typography>Descriptions</Typography>
-    </Descriptions>
-  ),
+  args: {
+    items: ITEMS,
+  },
+  render: (args) => <Descriptions {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <Descriptions {...args}>
-        <Typography>First</Typography>
-      </Descriptions>
-      <Descriptions>
-        <Typography>Second</Typography>
-      </Descriptions>
-    </Flex>
+export const Bordered: Story = {
+  render: () => (
+    <Descriptions title="Order Details" items={ITEMS} bordered layout="vertical" columns={2} />
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Descriptions anywhere below.</Typography>
-        <Descriptions {...args}>
-          <Typography>First use</Typography>
-        </Descriptions>
-        <Descriptions>
-          <Typography>Second use</Typography>
-        </Descriptions>
+        <Descriptions items={ITEMS} />
+        <Descriptions items={ITEMS} bordered />
       </Flex>
     </BearProvider>
   ),

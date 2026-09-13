@@ -15,6 +15,18 @@ const meta: Meta<typeof Tooltip> = {
       },
     },
   },
+  args: {
+    children: 'Hover me',
+    position: 'top',
+    placement: 'top',
+    delay: 0,
+    disabled: false,
+  },
+  argTypes: {
+    position: { control: 'select', options: ['top', 'bottom', 'left', 'right'] },
+    placement: { control: 'select', options: ['top', 'bottom', 'left', 'right'] },
+    disabled: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,11 +34,7 @@ export default meta;
 type Story = StoryObj<typeof Tooltip>;
 
 export const Basic: Story = {
-  render: () => (
-    <Tooltip content="Save changes">
-      <Button>Hover</Button>
-    </Tooltip>
-  ),
+  render: (args) => <Tooltip {...args} />,
 };
 
 export const Positions: Story = {

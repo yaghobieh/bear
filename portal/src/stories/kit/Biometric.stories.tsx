@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Biometric, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { Biometric, BearProvider, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Biometric> = {
   title: 'Components/Biometric',
@@ -15,6 +15,18 @@ const meta: Meta<typeof Biometric> = {
       },
     },
   },
+  args: {
+    label: 'Label',
+    disabled: false,
+    animated: true,
+  },
+  argTypes: {
+    onScan: { action: 'onScan' },
+    onSuccess: { action: 'onSuccess' },
+    onError: { action: 'onError' },
+    disabled: { control: 'boolean' },
+    animated: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,38 +34,25 @@ export default meta;
 type Story = StoryObj<typeof Biometric>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <Biometric {...args}>
-      <Typography>Biometric</Typography>
-    </Biometric>
-  ),
+  render: (args) => <Biometric {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <Biometric {...args}>
-        <Typography>First</Typography>
-      </Biometric>
-      <Biometric>
-        <Typography>Second</Typography>
-      </Biometric>
+export const FaceScan: Story = {
+  render: () => (
+    <Flex gap={6} align="end">
+      <Biometric type="face" size="lg" label="Look at the camera" />
+      <Biometric type="iris" size="lg" label="Hold steady" />
     </Flex>
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
         <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Biometric anywhere below.</Typography>
-        <Biometric {...args}>
-          <Typography>First use</Typography>
-        </Biometric>
-        <Biometric>
-          <Typography>Second use</Typography>
-        </Biometric>
+        <Biometric type="fingerprint" label="First" />
+        <Biometric type="face" label="Reuse" />
       </Flex>
     </BearProvider>
   ),

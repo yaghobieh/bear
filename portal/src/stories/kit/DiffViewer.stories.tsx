@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { DiffViewer, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { DiffViewer, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof DiffViewer> = {
   title: 'Components/DiffViewer',
@@ -15,45 +15,59 @@ const meta: Meta<typeof DiffViewer> = {
       },
     },
   },
+  args: {
+    showLineNumbers: true,
+    syntaxHighlight: false,
+    showStats: true,
+    showLineHoverInfo: true,
+  },
+  argTypes: {
+    showLineNumbers: { control: 'boolean' },
+    syntaxHighlight: { control: 'boolean' },
+    showStats: { control: 'boolean' },
+    showLineHoverInfo: { control: 'boolean' },
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof DiffViewer>;
 
+const OLD_VALUE = `function greet(name) {
+  console.log("Hello " + name);
+  return true;
+}`;
+
+const NEW_VALUE = `function greet(name, greeting = "Hello") {
+  console.log(greeting + " " + name);
+  console.log("Welcome!");
+  return true;
+}`;
+
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <DiffViewer {...args}>
-      <Typography>DiffViewer</Typography>
-    </DiffViewer>
-  ),
+  render: (args) => <DiffViewer {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <DiffViewer {...args}>
-        <Typography>First</Typography>
-      </DiffViewer>
-      <DiffViewer>
-        <Typography>Second</Typography>
-      </DiffViewer>
-    </Flex>
+export const Unified: Story = {
+  render: () => (
+    <DiffViewer
+      oldValue={OLD_VALUE}
+      newValue={NEW_VALUE}
+      viewMode="unified"
+      showStats
+      showLineNumbers
+      oldTitle="Before"
+      newTitle="After"
+    />
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse DiffViewer anywhere below.</Typography>
-        <DiffViewer {...args}>
-          <Typography>First use</Typography>
-        </DiffViewer>
-        <DiffViewer>
-          <Typography>Second use</Typography>
-        </DiffViewer>
+        <DiffViewer oldValue={OLD_VALUE} newValue={NEW_VALUE} />
+        <DiffViewer oldValue={OLD_VALUE} newValue={NEW_VALUE} viewMode="unified" />
       </Flex>
     </BearProvider>
   ),

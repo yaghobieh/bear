@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { AnimatedCounter, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { AnimatedCounter, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof AnimatedCounter> = {
   title: 'Components/AnimatedCounter',
@@ -15,6 +15,16 @@ const meta: Meta<typeof AnimatedCounter> = {
       },
     },
   },
+  args: {
+    value: 42,
+    from: 0,
+    duration: 0,
+    decimals: 0,
+    animateOnView: false,
+  },
+  argTypes: {
+    animateOnView: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,38 +32,24 @@ export default meta;
 type Story = StoryObj<typeof AnimatedCounter>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <AnimatedCounter {...args}>
-      <Typography>AnimatedCounter</Typography>
-    </AnimatedCounter>
-  ),
+  render: (args) => <AnimatedCounter {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <AnimatedCounter {...args}>
-        <Typography>First</Typography>
-      </AnimatedCounter>
-      <AnimatedCounter>
-        <Typography>Second</Typography>
-      </AnimatedCounter>
+export const Prefixed: Story = {
+  render: () => (
+    <Flex gap={4}>
+      <AnimatedCounter value={45678} prefix="$" />
+      <AnimatedCounter value={98} suffix="%" decimals={0} />
     </Flex>
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse AnimatedCounter anywhere below.</Typography>
-        <AnimatedCounter {...args}>
-          <Typography>First use</Typography>
-        </AnimatedCounter>
-        <AnimatedCounter>
-          <Typography>Second use</Typography>
-        </AnimatedCounter>
+      <Flex gap={4}>
+        <AnimatedCounter value={10} />
+        <AnimatedCounter value={20} />
       </Flex>
     </BearProvider>
   ),

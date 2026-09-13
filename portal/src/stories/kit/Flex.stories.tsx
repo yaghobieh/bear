@@ -15,6 +15,12 @@ const meta: Meta<typeof Flex> = {
       },
     },
   },
+  args: {
+    inline: false,
+  },
+  argTypes: {
+    inline: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,12 +28,7 @@ export default meta;
 type Story = StoryObj<typeof Flex>;
 
 export const Basic: Story = {
-  render: () => (
-    <Flex gap={3}>
-      <Button>One</Button>
-      <Button variant="outline">Two</Button>
-    </Flex>
-  ),
+  render: (args) => <Flex {...args} />,
 };
 
 export const Column: Story = {

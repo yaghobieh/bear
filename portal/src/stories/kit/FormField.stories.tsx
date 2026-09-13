@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { FormField, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { FormField, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof FormField> = {
   title: 'Components/FormField',
@@ -15,6 +15,20 @@ const meta: Meta<typeof FormField> = {
       },
     },
   },
+  args: {
+    label: 'Label',
+    helperText: 'Helper text',
+    size: 'sm',
+    fullWidth: false,
+    required: false,
+    variant: 'outlined',
+  },
+  argTypes: {
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    fullWidth: { control: 'boolean' },
+    required: { control: 'boolean' },
+    variant: { control: 'select', options: ['outlined', 'filled', 'standard'] },
+  },
 };
 
 export default meta;
@@ -22,38 +36,21 @@ export default meta;
 type Story = StoryObj<typeof FormField>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <FormField {...args}>
-      <Typography>FormField</Typography>
-    </FormField>
-  ),
+  render: (args) => <FormField {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <FormField {...args}>
-        <Typography>First</Typography>
-      </FormField>
-      <FormField>
-        <Typography>Second</Typography>
-      </FormField>
-    </Flex>
+export const WithError: Story = {
+  render: () => (
+    <FormField label="Email" error="Invalid email address" placeholder="you@example.com" required />
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse FormField anywhere below.</Typography>
-        <FormField {...args}>
-          <Typography>First use</Typography>
-        </FormField>
-        <FormField>
-          <Typography>Second use</Typography>
-        </FormField>
+      <Flex direction="column" gap={3}>
+        <FormField label="Name" placeholder="First field" />
+        <FormField label="Email" placeholder="Reuse below the same provider" />
       </Flex>
     </BearProvider>
   ),

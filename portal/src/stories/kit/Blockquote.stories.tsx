@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Blockquote, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { Blockquote, BearProvider, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Blockquote> = {
   title: 'Components/Blockquote',
@@ -15,6 +15,12 @@ const meta: Meta<typeof Blockquote> = {
       },
     },
   },
+  args: {
+    children: 'Ship the smallest useful version.',
+  },
+  argTypes: {
+    color: { control: 'color' },
+  },
 };
 
 export default meta;
@@ -22,38 +28,24 @@ export default meta;
 type Story = StoryObj<typeof Blockquote>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <Blockquote {...args}>
-      <Typography>Blockquote</Typography>
+  render: (args) => <Blockquote {...args} />,
+};
+
+export const Colored: Story = {
+  render: () => (
+    <Blockquote color="primary" cite="Design system">
+      Pink is the only accent. Body and borders stay neutral.
     </Blockquote>
   ),
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <Blockquote {...args}>
-        <Typography>First</Typography>
-      </Blockquote>
-      <Blockquote>
-        <Typography>Second</Typography>
-      </Blockquote>
-    </Flex>
-  ),
-};
-
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
+      <Flex direction="column" gap={3}>
         <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Blockquote anywhere below.</Typography>
-        <Blockquote {...args}>
-          <Typography>First use</Typography>
-        </Blockquote>
-        <Blockquote>
-          <Typography>Second use</Typography>
-        </Blockquote>
+        <Blockquote>First use</Blockquote>
+        <Blockquote color="success">Reuse</Blockquote>
       </Flex>
     </BearProvider>
   ),

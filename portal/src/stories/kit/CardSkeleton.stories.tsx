@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { CardSkeleton, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { CardSkeleton, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof CardSkeleton> = {
   title: 'Components/CardSkeleton',
@@ -15,6 +15,12 @@ const meta: Meta<typeof CardSkeleton> = {
       },
     },
   },
+  args: {
+    animation: 'pulse',
+  },
+  argTypes: {
+    animation: { control: 'select', options: ['pulse', 'wave', 'none'] },
+  },
 };
 
 export default meta;
@@ -22,25 +28,19 @@ export default meta;
 type Story = StoryObj<typeof CardSkeleton>;
 
 export const Basic: Story = {
-  args: {},
+  render: (args) => <CardSkeleton {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex direction="column" gap={3}>
-      <CardSkeleton {...args} />
-      <CardSkeleton {...args} />
-    </Flex>
-  ),
+export const Wave: Story = {
+  render: () => <CardSkeleton animation="wave" />,
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse CardSkeleton anywhere below.</Typography>
-        <CardSkeleton {...args} />
-        <CardSkeleton {...args} />
+      <Flex gap={4} wrap="wrap">
+        <CardSkeleton />
+        <CardSkeleton animation="none" />
       </Flex>
     </BearProvider>
   ),

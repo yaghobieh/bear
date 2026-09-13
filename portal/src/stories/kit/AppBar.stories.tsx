@@ -15,6 +15,19 @@ const meta: Meta<typeof AppBar> = {
       },
     },
   },
+  args: {
+    elevation: false,
+    dense: false,
+    disableGutters: false,
+    enableColorOnDark: false,
+  },
+  argTypes: {
+    color: { control: 'color' },
+    elevation: { control: 'boolean' },
+    dense: { control: 'boolean' },
+    disableGutters: { control: 'boolean' },
+    enableColorOnDark: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,9 +35,7 @@ export default meta;
 type Story = StoryObj<typeof AppBar>;
 
 export const Basic: Story = {
-  render: () => (
-    <AppBar position="relative" leftContent={<Typography variant="subtitle2">Bear</Typography>} rightContent={<Button size="sm">Docs</Button>} />
-  ),
+  render: (args) => <AppBar {...args} />,
 };
 
 export const Dense: Story = {

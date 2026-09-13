@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { useArgs } from '@storybook/preview-api';
 import { useState } from 'react';
 import { Modal, Button, BearProvider, Flex, Typography } from '@forgedevstack/bear';
 
@@ -16,6 +17,33 @@ const meta: Meta<typeof Modal> = {
       },
     },
   },
+  args: {
+    isOpen: false,
+    title: 'Title',
+    showCloseButton: true,
+    closeOnBackdrop: false,
+    closeOnEscape: false,
+    disableEscapeKeyDown: false,
+    hideBackdrop: false,
+    keepMounted: false,
+    lockBodyScroll: false,
+    zIndex: 0,
+    cancelPreventScroll: false,
+    isCancelBackgroundClick: false,
+  },
+  argTypes: {
+    isOpen: { control: 'boolean' },
+    onClose: { action: 'onClose' },
+    showCloseButton: { control: 'boolean' },
+    closeOnBackdrop: { control: 'boolean' },
+    closeOnEscape: { control: 'boolean' },
+    disableEscapeKeyDown: { control: 'boolean' },
+    hideBackdrop: { control: 'boolean' },
+    keepMounted: { control: 'boolean' },
+    lockBodyScroll: { control: 'boolean' },
+    cancelPreventScroll: { control: 'boolean' },
+    isCancelBackgroundClick: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -23,13 +51,13 @@ export default meta;
 type Story = StoryObj<typeof Modal>;
 
 export const Basic: Story = {
-  render: () => {
-    const [isOpen, setIsOpen] = useState(false);
+  render: (args) => {
+    const [, updateArgs] = useArgs();
     return (
       <>
-        <Button onClick={() => setIsOpen(true)}>Open modal</Button>
-        <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="Bear modal">
-          <Typography>Real modal body. Close and open again to reuse it.</Typography>
+        <Button onClick={() => updateArgs({ isOpen: true })}>Open</Button>
+        <Modal {...args} onClose={() => updateArgs({ isOpen: false })}>
+          <Typography>Change title and size in Controls.</Typography>
         </Modal>
       </>
     );

@@ -15,6 +15,22 @@ const meta: Meta<typeof Dock> = {
       },
     },
   },
+  args: {
+    items: [
+      { id: 'home', label: 'Home', icon: <Typography>H</Typography> },
+      { id: 'search', label: 'Search', icon: <Typography>S</Typography> },
+      { id: 'more', label: 'More', icon: <Typography>M</Typography> },
+    ],
+    iconSize: 40,
+    magnifiedSize: 56,
+    magnification: true,
+    magnificationDistance: 80,
+    showLabels: true,
+  },
+  argTypes: {
+    magnification: { control: 'boolean' },
+    showLabels: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -28,10 +44,7 @@ const ITEMS = [
 ];
 
 export const Basic: Story = {
-  args: {
-    items: ITEMS,
-    position: 'bottom',
-  },
+  render: (args) => <Dock {...args} />,
 };
 
 export const Top: Story = {

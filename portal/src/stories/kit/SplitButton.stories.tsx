@@ -1,5 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { SplitButton, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { SplitButton, BearProvider, Flex } from '@forgedevstack/bear';
+
+const SAVE_OPTIONS = [
+  { id: 'draft', label: 'Save as draft', onClick: () => undefined },
+  { id: 'template', label: 'Save as template', onClick: () => undefined },
+  { id: 'copy', label: 'Save a copy', onClick: () => undefined },
+];
+
+const EXPORT_OPTIONS = [
+  { id: 'csv', label: 'Export as CSV', onClick: () => undefined },
+  { id: 'pdf', label: 'Export as PDF', onClick: () => undefined },
+  { id: 'xlsx', label: 'Export as Excel', onClick: () => undefined },
+];
 
 const meta: Meta<typeof SplitButton> = {
   title: 'Components/SplitButton',
@@ -11,9 +23,26 @@ const meta: Meta<typeof SplitButton> = {
     },
     docs: {
       description: {
-        component: 'SplitButton from @forgedevstack/bear. Wrap your tree in BearProvider so theme tokens apply, then reuse SplitButton anywhere below the provider. The Docs table lists the public props.',
+        component: 'SplitButton from @forgedevstack/bear. Change label, variant, size, and disabled in Controls. The chevron opens the options menu.',
       },
     },
+  },
+  args: {
+    label: 'Save',
+    options: SAVE_OPTIONS,
+    variant: 'primary',
+    size: 'md',
+    disabled: false,
+    loading: false,
+    dropdownAlign: 'left',
+  },
+  argTypes: {
+    variant: { control: 'select', options: ['primary', 'secondary', 'outline', 'danger'] },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    disabled: { control: 'boolean' },
+    loading: { control: 'boolean' },
+    onClick: { action: 'onClick' },
+    dropdownAlign: { control: 'select', options: ['left', 'right'] },
   },
 };
 
@@ -22,38 +51,25 @@ export default meta;
 type Story = StoryObj<typeof SplitButton>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <SplitButton {...args}>
-      <Typography>SplitButton</Typography>
-    </SplitButton>
-  ),
+  render: (args) => <SplitButton {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <SplitButton {...args}>
-        <Typography>First</Typography>
-      </SplitButton>
-      <SplitButton>
-        <Typography>Second</Typography>
-      </SplitButton>
-    </Flex>
-  ),
+export const Outline: Story = {
+  args: {
+    label: 'Export',
+    options: EXPORT_OPTIONS,
+    variant: 'outline',
+    dropdownAlign: 'right',
+  },
+  render: (args) => <SplitButton {...args} />,
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse SplitButton anywhere below.</Typography>
-        <SplitButton {...args}>
-          <Typography>First use</Typography>
-        </SplitButton>
-        <SplitButton>
-          <Typography>Second use</Typography>
-        </SplitButton>
+      <Flex gap={2}>
+        <SplitButton label="Save" options={SAVE_OPTIONS} onClick={() => undefined} />
+        <SplitButton label="Export" options={EXPORT_OPTIONS} variant="secondary" onClick={() => undefined} />
       </Flex>
     </BearProvider>
   ),

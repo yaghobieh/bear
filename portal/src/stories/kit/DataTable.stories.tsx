@@ -15,6 +15,10 @@ const meta: Meta<typeof DataTable> = {
       },
     },
   },
+  args: {
+
+  },
+  argTypes: {},
 };
 
 export default meta;
@@ -34,8 +38,18 @@ const COLUMNS = [
 ];
 
 export const Basic: Story = {
-  render: () => (
-    <DataTable columns={COLUMNS} data={ROWS} rowKey={(row) => row.id} />
+  args: {
+    variant: 'simple',
+    loading: false,
+    clickable: false,
+  },
+  render: (args) => (
+    <DataTable
+      {...args}
+      columns={COLUMNS}
+      data={ROWS}
+      rowKey={(row) => row.id}
+    />
   ),
 };
 

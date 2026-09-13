@@ -15,6 +15,27 @@ const meta: Meta<typeof Pagination> = {
       },
     },
   },
+  args: {
+    count: 0,
+    page: 0,
+    defaultPage: 0,
+    boundaryCount: 0,
+    siblingCount: 0,
+    variant: 'text',
+    shape: 'circular',
+    showFirstLast: true,
+    showPrevNext: true,
+    disabled: false,
+  },
+  argTypes: {
+    variant: { control: 'select', options: ['text', 'outlined', 'contained'] },
+    color: { control: 'color' },
+    shape: { control: 'select', options: ['circular', 'rounded'] },
+    showFirstLast: { control: 'boolean' },
+    showPrevNext: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+    onChange: { action: 'onChange' },
+  },
 };
 
 export default meta;
@@ -22,11 +43,7 @@ export default meta;
 type Story = StoryObj<typeof Pagination>;
 
 export const Basic: Story = {
-  args: {
-    page: 2,
-    count: 8,
-    onChange: () => undefined,
-  },
+  render: (args) => <Pagination {...args} />,
 };
 
 export const ManyPages: Story = {

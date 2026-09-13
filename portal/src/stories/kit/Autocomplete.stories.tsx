@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Autocomplete, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { useState } from 'react';
+import { Autocomplete, BearProvider, Flex } from '@forgedevstack/bear';
+import type { AutocompleteOption } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Autocomplete> = {
   title: 'Components/Autocomplete',
@@ -15,45 +17,69 @@ const meta: Meta<typeof Autocomplete> = {
       },
     },
   },
+  args: {
+    placeholder: 'Type here',
+    label: 'Label',
+    helperText: 'Helper text',
+    disabled: false,
+    freeSolo: false,
+    loading: false,
+  },
+  argTypes: {
+    onChange: { action: 'onChange' },
+    onSelect: { action: 'onSelect' },
+    disabled: { control: 'boolean' },
+    freeSolo: { control: 'boolean' },
+    loading: { control: 'boolean' },
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof Autocomplete>;
 
+const FRUIT_OPTIONS: AutocompleteOption[] = [
+  { value: 'apple', label: 'Apple' },
+  { value: 'banana', label: 'Banana' },
+  { value: 'cherry', label: 'Cherry' },
+  { value: 'date', label: 'Date' },
+];
+
+const COUNTRY_OPTIONS: AutocompleteOption[] = [
+  { value: 'us', label: 'United States', description: '+1' },
+  { value: 'uk', label: 'United Kingdom', description: '+44' },
+  { value: 'de', label: 'Germany', description: '+49' },
+];
+
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <Autocomplete {...args}>
-      <Typography>Autocomplete</Typography>
-    </Autocomplete>
-  ),
+  args: {
+    options: FRUIT_OPTIONS,
+    placeholder: 'Search fruits...',
+  },
+  render: (args) => <Autocomplete {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <Autocomplete {...args}>
-        <Typography>First</Typography>
-      </Autocomplete>
-      <Autocomplete>
-        <Typography>Second</Typography>
-      </Autocomplete>
-    </Flex>
-  ),
+export const WithDescriptions: Story = {
+  render: () => {
+    const [value, setValue] = useState('');
+    return (
+      <Autocomplete
+        options={COUNTRY_OPTIONS}
+        value={value}
+        onChange={setValue}
+        label="Country"
+        placeholder="Select country..."
+      />
+    );
+  },
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Autocomplete anywhere below.</Typography>
-        <Autocomplete {...args}>
-          <Typography>First use</Typography>
-        </Autocomplete>
-        <Autocomplete>
-          <Typography>Second use</Typography>
-        </Autocomplete>
+      <Flex direction="column" gap={3}>
+        <Autocomplete options={FRUIT_OPTIONS} placeholder="First autocomplete" />
+        <Autocomplete options={COUNTRY_OPTIONS} placeholder="Reuse below the same provider" />
       </Flex>
     </BearProvider>
   ),

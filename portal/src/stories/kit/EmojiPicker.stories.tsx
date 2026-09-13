@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { EmojiPicker, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { EmojiPicker, BearProvider, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof EmojiPicker> = {
   title: 'Components/EmojiPicker',
@@ -15,45 +16,44 @@ const meta: Meta<typeof EmojiPicker> = {
       },
     },
   },
+  args: {
+    size: 'sm',
+  },
+  argTypes: {
+    onSelect: { action: 'onSelect' },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof EmojiPicker>;
 
-export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <EmojiPicker {...args}>
-      <Typography>EmojiPicker</Typography>
-    </EmojiPicker>
-  ),
+const SelectDemo = () => {
+  const [emoji, setEmoji] = useState('');
+  return (
+    <Flex direction="column" gap={3}>
+      <EmojiPicker onSelect={setEmoji} />
+      <Typography>{emoji ? `Selected ${emoji}` : 'Pick an emoji'}</Typography>
+    </Flex>
+  );
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <EmojiPicker {...args}>
-        <Typography>First</Typography>
-      </EmojiPicker>
-      <EmojiPicker>
-        <Typography>Second</Typography>
-      </EmojiPicker>
-    </Flex>
-  ),
+export const Basic: Story = {
+  render: (args) => <EmojiPicker {...args} />,
+};
+
+export const WithSelection: Story = {
+  render: () => <SelectDemo />,
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
         <Typography variant="subtitle2">Wrap once in BearProvider, then reuse EmojiPicker anywhere below.</Typography>
-        <EmojiPicker {...args}>
-          <Typography>First use</Typography>
-        </EmojiPicker>
-        <EmojiPicker>
-          <Typography>Second use</Typography>
-        </EmojiPicker>
+        <EmojiPicker />
+        <EmojiPicker size="sm" />
       </Flex>
     </BearProvider>
   ),

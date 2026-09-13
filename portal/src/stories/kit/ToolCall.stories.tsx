@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ToolCall, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { ToolCall, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof ToolCall> = {
   title: 'Components/ToolCall',
@@ -15,6 +15,10 @@ const meta: Meta<typeof ToolCall> = {
       },
     },
   },
+  args: {
+    name: 'searchDocs',
+  },
+  argTypes: {},
 };
 
 export default meta;
@@ -22,38 +26,19 @@ export default meta;
 type Story = StoryObj<typeof ToolCall>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <ToolCall {...args}>
-      <Typography>ToolCall</Typography>
-    </ToolCall>
-  ),
+  render: (args) => <ToolCall {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <ToolCall {...args}>
-        <Typography>First</Typography>
-      </ToolCall>
-      <ToolCall>
-        <Typography>Second</Typography>
-      </ToolCall>
-    </Flex>
-  ),
+export const Running: Story = {
+  render: () => <ToolCall name="editFile" kind="edit" status="running" input="composer.tsx" />,
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse ToolCall anywhere below.</Typography>
-        <ToolCall {...args}>
-          <Typography>First use</Typography>
-        </ToolCall>
-        <ToolCall>
-          <Typography>Second use</Typography>
-        </ToolCall>
+      <Flex direction="column" gap={3}>
+        <ToolCall name="searchDocs" kind="search" status="success" output="Found Chart." />
+        <ToolCall name="planSprint" kind="plan" status="pending" />
       </Flex>
     </BearProvider>
   ),

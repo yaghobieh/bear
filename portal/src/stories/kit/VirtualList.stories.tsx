@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { VirtualList, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { VirtualList, BearProvider, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof VirtualList> = {
   title: 'Components/VirtualList',
@@ -15,45 +15,71 @@ const meta: Meta<typeof VirtualList> = {
       },
     },
   },
+  args: {
+
+  },
+  argTypes: {},
 };
 
 export default meta;
 
 type Story = StoryObj<typeof VirtualList>;
 
+type Row = { id: number; label: string };
+
+const ITEMS: Row[] = Array.from({ length: 80 }, (_, index) => ({
+  id: index,
+  label: `Row ${index + 1}`,
+}));
+
+const ITEM_HEIGHT = 40;
+const LIST_HEIGHT = 240;
+
 export const Basic: Story = {
-  args: {},
+  args: {
+    items: ITEMS,
+    itemHeight: ITEM_HEIGHT,
+    height: LIST_HEIGHT,
+  },
   render: (args) => (
-    <VirtualList {...args}>
-      <Typography>VirtualList</Typography>
-    </VirtualList>
+    <VirtualList
+      {...args}
+      renderItem={(item: Row) => <Typography>{item.label}</Typography>}
+      keyExtractor={(item: Row) => item.id}
+    />
   ),
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <VirtualList {...args}>
-        <Typography>First</Typography>
-      </VirtualList>
-      <VirtualList>
-        <Typography>Second</Typography>
-      </VirtualList>
-    </Flex>
+export const Compact: Story = {
+  render: () => (
+    <VirtualList
+      items={ITEMS}
+      itemHeight={28}
+      height={180}
+      renderItem={(item: Row) => <Typography variant="caption">{item.label}</Typography>}
+      keyExtractor={(item: Row) => item.id}
+    />
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse VirtualList anywhere below.</Typography>
-        <VirtualList {...args}>
-          <Typography>First use</Typography>
-        </VirtualList>
-        <VirtualList>
-          <Typography>Second use</Typography>
-        </VirtualList>
+        <VirtualList
+          items={ITEMS}
+          itemHeight={ITEM_HEIGHT}
+          height={LIST_HEIGHT}
+          renderItem={(item: Row) => <Typography>{item.label}</Typography>}
+          keyExtractor={(item: Row) => item.id}
+        />
+        <VirtualList
+          items={ITEMS.slice(0, 20)}
+          itemHeight={28}
+          height={160}
+          renderItem={(item: Row) => <Typography variant="caption">{item.label}</Typography>}
+          keyExtractor={(item: Row) => item.id}
+        />
       </Flex>
     </BearProvider>
   ),

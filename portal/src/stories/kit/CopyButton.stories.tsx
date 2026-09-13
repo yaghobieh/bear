@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { CopyButton, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { CopyButton, BearProvider, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof CopyButton> = {
   title: 'Components/CopyButton',
@@ -15,6 +15,19 @@ const meta: Meta<typeof CopyButton> = {
       },
     },
   },
+  args: {
+    children: 'Copy',
+    timeout: 0,
+    size: 'sm',
+    variant: 'default',
+    showText: true,
+  },
+  argTypes: {
+    onCopy: { action: 'onCopy' },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    variant: { control: 'select', options: ['default', 'ghost', 'outline'] },
+    showText: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,25 +35,24 @@ export default meta;
 type Story = StoryObj<typeof CopyButton>;
 
 export const Basic: Story = {
-  args: {},
+  render: (args) => <CopyButton {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex direction="column" gap={3}>
-      <CopyButton {...args} />
-      <CopyButton {...args} />
+export const WithText: Story = {
+  render: () => (
+    <Flex gap={3} align="center">
+      <CopyButton value="npm install @forgedevstack/bear" showText />
+      <CopyButton value="https://forgestack.dev" variant="outline" showText copyText="Copy URL" />
     </Flex>
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse CopyButton anywhere below.</Typography>
-        <CopyButton {...args} />
-        <CopyButton {...args} />
+      <Flex gap={3}>
+        <CopyButton value="First snippet" />
+        <CopyButton value="Reuse below the same provider" variant="ghost" />
       </Flex>
     </BearProvider>
   ),

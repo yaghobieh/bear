@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { OTPInput, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { OTPInput, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof OTPInput> = {
   title: 'Components/OTPInput',
@@ -15,6 +15,29 @@ const meta: Meta<typeof OTPInput> = {
       },
     },
   },
+  args: {
+    length: 6,
+    disabled: false,
+    error: false,
+    autoFocus: false,
+    mask: false,
+    size: 'sm',
+    separator: 0,
+    stackOnNarrow: false,
+    cancelAutoJump: false,
+  },
+  argTypes: {
+    onChange: { action: 'onChange' },
+    onComplete: { action: 'onComplete' },
+    onFinish: { action: 'onFinish' },
+    disabled: { control: 'boolean' },
+    error: { control: 'boolean' },
+    autoFocus: { control: 'boolean' },
+    mask: { control: 'boolean' },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    stackOnNarrow: { control: 'boolean' },
+    cancelAutoJump: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,25 +45,19 @@ export default meta;
 type Story = StoryObj<typeof OTPInput>;
 
 export const Basic: Story = {
-  args: {},
+  render: (args) => <OTPInput {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex direction="column" gap={3}>
-      <OTPInput {...args} />
-      <OTPInput {...args} />
-    </Flex>
-  ),
+export const Circle: Story = {
+  render: () => <OTPInput length={6} value="19" variant="circle" />,
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse OTPInput anywhere below.</Typography>
-        <OTPInput {...args} />
-        <OTPInput {...args} />
+        <OTPInput length={6} value="12" />
+        <OTPInput length={4} variant="underline" />
       </Flex>
     </BearProvider>
   ),

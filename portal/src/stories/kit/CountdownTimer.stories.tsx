@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { CountdownTimer, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { CountdownTimer, BearProvider, Flex, Typography } from '@forgedevstack/bear';
+
+const TARGET = new Date('2027-01-01T00:00:00');
 
 const meta: Meta<typeof CountdownTimer> = {
   title: 'Components/CountdownTimer',
@@ -15,6 +17,30 @@ const meta: Meta<typeof CountdownTimer> = {
       },
     },
   },
+  args: {
+    targetDate: new Date('2026-09-12'),
+    duration: 0,
+    showDays: true,
+    showHours: true,
+    showMinutes: true,
+    showSeconds: true,
+    showLabels: true,
+    showSeparator: true,
+    paused: false,
+    narrowLayout: false,
+  },
+  argTypes: {
+    showDays: { control: 'boolean' },
+    showHours: { control: 'boolean' },
+    showMinutes: { control: 'boolean' },
+    showSeconds: { control: 'boolean' },
+    showLabels: { control: 'boolean' },
+    showSeparator: { control: 'boolean' },
+    onComplete: { action: 'onComplete' },
+    onTick: { action: 'onTick' },
+    paused: { control: 'boolean' },
+    narrowLayout: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,38 +48,20 @@ export default meta;
 type Story = StoryObj<typeof CountdownTimer>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <CountdownTimer {...args}>
-      <Typography>CountdownTimer</Typography>
-    </CountdownTimer>
-  ),
+  render: (args) => <CountdownTimer {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <CountdownTimer {...args}>
-        <Typography>First</Typography>
-      </CountdownTimer>
-      <CountdownTimer>
-        <Typography>Second</Typography>
-      </CountdownTimer>
-    </Flex>
-  ),
+export const CardVariant: Story = {
+  render: () => <CountdownTimer targetDate={TARGET} variant="card" size="lg" />,
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
         <Typography variant="subtitle2">Wrap once in BearProvider, then reuse CountdownTimer anywhere below.</Typography>
-        <CountdownTimer {...args}>
-          <Typography>First use</Typography>
-        </CountdownTimer>
-        <CountdownTimer>
-          <Typography>Second use</Typography>
-        </CountdownTimer>
+        <CountdownTimer targetDate={TARGET} />
+        <CountdownTimer duration={90} variant="minimal" showDays={false} showHours={false} />
       </Flex>
     </BearProvider>
   ),

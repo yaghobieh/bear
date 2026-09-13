@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Transition, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { useState } from 'react';
+import { BearProvider, Button, Flex, Motion, Transition, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Transition> = {
   title: 'Components/Transition',
@@ -11,9 +12,24 @@ const meta: Meta<typeof Transition> = {
     },
     docs: {
       description: {
-        component: 'Animation from @forgedevstack/bear. Wrap your tree in BearProvider so theme tokens apply, then reuse Transition anywhere below the provider. The Docs table lists the public props.',
+        component: 'Transition from @forgedevstack/bear. Wrap your tree in BearProvider so theme tokens apply, then reuse Transition anywhere below the provider. The Docs table lists the public props.',
       },
     },
+  },
+  subcomponents: { Motion },
+  args: {
+    show: true,
+    duration: 0,
+    delay: 0,
+    unmountOnHide: false,
+  },
+  argTypes: {
+    show: { control: 'boolean' },
+    unmountOnHide: { control: 'boolean' },
+    onEnter: { action: 'onEnter' },
+    onEntered: { action: 'onEntered' },
+    onLeave: { action: 'onLeave' },
+    onLeft: { action: 'onLeft' },
   },
 };
 
@@ -22,37 +38,32 @@ export default meta;
 type Story = StoryObj<typeof Transition>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <Transition {...args}>
-      <Typography>Transition</Typography>
-    </Transition>
-  ),
+  render: (args) => <Transition {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <Transition {...args}>
-        <Typography>First</Typography>
-      </Transition>
-      <Transition>
-        <Typography>Second</Typography>
-      </Transition>
-    </Flex>
-  ),
+export const Scale: Story = {
+  render: () => {
+    const [show, setShow] = useState(true);
+    return (
+      <Flex direction="column" gap={2}>
+        <Button variant="outline" onClick={() => setShow((value) => !value)}>{show ? 'Hide' : 'Show'}</Button>
+        <Transition show={show} name="scale" duration={400}>
+          <Typography>Scale in</Typography>
+        </Transition>
+      </Flex>
+    );
+  },
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Transition anywhere below.</Typography>
-        <Transition {...args}>
-          <Typography>First use</Typography>
+      <Flex gap={4}>
+        <Transition show name="fade">
+          <Typography>First</Typography>
         </Transition>
-        <Transition>
-          <Typography>Second use</Typography>
+        <Transition show name="slide-up">
+          <Typography>Second, same provider</Typography>
         </Transition>
       </Flex>
     </BearProvider>

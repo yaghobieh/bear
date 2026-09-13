@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { CloseButton, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { CloseButton, BearProvider, Card, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof CloseButton> = {
   title: 'Components/CloseButton',
@@ -15,6 +15,13 @@ const meta: Meta<typeof CloseButton> = {
       },
     },
   },
+  args: {
+    disabled: false,
+  },
+  argTypes: {
+    onClick: { action: 'onClick' },
+    disabled: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,25 +29,27 @@ export default meta;
 type Story = StoryObj<typeof CloseButton>;
 
 export const Basic: Story = {
-  args: {},
+  render: (args) => <CloseButton {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex direction="column" gap={3}>
-      <CloseButton {...args} />
-      <CloseButton {...args} />
-    </Flex>
+export const OnCard: Story = {
+  render: () => (
+    <Card padding="md">
+      <Flex justify="between" align="center">
+        <Typography variant="subtitle1">Dismiss this panel</Typography>
+        <CloseButton aria-label="Close panel" />
+      </Flex>
+    </Card>
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse CloseButton anywhere below.</Typography>
-        <CloseButton {...args} />
-        <CloseButton {...args} />
+      <Flex gap={3} align="center">
+        <CloseButton size="sm" aria-label="Close small" />
+        <CloseButton size="md" aria-label="Close medium" />
+        <CloseButton size="lg" aria-label="Close large" />
       </Flex>
     </BearProvider>
   ),

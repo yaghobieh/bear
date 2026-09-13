@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Radio, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { Radio, RadioGroup, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Radio> = {
   title: 'Components/Radio',
@@ -15,6 +15,19 @@ const meta: Meta<typeof Radio> = {
       },
     },
   },
+  subcomponents: { RadioGroup },
+  args: {
+    label: 'Label',
+    color: '#EA0A8E',
+    disabled: false,
+    error: false,
+    helperText: 'Helper text',
+  },
+  argTypes: {
+    color: { control: 'color' },
+    disabled: { control: 'boolean' },
+    error: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,25 +35,25 @@ export default meta;
 type Story = StoryObj<typeof Radio>;
 
 export const Basic: Story = {
-  args: {},
+  render: (args) => <Radio {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex direction="column" gap={3}>
-      <Radio {...args} />
-      <Radio {...args} />
-    </Flex>
+export const Group: Story = {
+  render: () => (
+    <RadioGroup name="plan" defaultValue="pro" label="Plan" direction="column" gap={2}>
+      <Radio label="Starter" value="starter" />
+      <Radio label="Pro" value="pro" />
+      <Radio label="Team" value="team" />
+    </RadioGroup>
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Radio anywhere below.</Typography>
-        <Radio {...args} />
-        <Radio {...args} />
+      <Flex direction="column" gap={3}>
+        <Radio name="notify" label="First option" value="on" checked />
+        <Radio name="notify" label="Reuse" value="off" />
       </Flex>
     </BearProvider>
   ),

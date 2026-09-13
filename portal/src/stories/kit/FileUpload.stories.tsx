@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { FileUpload, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { FileUpload, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof FileUpload> = {
   title: 'Components/FileUpload',
@@ -15,6 +15,24 @@ const meta: Meta<typeof FileUpload> = {
       },
     },
   },
+  args: {
+    multiple: false,
+    maxSize: 100,
+    maxFiles: 100,
+    disabled: false,
+    label: 'Label',
+    helperText: 'Helper text',
+    showPreview: true,
+    variant: 'dropzone',
+  },
+  argTypes: {
+    onFilesSelect: { action: 'onFilesSelect' },
+    onFileRemove: { action: 'onFileRemove' },
+    multiple: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+    showPreview: { control: 'boolean' },
+    variant: { control: 'select', options: ['dropzone', 'button', 'compact'] },
+  },
 };
 
 export default meta;
@@ -22,38 +40,27 @@ export default meta;
 type Story = StoryObj<typeof FileUpload>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <FileUpload {...args}>
-      <Typography>FileUpload</Typography>
-    </FileUpload>
-  ),
+  render: (args) => <FileUpload {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <FileUpload {...args}>
-        <Typography>First</Typography>
-      </FileUpload>
-      <FileUpload>
-        <Typography>Second</Typography>
-      </FileUpload>
-    </Flex>
+export const ButtonVariant: Story = {
+  render: () => (
+    <FileUpload
+      variant="button"
+      multiple
+      accept=".pdf,.md"
+      label="Attach documents"
+      onFilesSelect={() => undefined}
+    />
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse FileUpload anywhere below.</Typography>
-        <FileUpload {...args}>
-          <Typography>First use</Typography>
-        </FileUpload>
-        <FileUpload>
-          <Typography>Second use</Typography>
-        </FileUpload>
+      <Flex direction="column" gap={3}>
+        <FileUpload variant="compact" label="First upload" onFilesSelect={() => undefined} />
+        <FileUpload variant="compact" label="Reuse" onFilesSelect={() => undefined} />
       </Flex>
     </BearProvider>
   ),

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Switch, BearProvider, Flex, Typography } from '@forgedevstack/bear';
+import { BearProvider, Flex, Switch, SwitchGroup, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Switch> = {
   title: 'Components/Switch',
@@ -15,6 +15,20 @@ const meta: Meta<typeof Switch> = {
       },
     },
   },
+  subcomponents: { SwitchGroup },
+  args: {
+    label: 'Label',
+    checked: false,
+    size: 'sm',
+    showIconsInThumb: true,
+    disabled: false,
+  },
+  argTypes: {
+    checked: { control: 'boolean' },
+    onCheckedChange: { action: 'onCheckedChange' },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    showIconsInThumb: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,9 +36,7 @@ export default meta;
 type Story = StoryObj<typeof Switch>;
 
 export const Basic: Story = {
-  args: {
-    label: 'Dark mode',
-  },
+  render: (args) => <Switch {...args} />,
 };
 
 export const States: Story = {

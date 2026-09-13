@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ThemeSwitcher, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { ThemeSwitcher, BearProvider, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof ThemeSwitcher> = {
   title: 'Components/ThemeSwitcher',
@@ -15,6 +15,12 @@ const meta: Meta<typeof ThemeSwitcher> = {
       },
     },
   },
+  args: {
+
+  },
+  argTypes: {
+    onChange: { action: 'onChange' },
+  },
 };
 
 export default meta;
@@ -22,38 +28,20 @@ export default meta;
 type Story = StoryObj<typeof ThemeSwitcher>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <ThemeSwitcher {...args}>
-      <Typography>ThemeSwitcher</Typography>
-    </ThemeSwitcher>
-  ),
+  render: (args) => <ThemeSwitcher {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <ThemeSwitcher {...args}>
-        <Typography>First</Typography>
-      </ThemeSwitcher>
-      <ThemeSwitcher>
-        <Typography>Second</Typography>
-      </ThemeSwitcher>
-    </Flex>
-  ),
+export const DarkValue: Story = {
+  render: () => <ThemeSwitcher value="dark" />,
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
         <Typography variant="subtitle2">Wrap once in BearProvider, then reuse ThemeSwitcher anywhere below.</Typography>
-        <ThemeSwitcher {...args}>
-          <Typography>First use</Typography>
-        </ThemeSwitcher>
-        <ThemeSwitcher>
-          <Typography>Second use</Typography>
-        </ThemeSwitcher>
+        <ThemeSwitcher />
+        <ThemeSwitcher />
       </Flex>
     </BearProvider>
   ),

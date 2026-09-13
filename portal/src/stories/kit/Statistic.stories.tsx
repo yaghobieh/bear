@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Statistic, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { Statistic, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Statistic> = {
   title: 'Components/Statistic',
@@ -15,6 +15,18 @@ const meta: Meta<typeof Statistic> = {
       },
     },
   },
+  args: {
+    title: 'Title',
+    loading: false,
+    precision: 0,
+    size: 'sm',
+    variant: 'default',
+  },
+  argTypes: {
+    loading: { control: 'boolean' },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    variant: { control: 'select', options: ['default', 'card', 'minimal'] },
+  },
 };
 
 export default meta;
@@ -22,38 +34,24 @@ export default meta;
 type Story = StoryObj<typeof Statistic>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <Statistic {...args}>
-      <Typography>Statistic</Typography>
-    </Statistic>
-  ),
+  render: (args) => <Statistic {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <Statistic {...args}>
-        <Typography>First</Typography>
-      </Statistic>
-      <Statistic>
-        <Typography>Second</Typography>
-      </Statistic>
+export const WithTrend: Story = {
+  render: () => (
+    <Flex gap={4} wrap="wrap">
+      <Statistic title="Revenue" value={45678} prefix="$" trend={{ value: 12, isUpward: true }} variant="card" />
+      <Statistic title="Orders" value={892} trend={{ value: 4, isUpward: false }} variant="card" />
     </Flex>
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Statistic anywhere below.</Typography>
-        <Statistic {...args}>
-          <Typography>First use</Typography>
-        </Statistic>
-        <Statistic>
-          <Typography>Second use</Typography>
-        </Statistic>
+      <Flex gap={4}>
+        <Statistic title="First" value={10} />
+        <Statistic title="Reuse" value={20} />
       </Flex>
     </BearProvider>
   ),

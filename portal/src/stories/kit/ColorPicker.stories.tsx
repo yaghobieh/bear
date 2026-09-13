@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ColorPicker, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { ColorPicker, BearProvider, Flex } from '@forgedevstack/bear';
+
+const PRESETS = ['#EA0A8E', '#3B82F6', '#10B981', '#F59E0B', '#8B5CF6'];
 
 const meta: Meta<typeof ColorPicker> = {
   title: 'Components/ColorPicker',
@@ -15,6 +17,20 @@ const meta: Meta<typeof ColorPicker> = {
       },
     },
   },
+  args: {
+    showInput: true,
+    showPresets: true,
+    disabled: false,
+    label: 'Label',
+    size: 'sm',
+  },
+  argTypes: {
+    onChange: { action: 'onChange' },
+    showInput: { control: 'boolean' },
+    showPresets: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+  },
 };
 
 export default meta;
@@ -22,25 +38,21 @@ export default meta;
 type Story = StoryObj<typeof ColorPicker>;
 
 export const Basic: Story = {
-  args: {},
+  render: (args) => <ColorPicker {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex direction="column" gap={3}>
-      <ColorPicker {...args} />
-      <ColorPicker {...args} />
-    </Flex>
+export const WithPresets: Story = {
+  render: () => (
+    <ColorPicker value="#3B82F6" label="Accent" presets={PRESETS} showInput showPresets />
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse ColorPicker anywhere below.</Typography>
-        <ColorPicker {...args} />
-        <ColorPicker {...args} />
+        <ColorPicker value="#EA0A8E" label="Primary" />
+        <ColorPicker value="#10B981" label="Reuse" size="sm" />
       </Flex>
     </BearProvider>
   ),

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { FormControl, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { FormControl, Input, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof FormControl> = {
   title: 'Components/FormControl',
@@ -15,6 +15,19 @@ const meta: Meta<typeof FormControl> = {
       },
     },
   },
+  args: {
+    label: 'Label',
+    error: false,
+    disabled: false,
+    required: false,
+    fullWidth: false,
+  },
+  argTypes: {
+    error: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+    required: { control: 'boolean' },
+    fullWidth: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,37 +35,26 @@ export default meta;
 type Story = StoryObj<typeof FormControl>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <FormControl {...args}>
-      <Typography>FormControl</Typography>
+  render: (args) => <FormControl {...args} />,
+};
+
+export const WithError: Story = {
+  render: () => (
+    <FormControl label="Password" error helperText="Password is required">
+      <Input type="password" />
     </FormControl>
   ),
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <FormControl {...args}>
-        <Typography>First</Typography>
-      </FormControl>
-      <FormControl>
-        <Typography>Second</Typography>
-      </FormControl>
-    </Flex>
-  ),
-};
-
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse FormControl anywhere below.</Typography>
-        <FormControl {...args}>
-          <Typography>First use</Typography>
+      <Flex direction="column" gap={3}>
+        <FormControl label="First" helperText="Below the provider">
+          <Input placeholder="First field" />
         </FormControl>
-        <FormControl>
-          <Typography>Second use</Typography>
+        <FormControl label="Reuse">
+          <Input placeholder="Second field" />
         </FormControl>
       </Flex>
     </BearProvider>

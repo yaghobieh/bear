@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { TagsInput, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { TagsInput, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof TagsInput> = {
   title: 'Components/TagsInput',
@@ -15,6 +15,25 @@ const meta: Meta<typeof TagsInput> = {
       },
     },
   },
+  args: {
+    value: ['bear', 'ui'],
+    defaultValue: ['bear', 'ui'],
+    placeholder: 'Type here',
+    disabled: false,
+    maxTags: 100,
+    minLength: 0,
+    maxLength: 100,
+    size: 'sm',
+    fullWidth: false,
+  },
+  argTypes: {
+    onChange: { action: 'onChange' },
+    onAdd: { action: 'onAdd' },
+    onRemove: { action: 'onRemove' },
+    disabled: { control: 'boolean' },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    fullWidth: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,25 +41,21 @@ export default meta;
 type Story = StoryObj<typeof TagsInput>;
 
 export const Basic: Story = {
-  args: {},
+  render: (args) => <TagsInput {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex direction="column" gap={3}>
-      <TagsInput {...args} />
-      <TagsInput {...args} />
-    </Flex>
+export const MaxTags: Story = {
+  render: () => (
+    <TagsInput defaultValue={['bear', 'ui']} maxTags={4} placeholder="Max 4 tags" fullWidth />
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse TagsInput anywhere below.</Typography>
-        <TagsInput {...args} />
-        <TagsInput {...args} />
+      <Flex direction="column" gap={3}>
+        <TagsInput defaultValue={['bear']} placeholder="First tags" />
+        <TagsInput defaultValue={['reuse']} placeholder="Same provider" size="sm" />
       </Flex>
     </BearProvider>
   ),

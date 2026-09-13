@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Watermark, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { Watermark, BearProvider, Flex, Typography, Paper } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Watermark> = {
   title: 'Components/Watermark',
@@ -11,9 +11,25 @@ const meta: Meta<typeof Watermark> = {
     },
     docs: {
       description: {
-        component: 'Utility from @forgedevstack/bear. Wrap your tree in BearProvider so theme tokens apply, then reuse Watermark anywhere below the provider. The Docs table lists the public props.',
+        component: 'Watermark from @forgedevstack/bear. Wrap your tree in BearProvider so theme tokens apply, then reuse Watermark anywhere below the provider. The Docs table lists the public props.',
       },
     },
+  },
+  args: {
+    children: 'Draft',
+    text: 'Hello Bear',
+    fontSize: 0,
+    color: '#EA0A8E',
+    rotate: 0,
+    opacity: 0,
+    patternRepeat: 0,
+    zIndex: 0,
+    fontWeight: 0,
+    visible: false,
+  },
+  argTypes: {
+    color: { control: 'color' },
+    visible: { control: 'boolean' },
   },
 };
 
@@ -22,37 +38,32 @@ export default meta;
 type Story = StoryObj<typeof Watermark>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <Watermark {...args}>
-      <Typography>Watermark</Typography>
+  render: (args) => <Watermark {...args} />,
+};
+
+export const MultiLine: Story = {
+  render: () => (
+    <Watermark text={['Bear UI', 'Draft']} opacity={0.2}>
+      <Paper padding="lg" elevation={1}>
+        <Typography>Multi-line watermark over a draft note.</Typography>
+      </Paper>
     </Watermark>
   ),
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <Watermark {...args}>
-        <Typography>First</Typography>
-      </Watermark>
-      <Watermark>
-        <Typography>Second</Typography>
-      </Watermark>
-    </Flex>
-  ),
-};
-
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Watermark anywhere below.</Typography>
-        <Watermark {...args}>
-          <Typography>First use</Typography>
+        <Watermark text="FIRST">
+          <Paper padding="md">
+            <Typography>First use</Typography>
+          </Paper>
         </Watermark>
-        <Watermark>
-          <Typography>Second use</Typography>
+        <Watermark text="REUSE">
+          <Paper padding="md">
+            <Typography>Same provider</Typography>
+          </Paper>
         </Watermark>
       </Flex>
     </BearProvider>

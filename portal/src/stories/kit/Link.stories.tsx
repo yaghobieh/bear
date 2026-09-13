@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Link, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { Link, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Link> = {
   title: 'Components/Link',
@@ -15,6 +15,19 @@ const meta: Meta<typeof Link> = {
       },
     },
   },
+  args: {
+    children: 'Open docs',
+    underline: 'none',
+    color: '#EA0A8E',
+    external: false,
+    showExternalIcon: true,
+  },
+  argTypes: {
+    underline: { control: 'select', options: ['none', 'hover', 'always'] },
+    color: { control: 'color' },
+    external: { control: 'boolean' },
+    showExternalIcon: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,37 +35,29 @@ export default meta;
 type Story = StoryObj<typeof Link>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <Link {...args}>
-      <Typography>Link</Typography>
-    </Link>
-  ),
+  render: (args) => <Link {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <Link {...args}>
-        <Typography>First</Typography>
+export const External: Story = {
+  render: () => (
+    <Flex gap={3}>
+      <Link href="https://forgestack.dev" underline="always">
+        Always underlined
       </Link>
-      <Link>
-        <Typography>Second</Typography>
+      <Link href="https://forgestack.dev" external showExternalIcon>
+        External
       </Link>
     </Flex>
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Link anywhere below.</Typography>
-        <Link {...args}>
-          <Typography>First use</Typography>
-        </Link>
-        <Link>
-          <Typography>Second use</Typography>
+      <Flex gap={3}>
+        <Link href="https://forgestack.dev">First use</Link>
+        <Link href="https://forgestack.dev" variant="secondary">
+          Reuse
         </Link>
       </Flex>
     </BearProvider>

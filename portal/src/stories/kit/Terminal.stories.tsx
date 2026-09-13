@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Terminal, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { Terminal, BearProvider, Flex } from '@forgedevstack/bear';
+import type { TerminalLine } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Terminal> = {
   title: 'Components/Terminal',
@@ -15,45 +16,66 @@ const meta: Meta<typeof Terminal> = {
       },
     },
   },
+  args: {
+    title: 'Title',
+    showHeader: true,
+    showLineNumbers: true,
+    showTimestamps: true,
+    readOnly: false,
+    height: 240,
+    theme: 'dark',
+    autoScroll: false,
+    isLoading: false,
+  },
+  argTypes: {
+    onCommand: { action: 'onCommand' },
+    showHeader: { control: 'boolean' },
+    showLineNumbers: { control: 'boolean' },
+    showTimestamps: { control: 'boolean' },
+    readOnly: { control: 'boolean' },
+    theme: { control: 'select', options: ['dark', 'light', 'matrix'] },
+    onHistoryChange: { action: 'onHistoryChange' },
+    autoScroll: { control: 'boolean' },
+    isLoading: { control: 'boolean' },
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof Terminal>;
 
+const LINES: TerminalLine[] = [
+  { id: '1', type: 'system', content: 'Welcome to Bear Terminal' },
+  { id: '2', type: 'info', content: 'Type help for available commands' },
+  { id: '3', type: 'input', content: 'whoami' },
+  { id: '4', type: 'output', content: 'bear@forge' },
+];
+
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <Terminal {...args}>
-      <Typography>Terminal</Typography>
-    </Terminal>
-  ),
+  args: {
+    lines: LINES,
+  },
+  render: (args) => <Terminal {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <Terminal {...args}>
-        <Typography>First</Typography>
-      </Terminal>
-      <Terminal>
-        <Typography>Second</Typography>
-      </Terminal>
-    </Flex>
+export const Matrix: Story = {
+  render: () => (
+    <Terminal
+      lines={LINES}
+      theme="matrix"
+      title="bear@forge"
+      showLineNumbers
+      height={220}
+    />
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Terminal anywhere below.</Typography>
-        <Terminal {...args}>
-          <Typography>First use</Typography>
-        </Terminal>
-        <Terminal>
-          <Typography>Second use</Typography>
-        </Terminal>
+        <Terminal lines={LINES} readOnly height={180} />
+        <Terminal lines={LINES} theme="light" readOnly height={180} />
       </Flex>
     </BearProvider>
   ),

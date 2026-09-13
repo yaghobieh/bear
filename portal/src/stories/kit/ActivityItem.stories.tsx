@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ActivityItem, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { ActivityItem, Badge, BearProvider, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof ActivityItem> = {
   title: 'Components/ActivityItem',
@@ -15,45 +15,42 @@ const meta: Meta<typeof ActivityItem> = {
       },
     },
   },
+  args: {
+    title: 'Title',
+  },
+  argTypes: {
+    onClick: { action: 'onClick' },
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof ActivityItem>;
 
+const ICON = <Badge variant="primary" size="sm">A</Badge>;
+
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <ActivityItem {...args}>
-      <Typography>ActivityItem</Typography>
-    </ActivityItem>
-  ),
+  render: (args) => <ActivityItem {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <ActivityItem {...args}>
-        <Typography>First</Typography>
-      </ActivityItem>
-      <ActivityItem>
-        <Typography>Second</Typography>
-      </ActivityItem>
-    </Flex>
+export const WithUser: Story = {
+  render: () => (
+    <ActivityItem
+      icon={<Typography variant="caption">B</Typography>}
+      title="Opened a pull request"
+      description="Release notes for Chart and the component catalog."
+      time="1h"
+      user="Ada"
+    />
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse ActivityItem anywhere below.</Typography>
-        <ActivityItem {...args}>
-          <Typography>First use</Typography>
-        </ActivityItem>
-        <ActivityItem>
-          <Typography>Second use</Typography>
-        </ActivityItem>
+        <ActivityItem icon={ICON} title="Published a post" time="2m" user="Ada" />
+        <ActivityItem icon={ICON} title="Commented on a review" time="8m" user="Grace" />
       </Flex>
     </BearProvider>
   ),

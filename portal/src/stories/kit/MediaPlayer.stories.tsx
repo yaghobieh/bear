@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { MediaPlayer, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { MediaPlayer, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof MediaPlayer> = {
   title: 'Components/MediaPlayer',
@@ -15,45 +15,54 @@ const meta: Meta<typeof MediaPlayer> = {
       },
     },
   },
+  args: {
+    src: '/bear.svg',
+    autoPlay: false,
+    loop: false,
+    muted: false,
+    nativeControls: false,
+    width: 320,
+    height: 240,
+    centerOverlay: false,
+    sticky: false,
+    stickySize: 0,
+    airPlay: false,
+  },
+  argTypes: {
+    autoPlay: { control: 'boolean' },
+    loop: { control: 'boolean' },
+    muted: { control: 'boolean' },
+    nativeControls: { control: 'boolean' },
+    accentColor: { control: 'color' },
+    centerOverlay: { control: 'boolean' },
+    sticky: { control: 'boolean' },
+    airPlay: { control: 'boolean' },
+    onTrackChange: { action: 'onTrackChange' },
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof MediaPlayer>;
 
+const SAMPLE_SRC = 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4';
+
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <MediaPlayer {...args}>
-      <Typography>MediaPlayer</Typography>
-    </MediaPlayer>
-  ),
+  render: (args) => <MediaPlayer {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <MediaPlayer {...args}>
-        <Typography>First</Typography>
-      </MediaPlayer>
-      <MediaPlayer>
-        <Typography>Second</Typography>
-      </MediaPlayer>
-    </Flex>
+export const CenterOverlay: Story = {
+  render: () => (
+    <MediaPlayer src={SAMPLE_SRC} muted centerOverlay size="sm" />
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse MediaPlayer anywhere below.</Typography>
-        <MediaPlayer {...args}>
-          <Typography>First use</Typography>
-        </MediaPlayer>
-        <MediaPlayer>
-          <Typography>Second use</Typography>
-        </MediaPlayer>
+        <MediaPlayer src={SAMPLE_SRC} size="sm" />
+        <MediaPlayer src={SAMPLE_SRC} muted size="sm" />
       </Flex>
     </BearProvider>
   ),

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Affix, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { Affix, Button, BearProvider, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Affix> = {
   title: 'Components/Affix',
@@ -15,6 +15,14 @@ const meta: Meta<typeof Affix> = {
       },
     },
   },
+  args: {
+    offset: 0,
+    zIndex: 0,
+    withinPortal: false,
+  },
+  argTypes: {
+    withinPortal: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,37 +30,26 @@ export default meta;
 type Story = StoryObj<typeof Affix>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <Affix {...args}>
-      <Typography>Affix</Typography>
+  render: (args) => <Affix {...args} />,
+};
+
+export const Bottom: Story = {
+  render: () => (
+    <Affix position="bottom" offset={24}>
+      <Button variant="outline">Pinned to bottom</Button>
     </Affix>
   ),
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <Affix {...args}>
-        <Typography>First</Typography>
-      </Affix>
-      <Affix>
-        <Typography>Second</Typography>
-      </Affix>
-    </Flex>
-  ),
-};
-
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Affix anywhere below.</Typography>
-        <Affix {...args}>
-          <Typography>First use</Typography>
+        <Affix position="top">
+          <Typography>First affix</Typography>
         </Affix>
-        <Affix>
-          <Typography>Second use</Typography>
+        <Affix position="bottom">
+          <Typography>Second affix, same provider</Typography>
         </Affix>
       </Flex>
     </BearProvider>

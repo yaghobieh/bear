@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Grid, BearProvider, Card, Flex, Typography } from '@forgedevstack/bear';
+import { BearProvider, Card, Flex, Grid, GridItem, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Grid> = {
   title: 'Components/Grid',
@@ -15,6 +15,11 @@ const meta: Meta<typeof Grid> = {
       },
     },
   },
+  subcomponents: { GridItem },
+  args: {
+
+  },
+  argTypes: {},
 };
 
 export default meta;
@@ -22,8 +27,8 @@ export default meta;
 type Story = StoryObj<typeof Grid>;
 
 export const Basic: Story = {
-  render: () => (
-    <Grid cols={3} gap={3}>
+  render: (args) => (
+    <Grid {...args} cols={3} gap={3}>
       <Card padding="sm"><Typography>One</Typography></Card>
       <Card padding="sm"><Typography>Two</Typography></Card>
       <Card padding="sm"><Typography>Three</Typography></Card>

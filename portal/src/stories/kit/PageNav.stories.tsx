@@ -1,5 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { PageNav, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { PageNav, BearProvider, Flex } from '@forgedevstack/bear';
+
+const PREV = { label: 'Button', onClick: () => undefined };
+const NEXT = { label: 'Input', onClick: () => undefined };
 
 const meta: Meta<typeof PageNav> = {
   title: 'Components/PageNav',
@@ -15,6 +18,12 @@ const meta: Meta<typeof PageNav> = {
       },
     },
   },
+  args: {
+    variant: 'default',
+  },
+  argTypes: {
+    variant: { control: 'select', options: ['default', 'outlined', 'filled'] },
+  },
 };
 
 export default meta;
@@ -22,38 +31,29 @@ export default meta;
 type Story = StoryObj<typeof PageNav>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <PageNav {...args}>
-      <Typography>PageNav</Typography>
-    </PageNav>
-  ),
+  render: (args) => <PageNav {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <PageNav {...args}>
-        <Typography>First</Typography>
-      </PageNav>
-      <PageNav>
-        <Typography>Second</Typography>
-      </PageNav>
-    </Flex>
+export const Outlined: Story = {
+  render: () => (
+    <PageNav
+      variant="outlined"
+      prev={{ label: 'Installation', onClick: () => undefined }}
+      next={{ label: 'Theming', onClick: () => undefined }}
+    />
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse PageNav anywhere below.</Typography>
-        <PageNav {...args}>
-          <Typography>First use</Typography>
-        </PageNav>
-        <PageNav>
-          <Typography>Second use</Typography>
-        </PageNav>
+        <PageNav prev={PREV} next={NEXT} />
+        <PageNav
+          variant="filled"
+          prev={{ label: 'Getting Started', onClick: () => undefined }}
+          next={{ label: 'Components', onClick: () => undefined }}
+        />
       </Flex>
     </BearProvider>
   ),

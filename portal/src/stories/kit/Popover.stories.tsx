@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Popover, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { useState } from 'react';
+import { Popover, Button, BearProvider, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Popover> = {
   title: 'Components/Popover',
@@ -11,9 +12,25 @@ const meta: Meta<typeof Popover> = {
     },
     docs: {
       description: {
-        component: 'Popover from @forgedevstack/bear. Wrap your tree in BearProvider so theme tokens apply, then reuse Popover anywhere below the provider. The Docs table lists the public props.',
+        component: 'Overlay from @forgedevstack/bear. Wrap your tree in BearProvider so theme tokens apply, then reuse Popover anywhere below the provider. The Docs table lists the public props.',
       },
     },
+  },
+  args: {
+    trigger: 'click',
+    open: false,
+    arrow: false,
+    closeOnClickOutside: false,
+    closeOnEscape: false,
+    offset: 0,
+  },
+  argTypes: {
+    trigger: { control: 'select', options: ['click', 'hover'] },
+    open: { control: 'boolean' },
+    onOpenChange: { action: 'onOpenChange' },
+    arrow: { control: 'boolean' },
+    closeOnClickOutside: { control: 'boolean' },
+    closeOnEscape: { control: 'boolean' },
   },
 };
 
@@ -22,39 +39,50 @@ export default meta;
 type Story = StoryObj<typeof Popover>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <Popover {...args}>
-      <Typography>Popover</Typography>
-    </Popover>
-  ),
+  render: (args) => <Popover {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <Popover {...args}>
-        <Typography>First</Typography>
+export const Hover: Story = {
+  render: () => {
+    const [open, setOpen] = useState(false);
+    return (
+      <Popover
+        trigger="hover"
+        placement="top"
+        open={open}
+        onOpenChange={setOpen}
+        content={<Typography>Hover details.</Typography>}
+      >
+        <Button variant="outline">Hover me</Button>
       </Popover>
-      <Popover>
-        <Typography>Second</Typography>
-      </Popover>
-    </Flex>
-  ),
+    );
+  },
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
-    <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Popover anywhere below.</Typography>
-        <Popover {...args}>
-          <Typography>First use</Typography>
-        </Popover>
-        <Popover>
-          <Typography>Second use</Typography>
-        </Popover>
-      </Flex>
-    </BearProvider>
-  ),
+  render: () => {
+    const [first, setFirst] = useState(false);
+    const [second, setSecond] = useState(false);
+    return (
+      <BearProvider>
+        <Flex gap={2}>
+          <Popover
+            open={first}
+            onOpenChange={setFirst}
+            content={<Typography>First popover</Typography>}
+          >
+            <Button>First</Button>
+          </Popover>
+          <Popover
+            open={second}
+            onOpenChange={setSecond}
+            placement="bottom-end"
+            content={<Typography>Second popover, same provider</Typography>}
+          >
+            <Button variant="outline">Reuse</Button>
+          </Popover>
+        </Flex>
+      </BearProvider>
+    );
+  },
 };

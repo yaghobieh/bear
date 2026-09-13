@@ -15,6 +15,13 @@ const meta: Meta<typeof ChatError> = {
       },
     },
   },
+  args: {
+    children: 'Request failed',
+    title: 'Title',
+  },
+  argTypes: {
+    onRetry: { action: 'onRetry' },
+  },
 };
 
 export default meta;
@@ -22,7 +29,7 @@ export default meta;
 type Story = StoryObj<typeof ChatError>;
 
 export const Basic: Story = {
-  render: () => <ChatError title="Request failed">The model timed out.</ChatError>,
+  render: (args) => <ChatError {...args} />,
 };
 
 export const WithRetry: Story = {

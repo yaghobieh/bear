@@ -16,6 +16,21 @@ const meta: Meta<typeof ActiveBar> = {
       },
     },
   },
+  args: {
+    items: [
+      { id: 'home', label: 'Home' },
+      { id: 'docs', label: 'Docs' },
+      { id: 'api', label: 'API' },
+    ],
+    activeId: 'home',
+    fullWidth: false,
+    animated: true,
+  },
+  argTypes: {
+    onItemClick: { action: 'onItemClick' },
+    fullWidth: { control: 'boolean' },
+    animated: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -29,16 +44,7 @@ const ITEMS = [
 ];
 
 export const Basic: Story = {
-  render: () => {
-    const [activeId, setActiveId] = useState('home');
-    return (
-      <ActiveBar
-        items={ITEMS}
-        activeId={activeId}
-        onItemClick={(item) => setActiveId(item.id)}
-      />
-    );
-  },
+  render: (args) => <ActiveBar {...args} />,
 };
 
 export const Underline: Story = {

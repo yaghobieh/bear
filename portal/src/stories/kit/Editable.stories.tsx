@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Editable, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { Editable, BearProvider, Flex, Typography } from '@forgedevstack/bear';
 
-const meta: Meta<typeof Editable> = {
+const meta: Meta<typeof Editable.Root> = {
   title: 'Components/Editable',
-  component: Editable,
+  component: Editable.Root,
   tags: ['autodocs'],
   parameters: {
     controls: {
@@ -15,45 +15,55 @@ const meta: Meta<typeof Editable> = {
       },
     },
   },
+  args: {
+    placeholder: 'Type here',
+    isDisabled: false,
+    startWithEditView: false,
+  },
+  argTypes: {
+    onChange: { action: 'onChange' },
+    onEditSubmit: { action: 'onEditSubmit' },
+    onCancel: { action: 'onCancel' },
+    isDisabled: { control: 'boolean' },
+    startWithEditView: { control: 'boolean' },
+  },
 };
 
 export default meta;
 
-type Story = StoryObj<typeof Editable>;
+type Story = StoryObj<typeof Editable.Root>;
 
 export const Basic: Story = {
-  args: {},
   render: (args) => (
-    <Editable {...args}>
-      <Typography>Editable</Typography>
-    </Editable>
+    <Editable.Root {...args}>
+      <Editable.Preview />
+      <Editable.Input />
+    </Editable.Root>
   ),
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <Editable {...args}>
-        <Typography>First</Typography>
-      </Editable>
-      <Editable>
-        <Typography>Second</Typography>
-      </Editable>
-    </Flex>
+export const Textarea: Story = {
+  render: () => (
+    <Editable.Root defaultValue="Longer inline copy that edits as a textarea.">
+      <Editable.Preview />
+      <Editable.Input asTextarea />
+    </Editable.Root>
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
         <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Editable anywhere below.</Typography>
-        <Editable {...args}>
-          <Typography>First use</Typography>
-        </Editable>
-        <Editable>
-          <Typography>Second use</Typography>
-        </Editable>
+        <Editable.Root defaultValue="First use">
+          <Editable.Preview />
+          <Editable.Input />
+        </Editable.Root>
+        <Editable.Root defaultValue="Reuse" isDisabled>
+          <Editable.Preview />
+          <Editable.Input />
+        </Editable.Root>
       </Flex>
     </BearProvider>
   ),

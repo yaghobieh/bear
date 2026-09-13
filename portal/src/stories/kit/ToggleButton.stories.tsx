@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ToggleButton, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { BearProvider, Flex, ToggleButton, ToggleButtonGroup } from '@forgedevstack/bear';
 
 const meta: Meta<typeof ToggleButton> = {
   title: 'Components/ToggleButton',
@@ -15,6 +15,16 @@ const meta: Meta<typeof ToggleButton> = {
       },
     },
   },
+  subcomponents: { ToggleButtonGroup },
+  args: {
+    children: 'Bold',
+    selected: false,
+    fullWidth: false,
+  },
+  argTypes: {
+    selected: { control: 'boolean' },
+    fullWidth: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,25 +32,29 @@ export default meta;
 type Story = StoryObj<typeof ToggleButton>;
 
 export const Basic: Story = {
-  args: {},
+  render: (args) => <ToggleButton {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex direction="column" gap={3}>
-      <ToggleButton {...args} />
-      <ToggleButton {...args} />
+export const Selected: Story = {
+  render: () => (
+    <Flex gap={2}>
+      <ToggleButton value="left">Left</ToggleButton>
+      <ToggleButton value="center" selected>
+        Center
+      </ToggleButton>
+      <ToggleButton value="right">Right</ToggleButton>
     </Flex>
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse ToggleButton anywhere below.</Typography>
-        <ToggleButton {...args} />
-        <ToggleButton {...args} />
+      <Flex gap={2}>
+        <ToggleButton value="first">First</ToggleButton>
+        <ToggleButton value="reuse" selected>
+          Reuse
+        </ToggleButton>
       </Flex>
     </BearProvider>
   ),

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ImageAnnotation, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { ImageAnnotation, BearProvider, Flex } from '@forgedevstack/bear';
+import type { Annotation } from '@forgedevstack/bear';
 
 const meta: Meta<typeof ImageAnnotation> = {
   title: 'Components/ImageAnnotation',
@@ -15,45 +16,56 @@ const meta: Meta<typeof ImageAnnotation> = {
       },
     },
   },
+  args: {
+    src: '/bear.svg',
+    alt: 'Bear demo',
+    editable: false,
+    pinSize: 0,
+  },
+  argTypes: {
+    onChange: { action: 'onChange' },
+    editable: { control: 'boolean' },
+    pinColor: { control: 'color' },
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof ImageAnnotation>;
 
+const ANNOTATIONS: Annotation[] = [
+  { id: 'demo-1', x: 30, y: 40, text: 'Mark' },
+  { id: 'demo-2', x: 65, y: 70, text: 'Note' },
+];
+
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <ImageAnnotation {...args}>
-      <Typography>ImageAnnotation</Typography>
-    </ImageAnnotation>
-  ),
+  args: {
+    src: '/bear.svg',
+    annotations: ANNOTATIONS,
+  },
+  render: (args) => <ImageAnnotation {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <ImageAnnotation {...args}>
-        <Typography>First</Typography>
-      </ImageAnnotation>
-      <ImageAnnotation>
-        <Typography>Second</Typography>
-      </ImageAnnotation>
-    </Flex>
+export const ReadOnly: Story = {
+  render: () => (
+    <ImageAnnotation
+      src="/bear.svg"
+      alt="Bear"
+      annotations={[
+        { id: 'c-1', x: 25, y: 35, text: 'Summit', color: '#3b82f6' },
+        { id: 'c-2', x: 70, y: 65, text: 'Base camp', color: '#10b981' },
+      ]}
+      editable={false}
+    />
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse ImageAnnotation anywhere below.</Typography>
-        <ImageAnnotation {...args}>
-          <Typography>First use</Typography>
-        </ImageAnnotation>
-        <ImageAnnotation>
-          <Typography>Second use</Typography>
-        </ImageAnnotation>
+        <ImageAnnotation src="/bear.svg" alt="Bear" annotations={ANNOTATIONS} />
+        <ImageAnnotation src="/bear.svg" alt="Bear" annotations={ANNOTATIONS} editable={false} />
       </Flex>
     </BearProvider>
   ),

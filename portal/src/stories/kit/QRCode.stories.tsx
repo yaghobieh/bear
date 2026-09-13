@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { QRCode, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { QRCode, BearProvider, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof QRCode> = {
   title: 'Components/QRCode',
@@ -15,6 +15,19 @@ const meta: Meta<typeof QRCode> = {
       },
     },
   },
+  args: {
+    size: 0,
+    level: 'L',
+    includeMargin: false,
+    imageSize: 0,
+  },
+  argTypes: {
+    level: { control: 'select', options: ['L', 'M', 'Q', 'H'] },
+    bgColor: { control: 'color' },
+    fgColor: { control: 'color' },
+    includeMargin: { control: 'boolean' },
+    renderAs: { control: 'select', options: ['canvas', 'svg'] },
+  },
 };
 
 export default meta;
@@ -22,25 +35,25 @@ export default meta;
 type Story = StoryObj<typeof QRCode>;
 
 export const Basic: Story = {
-  args: {},
+  render: (args) => <QRCode {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex direction="column" gap={3}>
-      <QRCode {...args} />
-      <QRCode {...args} />
+export const Colored: Story = {
+  render: () => (
+    <Flex gap={4} wrap="wrap">
+      <QRCode value="https://forgestack.dev" size={128} />
+      <QRCode value="https://forgestack.dev" size={128} fgColor="#EA0A8E" bgColor="#FFF5FA" />
     </Flex>
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
         <Typography variant="subtitle2">Wrap once in BearProvider, then reuse QRCode anywhere below.</Typography>
-        <QRCode {...args} />
-        <QRCode {...args} />
+        <QRCode value="https://forgestack.dev" />
+        <QRCode value="npm install @forgedevstack/bear" size={96} />
       </Flex>
     </BearProvider>
   ),

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { BearLoader, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { BearLoader, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof BearLoader> = {
   title: 'Components/BearLoader',
@@ -15,6 +15,17 @@ const meta: Meta<typeof BearLoader> = {
       },
     },
   },
+  args: {
+    size: 'sm',
+    text: 'Hello Bear',
+    fullscreen: false,
+    duration: 0,
+  },
+  argTypes: {
+    size: { control: 'select', options: ['sm', 'md', 'lg', 'xl'] },
+    fullscreen: { control: 'boolean' },
+    onComplete: { action: 'onComplete' },
+  },
 };
 
 export default meta;
@@ -22,25 +33,19 @@ export default meta;
 type Story = StoryObj<typeof BearLoader>;
 
 export const Basic: Story = {
-  args: {},
+  render: (args) => <BearLoader {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex direction="column" gap={3}>
-      <BearLoader {...args} />
-      <BearLoader {...args} />
-    </Flex>
-  ),
+export const WithText: Story = {
+  render: () => <BearLoader size="lg" text="Loading your content..." />,
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse BearLoader anywhere below.</Typography>
-        <BearLoader {...args} />
-        <BearLoader {...args} />
+      <Flex gap={6} align="center" wrap="wrap">
+        <BearLoader size="sm" />
+        <BearLoader size="md" text="Reuse" />
       </Flex>
     </BearProvider>
   ),

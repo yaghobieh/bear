@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { PageHeader, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { PageHeader, Button, BearProvider, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof PageHeader> = {
   title: 'Components/PageHeader',
@@ -15,6 +15,11 @@ const meta: Meta<typeof PageHeader> = {
       },
     },
   },
+  args: {
+    title: 'Title',
+    description: 'Helper text',
+  },
+  argTypes: {},
 };
 
 export default meta;
@@ -22,38 +27,26 @@ export default meta;
 type Story = StoryObj<typeof PageHeader>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <PageHeader {...args}>
-      <Typography>PageHeader</Typography>
-    </PageHeader>
-  ),
+  render: (args) => <PageHeader {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <PageHeader {...args}>
-        <Typography>First</Typography>
-      </PageHeader>
-      <PageHeader>
-        <Typography>Second</Typography>
-      </PageHeader>
-    </Flex>
+export const WithActions: Story = {
+  render: () => (
+    <PageHeader
+      title="Projects"
+      description="Manage workspace projects"
+      breadcrumbs={<Typography>Workspace / Projects</Typography>}
+      actions={<Button size="sm">New project</Button>}
+    />
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse PageHeader anywhere below.</Typography>
-        <PageHeader {...args}>
-          <Typography>First use</Typography>
-        </PageHeader>
-        <PageHeader>
-          <Typography>Second use</Typography>
-        </PageHeader>
+        <PageHeader title="First" description="First header" />
+        <PageHeader title="Reuse" description="Second header, same provider" actions={<Button size="sm">New</Button>} />
       </Flex>
     </BearProvider>
   ),

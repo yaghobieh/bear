@@ -15,6 +15,10 @@ const meta: Meta<typeof Masonry> = {
       },
     },
   },
+  args: {
+    gap: 2,
+  },
+  argTypes: {},
 };
 
 export default meta;
@@ -22,16 +26,7 @@ export default meta;
 type Story = StoryObj<typeof Masonry>;
 
 export const Basic: Story = {
-  render: () => (
-    <Masonry columns={3} gap={16}>
-      <Card padding="sm"><Typography>One</Typography></Card>
-      <Card padding="sm"><Typography>Two</Typography></Card>
-      <Card padding="sm"><Typography>Three</Typography></Card>
-      <Card padding="sm"><Typography>Four</Typography></Card>
-      <Card padding="sm"><Typography>Five</Typography></Card>
-      <Card padding="sm"><Typography>Six</Typography></Card>
-    </Masonry>
-  ),
+  render: (args) => <Masonry {...args} />,
 };
 
 export const Responsive: Story = {

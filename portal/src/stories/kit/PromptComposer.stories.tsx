@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { PromptComposer, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { useState } from 'react';
+import { PromptComposer, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof PromptComposer> = {
   title: 'Components/PromptComposer',
@@ -15,6 +16,22 @@ const meta: Meta<typeof PromptComposer> = {
       },
     },
   },
+  args: {
+    isStreaming: false,
+    disabled: false,
+    allowAttach: true,
+    placeholder: 'Type here',
+  },
+  argTypes: {
+    onChange: { action: 'onChange' },
+    onSubmit: { action: 'onSubmit' },
+    onStop: { action: 'onStop' },
+    onAttach: { action: 'onAttach' },
+    onFileRemove: { action: 'onFileRemove' },
+    isStreaming: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+    allowAttach: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,38 +39,30 @@ export default meta;
 type Story = StoryObj<typeof PromptComposer>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <PromptComposer {...args}>
-      <Typography>PromptComposer</Typography>
-    </PromptComposer>
-  ),
+  render: (args) => <PromptComposer {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <PromptComposer {...args}>
-        <Typography>First</Typography>
-      </PromptComposer>
-      <PromptComposer>
-        <Typography>Second</Typography>
-      </PromptComposer>
-    </Flex>
-  ),
+export const WithAttach: Story = {
+  render: () => {
+    const [value, setValue] = useState('Draft a plan');
+    return (
+      <PromptComposer
+        value={value}
+        onChange={setValue}
+        onSubmit={() => setValue('')}
+        allowAttach
+        onStop={() => undefined}
+      />
+    );
+  },
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse PromptComposer anywhere below.</Typography>
-        <PromptComposer {...args}>
-          <Typography>First use</Typography>
-        </PromptComposer>
-        <PromptComposer>
-          <Typography>Second use</Typography>
-        </PromptComposer>
+      <Flex direction="column" gap={3}>
+        <PromptComposer placeholder="First composer" onSubmit={() => undefined} />
+        <PromptComposer placeholder="Reuse below the same provider" allowAttach onSubmit={() => undefined} />
       </Flex>
     </BearProvider>
   ),

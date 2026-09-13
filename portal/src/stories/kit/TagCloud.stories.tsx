@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { TagCloud, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { TagCloud, BearProvider, Flex } from '@forgedevstack/bear';
+import type { TagCloudItem } from '@forgedevstack/bear';
 
 const meta: Meta<typeof TagCloud> = {
   title: 'Components/TagCloud',
@@ -15,45 +16,50 @@ const meta: Meta<typeof TagCloud> = {
       },
     },
   },
+  args: {
+    minFontSize: 0,
+    maxFontSize: 100,
+    mobileCompact: false,
+  },
+  argTypes: {
+    colors: { control: 'color' },
+    mobileCompact: { control: 'boolean' },
+    onTagClick: { action: 'onTagClick' },
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof TagCloud>;
 
+const TAGS: TagCloudItem[] = [
+  { text: 'React', value: 100 },
+  { text: 'TypeScript', value: 85 },
+  { text: 'Tailwind', value: 75 },
+  { text: 'Bear UI', value: 90 },
+  { text: 'ForgeStack', value: 80 },
+  { text: 'Vite', value: 60 },
+  { text: 'Node.js', value: 55 },
+  { text: 'GraphQL', value: 40 },
+];
+
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <TagCloud {...args}>
-      <Typography>TagCloud</Typography>
-    </TagCloud>
-  ),
+  args: {
+    tags: TAGS,
+  },
+  render: (args) => <TagCloud {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <TagCloud {...args}>
-        <Typography>First</Typography>
-      </TagCloud>
-      <TagCloud>
-        <Typography>Second</Typography>
-      </TagCloud>
-    </Flex>
-  ),
+export const Circle: Story = {
+  render: () => <TagCloud tags={TAGS} layout="circle" minFontSize={12} maxFontSize={32} />,
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse TagCloud anywhere below.</Typography>
-        <TagCloud {...args}>
-          <Typography>First use</Typography>
-        </TagCloud>
-        <TagCloud>
-          <Typography>Second use</Typography>
-        </TagCloud>
+        <TagCloud tags={TAGS} />
+        <TagCloud tags={TAGS} layout="circle" />
       </Flex>
     </BearProvider>
   ),

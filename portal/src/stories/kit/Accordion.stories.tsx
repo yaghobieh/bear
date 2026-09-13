@@ -15,6 +15,13 @@ const meta: Meta<typeof Accordion> = {
       },
     },
   },
+  subcomponents: { AccordionItem },
+  args: {
+    allowMultiple: true,
+  },
+  argTypes: {
+    allowMultiple: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,8 +29,8 @@ export default meta;
 type Story = StoryObj<typeof Accordion>;
 
 export const Basic: Story = {
-  render: () => (
-    <Accordion defaultOpen={['one']}>
+  render: (args) => (
+    <Accordion {...args} defaultOpen={['one']}>
       <AccordionItem id="one" title="What is Bear?">
         <Typography>A React UI kit with theme tokens.</Typography>
       </AccordionItem>

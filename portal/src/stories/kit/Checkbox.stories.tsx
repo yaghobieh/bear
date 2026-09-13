@@ -15,6 +15,25 @@ const meta: Meta<typeof Checkbox> = {
       },
     },
   },
+  args: {
+    label: 'Label',
+    color: '#EA0A8E',
+    checked: false,
+    defaultChecked: false,
+    indeterminate: false,
+    disabled: false,
+    error: false,
+    helperText: 'Helper text',
+  },
+  argTypes: {
+    color: { control: 'color' },
+    checked: { control: 'boolean' },
+    defaultChecked: { control: 'boolean' },
+    indeterminate: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+    error: { control: 'boolean' },
+    onChange: { action: 'onChange' },
+  },
 };
 
 export default meta;
@@ -22,9 +41,7 @@ export default meta;
 type Story = StoryObj<typeof Checkbox>;
 
 export const Basic: Story = {
-  args: {
-    label: 'Subscribe',
-  },
+  render: (args) => <Checkbox {...args} />,
 };
 
 export const States: Story = {

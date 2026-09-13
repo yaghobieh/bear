@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ResizableTextarea, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { ResizableTextarea, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof ResizableTextarea> = {
   title: 'Components/ResizableTextarea',
@@ -15,6 +15,19 @@ const meta: Meta<typeof ResizableTextarea> = {
       },
     },
   },
+  args: {
+    label: 'Label',
+    helperText: 'Helper text',
+    minHeight: 240,
+    maxHeight: 240,
+    resizable: false,
+    showCharCount: true,
+    charCountMax: 100,
+  },
+  argTypes: {
+    resizable: { control: 'boolean' },
+    showCharCount: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,25 +35,28 @@ export default meta;
 type Story = StoryObj<typeof ResizableTextarea>;
 
 export const Basic: Story = {
-  args: {},
+  render: (args) => <ResizableTextarea {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex direction="column" gap={3}>
-      <ResizableTextarea {...args} />
-      <ResizableTextarea {...args} />
-    </Flex>
+export const WithCharCount: Story = {
+  render: () => (
+    <ResizableTextarea
+      label="Feedback"
+      defaultValue="The canvas should show a visible textarea."
+      showCharCount
+      charCountMax={160}
+      minHeight={120}
+      maxHeight={240}
+    />
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse ResizableTextarea anywhere below.</Typography>
-        <ResizableTextarea {...args} />
-        <ResizableTextarea {...args} />
+      <Flex direction="column" gap={3}>
+        <ResizableTextarea label="First note" defaultValue="First use" minHeight={80} />
+        <ResizableTextarea label="Reuse" defaultValue="Same provider" minHeight={80} />
       </Flex>
     </BearProvider>
   ),

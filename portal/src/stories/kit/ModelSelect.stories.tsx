@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ModelSelect, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { useState } from 'react';
+import { ModelSelect, BearProvider, Flex } from '@forgedevstack/bear';
+import type { ModelSelectOption } from '@forgedevstack/bear';
 
 const meta: Meta<typeof ModelSelect> = {
   title: 'Components/ModelSelect',
@@ -15,45 +17,60 @@ const meta: Meta<typeof ModelSelect> = {
       },
     },
   },
+  args: {
+    label: 'Label',
+    placeholder: 'Type here',
+    disabled: false,
+  },
+  argTypes: {
+    onChange: { action: 'onChange' },
+    disabled: { control: 'boolean' },
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof ModelSelect>;
 
+const MODELS: ModelSelectOption[] = [
+  { id: 'forge-small', label: 'Forge Small' },
+  { id: 'forge-large', label: 'Forge Large' },
+];
+
+const EXTRA_MODELS: ModelSelectOption[] = [
+  { id: 'forge-small', label: 'Forge Small' },
+  { id: 'forge-large', label: 'Forge Large' },
+  { id: 'forge-vision', label: 'Forge Vision', disabled: true },
+];
+
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <ModelSelect {...args}>
-      <Typography>ModelSelect</Typography>
-    </ModelSelect>
-  ),
+  args: {
+    models: MODELS,
+  },
+  render: (args) => <ModelSelect {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <ModelSelect {...args}>
-        <Typography>First</Typography>
-      </ModelSelect>
-      <ModelSelect>
-        <Typography>Second</Typography>
-      </ModelSelect>
-    </Flex>
-  ),
+export const Controlled: Story = {
+  render: () => {
+    const [model, setModel] = useState(MODELS[0].id);
+    return (
+      <ModelSelect
+        models={EXTRA_MODELS}
+        value={model}
+        onChange={setModel}
+        label="Model"
+        placeholder="Pick a model"
+      />
+    );
+  },
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse ModelSelect anywhere below.</Typography>
-        <ModelSelect {...args}>
-          <Typography>First use</Typography>
-        </ModelSelect>
-        <ModelSelect>
-          <Typography>Second use</Typography>
-        </ModelSelect>
+      <Flex direction="column" gap={3}>
+        <ModelSelect models={MODELS} />
+        <ModelSelect models={EXTRA_MODELS} placeholder="Reuse below the same provider" />
       </Flex>
     </BearProvider>
   ),

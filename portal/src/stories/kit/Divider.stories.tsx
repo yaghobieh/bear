@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Divider, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { Divider, BearProvider, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Divider> = {
   title: 'Components/Divider',
@@ -15,6 +15,20 @@ const meta: Meta<typeof Divider> = {
       },
     },
   },
+  args: {
+    orientation: 'horizontal',
+    variant: 'solid',
+    color: '#EA0A8E',
+    textAlign: 'left',
+    thickness: 0,
+    spacing: 0,
+  },
+  argTypes: {
+    orientation: { control: 'select', options: ['horizontal', 'vertical'] },
+    variant: { control: 'select', options: ['solid', 'dashed', 'dotted'] },
+    color: { control: 'color' },
+    textAlign: { control: 'select', options: ['left', 'center', 'right'] },
+  },
 };
 
 export default meta;
@@ -22,25 +36,27 @@ export default meta;
 type Story = StoryObj<typeof Divider>;
 
 export const Basic: Story = {
-  args: {},
+  render: (args) => <Divider {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex direction="column" gap={3}>
-      <Divider {...args} />
-      <Divider {...args} />
+export const WithLabel: Story = {
+  render: () => (
+    <Flex direction="column" gap={4}>
+      <Typography variant="body2">Email sign-in</Typography>
+      <Divider>OR</Divider>
+      <Typography variant="body2">Continue with SSO</Typography>
     </Flex>
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Divider anywhere below.</Typography>
-        <Divider {...args} />
-        <Divider {...args} />
+        <Typography variant="subtitle2">Section one</Typography>
+        <Divider variant="dashed" />
+        <Typography variant="subtitle2">Reuse</Typography>
+        <Divider variant="dotted">More</Divider>
       </Flex>
     </BearProvider>
   ),

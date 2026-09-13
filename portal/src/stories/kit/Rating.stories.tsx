@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Rating, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { Rating, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Rating> = {
   title: 'Components/Rating',
@@ -15,6 +15,27 @@ const meta: Meta<typeof Rating> = {
       },
     },
   },
+  args: {
+    value: 42,
+    defaultValue: 42,
+    max: 100,
+    allowHalf: true,
+    allowClear: true,
+    disabled: false,
+    readOnly: false,
+    color: '#EA0A8E',
+    showValue: true,
+  },
+  argTypes: {
+    onChange: { action: 'onChange' },
+    allowHalf: { control: 'boolean' },
+    allowClear: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+    readOnly: { control: 'boolean' },
+    color: { control: 'color' },
+    emptyColor: { control: 'color' },
+    showValue: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,25 +43,19 @@ export default meta;
 type Story = StoryObj<typeof Rating>;
 
 export const Basic: Story = {
-  args: {},
+  render: (args) => <Rating {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex direction="column" gap={3}>
-      <Rating {...args} />
-      <Rating {...args} />
-    </Flex>
-  ),
+export const Large: Story = {
+  render: () => <Rating defaultValue={4} size="lg" showValue allowHalf />,
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Rating anywhere below.</Typography>
-        <Rating {...args} />
-        <Rating {...args} />
+      <Flex direction="column" gap={3}>
+        <Rating value={3} />
+        <Rating defaultValue={5} size="sm" />
       </Flex>
     </BearProvider>
   ),

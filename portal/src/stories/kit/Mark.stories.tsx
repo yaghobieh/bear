@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Mark, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { Mark, BearProvider, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Mark> = {
   title: 'Components/Mark',
@@ -15,6 +15,13 @@ const meta: Meta<typeof Mark> = {
       },
     },
   },
+  args: {
+    children: 'Highlighted',
+    color: 'default',
+  },
+  argTypes: {
+    color: { control: 'select', options: ['default', 'pink', 'blue', 'green', 'red'] },
+  },
 };
 
 export default meta;
@@ -22,38 +29,25 @@ export default meta;
 type Story = StoryObj<typeof Mark>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <Mark {...args}>
-      <Typography>Mark</Typography>
-    </Mark>
-  ),
+  render: (args) => <Mark {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <Mark {...args}>
-        <Typography>First</Typography>
-      </Mark>
-      <Mark>
-        <Typography>Second</Typography>
-      </Mark>
+export const Colors: Story = {
+  render: () => (
+    <Flex gap={2} wrap="wrap">
+      <Mark color="pink">Pink</Mark>
+      <Mark color="blue">Blue</Mark>
+      <Mark color="green">Green</Mark>
     </Flex>
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Mark anywhere below.</Typography>
-        <Mark {...args}>
-          <Typography>First use</Typography>
-        </Mark>
-        <Mark>
-          <Typography>Second use</Typography>
-        </Mark>
+      <Flex gap={2}>
+        <Mark>First</Mark>
+        <Mark color="red">Reuse</Mark>
       </Flex>
     </BearProvider>
   ),

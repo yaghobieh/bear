@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { TableSkeleton, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { TableSkeleton, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof TableSkeleton> = {
   title: 'Components/TableSkeleton',
@@ -15,6 +15,10 @@ const meta: Meta<typeof TableSkeleton> = {
       },
     },
   },
+  args: {
+    rows: 0,
+  },
+  argTypes: {},
 };
 
 export default meta;
@@ -22,25 +26,19 @@ export default meta;
 type Story = StoryObj<typeof TableSkeleton>;
 
 export const Basic: Story = {
-  args: {},
+  render: (args) => <TableSkeleton {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex direction="column" gap={3}>
-      <TableSkeleton {...args} />
-      <TableSkeleton {...args} />
-    </Flex>
-  ),
+export const Compact: Story = {
+  render: () => <TableSkeleton rows={3} columns={3} animation="wave" />,
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse TableSkeleton anywhere below.</Typography>
-        <TableSkeleton {...args} />
-        <TableSkeleton {...args} />
+        <TableSkeleton rows={3} columns={4} />
+        <TableSkeleton rows={2} columns={2} animation="none" />
       </Flex>
     </BearProvider>
   ),

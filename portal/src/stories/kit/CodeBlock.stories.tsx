@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { CodeBlock, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { CodeBlock, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof CodeBlock> = {
   title: 'Components/CodeBlock',
@@ -15,45 +15,50 @@ const meta: Meta<typeof CodeBlock> = {
       },
     },
   },
+  args: {
+    code: 'const x = 1',
+    showLineNumbers: true,
+    title: 'Title',
+    copyable: false,
+    maxHeight: 240,
+    theme: 'auto',
+  },
+  argTypes: {
+    showLineNumbers: { control: 'boolean' },
+    copyable: { control: 'boolean' },
+    theme: { control: 'select', options: ['auto', 'dark', 'light'] },
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof CodeBlock>;
 
+const SNIPPET = `const greeting = 'Hello, World!';
+console.log(greeting);`;
+
+const APP_SNIPPET = `import { Button } from '@forgedevstack/bear';
+
+function App() {
+  return <Button>Click me</Button>;
+}`;
+
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <CodeBlock {...args}>
-      <Typography>CodeBlock</Typography>
-    </CodeBlock>
-  ),
+  render: (args) => <CodeBlock {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <CodeBlock {...args}>
-        <Typography>First</Typography>
-      </CodeBlock>
-      <CodeBlock>
-        <Typography>Second</Typography>
-      </CodeBlock>
-    </Flex>
+export const WithTitle: Story = {
+  render: () => (
+    <CodeBlock code={APP_SNIPPET} language="tsx" title="App.tsx" showLineNumbers />
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse CodeBlock anywhere below.</Typography>
-        <CodeBlock {...args}>
-          <Typography>First use</Typography>
-        </CodeBlock>
-        <CodeBlock>
-          <Typography>Second use</Typography>
-        </CodeBlock>
+        <CodeBlock code={SNIPPET} language="javascript" />
+        <CodeBlock code="npm install @forgedevstack/bear" language="bash" showLineNumbers={false} />
       </Flex>
     </BearProvider>
   ),

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { GlowCard, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { GlowCard, BearProvider, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof GlowCard> = {
   title: 'Components/GlowCard',
@@ -15,6 +15,19 @@ const meta: Meta<typeof GlowCard> = {
       },
     },
   },
+  args: {
+    children: 'Glow card',
+    glowIntensity: 0,
+    followMouse: false,
+    borderRadius: 0,
+    disabled: false,
+    borderWidth: 320,
+  },
+  argTypes: {
+    glowColor: { control: 'color' },
+    followMouse: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,37 +35,26 @@ export default meta;
 type Story = StoryObj<typeof GlowCard>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <GlowCard {...args}>
-      <Typography>GlowCard</Typography>
+  render: (args) => <GlowCard {...args} />,
+};
+
+export const Spotlight: Story = {
+  render: () => (
+    <GlowCard effect="spotlight" followMouse glowColor="#3b82f6">
+      <Typography>Spotlight follows the pointer.</Typography>
     </GlowCard>
   ),
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <GlowCard {...args}>
-        <Typography>First</Typography>
-      </GlowCard>
-      <GlowCard>
-        <Typography>Second</Typography>
-      </GlowCard>
-    </Flex>
-  ),
-};
-
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse GlowCard anywhere below.</Typography>
-        <GlowCard {...args}>
+      <Flex gap={4} wrap="wrap">
+        <GlowCard>
           <Typography>First use</Typography>
         </GlowCard>
-        <GlowCard>
-          <Typography>Second use</Typography>
+        <GlowCard effect="pulse">
+          <Typography>Reuse</Typography>
         </GlowCard>
       </Flex>
     </BearProvider>

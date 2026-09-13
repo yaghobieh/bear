@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Carousel, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { Carousel, BearProvider, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Carousel> = {
   title: 'Components/Carousel',
@@ -15,45 +15,65 @@ const meta: Meta<typeof Carousel> = {
       },
     },
   },
+  args: {
+    autoPlay: 0,
+    showDots: true,
+    showArrows: true,
+    loop: false,
+    slidesToShow: 1,
+    gap: 2,
+    pauseOnHover: false,
+    transitionDuration: 300,
+    thumbnailSize: 0,
+    keyboard: false,
+    draggable: false,
+    showProgress: true,
+    showCounter: true,
+  },
+  argTypes: {
+    showDots: { control: 'boolean' },
+    showArrows: { control: 'boolean' },
+    loop: { control: 'boolean' },
+    pauseOnHover: { control: 'boolean' },
+    onSlideChange: { action: 'onSlideChange' },
+    keyboard: { control: 'boolean' },
+    draggable: { control: 'boolean' },
+    showProgress: { control: 'boolean' },
+    showCounter: { control: 'boolean' },
+    activeColor: { control: 'color' },
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof Carousel>;
 
+const SLIDES = (
+  <>
+    <Typography variant="h5">Slide one</Typography>
+    <Typography variant="h5">Slide two</Typography>
+    <Typography variant="h5">Slide three</Typography>
+  </>
+);
+
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <Carousel {...args}>
-      <Typography>Carousel</Typography>
+  render: (args) => <Carousel {...args}>{SLIDES}</Carousel>,
+};
+
+export const Fade: Story = {
+  render: () => (
+    <Carousel transition="fade" showCounter showProgress>
+      {SLIDES}
     </Carousel>
   ),
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <Carousel {...args}>
-        <Typography>First</Typography>
-      </Carousel>
-      <Carousel>
-        <Typography>Second</Typography>
-      </Carousel>
-    </Flex>
-  ),
-};
-
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Carousel anywhere below.</Typography>
-        <Carousel {...args}>
-          <Typography>First use</Typography>
-        </Carousel>
-        <Carousel>
-          <Typography>Second use</Typography>
-        </Carousel>
+        <Carousel>{SLIDES}</Carousel>
+        <Carousel transition="fade">{SLIDES}</Carousel>
       </Flex>
     </BearProvider>
   ),

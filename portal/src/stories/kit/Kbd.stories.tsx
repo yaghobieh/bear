@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Kbd, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { Kbd, BearProvider, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Kbd> = {
   title: 'Components/Kbd',
@@ -15,6 +15,15 @@ const meta: Meta<typeof Kbd> = {
       },
     },
   },
+  args: {
+    children: '⌘K',
+    size: 'sm',
+    variant: 'default',
+  },
+  argTypes: {
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    variant: { control: 'select', options: ['default', 'outline', 'ghost'] },
+  },
 };
 
 export default meta;
@@ -22,38 +31,24 @@ export default meta;
 type Story = StoryObj<typeof Kbd>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <Kbd {...args}>
-      <Typography>Kbd</Typography>
-    </Kbd>
-  ),
+  render: (args) => <Kbd {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <Kbd {...args}>
-        <Typography>First</Typography>
-      </Kbd>
-      <Kbd>
-        <Typography>Second</Typography>
-      </Kbd>
+export const Shortcut: Story = {
+  render: () => (
+    <Flex gap={1} align="center">
+      <Kbd keys={['⌘', 'K']}>K</Kbd>
+      <Typography>Open command palette</Typography>
     </Flex>
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Kbd anywhere below.</Typography>
-        <Kbd {...args}>
-          <Typography>First use</Typography>
-        </Kbd>
-        <Kbd>
-          <Typography>Second use</Typography>
-        </Kbd>
+      <Flex gap={2}>
+        <Kbd>Esc</Kbd>
+        <Kbd>Enter</Kbd>
       </Flex>
     </BearProvider>
   ),

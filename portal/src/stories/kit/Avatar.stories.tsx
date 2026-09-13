@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Avatar, BearProvider, Flex, Typography } from '@forgedevstack/bear';
+import { Avatar, AvatarGroup, BearProvider, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Avatar> = {
   title: 'Components/Avatar',
@@ -15,6 +15,21 @@ const meta: Meta<typeof Avatar> = {
       },
     },
   },
+  subcomponents: { AvatarGroup },
+  args: {
+    src: '/bear.svg',
+    alt: 'Bear demo',
+    size: 'xs',
+    variant: 'circle',
+    status: 'online',
+    bordered: false,
+  },
+  argTypes: {
+    size: { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl', '2xl'] },
+    variant: { control: 'select', options: ['circle', 'rounded', 'square'] },
+    status: { control: 'select', options: ['online', 'offline', 'away', 'busy'] },
+    bordered: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,10 +37,7 @@ export default meta;
 type Story = StoryObj<typeof Avatar>;
 
 export const Basic: Story = {
-  args: {
-    initials: 'AL',
-    alt: 'Ada Lovelace',
-  },
+  render: (args) => <Avatar {...args} />,
 };
 
 export const Sizes: Story = {

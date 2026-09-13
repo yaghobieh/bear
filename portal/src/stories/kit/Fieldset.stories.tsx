@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Fieldset, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { Fieldset, Input, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Fieldset> = {
   title: 'Components/Fieldset',
@@ -15,6 +15,16 @@ const meta: Meta<typeof Fieldset> = {
       },
     },
   },
+  args: {
+    variant: 'default',
+    radius: 'sm',
+    disabled: false,
+  },
+  argTypes: {
+    variant: { control: 'select', options: ['default', 'filled', 'unstyled'] },
+    radius: { control: 'select', options: ['sm', 'md', 'lg'] },
+    disabled: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,37 +32,33 @@ export default meta;
 type Story = StoryObj<typeof Fieldset>;
 
 export const Basic: Story = {
-  args: {},
   render: (args) => (
-    <Fieldset {...args}>
-      <Typography>Fieldset</Typography>
+    <Fieldset {...args} legend="Account" description="Sign-in details">
+      <Flex direction="column" gap={2}>
+        <Input label="Email" placeholder="you@forge.dev" />
+        <Input label="Password" type="password" />
+      </Flex>
     </Fieldset>
   ),
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <Fieldset {...args}>
-        <Typography>First</Typography>
-      </Fieldset>
-      <Fieldset>
-        <Typography>Second</Typography>
-      </Fieldset>
-    </Flex>
+export const Filled: Story = {
+  render: () => (
+    <Fieldset legend="Profile" variant="filled" radius="lg">
+      <Input label="Display name" placeholder="Ada" />
+    </Fieldset>
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Fieldset anywhere below.</Typography>
-        <Fieldset {...args}>
-          <Typography>First use</Typography>
+      <Flex direction="column" gap={3}>
+        <Fieldset legend="First">
+          <Input placeholder="First fieldset" />
         </Fieldset>
-        <Fieldset>
-          <Typography>Second use</Typography>
+        <Fieldset legend="Reuse">
+          <Input placeholder="Same provider" />
         </Fieldset>
       </Flex>
     </BearProvider>

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { NumberFormatter, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { NumberFormatter, BearProvider, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof NumberFormatter> = {
   title: 'Components/NumberFormatter',
@@ -15,6 +15,24 @@ const meta: Meta<typeof NumberFormatter> = {
       },
     },
   },
+  args: {
+    value: 42,
+    currencyDisplay: 'symbol',
+    unitDisplay: 'short',
+    notation: 'standard',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 100,
+    signDisplay: 'auto',
+    animated: true,
+    animationDuration: 0,
+  },
+  argTypes: {
+    currencyDisplay: { control: 'select', options: ['symbol', 'code', 'name', 'narrowSymbol'] },
+    unitDisplay: { control: 'select', options: ['short', 'long', 'narrow'] },
+    notation: { control: 'select', options: ['standard', 'scientific', 'engineering', 'compact'] },
+    signDisplay: { control: 'select', options: ['auto', 'never', 'always', 'exceptZero'] },
+    animated: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,38 +40,28 @@ export default meta;
 type Story = StoryObj<typeof NumberFormatter>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <NumberFormatter {...args}>
-      <Typography>NumberFormatter</Typography>
-    </NumberFormatter>
-  ),
+  render: (args) => <NumberFormatter {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <NumberFormatter {...args}>
-        <Typography>First</Typography>
-      </NumberFormatter>
-      <NumberFormatter>
-        <Typography>Second</Typography>
-      </NumberFormatter>
+export const Currency: Story = {
+  render: () => (
+    <Flex gap={3} direction="column">
+      <Typography>
+        <NumberFormatter value={45678} formatStyle="currency" currency="USD" />
+      </Typography>
+      <Typography>
+        <NumberFormatter value={0.184} formatStyle="percent" />
+      </Typography>
     </Flex>
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse NumberFormatter anywhere below.</Typography>
-        <NumberFormatter {...args}>
-          <Typography>First use</Typography>
-        </NumberFormatter>
-        <NumberFormatter>
-          <Typography>Second use</Typography>
-        </NumberFormatter>
+      <Flex gap={3}>
+        <NumberFormatter value={1000} />
+        <NumberFormatter value={2500} formatStyle="compact" />
       </Flex>
     </BearProvider>
   ),

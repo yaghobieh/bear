@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ImageGallery, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { ImageGallery, BearProvider, Flex } from '@forgedevstack/bear';
+import type { GalleryImage } from '@forgedevstack/bear';
 
 const meta: Meta<typeof ImageGallery> = {
   title: 'Components/ImageGallery',
@@ -15,45 +16,47 @@ const meta: Meta<typeof ImageGallery> = {
       },
     },
   },
+  args: {
+    gap: 2,
+    rounded: false,
+    enableLightbox: false,
+    thumbnailHeight: 240,
+  },
+  argTypes: {
+    rounded: { control: 'boolean' },
+    enableLightbox: { control: 'boolean' },
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof ImageGallery>;
 
+const IMAGES: GalleryImage[] = [
+  { src: '/bear.svg', alt: 'Bear one', caption: 'Mark' },
+  { src: '/bear.svg', alt: 'Bear two', caption: 'Track' },
+  { src: '/bear.svg', alt: 'Bear three', caption: 'Note' },
+];
+
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <ImageGallery {...args}>
-      <Typography>ImageGallery</Typography>
-    </ImageGallery>
-  ),
+  args: {
+    images: IMAGES,
+  },
+  render: (args) => <ImageGallery {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <ImageGallery {...args}>
-        <Typography>First</Typography>
-      </ImageGallery>
-      <ImageGallery>
-        <Typography>Second</Typography>
-      </ImageGallery>
-    </Flex>
+export const ThreeColumns: Story = {
+  render: () => (
+    <ImageGallery images={IMAGES} columns={3} gap={8} rounded enableLightbox={false} />
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse ImageGallery anywhere below.</Typography>
-        <ImageGallery {...args}>
-          <Typography>First use</Typography>
-        </ImageGallery>
-        <ImageGallery>
-          <Typography>Second use</Typography>
-        </ImageGallery>
+        <ImageGallery images={IMAGES} />
+        <ImageGallery images={IMAGES} columns={2} rounded />
       </Flex>
     </BearProvider>
   ),

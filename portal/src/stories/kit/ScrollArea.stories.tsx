@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ScrollArea, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { ScrollArea, BearProvider, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof ScrollArea> = {
   title: 'Components/ScrollArea',
@@ -15,44 +15,60 @@ const meta: Meta<typeof ScrollArea> = {
       },
     },
   },
+  args: {
+    orientation: 'vertical',
+    scrollbarSize: 'sm',
+    scrollbarVariant: 'default',
+    maxHeight: 240,
+    maxWidth: 320,
+  },
+  argTypes: {
+    orientation: { control: 'select', options: ['vertical', 'horizontal', 'both'] },
+    scrollbarSize: { control: 'select', options: ['sm', 'md', 'lg'] },
+    scrollbarVariant: { control: 'select', options: ['default', 'minimal', 'hidden'] },
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof ScrollArea>;
 
+const LONG_COPY = (
+  <>
+    <Typography>Line one of a tall list that needs a scrollbar.</Typography>
+    <Typography>Line two keeps going so the overflow is obvious.</Typography>
+    <Typography>Line three.</Typography>
+    <Typography>Line four.</Typography>
+    <Typography>Line five.</Typography>
+    <Typography>Line six.</Typography>
+    <Typography>Line seven.</Typography>
+    <Typography>Line eight.</Typography>
+  </>
+);
+
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <ScrollArea {...args}>
-      <Typography>ScrollArea</Typography>
+  render: (args) => <ScrollArea {...args} />,
+};
+
+export const MinimalScrollbar: Story = {
+  render: () => (
+    <ScrollArea maxHeight={120} scrollbarVariant="minimal">
+      {LONG_COPY}
     </ScrollArea>
   ),
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <ScrollArea {...args}>
-        <Typography>First</Typography>
-      </ScrollArea>
-      <ScrollArea>
-        <Typography>Second</Typography>
-      </ScrollArea>
-    </Flex>
-  ),
-};
-
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse ScrollArea anywhere below.</Typography>
-        <ScrollArea {...args}>
-          <Typography>First use</Typography>
+        <ScrollArea maxHeight={100}>
+          <Typography>First scroll area</Typography>
+          {LONG_COPY}
         </ScrollArea>
-        <ScrollArea>
-          <Typography>Second use</Typography>
+        <ScrollArea maxHeight={100}>
+          <Typography>Reuse</Typography>
+          {LONG_COPY}
         </ScrollArea>
       </Flex>
     </BearProvider>

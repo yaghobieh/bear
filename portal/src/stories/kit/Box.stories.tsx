@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Box, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { Box, BearProvider, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Box> = {
   title: 'Components/Box',
@@ -15,6 +15,34 @@ const meta: Meta<typeof Box> = {
       },
     },
   },
+  args: {
+    children: 'Box content',
+    as: 'div',
+    p: 0,
+    px: 0,
+    py: 0,
+    pt: 0,
+    pb: 0,
+    pl: 0,
+    pr: 0,
+    m: 0,
+    mx: 0,
+    my: 0,
+    mt: 0,
+    mb: 0,
+    ml: 0,
+    mr: 0,
+    rounded: 'none',
+    shadow: 'none',
+    border: false,
+  },
+  argTypes: {
+    as: { control: 'select', options: ['div', 'section', 'article', 'aside', 'main', 'header', 'footer', 'nav', 'span'] },
+    rounded: { control: 'select', options: ['none', 'sm', 'md', 'lg', 'xl', '2xl', 'full'] },
+    shadow: { control: 'select', options: ['none', 'sm', 'md', 'lg', 'xl', '2xl'] },
+    border: { control: 'boolean' },
+    borderColor: { control: 'color' },
+  },
 };
 
 export default meta;
@@ -22,37 +50,26 @@ export default meta;
 type Story = StoryObj<typeof Box>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <Box {...args}>
-      <Typography>Box</Typography>
+  render: (args) => <Box {...args} />,
+};
+
+export const Shadowed: Story = {
+  render: () => (
+    <Box p={4} rounded="xl" shadow="md">
+      <Typography>Elevated surface for grouping content.</Typography>
     </Box>
   ),
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <Box {...args}>
-        <Typography>First</Typography>
-      </Box>
-      <Box>
-        <Typography>Second</Typography>
-      </Box>
-    </Flex>
-  ),
-};
-
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Box anywhere below.</Typography>
-        <Box {...args}>
+      <Flex direction="column" gap={3}>
+        <Box p={3} border>
           <Typography>First use</Typography>
         </Box>
-        <Box>
-          <Typography>Second use</Typography>
+        <Box p={3} rounded="md" shadow="sm">
+          <Typography>Reuse</Typography>
         </Box>
       </Flex>
     </BearProvider>

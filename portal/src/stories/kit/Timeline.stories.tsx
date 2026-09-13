@@ -15,6 +15,21 @@ const meta: Meta<typeof Timeline> = {
       },
     },
   },
+  args: {
+    items: [
+      { title: 'Shipped', time: '09:00', description: 'First release' },
+      { title: 'Review', time: '11:00', description: 'Design review', active: true },
+      { title: 'Done', time: '16:00', description: 'Closed' },
+    ],
+    showLine: true,
+    reverse: false,
+  },
+  argTypes: {
+    showLine: { control: 'boolean' },
+    pending: { control: 'boolean' },
+    reverse: { control: 'boolean' },
+    lineColor: { control: 'color' },
+  },
 };
 
 export default meta;
@@ -28,9 +43,7 @@ const ITEMS = [
 ];
 
 export const Basic: Story = {
-  args: {
-    items: ITEMS,
-  },
+  render: (args) => <Timeline {...args} />,
 };
 
 export const Alternate: Story = {

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { CheckboxCard, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { BearProvider, CheckboxCard, CheckboxCardGroup, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof CheckboxCard> = {
   title: 'Components/CheckboxCard',
@@ -15,6 +15,21 @@ const meta: Meta<typeof CheckboxCard> = {
       },
     },
   },
+  subcomponents: { CheckboxCardGroup },
+  args: {
+    checked: false,
+    label: 'Label',
+    disabled: false,
+    variant: 'default',
+    size: 'sm',
+  },
+  argTypes: {
+    checked: { control: 'boolean' },
+    onChange: { action: 'onChange' },
+    disabled: { control: 'boolean' },
+    variant: { control: 'select', options: ['default', 'outline', 'filled'] },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+  },
 };
 
 export default meta;
@@ -22,38 +37,26 @@ export default meta;
 type Story = StoryObj<typeof CheckboxCard>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <CheckboxCard {...args}>
-      <Typography>CheckboxCard</Typography>
-    </CheckboxCard>
-  ),
+  render: (args) => <CheckboxCard {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <CheckboxCard {...args}>
-        <Typography>First</Typography>
-      </CheckboxCard>
-      <CheckboxCard>
-        <Typography>Second</Typography>
-      </CheckboxCard>
-    </Flex>
+export const WithDescription: Story = {
+  render: () => (
+    <CheckboxCard
+      label="SMS"
+      description="Text message alerts"
+      value="sms"
+      variant="outline"
+    />
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse CheckboxCard anywhere below.</Typography>
-        <CheckboxCard {...args}>
-          <Typography>First use</Typography>
-        </CheckboxCard>
-        <CheckboxCard>
-          <Typography>Second use</Typography>
-        </CheckboxCard>
+      <Flex gap={3} wrap="wrap">
+        <CheckboxCard label="Email" description="Get notified by email" />
+        <CheckboxCard label="Push" description="Mobile notifications" />
       </Flex>
     </BearProvider>
   ),

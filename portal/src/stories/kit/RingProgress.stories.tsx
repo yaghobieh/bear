@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { RingProgress, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { RingProgress, BearProvider, Flex, Typography } from '@forgedevstack/bear';
+import type { RingProgressSection } from '@forgedevstack/bear';
 
 const meta: Meta<typeof RingProgress> = {
   title: 'Components/RingProgress',
@@ -15,32 +16,49 @@ const meta: Meta<typeof RingProgress> = {
       },
     },
   },
+  args: {
+    size: 120,
+    thickness: 12,
+    roundCaps: true,
+    label: '72%',
+    variant: 'full',
+  },
+  argTypes: {
+    roundCaps: { control: 'boolean' },
+    rootColor: { control: 'color' },
+    variant: { control: 'select', options: ['full', 'half'] },
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof RingProgress>;
 
+const SINGLE: RingProgressSection[] = [{ value: 72, color: '#ec4899' }];
+
+const MULTI: RingProgressSection[] = [
+  { value: 40, color: '#ec4899' },
+  { value: 25, color: '#8b5cf6' },
+  { value: 15, color: '#06b6d4' },
+];
+
 export const Basic: Story = {
-  args: {},
+  args: {
+    sections: SINGLE,
+  },
+  render: (args) => <RingProgress {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex direction="column" gap={3}>
-      <RingProgress {...args} />
-      <RingProgress {...args} />
-    </Flex>
-  ),
+export const MultipleSections: Story = {
+  render: () => <RingProgress sections={MULTI} roundCaps />,
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse RingProgress anywhere below.</Typography>
-        <RingProgress {...args} />
-        <RingProgress {...args} />
+      <Flex gap={4} wrap="wrap">
+        <RingProgress sections={SINGLE} />
+        <RingProgress sections={MULTI} />
       </Flex>
     </BearProvider>
   ),

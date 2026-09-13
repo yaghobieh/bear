@@ -15,6 +15,17 @@ const meta: Meta<typeof Badge> = {
       },
     },
   },
+  args: {
+    pill: false,
+    dot: false,
+    variant: 'primary',
+    size: 'md',
+    children: 'Primary',
+  },
+  argTypes: {
+    pill: { control: 'boolean' },
+    dot: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,10 +33,7 @@ export default meta;
 type Story = StoryObj<typeof Badge>;
 
 export const Basic: Story = {
-  args: {
-    children: 'New',
-    variant: 'primary',
-  },
+  render: (args) => <Badge {...args} />,
 };
 
 export const Variants: Story = {

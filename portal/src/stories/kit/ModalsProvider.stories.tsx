@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ModalsProvider, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { ModalsProvider, useModals, Button, BearProvider, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof ModalsProvider> = {
   title: 'Components/ModalsProvider',
@@ -11,48 +11,116 @@ const meta: Meta<typeof ModalsProvider> = {
     },
     docs: {
       description: {
-        component: 'ModalsProvider from @forgedevstack/bear. Wrap your tree in BearProvider so theme tokens apply, then reuse ModalsProvider anywhere below the provider. The Docs table lists the public props.',
+        component: 'Overlay from @forgedevstack/bear. Wrap your tree in BearProvider so theme tokens apply, then reuse ModalsProvider anywhere below the provider. The Docs table lists the public props.',
       },
     },
   },
+  args: {
+
+  },
+  argTypes: {},
 };
 
 export default meta;
 
 type Story = StoryObj<typeof ModalsProvider>;
 
+const OpenModalTrigger = () => {
+  const { open, close } = useModals();
+  return (
+    <Button
+      onClick={() =>
+        open({
+          title: 'Bear modal',
+          children: <Typography>Real modal body. Close and open again to reuse it.</Typography>,
+          footer: <Button onClick={() => close()}>Close</Button>,
+        })
+      }
+    >
+      Open modal
+    </Button>
+  );
+};
+
+const ConfirmTrigger = () => {
+  const { confirm } = useModals();
+  return (
+    <Button
+      variant="outline"
+      onClick={() => {
+        void confirm({
+          title: 'Delete project?',
+          description: 'This cannot be undone.',
+          confirmText: 'Delete',
+          confirmVariant: 'danger',
+        });
+      }}
+    >
+      Confirm
+    </Button>
+  );
+};
+
+const FirstTrigger = () => {
+  const { open, close } = useModals();
+  return (
+    <Button
+      onClick={() =>
+        open({
+          title: 'First',
+          children: <Typography>First modal</Typography>,
+          footer: <Button onClick={() => close()}>Close</Button>,
+        })
+      }
+    >
+      First
+    </Button>
+  );
+};
+
+const ReuseTrigger = () => {
+  const { open, close } = useModals();
+  return (
+    <Button
+      variant="outline"
+      onClick={() =>
+        open({
+          title: 'Reuse',
+          children: <Typography>Second modal, same provider</Typography>,
+          footer: <Button onClick={() => close()}>Close</Button>,
+        })
+      }
+    >
+      Reuse
+    </Button>
+  );
+};
+
 export const Basic: Story = {
-  args: {},
   render: (args) => (
     <ModalsProvider {...args}>
-      <Typography>ModalsProvider</Typography>
+      <OpenModalTrigger />
     </ModalsProvider>
   ),
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <ModalsProvider {...args}>
-        <Typography>First</Typography>
-      </ModalsProvider>
-      <ModalsProvider>
-        <Typography>Second</Typography>
-      </ModalsProvider>
-    </Flex>
+export const Confirm: Story = {
+  render: () => (
+    <ModalsProvider>
+      <ConfirmTrigger />
+    </ModalsProvider>
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse ModalsProvider anywhere below.</Typography>
-        <ModalsProvider {...args}>
-          <Typography>First use</Typography>
+      <Flex gap={2}>
+        <ModalsProvider>
+          <FirstTrigger />
         </ModalsProvider>
         <ModalsProvider>
-          <Typography>Second use</Typography>
+          <ReuseTrigger />
         </ModalsProvider>
       </Flex>
     </BearProvider>

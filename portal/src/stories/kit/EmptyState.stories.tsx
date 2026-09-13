@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { EmptyState, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { EmptyState, BearProvider, Button, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof EmptyState> = {
   title: 'Components/EmptyState',
@@ -15,6 +15,15 @@ const meta: Meta<typeof EmptyState> = {
       },
     },
   },
+  args: {
+    title: 'Title',
+    size: 'sm',
+    variant: 'default',
+  },
+  argTypes: {
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    variant: { control: 'select', options: ['default', 'card'] },
+  },
 };
 
 export default meta;
@@ -22,38 +31,26 @@ export default meta;
 type Story = StoryObj<typeof EmptyState>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <EmptyState {...args}>
-      <Typography>EmptyState</Typography>
-    </EmptyState>
-  ),
+  render: (args) => <EmptyState {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <EmptyState {...args}>
-        <Typography>First</Typography>
-      </EmptyState>
-      <EmptyState>
-        <Typography>Second</Typography>
-      </EmptyState>
-    </Flex>
+export const WithAction: Story = {
+  render: () => (
+    <EmptyState
+      title="No projects yet"
+      description="Get started by creating your first project."
+      action={<Button>Create project</Button>}
+      preset="empty"
+    />
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse EmptyState anywhere below.</Typography>
-        <EmptyState {...args}>
-          <Typography>First use</Typography>
-        </EmptyState>
-        <EmptyState>
-          <Typography>Second use</Typography>
-        </EmptyState>
+        <EmptyState title="First" description="Empty inbox" preset="inbox" />
+        <EmptyState title="Reuse" description="No search hits" preset="search" />
       </Flex>
     </BearProvider>
   ),

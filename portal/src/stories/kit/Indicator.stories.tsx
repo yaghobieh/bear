@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Indicator, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { Indicator, Avatar, BearProvider, Flex, Typography } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Indicator> = {
   title: 'Components/Indicator',
@@ -15,6 +15,25 @@ const meta: Meta<typeof Indicator> = {
       },
     },
   },
+  args: {
+    label: 'Label',
+    color: '#EA0A8E',
+    size: 0,
+    radius: 'sm',
+    processing: false,
+    disabled: false,
+    offset: 0,
+    withBorder: false,
+    inline: false,
+  },
+  argTypes: {
+    color: { control: 'color' },
+    radius: { control: 'select', options: ['sm', 'md', 'lg', 'full'] },
+    processing: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+    withBorder: { control: 'boolean' },
+    inline: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,37 +41,31 @@ export default meta;
 type Story = StoryObj<typeof Indicator>;
 
 export const Basic: Story = {
-  args: {},
-  render: (args) => (
-    <Indicator {...args}>
-      <Typography>Indicator</Typography>
-    </Indicator>
-  ),
+  render: (args) => <Indicator {...args} />,
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <Indicator {...args}>
-        <Typography>First</Typography>
+export const Processing: Story = {
+  render: () => (
+    <Flex gap={4} align="center">
+      <Indicator processing position="bottom-end">
+        <Avatar initials="ON" />
       </Indicator>
-      <Indicator>
-        <Typography>Second</Typography>
+      <Indicator label="9+" color="#EA0A8E" withBorder>
+        <Typography>Inbox</Typography>
       </Indicator>
     </Flex>
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
-      <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Indicator anywhere below.</Typography>
-        <Indicator {...args}>
-          <Typography>First use</Typography>
+      <Flex gap={4}>
+        <Indicator label="1">
+          <Avatar initials="A" />
         </Indicator>
-        <Indicator>
-          <Typography>Second use</Typography>
+        <Indicator label="2">
+          <Avatar initials="B" />
         </Indicator>
       </Flex>
     </BearProvider>

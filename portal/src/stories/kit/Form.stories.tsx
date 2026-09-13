@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Form, Flex, Typography, BearProvider } from '@forgedevstack/bear';
+import { Form, Input, Button, BearProvider, Flex } from '@forgedevstack/bear';
 
 const meta: Meta<typeof Form> = {
   title: 'Components/Form',
@@ -15,6 +15,16 @@ const meta: Meta<typeof Form> = {
       },
     },
   },
+  args: {
+    validateOnChange: false,
+    validateOnBlur: false,
+  },
+  argTypes: {
+    onSubmit: { action: 'onSubmit' },
+    onError: { action: 'onError' },
+    validateOnChange: { control: 'boolean' },
+    validateOnBlur: { control: 'boolean' },
+  },
 };
 
 export default meta;
@@ -22,37 +32,45 @@ export default meta;
 type Story = StoryObj<typeof Form>;
 
 export const Basic: Story = {
-  args: {},
   render: (args) => (
-    <Form {...args}>
-      <Typography>Form</Typography>
+    <Form {...args} onSubmit={() => undefined} initialValues={{ email: '', name: '' }}>
+      <Form.Item name="name" label="Name" rules={{ required: true }}>
+        <Input placeholder="Ada Lovelace" />
+      </Form.Item>
+      <Form.Item name="email" label="Email" rules={{ required: true, email: true }}>
+        <Input type="email" placeholder="ada@forge.dev" />
+      </Form.Item>
+      <Button type="submit">Submit</Button>
     </Form>
   ),
 };
 
-export const AnotherExample: Story = {
-  render: (args) => (
-    <Flex gap={3} wrap="wrap">
-      <Form {...args}>
-        <Typography>First</Typography>
-      </Form>
-      <Form>
-        <Typography>Second</Typography>
-      </Form>
-    </Flex>
+export const Horizontal: Story = {
+  render: () => (
+    <Form layout="horizontal" onSubmit={() => undefined} initialValues={{ username: '' }}>
+      <Form.Item name="username" label="Username" rules={{ required: true, minLength: { value: 3, message: 'At least 3 characters' } }}>
+        <Input placeholder="forge-dev" />
+      </Form.Item>
+      <Button type="submit">Save</Button>
+    </Form>
   ),
 };
 
 export const ReuseWithProvider: Story = {
-  render: (args) => (
+  render: () => (
     <BearProvider>
       <Flex direction="column" gap={4}>
-        <Typography variant="subtitle2">Wrap once in BearProvider, then reuse Form anywhere below.</Typography>
-        <Form {...args}>
-          <Typography>First use</Typography>
+        <Form onSubmit={() => undefined} initialValues={{ email: '' }}>
+          <Form.Item name="email" label="Email">
+            <Input type="email" placeholder="first@forge.dev" />
+          </Form.Item>
+          <Button type="submit">First</Button>
         </Form>
-        <Form>
-          <Typography>Second use</Typography>
+        <Form onSubmit={() => undefined} initialValues={{ email: '' }}>
+          <Form.Item name="email" label="Email">
+            <Input type="email" placeholder="reuse@forge.dev" />
+          </Form.Item>
+          <Button type="submit">Reuse</Button>
         </Form>
       </Flex>
     </BearProvider>

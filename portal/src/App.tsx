@@ -225,6 +225,7 @@ const InputGroupPage = lazy(() => import('./pages/components/InputGroup'));
 const FormFieldPage = lazy(() => import('./pages/components/FormFieldPage'));
 const FormControlPage = lazy(() => import('./pages/components/FormControl'));
 const ToggleButtonPage = lazy(() => import('./pages/components/ToggleButton'));
+const ToggleGroupPage = lazy(() => import('./pages/components/ToggleGroup'));
 const SnackbarPage = lazy(() => import('./pages/components/Snackbar'));
 const AspectRatioPage = lazy(() => import('./pages/components/AspectRatioPage'));
 
@@ -476,6 +477,7 @@ function PortalLayout({
                 <Route path="/components/form-field" element={<FormFieldPage />} />
                 <Route path="/components/form-control" element={<FormControlPage />} />
                 <Route path="/components/toggle-button" element={<ToggleButtonPage />} />
+                <Route path="/components/toggle-group" element={<ToggleGroupPage />} />
                 <Route path="/components/aspect-ratio" element={<AspectRatioPage />} />
                 <Route path="/components/select" element={<SelectPage />} />
                 <Route path="/components/tree-select" element={<TreeSelectPage />} />

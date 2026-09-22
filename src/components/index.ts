@@ -782,6 +782,17 @@ export type { CssBaselineProps } from './CssBaseline';
 export { ToggleButton, ToggleButtonGroup } from './ToggleButton';
 export type { ToggleButtonProps, ToggleButtonGroupProps } from './ToggleButton';
 
+export { ToggleGroup, ToggleGroupItem, useToggleGroupContext } from './ToggleGroup';
+export type {
+  ToggleGroupProps,
+  ToggleGroupItemProps,
+  ToggleGroupType,
+  ToggleGroupOrientation,
+  ToggleGroupSize,
+  ToggleGroupVariant,
+  ToggleGroupContextValue,
+} from './ToggleGroup';
+
 export { FormControl, useFormControl } from './FormControl';
 export type { FormControlProps, FormControlContextValue } from './FormControl';
 

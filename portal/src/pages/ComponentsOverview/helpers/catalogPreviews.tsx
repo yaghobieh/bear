@@ -31,6 +31,8 @@ import {
   StatCard,
   Switch,
   TableSkeleton,
+  ToggleGroup,
+  ToggleGroupItem,
   ToolCall,
   Typography,
 } from '@forgedevstack/bear';
@@ -52,6 +54,12 @@ const PIE_PREVIEW_DATA = [
 
 export const CATALOG_PREVIEWS: CatalogPreviewMap = {
   '/components/button': <Button size="sm">Button</Button>,
+  '/components/toggle-group': (
+    <ToggleGroup type="single" defaultValue="a" size="sm">
+      <ToggleGroupItem value="a">A</ToggleGroupItem>
+      <ToggleGroupItem value="b">B</ToggleGroupItem>
+    </ToggleGroup>
+  ),
   '/components/badge': <Badge variant="primary">New</Badge>,
   '/components/chip': <Chip size="sm" color="primary">Chip</Chip>,
   '/components/avatar': <Avatar initials="BE" size="md" />,

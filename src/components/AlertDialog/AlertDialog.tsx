@@ -1,18 +1,16 @@
-import { useEffect, useCallback, useId, useRef } from 'react';
+import { useEffect, useId, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import {
   ALERT_DESC_ID_PREFIX,
   ALERT_TITLE_ID_PREFIX,
   BOOLEAN_FALSE,
   BOOLEAN_TRUE,
-  KEY_ESCAPE,
-  KEY_TAB,
   LABEL_CANCEL,
   LABEL_CONFIRM,
   VARIANT_DANGER,
-  ZERO,
 } from '@const';
 import { cn } from '@utils';
+import { useFocusTrap } from '@hooks/useFocusTrap';
 import { Button } from '../Button';
 import { Typography } from '../Typography';
 import type { AlertDialogProps } from './AlertDialog.types';
@@ -40,53 +38,20 @@ export const AlertDialog = (props: AlertDialogProps) => {
   const titleId = `${ALERT_TITLE_ID_PREFIX}${uid}`;
   const descId = `${ALERT_DESC_ID_PREFIX}${uid}`;
   const dialogRef = useRef<HTMLDivElement>(null);
-  const previousFocusRef = useRef<HTMLElement | null>(null);
 
-  const handleEscape = useCallback(
-    (event: KeyboardEvent) => {
-      if (closeOnEscape && event.key === KEY_ESCAPE && !loading) {
-        onClose();
-      }
-    },
-    [closeOnEscape, onClose, loading],
-  );
-
-  const handleTab = useCallback((event: KeyboardEvent) => {
-    if (event.key !== KEY_TAB || !dialogRef.current) {
-      return;
-    }
-    const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
-      'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
-    );
-    if (focusable.length === ZERO) {
-      return;
-    }
-    const first = focusable[ZERO];
-    const last = focusable[focusable.length - 1];
-    if (event.shiftKey && document.activeElement === first) {
-      event.preventDefault();
-      last.focus();
-    } else if (!event.shiftKey && document.activeElement === last) {
-      event.preventDefault();
-      first.focus();
-    }
-  }, []);
+  useFocusTrap(dialogRef, {
+    enabled: isOpen,
+    onEscape: closeOnEscape && !loading ? onClose : undefined,
+  });
 
   useEffect(() => {
     if (isOpen) {
-      previousFocusRef.current = document.activeElement as HTMLElement;
-      document.addEventListener('keydown', handleEscape);
-      document.addEventListener('keydown', handleTab);
       document.body.style.overflow = 'hidden';
-      requestAnimationFrame(() => dialogRef.current?.focus());
     }
     return () => {
-      document.removeEventListener('keydown', handleEscape);
-      document.removeEventListener('keydown', handleTab);
       document.body.style.overflow = '';
-      previousFocusRef.current?.focus();
     };
-  }, [isOpen, handleEscape, handleTab]);
+  }, [isOpen]);
 
   if (!isOpen) {
     return null;

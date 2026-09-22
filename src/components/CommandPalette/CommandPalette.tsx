@@ -1,7 +1,8 @@
 import { FC, useState, useRef, useEffect, useMemo, useCallback, KeyboardEvent } from 'react';
 import { createPortal } from 'react-dom';
-import {cn } from '@utils';
-import type { CommandPaletteProps, CommandItem, CommandItemComponentProps } from './CommandPalette.types';
+import { cn } from '@utils';
+import { useFocusTrap } from '@hooks/useFocusTrap';
+import type { CommandPaletteProps, CommandItem } from './CommandPalette.types';
 import {
   COMMAND_PALETTE_DEFAULT_TRANSLATIONS,
   COMMAND_PALETTE_TRIGGER_KEY,
@@ -11,58 +12,9 @@ import {
 import {
   defaultFilterFn,
   groupCommandsByCategory,
-  formatShortcut,
 } from './CommandPalette.utils';
 
-/**
- * CommandItemComponent - Single command item
- */
-const CommandItemComponent: FC<CommandItemComponentProps> = ({
-  command,
-  isHighlighted,
-  onSelect,
-}) => (
-  <button
-    type="button"
-    onClick={onSelect}
-    disabled={command.disabled}
-    className={cn(
-      'Bear-CommandPalette__item bear-w-full bear-flex bear-items-center bear-gap-3 bear-px-4 bear-py-2.5 bear-text-left bear-transition-colors',
-      isHighlighted
-        ? 'bear-bg-primary-500/20 bear-text-primary-400'
-        : 'bear-text-gray-700 dark:bear-text-zinc-300 hover:bear-bg-gray-100 dark:hover:bear-bg-zinc-700',
-      command.disabled && 'bear-opacity-50 bear-cursor-not-allowed'
-    )}
-  >
-    {command.icon && (
-      <span className="Bear-CommandPalette__item-icon bear-text-gray-500 dark:bear-text-zinc-400 bear-shrink-0">
-        {command.icon}
-      </span>
-    )}
-    <div className="Bear-CommandPalette__item-content bear-flex-1 bear-min-w-0">
-      <div className="Bear-CommandPalette__item-label bear-text-sm bear-font-medium bear-truncate">
-        {command.label}
-      </div>
-      {command.description && (
-        <div className="Bear-CommandPalette__item-description bear-text-xs bear-text-gray-500 dark:bear-text-zinc-500 bear-truncate">
-          {command.description}
-        </div>
-      )}
-    </div>
-    {command.shortcut && (
-      <div className="Bear-CommandPalette__item-shortcut bear-flex bear-gap-1 bear-shrink-0">
-        {formatShortcut(command.shortcut).map((key, idx) => (
-          <kbd
-            key={idx}
-            className="bear-px-1.5 bear-py-0.5 bear-text-xs bear-font-mono bear-bg-gray-200 bear-text-gray-600 dark:bear-bg-zinc-700 dark:bear-text-zinc-400 bear-rounded"
-          >
-            {key}
-          </kbd>
-        ))}
-      </div>
-    )}
-  </button>
-);
+import { CommandItem as CommandItemComponent } from './CommandItem';
 
 /**
  * CommandPalette - Command palette component (Cmd+K style)
@@ -105,12 +57,19 @@ export const CommandPalette: FC<CommandPaletteProps> = ({
   const [internalRecentIds, setInternalRecentIds] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   const isOpen = controlledOpen ?? internalOpen;
   const setIsOpen = useCallback((open: boolean) => {
     onOpenChange?.(open);
     setInternalOpen(open);
   }, [onOpenChange]);
+
+  useFocusTrap(contentRef, {
+    enabled: isOpen,
+    initialFocusRef: inputRef,
+    onEscape: () => setIsOpen(false),
+  });
 
   const recentIds = controlledRecentIds ?? internalRecentIds;
   const setRecentIds = useCallback((ids: string[]) => {
@@ -240,7 +199,11 @@ export const CommandPalette: FC<CommandPaletteProps> = ({
         onClick={() => setIsOpen(false)}
       />
 
-      <div className="Bear-CommandPalette__content bear-relative bear-w-full bear-max-w-xl bear-bg-white dark:bear-bg-zinc-800 bear-border bear-border-gray-200 dark:bear-border-zinc-700 bear-rounded-xl bear-shadow-2xl bear-overflow-hidden"        >
+      <div
+        ref={contentRef}
+        tabIndex={-1}
+        className="Bear-CommandPalette__content bear-relative bear-w-full bear-max-w-xl bear-bg-white dark:bear-bg-zinc-800 bear-border bear-border-gray-200 dark:bear-border-zinc-700 bear-rounded-xl bear-shadow-2xl bear-overflow-hidden"
+      >
         <div className="Bear-CommandPalette__search bear-flex bear-items-center bear-gap-3 bear-px-4 bear-py-3 bear-border-b bear-border-gray-200 dark:bear-border-zinc-700">
           {icon ?? (
             <svg className="bear-w-5 bear-h-5 bear-text-gray-500 dark:bear-text-zinc-400 bear-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">

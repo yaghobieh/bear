@@ -1,5 +1,6 @@
-import { useEffect, useCallback, useState } from 'react';
+import { useEffect, useCallback, useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import { useFocusTrap } from '@hooks/useFocusTrap';
 import {
   BACKDROP_DEFAULT_Z_INDEX,
   BOOLEAN_FALSE,
@@ -57,6 +58,13 @@ export const BottomSheet = (props: BottomSheetProps) => {
     }
   }, [isOpen, isMounted]);
 
+  const sheetRef = useRef<HTMLDivElement>(null);
+
+  useFocusTrap(sheetRef, {
+    enabled: isMounted && !isClosing,
+    onEscape: closeOnEscape ? onClose : undefined,
+  });
+
   const handleEscape = useCallback(
     (event: KeyboardEvent) => {
       if (closeOnEscape && event.key === KEY_ESCAPE) {
@@ -97,7 +105,9 @@ export const BottomSheet = (props: BottomSheetProps) => {
       />
 
       <Box
+        ref={sheetRef}
         role="dialog"
+        tabIndex={-1}
         aria-modal="true"
         aria-labelledby={title ? 'bottom-sheet-title' : undefined}
         className={cn(

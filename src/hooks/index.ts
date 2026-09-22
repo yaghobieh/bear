@@ -131,3 +131,6 @@ export type {
 } from './useFixedAnchorPosition';
 
 export { useFormControl } from './useFormControl';
+export { useFocusTrap } from './useFocusTrap';
+export type { UseFocusTrapOptions } from './useFocusTrap';
+

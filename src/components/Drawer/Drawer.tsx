@@ -1,6 +1,8 @@
+import { useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useBearDirectionOptional } from '@context/BearProvider';
 import { cn, resolveBearId, useBearId } from '@utils';
+import { useFocusTrap } from '@hooks/useFocusTrap';
 import {
   BOOLEAN_FALSE,
   BOOLEAN_TRUE,
@@ -55,6 +57,12 @@ export const Drawer = (props: DrawerProps) => {
     alwaysMounted: isPermanent,
   });
   const activeEffect = isPanelOpen ? openEffect : closeEffect;
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  useFocusTrap(panelRef, {
+    enabled: isTemporary && isPanelOpen,
+    onEscape: closeOnEscape ? onClose : undefined,
+  });
 
   if (!isMounted) {
     return null;
@@ -85,7 +93,9 @@ export const Drawer = (props: DrawerProps) => {
       )}
 
       <Box
+        ref={panelRef}
         role={panelRole}
+        tabIndex={-1}
         aria-modal={isTemporary ? BOOLEAN_TRUE : BOOLEAN_FALSE}
         aria-labelledby={labelledBy}
         className={cn(

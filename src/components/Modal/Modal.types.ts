@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import type { OverlayMotionEffect, OverlayEffectConfig } from '@hooks/useFixedAnchorPosition';
 
 export type ModalSize = 'sm' | 'md' | 'lg' | 'xl' | 'full';
 
@@ -28,6 +29,12 @@ export interface ModalProps {
   cancelPreventScroll?: boolean;
   /** When provided, sets whether clicking the backdrop closes the modal (overrides closeOnBackdrop) */
   isCancelBackgroundClick?: boolean;
+  /** Transition effect when opening */
+  openEffect?: OverlayMotionEffect;
+  /** Transition effect when closing */
+  closeEffect?: OverlayMotionEffect;
+  /** Config for open and close transition effects */
+  effect?: OverlayEffectConfig;
   /** Additional class names for content */
   className?: string;
   /** Footer content */

@@ -1,6 +1,8 @@
-import { FC, useEffect, useCallback } from 'react';
+import { FC, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { cn, resolveBearId, useBearId } from '@utils';
+import { useFocusTrap } from '@hooks/useFocusTrap';
+import { resolveOverlayEffects } from '@hooks/useFixedAnchorPosition';
 import { CloseIcon } from '@forgedevstack/bear-icons/navigation';
 import { Backdrop } from '../Backdrop';
 import type { ModalProps } from './Modal.types';
@@ -15,6 +17,7 @@ import {
   MODAL_ROOT_CLASSES,
   MODAL_Z_INDEX,
   MODAL_PANEL_Z_INDEX,
+  MODAL_EFFECT_CLASS_MAP,
 } from './Modal.const';
 
 /**
@@ -52,32 +55,30 @@ export const Modal: FC<ModalProps> = (props) => {
 
   const generatedId = useBearId('Modal');
   const domId = resolveBearId(id, generatedId);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   const shouldLockBodyScroll = lockBodyScroll && !cancelPreventScroll;
   const closeBackdropClick =
     isCancelBackgroundClick !== undefined ? isCancelBackgroundClick : closeOnBackdrop;
   const escapeEnabled = closeOnEscape && !disableEscapeKeyDown;
 
-  const handleEscape = useCallback(
-    (event: KeyboardEvent) => {
-      if (escapeEnabled && event.key === 'Escape') {
-        onClose();
-      }
-    },
-    [escapeEnabled, onClose]
-  );
+  const { openEffect } = resolveOverlayEffects(props, 'scale');
+  const effectClass = MODAL_EFFECT_CLASS_MAP[openEffect] ?? MODAL_EFFECT_CLASS_MAP.scale;
+
+  useFocusTrap(dialogRef, {
+    enabled: isOpen,
+    onEscape: escapeEnabled ? onClose : undefined,
+  });
 
   useEffect(() => {
     if (!isOpen) return;
-    document.addEventListener('keydown', handleEscape);
     if (shouldLockBodyScroll) {
       document.body.style.overflow = 'hidden';
     }
     return () => {
-      document.removeEventListener('keydown', handleEscape);
       document.body.style.overflow = '';
     };
-  }, [isOpen, handleEscape, shouldLockBodyScroll]);
+  }, [isOpen, shouldLockBodyScroll]);
 
   if (!isOpen && !keepMounted) return null;
 
@@ -100,6 +101,7 @@ export const Modal: FC<ModalProps> = (props) => {
       )}
 
       <div
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby={title ? `${domId}-title` : undefined}
@@ -107,6 +109,7 @@ export const Modal: FC<ModalProps> = (props) => {
           'Bear-Modal__container',
           MODAL_CONTAINER_CLASSES,
           MODAL_SIZE_CLASSES[size],
+          isOpen && effectClass,
           className
         )}
         style={{ zIndex: MODAL_PANEL_Z_INDEX }}
@@ -123,6 +126,7 @@ export const Modal: FC<ModalProps> = (props) => {
             )}
             {showCloseButton && (
               <button
+                type="button"
                 onClick={onClose}
                 className={cn('Bear-Modal__close', MODAL_CLOSE_CLASSES)}
                 aria-label="Close modal"

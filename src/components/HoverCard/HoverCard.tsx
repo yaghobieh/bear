@@ -2,52 +2,59 @@ import { forwardRef, useState, useRef, useEffect } from 'react';
 import type { CSSProperties } from 'react';
 import { HoverCardProps } from './HoverCard.types';
 import { Portal } from '../Portal';
+import { resolveOverlayEffects } from '@hooks/useFixedAnchorPosition';
 
-const HOVER_CARD_Z = 11000;
-const PANEL_W = 288;
-const EST_HEIGHT = 200;
+import {
+  ZERO,
+  TWO,
+  EIGHT,
+  TWO_HUNDRED,
+  TWO_HUNDRED_EIGHTY_EIGHT,
+  ELEVEN_THOUSAND,
+} from '@constants';
+import { HOVER_CARD_EFFECT_CLASS_MAP } from './HoverCard.const';
 
 function computePosition(
   rect: DOMRect,
   side: HoverCardProps['side'],
   align: HoverCardProps['align']
 ): CSSProperties {
-  const gap = 8;
-  let top = 0;
-  let left = 0;
-  const halfW = PANEL_W / 2;
+  const gap = EIGHT;
+  let top = ZERO;
+  let left = ZERO;
+  const halfW = TWO_HUNDRED_EIGHTY_EIGHT / TWO;
 
   if (side === 'bottom') {
     top = rect.bottom + gap;
-    left = rect.left + rect.width / 2 - halfW;
+    left = rect.left + rect.width / TWO - halfW;
     if (align === 'start') left = rect.left;
-    if (align === 'end') left = rect.right - PANEL_W;
+    if (align === 'end') left = rect.right - TWO_HUNDRED_EIGHTY_EIGHT;
   } else if (side === 'top') {
-    top = rect.top - EST_HEIGHT - gap;
-    left = rect.left + rect.width / 2 - halfW;
+    top = rect.top - TWO_HUNDRED - gap;
+    left = rect.left + rect.width / TWO - halfW;
     if (align === 'start') left = rect.left;
-    if (align === 'end') left = rect.right - PANEL_W;
+    if (align === 'end') left = rect.right - TWO_HUNDRED_EIGHTY_EIGHT;
   } else if (side === 'right') {
     left = rect.right + gap;
-    top = rect.top + rect.height / 2 - EST_HEIGHT / 2;
+    top = rect.top + rect.height / TWO - TWO_HUNDRED / TWO;
     if (align === 'start') top = rect.top;
-    if (align === 'end') top = rect.bottom - EST_HEIGHT;
+    if (align === 'end') top = rect.bottom - TWO_HUNDRED;
   } else {
-    left = rect.left - PANEL_W - gap;
-    top = rect.top + rect.height / 2 - EST_HEIGHT / 2;
+    left = rect.left - TWO_HUNDRED_EIGHTY_EIGHT - gap;
+    top = rect.top + rect.height / TWO - TWO_HUNDRED / TWO;
     if (align === 'start') top = rect.top;
-    if (align === 'end') top = rect.bottom - EST_HEIGHT;
+    if (align === 'end') top = rect.bottom - TWO_HUNDRED;
   }
 
-  left = Math.max(8, Math.min(left, window.innerWidth - PANEL_W - 8));
-  top = Math.max(8, Math.min(top, window.innerHeight - EST_HEIGHT - 8));
+  left = Math.max(EIGHT, Math.min(left, window.innerWidth - TWO_HUNDRED_EIGHTY_EIGHT - EIGHT));
+  top = Math.max(EIGHT, Math.min(top, window.innerHeight - TWO_HUNDRED - EIGHT));
 
   return {
     position: 'fixed',
-    zIndex: HOVER_CARD_Z,
+    zIndex: ELEVEN_THOUSAND,
     top,
     left,
-    width: PANEL_W,
+    width: TWO_HUNDRED_EIGHTY_EIGHT,
   };
 }
 
@@ -113,6 +120,9 @@ export const HoverCard = forwardRef<HTMLDivElement, HoverCardProps>(({
     if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
   }, []);
 
+  const { openEffect } = resolveOverlayEffects(props, 'scale');
+  const effectClass = HOVER_CARD_EFFECT_CLASS_MAP[openEffect] ?? HOVER_CARD_EFFECT_CLASS_MAP.scale;
+
   return (
     <div
       ref={ref}
@@ -135,7 +145,8 @@ export const HoverCard = forwardRef<HTMLDivElement, HoverCardProps>(({
               bear-border bear-border-gray-200 dark:bear-border-gray-700 bear-p-4
               bear-transition-all bear-duration-200
               ${isOpen ? 'bear-opacity-100 bear-scale-100' : 'bear-opacity-0 bear-scale-95'}
-            `}
+              ${effectClass}
+            `.trim()}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >

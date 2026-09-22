@@ -4,7 +4,10 @@ import {
   BEAR_ARIA_ROLE_BY_SEVERITY,
 } from '../../utils/liveRegion.const';
 
+import { TWO_HUNDRED, FIVE_THOUSAND } from '@constants';
+
 export const T_O_A_S_T_ROOT_CLASS = 'Bear-Toast';
+export const COMPONENT_NAME_TOAST = 'Toast';
 
 export const TOAST_ARIA_LIVE: Record<ToastSeverity, 'polite' | 'assertive'> = {
   success: BEAR_ARIA_LIVE_BY_SEVERITY.success,
@@ -20,7 +23,8 @@ export const TOAST_ARIA_ROLE: Record<ToastSeverity, 'status' | 'alert'> = {
   error: BEAR_ARIA_ROLE_BY_SEVERITY.error,
 };
 
-export const TOAST_EXIT_MS = 200;
+export const TOAST_EXIT_MS = TWO_HUNDRED;
+export const TOAST_DEFAULT_DURATION = FIVE_THOUSAND;
 
 export const TOAST_SEVERITY_MODIFIER: Record<ToastSeverity, string> = {
   success: `${T_O_A_S_T_ROOT_CLASS}--success`,

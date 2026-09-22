@@ -1,67 +1,12 @@
 import { FC, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import {cn } from '@utils';
+import { cn } from '@utils';
+import { resolveOverlayEffects } from '@hooks/useFixedAnchorPosition';
 import { Portal } from '../Portal';
-import type { MenuProps, MenuItemProps, MenuDividerProps } from './Menu.types';
+import { MENU_Z_INDEX, MENU_EFFECT_CLASS_MAP } from './Menu.const';
+import type { MenuProps } from './Menu.types';
 
-const MENU_Z_INDEX = 12000;
-
-/**
- * MenuItem component for menu items
- */
-export const MenuItem: FC<MenuItemProps> = ({
-  icon,
-  disabled = false,
-  selected = false,
-  divider = false,
-  children,
-  onClick,
-  className,
-      testId,
-  ...props
-}) => {
-
-  return (
-    <>
-      <div
-        role="menuitem"
-        tabIndex={disabled ? -1 : 0}
-        className={cn(
-          'bear-flex bear-items-center bear-gap-3 bear-px-4 bear-py-2 bear-cursor-pointer bear-transition-colors',
-          'hover:bear-bg-gray-100 dark:hover:bear-bg-gray-700',
-          'focus:bear-outline-none focus:bear-bg-gray-100 dark:focus:bear-bg-gray-700',
-          selected && 'bear-bg-primary-50 dark:bear-bg-primary-900/20 bear-text-primary-600',
-          disabled && 'bear-opacity-50 bear-cursor-not-allowed hover:bear-bg-transparent',
-          className
-        )}
-        onClick={disabled ? undefined : onClick}
-        onKeyDown={(e) => {
-          if ((e.key === 'Enter' || e.key === ' ') && !disabled) {
-            onClick?.();
-          }
-        }}
-        data-testid={testId}
-        {...props}
-      >
-        {icon && (
-          <span className="bear-flex-shrink-0 bear-text-gray-500">
-            {icon}
-          </span>
-        )}
-        <span className="bear-flex-1 bear-text-sm">
-          {children}
-        </span>
-      </div>
-      {divider && <MenuDivider />}
-    </>
-  );
-};
-
-/**
- * MenuDivider component for separating menu sections
- */
-export const MenuDivider: FC<MenuDividerProps> = ({ className }) => (
-  <div className={cn('bear-h-px bear-bg-gray-200 dark:bear-bg-gray-700 bear-my-1', className)} />
-);
+export { MenuItem } from './MenuItem';
+export { MenuDivider } from './MenuDivider';
 
 /**
  * Menu component for dropdown menus
@@ -99,7 +44,7 @@ export const Menu: FC<MenuProps> = ({
     if (!open || !anchorEl) return;
 
     const update = () => {
-      const rect = anchorEl!.getBoundingClientRect();
+      const rect = anchorEl.getBoundingClientRect();
       const menuEl = menuRef.current;
       const menuH = menuEl ? menuEl.offsetHeight : Math.min(maxHeight, 200);
       let top = 0;
@@ -112,7 +57,7 @@ export const Menu: FC<MenuProps> = ({
           break;
         case 'bottom-end':
           top = rect.bottom + 4;
-          left = rect.right - minWidth;
+          left = rect.right - (menuEl?.offsetWidth ?? minWidth);
           break;
         case 'top-start':
           top = rect.top - menuH - 4;
@@ -120,35 +65,37 @@ export const Menu: FC<MenuProps> = ({
           break;
         case 'top-end':
           top = rect.top - menuH - 4;
-          left = rect.right - minWidth;
+          left = rect.right - (menuEl?.offsetWidth ?? minWidth);
+          break;
+        case 'right-start':
+          top = rect.top;
+          left = rect.right + 4;
+          break;
+        case 'left-start':
+          top = rect.top;
+          left = rect.left - (menuEl?.offsetWidth ?? minWidth) - 4;
           break;
       }
 
-      left = Math.max(8, Math.min(left, window.innerWidth - minWidth - 8));
-      const maxTop = window.innerHeight - menuH - 8;
-      top = Math.max(8, Math.min(top, maxTop));
       setCoords({ top, left });
     };
 
     update();
-    const ro = menuRef.current && typeof ResizeObserver !== 'undefined' ? new ResizeObserver(update) : null;
-    if (menuRef.current && ro) ro.observe(menuRef.current);
     window.addEventListener('resize', update);
     window.addEventListener('scroll', update, true);
+
     return () => {
-      ro?.disconnect();
       window.removeEventListener('resize', update);
       window.removeEventListener('scroll', update, true);
     };
   }, [open, anchorEl, position, minWidth, maxHeight]);
 
-  // Handle click outside
   useEffect(() => {
     if (!open) return;
 
     const handleClickOutside = (e: MouseEvent) => {
       if (
-        menuRef.current && 
+        menuRef.current &&
         !menuRef.current.contains(e.target as Node) &&
         anchorEl &&
         !anchorEl.contains(e.target as Node)
@@ -172,6 +119,9 @@ export const Menu: FC<MenuProps> = ({
     };
   }, [open, anchorEl, onClose]);
 
+  const { openEffect } = resolveOverlayEffects(props, 'fade');
+  const effectClass = MENU_EFFECT_CLASS_MAP[openEffect] ?? MENU_EFFECT_CLASS_MAP.fade;
+
   if (!open) return null;
 
   return (
@@ -184,6 +134,7 @@ export const Menu: FC<MenuProps> = ({
           'bear-border bear-border-gray-200 dark:bear-border-gray-700',
           'bear-rounded-lg bear-shadow-lg bear-py-1',
           'bear-overflow-y-auto',
+          effectClass,
           className
         )}
         style={{
@@ -192,7 +143,8 @@ export const Menu: FC<MenuProps> = ({
           minWidth,
           maxHeight,
           zIndex: MENU_Z_INDEX,
-        }} data-testid={testId}
+        }}
+        data-testid={testId}
         {...props}
       >
         {children}
@@ -202,4 +154,3 @@ export const Menu: FC<MenuProps> = ({
 };
 
 export default Menu;
-

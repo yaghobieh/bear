@@ -6,8 +6,10 @@ import {
   EMPTY_STATE_DEFAULT_PRESET,
   EMPTY_STATE_DEFAULT_SIZE,
   EMPTY_STATE_DEFAULT_VARIANT,
+  EMPTY_STATE_PRESET_DEFAULTS,
   EMPTY_STATE_PRESET_ICON,
   EMPTY_STATE_SIZE_CLASSES,
+  COMPONENT_NAME_EMPTY_STATE,
 } from './EmptyState.const';
 import type { EmptyStateProps } from './EmptyState.types';
 
@@ -26,11 +28,14 @@ export const EmptyState = (props: EmptyStateProps) => {
     testId,
   } = props;
 
-  const generatedId = useBearId('EmptyState');
+  const generatedId = useBearId(COMPONENT_NAME_EMPTY_STATE);
   const domId = resolveBearId(id, generatedId);
   const sizeClasses = EMPTY_STATE_SIZE_CLASSES[size];
   const PresetIcon = EMPTY_STATE_PRESET_ICON[preset];
   const iconNode = icon ?? <PresetIcon className="bear-w-full bear-h-full" />;
+
+  const defaults = EMPTY_STATE_PRESET_DEFAULTS[preset] ?? EMPTY_STATE_PRESET_DEFAULTS.empty;
+  const resolvedDesc = description !== undefined ? description : defaults.description;
 
   return (
     <Box
@@ -45,10 +50,12 @@ export const EmptyState = (props: EmptyStateProps) => {
       )}
     >
       <Box className={cn('Bear-EmptyState__icon', sizeClasses.icon)}>{iconNode}</Box>
-      <Typography className={cn('Bear-EmptyState__title', sizeClasses.title)}>{title}</Typography>
-      {description && (
+      <Typography className={cn('Bear-EmptyState__title', sizeClasses.title)}>
+        {title ?? defaults.title}
+      </Typography>
+      {resolvedDesc && (
         <Typography className={cn('Bear-EmptyState__description', sizeClasses.desc)}>
-          {description}
+          {resolvedDesc}
         </Typography>
       )}
       {(action || secondaryAction) && (

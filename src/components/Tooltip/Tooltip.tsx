@@ -1,23 +1,38 @@
 import { FC, useState, useRef, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
-import {cn } from '@utils';
+import { cn } from '@utils';
+import { resolveOverlayEffects } from '@hooks/useFixedAnchorPosition';
 import type { TooltipProps } from './Tooltip.types';
+import {
+  TOOLTIP_EFFECT_CLASS_MAP,
+  TOOLTIP_DEFAULT_DELAY,
+  TOOLTIP_SPACING,
+  TOOLTIP_VIEWPORT_PADDING,
+  TOOLTIP_POSITION_TOP,
+  TOOLTIP_POSITION_BOTTOM,
+  TOOLTIP_POSITION_LEFT,
+  TOOLTIP_POSITION_RIGHT,
+} from './Tooltip.const';
+import { ZERO, TWO } from '@constants';
 
-export const Tooltip: FC<TooltipProps> = ({
-
-  content,
-  children,
-  position: positionProp,
-  placement,
-  delay = 200,
-  className,
-  disabled = false,
-}) => {
+export const Tooltip: FC<TooltipProps> = (props) => {
+  const {
+    content,
+    children,
+    position: positionProp,
+    placement,
+    delay = TOOLTIP_DEFAULT_DELAY,
+    className,
+    disabled = false,
+    openEffect: openEffectProp,
+    closeEffect: closeEffectProp,
+    effect,
+  } = props;
 
   // Support both position and placement props
-  const position = placement || positionProp || 'top';
+  const position = placement || positionProp || TOOLTIP_POSITION_TOP;
   const [isVisible, setIsVisible] = useState(false);
-  const [coords, setCoords] = useState({ x: 0, y: 0 });
+  const [coords, setCoords] = useState({ x: ZERO, y: ZERO });
   const triggerRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout>();
@@ -27,33 +42,20 @@ export const Tooltip: FC<TooltipProps> = ({
 
     const triggerRect = triggerRef.current.getBoundingClientRect();
     const tooltipRect = tooltipRef.current.getBoundingClientRect();
-    const spacing = 8;
 
-    let x = 0;
-    let y = 0;
+    const centerX = triggerRect.left + (triggerRect.width - tooltipRect.width) / TWO;
+    const centerY = triggerRect.top + (triggerRect.height - tooltipRect.height) / TWO;
 
-    switch (position) {
-      case 'top':
-        x = triggerRect.left + (triggerRect.width - tooltipRect.width) / 2;
-        y = triggerRect.top - tooltipRect.height - spacing;
-        break;
-      case 'bottom':
-        x = triggerRect.left + (triggerRect.width - tooltipRect.width) / 2;
-        y = triggerRect.bottom + spacing;
-        break;
-      case 'left':
-        x = triggerRect.left - tooltipRect.width - spacing;
-        y = triggerRect.top + (triggerRect.height - tooltipRect.height) / 2;
-        break;
-      case 'right':
-        x = triggerRect.right + spacing;
-        y = triggerRect.top + (triggerRect.height - tooltipRect.height) / 2;
-        break;
-    }
+    const coordsByPosition: Record<string, { x: number; y: number }> = {
+      [TOOLTIP_POSITION_TOP]: { x: centerX, y: triggerRect.top - tooltipRect.height - TOOLTIP_SPACING },
+      [TOOLTIP_POSITION_BOTTOM]: { x: centerX, y: triggerRect.bottom + TOOLTIP_SPACING },
+      [TOOLTIP_POSITION_LEFT]: { x: triggerRect.left - tooltipRect.width - TOOLTIP_SPACING, y: centerY },
+      [TOOLTIP_POSITION_RIGHT]: { x: triggerRect.right + TOOLTIP_SPACING, y: centerY },
+    };
 
-    // Keep tooltip within viewport
-    x = Math.max(8, Math.min(x, window.innerWidth - tooltipRect.width - 8));
-    y = Math.max(8, Math.min(y, window.innerHeight - tooltipRect.height - 8));
+    const targetCoords = coordsByPosition[position] ?? coordsByPosition[TOOLTIP_POSITION_TOP];
+    const x = Math.max(TOOLTIP_VIEWPORT_PADDING, Math.min(targetCoords.x, window.innerWidth - tooltipRect.width - TOOLTIP_VIEWPORT_PADDING));
+    const y = Math.max(TOOLTIP_VIEWPORT_PADDING, Math.min(targetCoords.y, window.innerHeight - tooltipRect.height - TOOLTIP_VIEWPORT_PADDING));
 
     setCoords({ x, y });
   }, [position]);
@@ -100,6 +102,9 @@ export const Tooltip: FC<TooltipProps> = ({
     };
   }, []);
 
+  const { openEffect } = resolveOverlayEffects({ openEffect: openEffectProp, closeEffect: closeEffectProp, effect }, 'fade');
+  const effectClass = TOOLTIP_EFFECT_CLASS_MAP[openEffect] ?? TOOLTIP_EFFECT_CLASS_MAP.fade;
+
   return (
     <>
       <div
@@ -130,7 +135,7 @@ export const Tooltip: FC<TooltipProps> = ({
               'bear-bg-gray-800 bear-text-white bear-text-sm',
               'bear-border bear-border-gray-700',
               'bear-shadow-lg',
-              'bear-animate-in bear-fade-in bear-duration-150',
+              effectClass,
               className
             )}
           >

@@ -6,10 +6,13 @@ import {
   SELECT_MENU_OFFSET_PX,
   SELECT_MENU_Z_INDEX,
   SELECT_DEFAULT_PLACEHOLDER,
+  COMPONENT_NAME_SELECT,
 } from './Select.const';
 import { SelectCheckSvg, SelectChevronDownSvg } from './helpers';
 import { OverlayPortal } from '../OverlayPortal';
 import { cn, resolveBearId, useBearId } from '@utils';
+import { useBearDensityOptional } from '@context';
+import { DENSITY_COMPACT } from '@constants';
 import { resolveOverlayEffects, useClickOutsideMultiple, useFixedAnchorPosition, useFormControl } from '@hooks';
 
 export const Select: FC<SelectProps> = (props) => {
@@ -32,8 +35,10 @@ export const Select: FC<SelectProps> = (props) => {
     testId,
   } = props;
   const { openEffect, closeEffect } = resolveOverlayEffects(props);
+  const { density } = useBearDensityOptional();
+  const isCompact = density === DENSITY_COMPACT;
 
-  const generatedId = useBearId('Select');
+  const generatedId = useBearId(COMPONENT_NAME_SELECT);
   const domId = resolveBearId(id, generatedId);
   const formControl = useFormControl();
   const [isOpen, setIsOpen] = useState(false);
@@ -114,6 +119,7 @@ export const Select: FC<SelectProps> = (props) => {
               : 'focus:bear-border-bear-500 focus:bear-ring-bear-500',
             isDisabled && 'bear-opacity-50 bear-cursor-not-allowed',
             SELECT_SIZE_CLASSES[size],
+            isCompact && 'Bear-Select--compact bear-py-1 bear-text-xs',
             className
           )}
           style={fieldStyle}
@@ -145,11 +151,12 @@ export const Select: FC<SelectProps> = (props) => {
       className={cn(
         S_E_L_E_C_T_ROOT_CLASS,
         'bear-relative bear-flex bear-flex-col bear-gap-1.5',
+        isCompact && 'Bear-Select--compact',
         fullWidth && 'bear-w-full'
       )}
     >
       {label && (
-        <label className="bear-text-sm bear-font-medium" style={{ color: 'var(--bear-text-secondary)' }}>
+        <label className={cn('bear-font-medium', isCompact ? 'bear-text-xs' : 'bear-text-sm')} style={{ color: 'var(--bear-text-secondary)' }}>
           {label}
         </label>
       )}
@@ -168,6 +175,7 @@ export const Select: FC<SelectProps> = (props) => {
             : 'focus:bear-border-bear-500 focus:bear-ring-bear-500 dark:focus:bear-border-bear-500 dark:focus:bear-ring-bear-500',
           isDisabled && 'bear-opacity-50 bear-cursor-not-allowed',
           SELECT_SIZE_CLASSES[size],
+          isCompact && 'bear-py-1 bear-text-xs bear-h-8',
           className
         )}
         style={fieldStyle}

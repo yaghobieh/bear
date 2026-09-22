@@ -1,4 +1,5 @@
 import type { HTMLAttributes, ReactNode } from 'react';
+import type { OverlayMotionEffect, OverlayEffectConfig } from '@hooks/useFixedAnchorPosition';
 
 export interface MenuItemProps extends HTMLAttributes<HTMLDivElement> {
   id?: string;
@@ -28,11 +29,17 @@ export interface MenuProps extends HTMLAttributes<HTMLDivElement> {
   /** Menu items */
   children?: ReactNode;
   /** Position relative to anchor */
-  position?: 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end';
+  position?: 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end' | 'right-start' | 'left-start';
   /** Min width of the menu */
   minWidth?: number;
   /** Max height before scrolling */
   maxHeight?: number;
+  /** Transition effect when opening */
+  openEffect?: OverlayMotionEffect;
+  /** Transition effect when closing */
+  closeEffect?: OverlayMotionEffect;
+  /** Config for open and close transition effects */
+  effect?: OverlayEffectConfig;
   /** Test ID */
   testId?: string;
 }
@@ -41,4 +48,3 @@ export interface MenuDividerProps {
   /** Additional class name */
   className?: string;
 }
-

@@ -1,4 +1,5 @@
 export const S_E_L_E_C_T_ROOT_CLASS = 'Bear-Select';
+export const COMPONENT_NAME_SELECT = 'Select';
 
 export const SELECT_DEFAULT_PLACEHOLDER = 'Select an option';
 

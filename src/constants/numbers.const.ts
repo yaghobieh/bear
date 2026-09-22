@@ -45,7 +45,10 @@ export const FOUR_HUNDRED_TWENTY = 420;
 export const SIX_HUNDRED_FORTY = 640;
 export const FIFTEEN_HUNDRED = 1500;
 export const TWO_THOUSAND = 2000;
+export const FIVE_THOUSAND = 5000;
 export const ELEVEN_THOUSAND = 11000;
+export const TWELVE_THOUSAND = 12000;
+export const TWO_HUNDRED_EIGHTY_EIGHT = 288;
 
 export const DAYS_IN_WEEK = SEVEN;
 export const MONTHS_IN_YEAR = TWELVE;

@@ -1,229 +1,17 @@
-import { FC, createContext, useContext, useState, useCallback, useEffect, useRef, ReactNode } from 'react';
+import { FC, useState, useCallback, ReactNode } from 'react';
 import type {
   ToastProps,
-  ToastContainerProps,
   ToastContextValue,
   ToastProviderProps,
-  ToastSeverity,
-  ToastPosition,
 } from './Toast.types';
-import {
-  T_O_A_S_T_ROOT_CLASS,
-  TOAST_EXIT_MS,
-  TOAST_ITEM_CLASSES,
-  TOAST_POSITION_CLASSES,
-  TOAST_SEVERITY_MODIFIER,
-} from './Toast.const';
-import { cn, generateBearId, getBearLiveRegionProps } from '@utils';
+import { COMPONENT_NAME_TOAST } from './Toast.const';
+import { ToastContext } from './Toast.context';
+import { ToastContainer } from './ToastContainer';
+import { generateBearId } from '@utils';
 
-// Default icons
-const ToastIcons: Record<ToastSeverity, ReactNode> = {
-  success: (
-    <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-      <polyline points="22 4 12 14.01 9 11.01" />
-    </svg>
-  ),
-  info: (
-    <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-      <circle cx="12" cy="12" r="10" />
-      <line x1="12" y1="16" x2="12" y2="12" />
-      <line x1="12" y1="8" x2="12.01" y2="8" />
-    </svg>
-  ),
-  warning: (
-    <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
-      <line x1="12" y1="9" x2="12" y2="13" />
-      <line x1="12" y1="17" x2="12.01" y2="17" />
-    </svg>
-  ),
-  error: (
-    <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-      <circle cx="12" cy="12" r="10" />
-      <line x1="15" y1="9" x2="9" y2="15" />
-      <line x1="9" y1="9" x2="15" y2="15" />
-    </svg>
-  ),
-};
-
-const CloseIcon = () => (
-  <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-    <line x1="18" y1="6" x2="6" y2="18" />
-    <line x1="6" y1="6" x2="18" y2="18" />
-  </svg>
-);
-
-const SEVERITY_STYLES: Record<ToastSeverity, string> = TOAST_SEVERITY_MODIFIER;
-
-const POSITION_STYLES: Record<ToastPosition, string> = TOAST_POSITION_CLASSES;
-
-// Context
-const ToastContext = createContext<ToastContextValue | null>(null);
-
-// Hook to use toast
-export const useToast = (): ToastContextValue => {
-  const context = useContext(ToastContext);
-  if (!context) {
-    throw new Error('useToast must be used within a ToastProvider');
-  }
-  return context;
-};
-
-// Individual Toast component
-const ToastItem: FC<ToastProps & { onRemove: () => void }> = ({
-  id,
-  testId,
-  message,
-  title,
-  severity = 'info',
-  duration = 5000,
-  closable = true,
-  icon,
-  action,
-  onClose,
-  onRemove,
-  className,
-  autoScroll = false,
-  pauseOnHover = false,
-}) => {
-  const [isExiting, setIsExiting] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
-  const rootRef = useRef<HTMLDivElement>(null);
-  const remainingRef = useRef(duration);
-  const startedAtRef = useRef(0);
-
-  useEffect(() => {
-    if (autoScroll && rootRef.current) {
-      rootRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
-    }
-  }, [autoScroll]);
-
-  useEffect(() => {
-    if (duration <= 0 || isPaused) return;
-    startedAtRef.current = Date.now();
-    const timer = setTimeout(() => {
-      setIsExiting(true);
-      setTimeout(() => {
-        onRemove();
-        onClose?.();
-      }, TOAST_EXIT_MS);
-    }, remainingRef.current);
-    return () => {
-      clearTimeout(timer);
-      remainingRef.current = Math.max(0, remainingRef.current - (Date.now() - startedAtRef.current));
-    };
-  }, [duration, isPaused, onRemove, onClose]);
-
-  const handleClose = () => {
-    setIsExiting(true);
-    setTimeout(() => {
-      onRemove();
-      onClose?.();
-    }, TOAST_EXIT_MS);
-  };
-
-  const renderIcon = () => {
-    if (icon === false) return null;
-    if (icon) return icon;
-    return ToastIcons[severity];
-  };
-
-  const liveRegionProps = getBearLiveRegionProps(severity);
-
-  return (
-    <div
-      ref={rootRef}
-      id={id}
-      data-testid={testId}
-      {...liveRegionProps}
-      aria-atomic="true"
-      onMouseEnter={pauseOnHover ? () => setIsPaused(true) : undefined}
-      onMouseLeave={pauseOnHover ? () => setIsPaused(false) : undefined}
-      className={cn(
-        T_O_A_S_T_ROOT_CLASS,
-        TOAST_ITEM_CLASSES,
-        isExiting ? 'bear-opacity-0 bear-translate-x-2' : 'bear-opacity-100 bear-translate-x-0',
-        SEVERITY_STYLES[severity],
-        className
-      )}
-    >
-      {renderIcon() && (
-        <span className="bear-flex-shrink-0 bear-mt-0.5">
-          {renderIcon()}
-        </span>
-      )}
-      
-      <div className="bear-flex-1 bear-min-w-0">
-        {title && (
-          <div className="bear-font-semibold bear-mb-0.5">
-            {title}
-          </div>
-        )}
-        <div className="bear-text-sm bear-opacity-90">
-          {message}
-        </div>
-      </div>
-
-      {action && (
-        <div className="bear-flex-shrink-0">
-          {action}
-        </div>
-      )}
-
-      {closable && (
-        <button
-          type="button"
-          onClick={handleClose}
-          className="bear-flex-shrink-0 bear-p-1 bear-rounded hover:bear-bg-black/10 dark:hover:bear-bg-white/20 bear-transition-colors bear-bg-transparent bear-border-none bear-cursor-pointer"
-          aria-label="Close"
-        >
-          <CloseIcon />
-        </button>
-      )}
-    </div>
-  );
-};
-
-// Toast Container
-export const ToastContainer: FC<ToastContainerProps> = ({
-
-  position = 'top-right',
-  maxToasts = 5,
-  className,
-}) => {
-
-  const context = useContext(ToastContext);
-  if (!context) return null;
-
-  // Access internal toasts from provider
-  const { _toasts, _removeToast } = context as ToastContextValue & { 
-    _toasts: (ToastProps & { id: string })[]; 
-    _removeToast: (id: string) => void;
-  };
-
-  const visibleToasts = _toasts.slice(0, maxToasts);
-
-  return (
-    <div
-      className={cn(
-        `${T_O_A_S_T_ROOT_CLASS}__container`,
-        'bear-fixed bear-z-[11000] bear-flex bear-flex-col bear-gap-2',
-        POSITION_STYLES[position],
-        className
-      )}
-      aria-relevant="additions"
-    >
-      {visibleToasts.map((toast) => (
-        <ToastItem
-          key={toast.id}
-          {...toast}
-          onRemove={() => _removeToast(toast.id)}
-        />
-      ))}
-    </div>
-  );
-};
+export { useToast } from './Toast.context';
+export { ToastContainer } from './ToastContainer';
+export { ToastItem } from './ToastItem';
 
 // Toast Provider
 export const ToastProvider: FC<ToastProviderProps> = ({ 
@@ -238,7 +26,7 @@ export const ToastProvider: FC<ToastProviderProps> = ({
   }, []);
 
   const addToast = useCallback((props: ToastProps): string => {
-    const id = props.id || generateBearId('Toast');
+    const id = props.id || generateBearId(COMPONENT_NAME_TOAST);
     setToasts((prev) => [...prev, { ...props, id }]);
     return id;
   }, []);
@@ -280,4 +68,3 @@ export const ToastProvider: FC<ToastProviderProps> = ({
     </ToastContext.Provider>
   );
 };
-

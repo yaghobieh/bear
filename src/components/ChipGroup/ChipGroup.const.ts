@@ -17,3 +17,5 @@ export const CHIP_GROUP_MENU_CLASSES =
   'bear-absolute bear-z-20 bear-top-full bear-left-0 bear-mt-1 bear-min-w-[10rem] bear-rounded-lg bear-border bear-border-[var(--bear-border-default)] bear-bg-[var(--bear-bg-primary)] bear-shadow-lg bear-p-2 bear-flex bear-flex-col bear-gap-2';
 
 export const CHIP_GROUP_MENU_ITEM_CLASSES = 'bear-text-sm';
+export const COMPONENT_NAME_CHIP_GROUP = 'ChipGroup';
+export const CHIP_GROUP_COMPACT_CLASS = 'Bear-ChipGroup--compact';

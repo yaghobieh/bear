@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import type { OverlayMotionEffect, OverlayEffectConfig } from '@hooks/useFixedAnchorPosition';
 
 export interface TooltipProps {
   testId?: string;
@@ -17,5 +18,10 @@ export interface TooltipProps {
   className?: string;
   /** Whether tooltip is disabled */
   disabled?: boolean;
+  /** Transition effect when opening */
+  openEffect?: OverlayMotionEffect;
+  /** Transition effect when closing */
+  closeEffect?: OverlayMotionEffect;
+  /** Config for open and close transition effects */
+  effect?: OverlayEffectConfig;
 }
-

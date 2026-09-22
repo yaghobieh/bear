@@ -1,7 +1,8 @@
+import { ELEVEN_THOUSAND, ONE } from '@constants';
 import type { ModalSize } from './Modal.types';
 
-export const MODAL_Z_INDEX = 11000;
-export const MODAL_PANEL_Z_INDEX = 1;
+export const MODAL_Z_INDEX = ELEVEN_THOUSAND;
+export const MODAL_PANEL_Z_INDEX = ONE;
 export const MODAL_ROOT_CLASSES =
   'Bear-Modal bear-fixed bear-inset-0 bear-flex bear-items-center bear-justify-center bear-p-4';
 
@@ -35,3 +36,10 @@ export const MODAL_BODY_CLASSES = 'bear-px-6 bear-py-4 bear-text-gray-600 dark:b
 // Footer
 export const MODAL_FOOTER_CLASSES = 'bear-flex bear-items-center bear-justify-end bear-gap-3 bear-px-6 bear-py-4 bear-border-t bear-border-gray-200 dark:bear-border-zinc-700';
 
+export const MODAL_EFFECT_CLASS_MAP: Record<string, string> = {
+  scale: 'animate-scale-in',
+  fade: 'animate-fade-in',
+  'slide-down': 'animate-grow-up',
+  fold: 'animate-alert-dialog-in',
+  none: '',
+};

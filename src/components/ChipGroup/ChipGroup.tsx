@@ -15,8 +15,12 @@ import {
   CHIP_GROUP_DEFAULT_DELETE_ALL_LABEL,
   CHIP_GROUP_MENU_CLASSES,
   CHIP_GROUP_MENU_ITEM_CLASSES,
+  COMPONENT_NAME_CHIP_GROUP,
+  CHIP_GROUP_COMPACT_CLASS,
 } from './ChipGroup.const';
 import { cn, resolveBearId, useBearId } from '@utils';
+import { useBearDensityOptional } from '@context';
+import { DENSITY_COMPACT, SIZE_SM } from '@constants';
 
 export const ChipGroup: FC<ChipGroupProps> = (props) => {
   const {
@@ -33,14 +37,19 @@ export const ChipGroup: FC<ChipGroupProps> = (props) => {
     ...rest
   } = props;
 
-  const generatedId = useBearId('ChipGroup');
+  const { density } = useBearDensityOptional();
+  const isCompact = density === DENSITY_COMPACT;
+  const effectiveSpacing = isCompact ? SIZE_SM : spacing;
+  const effectiveSize = isCompact ? SIZE_SM : size;
+
+  const generatedId = useBearId(COMPONENT_NAME_CHIP_GROUP);
   const domId = resolveBearId(id, generatedId);
   const [menuOpen, setMenuOpen] = useState(false);
   const childArray = Children.toArray(children).filter(isValidElement);
   const sizedChildren = childArray.map((child) =>
     isValidElement(child)
       ? cloneElement(child as ReactElement<{ size?: string }>, {
-          size: (child.props as { size?: string }).size ?? size,
+          size: (child.props as { size?: string }).size ?? effectiveSize,
         })
       : child
   );
@@ -56,7 +65,8 @@ export const ChipGroup: FC<ChipGroupProps> = (props) => {
       className={cn(
         CHIP_GROUP_ROOT_CLASS,
         CHIP_GROUP_BASE_CLASSES,
-        CHIP_GROUP_SPACING_CLASSES[spacing],
+        CHIP_GROUP_SPACING_CLASSES[effectiveSpacing as keyof typeof CHIP_GROUP_SPACING_CLASSES],
+        isCompact && CHIP_GROUP_COMPACT_CLASS,
         className
       )}
     >

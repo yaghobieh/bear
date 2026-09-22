@@ -1,53 +1,53 @@
 import { FC, useState, useRef, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { PopoverProps } from './Popover.types';
-import {cn } from '@utils';
-
-const Z_INDEX = 11000;
+import { cn } from '@utils';
+import { TWO } from '@constants';
+import { resolveOverlayEffects } from '@hooks/useFixedAnchorPosition';
+import {
+  POPOVER_Z_INDEX,
+  POPOVER_DEFAULT_OFFSET,
+  POPOVER_EFFECT_CLASS_MAP,
+  POPOVER_ARROW_STYLES,
+  PLACEMENT_BOTTOM,
+  PLACEMENT_TOP,
+  PLACEMENT_LEFT,
+  PLACEMENT_RIGHT,
+  ALIGN_START,
+  ALIGN_END,
+  TRANSFORM_TRANSLATE_X_CENTER,
+  TRANSFORM_TRANSLATE_X_END,
+  TRANSFORM_TRANSLATE_Y_CENTER,
+  TRANSFORM_TRANSLATE_Y_END,
+} from './Popover.const';
 
 function getPlacementStyles(placement: string, rect: DOMRect, offset: number): React.CSSProperties {
-  const base: React.CSSProperties = { position: 'fixed' as const, zIndex: Z_INDEX };
-  const vertical = placement.split('-')[0];
-  const hasStart = placement.includes('start');
-  const hasEnd = placement.includes('end');
+  const base: React.CSSProperties = { position: 'fixed', zIndex: POPOVER_Z_INDEX };
+  const [direction] = placement.split('-');
+  const hasStart = placement.includes(ALIGN_START);
+  const hasEnd = placement.includes(ALIGN_END);
+  const isVertical = direction === PLACEMENT_BOTTOM || direction === PLACEMENT_TOP;
 
-  if (vertical === 'bottom') {
-    base.top = rect.bottom + offset;
-    if (hasStart) base.left = rect.left;
-    else if (hasEnd) base.left = rect.right;
-    else base.left = rect.left + rect.width / 2;
-  } else if (vertical === 'top') {
-    base.bottom = window.innerHeight - rect.top + offset;
-    if (hasStart) base.left = rect.left;
-    else if (hasEnd) base.left = rect.right;
-    else base.left = rect.left + rect.width / 2;
-  } else if (vertical === 'left') {
-    base.right = window.innerWidth - rect.left + offset;
-    if (hasStart) base.top = rect.top;
-    else if (hasEnd) base.bottom = window.innerHeight - rect.bottom;
-    else base.top = rect.top + rect.height / 2;
+  if (isVertical) {
+    base.top = direction === PLACEMENT_BOTTOM ? rect.bottom + offset : undefined;
+    base.bottom = direction === PLACEMENT_TOP ? window.innerHeight - rect.top + offset : undefined;
+    base.left = hasStart ? rect.left : hasEnd ? rect.right : rect.left + rect.width / TWO;
+    base.transform = !hasStart && !hasEnd ? TRANSFORM_TRANSLATE_X_CENTER : hasEnd ? TRANSFORM_TRANSLATE_X_END : undefined;
   } else {
-    base.left = rect.right + offset;
-    if (hasStart) base.top = rect.top;
-    else if (hasEnd) base.bottom = window.innerHeight - rect.bottom;
-    else base.top = rect.top + rect.height / 2;
+    base.left = direction === PLACEMENT_RIGHT ? rect.right + offset : undefined;
+    base.right = direction === PLACEMENT_LEFT ? window.innerWidth - rect.left + offset : undefined;
+    base.bottom = hasEnd ? window.innerHeight - rect.bottom : undefined;
+    base.top = !hasEnd ? (hasStart ? rect.top : rect.top + rect.height / TWO) : undefined;
+    base.transform = !hasStart && !hasEnd ? TRANSFORM_TRANSLATE_Y_CENTER : hasEnd ? TRANSFORM_TRANSLATE_Y_END : undefined;
   }
 
-  if (vertical === 'bottom' || vertical === 'top') {
-    if (!hasStart && !hasEnd) base.transform = 'translateX(-50%)';
-    else if (hasEnd) base.transform = 'translateX(-100%)';
-  } else {
-    if (!hasStart && !hasEnd) base.transform = 'translateY(-50%)';
-    else if (hasEnd) base.transform = 'translateY(-100%)';
-  }
   return base;
 }
 
 export const Popover: FC<PopoverProps> = ({
-
   children,
   content,
-  placement = 'bottom',
+  placement = PLACEMENT_BOTTOM,
   trigger = 'click',
   open: controlledOpen,
   onOpenChange,
@@ -56,9 +56,11 @@ export const Popover: FC<PopoverProps> = ({
   arrow = true,
   closeOnClickOutside = true,
   closeOnEscape = true,
-  offset = 8,
+  offset = POPOVER_DEFAULT_OFFSET,
+  openEffect: openEffectProp,
+  closeEffect: closeEffectProp,
+  effect,
 }) => {
-
   const [internalOpen, setInternalOpen] = useState(false);
   const [position, setPosition] = useState<React.CSSProperties>({});
   const containerRef = useRef<HTMLDivElement>(null);
@@ -70,43 +72,55 @@ export const Popover: FC<PopoverProps> = ({
     onOpenChange?.(value);
   }, [onOpenChange]);
 
-  useEffect(() => {
-    if (!isOpen || !containerRef.current) return;
+  const updatePosition = useCallback(() => {
+    if (!containerRef.current || !contentRef.current) return;
+    const triggerEl = containerRef.current.firstElementChild as HTMLElement;
+    if (!triggerEl) return;
 
-    const update = () => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      setPosition(getPlacementStyles(placement, rect, offset));
-    };
-
-    update();
-    window.addEventListener('resize', update);
-    window.addEventListener('scroll', update, true);
-    return () => {
-      window.removeEventListener('resize', update);
-      window.removeEventListener('scroll', update, true);
-    };
-  }, [isOpen, placement, offset]);
+    const triggerRect = triggerEl.getBoundingClientRect();
+    setPosition(getPlacementStyles(placement, triggerRect, offset));
+  }, [placement, offset]);
 
   useEffect(() => {
-    if (!closeOnClickOutside) return;
+    if (isOpen) {
+      updatePosition();
+      const handleResize = () => updatePosition();
+      const handleScroll = () => updatePosition();
+      window.addEventListener('resize', handleResize);
+      window.addEventListener('scroll', handleScroll, true);
+      return () => {
+        window.removeEventListener('resize', handleResize);
+        window.removeEventListener('scroll', handleScroll, true);
+      };
+    }
+  }, [isOpen, updatePosition]);
+
+  useEffect(() => {
+    if (!isOpen || !closeOnClickOutside) return;
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as Node;
-      if (containerRef.current?.contains(target)) return;
-      if (contentRef.current?.contains(target)) return;
-      setIsOpen(false);
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(target) &&
+        contentRef.current &&
+        !contentRef.current.contains(target)
+      ) {
+        setIsOpen(false);
+      }
     };
-    if (isOpen) document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [isOpen, closeOnClickOutside, setIsOpen]);
 
   useEffect(() => {
-    if (!closeOnEscape) return;
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setIsOpen(false);
+    if (!isOpen || !closeOnEscape) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsOpen(false);
+      }
     };
-    if (isOpen) document.addEventListener('keydown', handleEscape);
-    return () => document.removeEventListener('keydown', handleEscape);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, closeOnEscape, setIsOpen]);
 
   const handleTriggerClick = () => {
@@ -121,14 +135,9 @@ export const Popover: FC<PopoverProps> = ({
     if (trigger === 'hover') setIsOpen(false);
   };
 
-  const arrowStyles: Record<string, string> = {
-    'top': 'bear-top-full bear-left-1/2 -bear-translate-x-1/2 bear-border-t-zinc-700 bear-border-x-transparent bear-border-b-transparent',
-    'bottom': 'bear-bottom-full bear-left-1/2 -bear-translate-x-1/2 bear-border-b-zinc-700 bear-border-x-transparent bear-border-t-transparent',
-    'left': 'bear-left-full bear-top-1/2 -bear-translate-y-1/2 bear-border-l-zinc-700 bear-border-y-transparent bear-border-r-transparent',
-    'right': 'bear-right-full bear-top-1/2 -bear-translate-y-1/2 bear-border-r-zinc-700 bear-border-y-transparent bear-border-l-transparent',
-  };
-
   const arrowDirection = placement.split('-')[0];
+  const { openEffect } = resolveOverlayEffects({ openEffect: openEffectProp, closeEffect: closeEffectProp, effect }, 'fade');
+  const effectClass = POPOVER_EFFECT_CLASS_MAP[openEffect] ?? POPOVER_EFFECT_CLASS_MAP.fade;
 
   const portalContent =
     isOpen &&
@@ -139,13 +148,14 @@ export const Popover: FC<PopoverProps> = ({
         data-bear-popover
         className={cn(
           'bear-bg-zinc-800 bear-border bear-border-zinc-700 bear-rounded-lg bear-shadow-xl bear-p-3',
+          effectClass,
           contentClassName
         )}
         style={position}
       >
         {content}
         {arrow && (
-          <div className={cn('bear-absolute bear-w-0 bear-h-0 bear-border-8', arrowStyles[arrowDirection])} />
+          <div className={cn('bear-absolute bear-w-0 bear-h-0 bear-border-8', POPOVER_ARROW_STYLES[arrowDirection])} />
         )}
       </div>,
       document.body

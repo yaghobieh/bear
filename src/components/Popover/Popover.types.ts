@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import type { OverlayMotionEffect, OverlayEffectConfig } from '@hooks/useFixedAnchorPosition';
 
 export type PopoverPlacement = 
   | 'top' | 'top-start' | 'top-end'
@@ -21,5 +22,10 @@ export interface PopoverProps {
   closeOnClickOutside?: boolean;
   closeOnEscape?: boolean;
   offset?: number;
+  /** Transition effect when opening */
+  openEffect?: OverlayMotionEffect;
+  /** Transition effect when closing */
+  closeEffect?: OverlayMotionEffect;
+  /** Config for open and close transition effects */
+  effect?: OverlayEffectConfig;
 }
-

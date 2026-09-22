@@ -17,16 +17,17 @@ export interface NavGroup {
   icon?: string;
 }
 
-export const BEAR_VERSION = '1.3.3';
+export const BEAR_VERSION = '1.3.4';
 
 export const VERSION_HIGHLIGHT_BY_VERSION: Record<string, string> = {
+  '1.3.4': 'ToggleGroup · Lotso redesign · Overlay effects parity · Focus traps',
   '1.3.3': 'AI chat kit · Drawer variants · system theme',
   '1.3.2': 'Drawer close effects · no-icons install · Chart views',
   '1.3.1': 'Overlay open/close effects · Select · DatePicker',
   '1.3.0': 'ModalsProvider · overlays above blur · SignPad',
 };
 
-export const VERSION_HIGHLIGHT_FALLBACK = 'AI chat kit · Drawer variants · system theme';
+export const VERSION_HIGHLIGHT_FALLBACK = 'ToggleGroup · Lotso redesign · Overlay effects parity · Focus traps';
 
 /** Main Bear UI repository */
 export const GITHUB_URL = 'https://github.com/yaghobieh/bear';
@@ -171,7 +172,8 @@ export const NAVIGATION: NavGroup[] = [
           { path: '/components/copy-button', label: 'CopyButton' },
           { path: '/components/close-button', label: 'CloseButton' },
           { path: '/components/split-button', label: 'SplitButton' },
-          { path: '/components/toggle-button', label: 'ToggleButton', badge: 'New' },
+          { path: '/components/toggle-button', label: 'ToggleButton' },
+          { path: '/components/toggle-group', label: 'ToggleGroup', badge: 'New' },
           { path: '/components/action-icon', label: 'ActionIcon' },
           { path: '/components/back-top', label: 'BackTop' },
         ],
@@ -616,7 +618,8 @@ export const NAVIGATION: NavGroup[] = [
 ];
 
 export const VERSIONS = [
-  { value: '1.3.3', label: 'v1.3.3 (current)' },
+  { value: '1.3.4', label: 'v1.3.4 (current)' },
+  { value: '1.3.3', label: 'v1.3.3' },
   { value: '1.3.2', label: 'v1.3.2' },
   { value: '1.3.1', label: 'v1.3.1' },
   { value: '1.3.0', label: 'v1.3.0' },

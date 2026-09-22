@@ -6,11 +6,12 @@ export interface SEOEntry {
 }
 
 export const SEO_MAP: Record<string, SEOEntry> = {
-  '/': { title: 'Home', description: `Bear UI by ${SEO_AUTHOR_NAME} — 100+ beautiful, accessible React components with TypeScript, AeroCraft CSS, 550+ icons, responsive hooks, and theming.` },
+  '/': { title: 'Home', description: `Bear UI by ${SEO_AUTHOR_NAME} — 190+ beautiful, accessible React components with TypeScript, AeroCraft CSS, 550+ icons, responsive hooks, and theming.` },
   '/installation': { title: 'Installation', description: `Install Bear UI by ${SEO_AUTHOR_NAME} in your React project. npm, yarn, pnpm setup with AeroCraft CSS and TypeScript.` },
   '/changelog': { title: 'Changelog', description: `Bear UI release notes and changelog — latest updates by ${SEO_AUTHOR_NAME}.` },
   '/skills': { title: 'Skills', description: `Cursor AI skills for Bear UI development — component patterns, code review, and portal docs by ${SEO_AUTHOR_NAME}.` },
-  '/whats-new': { title: "What's New", description: `What's new in Bear UI v1.3.3 — AI chat kit, Drawer variants, ThemeSwitcher, and Chat fixes by ${SEO_AUTHOR_NAME}.` },
+  '/whats-new': { title: "What's New", description: `What's new in Bear UI v1.3.4 — ToggleGroup, Lotso bear redesign, overlay effects parity, and focus trap standardization by ${SEO_AUTHOR_NAME}.` },
+  '/components/toggle-group': { title: 'ToggleGroup', description: `Two-state button group supporting single or multiple selection with WAI-ARIA roving tabindex keyboard navigation by ${SEO_AUTHOR_NAME}.` },
   '/components/ai-chat': { title: 'AI chat kit', description: `Bear UI AI chat primitives — composer, streaming, tools, citations, and approvals by ${SEO_AUTHOR_NAME}.` },
   '/components/theme-switcher': { title: 'ThemeSwitcher', description: `Switch Bear UI light, dark, or system color scheme by ${SEO_AUTHOR_NAME}.` },
   '/theming': { title: 'Theming', description: 'Customize Bear UI themes — colors, spacing, typography, dark mode, and custom variants via BearProvider.' },
@@ -24,7 +25,7 @@ export const SEO_MAP: Record<string, SEOEntry> = {
   '/docs/registry/github': { title: 'GitHub Registry', description: 'Publish and install Bear registry items from public GitHub repositories.' },
   '/docs/registry/mcp': { title: 'MCP Server', description: 'MCP support for Bear registries — coming soon.' },
   '/typescript': { title: 'TypeScript', description: 'Bear UI TypeScript support — full type safety, generics, and IntelliSense for all components.' },
-  '/components': { title: 'Components', description: 'Browse 100+ Bear UI React components — buttons, modals, forms, charts, editors, and more.' },
+  '/components': { title: 'Components', description: 'Browse 190+ Bear UI React components — buttons, modals, forms, charts, editors, and more.' },
   '/icons': { title: 'Icons', description: '550+ SVG icons organized by category. Search, preview, and copy imports instantly.' },
   '/hooks': { title: 'Hooks', description: '25+ React hooks — responsive breakpoints, animations, clipboard, debounce, drag-drop, and more.' },
   '/hooks/use-media-query': { title: 'useMediaQuery', description: 'Track CSS media queries with breakpoint shortcuts. Override breakpoints via BearProvider.' },

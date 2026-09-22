@@ -41,51 +41,82 @@ export const BearLoader: FC<BearLoaderProps> = ({
     >
       <div className="bear-bounce">
         <svg
-          width="120"
-          height="120"
+          width="130"
+          height="130"
           viewBox="0 0 100 100"
           fill="none"
-          className="drop-shadow-xl"
+          className="drop-shadow-2xl"
         >
-          <ellipse cx="50" cy="72" rx="28" ry="22" fill="#f9a8d4" />
-          <ellipse cx="50" cy="74" rx="18" ry="14" fill="#fce7f3" />
-          
-          <ellipse cx="22" cy="65" rx="10" ry="14" fill="#f9a8d4" transform="rotate(-20 22 65)" />
-          <ellipse cx="78" cy="65" rx="10" ry="14" fill="#f9a8d4" transform="rotate(20 78 65)" />
-          
-          <ellipse cx="35" cy="90" rx="11" ry="8" fill="#f9a8d4" />
-          <ellipse cx="35" cy="90" rx="7" ry="5" fill="#fce7f3" />
-          <ellipse cx="65" cy="90" rx="11" ry="8" fill="#f9a8d4" />
-          <ellipse cx="65" cy="90" rx="7" ry="5" fill="#fce7f3" />
-          
-          <ellipse cx="50" cy="35" rx="28" ry="26" fill="#f9a8d4" />
-          
-          <ellipse cx="26" cy="14" rx="12" ry="12" fill="#f9a8d4" />
-          <ellipse cx="26" cy="14" rx="7" ry="7" fill="#fce7f3" />
-          <ellipse cx="74" cy="14" rx="12" ry="12" fill="#f9a8d4" />
-          <ellipse cx="74" cy="14" rx="7" ry="7" fill="#fce7f3" />
-          
-          <ellipse cx="50" cy="42" rx="14" ry="11" fill="#fce7f3" />
-          
-          <path d="M50 40 L47 37 Q45 35 47 33 Q49 31 50 33 Q51 31 53 33 Q55 35 53 37 L50 40 Z" fill="#be185d" />
-          
-          <ellipse cx="38" cy="30" rx="5" ry="6" fill="#1f2937">
+          <defs>
+            <linearGradient id="loaderFur" x1="20" y1="10" x2="80" y2="90" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#f43f5e" />
+              <stop offset="50%" stopColor="#db2777" />
+              <stop offset="100%" stopColor="#9d174d" />
+            </linearGradient>
+            <linearGradient id="loaderSnout" x1="50" y1="36" x2="50" y2="52" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#fff1f2" />
+              <stop offset="100%" stopColor="#fed7aa" />
+            </linearGradient>
+            <linearGradient id="loaderNose" x1="50" y1="36" x2="50" y2="44" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#701a75" />
+              <stop offset="100%" stopColor="#4a044e" />
+            </linearGradient>
+          </defs>
+
+          {/* Body */}
+          <ellipse cx="50" cy="72" rx="28" ry="22" fill="url(#loaderFur)" />
+          <ellipse cx="50" cy="74" rx="18" ry="14" fill="#fbcfe8" />
+
+          {/* Arms */}
+          <ellipse cx="22" cy="65" rx="10" ry="14" fill="url(#loaderFur)" transform="rotate(-20 22 65)" />
+          <ellipse cx="78" cy="65" rx="10" ry="14" fill="url(#loaderFur)" transform="rotate(20 78 65)" />
+
+          {/* Paws */}
+          <ellipse cx="35" cy="90" rx="11" ry="8" fill="url(#loaderFur)" />
+          <ellipse cx="35" cy="90" rx="7" ry="5" fill="#fbcfe8" />
+          <ellipse cx="65" cy="90" rx="11" ry="8" fill="url(#loaderFur)" />
+          <ellipse cx="65" cy="90" rx="7" ry="5" fill="#fbcfe8" />
+
+          {/* Head */}
+          <ellipse cx="50" cy="35" rx="28" ry="26" fill="url(#loaderFur)" />
+
+          {/* Ears */}
+          <ellipse cx="26" cy="14" rx="12" ry="12" fill="url(#loaderFur)" />
+          <ellipse cx="26" cy="14" rx="7" ry="7" fill="#fbcfe8" />
+          <ellipse cx="74" cy="14" rx="12" ry="12" fill="url(#loaderFur)" />
+          <ellipse cx="74" cy="14" rx="7" ry="7" fill="#fbcfe8" />
+
+          {/* Eyebrows */}
+          <path d="M34 23 Q40 21 44 24" stroke="#831843" strokeWidth="2" strokeLinecap="round" fill="none" />
+          <path d="M66 23 Q60 21 56 24" stroke="#831843" strokeWidth="2" strokeLinecap="round" fill="none" />
+
+          {/* Eyes */}
+          <ellipse cx="38" cy="30" rx="5" ry="6" fill="#18181b">
             <animate attributeName="ry" values="6;1;6" dur="3s" repeatCount="indefinite" />
           </ellipse>
           <ellipse cx="36.5" cy="28.5" rx="2" ry="2.5" fill="#ffffff">
             <animate attributeName="ry" values="2.5;0;2.5" dur="3s" repeatCount="indefinite" />
           </ellipse>
-          <ellipse cx="62" cy="30" rx="5" ry="6" fill="#1f2937">
+          <ellipse cx="62" cy="30" rx="5" ry="6" fill="#18181b">
             <animate attributeName="ry" values="6;1;6" dur="3s" repeatCount="indefinite" />
           </ellipse>
           <ellipse cx="60.5" cy="28.5" rx="2" ry="2.5" fill="#ffffff">
             <animate attributeName="ry" values="2.5;0;2.5" dur="3s" repeatCount="indefinite" />
           </ellipse>
-          
-          <path d="M42 46 Q50 52 58 46" stroke="#be185d" strokeWidth="2" strokeLinecap="round" fill="none" />
-          
-          <ellipse cx="28" cy="38" rx="5" ry="3" fill="#f472b6" opacity="0.5" />
-          <ellipse cx="72" cy="38" rx="5" ry="3" fill="#f472b6" opacity="0.5" />
+
+          {/* Cheeks */}
+          <ellipse cx="28" cy="38" rx="5" ry="3" fill="#f43f5e" opacity="0.6" />
+          <ellipse cx="72" cy="38" rx="5" ry="3" fill="#f43f5e" opacity="0.6" />
+
+          {/* Cream Snout */}
+          <ellipse cx="50" cy="43" rx="15" ry="11" fill="url(#loaderSnout)" stroke="#fbcfe8" strokeWidth="0.8" />
+
+          {/* Plum Nose */}
+          <ellipse cx="50" cy="39" rx="6" ry="4.5" fill="url(#loaderNose)" />
+          <ellipse cx="48.5" cy="37.8" rx="2" ry="1" fill="#f472b6" opacity="0.5" />
+
+          {/* Smile */}
+          <path d="M43 45 Q50 51 57 45" stroke="#701a75" strokeWidth="2" strokeLinecap="round" fill="none" />
         </svg>
       </div>
 

@@ -1,5 +1,5 @@
 import { FC, useCallback, useState, useEffect, useMemo } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { NAVIGATION, VERSIONS } from '@/constants/navigation.const';
 import { ICON_COUNT } from '@/constants/icons.const';
 import { useIsMobile, BearIcons } from '@forgedevstack/bear';
@@ -238,6 +238,7 @@ const CollapsibleGroup: FC<CollapsibleGroupProps> = (props) => {
 export const Sidebar: FC<SidebarProps> = (props) => {
   const { isOpen = true, onClose, topOffset = 104, hiddenDesktop = false } = props;
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   const { version } = useNpmPackageVersion();
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -298,9 +299,18 @@ export const Sidebar: FC<SidebarProps> = (props) => {
           </div>
           <select
             value={version}
+            onChange={(e) => {
+              const val = e.target.value;
+              if (val === '1.3.4') {
+                navigate('/whats-new');
+              } else {
+                navigate('/changelog');
+              }
+            }}
+            aria-label="Documentation version"
             className="w-full px-2 py-1.5 text-xs rounded-md border border-gray-200 dark:border-gray-700
               bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400
-              focus:outline-none focus:ring-1 focus:ring-pink-500"
+              focus:outline-none focus:ring-1 focus:ring-pink-500 cursor-pointer"
           >
             {VERSIONS.map((v) => (
               <option key={v.value} value={v.value}>{v.label}</option>

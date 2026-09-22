@@ -10,6 +10,34 @@ export interface ChangelogEntry {
 
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
+    version: '1.3.4',
+    date: 'September 22, 2026',
+    tag: 'patch',
+    sections: [
+      {
+        title: 'Added',
+        items: [
+          'ToggleGroup & ToggleGroupItem: WAI-ARIA segmented controls supporting single & multiple selections with roving tabindex keyboard navigation',
+          'Lotso bear visual redesign: modern crisp SVG mascot, favicon, and bouncy BearLoader',
+          'Interactive Bear Video Showcase featuring chapter navigation and motion demos',
+          'Standardized useFocusTrap hook with initial focus, cycle loops, and clean focus restoration on unmount',
+          'New EmptyState presets: "no-data", "404", "offline", "filter-empty" with smart fallback titles and descriptions',
+          'New @bear-icons: BearIcon, LotsoIcon, BearFaceIcon, and PawIcon',
+        ],
+      },
+      {
+        title: 'Fixed',
+        items: [
+          'FORGE-134 (#85): Overlay openEffect & closeEffect parity across Modal, Menu, Popover, Tooltip, and HoverCard',
+          'FORGE-135 (#84): Standardized focus trap and focus restore across Modal, Drawer, AlertDialog, CommandPalette, and BottomSheet',
+          'FORGE-133 (#82): Density parity (compact, normal, comfortable) supported across Select, ChipGroup, and AppBar',
+          'FORGE-155 (#86): Resolved useBearId hook consistency and removed legacy references',
+          'FORGE-138 (#83): Complete PropsTable coverage and live examples for all new components',
+        ],
+      },
+    ],
+  },
+  {
     version: '1.3.3',
     date: 'September 10, 2026',
     tag: 'patch',

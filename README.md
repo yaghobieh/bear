@@ -1,357 +1,210 @@
-# @forgedevstack/bear
+<p align="center">
+  <img src="portal/public/bear-icon.svg" width="100" height="110" alt="Bear UI Mascot - Lotso Bear" />
+</p>
 
-Strong, reliable React UI components. AeroCraft-powered, zero config required. The protective force of ForgeStack.
+<h1 align="center">@forgedevstack/bear</h1>
 
-[![Support ForgeStack on Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/forgestack)
+<p align="center">
+  <strong>The Foundation for your React UI.</strong><br />
+  190+ accessible, customizable React components with TypeScript, AeroCraft CSS tokens, responsive hooks, and signature Lotso bear aesthetics.
+</p>
 
-Sponsor Bear on [Ko-fi](https://ko-fi.com/forgestack).
+<p align="center">
+  <a href="https://www.npmjs.com/package/@forgedevstack/bear"><img src="https://img.shields.io/npm/v/@forgedevstack/bear.svg?color=db2777" alt="npm version" /></a>
+  <a href="https://github.com/yaghobieh/bear/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT" /></a>
+  <img src="https://img.shields.io/badge/components-190+-db2777.svg" alt="Components: 190+" />
+  <img src="https://img.shields.io/badge/icons-550+-purple.svg" alt="Icons: 550+" />
+  <img src="https://img.shields.io/badge/hooks-25+-blue.svg" alt="Hooks: 25+" />
+  <img src="https://img.shields.io/badge/TypeScript-Strict-3178c6.svg" alt="TypeScript Strict" />
+  <a href="https://bearui.com"><img src="https://img.shields.io/badge/docs-bearui.com-db2777.svg" alt="Docs Portal" /></a>
+</p>
 
-## Portal
+---
 
-Visit the [Bear UI Portal](https://bearui.com/) to explore all components, view live examples, and browse the documentation.
+## 🌟 Highlights & What's New in v1.3.4
 
-## Sanity / Playwright
+- 🔘 **ToggleGroup & ToggleGroupItem**: Modern segmented controls supporting single (`type="single"`) and multiple (`type="multiple"`) selections with full WAI-ARIA roving tabindex keyboard navigation.
+- 🎯 **Standardized `useFocusTrap`**: Centralized, robust focus trap & focus restore across all overlay components (`Modal`, `Drawer`, `AlertDialog`, `CommandPalette`, `BottomSheet`).
+- 🎬 **Overlay Motion Parity**: Unified `openEffect`, `closeEffect`, and compound `effect={{ open, close }}` across `Modal`, `Menu`, `Popover`, `Tooltip`, and `HoverCard`.
+- 📐 **Density Parity**: First-class support for `compact`, `normal`, and `comfortable` densities across `Select`, `ChipGroup`, and `AppBar`.
+- 🐻 **Lotso Bear Visual Identity**: High-fidelity mascot vectors, dark/light theme integration, and brand new `@bear-icons` (`BearIcon`, `LotsoIcon`, `BearFaceIcon`, `PawIcon`).
+- 🤖 **AI Chat Primitives**: Complete streaming chat suite including `PromptComposer`, `StreamingMessage`, `ThinkingBlock`, `PromptSuggestions`, `ToolCall`, and `ContextMeter`.
 
-```bash
-# Install browsers once (required — missing Chromium yields 0 passes)
-cd portal && npx playwright install chromium
+---
 
-# Critical-path smoke (recommended before release)
-cd portal && npm run test:e2e:smoke
-
-# Full portal suite
-cd portal && npm run test:e2e
-```
-
-`BEAR_E2E_SMOKE=1` runs `e2e/specs/smoke.spec.ts` only (includes RTL direction + Toast aria-live checks). The e2e webServer builds Bear, then starts the portal on port `5174`.
-
-### Auto DOM ids
-
-Public components generate root `id` values as `Bear-{Component}-{alphanumeric}` (e.g. `Bear-Button-a48293100123`). Pass `id` to override; keep `testId` on `data-testid`.
-
-## Features
-
-- **Tailwind-Powered**: Built with Tailwind CSS, zero config required
-- **React 18+**: Works with React 18 and above
-- **TypeScript**: Full type safety with comprehensive TypeScript definitions
-- **Comprehensive Component Library**: 50+ production-ready components
-- **Accessible**: ARIA attributes and keyboard navigation support
-- **Customizable**: Flexible theming and styling options
-- **Tree-Shakeable**: Import only what you need
-- **Zero Config**: Works out of the box with minimal setup
-
-## Installation
-
-Bear installs `@forgedevstack/bear-icons` as an **optional dependency**. The default install includes components, theme, and icons.
+## 📦 Installation
 
 ```bash
+# Recommended default installation (includes components, themes & icons)
 npm install @forgedevstack/bear
-# or
+
+# Or with your preferred package manager
 pnpm add @forgedevstack/bear
-# or
 yarn add @forgedevstack/bear
+bun add @forgedevstack/bear
 ```
 
-### Install without icons
-
-npm has no `--no-icons` flag. Skip the icon package with `--omit=optional`:
+### Quick Scaffolding with Forge CLI
 
 ```bash
+npx @forgedevstack/bear init
+```
+
+### Lightweight Install (Without Icons)
+
+If you only need core components and wish to omit the icon library, pass the optional omission flag:
+
+```bash
+# npm
 npm install @forgedevstack/bear --omit=optional
-# yarn
-yarn add @forgedevstack/bear --ignore-optional
+
 # pnpm
 pnpm add @forgedevstack/bear --no-optional
+
+# yarn
+yarn add @forgedevstack/bear --ignore-optional
 ```
 
-Do not import icons from `@forgedevstack/bear` after a no-icons install.
-
-### Icons only
+### Standalone Icons
 
 ```bash
 npm install @forgedevstack/bear-icons
 ```
 
+---
+
+## 🚀 Quick Start
+
+### 1. Import Compiled CSS
+
+Include Bear's compiled stylesheet once in your application entry file (`main.tsx`, `App.tsx`, or `index.css`):
+
 ```tsx
-import { SearchIcon, BearIcons } from '@forgedevstack/bear-icons';
-```
-
-### Import CSS (Required)
-
-Import the compiled CSS file once in your app:
-
-```tsx
-// In your main entry file (e.g., main.tsx, App.tsx, or index.css)
 import '@forgedevstack/bear/styles.css';
 ```
 
-## Quick Start
+### 2. Wrap with BearProvider & Start Building
 
 ```tsx
-import { Button, Card, CardHeader, CardBody } from '@forgedevstack/bear';
+import React, { useState } from 'react';
+import {
+  BearProvider,
+  Button,
+  Card,
+  CardHeader,
+  CardBody,
+  ToggleGroup,
+  ToggleGroupItem,
+  Typography,
+} from '@forgedevstack/bear';
 
-function App() {
+export function App() {
+  const [alignment, setAlignment] = useState('center');
+
   return (
-    <Card>
-      <CardHeader>
-        <h2>Welcome to Bear</h2>
-      </CardHeader>
-      <CardBody>
-        <Button variant="primary">Get Started</Button>
-      </CardBody>
-    </Card>
+    <BearProvider>
+      <Card className="max-w-md mx-auto p-6 shadow-xl">
+        <CardHeader>
+          <Typography variant="h4">Bear UI 1.3.4</Typography>
+        </CardHeader>
+        <CardBody className="space-y-4">
+          <Typography variant="body1">
+            Choose your layout alignment:
+          </Typography>
+
+          <ToggleGroup
+            type="single"
+            value={alignment}
+            onValueChange={(val) => val && setAlignment(val)}
+          >
+            <ToggleGroupItem value="left">Left</ToggleGroupItem>
+            <ToggleGroupItem value="center">Center</ToggleGroupItem>
+            <ToggleGroupItem value="right">Right</ToggleGroupItem>
+          </ToggleGroup>
+
+          <Button variant="primary" fullWidth>
+            Confirm Selection ({alignment})
+          </Button>
+        </CardBody>
+      </Card>
+    </BearProvider>
   );
 }
 ```
 
-## Component Categories
+---
 
-### Layout Components
+## 🎨 Theming & Lotso Color Palette
 
-- `Container` - Responsive container with max-width constraints
-- `Flex` - Flexible box layout component
-- `Grid` / `GridItem` - CSS Grid layout system
-- `ResizablePanel` - Two-pane resizable layout with draggable divider (horizontal/vertical)
-
-### UI Components
-
-- `Button` / `ButtonGroup` - Interactive button components
-- `Card` - Container for content with header, body, and footer
-- `Badge` - Status indicators and labels
-- `Paper` - Elevated surface component
-- `Divider` - Visual separator
-- `Typography` - Text styling with gradient text and typewriter effect
-- `Link` - Styled link component
-
-### Form Components
-
-- `Input` / `TextField` - Text input with optional `InputProps.startAdornment` / `endAdornment` for start/end slots
-- `Select` / `MultiSelect` - Dropdown selection components
-- `Checkbox` - Checkbox input
-- `Radio` / `RadioGroup` - Radio button inputs
-- `Switch` - Toggle switch
-- `Autocomplete` - Autocomplete input
-- `TransferList` - Transfer items between lists
-- `FileUpload` - File upload component
-- `NumberInput` - Numeric input with controls
-- `OTPInput` - One-time password input
-- `ColorPicker` - Color selection component
-- `DatePicker` - Date selection component
-- `TimePicker` - Time selection component
-- `Slider` - Range slider input
-
-### Feedback Components
-
-- `Alert` - Alert messages
-- `Spinner` - Loading spinner
-- `Rating` - Star rating component
-- `Progress` - Progress indicator
-- `Skeleton` - Loading skeleton states
-- `Toast` / `useToast` - Toast notifications
-- `BearLoader` - Custom bear-themed loader
-
-### Overlay Components
-
-- `Modal` - Modal dialog
-- `Drawer` - Slide-out drawer
-- `Tooltip` - Tooltip component
-- `Popover` - Popover component
-- `Menu` / `MenuItem` - Context menu
-- `Dropdown` - Dropdown menu
-- `SpeedDial` - Floating action speed dial
-
-### Data Display
-
-- `DataTable` - Advanced data table with sorting, filtering, and pagination
-- `Carousel` - Image/content carousel
-- `Accordion` - Collapsible content sections
-- `Tabs` / `TabList` / `Tab` / `TabPanel` - Tabbed interface; `TabList` supports `maxVisibleTabs` (overflow dropdown) and `wrap` (auto-break)
-- `List` - List component with various item types
-- `Avatar` / `AvatarGroup` - User avatar display
-- `Chip` - Compact element for input, attribute, or action
-- `TreeView` - Hierarchical tree structure
-- `FileTree` - File/folder tree with selection and expand/collapse
-- `Timeline` - Timeline component
-- `Statistic` - Statistical display
-- `EmptyState` - Empty state placeholder
-- `Image` - Enhanced image component
-
-### Navigation Components
-
-- `Breadcrumbs` - Navigation breadcrumbs
-- `Stepper` - Step-by-step navigation
-- `BottomNavigation` - Bottom navigation bar
-- `AppBar` - Application bar/header
-- `Pagination` - Page navigation
-
-### Utility Components
-
-- `ScrollArea` - Custom scrollable area
-- `Collapsible` - Collapsible content wrapper
-- `Kbd` - Keyboard key display
-- `CopyButton` - Copy to clipboard button
-- `Icon` / `BearIcons` - Icon component library
-- `BearLogo` - Bear logo component
-
-## Examples
-
-### Button
+Bear UI features a built-in strawberry magenta theme inspired by Lotso Bear, with deep contrast and native dark mode support.
 
 ```tsx
-import { Button } from '@forgedevstack/bear';
+import { BearProvider } from '@forgedevstack/bear';
 
-<Button variant="primary">Primary</Button>
-<Button variant="secondary">Secondary</Button>
-<Button variant="outline">Outline</Button>
-<Button variant="ghost">Ghost</Button>
-
-// With icon (icon size matches text)
-<Button variant="primary" leftIcon={<PlayIcon />}>View Demos</Button>
-
-// Button label using Typography variant (h1, h2, body1, etc.)
-<Button variant="primary" textVariant="subtitle1">Heading-style label</Button>
-```
-
-**Custom variants** (via `BearProvider`): pass `customVariants={{ myBrand: { bg: '#...', text: '#fff' } }}` and use `<Button variant="myBrand">`. Use `customTypography` for custom text styles and set `textVariant` on Button to use them.
-
-### Card
-
-```tsx
-import { Card, CardHeader, CardBody, CardFooter } from '@forgedevstack/bear';
-
-<Card>
-  <CardHeader>Title</CardHeader>
-  <CardBody>Content goes here</CardBody>
-  <CardFooter>Footer content</CardFooter>
-</Card>
-```
-
-### Form
-
-```tsx
-import { Input, Select, Checkbox, Button } from '@forgedevstack/bear';
-
-function LoginForm() {
-  return (
-    <form>
-      <Input label="Email" type="email" required />
-      <Input label="Password" type="password" required />
-      <Select 
-        label="Country"
-        options={[
-          { value: 'us', label: 'United States' },
-          { value: 'uk', label: 'United Kingdom' },
-        ]}
-      />
-      <Checkbox label="Remember me" />
-      <Button type="submit">Submit</Button>
-    </form>
-  );
-}
-```
-
-### DataTable
-
-```tsx
-import { DataTable, createColumns } from '@forgedevstack/bear';
-
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  role: string;
-}
-
-const columns = createColumns<User>([
-  { key: 'name', header: 'Name' },
-  { key: 'email', header: 'Email' },
-  { key: 'role', header: 'Role' },
-]);
-
-const data: User[] = [
-  { id: 1, name: 'John Doe', email: 'john@example.com', role: 'admin' },
-  { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'user' },
-];
-
-<DataTable data={data} columns={columns} />
-```
-
-### Toast Notifications
-
-```tsx
-import { ToastProvider, useToast, Button } from '@forgedevstack/bear';
-
-function App() {
-  return (
-    <ToastProvider>
-      <MyComponent />
-    </ToastProvider>
-  );
-}
-
-function MyComponent() {
-  const toast = useToast();
-  
-  return (
-    <Button onClick={() => toast.success('Operation successful!')}>
-      Show Toast
-    </Button>
-  );
-}
-```
-
-## Theming
-
-Bear components support customization through Tailwind CSS. You can override default styles by configuring your Tailwind theme:
-
-```js
-// tailwind.config.js
-module.exports = {
-  theme: {
-    extend: {
-      colors: {
-        // Your custom colors
-      },
+<BearProvider
+  colorScheme="system" // 'light' | 'dark' | 'system'
+  theme={{
+    colors: {
+      primary: '#db2777', // Lotso Magenta
+      accent: '#fed7aa',  // Strawberry Cream
     },
-  },
-}
+  }}
+>
+  <App />
+</BearProvider>
 ```
 
-## TypeScript Support
+---
 
-All components are fully typed with TypeScript:
+## 🧩 Component Suite (190+ Primitives)
 
-```tsx
-import { Button, ButtonProps } from '@forgedevstack/bear';
+| Category | Key Components |
+|---|---|
+| **Buttons & Action** | `Button`, `ButtonGroup`, `ToggleButton`, `ToggleGroup`, `FAB`, `SpeedDial`, `CopyButton`, `CloseButton`, `SplitButton`, `ActionIcon` |
+| **Forms & Input** | `Input`, `Select`, `MultiSelect`, `Autocomplete`, `Checkbox`, `Radio`, `Switch`, `Slider`, `TransferList`, `OTPInput`, `DatePicker`, `TimePicker`, `ColorPicker` |
+| **AI & Conversational** | `PromptComposer`, `StreamingMessage`, `ThinkingBlock`, `PromptSuggestions`, `MessageActions`, `ChatError`, `ToolCall`, `CitationList`, `ApprovalCard`, `ContextMeter` |
+| **Layout & Grid** | `Container`, `Flex`, `Grid`, `Paper`, `Divider`, `ResizablePanel`, `ScrollArea`, `Masonry`, `Dock` |
+| **Overlays & Dialogs** | `Modal`, `Drawer`, `AlertDialog`, `Popover`, `Tooltip`, `HoverCard`, `Menu`, `Dropdown`, `BottomSheet`, `CommandPalette` |
+| **Data Display** | `DataTable`, `Chart` (Bar/Line/Pie/Radar/Funnel), `Kanban`, `TreeSelect`, `Calendar`, `Timeline`, `DiffViewer`, `JsonViewer`, `CodeEditor` |
+| **Feedback & Status** | `Alert`, `Toast`, `BearLoader`, `Spinner`, `Progress`, `Skeleton`, `EmptyState`, `Badge`, `Rating` |
 
-const buttonProps: ButtonProps = {
-  variant: 'primary',
-  size: 'md',
-  children: 'Click me',
-};
+---
 
-<Button {...buttonProps} />
+## ⚡ Performance & Comparison
+
+| Feature | Bear UI | Material UI | Shadcn / Radix | Chakra UI |
+|---|---|---|---|---|
+| **Bundle Size (tree-shaken)** | **~18 kB** | ~85 kB | Modular | ~45 kB |
+| **Component Count** | **190+** | ~60 | ~45 | ~35 |
+| **Included Icons** | **550+** | Addon | Addon (Lucide) | Addon |
+| **AI Chat Primitives** | **Built-in** | No | Community | No |
+| **Zero Runtime CSS-in-JS** | **Yes (AeroCraft)**| No (Emotion) | Yes (Tailwind) | No (Emotion) |
+| **Density Parity** | **Compact / Normal / Comfortable** | Limited | Manual | Limited |
+| **TypeScript Strict** | **100%** | 100% | 100% | 100% |
+
+---
+
+## 🛠️ Testing & Verification
+
+```bash
+# Run unit & component build
+npm run build
+
+# Portal E2E Smoke Tests
+cd portal && npm run test:e2e:smoke
+
+# Full Playwright Suite
+cd portal && npm run test:e2e
 ```
 
-## How Bear Compares
+---
 
-| Feature | Bear UI | Material UI | Ant Design | Chakra UI |
-|---------|---------|-----|------------|-----------|
-| **Tailwind CSS native** | Yes | No | No | Partial (v3) |
-| **Bundle (tree-shaken)** | ~18 kB | ~80 kB | ~120 kB | ~45 kB |
-| **Dark mode** | `dark:` variants, zero JS | Runtime theme swap | CSS vars + config | ColorMode context |
-| **TypeScript** | 100 % | 100 % | 100 % | 100 % |
-| **Components** | 60+ | 50+ | 60+ | 30+ |
-| **Theming** | BearProvider + Tailwind | Emotion/styled | Less/CSS vars | Styled System |
-| **Modular CSS** | `@BearInclude` PostCSS | N/A | N/A | N/A |
-| **React 18 / 19** | Yes | Yes | Yes | Yes |
-| **Zero runtime CSS-in-JS** | Yes | No (Emotion) | No (Less) | No (Emotion) |
-| **Built-in i18n** | Portal (en/es) | X (add-on) | ConfigProvider | N/A |
+## 🤝 Community & Contributing
 
-## Contributing
+- **Live Documentation**: [https://bearui.com](https://bearui.com)
+- **Storybook**: Run `npm run storybook` in `/portal` or explore [bearui.com/storybook](https://bearui.com/storybook/)
+- **Contributing**: Please read [CONTRIBUTING.md](./CONTRIBUTING.md) before opening pull requests.
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines on adding components, coding rules, and the portal development workflow.
+## 📄 License
 
-## License
-
-MIT
+Bear UI is open-source software licensed under the [MIT License](./LICENSE). Built with 💖 by John Yaghobieh & the ForgeStack Team.

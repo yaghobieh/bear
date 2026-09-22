@@ -29,7 +29,9 @@
       "@types": ["./src/types"],
       "@types/*": ["./src/types/*"],
       "@const": ["./src/constants"],
-      "@const/*": ["./src/constants/*"]
+      "@const/*": ["./src/constants/*"],
+      "@constants": ["./src/constants"],
+      "@constants/*": ["./src/constants/*"]
     }
   },
   "include": ["src"],

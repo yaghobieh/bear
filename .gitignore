@@ -7,3 +7,4 @@ portal/.npmrc
 cms/*
 .npmrc
 articles/*
+GUIDE_FOR_USER.md

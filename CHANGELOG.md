@@ -2,6 +2,33 @@
 
 All notable changes to Bear UI will be documented in this file.
 
+## [1.3.4] - 2026-09-22
+
+### Added
+
+- **`ToggleGroup` & `ToggleGroupItem`** — New component inspired by modern design systems (MUI / Radix / shadcn). Supports single selection (`type="single"`, segmented control pattern) and multiple selection (`type="multiple"`, toolbar pattern) with full WAI-ARIA roving tabindex keyboard navigation, auto/manual orientation, sizes (`sm`, `md`, `lg`), and variants (`default`, `outline`).
+- **`useFocusTrap`** — New centralized accessible focus management hook with loop navigation, auto-focus on first focusable target, outside-click suppression, and automatic focus restoration upon unmount.
+- **`EmptyState`** — Extended presets: added `'no-data'`, `'404'`, `'offline'`, and `'filter-empty'` with smart fallback titles and descriptions so `title` is now optional.
+- **`@bear-icons` Expansion** — Added brand mascot icons: `BearIcon`, `LotsoIcon`, `BearFaceIcon`, and `PawIcon`.
+- **Lotso Brand Redesign** — Modernized brand identity with rich Lotso pink/magenta vectors (`#db2777`), cream strawberry snout (`#fed7aa`), refreshed `bear-icon.svg`, crisp `bear-favicon.svg`, and bouncy `BearLoader`.
+- **Interactive Bear Video Showcase** — Dedicated interactive video player preview container in portal featuring chapter navigation, progress scrubber, and live component highlights.
+
+### Fixed
+
+- **FORGE-134 (#85)**: Overlay motion parity — Standardized `openEffect`, `closeEffect`, and compound `effect={{ open, close }}` across `Modal`, `Menu`, `Popover`, `Tooltip`, and `HoverCard` via `resolveOverlayEffects`.
+- **FORGE-135 (#84)**: Focus trap & restoration parity — Standardized active focus trapping and focus return across `Modal`, `Drawer`, `AlertDialog`, `CommandPalette`, and `BottomSheet` using `useFocusTrap`.
+- **FORGE-133 (#82)**: Density parity — Standardized `compact`, `normal`, and `comfortable` density modes across `Select` (input height, option padding), `ChipGroup` (gap and chip sizing), and `AppBar`.
+- **FORGE-155 (#86)**: Cleaned up leftover `useBearId` references and aligned hook usage across all atomic components.
+- **FORGE-138 (#83)**: Comprehensive PropsTable coverage and live examples added to portal for all new components.
+
+### Portal
+
+- New documentation and interactive playgrounds for `ToggleGroup`.
+- Modernized homepage with updated stats: **190+** Components, **550+** Icons, **25+** Hooks, and **35k+** lines of code.
+- Added CLI quickstart: `npx @forgedevstack/bear init`.
+- Storybook updated with `ToggleGroup.stories.tsx`.
+- Updated Sandbox and meta tags for release 1.3.4.
+
 ## [1.3.3] - 2026-09-12
 
 ### Added

@@ -25,7 +25,7 @@ export const ComparisonSection: FC = () => (
     <p className="text-center text-gray-500 dark:text-gray-400 mb-8 max-w-lg mx-auto">
       Features that come built-in vs what you typically need to add yourself with other libraries.
     </p>
-    <div className="max-w-2xl mx-auto grid-table-wrapper">
+    <div className="max-w-2xl mx-auto grid-table-wrapper overflow-x-auto w-full max-w-full">
       <GridTable<ComparisonRow>
         data={COMPARISON_DATA}
         columns={COMPARISON_COLUMNS}

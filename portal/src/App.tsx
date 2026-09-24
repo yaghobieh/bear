@@ -403,6 +403,10 @@ function PortalLayout({
     linkText: "See what's new",
   };
 
+  useEffect(() => {
+    setSidebarOpen(false);
+  }, [location.pathname, setSidebarOpen]);
+
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950">
       <RouteSEO />
@@ -428,10 +432,10 @@ function PortalLayout({
           <div
             className={
               isStorybook
-                ? 'w-full px-4 py-4'
+                ? 'w-full px-2 sm:px-4 py-4'
                 : isWide
-                  ? 'max-w-7xl mx-auto px-6 py-10'
-                  : 'max-w-3xl mx-auto px-6 py-10 doc-layout'
+                  ? 'max-w-7xl mx-auto px-3.5 sm:px-6 py-5 sm:py-10'
+                  : 'max-w-3xl mx-auto px-3.5 sm:px-6 py-5 sm:py-10 doc-layout'
             }
           >
             {!isLanding && !isStorybook && (

@@ -21,18 +21,17 @@
 
 ---
 
-## 🌟 Highlights & What's New in v1.3.4
+## Highlights & What's New in v1.3.4
 
-- 🔘 **ToggleGroup & ToggleGroupItem**: Modern segmented controls supporting single (`type="single"`) and multiple (`type="multiple"`) selections with full WAI-ARIA roving tabindex keyboard navigation.
-- 🎯 **Standardized `useFocusTrap`**: Centralized, robust focus trap & focus restore across all overlay components (`Modal`, `Drawer`, `AlertDialog`, `CommandPalette`, `BottomSheet`).
-- 🎬 **Overlay Motion Parity**: Unified `openEffect`, `closeEffect`, and compound `effect={{ open, close }}` across `Modal`, `Menu`, `Popover`, `Tooltip`, and `HoverCard`.
-- 📐 **Density Parity**: First-class support for `compact`, `normal`, and `comfortable` densities across `Select`, `ChipGroup`, and `AppBar`.
-- 🐻 **Lotso Bear Visual Identity**: High-fidelity mascot vectors, dark/light theme integration, and brand new `@bear-icons` (`BearIcon`, `LotsoIcon`, `BearFaceIcon`, `PawIcon`).
-- 🤖 **AI Chat Primitives**: Complete streaming chat suite including `PromptComposer`, `StreamingMessage`, `ThinkingBlock`, `PromptSuggestions`, `ToolCall`, and `ContextMeter`.
+- **ToggleGroup & ToggleGroupItem**: Modern segmented controls supporting single (`type="single"`) and multiple (`type="multiple"`) selections with full WAI-ARIA roving tabindex keyboard navigation.
+- **Standardized `useFocusTrap`**: Centralized, robust focus trap & focus restore across all overlay components (`Modal`, `Drawer`, `AlertDialog`, `CommandPalette`, `BottomSheet`).
+- **Overlay Motion Parity**: Unified `openEffect`, `closeEffect`, and compound `effect={{ open, close }}` across `Modal`, `Menu`, `Popover`, `Tooltip`, and `HoverCard`.
+- **Density Parity**: First-class support for `compact`, `normal`, and `comfortable` densities across `Select`, `ChipGroup`, and `AppBar`.
+- **Lotso Bear Visual Identity**: High-fidelity mascot vectors, dark/light theme integration, and brand new `@forgedevstack/bear-icons` (`BearIcon`, `LotsoIcon`, `BearFaceIcon`, `PawIcon`).
 
 ---
 
-## 📦 Installation
+## Installation
 
 ```bash
 # Recommended default installation (includes components, themes & icons)
@@ -73,7 +72,7 @@ npm install @forgedevstack/bear-icons
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Import Compiled CSS
 
@@ -134,7 +133,7 @@ export function App() {
 
 ---
 
-## 🎨 Theming & Lotso Color Palette
+## Theming & Lotso Color Palette
 
 Bear UI features a built-in strawberry magenta theme inspired by Lotso Bear, with deep contrast and native dark mode support.
 
@@ -156,7 +155,7 @@ import { BearProvider } from '@forgedevstack/bear';
 
 ---
 
-## 🧩 Component Suite (190+ Primitives)
+## Component Suite (190+ Primitives)
 
 | Category | Key Components |
 |---|---|
@@ -170,7 +169,7 @@ import { BearProvider } from '@forgedevstack/bear';
 
 ---
 
-## ⚡ Performance & Comparison
+## Performance & Comparison
 
 | Feature | Bear UI | Material UI | Shadcn / Radix | Chakra UI |
 |---|---|---|---|---|
@@ -184,7 +183,7 @@ import { BearProvider } from '@forgedevstack/bear';
 
 ---
 
-## 🛠️ Testing & Verification
+## Testing & Verification
 
 ```bash
 # Run unit & component build
@@ -199,12 +198,12 @@ cd portal && npm run test:e2e
 
 ---
 
-## 🤝 Community & Contributing
+## Community & Contributing
 
 - **Live Documentation**: [https://bearui.com](https://bearui.com)
 - **Storybook**: Run `npm run storybook` in `/portal` or explore [bearui.com/storybook](https://bearui.com/storybook/)
 - **Contributing**: Please read [CONTRIBUTING.md](./CONTRIBUTING.md) before opening pull requests.
 
-## 📄 License
+## License
 
 Bear UI is open-source software licensed under the [MIT License](./LICENSE). Built with 💖 by John Yaghobieh & the ForgeStack Team.

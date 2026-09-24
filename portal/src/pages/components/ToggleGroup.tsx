@@ -62,7 +62,7 @@ const [alignment, setAlignment] = useState('center');
   </ToggleGroupItem>
 </ToggleGroup>`}
         render={() => (
-          <div className="flex flex-col items-center gap-4">
+          <div className="flex flex-col items-center gap-4 w-full max-w-full overflow-x-auto py-1">
             <ToggleGroup
               type="single"
               value={alignment}
@@ -70,16 +70,16 @@ const [alignment, setAlignment] = useState('center');
               aria-label="Text alignment"
             >
               <ToggleGroupItem value="left" ariaLabel="Left aligned">
-                <span className="flex items-center gap-1.5 px-2">
+                <span className="flex items-center gap-1.5 px-1 sm:px-2">
                   <BearIcons.ArrowLeftIcon size={16} />
                   <Typography variant="body2" component="span">Left</Typography>
                 </span>
               </ToggleGroupItem>
               <ToggleGroupItem value="center" ariaLabel="Center aligned">
-                <Typography variant="body2" component="span" className="px-2 font-medium">Center</Typography>
+                <Typography variant="body2" component="span" className="px-1 sm:px-2 font-medium">Center</Typography>
               </ToggleGroupItem>
               <ToggleGroupItem value="right" ariaLabel="Right aligned">
-                <span className="flex items-center gap-1.5 px-2">
+                <span className="flex items-center gap-1.5 px-1 sm:px-2">
                   <Typography variant="body2" component="span">Right</Typography>
                   <BearIcons.ArrowRightIcon size={16} />
                 </span>
@@ -113,7 +113,7 @@ const [alignment, setAlignment] = useState('center');
   </ToggleGroupItem>
 </ToggleGroup>`}
         render={() => (
-          <div className="flex flex-col items-center gap-4">
+          <div className="flex flex-col items-center gap-4 w-full max-w-full overflow-x-auto py-1">
             <ToggleGroup
               type="multiple"
               value={formatting}
@@ -156,18 +156,18 @@ const [alignment, setAlignment] = useState('center');
   <ToggleGroupItem value="grid">Grid</ToggleGroupItem>
 </ToggleGroup>`}
         render={() => (
-          <div className="flex flex-col items-center gap-4">
+          <div className="flex flex-col items-center gap-4 w-full max-w-full overflow-x-auto py-1">
             <ToggleGroup size="sm" defaultValue="grid">
-              <ToggleGroupItem value="list"><span className="px-2 text-xs">Small List</span></ToggleGroupItem>
-              <ToggleGroupItem value="grid"><span className="px-2 text-xs">Small Grid</span></ToggleGroupItem>
+              <ToggleGroupItem value="list"><span className="px-1.5 sm:px-2 text-xs">Small List</span></ToggleGroupItem>
+              <ToggleGroupItem value="grid"><span className="px-1.5 sm:px-2 text-xs">Small Grid</span></ToggleGroupItem>
             </ToggleGroup>
             <ToggleGroup size="md" defaultValue="grid">
-              <ToggleGroupItem value="list"><span className="px-3 text-sm">Medium List</span></ToggleGroupItem>
-              <ToggleGroupItem value="grid"><span className="px-3 text-sm">Medium Grid</span></ToggleGroupItem>
+              <ToggleGroupItem value="list"><span className="px-2 sm:px-3 text-sm">Medium List</span></ToggleGroupItem>
+              <ToggleGroupItem value="grid"><span className="px-2 sm:px-3 text-sm">Medium Grid</span></ToggleGroupItem>
             </ToggleGroup>
             <ToggleGroup size="lg" defaultValue="grid">
-              <ToggleGroupItem value="list"><span className="px-4 text-base">Large List</span></ToggleGroupItem>
-              <ToggleGroupItem value="grid"><span className="px-4 text-base">Large Grid</span></ToggleGroupItem>
+              <ToggleGroupItem value="list"><span className="px-2 sm:px-4 text-sm sm:text-base">Large List</span></ToggleGroupItem>
+              <ToggleGroupItem value="grid"><span className="px-2 sm:px-4 text-sm sm:text-base">Large Grid</span></ToggleGroupItem>
             </ToggleGroup>
           </div>
         )}

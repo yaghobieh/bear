@@ -51,8 +51,8 @@ export const PageBreadcrumbs: FC = () => {
   if (segments.length <= 1) return null;
 
   return (
-    <nav aria-label="Breadcrumb" className="mb-4">
-      <ol className="flex items-center flex-wrap">
+    <nav aria-label="Breadcrumb" className="mb-2 sm:mb-4 max-w-full">
+      <ol className="flex items-center flex-wrap gap-y-1">
         {segments.map((seg, i) => {
           const isLast = i === segments.length - 1;
           return (

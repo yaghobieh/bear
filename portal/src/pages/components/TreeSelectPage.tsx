@@ -97,7 +97,7 @@ const TreeSelectPage: FC = () => {
   label="Technology"
 />`}
       >
-        <div className="w-72">
+        <div className="w-full max-w-xs">
           <TreeSelect
             nodes={DEMO_NODES}
             value={single}
@@ -120,7 +120,7 @@ const TreeSelectPage: FC = () => {
   label="Skills"
 />`}
       >
-        <div className="w-80">
+        <div className="w-full max-w-xs">
           <TreeSelect
             nodes={DEMO_NODES}
             value={multi}
@@ -141,7 +141,7 @@ const TreeSelectPage: FC = () => {
   error="Please select a department"
 />`}
       >
-        <div className="w-72">
+        <div className="w-full max-w-xs">
           <TreeSelect
             nodes={DEPT_NODES}
             value={dept}

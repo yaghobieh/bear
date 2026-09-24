@@ -1,4 +1,4 @@
-import { useState, useMemo, KeyboardEvent } from 'react';
+import { useState, useMemo, useCallback, KeyboardEvent } from 'react';
 import { cn, resolveBearId, useBearId } from '@utils';
 import { ToggleGroupContext } from './ToggleGroup.context';
 import {
@@ -30,7 +30,7 @@ export const ToggleGroup = (props: ToggleGroupProps) => {
     id,
     testId,
     ...rest
-  } = props as ToggleGroupProps & { onValueChange?: (val: any) => void };
+  } = props as ToggleGroupProps & { onValueChange?: (val: string | string[]) => void };
 
   const generatedId = useBearId(COMPONENT_NAME_TOGGLE_GROUP);
   const domId = resolveBearId(id, generatedId);
@@ -56,29 +56,32 @@ export const ToggleGroup = (props: ToggleGroupProps) => {
       ? uncontrolledSingle
       : uncontrolledMultiple;
 
-  const handleToggle = (itemValue: string) => {
-    if (disabled) return;
+  const handleToggle = useCallback(
+    (itemValue: string) => {
+      if (disabled) return;
 
-    if (type === TOGGLE_GROUP_TYPE_SINGLE) {
-      const nextValue = currentValue === itemValue ? EMPTY_STRING : itemValue;
-      if (!isControlled) {
-        setUncontrolledSingle(nextValue);
-      }
-      (onChange as ((val: string) => void) | undefined)?.(nextValue);
-      onValueChange?.(nextValue);
-    } else {
-      const currentList = Array.isArray(currentValue) ? currentValue : [];
-      const nextList = currentList.includes(itemValue)
-        ? currentList.filter((v) => v !== itemValue)
-        : [...currentList, itemValue];
+      if (type === TOGGLE_GROUP_TYPE_SINGLE) {
+        const nextValue = currentValue === itemValue ? EMPTY_STRING : itemValue;
+        if (!isControlled) {
+          setUncontrolledSingle(nextValue);
+        }
+        (onChange as ((val: string) => void) | undefined)?.(nextValue);
+        onValueChange?.(nextValue);
+      } else {
+        const currentList = Array.isArray(currentValue) ? currentValue : [];
+        const nextList = currentList.includes(itemValue)
+          ? currentList.filter((v) => v !== itemValue)
+          : [...currentList, itemValue];
 
-      if (!isControlled) {
-        setUncontrolledMultiple(nextList);
+        if (!isControlled) {
+          setUncontrolledMultiple(nextList);
+        }
+        (onChange as ((val: string[]) => void) | undefined)?.(nextList);
+        onValueChange?.(nextList);
       }
-      (onChange as ((val: string[]) => void) | undefined)?.(nextList);
-      onValueChange?.(nextList);
-    }
-  };
+    },
+    [disabled, type, currentValue, isControlled, onChange, onValueChange]
+  );
 
   const contextValue = useMemo(
     () => ({
@@ -89,7 +92,7 @@ export const ToggleGroup = (props: ToggleGroupProps) => {
       variant,
       disabled,
     }),
-    [type, currentValue, size, variant, disabled]
+    [type, currentValue, handleToggle, size, variant, disabled]
   );
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -127,7 +130,7 @@ export const ToggleGroup = (props: ToggleGroupProps) => {
         onKeyDown={handleKeyDown}
         className={cn(
           'Bear-ToggleGroup',
-          'inline-flex items-center gap-1 rounded-lg border border-[var(--bear-border-subtle)] bg-[var(--bear-surface-base)] p-1',
+          'inline-flex max-w-full items-center gap-1 rounded-lg border border-[var(--bear-border-subtle)] bg-[var(--bear-surface-base)] p-1',
           ORIENTATION_CLASS_MAP[orientation],
           fullWidth && 'w-full justify-stretch',
           disabled && 'opacity-60 cursor-not-allowed',

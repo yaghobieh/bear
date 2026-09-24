@@ -439,9 +439,11 @@ function PortalLayout({
             }
           >
             {!isLanding && !isStorybook && (
-              <div className="flex items-center justify-between gap-3 mb-2">
+              <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-3 mb-2 min-w-0 max-w-full">
                 <PageBreadcrumbs />
-                <ComponentSandboxLink />
+                <div className="shrink-0 hidden sm:block">
+                  <ComponentSandboxLink />
+                </div>
               </div>
             )}
             <Suspense fallback={<PageLoader />}>

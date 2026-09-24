@@ -77,8 +77,8 @@ export const ComponentPreview: FC<ComponentPreviewProps> = ({
         </div>
       )}
 
-      <div className={`doc-preview__stage ${hasLiveProps && editableProps ? 'rounded-t-none border-t-0' : ''} rounded-t-xl border border-b-0 border-zinc-200 dark:border-zinc-800`}>
-        <div className="doc-preview__stage-inner">{previewContent}</div>
+      <div className={`doc-preview__stage ${hasLiveProps && editableProps ? 'rounded-t-none border-t-0' : ''} rounded-t-xl border border-b-0 border-zinc-200 dark:border-zinc-800 max-w-full overflow-x-auto`}>
+        <div className="doc-preview__stage-inner max-w-full overflow-x-auto">{previewContent}</div>
       </div>
 
       <div className="doc-preview__code mt-0 rounded-b-xl border border-t-0 border-zinc-200 dark:border-zinc-800 overflow-hidden">

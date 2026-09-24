@@ -72,7 +72,7 @@ export const ToggleGroupItem = (props: ToggleGroupItemProps) => {
         isSelected ? variantStyles.active : variantStyles.base,
         className
       )}
-      {...(rest as any)}
+      {...(rest as Record<string, unknown>)}
     >
       {children}
     </Button>

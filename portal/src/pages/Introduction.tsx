@@ -2,7 +2,6 @@ import React, { FC, ReactNode, useState, lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import { CodeBlock } from '@/components/CodeBlock';
 import { HomeBentoGrid } from '@/components/HomeBentoGrid';
-import { BearVideoShowcase } from '@/components/BearVideoShowcase';
 import {
   GITHUB_URL,
   VERSION_HIGHLIGHT_BY_VERSION,
@@ -261,8 +260,6 @@ const Introduction: FC = () => {
         </p>
       </section>
 
-      {/* Prominent Featured Video Showcase */}
-      <BearVideoShowcase />
 
       {/* Interactive Component Playground (Shadcn-style Base Alert & ToggleGroup) */}
       <section className="mb-20">

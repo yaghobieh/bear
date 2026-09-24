@@ -2,7 +2,6 @@ import React, { FC, ReactNode, useState, lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import { CodeBlock } from '@/components/CodeBlock';
 import { HomeBentoGrid } from '@/components/HomeBentoGrid';
-import { BearVideoShowcase } from '@/components/BearVideoShowcase';
 import {
   GITHUB_URL,
   VERSION_HIGHLIGHT_BY_VERSION,
@@ -261,8 +260,6 @@ const Introduction: FC = () => {
         </p>
       </section>
 
-      {/* Prominent Featured Video Showcase */}
-      <BearVideoShowcase />
 
       {/* Interactive Component Playground (Shadcn-style Base Alert & ToggleGroup) */}
       <section className="mb-20">
@@ -278,9 +275,9 @@ const Introduction: FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 max-w-5xl mx-auto">
           {/* Base Alert Showcase (matching shadcn alert pattern) */}
-          <div className="p-6 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/70 dark:bg-gray-900/50 backdrop-blur-sm shadow-sm space-y-4 flex flex-col justify-between">
+          <div className="p-4 sm:p-6 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/70 dark:bg-gray-900/50 backdrop-blur-sm shadow-sm space-y-4 flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between mb-4">
                 <span className="text-xs font-semibold uppercase tracking-wider text-gray-400">Feedback / Alert</span>
@@ -323,7 +320,7 @@ const Introduction: FC = () => {
           </div>
 
           {/* ToggleGroup Showcase (Brand New Component) */}
-          <div className="p-6 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/70 dark:bg-gray-900/50 backdrop-blur-sm shadow-sm space-y-4 flex flex-col justify-between">
+          <div className="p-4 sm:p-6 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/70 dark:bg-gray-900/50 backdrop-blur-sm shadow-sm space-y-4 flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between mb-4">
                 <span className="text-xs font-semibold uppercase tracking-wider text-gray-400">Controls / ToggleGroup</span>
@@ -400,7 +397,7 @@ const Introduction: FC = () => {
           </div>
 
           {/* Card & Compound Showcase */}
-          <div className="p-6 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/70 dark:bg-gray-900/50 backdrop-blur-sm shadow-sm space-y-4 flex flex-col justify-between">
+          <div className="p-4 sm:p-6 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/70 dark:bg-gray-900/50 backdrop-blur-sm shadow-sm space-y-4 flex flex-col justify-between md:col-span-2 lg:col-span-1">
             <div>
               <div className="flex items-center justify-between mb-4">
                 <span className="text-xs font-semibold uppercase tracking-wider text-gray-400">Surfaces / Card</span>
@@ -569,7 +566,7 @@ const BrandCard = bearStyled(Card, {
       <section className="mb-14 md:mb-20">
         <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-3 text-center">Popular Components</h2>
         <p className="text-center text-gray-500 dark:text-gray-400 mb-10">Click any card to explore docs, live examples, and API reference</p>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
           <ComponentCard title="Button" desc="10+ variants, loading, icons" path="/components/button"
             preview={<div className="flex gap-2"><span className="px-3 py-1.5 bg-pink-500 text-white text-xs rounded-lg">Primary</span><span className="px-3 py-1.5 border border-gray-300 text-gray-600 dark:text-gray-300 text-xs rounded-lg">Outline</span></div>} />
           <ComponentCard title="ToggleGroup" desc="Segmented buttons & toggles" path="/components/toggle-group"
@@ -608,7 +605,7 @@ const BrandCard = bearStyled(Card, {
       <section className="mb-14 md:mb-20">
         <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-3 text-center">Powerful Hooks</h2>
         <p className="text-center text-gray-500 dark:text-gray-400 mb-10">Responsive, animation, network, gesture, and utility hooks</p>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3">
           {HOOKS.map((h) => (
             <Link key={h.name} to={h.path} className="group p-3 rounded-lg border border-gray-200 dark:border-gray-700/60 bg-white dark:bg-gray-800/40 hover:border-pink-400 dark:hover:border-pink-500 transition-all">
               <code className="text-sm font-mono text-pink-600 dark:text-pink-400 group-hover:text-pink-500">{h.name}</code>

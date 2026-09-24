@@ -273,6 +273,18 @@ html.dark body {
   color: #fafafa;
 }
 
+.doc-table-wrap {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.doc-table {
+  width: 100%;
+  min-width: 480px;
+}
+
 .doc-table__th {
   padding: 0.75rem 1rem;
   font-weight: 500;
@@ -322,6 +334,9 @@ html.dark body {
   border: 1px solid #e4e4e7;
   background: #fafafa;
   border-radius: 0.75rem;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .dark .doc-preview__stage {
@@ -336,6 +351,15 @@ html.dark body {
   min-height: 12rem;
   padding: 2.5rem 2rem;
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+  .doc-preview__stage-inner {
+    padding: 1.5rem 0.75rem;
+    min-height: 8rem;
+  }
 }
 
 .doc-nav-badge {

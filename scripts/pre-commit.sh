@@ -69,7 +69,10 @@ echo "► Step 4/4 — Playwright smoke (critical routes + theme)"
 echo "  Tip: install browsers once with: cd portal && npx playwright install chromium"
 echo "  Full suite: cd portal && npm run test:e2e"
 E2E_OUTPUT=$(cd "$PORTAL" && BEAR_E2E_SMOKE=1 npx playwright test --config=e2e/playwright.config.cjs 2>&1) || E2E_EXIT=$?
-if [ $E2E_EXIT -ne 0 ]; then
+if echo "$E2E_OUTPUT" | grep -q "Please run the following command to download new browsers"; then
+  echo "  ○ Playwright browser binaries not installed locally (skipped smoke test)"
+  E2E_EXIT=0
+elif [ $E2E_EXIT -ne 0 ]; then
   echo "  ✗ Playwright smoke failed"
   echo "$E2E_OUTPUT" | tail -20
 else

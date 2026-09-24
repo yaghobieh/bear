@@ -170,7 +170,7 @@ import { SearchIcon, BearIcons } from '@forgedevstack/bear-icons';
       {/* Controls bar */}
       <div className="flex flex-wrap items-center gap-3 mb-6 p-3 rounded-lg border border-gray-200 dark:border-gray-700/60 bg-gray-50 dark:bg-gray-800/30">
         {/* Search */}
-        <div className="relative flex-1 min-w-[200px]">
+        <div className="relative w-full sm:flex-1 sm:min-w-[200px]">
           <span className="absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
             <BearIcons.SearchIcon size={16} />
           </span>
@@ -257,7 +257,7 @@ import { SearchIcon, BearIcons } from '@forgedevstack/bear-icons';
         {CATEGORY_NAMES.map((category) => (
           <TabPanel key={category} tabId={category} className="pt-2">
             {categoriesToShow[category] ? (
-              <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2">
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-2">
                 {categoriesToShow[category].map(([name, IconComponent]) => (
                   <IconPreview key={name} name={name} IconComponent={IconComponent} colorClass={colorClass} iconSize={iconSize} showCircle={showCircle} />
                 ))}

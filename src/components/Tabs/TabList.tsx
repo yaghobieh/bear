@@ -45,7 +45,7 @@ export const TabList: FC<TabListProps> = ({ children, maxVisibleTabs, wrap = fal
     `Bear-Tabs__list--${variant}`,
     resolvedMax != null && !wrap && 'bear-flex bear-w-full bear-min-w-0 bear-items-stretch',
     (!resolvedMax || wrap) && 'bear-flex bear-gap-1',
-    wrap && 'bear-flex-wrap',
+    wrap ? 'bear-flex-wrap' : 'bear-max-w-full bear-overflow-x-auto',
     !wrap && !resolvedMax && 'bear-gap-1',
     variant === 'line' && 'bear-border-b',
     variant === 'pills' && 'bear-p-1 bear-rounded-lg',

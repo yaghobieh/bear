@@ -64,7 +64,7 @@ export const BearCodeBlock: FC<BearCodeBlockProps> = (props) => {
     <div
       id={id}
       data-testid={testId}
-      className="Bear-CodeBlock rounded-lg overflow-hidden border border-zinc-200 dark:border-zinc-700"
+      className="Bear-CodeBlock rounded-lg overflow-hidden border border-zinc-200 dark:border-zinc-700 max-w-full"
     >
       <div className="Bear-CodeBlock-header flex items-center justify-between px-4 py-2 bg-zinc-100 dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-700">
         <div className="Bear-CodeBlock-meta flex items-center gap-2">
@@ -83,7 +83,7 @@ export const BearCodeBlock: FC<BearCodeBlockProps> = (props) => {
         </button>
       </div>
 
-      <div className="Bear-CodeBlock-content overflow-x-auto bg-zinc-50 dark:bg-zinc-900">
+      <div className="Bear-CodeBlock-content overflow-x-auto max-w-full bg-zinc-50 dark:bg-zinc-900">
         <pre className="Bear-CodeBlock-pre p-4 text-sm leading-relaxed font-mono m-0">
           <code className="Bear-CodeBlock-code">
             {lines.map((line, index) => (

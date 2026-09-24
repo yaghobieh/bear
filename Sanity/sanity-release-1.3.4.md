@@ -1,7 +1,7 @@
 # Bear Portal Sanity Report — release/1.3.4
 
-**Date:** 2026-09-22
-**Branch:** release/1.3.4
+**Date:** 2026-09-24
+**Branch:** fix/portal-responsiveness-and-torch-player
 **Version:** 1.3.4
 **Overall Status:** ❌ FAILED
 
@@ -9,13 +9,13 @@
 
 ## Code Review Gates (Static Analysis)
 
-❌ ESLint failed (0 errors, 0 warnings)
+✅ ESLint passed
 
 | Gate | Rule | Status | Notes |
 |------|------|--------|-------|
 | **G1** | No magic strings/numbers | 🔍 Manual |  |
 | **G2** | No `as` casts on LiveProps | 🔍 Manual |  |
-| **G3** | No HTML comments in JSX | ❌ | 0 error(s), 0 warning(s) |
+| **G3** | No HTML comments in JSX | ✅ |  |
 | **G4** | No bare `<>` for layout | 🔍 Manual |  |
 | **G5** | Bear primitives only (no raw div/span) | 🔍 Manual |  |
 | **G6** | Keymap over chained conditions | 🔍 Manual |  |

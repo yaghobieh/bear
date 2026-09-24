@@ -114,11 +114,20 @@ export const Topbar: FC<TopbarProps> = (props) => {
             </nav>
 
             <div className="Bear-Topbar__right flex items-center gap-0.5">
+              <button
+                onClick={handleSearchToggle}
+                className="md:hidden p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-md transition-colors"
+                aria-label={t.searchPlaceholder}
+                title={t.searchPlaceholder}
+              >
+                <BearIcons.SearchIcon size={18} />
+              </button>
+
               <a
                 href={resolveStorybookHrefForPath(location.pathname)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-md transition-colors"
+                className="hidden md:flex p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-md transition-colors"
                 aria-label={t.storybookLink}
                 title={t.storybookLink}
               >
@@ -127,13 +136,13 @@ export const Topbar: FC<TopbarProps> = (props) => {
               <button
                 type="button"
                 onClick={() => openCodeSandbox(location.pathname)}
-                className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-md transition-colors"
+                className="hidden md:flex p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-md transition-colors"
                 aria-label={t.sandboxLink}
                 title={t.sandboxLink}
               >
                 <SandboxIcon size={18} />
               </button>
-              <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-md transition-colors" aria-label="GitHub" title="GitHub">
+              <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className="hidden sm:flex p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-md transition-colors" aria-label="GitHub" title="GitHub">
                 <BearIcons.GithubIcon size={18} />
               </a>
 
@@ -147,9 +156,6 @@ export const Topbar: FC<TopbarProps> = (props) => {
               >
                 <NpmIcon />
                 <span>{npmDownloads.formatted}/mo</span>
-              </a>
-              <a href={NPM_URL} target="_blank" rel="noopener noreferrer" className="sm:hidden p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-md transition-colors" aria-label="NPM" title="npm">
-                <NpmIcon />
               </a>
 
               <div ref={alertsRef} className="relative">
@@ -166,7 +172,7 @@ export const Topbar: FC<TopbarProps> = (props) => {
                   <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-pink-500 rounded-full" />
                 </button>
                 {alertsOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-80 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 shadow-xl overflow-hidden z-50">
+                  <div className="absolute right-0 top-full mt-2 w-80 max-w-[calc(100vw-1.5rem)] bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 shadow-xl overflow-hidden z-50">
                     <div className="px-3 py-2 border-b border-gray-100 dark:border-gray-800">
                       <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
                         {t.newComponents}
@@ -208,7 +214,7 @@ export const Topbar: FC<TopbarProps> = (props) => {
                 </button>
 
                 {settingsOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-72 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 shadow-xl overflow-hidden z-50">
+                  <div className="absolute right-0 top-full mt-2 w-72 max-w-[calc(100vw-1.5rem)] bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 shadow-xl overflow-hidden z-50">
                     <div className="p-3 border-b border-gray-100 dark:border-gray-800">
                       <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">{t.appearance}</p>
                       <div className="flex items-center gap-1.5">

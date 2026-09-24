@@ -7,6 +7,7 @@
     "@forgedevstack/bear": "file:..",
     "@forgedevstack/bear-icons": "^1.0.3",
     "@forgedevstack/grid-table": "1.0.2",
+    "@forgedevstack/torch": "^1.0.1",
     "lz-string": "^1.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

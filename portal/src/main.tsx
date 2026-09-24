@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { BearProvider } from '@forgedevstack/bear';
 import App from './App';
 import '@forgedevstack/bear/styles.css';
+import '@forgedevstack/torch/styles.css';
 import './styles/globals.css';
 
 const storedDirection =

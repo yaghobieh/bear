@@ -2,6 +2,19 @@
 
 All notable changes to Bear UI will be documented in this file.
 
+## [1.3.5] - 2026-10-17
+
+### Added
+
+- **Bear X packages** — `@forgedevstack/bear-x-charts`, `@forgedevstack/bear-x-tree`, `@forgedevstack/bear-x-ai`, and `@forgedevstack/bear-x-code`. They re-export the current components and are linked locally from the portal.
+- **Separate libraries** — `@forgedevstack/bear-map` and `@forgedevstack/kanban`.
+- **Portal** — `/libraries` catalog, CLI docs, Storybook package entry, and sandbox package names.
+
+### Migration
+
+- Existing imports from `@forgedevstack/bear` keep working.
+- MediaPlayer stays `@forgedevstack/torch`. RichEditor stays Ink. `@forgedevstack/grid-table` keeps its name.
+
 ## [1.3.4] - 2026-09-22
 
 ### Added

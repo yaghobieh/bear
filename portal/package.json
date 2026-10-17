@@ -6,6 +6,12 @@
   "dependencies": {
     "@forgedevstack/bear": "file:..",
     "@forgedevstack/bear-icons": "^1.0.3",
+    "@forgedevstack/bear-x-charts": "file:../packages/bear-x-charts",
+    "@forgedevstack/bear-x-tree": "file:../packages/bear-x-tree",
+    "@forgedevstack/bear-x-ai": "file:../packages/bear-x-ai",
+    "@forgedevstack/bear-x-code": "file:../packages/bear-x-code",
+    "@forgedevstack/bear-map": "file:../packages/bear-map",
+    "@forgedevstack/kanban": "file:../packages/kanban",
     "@forgedevstack/grid-table": "1.0.2",
     "@forgedevstack/torch": "^1.0.1",
     "lz-string": "^1.5.0",

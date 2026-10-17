@@ -106,6 +106,11 @@ forge add [package]
 forge generate page Dashboard
 forge generate component UserCard`;
 
+export const BEAR_CLI_INIT = `npx @forgedevstack/bear-cli init
+npx @forgedevstack/bear-cli add charts
+npx @forgedevstack/bear-cli add map
+npx @forgedevstack/bear-cli add kanban`;
+
 export const PACKAGE_JSON_IMPORTS = `{
   "imports": {
     "#components/*": "./src/components/*.tsx",

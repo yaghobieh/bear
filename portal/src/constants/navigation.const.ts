@@ -17,9 +17,10 @@ export interface NavGroup {
   icon?: string;
 }
 
-export const BEAR_VERSION = '1.3.4';
+export const BEAR_VERSION = '1.3.5';
 
 export const VERSION_HIGHLIGHT_BY_VERSION: Record<string, string> = {
+  '1.3.5': 'Bear X charts, tree, AI, code · bear-map · kanban',
   '1.3.4': 'ToggleGroup · Lotso redesign · Overlay effects parity · Focus traps',
   '1.3.3': 'AI chat kit · Drawer variants · system theme',
   '1.3.2': 'Drawer close effects · no-icons install · Chart views',
@@ -27,7 +28,7 @@ export const VERSION_HIGHLIGHT_BY_VERSION: Record<string, string> = {
   '1.3.0': 'ModalsProvider · overlays above blur · SignPad',
 };
 
-export const VERSION_HIGHLIGHT_FALLBACK = 'ToggleGroup · Lotso redesign · Overlay effects parity · Focus traps';
+export const VERSION_HIGHLIGHT_FALLBACK = 'Bear X charts, tree, AI, code · bear-map · kanban';
 
 /** Main Bear UI repository */
 export const GITHUB_URL = 'https://github.com/yaghobieh/bear';
@@ -108,6 +109,7 @@ export const NAVIGATION: NavGroup[] = [
       { path: '/docs/nextjs', label: 'Next.js' },
       { path: '/typescript', label: 'TypeScript' },
       { path: '/icons', label: 'Icons', badge: 'icons' },
+      { path: '/libraries', label: 'Libraries', badge: '1.3.5' },
       { path: '/docs/directory', label: 'Registry Directory' },
       { path: '/docs/registry/github', label: 'GitHub Registry' },
       { path: '/docs/registry/mcp', label: 'MCP Server', badge: 'Soon' },

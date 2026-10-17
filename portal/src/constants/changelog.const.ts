@@ -10,6 +10,22 @@ export interface ChangelogEntry {
 
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
+    version: '1.3.5',
+    date: 'October 17, 2026',
+    tag: 'minor',
+    sections: [
+      {
+        title: 'Added',
+        items: [
+          '@forgedevstack/bear-x-charts, bear-x-tree, bear-x-ai, and bear-x-code as optional Bear X packages',
+          '@forgedevstack/bear-map and @forgedevstack/kanban as separate libraries',
+          'Portal Libraries page, Storybook package stories, and sandbox install names',
+          'Core still exports the same components. MediaPlayer stays Torch. RichEditor stays Ink.',
+        ],
+      },
+    ],
+  },
+  {
     version: '1.3.4',
     date: 'September 22, 2026',
     tag: 'patch',

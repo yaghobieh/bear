@@ -6,6 +6,12 @@ const LATEST = CHANGELOG_ENTRIES[0];
 
 const RELEASE_ITEMS = [
   {
+    title: 'Bear X and separate libraries',
+    path: '/libraries',
+    icon: BearIcons.LayersIcon,
+    description: 'Optional packages for charts, tree, AI, and code, plus @forgedevstack/bear-map and @forgedevstack/kanban. Core imports stay in place.',
+  },
+  {
     title: 'ToggleGroup & ToggleGroupItem',
     path: '/components/toggle-group',
     icon: BearIcons.ToggleButtonIcon,

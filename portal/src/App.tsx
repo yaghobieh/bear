@@ -18,6 +18,7 @@ const SkillsPage = lazy(() => import('./pages/Skills'));
 const FormsDocsPage = lazy(() => import('./pages/docs/FormsDocs'));
 const CliDocsPage = lazy(() => import('./pages/docs/CliDocs'));
 const PackageImportsDocsPage = lazy(() => import('./pages/docs/PackageImportsDocs'));
+const LibrariesPage = lazy(() => import('./pages/Libraries'));
 const DarkModeDocsPage = lazy(() => import('./pages/docs/DarkModeDocs'));
 const JavaScriptDocsPage = lazy(() => import('./pages/docs/JavaScriptDocs'));
 const NextJsDocsPage = lazy(() => import('./pages/docs/NextJsDocs'));
@@ -456,6 +457,7 @@ function PortalLayout({
                 <Route path="/docs/forms" element={<FormsDocsPage />} />
                 <Route path="/docs/cli" element={<CliDocsPage />} />
                 <Route path="/docs/package-imports" element={<PackageImportsDocsPage />} />
+                <Route path="/libraries" element={<LibrariesPage />} />
                 <Route path="/docs/dark-mode" element={<DarkModeDocsPage />} />
                 <Route path="/docs/javascript" element={<JavaScriptDocsPage />} />
                 <Route path="/docs/nextjs" element={<NextJsDocsPage />} />

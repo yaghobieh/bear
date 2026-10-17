@@ -70,6 +70,21 @@ yarn add @forgedevstack/bear --ignore-optional
 npm install @forgedevstack/bear-icons
 ```
 
+### Bear X and separate libraries (1.3.5)
+
+Core still exports these components. Install the package when you want that surface on its own. Styles stay on `@forgedevstack/bear/styles.css`.
+
+```bash
+npm install @forgedevstack/bear-x-charts
+npm install @forgedevstack/bear-x-tree
+npm install @forgedevstack/bear-x-ai
+npm install @forgedevstack/bear-x-code
+npm install @forgedevstack/bear-map
+npm install @forgedevstack/kanban
+```
+
+MediaPlayer stays Torch. RichEditor stays Ink.
+
 ---
 
 ## Quick Start

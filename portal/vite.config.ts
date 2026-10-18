@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
+import { bearAskPlugin } from './server/bearAskPlugin';
 
 export default defineConfig({
   resolve: {
@@ -22,6 +23,7 @@ export default defineConfig({
   },
   plugins: [
     react(),
+    bearAskPlugin(),
     {
       name: 'bear-source-entry',
       enforce: 'pre',

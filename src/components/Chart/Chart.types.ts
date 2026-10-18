@@ -6,6 +6,8 @@ export type PieView = 'full' | 'half' | 'rose';
 
 export type ChartLegendPosition = 'right' | 'bottom' | 'none';
 
+export type ChartMotion = 'grow' | 'fade' | 'scale' | 'none';
+
 export interface ChartDataPoint {
   label: string;
   value: number;
@@ -21,6 +23,7 @@ export interface ChartProps extends Omit<HTMLAttributes<HTMLDivElement>, 'childr
   showLabels?: boolean;
   showValues?: boolean;
   animated?: boolean;
+  motion?: ChartMotion;
   color?: string;
   showGrid?: boolean;
   pieView?: PieView;

@@ -18,6 +18,8 @@ export const SEO_MAP: Record<string, SEOEntry> = {
   '/docs/forms': { title: 'Forms', description: 'Build forms with Bear UI, @forgedevstack/forge-form, and React useActionState.' },
   '/docs/cli': { title: 'CLI', description: 'Forge CLI and @forgedevstack/bear-cli — scaffold projects and add Bear X libraries.' },
   '/libraries': { title: 'Libraries', description: 'Bear X charts, tree, AI, code, plus bear-map and kanban.' },
+  '/about': { title: 'About us', description: `About Bear UI and ${SEO_AUTHOR_NAME}.` },
+  '/blog': { title: 'Blog', description: `Bear UI release notes by ${SEO_AUTHOR_NAME}.` },
   '/docs/package-imports': { title: 'Package Imports', description: 'Configure package.json imports for Bear-style path aliases.' },
   '/docs/dark-mode': { title: 'Dark Mode', description: 'Bear UI dark mode with BearProvider — toggle, persist, and CSS variables.' },
   '/docs/javascript': { title: 'JavaScript', description: 'Use Bear UI in JavaScript projects with optional TypeScript.' },

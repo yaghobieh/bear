@@ -349,13 +349,27 @@ export const Calendar: FC<CalendarProps> = (props) => {
     return root;
   }
 
+  if (slots.root) {
+    return (
+      <Transition
+        show={showPanel}
+        name={motionName}
+        duration={skipDuration ? ZERO : DEFAULT_DURATION}
+      >
+        {root}
+      </Transition>
+    );
+  }
+
   return (
     <Transition
       show={showPanel}
       name={motionName}
       duration={skipDuration ? ZERO : DEFAULT_DURATION}
+      className={rootCn}
+      style={rootStyle}
     >
-      {root}
+      {content}
     </Transition>
   );
 };

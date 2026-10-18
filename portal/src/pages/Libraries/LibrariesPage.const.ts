@@ -19,14 +19,6 @@ export const BEAR_LIBRARIES: BearLibraryCard[] = [
     components: ['Chart', 'BarChart', 'LineChart', 'PieChart', 'RadarChart', 'FunnelChart', 'Sparkline', 'Gauge', 'RingProgress', 'Heatmap', 'TimelineChart'],
   },
   {
-    id: 'tree',
-    name: '@forgedevstack/bear-x-tree',
-    kind: 'x',
-    summaryKey: 'librariesTree',
-    install: 'npm install @forgedevstack/bear @forgedevstack/bear-x-tree',
-    components: ['TreeView', 'TreeSelect', 'FileTree', 'Cascader'],
-  },
-  {
     id: 'ai',
     name: '@forgedevstack/bear-x-ai',
     kind: 'x',
@@ -58,14 +50,30 @@ export const BEAR_LIBRARIES: BearLibraryCard[] = [
     install: 'npm install @forgedevstack/bear @forgedevstack/kanban',
     components: ['Kanban'],
   },
+  {
+    id: 'calendar',
+    name: '@forgedevstack/calendar',
+    kind: 'library',
+    summaryKey: 'librariesCalendar',
+    install: 'npm install @forgedevstack/bear @forgedevstack/calendar',
+    components: ['EventCalendar', 'EventTimeline', 'EventEditDialog', 'ResourceFilter', 'Calendar'],
+  },
 ];
 
-export const LIBRARY_IMPORT_SAMPLE = `import { BarChart } from '@forgedevstack/bear-x-charts';
-import '@forgedevstack/bear/styles.css';`;
+export const LIBRARY_IMPORT_SAMPLE = `import { BearProvider, BarChart } from '@forgedevstack/bear-x-charts';
+import '@forgedevstack/bear/styles.css';
 
-export const BEAR_CLI_ADD = `npx @forgedevstack/bear-cli add charts
-npx @forgedevstack/bear-cli add tree
+export const App = () => (
+  <BearProvider>
+    <BarChart data={[{ label: 'Jan', value: 30 }]} showLabels />
+  </BearProvider>
+);`;
+
+export const BEAR_CLI_ADD = `npm install @forgedevstack/bear
+npx @forgedevstack/bear-cli add charts
+npx @forgedevstack/bear-cli add icons
 npx @forgedevstack/bear-cli add ai
 npx @forgedevstack/bear-cli add code
 npx @forgedevstack/bear-cli add map
-npx @forgedevstack/bear-cli add kanban`;
+npx @forgedevstack/bear-cli add kanban
+npx @forgedevstack/bear-cli init --exclude map --exclude kanban --exclude ai --exclude code`;

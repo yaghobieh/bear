@@ -19,6 +19,10 @@ const PREFIX_RESOLVER_MAP: Record<string, (pathname: string) => SEOEntry> = {
     const name = slugToTitle(pathname);
     return { title: `${name} API`, description: `${name} API reference — all props, types, and examples.` };
   },
+  '/products/': (pathname) => {
+    const name = slugToTitle(pathname);
+    return { title: name, description: `${name} — Bear UI package by ${SEO_AUTHOR_NAME}. Install, preview, and component docs.` };
+  },
   '/customization/': (pathname) => {
     const name = slugToTitle(pathname);
     return { title: name, description: `Customize ${name} in Bear UI.` };

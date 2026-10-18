@@ -1,144 +1,64 @@
-<p align="center">
-  <img src="portal/public/bear-icon.svg" width="100" height="110" alt="Bear UI Mascot - Lotso Bear" />
-</p>
+# @forgedevstack/bear
 
-<h1 align="center">@forgedevstack/bear</h1>
+React components, a theme provider, and AeroCraft tokens. Version 1.3.5 in this repository. The published npm release is still 1.3.4 until 1.3.5 is published.
 
-<p align="center">
-  <strong>The Foundation for your React UI.</strong><br />
-  190+ accessible, customizable React components with TypeScript, AeroCraft CSS tokens, responsive hooks, and signature Lotso bear aesthetics.
-</p>
+Author: John Yaghobieh. Docs: [bearui.com](https://bearui.com). Package: [@forgedevstack/bear](https://www.npmjs.com/package/@forgedevstack/bear).
 
-<p align="center">
-  <a href="https://www.npmjs.com/package/@forgedevstack/bear"><img src="https://img.shields.io/npm/v/@forgedevstack/bear.svg?color=db2777" alt="npm version" /></a>
-  <a href="https://github.com/yaghobieh/bear/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT" /></a>
-  <img src="https://img.shields.io/badge/components-190+-db2777.svg" alt="Components: 190+" />
-  <img src="https://img.shields.io/badge/icons-550+-purple.svg" alt="Icons: 550+" />
-  <img src="https://img.shields.io/badge/hooks-25+-blue.svg" alt="Hooks: 25+" />
-  <img src="https://img.shields.io/badge/TypeScript-Strict-3178c6.svg" alt="TypeScript Strict" />
-  <a href="https://bearui.com"><img src="https://img.shields.io/badge/docs-bearui.com-db2777.svg" alt="Docs Portal" /></a>
-</p>
-
----
-
-## Highlights & What's New in v1.3.4
-
-- **ToggleGroup & ToggleGroupItem**: Modern segmented controls supporting single (`type="single"`) and multiple (`type="multiple"`) selections with full WAI-ARIA roving tabindex keyboard navigation.
-- **Standardized `useFocusTrap`**: Centralized, robust focus trap & focus restore across all overlay components (`Modal`, `Drawer`, `AlertDialog`, `CommandPalette`, `BottomSheet`).
-- **Overlay Motion Parity**: Unified `openEffect`, `closeEffect`, and compound `effect={{ open, close }}` across `Modal`, `Menu`, `Popover`, `Tooltip`, and `HoverCard`.
-- **Density Parity**: First-class support for `compact`, `normal`, and `comfortable` densities across `Select`, `ChipGroup`, and `AppBar`.
-- **Lotso Bear Visual Identity**: High-fidelity mascot vectors, dark/light theme integration, and brand new `@forgedevstack/bear-icons` (`BearIcon`, `LotsoIcon`, `BearFaceIcon`, `PawIcon`).
-
----
-
-## Installation
+## Install
 
 ```bash
-# Recommended default installation (includes components, themes & icons)
 npm install @forgedevstack/bear
-
-# Or with your preferred package manager
-pnpm add @forgedevstack/bear
-yarn add @forgedevstack/bear
-bun add @forgedevstack/bear
 ```
 
-### Quick Scaffolding with Forge CLI
-
-```bash
-npx @forgedevstack/bear init
-```
-
-### Lightweight Install (Without Icons)
-
-If you only need core components and wish to omit the icon library, pass the optional omission flag:
-
-```bash
-# npm
-npm install @forgedevstack/bear --omit=optional
-
-# pnpm
-pnpm add @forgedevstack/bear --no-optional
-
-# yarn
-yarn add @forgedevstack/bear --ignore-optional
-```
-
-### Standalone Icons
+That install is the component set and the theme. Icons are a separate package. Charts still ship inside the core build today, and they also have a dedicated package entry so you can import them on their own.
 
 ```bash
 npm install @forgedevstack/bear-icons
-```
-
-### Bear X and separate libraries (1.3.5)
-
-Core still exports these components. Install the package when you want that surface on its own. Styles stay on `@forgedevstack/bear/styles.css`.
-
-```bash
 npm install @forgedevstack/bear-x-charts
-npm install @forgedevstack/bear-x-tree
 npm install @forgedevstack/bear-x-ai
 npm install @forgedevstack/bear-x-code
 npm install @forgedevstack/bear-map
 npm install @forgedevstack/kanban
+npm install @forgedevstack/calendar
 ```
 
-MediaPlayer stays Torch. RichEditor stays Ink.
+`@forgedevstack/bear-icons` and `@forgedevstack/calendar` are on npm (`calendar` is 1.0.1 there; 1.0.2 with the event calendar is in this repo). Charts, AI, code, map, and kanban are not on npm yet.
 
----
+Media playback stays [Torch](https://www.npmjs.com/package/@forgedevstack/torch). The rich text editor stays [Ink](https://www.npmjs.com/package/@forgedevstack/ink).
 
-## Quick Start
+## Bundle size
 
-### 1. Import Compiled CSS
+Sizes change with each publish. Open Bundlephobia for the package you are about to add:
 
-Include Bear's compiled stylesheet once in your application entry file (`main.tsx`, `App.tsx`, or `index.css`):
+- [Core](https://bundlephobia.com/package/@forgedevstack/bear)
+- [Icons](https://bundlephobia.com/package/@forgedevstack/bear-icons)
+- [Charts](https://bundlephobia.com/package/@forgedevstack/bear-x-charts)
+- [AI](https://bundlephobia.com/package/@forgedevstack/bear-x-ai)
+- [Code](https://bundlephobia.com/package/@forgedevstack/bear-x-code)
+- [Map](https://bundlephobia.com/package/@forgedevstack/bear-map)
+- [Kanban](https://bundlephobia.com/package/@forgedevstack/kanban)
+- [Calendar](https://bundlephobia.com/package/@forgedevstack/calendar)
+
+The portal product pages and the libraries page have the same link as a button.
+
+## Provider
+
+Import the stylesheet once, then wrap the tree.
 
 ```tsx
 import '@forgedevstack/bear/styles.css';
-```
-
-### 2. Wrap with BearProvider & Start Building
-
-```tsx
-import React, { useState } from 'react';
-import {
-  BearProvider,
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  ToggleGroup,
-  ToggleGroupItem,
-  Typography,
-} from '@forgedevstack/bear';
+import { BearProvider, Button, Card, CardBody, Typography } from '@forgedevstack/bear';
 
 export function App() {
-  const [alignment, setAlignment] = useState('center');
-
   return (
-    <BearProvider>
-      <Card className="max-w-md mx-auto p-6 shadow-xl">
-        <CardHeader>
-          <Typography variant="h4">Bear UI 1.3.4</Typography>
-        </CardHeader>
-        <CardBody className="space-y-4">
-          <Typography variant="body1">
-            Choose your layout alignment:
-          </Typography>
-
-          <ToggleGroup
-            type="single"
-            value={alignment}
-            onValueChange={(val) => val && setAlignment(val)}
-          >
-            <ToggleGroupItem value="left">Left</ToggleGroupItem>
-            <ToggleGroupItem value="center">Center</ToggleGroupItem>
-            <ToggleGroupItem value="right">Right</ToggleGroupItem>
-          </ToggleGroup>
-
-          <Button variant="primary" fullWidth>
-            Confirm Selection ({alignment})
-          </Button>
+    <BearProvider
+      colorScheme="system"
+      theme={{ colors: { primary: '#ec4899' } }}
+    >
+      <Card>
+        <CardBody>
+          <Typography variant="h4">Bear</Typography>
+          <Button variant="primary">Save</Button>
         </CardBody>
       </Card>
     </BearProvider>
@@ -146,79 +66,102 @@ export function App() {
 }
 ```
 
----
+`colorScheme` is `light`, `dark`, or `system`. Dark mode follows the `.dark` class from the provider.
 
-## Theming & Lotso Color Palette
-
-Bear UI features a built-in strawberry magenta theme inspired by Lotso Bear, with deep contrast and native dark mode support.
+## Charts
 
 ```tsx
-import { BearProvider } from '@forgedevstack/bear';
+import { BarChart } from '@forgedevstack/bear-x-charts';
+import '@forgedevstack/bear/styles.css';
 
-<BearProvider
-  colorScheme="system" // 'light' | 'dark' | 'system'
-  theme={{
-    colors: {
-      primary: '#db2777', // Lotso Magenta
-      accent: '#fed7aa',  // Strawberry Cream
-    },
-  }}
->
-  <App />
-</BearProvider>
+<BarChart
+  data={[
+    { label: 'Jan', value: 30 },
+    { label: 'Feb', value: 45 },
+  ]}
+  showLabels
+/>
 ```
 
----
+Chart views in this repo: `bar`, `line`, `area`, `pie`, `donut`, `radar`, `funnel`, `stacked`. Pie also has `full`, `half`, and `rose`. Sparkline, Gauge, RingProgress, Heatmap, and TimelineChart sit next to those. Motion is `grow`, `fade`, `scale`, or `none`, and `animated` is a boolean. These are zero-dependency SVG charts. They are not Chart.js plugins.
 
-## Component Suite (190+ Primitives)
+## Icons
 
-| Category | Key Components |
-|---|---|
-| **Buttons & Action** | `Button`, `ButtonGroup`, `ToggleButton`, `ToggleGroup`, `FAB`, `SpeedDial`, `CopyButton`, `CloseButton`, `SplitButton`, `ActionIcon` |
-| **Forms & Input** | `Input`, `Select`, `MultiSelect`, `Autocomplete`, `Checkbox`, `Radio`, `Switch`, `Slider`, `TransferList`, `OTPInput`, `DatePicker`, `TimePicker`, `ColorPicker` |
-| **AI & Conversational** | `PromptComposer`, `StreamingMessage`, `ThinkingBlock`, `PromptSuggestions`, `MessageActions`, `ChatError`, `ToolCall`, `CitationList`, `ApprovalCard`, `ContextMeter` |
-| **Layout & Grid** | `Container`, `Flex`, `Grid`, `Paper`, `Divider`, `ResizablePanel`, `ScrollArea`, `Masonry`, `Dock` |
-| **Overlays & Dialogs** | `Modal`, `Drawer`, `AlertDialog`, `Popover`, `Tooltip`, `HoverCard`, `Menu`, `Dropdown`, `BottomSheet`, `CommandPalette` |
-| **Data Display** | `DataTable`, `Chart` (Bar/Line/Pie/Radar/Funnel), `Kanban`, `TreeSelect`, `Calendar`, `Timeline`, `DiffViewer`, `JsonViewer`, `CodeEditor` |
-| **Feedback & Status** | `Alert`, `Toast`, `BearLoader`, `Spinner`, `Progress`, `Skeleton`, `EmptyState`, `Badge`, `Rating` |
+```tsx
+import { SearchIcon } from '@forgedevstack/bear-icons';
 
----
+<SearchIcon size={24} />
+```
 
-## Performance & Comparison
+## Calendar
 
-| Feature | Bear UI | Material UI | Shadcn / Radix | Chakra UI |
-|---|---|---|---|---|
-| **Bundle Size (tree-shaken)** | **~18 kB** | ~85 kB | Modular | ~45 kB |
-| **Component Count** | **190+** | ~60 | ~45 | ~35 |
-| **Included Icons** | **550+** | Addon | Addon (Lucide) | Addon |
-| **AI Chat Primitives** | **Built-in** | No | Community | No |
-| **Zero Runtime CSS-in-JS** | **Yes (AeroCraft)**| No (Emotion) | Yes (Tailwind) | No (Emotion) |
-| **Density Parity** | **Compact / Normal / Comfortable** | Limited | Manual | Limited |
-| **TypeScript Strict** | **100%** | 100% | 100% | 100% |
+Peer of Bear. 1.0.2 adds the event month and the resource timeline. Popups and filters use Bear.
 
----
+```tsx
+import { EventCalendar, EventTimeline } from '@forgedevstack/calendar';
+import '@forgedevstack/calendar/styles.css';
+import '@forgedevstack/bear/styles.css';
 
-## Testing & Verification
+<EventCalendar events={events} mode="dark" />
+<EventTimeline events={events} />
+```
+
+## Map and kanban
+
+```tsx
+import { Map } from '@forgedevstack/bear-map';
+import { Kanban } from '@forgedevstack/kanban';
+```
+
+Hooks stay on core. Date pickers stay on core.
+
+## CLI
+
+Forge CLI is the installer that exists today.
 
 ```bash
-# Run unit & component build
-npm run build
-
-# Portal E2E Smoke Tests
-cd portal && npm run test:e2e:smoke
-
-# Full Playwright Suite
-cd portal && npm run test:e2e
+npx create-forge my-app
 ```
 
----
+When you select Bear, the CLI prints the Lotso mascot and asks which libraries to include: icons, charts, AI, code, map, kanban, and calendar. It then asks for the primary color. `--yes` selects Bear and those libraries.
 
-## Community & Contributing
+Add one package to an existing app:
 
-- **Live Documentation**: [https://bearui.com](https://bearui.com)
-- **Storybook**: Run `npm run storybook` in `/portal` or explore [bearui.com/storybook](https://bearui.com/storybook/)
-- **Contributing**: Please read [CONTRIBUTING.md](./CONTRIBUTING.md) before opening pull requests.
+```bash
+forge add bear
+forge add bear-icons
+forge add calendar
+```
+
+`forge add bear` asks the same library question. Icons and calendar install from npm. Charts, AI, code, map, and kanban are recorded in a comment in `src/main.tsx` until those packages are published, so the install does not fail on a missing package.
+
+`npx @forgedevstack/bear-cli` is the name reserved for a Bear-only binary. That binary is not published, so those commands do not run yet.
+
+## What 1.3.5 adds
+
+- Optional packages: `@forgedevstack/bear-x-charts`, `@forgedevstack/bear-x-ai`, `@forgedevstack/bear-x-code`, `@forgedevstack/bear-map`, `@forgedevstack/kanban`.
+- Overlay open and close motion on the panel: `none`, `fade`, `slide-down`, `scale`, `fold`, `elastic`, `reveal`, `expand`. The default is `fold`.
+- Portal product pages for each library, with a Bundlephobia button.
+- `@forgedevstack/calendar` 1.0.2: event calendar, resource filter, side editor, and timeline.
+
+## Components
+
+| Area | Examples |
+|---|---|
+| Actions | Button, ButtonGroup, ToggleGroup, FAB, SplitButton |
+| Forms | Input, Select, Checkbox, Radio, Switch, Slider, DatePicker, TimePicker |
+| Overlays | Modal, Drawer, AlertDialog, Popover, Tooltip, Menu, CommandPalette |
+| Feedback | Alert, Toast, Spinner, Progress, Skeleton, Badge |
+| Layout | Container, Flex, Grid, Paper, Divider, ScrollArea |
+| Data | DataTable, Chart, Calendar, Timeline |
+
+## Scripts
+
+```bash
+npm run build
+cd portal && npm run test:e2e:smoke
+```
 
 ## License
 
-Bear UI is open-source software licensed under the [MIT License](./LICENSE). Built with 💖 by John Yaghobieh & the ForgeStack Team.
+MIT. John Yaghobieh and the ForgeStack team.

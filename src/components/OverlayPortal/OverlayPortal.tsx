@@ -1,15 +1,17 @@
 import { useState } from 'react';
 import type { CSSProperties } from 'react';
 import { BOOLEAN_FALSE, BOOLEAN_TRUE, ZERO } from '@const';
+import { cn } from '@utils';
 import {
+  OVERLAY_OPEN_EFFECT_DEFAULT,
   OVERLAY_OPEN_EFFECT_NONE,
   VISIBILITY_VISIBLE,
   resolveOverlayEffects,
 } from '@hooks/useFixedAnchorPosition';
 import { Portal } from '../Portal';
 import { Transition } from '../Transition';
-import { DEFAULT_DURATION } from '../Transition/Transition.const';
-import { OVERLAY_EFFECT_TRANSITION } from './OverlayPortal.const';
+import { DEFAULT_DURATION, DEFAULT_EASING } from '../Transition/Transition.const';
+import { OVERLAY_EFFECT_TRANSITION, OVERLAY_ELASTIC_EASING, OVERLAY_EXPAND_MS, OVERLAY_PANEL_CLASS } from './OverlayPortal.const';
 import type { OverlayPortalProps } from './OverlayPortal.types';
 
 export const OverlayPortal = (props: OverlayPortalProps) => {
@@ -25,7 +27,7 @@ export const OverlayPortal = (props: OverlayPortalProps) => {
     children,
   } = props;
 
-  const { openEffect, closeEffect } = resolveOverlayEffects(props, OVERLAY_OPEN_EFFECT_NONE);
+  const { openEffect, closeEffect } = resolveOverlayEffects(props, OVERLAY_OPEN_EFFECT_DEFAULT);
   const [shouldRender, setShouldRender] = useState(BOOLEAN_FALSE);
   const hasMotion = openEffect !== OVERLAY_OPEN_EFFECT_NONE || closeEffect !== OVERLAY_OPEN_EFFECT_NONE;
 
@@ -69,20 +71,27 @@ export const OverlayPortal = (props: OverlayPortalProps) => {
     }
   };
 
-  const panel = (
+  const panelClassName = cn(OVERLAY_PANEL_CLASS, activeEffect && `${OVERLAY_PANEL_CLASS}--${activeEffect}`, className);
+  const motionDuration = activeEffect === 'expand' || activeEffect === 'reveal' ? OVERLAY_EXPAND_MS : DEFAULT_DURATION;
+  const motionEasing = activeEffect === 'elastic' ? OVERLAY_ELASTIC_EASING : DEFAULT_EASING;
+
+  const panel = hasMotion && motionName ? (
+    <Transition
+      show={open}
+      name={motionName}
+      duration={skipDuration ? ZERO : motionDuration}
+      easing={motionEasing}
+      className={panelClassName}
+      style={panelStyle}
+      nodeRef={panelRef}
+      onLeft={handleLeft}
+      elementProps={{ ...attributes, 'data-testid': testId }}
+    >
+      {children}
+    </Transition>
+  ) : (
     <div ref={panelRef} className={className} style={panelStyle} data-testid={testId} {...attributes}>
-      {hasMotion && motionName ? (
-        <Transition
-          show={open}
-          name={motionName}
-          duration={skipDuration ? ZERO : DEFAULT_DURATION}
-          onLeft={handleLeft}
-        >
-          {children}
-        </Transition>
-      ) : (
-        children
-      )}
+      {children}
     </div>
   );
 

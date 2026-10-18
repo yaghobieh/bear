@@ -1,5 +1,17 @@
 import type { PropRow } from '@/components/PropsTable';
-import type { ChartDataPoint } from '@forgedevstack/bear';
+import type { ChartDataPoint, ChartType, PieView } from '@forgedevstack/bear';
+
+export interface ChartDoc {
+  id: string;
+  path: string;
+  title: string;
+  description: string;
+  type: ChartType;
+  data: ChartDataPoint[];
+  height: number;
+  code: string;
+  pieView?: PieView;
+}
 
 export const CHART_SAMPLE_DATA: ChartDataPoint[] = [
   { label: 'Jan', value: 30 },
@@ -175,4 +187,29 @@ export const CHART_PROPS: PropRow[] = [
   { name: 'stepped', type: 'boolean', default: 'false', description: 'Step path on line charts' },
   { name: 'stacked', type: 'boolean', default: 'false', description: 'Stack bar segments' },
   { name: 'height', type: 'number', default: '200', description: 'Height in pixels' },
+  { name: 'animated', type: 'boolean', default: 'true', description: 'Play the entrance motion' },
+  { name: 'motion', type: "'grow' | 'fade' | 'scale' | 'none'", default: 'grow', description: 'Entrance effect. none turns the motion off' },
+  { name: 'showLabels', type: 'boolean', default: 'true', description: 'Show category labels' },
+  { name: 'showValues', type: 'boolean', default: 'false', description: 'Show the numeric value' },
+  { name: 'showGrid', type: 'boolean', default: 'true', description: 'Show the chart grid' },
+  { name: 'color', type: 'string', description: 'Series color. Line charts use the theme primary token when this is omitted' },
+];
+
+export const CHART_DOCS: ChartDoc[] = [
+  { id: 'bar', path: '/components/bar-chart', title: 'Bar', description: 'Vertical bars with labels and values.', type: 'bar', data: CHART_SAMPLE_DATA, height: CHART_BAR_HEIGHT, code: CHART_BAR_CODE },
+  { id: 'stacked', path: '/components/stacked-chart', title: 'Stacked', description: 'Stacked bar segments.', type: 'stacked', data: CHART_STACKED_DATA, height: CHART_BAR_HEIGHT, code: CHART_STACKED_CODE },
+  { id: 'line', path: '/components/line-chart', title: 'Line', description: 'Line series. Color follows the theme primary token.', type: 'line', data: CHART_SAMPLE_DATA, height: CHART_LINE_HEIGHT, code: CHART_LINE_CODE },
+  { id: 'area', path: '/components/area-chart', title: 'Area', description: 'Filled line series.', type: 'area', data: CHART_SAMPLE_DATA, height: CHART_BAR_HEIGHT, code: CHART_AREA_CODE },
+  { id: 'pie', path: '/components/pie-chart', title: 'Pie', description: 'Full pie.', type: 'pie', data: CHART_PIE_DATA, height: CHART_PIE_HEIGHT, code: CHART_PIE_CODE },
+  { id: 'polar', path: '/components/polar-chart', title: 'Polar area', description: 'Rose pie view.', type: 'pie', data: CHART_PIE_DATA, height: CHART_PIE_HEIGHT, code: CHART_PIE_CODE, pieView: 'rose' },
+  { id: 'donut', path: '/components/donut-chart', title: 'Donut', description: 'Pie with an inner radius.', type: 'donut', data: CHART_PIE_DATA, height: CHART_PIE_HEIGHT, code: CHART_DONUT_CODE },
+  { id: 'radar', path: '/components/radar-chart', title: 'Radar', description: 'Radar polygon.', type: 'radar', data: CHART_RADAR_DATA, height: CHART_RADAR_HEIGHT, code: CHART_RADAR_CODE },
+  { id: 'funnel', path: '/components/funnel-chart', title: 'Funnel', description: 'Funnel steps.', type: 'funnel', data: CHART_FUNNEL_DATA, height: CHART_FUNNEL_HEIGHT, code: CHART_FUNNEL_CODE },
+];
+
+export const CHART_MOTION_OPTIONS = [
+  { value: 'grow', label: 'Grow' },
+  { value: 'fade', label: 'Fade' },
+  { value: 'scale', label: 'Scale' },
+  { value: 'none', label: 'None' },
 ];

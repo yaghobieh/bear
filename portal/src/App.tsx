@@ -19,6 +19,10 @@ const FormsDocsPage = lazy(() => import('./pages/docs/FormsDocs'));
 const CliDocsPage = lazy(() => import('./pages/docs/CliDocs'));
 const PackageImportsDocsPage = lazy(() => import('./pages/docs/PackageImportsDocs'));
 const LibrariesPage = lazy(() => import('./pages/Libraries'));
+const AboutPage = lazy(() => import('./pages/About'));
+const BlogPage = lazy(() => import('./pages/Blog'));
+const BlogArticlePage = lazy(() => import('./pages/Blog/BlogArticle'));
+const ProductPage = lazy(() => import('./pages/Products'));
 const DarkModeDocsPage = lazy(() => import('./pages/docs/DarkModeDocs'));
 const JavaScriptDocsPage = lazy(() => import('./pages/docs/JavaScriptDocs'));
 const NextJsDocsPage = lazy(() => import('./pages/docs/NextJsDocs'));
@@ -395,7 +399,7 @@ function PortalLayout({
   const location = useLocation();
   const isLanding = location.pathname === '/';
   const isStorybook = location.pathname === '/storybook';
-  const isWide = isLanding || isStorybook;
+  const isWide = isLanding || isStorybook || location.pathname.startsWith('/products');
   const { version } = useNpmPackageVersion();
   const banner = {
     id: `bear-${version}`,
@@ -442,7 +446,7 @@ function PortalLayout({
             {!isLanding && !isStorybook && (
               <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-3 mb-2 min-w-0 max-w-full">
                 <PageBreadcrumbs />
-                <div className="shrink-0 hidden sm:block">
+                <div className="shrink-0">
                   <ComponentSandboxLink />
                 </div>
               </div>
@@ -458,6 +462,10 @@ function PortalLayout({
                 <Route path="/docs/cli" element={<CliDocsPage />} />
                 <Route path="/docs/package-imports" element={<PackageImportsDocsPage />} />
                 <Route path="/libraries" element={<LibrariesPage />} />
+                <Route path="/products/:productId" element={<ProductPage />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/blog" element={<BlogPage />} />
+                <Route path="/blog/:articleId" element={<BlogArticlePage />} />
                 <Route path="/docs/dark-mode" element={<DarkModeDocsPage />} />
                 <Route path="/docs/javascript" element={<JavaScriptDocsPage />} />
                 <Route path="/docs/nextjs" element={<NextJsDocsPage />} />
@@ -676,8 +684,12 @@ function PortalLayout({
                 {/* Charts & Graphs */}
                 <Route path="/components/chart" element={<ChartPage />} />
                 <Route path="/components/bar-chart" element={<ChartPage />} />
+                <Route path="/components/stacked-chart" element={<ChartPage />} />
                 <Route path="/components/line-chart" element={<ChartPage />} />
+                <Route path="/components/area-chart" element={<ChartPage />} />
                 <Route path="/components/pie-chart" element={<ChartPage />} />
+                <Route path="/components/polar-chart" element={<ChartPage />} />
+                <Route path="/components/donut-chart" element={<ChartPage />} />
                 <Route path="/components/radar-chart" element={<ChartPage />} />
                 <Route path="/components/funnel-chart" element={<ChartPage />} />
                 <Route path="/components/sparkline" element={<SparklinePage />} />

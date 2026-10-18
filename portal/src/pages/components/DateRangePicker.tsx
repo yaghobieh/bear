@@ -137,8 +137,8 @@ const DateRangePickerPage: FC = () => {
               <tr><td className="px-4 py-2 font-mono text-xs text-bear-600">size</td><td className="px-4 py-2">'sm' | 'md' | 'lg'</td><td className="px-4 py-2">'md'</td><td className="px-4 py-2">Input size</td></tr>
               <tr><td className="px-4 py-2 font-mono text-xs text-bear-600">error</td><td className="px-4 py-2">string</td><td className="px-4 py-2">—</td><td className="px-4 py-2">Error message</td></tr>
               <tr><td className="px-4 py-2 font-mono text-xs text-bear-600">helperText</td><td className="px-4 py-2">string</td><td className="px-4 py-2">—</td><td className="px-4 py-2">Helper text below input</td></tr>
-              <tr><td className="px-4 py-2 font-mono text-xs text-bear-600">openEffect</td><td className="px-4 py-2">none | fade | slide-down | scale</td><td className="px-4 py-2">slide-down</td><td className="px-4 py-2">Open animation</td></tr>
-              <tr><td className="px-4 py-2 font-mono text-xs text-bear-600">closeEffect</td><td className="px-4 py-2">none | fade | slide-down | scale</td><td className="px-4 py-2">same as openEffect</td><td className="px-4 py-2">Close animation</td></tr>
+              <tr><td className="px-4 py-2 font-mono text-xs text-bear-600">openEffect</td><td className="px-4 py-2">none | fade | slide-down | scale | fold | elastic | reveal | expand</td><td className="px-4 py-2">slide-down</td><td className="px-4 py-2">Open animation</td></tr>
+              <tr><td className="px-4 py-2 font-mono text-xs text-bear-600">closeEffect</td><td className="px-4 py-2">none | fade | slide-down | scale | fold | elastic | reveal | expand</td><td className="px-4 py-2">same as openEffect</td><td className="px-4 py-2">Close animation</td></tr>
               <tr><td className="px-4 py-2 font-mono text-xs text-bear-600">effect</td><td className="px-4 py-2">{'{ open?, close? }'}</td><td className="px-4 py-2">—</td><td className="px-4 py-2">Open and close motion in one prop</td></tr>
             </tbody>
           </table>

@@ -55,6 +55,15 @@ export const STORYBOOK_EXPORT_BY_SLUG: Record<string, string> = {
   'otp-input': 'OTPInput',
   'qr-code': 'QRCode',
   'json-viewer': 'JsonViewer',
+  'bar-chart': 'Chart',
+  'stacked-chart': 'Chart',
+  'line-chart': 'Chart',
+  'area-chart': 'Chart',
+  'pie-chart': 'Chart',
+  'polar-chart': 'Chart',
+  'donut-chart': 'Chart',
+  'radar-chart': 'Chart',
+  'funnel-chart': 'Chart',
 };
 
 const toComponentExportName = (slug: string): string => {
@@ -96,6 +105,8 @@ export const NAVIGATION: NavGroup[] = [
     icon: 'RocketIcon',
     items: [
       { path: '/', label: 'Introduction' },
+      { path: '/about', label: 'About us' },
+      { path: '/blog', label: 'Blog' },
       { path: '/whats-new', label: "What's New", badge: 'New' },
       { path: '/installation', label: 'Installation' },
       { path: '/changelog', label: 'Changelog' },
@@ -482,12 +493,21 @@ export const NAVIGATION: NavGroup[] = [
     title: 'Charts',
     icon: 'BarChartIcon',
     items: [
-      { path: '/components/chart', label: 'Chart' },
-      { path: '/components/bar-chart', label: 'BarChart' },
-      { path: '/components/line-chart', label: 'LineChart' },
-      { path: '/components/pie-chart', label: 'PieChart' },
-      { path: '/components/radar-chart', label: 'RadarChart' },
-      { path: '/components/funnel-chart', label: 'FunnelChart' },
+      {
+        path: '/components/chart',
+        label: 'Chart',
+        children: [
+          { path: '/components/bar-chart', label: 'Bar' },
+          { path: '/components/stacked-chart', label: 'Stacked' },
+          { path: '/components/line-chart', label: 'Line' },
+          { path: '/components/area-chart', label: 'Area' },
+          { path: '/components/pie-chart', label: 'Pie' },
+          { path: '/components/polar-chart', label: 'Polar area' },
+          { path: '/components/donut-chart', label: 'Donut' },
+          { path: '/components/radar-chart', label: 'Radar' },
+          { path: '/components/funnel-chart', label: 'Funnel' },
+        ],
+      },
       { path: '/components/sparkline', label: 'Sparkline' },
       { path: '/components/gauge', label: 'Gauge' },
       { path: '/components/heatmap', label: 'Heatmap' },

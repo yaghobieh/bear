@@ -4,9 +4,7 @@ import {
   BOOLEAN_TRUE,
   INFO,
   LABEL_CLOSE_ALERT,
-  VARIANT_FILLED,
   VARIANT_GHOST,
-  VARIANT_OUTLINED,
   VARIANT_STANDARD,
 } from '@const';
 import { cn } from '@utils';
@@ -16,7 +14,7 @@ import { Flex } from '../Flex';
 import { BearIcons, CloseIcon, InfoIcon } from '../Icon';
 import { Typography } from '../Typography';
 import type { AlertProps } from './Alert.types';
-import { ALERT_SEVERITY_COLORS, ALERT_VARIANT_CLASSES } from './Alert.const';
+import { ALERT_SEVERITY_CLASS, ALERT_VARIANT_CLASSES } from './Alert.const';
 
 export const Alert = (props: AlertProps) => {
   const {
@@ -38,9 +36,6 @@ export const Alert = (props: AlertProps) => {
   if (!visible) {
     return null;
   }
-
-  const isFilled = variant === VARIANT_FILLED;
-  const colors = ALERT_SEVERITY_COLORS[severity];
 
   const handleClose = () => {
     setVisible(BOOLEAN_FALSE);
@@ -74,14 +69,10 @@ export const Alert = (props: AlertProps) => {
       aria-live="polite"
       className={cn(
         'Bear-Alert bear-items-start bear-gap-3 bear-p-4 bear-rounded-lg',
+        ALERT_SEVERITY_CLASS[severity],
         ALERT_VARIANT_CLASSES[variant](severity),
         className
       )}
-      style={{
-        backgroundColor: isFilled ? undefined : colors.bg,
-        borderColor: variant === VARIANT_OUTLINED ? colors.border : undefined,
-        color: isFilled ? undefined : colors.text,
-      }}
       data-testid={testId}
       {...rest}
     >
@@ -89,7 +80,6 @@ export const Alert = (props: AlertProps) => {
         <Box
           as="span"
           className="Bear-Alert__icon bear-flex-shrink-0 bear-mt-0.5"
-          style={{ color: isFilled ? 'currentColor' : colors.icon }}
         >
           {renderedIcon}
         </Box>
@@ -97,12 +87,12 @@ export const Alert = (props: AlertProps) => {
 
       <Box className="Bear-Alert__content bear-flex-1 bear-min-w-0">
         {title && (
-          <Typography weight="semibold" className="Bear-Alert__title bear-mb-1">
+          <Typography variant="subtitle2" weight="semibold" color="inherit" className="Bear-Alert__title bear-mb-1">
             {title}
           </Typography>
         )}
         {children && (
-          <Typography className="Bear-Alert__message bear-text-sm">
+          <Typography variant="body2" color="inherit" className="Bear-Alert__message">
             {children}
           </Typography>
         )}

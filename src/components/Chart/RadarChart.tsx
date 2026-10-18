@@ -3,7 +3,7 @@ import { cn, resolveBearId, useBearId } from '@utils';
 import type { CSSProperties } from 'react';
 import type { RadarChartProps } from './Chart.types';
 import { CHART } from './Chart.const';
-import { getChartColor, polarToCartesian } from './Chart.utils';
+import { chartMotionClass, getChartColor, polarToCartesian } from './Chart.utils';
 
 export const RadarChart = (props: RadarChartProps) => {
   const {
@@ -12,6 +12,7 @@ export const RadarChart = (props: RadarChartProps) => {
     showLabels = true,
     showValues = false,
     animated = true,
+    motion,
     color,
     className,
     id,
@@ -90,7 +91,7 @@ export const RadarChart = (props: RadarChartProps) => {
           fillOpacity={0.25}
           stroke={getChartColor(ZERO, color)}
           strokeWidth={0.8}
-          className={cn(animated && 'animate-scale-in')}
+          className={chartMotionClass(animated, motion, 'animate-scale-in')}
         />
         {points.map((point, index) => (
           <circle

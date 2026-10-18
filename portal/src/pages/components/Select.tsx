@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { ComponentPreview } from '@/components/ComponentPreview';
 import { PropsTable } from '@/components/PropsTable';
-import { Select } from '@forgedevstack/bear';
+import { Button, Select } from '@forgedevstack/bear';
 
 const BASIC_OPTIONS = [
   { value: '1', label: 'Option 1' },
@@ -25,8 +25,21 @@ const CAR_OPTIONS = [
   { value: 'nissan', label: 'Nissan' },
 ];
 
+const EFFECT_OPTIONS = [
+  { value: 'none', label: 'None' },
+  { value: 'fade', label: 'Fade' },
+  { value: 'slide-down', label: 'Slide down' },
+  { value: 'scale', label: 'Scale' },
+  { value: 'fold', label: 'Fold' },
+  { value: 'elastic', label: 'Elastic' },
+  { value: 'reveal', label: 'Reveal' },
+  { value: 'expand', label: 'Expand' },
+];
+
 const SelectPage: FC = () => {
   const [value, setValue] = useState('');
+  const [openEffect, setOpenEffect] = useState('fold');
+  const [closeEffect, setCloseEffect] = useState('fold');
   const [country, setCountry] = useState('');
   const [car, setCar] = useState('');
   const [nativeValue, setNativeValue] = useState('');
@@ -219,27 +232,36 @@ const SelectPage: FC = () => {
 
       <ComponentPreview
         title="Open and close effects"
-        description="Menu stays on the trigger. Pick open and close motion independently."
-        code={`<Select openEffect="slide-down" closeEffect="fade" options={options} />
-<Select effect={{ open: 'scale', close: 'slide-down' }} options={options} />`}
+        description="The panel moves. Fold is the default. Pick a motion, then open the select."
+        code={`<Select openEffect="fold" closeEffect="fold" options={options} />
+<Select openEffect="reveal" closeEffect="expand" options={options} />`}
         allowOverflow
       >
-        <div className="flex flex-col gap-4 max-w-xs w-full">
+        <div className="flex flex-col gap-4 max-w-xl w-full">
+          <div className="flex flex-wrap gap-2">
+            {EFFECT_OPTIONS.map((option) => (
+              <Button
+                key={option.value}
+                type="button"
+                size="sm"
+                variant={openEffect === option.value ? 'primary' : 'outline'}
+                onClick={() => {
+                  setOpenEffect(option.value);
+                  setCloseEffect(option.value);
+                }}
+              >
+                {option.label}
+              </Button>
+            ))}
+          </div>
           <Select
+            key={`${openEffect}-${closeEffect}`}
             options={BASIC_OPTIONS}
             value={value}
             onChange={setValue}
-            placeholder="open slide-down, close fade"
-            openEffect="slide-down"
-            closeEffect="fade"
-            fullWidth
-          />
-          <Select
-            options={BASIC_OPTIONS}
-            value={value}
-            onChange={setValue}
-            placeholder="effect open scale, close slide-down"
-            effect={{ open: 'scale', close: 'slide-down' }}
+            placeholder="Opens with the effects above"
+            openEffect={openEffect as 'none' | 'fade' | 'slide-down' | 'scale' | 'fold' | 'elastic' | 'reveal' | 'expand'}
+            closeEffect={closeEffect as 'none' | 'fade' | 'slide-down' | 'scale' | 'fold' | 'elastic' | 'reveal' | 'expand'}
             fullWidth
           />
         </div>
@@ -260,8 +282,8 @@ const SelectPage: FC = () => {
           { name: 'native', type: 'boolean', default: 'false', description: 'Render a native HTML select' },
           { name: 'displayEmpty', type: 'boolean', default: 'false', description: 'Show empty/placeholder when value is empty' },
           { name: 'renderValue', type: '(value: string) => ReactNode', description: 'Custom closed-trigger display for custom Select' },
-          { name: 'openEffect', type: "'none' | 'fade' | 'slide-down' | 'scale'", default: 'slide-down', description: 'Menu open animation' },
-          { name: 'closeEffect', type: "'none' | 'fade' | 'slide-down' | 'scale'", default: 'same as openEffect', description: 'Menu close animation' },
+          { name: 'openEffect', type: "'none' | 'fade' | 'slide-down' | 'scale' | 'fold' | 'elastic' | 'reveal' | 'expand'", default: 'fold', description: 'Motion on the menu panel' },
+          { name: 'closeEffect', type: "'none' | 'fade' | 'slide-down' | 'scale' | 'fold' | 'elastic' | 'reveal' | 'expand'", default: 'same as openEffect', description: 'Motion on the menu panel as it closes' },
           { name: 'effect', type: '{ open?: OverlayMotionEffect; close?: OverlayMotionEffect }', description: 'Open and close motion in one prop' },
         ]}
       />

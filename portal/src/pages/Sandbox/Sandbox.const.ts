@@ -68,7 +68,6 @@ export const SANDBOX_PACKAGE_JSON = `{
     "@forgedevstack/bear": "1.3.5",
     "@forgedevstack/bear-icons": "1.0.3",
     "@forgedevstack/bear-x-charts": "0.1.0",
-    "@forgedevstack/bear-x-tree": "0.1.0",
     "@forgedevstack/bear-x-ai": "0.1.0",
     "@forgedevstack/bear-x-code": "0.1.0",
     "@forgedevstack/bear-map": "0.1.0",

@@ -27,7 +27,6 @@
       "@const": ["../src/constants"],
       "@constants": ["../src/constants"],
       "@forgedevstack/bear-x-charts": ["../packages/bear-x-charts/src/index.ts"],
-      "@forgedevstack/bear-x-tree": ["../packages/bear-x-tree/src/index.ts"],
       "@forgedevstack/bear-x-ai": ["../packages/bear-x-ai/src/index.ts"],
       "@forgedevstack/bear-x-code": ["../packages/bear-x-code/src/index.ts"],
       "@forgedevstack/bear-map": ["../packages/bear-map/src/index.ts"],

@@ -31,6 +31,8 @@ const meta: Meta<typeof Select> = {
     fullWidth: false,
     displayEmpty: false,
     native: false,
+    openEffect: 'fold',
+    closeEffect: 'fold',
   },
   argTypes: {
     onChange: { action: 'onChange' },
@@ -40,6 +42,8 @@ const meta: Meta<typeof Select> = {
     fullWidth: { control: 'boolean' },
     displayEmpty: { control: 'boolean' },
     native: { control: 'boolean' },
+    openEffect: { control: 'select', options: ['none', 'fade', 'slide-down', 'scale', 'fold', 'elastic', 'reveal', 'expand'] },
+    closeEffect: { control: 'select', options: ['none', 'fade', 'slide-down', 'scale', 'fold', 'elastic', 'reveal', 'expand'] },
   },
 };
 
@@ -56,7 +60,32 @@ const OPTIONS = [
 export const Basic: Story = {
   render: (args) => {
     const [, updateArgs] = useArgs();
-    return <Select {...args} onChange={(value) => updateArgs({ value })} />;
+    return <Select {...args} openEffect={args.openEffect} closeEffect={args.closeEffect} onChange={(value) => updateArgs({ value })} />;
+  },
+};
+
+export const Fold: Story = {
+  args: {
+    openEffect: 'fold',
+    closeEffect: 'fold',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'The menu opens with fold and closes with fold. Fold is the default for both.',
+      },
+    },
+  },
+  render: (args) => {
+    const [, updateArgs] = useArgs();
+    return (
+      <Select
+        {...args}
+        openEffect="fold"
+        closeEffect="fold"
+        onChange={(value) => updateArgs({ value })}
+      />
+    );
   },
 };
 

@@ -59,7 +59,7 @@
     "portal": "cd portal && npm run dev",
     "portal:install": "cd portal && npm install",
     "portal:build": "cd portal && npm run build",
-    "build:libs": "npm run build --prefix packages/bear-x-charts && npm run build --prefix packages/bear-x-tree && npm run build --prefix packages/bear-x-ai && npm run build --prefix packages/bear-x-code && npm run build --prefix packages/bear-map && npm run build --prefix packages/kanban",
+    "build:libs": "npm run build --prefix packages/bear-x-charts && npm run build --prefix packages/bear-x-ai && npm run build --prefix packages/bear-x-code && npm run build --prefix packages/bear-map && npm run build --prefix packages/kanban",
     "sanity": "bash scripts/pre-commit.sh",
     "prepublishOnly": "npm run build",
     "prepare": "husky"
@@ -101,9 +101,6 @@
   },
   "dependencies": {
     "@forgedevstack/anvil": "^1.0.0"
-  },
-  "optionalDependencies": {
-    "@forgedevstack/bear-icons": "^1.0.3"
   },
   "keywords": [
     "react",

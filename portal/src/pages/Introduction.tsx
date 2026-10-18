@@ -2,19 +2,20 @@ import React, { FC, ReactNode, useState, lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import { CodeBlock } from '@/components/CodeBlock';
 import { HomeBentoGrid } from '@/components/HomeBentoGrid';
+import { HomeAiPrompt } from '@/pages/home/HomeAiPrompt';
+import { HomeProductStrip } from '@/pages/home/HomeProductStrip';
+import { HomeSideExamples } from '@/pages/home/HomeSideExamples';
 import {
   GITHUB_URL,
   VERSION_HIGHLIGHT_BY_VERSION,
   VERSION_HIGHLIGHT_FALLBACK,
-  resolveStorybookHref,
 } from '@/constants/navigation.const';
-import { openCodeSandbox } from '@/pages/Sandbox/openCodeSandbox';
+import { PORTAL_TEXT } from '@/constants/portal-i18n.const';
+import { usePortalLanguage } from '@/hooks/usePortalLanguage';
 import {
   Badge,
   BearIcons,
   CheckIcon,
-  SandboxIcon,
-  StorybookIcon,
   Alert,
   ToggleGroup,
   ToggleGroupItem,
@@ -29,8 +30,6 @@ const ComparisonSection = lazy(() => import('@/components/ComparisonSection/Comp
 
 const ArrowRightIcon = BearIcons.ArrowRightIcon;
 
-const HERO_TITLE = 'The Foundation for your React UI';
-const HERO_DESCRIPTION = '190+ accessible, customizable React components with TypeScript, AeroCraft CSS, responsive hooks, and a powerful theming system. Featuring signature Lotso bear aesthetics with rich light/dark mode.';
 const INSTALL_CMD = 'npm install @forgedevstack/bear';
 const CLI_CMD = 'npx @forgedevstack/bear init';
 
@@ -57,18 +56,6 @@ const THEME_BULLETS = [
   "Breakpoint overrides via provider — xl: '2500px', add custom keys",
 ];
 
-const COMPONENT_TAGS = [
-  'Button', 'ButtonGroup', 'ToggleButton', 'ToggleGroup', 'Card', 'Modal', 'ModalsProvider', 'Drawer', 'Tooltip', 'Badge', 'Avatar', 'Input', 'Select', 'Checkbox',
-  'Radio', 'Switch', 'Rating', 'Tabs', 'Accordion', 'Menu', 'Dropdown', 'Alert', 'Progress', 'Spinner',
-  'DataTable', 'Carousel', 'List', 'Typography', 'Divider', 'Paper', 'Grid', 'Flex', 'Container',
-  'SpeedDial', 'TransferList', 'MultiSelect', 'Autocomplete', 'FAB', 'Link', 'RichEditor', 'SignPad',
-  'Kanban', 'EmojiPicker', 'Chart', 'Gauge', 'Sparkline', 'DatePicker', 'DateRangePicker', 'TimePicker',
-  'Calendar', 'TreeSelect', 'SplitButton', 'ImageGallery', 'ContextMenu', 'CodeEditor', 'Cropper',
-  'Map', 'Terminal', 'Chat', 'FloatingChat', 'JsonViewer', 'DiffViewer', 'Masonry', 'Marquee',
-  'Typewriter', 'Dock', 'Spotlight', 'AlertDialog', 'ThemeIcon', 'CloseButton', 'Overlay', 'Portal',
-  'AnimatedCounter', 'GlowCard', 'MediaPlayer', 'Heatmap', 'TagCloud', 'CurrencyInput', 'TimelineChart', 'ImageAnnotation',
-];
-
 const HOOKS = [
   { name: 'useMediaQuery', desc: 'Breakpoint keys + provider overrides', path: '/hooks/use-media-query' },
   { name: 'useResponsive', desc: 'Responsive prop values', path: '/hooks/use-media-query' },
@@ -85,10 +72,10 @@ const HOOKS = [
 ];
 
 const ECOSYSTEM = [
-  { emoji: '🐻', name: 'Bear UI', desc: '100+ React components, hooks, icons' },
-  { emoji: '🔨', name: 'Anvil', desc: 'Utility library — array, object, string helpers' },
-  { emoji: '📊', name: 'GridTable', desc: 'Powerful data grid with sort, filter, paginate' },
-  { emoji: '🎠', name: 'Rail', desc: 'Carousel engine with effects, video, story mode' },
+  { name: 'Bear UI', desc: '100+ React components, hooks, icons' },
+  { name: 'Anvil', desc: 'Utility library — array, object, string helpers' },
+  { name: 'GridTable', desc: 'Powerful data grid with sort, filter, paginate' },
+  { name: 'Rail', desc: 'Carousel engine with effects, video, story mode' },
 ];
 
 const StatBadge: FC<{ value: string; label: string; color: string }> = ({ value, label, color }) => (
@@ -109,17 +96,10 @@ const FeatureCard: FC<{ title: string; description: string; icon: ReactNode; pat
   return path ? <Link to={path}>{inner}</Link> : inner;
 };
 
-const ComponentCard: FC<{ title: string; desc: string; path: string; preview: React.ReactNode }> = ({ title, desc, path, preview }) => (
-  <Link to={path} className="group block p-4 rounded-xl border border-gray-200 dark:border-gray-700/60 bg-white dark:bg-gray-800/40 hover:border-pink-400 dark:hover:border-pink-500 hover:shadow-lg hover:shadow-pink-500/5 transition-all">
-    <div className="h-20 mb-3 rounded-lg bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 flex items-center justify-center overflow-hidden">{preview}</div>
-    <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-0.5 group-hover:text-pink-500 transition-colors">{title}</h3>
-    <p className="text-xs text-gray-500 dark:text-gray-400">{desc}</p>
-  </Link>
-);
-
 const Introduction: FC = () => {
   const { version } = useNpmPackageVersion();
-  const versionLabel = `Introducing Bear v${version}`;
+  const { language } = usePortalLanguage();
+  const text = PORTAL_TEXT[language];
   const versionHighlight = VERSION_HIGHLIGHT_BY_VERSION[version] ?? VERSION_HIGHLIGHT_FALLBACK;
 
   const [copiedCmd, setCopiedCmd] = useState<string | null>(null);
@@ -134,138 +114,68 @@ const Introduction: FC = () => {
 
   return (
     <div className="fade-in overflow-x-hidden relative">
-      {/* Background ambient gradient glow */}
-      <div className="pointer-events-none absolute -top-48 left-1/2 -translate-x-1/2 w-[900px] h-[550px] bg-gradient-to-b from-pink-500/10 via-purple-500/5 to-transparent blur-3xl rounded-full" />
-
-      {/* Hero Section */}
-      <section className="text-center pt-12 md:pt-20 pb-12 md:pb-16 relative z-10">
-        <Link
-          to="/whats-new"
-          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md text-xs font-medium text-gray-700 dark:text-gray-300 hover:border-pink-300 dark:hover:border-pink-700 hover:text-pink-600 dark:hover:text-pink-400 transition-all mb-8 shadow-sm group"
-        >
-          <span className="flex h-2 w-2 rounded-full bg-pink-500 animate-pulse" />
-          <span className="font-semibold text-pink-600 dark:text-pink-400">{versionLabel}</span>
-          <span className="text-gray-300 dark:text-gray-700">|</span>
-          <span className="text-gray-500 dark:text-gray-400">{versionHighlight}</span>
-          <ArrowRightIcon size={12} className="text-gray-400 group-hover:translate-x-0.5 transition-transform" />
-        </Link>
-
-        <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold text-gray-900 dark:text-white mb-6 leading-[1.08] tracking-tight max-w-4xl mx-auto">
-          The Foundation for your{' '}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-600 via-rose-500 to-pink-500 dark:from-pink-400 dark:via-rose-300 dark:to-pink-400">
-            React UI
-          </span>
-        </h1>
-
-        <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-8 leading-relaxed font-normal">
-          {HERO_DESCRIPTION}
-        </p>
-
-        {/* Hero CTA buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-6">
-          <Link
-            to="/installation"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-semibold text-sm hover:bg-gray-800 dark:hover:bg-gray-100 transition-all shadow-md shadow-gray-900/10 dark:shadow-none hover:-translate-y-0.5"
-          >
-            Get Started
-            <ArrowRightIcon size={16} />
+      <section className="home-hero">
+        <div className="home-hero__copy">
+          <Link to="/whats-new" className="home-hero__pill">
+            <span>{text.homeHeroNew} v{version}</span>
+            <span aria-hidden="true">·</span>
+            <span>{versionHighlight}</span>
           </Link>
-          <Link
-            to="/components"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-white/60 dark:bg-gray-900/60 backdrop-blur-sm text-gray-800 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 font-medium text-sm transition-all hover:border-gray-300 dark:hover:border-gray-700 shadow-sm"
-          >
-            Explore Components
-          </Link>
-        </div>
 
-        {/* Command Line Copiers */}
-        <div className="flex flex-wrap items-center justify-center gap-2.5 mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-100/90 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700/70 text-xs font-mono text-gray-700 dark:text-gray-300 backdrop-blur-sm">
-            <span className="text-pink-500 font-bold">$</span>
+          <Typography variant="h1" className="home-hero__title">
+            <span className="home-hero__accent">{text.homeHeroTitle}</span>
+            <br />
+            {text.homeHeroTitleRest}
+          </Typography>
+
+          <Typography variant="body1" color="secondary" className="home-hero__lead">
+            {text.homeHeroLead}
+          </Typography>
+
+          <Link to="/installation">
+            <Button variant="primary" size="lg">
+              {text.homeHeroCta}
+              <ArrowRightIcon size={16} />
+            </Button>
+          </Link>
+
+          <div className="home-hero__code">
             <code>{CLI_CMD}</code>
             <button
               type="button"
               onClick={() => copyToClipboard(CLI_CMD)}
-              className="text-gray-400 hover:text-pink-500 transition-colors ml-1 p-0.5"
-              title="Copy to clipboard"
-              aria-label="Copy CLI command"
+              title={text.copy}
+              aria-label={text.copy}
             >
               {copiedCmd === CLI_CMD ? (
-                <CheckIcon size={13} className="text-emerald-500" />
+                <CheckIcon size={13} className="text-emerald-400" />
               ) : (
                 <BearIcons.CopyIcon size={13} />
               )}
             </button>
           </div>
-          <span className="text-xs text-gray-400">or</span>
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-100/90 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700/70 text-xs font-mono text-gray-700 dark:text-gray-300 backdrop-blur-sm">
-            <span className="text-pink-500 font-bold">$</span>
-            <code>{INSTALL_CMD}</code>
-            <button
-              type="button"
-              onClick={() => copyToClipboard(INSTALL_CMD)}
-              className="text-gray-400 hover:text-pink-500 transition-colors ml-1 p-0.5"
-              title="Copy to clipboard"
-              aria-label="Copy install command"
-            >
-              {copiedCmd === INSTALL_CMD ? (
-                <CheckIcon size={13} className="text-emerald-500" />
-              ) : (
-                <BearIcons.CopyIcon size={13} />
-              )}
-            </button>
-          </div>
-        </div>
 
-        {/* Social / Tool Links */}
-        <div className="flex items-center justify-center gap-3 mb-6">
-          <a
-            href={resolveStorybookHref()}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-            aria-label="Storybook"
-            title="Storybook"
-          >
-            <StorybookIcon size={20} />
-          </a>
-          <button
-            type="button"
-            onClick={() => openCodeSandbox()}
-            className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-            aria-label="Sandbox"
-            title="Sandbox"
-          >
-            <SandboxIcon size={20} />
-          </button>
-          <a
-            href={GITHUB_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-            aria-label="GitHub"
-            title="GitHub"
-          >
-            <BearIcons.GithubIcon size={20} />
-          </a>
+          <p className="home-hero__credit">
+            {text.homeHeroCredit}{' '}
+            <a href="https://github.com/yaghobieh" className="text-pink-600 dark:text-pink-400 hover:underline">
+              John Yaghobieh
+            </a>
+            {' · '}
+            {text.homeHeroStack}
+          </p>
         </div>
-
-        <p className="text-xs text-gray-400 dark:text-gray-500">
-          Built with Lotso Bear styling by{' '}
-          <a href="https://github.com/yaghobieh" className="text-pink-600 dark:text-pink-400 hover:underline">
-            John Yaghobieh
-          </a>
-          {' · '}
-          Part of ForgeStack
-        </p>
+        <div className="home-hero__stage">
+          <HomeSideExamples />
+        </div>
       </section>
 
+      <HomeProductStrip />
+      <HomeAiPrompt />
 
-      {/* Interactive Component Playground (Shadcn-style Base Alert & ToggleGroup) */}
       <section className="mb-20">
         <div className="text-center max-w-2xl mx-auto mb-10">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-400 text-xs font-semibold uppercase tracking-wider mb-3">
-            ✨ Interactive Primitives
+            Interactive Primitives
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white tracking-tight mb-3">
             Crafted for Production. Styled with Lotso.
@@ -290,25 +200,19 @@ const Introduction: FC = () => {
                 <Alert
                   variant="outlined"
                   severity="info"
-                  icon={<BearIcons.TerminalIcon size={18} className="text-pink-500" />}
-                  title={<span className="font-semibold text-gray-900 dark:text-white">Heads up!</span>}
-                  className="border-gray-200 dark:border-gray-800 bg-white/90 dark:bg-gray-800/80 rounded-xl"
+                  icon={<BearIcons.TerminalIcon size={18} />}
+                  title="Heads up!"
                 >
-                  <span className="text-xs text-gray-600 dark:text-gray-300">
-                    You can add components to your app using the CLI or direct package imports.
-                  </span>
+                  You can add components to your app using the CLI or direct package imports.
                 </Alert>
 
                 <Alert
                   variant="standard"
                   severity="success"
-                  icon={<BearIcons.CheckIcon size={18} className="text-emerald-500" />}
-                  title={<span className="font-semibold text-gray-900 dark:text-white">Bear v1.3.4 Loaded</span>}
-                  className="bg-emerald-50/60 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-900/40 rounded-xl"
+                  icon={<BearIcons.CheckIcon size={18} />}
+                  title="Bear v1.3.5 Loaded"
                 >
-                  <span className="text-xs text-emerald-800 dark:text-emerald-300">
-                    Zero config needed. Full TypeScript IntelliSense enabled.
-                  </span>
+                  Zero config needed. Full TypeScript IntelliSense enabled.
                 </Alert>
               </div>
             </div>
@@ -562,45 +466,6 @@ const BrandCard = bearStyled(Card, {
         </div>
       </section>
 
-      {/* Popular Components */}
-      <section className="mb-14 md:mb-20">
-        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-3 text-center">Popular Components</h2>
-        <p className="text-center text-gray-500 dark:text-gray-400 mb-10">Click any card to explore docs, live examples, and API reference</p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
-          <ComponentCard title="Button" desc="10+ variants, loading, icons" path="/components/button"
-            preview={<div className="flex gap-2"><span className="px-3 py-1.5 bg-pink-500 text-white text-xs rounded-lg">Primary</span><span className="px-3 py-1.5 border border-gray-300 text-gray-600 dark:text-gray-300 text-xs rounded-lg">Outline</span></div>} />
-          <ComponentCard title="ToggleGroup" desc="Segmented buttons & toggles" path="/components/toggle-group"
-            preview={<div className="flex gap-1 p-1 bg-gray-100 dark:bg-gray-800 rounded-lg"><span className="px-2.5 py-1 bg-pink-500 text-white text-[10px] rounded-md font-medium">Single</span><span className="px-2.5 py-1 text-gray-500 text-[10px] font-medium">Multiple</span></div>} />
-          <ComponentCard title="Modal" desc="Dialog with transitions" path="/components/modal"
-            preview={<div className="relative w-24 h-14 bg-gray-900/20 dark:bg-white/10 rounded"><div className="absolute inset-2 bg-white dark:bg-gray-700 rounded shadow-lg" /></div>} />
-          <ComponentCard title="DataTable" desc="Sort, filter, paginate" path="/components/data-table"
-            preview={<div className="w-28 space-y-1"><div className="h-3 bg-pink-200 dark:bg-pink-800 rounded" /><div className="h-3 bg-gray-200 dark:bg-gray-700 rounded" /><div className="h-3 bg-gray-200 dark:bg-gray-700 rounded" /></div>} />
-          <ComponentCard title="Charts" desc="Bar, Line, Pie, Gauge" path="/components/chart"
-            preview={<div className="flex items-end gap-1 h-8"><div className="w-3 h-4 bg-pink-500 rounded-t" /><div className="w-3 h-6 bg-purple-500 rounded-t" /><div className="w-3 h-5 bg-blue-500 rounded-t" /><div className="w-3 h-8 bg-emerald-500 rounded-t" /></div>} />
-          <ComponentCard title="RichEditor" desc="WYSIWYG text editor" path="/components/rich-editor"
-            preview={<div className="w-28 bg-white dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 p-1"><div className="flex gap-0.5 mb-1 pb-1 border-b border-gray-200 dark:border-gray-600"><span className="w-3 h-3 bg-gray-200 dark:bg-gray-600 rounded text-[6px] flex items-center justify-center font-bold">B</span><span className="w-3 h-3 bg-gray-200 dark:bg-gray-600 rounded text-[6px] flex items-center justify-center italic">I</span></div><div className="text-[6px] text-gray-500">Edit text...</div></div>} />
-          <ComponentCard title="Kanban" desc="Drag-and-drop board" path="/components/kanban"
-            preview={<div className="flex gap-2 w-full px-2"><div className="flex-1 rounded bg-gray-100 dark:bg-gray-700 p-1 space-y-1"><div className="h-3 bg-white dark:bg-gray-600 rounded" /><div className="h-3 bg-white dark:bg-gray-600 rounded" /></div><div className="flex-1 rounded bg-gray-100 dark:bg-gray-700 p-1"><div className="h-3 bg-white dark:bg-gray-600 rounded" /></div></div>} />
-          <ComponentCard title="Calendar" desc="Date picker" path="/components/calendar"
-            preview={<div className="grid grid-cols-7 gap-0.5 text-[6px] text-gray-500">{Array.from({ length: 21 }, (_, i) => (<span key={i} className={`w-3 h-3 flex items-center justify-center rounded ${i === 10 ? 'bg-pink-500 text-white' : ''}`}>{i + 1}</span>))}</div>} />
-          <ComponentCard title="Icons" desc="550+ SVG icons" path="/icons"
-            preview={<div className="flex gap-2 text-gray-500 dark:text-gray-400"><BearIcons.HomeIcon size={16} /><BearIcons.SearchIcon size={16} /><BearIcons.HeartIcon size={16} /><BearIcons.SettingsIcon size={16} /></div>} />
-          <ComponentCard title="GlowCard" desc="4 glow effects, mouse tracking" path="/components/glow-card"
-            preview={<div className="w-20 h-12 rounded-lg bg-gradient-to-br from-pink-500/20 to-purple-500/20 border border-pink-400/40 shadow-lg shadow-pink-500/10" />} />
-          <ComponentCard title="Stepper" desc="Multi-step, windowed, responsive" path="/components/stepper"
-            preview={<div className="flex items-center gap-1"><div className="w-4 h-4 rounded-full bg-pink-500 text-white text-[7px] flex items-center justify-center">1</div><div className="w-6 h-px bg-pink-400" /><div className="w-4 h-4 rounded-full bg-pink-500 text-white text-[7px] flex items-center justify-center">2</div><div className="w-6 h-px bg-gray-300" /><div className="w-4 h-4 rounded-full border border-gray-300 text-gray-400 text-[7px] flex items-center justify-center">3</div></div>} />
-          <ComponentCard title="DiffViewer" desc="Side-by-side code diff" path="/components/diff-viewer"
-            preview={<div className="w-24 space-y-0.5 text-[6px] font-mono"><div className="flex"><span className="text-green-500">+</span><span className="text-gray-500 ml-0.5">added line</span></div><div className="flex"><span className="text-red-500">-</span><span className="text-gray-500 ml-0.5">removed</span></div></div>} />
-          <ComponentCard title="Heatmap" desc="Contribution graph" path="/components/heatmap"
-            preview={<div className="flex gap-0.5">{[2, 5, 8, 3, 9, 1, 7].map((v, i) => <div key={i} className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: `rgba(236, 72, 153, ${v / 10})` }} />)}</div>} />
-        </div>
-        <div className="text-center">
-          <Link to="/components" className="inline-flex items-center gap-2 text-sm text-pink-600 dark:text-pink-400 hover:underline font-medium">
-            View all 100+ components <ArrowRightIcon size={14} />
-          </Link>
-      </div>
-      </section>
-
       {/* Hooks */}
       <section className="mb-14 md:mb-20">
         <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-3 text-center">Powerful Hooks</h2>
@@ -658,16 +523,6 @@ import '@forgedevstack/bear/styles.css';
         </div>
       </section>
 
-      {/* All Components Tags */}
-      <section className="mb-14 md:mb-20">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">100+ Components</h2>
-        <div className="flex flex-wrap gap-1.5 justify-center max-w-4xl mx-auto">
-          {COMPONENT_TAGS.map((c) => (
-            <span key={c} className="px-2.5 py-1 text-xs rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300">{c}</span>
-          ))}
-        </div>
-      </section>
-
       {/* Ecosystem */}
       <section className="mb-14 md:mb-20 text-center">
         <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">Part of the ForgeStack ecosystem</h2>
@@ -675,7 +530,6 @@ import '@forgedevstack/bear/styles.css';
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 max-w-4xl mx-auto">
           {ECOSYSTEM.map((e) => (
             <div key={e.name} className="p-5 rounded-xl border border-gray-200 dark:border-gray-700/60 bg-white dark:bg-gray-800/40">
-              <div className="text-2xl mb-2">{e.emoji}</div>
               <h3 className="font-semibold text-gray-900 dark:text-white mb-1">{e.name}</h3>
               <p className="text-xs text-gray-500 dark:text-gray-400">{e.desc}</p>
             </div>

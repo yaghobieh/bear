@@ -1,14 +1,9 @@
 import { EIGHT, TWO_HUNDRED } from '@constants';
+import { OVERLAY_EFFECT_CLASS_MAP } from '../OverlayPortal/OverlayPortal.const';
 
 export const T_O_O_L_T_I_P_ROOT_CLASS = 'Bear-Tooltip';
 
-export const TOOLTIP_EFFECT_CLASS_MAP: Record<string, string> = {
-  scale: 'animate-scale-in',
-  fade: 'animate-fade-in',
-  'slide-down': 'animate-grow-up',
-  fold: 'animate-alert-dialog-in',
-  none: '',
-};
+export const TOOLTIP_EFFECT_CLASS_MAP: Record<string, string> = OVERLAY_EFFECT_CLASS_MAP;
 
 export const TOOLTIP_DEFAULT_DELAY = TWO_HUNDRED;
 export const TOOLTIP_SPACING = EIGHT;

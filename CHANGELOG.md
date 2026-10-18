@@ -6,7 +6,7 @@ All notable changes to Bear UI will be documented in this file.
 
 ### Added
 
-- **Bear X packages** — `@forgedevstack/bear-x-charts`, `@forgedevstack/bear-x-tree`, `@forgedevstack/bear-x-ai`, and `@forgedevstack/bear-x-code`. They re-export the current components and are linked locally from the portal.
+- **Bear X packages** — `@forgedevstack/bear-x-charts`, `@forgedevstack/bear-x-ai`, and `@forgedevstack/bear-x-code`. Tree stays in Core. The packages re-export the current components and are linked locally from the portal.
 - **Separate libraries** — `@forgedevstack/bear-map` and `@forgedevstack/kanban`.
 - **Portal** — `/libraries` catalog, CLI docs, Storybook package entry, and sandbox package names.
 

@@ -1,5 +1,13 @@
 import { ZERO, ONE } from '@const';
 import { DEFAULT_COLORS, CHART } from './Chart.const';
+import type { ChartMotion } from './Chart.types';
+
+export const chartMotionClass = (animated: boolean, motion: ChartMotion | undefined, fallback: string): string => {
+  if (!animated || motion === 'none') return '';
+  if (motion === 'fade') return 'animate-fade-in';
+  if (motion === 'scale') return 'animate-scale-in';
+  return fallback;
+};
 
 export const getChartColor = (index: number, customColor?: string): string => {
   return customColor || DEFAULT_COLORS[index % DEFAULT_COLORS.length];

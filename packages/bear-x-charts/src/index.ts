@@ -15,9 +15,11 @@ export type {
   FunnelChartProps,
   ChartDataPoint,
   ChartType,
+  ChartMotion,
   PieView,
   ChartLegendPosition,
 } from '../../../src/components/Chart';
+export { BearProvider } from '../../../src/context/BearProvider';
 export { Sparkline } from '../../../src/components/Sparkline';
 export type { SparklineProps } from '../../../src/components/Sparkline';
 export { Gauge } from '../../../src/components/Gauge';

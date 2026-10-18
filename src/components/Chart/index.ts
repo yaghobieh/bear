@@ -13,6 +13,7 @@ export type {
   FunnelChartProps,
   ChartDataPoint,
   ChartType,
+  ChartMotion,
   PieView,
   ChartLegendPosition,
 } from './Chart.types';

@@ -3,7 +3,6 @@ import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 
 export default defineConfig({
-  plugins: [react()],
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),
@@ -14,7 +13,6 @@ export default defineConfig({
       '@const': resolve(__dirname, '../src/constants'),
       '@constants': resolve(__dirname, '../src/constants'),
       '@forgedevstack/bear-x-charts': resolve(__dirname, '../packages/bear-x-charts/src/index.ts'),
-      '@forgedevstack/bear-x-tree': resolve(__dirname, '../packages/bear-x-tree/src/index.ts'),
       '@forgedevstack/bear-x-ai': resolve(__dirname, '../packages/bear-x-ai/src/index.ts'),
       '@forgedevstack/bear-x-code': resolve(__dirname, '../packages/bear-x-code/src/index.ts'),
       '@forgedevstack/bear-map': resolve(__dirname, '../packages/bear-map/src/index.ts'),
@@ -22,6 +20,19 @@ export default defineConfig({
       vue: resolve(__dirname, './src/vue-stub.ts'),
     },
   },
+  plugins: [
+    react(),
+    {
+      name: 'bear-source-entry',
+      enforce: 'pre',
+      resolveId(source) {
+        if (source === '@forgedevstack/bear') {
+          return resolve(__dirname, '../src/index.ts');
+        }
+        return null;
+      },
+    },
+  ],
   server: {
     port: 3030,
   },

@@ -1,7 +1,7 @@
 {
   "name": "@forgedevstack/bear-x-charts",
   "version": "0.1.0",
-  "description": "Bear X charts. Bar, line, pie, radar, funnel, sparkline, gauge, heatmap, and timeline. Requires @forgedevstack/bear styles.",
+  "description": "Bear X charts plus BearProvider. Styles come from @forgedevstack/bear/styles.css.",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./src/index.ts",

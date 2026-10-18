@@ -17,7 +17,7 @@ export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
       {
         title: 'Added',
         items: [
-          '@forgedevstack/bear-x-charts, bear-x-tree, bear-x-ai, and bear-x-code as optional Bear X packages',
+          '@forgedevstack/bear-x-charts, bear-x-ai, and bear-x-code as optional packages. Tree stays in Core.',
           '@forgedevstack/bear-map and @forgedevstack/kanban as separate libraries',
           'Portal Libraries page, Storybook package stories, and sandbox install names',
           'Core still exports the same components. MediaPlayer stays Torch. RichEditor stays Ink.',

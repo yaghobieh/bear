@@ -1,5 +1,8 @@
 node_modules
 dist
+.env
+.env.*
+!.env.example
 demo
 portal/dist
 portal/node_modules

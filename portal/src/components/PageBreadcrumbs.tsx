@@ -43,7 +43,11 @@ export const PageBreadcrumbs: FC = () => {
     const parts = pathname.split('/').filter(Boolean);
     parts.forEach((part, index) => {
       const partialPath = `/${parts.slice(0, index + 1).join('/')}`;
-      result.push({ label: getSegmentLabel(partialPath, formatDocTitleFromPath(part)) });
+      const isLast = index === parts.length - 1;
+      result.push({
+        label: getSegmentLabel(partialPath, formatDocTitleFromPath(part)),
+        path: isLast ? undefined : partialPath,
+      });
     });
     return result;
   }, [pathname]);

@@ -90,7 +90,40 @@
 }
 
 .animate-scale-in {
+  transform-origin: top center;
   animation: scale-in 0.3s ease-out forwards;
+}
+
+@keyframes bear-overlay-elastic {
+  0% { opacity: 0; transform: scale(1.12); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.animate-overlay-elastic {
+  transform-origin: top center;
+  animation: bear-overlay-elastic 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes bear-overlay-reveal {
+  from { opacity: 0; max-height: 0; }
+  to { opacity: 1; max-height: 24rem; }
+}
+
+.animate-overlay-reveal {
+  overflow: hidden;
+  transform-origin: top center;
+  animation: bear-overlay-reveal 0.375s ease-in-out both;
+}
+
+@keyframes bear-overlay-expand {
+  from { opacity: 0; transform: scaleY(0.02); }
+  to { opacity: 1; transform: scaleY(1); }
+}
+
+.animate-overlay-expand {
+  overflow: hidden;
+  transform-origin: top center;
+  animation: bear-overlay-expand 0.375s ease-in-out both;
 }
 
 @keyframes bear-diff-squares-pulse {

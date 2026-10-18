@@ -119,6 +119,66 @@
   opacity: 1;
 }
 
+.Bear-Drawer__panel--left.Bear-Drawer__panel--effect-elastic,
+.Bear-Drawer__panel--right.Bear-Drawer__panel--effect-elastic,
+.Bear-Drawer__panel--top.Bear-Drawer__panel--effect-elastic,
+.Bear-Drawer__panel--bottom.Bear-Drawer__panel--effect-elastic {
+  transform: scale(1.08);
+  opacity: 0;
+}
+
+.Bear-Drawer__panel--effect-elastic.Bear-Drawer__panel--open {
+  transform: scale(1);
+  opacity: 1;
+  transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.Bear-Drawer__panel--effect-reveal,
+.Bear-Drawer__panel--left.Bear-Drawer__panel--effect-reveal,
+.Bear-Drawer__panel--right.Bear-Drawer__panel--effect-reveal,
+.Bear-Drawer__panel--top.Bear-Drawer__panel--effect-reveal,
+.Bear-Drawer__panel--bottom.Bear-Drawer__panel--effect-reveal {
+  transform: none;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 375ms ease, opacity 375ms ease;
+}
+
+.Bear-Drawer__panel--effect-reveal.Bear-Drawer__panel--open {
+  transform: none;
+  max-height: 100%;
+  opacity: 1;
+}
+
+.Bear-Drawer__panel--left.Bear-Drawer__panel--effect-expand {
+  transform: scaleX(0);
+  transform-origin: left center;
+  opacity: 0;
+}
+
+.Bear-Drawer__panel--right.Bear-Drawer__panel--effect-expand {
+  transform: scaleX(0);
+  transform-origin: right center;
+  opacity: 0;
+}
+
+.Bear-Drawer__panel--top.Bear-Drawer__panel--effect-expand {
+  transform: scaleY(0);
+  transform-origin: top center;
+  opacity: 0;
+}
+
+.Bear-Drawer__panel--bottom.Bear-Drawer__panel--effect-expand {
+  transform: scaleY(0);
+  transform-origin: bottom center;
+  opacity: 0;
+}
+
+.Bear-Drawer__panel--effect-expand.Bear-Drawer__panel--open {
+  transform: scale(1);
+  opacity: 1;
+}
+
 .Bear-Drawer__header {
   display: flex;
   align-items: center;

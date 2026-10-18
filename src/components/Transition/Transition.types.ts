@@ -1,4 +1,4 @@
-import type { ReactNode, CSSProperties } from 'react';
+import type { CSSProperties, ReactNode, Ref } from 'react';
 
 /**
  * Built-in transition names
@@ -13,6 +13,9 @@ export type TransitionName =
   | 'scale-y'
   | 'scale-x'
   | 'fold'
+  | 'elastic'
+  | 'reveal'
+  | 'expand'
   | 'rotate'
   | 'flip'
   | 'collapse';
@@ -51,6 +54,12 @@ export interface TransitionProps {
   children: ReactNode;
   /** Custom class name */
   className?: string;
+  /** Layout styles merged under the motion styles */
+  style?: CSSProperties;
+  /** Ref for the animated element */
+  nodeRef?: Ref<HTMLDivElement>;
+  /** DOM attributes placed on the animated element */
+  elementProps?: Record<string, string | undefined>;
   /** As which HTML element */
   as?: keyof JSX.IntrinsicElements;
 }

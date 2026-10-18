@@ -26,6 +26,15 @@ const meta: Meta<typeof Chart> = {
     explodeIndex: 0,
     stepped: false,
     stacked: false,
+    type: 'bar',
+    motion: 'grow',
+    pieView: 'full',
+    data: [
+      { label: 'Jan', value: 30 },
+      { label: 'Feb', value: 45 },
+      { label: 'Mar', value: 28 },
+      { label: 'Apr', value: 60 },
+    ],
   },
   argTypes: {
     showLabels: { control: 'boolean' },
@@ -35,6 +44,11 @@ const meta: Meta<typeof Chart> = {
     showGrid: { control: 'boolean' },
     stepped: { control: 'boolean' },
     stacked: { control: 'boolean' },
+    type: { control: 'select', options: ['bar', 'line', 'area', 'pie', 'donut', 'radar', 'funnel', 'stacked'] },
+    motion: { control: 'select', options: ['grow', 'fade', 'scale', 'none'] },
+    pieView: { control: 'select', options: ['full', 'half', 'rose'] },
+    legendPosition: { control: 'select', options: ['right', 'bottom', 'none'] },
+    height: { control: 'number' },
   },
 };
 
@@ -53,9 +67,8 @@ export const Basic: Story = {
 };
 
 export const Line: Story = {
-  render: () => (
-    <Chart type="line" data={[{ label: 'A', value: 20 }, { label: 'B', value: 48 }]} height={160} showLabels />
-  ),
+  args: { type: 'line', height: 160 },
+  render: (args) => <Chart {...args} />,
 };
 
 export const ReuseWithProvider: Story = {

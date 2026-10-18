@@ -81,6 +81,7 @@ export const COLOR_CLASSES: Record<string, string> = {
   success: 'bear-text-green-600 dark:bear-text-green-400',
   danger: 'bear-text-red-600 dark:bear-text-red-400',
   warning: 'bear-text-amber-600 dark:bear-text-amber-400',
+  info: 'bear-text-blue-800 dark:bear-text-blue-200',
 };
 
 /** Line height classes */

@@ -29,10 +29,10 @@ export const TRANSITION_PRESETS: Record<TransitionName, TransitionStyles> = {
     exitActive: { opacity: 0, transform: 'translateY(16px)' },
   },
   'slide-down': {
-    enter: { opacity: 0, transform: 'translateY(-16px)' },
-    enterActive: { opacity: 1, transform: 'translateY(0)' },
-    exit: { opacity: 1, transform: 'translateY(0)' },
-    exitActive: { opacity: 0, transform: 'translateY(-16px)' },
+    enter: { opacity: 0, transform: 'translateY(-16px)', transformOrigin: 'top center' },
+    enterActive: { opacity: 1, transform: 'translateY(0)', transformOrigin: 'top center' },
+    exit: { opacity: 1, transform: 'translateY(0)', transformOrigin: 'top center' },
+    exitActive: { opacity: 0, transform: 'translateY(-16px)', transformOrigin: 'top center' },
   },
   'slide-left': {
     enter: { opacity: 0, transform: 'translateX(-16px)' },
@@ -47,10 +47,10 @@ export const TRANSITION_PRESETS: Record<TransitionName, TransitionStyles> = {
     exitActive: { opacity: 0, transform: 'translateX(16px)' },
   },
   scale: {
-    enter: { opacity: 0, transform: 'scale(0.9)' },
-    enterActive: { opacity: 1, transform: 'scale(1)' },
-    exit: { opacity: 1, transform: 'scale(1)' },
-    exitActive: { opacity: 0, transform: 'scale(0.9)' },
+    enter: { opacity: 0, transform: 'scale(0.96)', transformOrigin: 'top center' },
+    enterActive: { opacity: 1, transform: 'scale(1)', transformOrigin: 'top center' },
+    exit: { opacity: 1, transform: 'scale(1)', transformOrigin: 'top center' },
+    exitActive: { opacity: 0, transform: 'scale(0.96)', transformOrigin: 'top center' },
   },
   'scale-y': {
     enter: { opacity: 0, transform: 'scaleY(0.02)', transformOrigin: 'top center' },
@@ -63,6 +63,24 @@ export const TRANSITION_PRESETS: Record<TransitionName, TransitionStyles> = {
     enterActive: { opacity: 1, transform: 'scaleY(1)', transformOrigin: 'top center' },
     exit: { opacity: 1, transform: 'scaleY(1)', transformOrigin: 'top center' },
     exitActive: { opacity: 0, transform: 'scaleY(0.02)', transformOrigin: 'top center' },
+  },
+  elastic: {
+    enter: { opacity: 0, transform: 'scale(1.12)', transformOrigin: 'top center' },
+    enterActive: { opacity: 1, transform: 'scale(1)', transformOrigin: 'top center' },
+    exit: { opacity: 1, transform: 'scale(1)', transformOrigin: 'top center' },
+    exitActive: { opacity: 0, transform: 'scale(1.12)', transformOrigin: 'top center' },
+  },
+  reveal: {
+    enter: { maxHeight: 0, overflow: 'hidden', opacity: 0 },
+    enterActive: { maxHeight: '24rem', overflow: 'hidden', opacity: 1 },
+    exit: { maxHeight: '24rem', overflow: 'hidden', opacity: 1 },
+    exitActive: { maxHeight: 0, overflow: 'hidden', opacity: 0 },
+  },
+  expand: {
+    enter: { maxHeight: 0, overflow: 'hidden', opacity: 0, transformOrigin: 'top center' },
+    enterActive: { maxHeight: '24rem', overflow: 'hidden', opacity: 1, transformOrigin: 'top center' },
+    exit: { maxHeight: '24rem', overflow: 'hidden', opacity: 1, transformOrigin: 'top center' },
+    exitActive: { maxHeight: 0, overflow: 'hidden', opacity: 0, transformOrigin: 'top center' },
   },
   'scale-x': {
     enter: { opacity: 0, transform: 'scaleX(0)' },

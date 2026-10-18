@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { CSSProperties, FC, useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { BearIcons, SandboxIcon, StorybookIcon, Typography } from '@forgedevstack/bear';
 import {
@@ -12,8 +12,9 @@ import { NEW_COMPONENT_ALERTS, VERSION_POPUP_DESCRIPTION, VERSION_POPUP_FEATURES
 import { PORTAL_TEXT } from '@/constants/portal-i18n.const';
 import { TopbarProps } from './Topbar.types';
 import { BearIcon, NpmIcon } from './Topbar.icons';
-import { BellSvg } from './helpers';
-import { TOP_NAV_LINKS } from './Topbar.const';
+import { BellSvg, DocsMenu, ProductMenu } from './helpers';
+import { PATH_DOCS, PRODUCT_MENU_CLOSE_DELAY_MS, TOP_NAV_LINKS } from './Topbar.const';
+import { isProductPath, isTopNavActive } from './Topbar.utils';
 import { useTopbar } from './hooks/useTopbar';
 import { usePortalLanguage } from '@/hooks/usePortalLanguage';
 import { useNpmPackageVersion } from '@/hooks/useNpmPackageVersion';
@@ -24,6 +25,76 @@ export const Topbar: FC<TopbarProps> = (props) => {
   const { version } = useNpmPackageVersion();
   const t = PORTAL_TEXT[language];
   const location = useLocation();
+  const [productOpen, setProductOpen] = useState(false);
+  const productRef = useRef<HTMLDivElement>(null);
+  const productFlyoutRef = useRef<HTMLDivElement>(null);
+  const productCloseTimer = useRef<number | null>(null);
+  const [docsOpen, setDocsOpen] = useState(false);
+  const docsRef = useRef<HTMLDivElement>(null);
+  const docsFlyoutRef = useRef<HTMLDivElement>(null);
+  const docsCloseTimer = useRef<number | null>(null);
+
+  const openDocs = () => {
+    if (docsCloseTimer.current !== null) {
+      window.clearTimeout(docsCloseTimer.current);
+      docsCloseTimer.current = null;
+    }
+    setProductOpen(false);
+    setDocsOpen(true);
+  };
+
+  const scheduleCloseDocs = () => {
+    if (docsCloseTimer.current !== null) window.clearTimeout(docsCloseTimer.current);
+    docsCloseTimer.current = window.setTimeout(() => {
+      setDocsOpen(false);
+      docsCloseTimer.current = null;
+    }, PRODUCT_MENU_CLOSE_DELAY_MS);
+  };
+
+  const openProduct = () => {
+    if (productCloseTimer.current !== null) {
+      window.clearTimeout(productCloseTimer.current);
+      productCloseTimer.current = null;
+    }
+    setDocsOpen(false);
+    setProductOpen(true);
+  };
+
+  const scheduleCloseProduct = () => {
+    if (productCloseTimer.current !== null) window.clearTimeout(productCloseTimer.current);
+    productCloseTimer.current = window.setTimeout(() => {
+      setProductOpen(false);
+      productCloseTimer.current = null;
+    }, PRODUCT_MENU_CLOSE_DELAY_MS);
+  };
+
+  const menuOpen = productOpen || docsOpen;
+
+  useEffect(() => {
+    if (!menuOpen) return undefined;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setProductOpen(false);
+        setDocsOpen(false);
+      }
+    };
+    const onPointerDown = (event: MouseEvent) => {
+      if (!(event.target instanceof Node)) return;
+      const target = event.target;
+      const inProduct = productRef.current?.contains(target) || productFlyoutRef.current?.contains(target);
+      const inDocs = docsRef.current?.contains(target) || docsFlyoutRef.current?.contains(target);
+      if (!inProduct) setProductOpen(false);
+      if (!inDocs) setDocsOpen(false);
+    };
+    document.addEventListener('keydown', onKey);
+    document.addEventListener('mousedown', onPointerDown);
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.removeEventListener('mousedown', onPointerDown);
+      if (productCloseTimer.current !== null) window.clearTimeout(productCloseTimer.current);
+      if (docsCloseTimer.current !== null) window.clearTimeout(docsCloseTimer.current);
+    };
+  }, [menuOpen]);
 
   const {
     isDark, toggleMode, setMode,
@@ -44,10 +115,29 @@ export const Topbar: FC<TopbarProps> = (props) => {
   });
 
   const showBanner = banner && bannerVisible;
+  const topbarStyle = { '--bear-topbar-offset': showBanner ? '6rem' : '3.5rem' } as CSSProperties;
+  const navClass = (active: boolean) =>
+    `inline-flex items-center gap-1 px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+      active
+        ? 'text-pink-600 dark:text-pink-400 bg-pink-50 dark:bg-pink-900/20'
+        : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800'
+    }`;
+  const iconClass = 'p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-md transition-colors';
 
   return (
     <div>
-      <header className="Bear-Topbar fixed top-0 left-0 right-0 z-50">
+      {menuOpen ? (
+        <button
+          type="button"
+          className="Bear-Topbar__backdrop"
+          aria-label="Close menu"
+          onClick={() => {
+            setProductOpen(false);
+            setDocsOpen(false);
+          }}
+        />
+      ) : null}
+      <header className="Bear-Topbar fixed top-0 left-0 right-0 z-50" style={topbarStyle}>
         {showBanner && (
           <div className="Bear-Topbar__banner bg-gradient-to-r from-pink-600 via-pink-500 to-purple-600 text-white text-center py-2 px-4 text-sm flex items-center justify-center gap-3">
             <span className="flex-1">
@@ -67,10 +157,10 @@ export const Topbar: FC<TopbarProps> = (props) => {
           </div>
         )}
 
-        <div className="Bear-Topbar__main h-14 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+        <div className="relative h-14 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
           <div className="h-full px-4 flex items-center justify-between mx-auto">
-            <div className="Bear-Topbar__left flex items-center gap-3">
-              <button onClick={onMenuClick} className="lg:hidden p-2 -ml-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-lg transition-colors" aria-label="Toggle menu">
+            <div className="flex items-center gap-3">
+              <button onClick={onMenuClick} className={`lg:hidden ${iconClass} -ml-2`} aria-label="Toggle menu">
                 <BearIcons.MenuIcon size={20} />
               </button>
               <Link to="/" className="flex items-center gap-2.5">
@@ -80,7 +170,6 @@ export const Topbar: FC<TopbarProps> = (props) => {
                   <Typography variant="caption" className="hidden sm:inline text-gray-400 dark:text-gray-500 font-mono" component="span">v{version}</Typography>
                 </div>
               </Link>
-
               <button
                 onClick={handleSearchToggle}
                 className="hidden md:flex items-center gap-2 ml-4 px-2.5 py-1.5 rounded-lg text-sm text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
@@ -94,40 +183,72 @@ export const Topbar: FC<TopbarProps> = (props) => {
               </button>
             </div>
 
-            <nav className="Bear-Topbar__nav hidden md:flex items-center gap-1">
+            <nav className="hidden md:flex items-center gap-1" aria-label={t.navProduct}>
+              <div
+                ref={productRef}
+                onMouseEnter={openProduct}
+                onMouseLeave={scheduleCloseProduct}
+              >
+                <button
+                  type="button"
+                  aria-expanded={productOpen}
+                  aria-haspopup="menu"
+                  onClick={() => {
+                    setDocsOpen(false);
+                    setProductOpen((open) => !open);
+                  }}
+                  onFocus={openProduct}
+                  className={navClass(productOpen || isProductPath(location.pathname))}
+                >
+                  {t.navProduct}
+                  <BearIcons.ChevronRightIcon size={14} className={`Bear-Topbar__chevron${productOpen ? ' is-open' : ''}`} />
+                </button>
+              </div>
               {TOP_NAV_LINKS.map((link) => {
-                const isActive = location.pathname === link.path || location.pathname.startsWith(link.path.split('/').slice(0, 2).join('/') + '/');
+                const isActive = isTopNavActive(link.path, location.pathname);
+                if (link.path === PATH_DOCS) {
+                  return (
+                    <div key={link.path} ref={docsRef} onMouseEnter={openDocs} onMouseLeave={scheduleCloseDocs}>
+                      <button
+                        type="button"
+                        aria-expanded={docsOpen}
+                        aria-haspopup="menu"
+                        onClick={() => {
+                          setProductOpen(false);
+                          setDocsOpen((open) => !open);
+                        }}
+                        onFocus={openDocs}
+                        className={navClass(isActive || docsOpen)}
+                      >
+                        {t[link.labelKey]}
+                        <BearIcons.ChevronRightIcon size={14} className={`Bear-Topbar__chevron${docsOpen ? ' is-open' : ''}`} />
+                      </button>
+                    </div>
+                  );
+                }
                 return (
-                  <Link
-                    key={link.path}
-                    to={link.path}
-                    className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
-                      isActive
-                        ? 'text-pink-600 dark:text-pink-400 bg-pink-50 dark:bg-pink-900/20'
-                        : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800'
-                    }`}
-                  >
-                    {link.label}
+                  <Link key={link.path} to={link.path} className={navClass(isActive)}>
+                    {t[link.labelKey]}
                   </Link>
                 );
               })}
             </nav>
 
-            <div className="Bear-Topbar__right flex items-center gap-0.5">
+            <div className="flex items-center gap-0.5">
               <button
+                type="button"
                 onClick={handleSearchToggle}
-                className="md:hidden p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-md transition-colors"
+                className={`md:hidden ${iconClass}`}
                 aria-label={t.searchPlaceholder}
                 title={t.searchPlaceholder}
               >
                 <BearIcons.SearchIcon size={18} />
               </button>
-
               <a
                 href={resolveStorybookHrefForPath(location.pathname)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden md:flex p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-md transition-colors"
+                className={`hidden md:flex ${iconClass}`}
                 aria-label={t.storybookLink}
                 title={t.storybookLink}
               >
@@ -136,13 +257,13 @@ export const Topbar: FC<TopbarProps> = (props) => {
               <button
                 type="button"
                 onClick={() => openCodeSandbox(location.pathname)}
-                className="hidden md:flex p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-md transition-colors"
+                className={`hidden md:flex ${iconClass}`}
                 aria-label={t.sandboxLink}
                 title={t.sandboxLink}
               >
                 <SandboxIcon size={18} />
               </button>
-              <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className="hidden sm:flex p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-md transition-colors" aria-label="GitHub" title="GitHub">
+              <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className={`hidden sm:flex ${iconClass}`} aria-label={t.githubLink} title={t.githubLink}>
                 <BearIcons.GithubIcon size={18} />
               </a>
 
@@ -164,7 +285,7 @@ export const Topbar: FC<TopbarProps> = (props) => {
                     setAlertsOpen((prev) => !prev);
                     setSettingsOpen(false);
                   }}
-                  className="relative p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-md transition-colors"
+                  className={`relative ${iconClass}`}
                   aria-label={t.notifications}
                   title={t.notifications}
                 >
@@ -317,11 +438,10 @@ export const Topbar: FC<TopbarProps> = (props) => {
 
               <button
                 onClick={toggleMode}
-                aria-label="Toggle theme"
+                aria-label={isDark ? t.light : t.dark}
+                title={isDark ? t.light : t.dark}
                 className={`p-2 rounded-md transition-colors ${
-                  isDark
-                    ? 'text-gray-400 hover:text-white'
-                    : 'text-zinc-700 hover:text-zinc-900'
+                  isDark ? 'text-gray-400 hover:text-white' : 'text-zinc-700 hover:text-zinc-900'
                 }`}
               >
                 {isDark ? (
@@ -331,6 +451,30 @@ export const Topbar: FC<TopbarProps> = (props) => {
                 )}
               </button>
             </div>
+          </div>
+          <div
+            ref={productFlyoutRef}
+            className={`Bear-Topbar__flyout Bear-Topbar__flyout--products${productOpen ? ' is-open' : ''}`}
+            onMouseEnter={openProduct}
+            onMouseLeave={scheduleCloseProduct}
+            aria-hidden={!productOpen}
+            onClick={(event) => {
+              if (event.target === event.currentTarget) setProductOpen(false);
+            }}
+          >
+            <ProductMenu copy={t} onNavigate={() => setProductOpen(false)} />
+          </div>
+          <div
+            ref={docsFlyoutRef}
+            className={`Bear-Topbar__flyout Bear-Topbar__flyout--docs${docsOpen ? ' is-open' : ''}`}
+            onMouseEnter={openDocs}
+            onMouseLeave={scheduleCloseDocs}
+            aria-hidden={!docsOpen}
+            onClick={(event) => {
+              if (event.target === event.currentTarget) setDocsOpen(false);
+            }}
+          >
+            <DocsMenu label={t.navDocs} onNavigate={() => setDocsOpen(false)} />
           </div>
         </div>
 

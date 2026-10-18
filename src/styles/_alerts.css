@@ -1,12 +1,93 @@
+.Bear-Alert--success {
+  background-color: #f0fdf4;
+  color: #14532d;
+  border: 1px solid #bbf7d0;
+}
+
+.Bear-Alert--info {
+  background-color: #eff6ff;
+  color: #1e3a8a;
+  border: 1px solid #bfdbfe;
+}
+
+.Bear-Alert--warning {
+  background-color: #fffbeb;
+  color: #78350f;
+  border: 1px solid #fde68a;
+}
+
+.Bear-Alert--error {
+  background-color: #fef2f2;
+  color: #7f1d1d;
+  border: 1px solid #fecaca;
+}
+
+.dark .Bear-Alert--success,
+.bear-dark .Bear-Alert--success {
+  background-color: #052e16;
+  color: #dcfce7;
+  border-color: #166534;
+}
+
+.dark .Bear-Alert--info,
+.bear-dark .Bear-Alert--info {
+  background-color: #172554;
+  color: #dbeafe;
+  border-color: #1e40af;
+}
+
+.dark .Bear-Alert--warning,
+.bear-dark .Bear-Alert--warning {
+  background-color: #451a03;
+  color: #fef3c7;
+  border-color: #92400e;
+}
+
+.dark .Bear-Alert--error,
+.bear-dark .Bear-Alert--error {
+  background-color: #450a0a;
+  color: #fee2e2;
+  border-color: #991b1b;
+}
+
+.Bear-Alert--outlined,
+.dark .Bear-Alert--outlined,
+.bear-dark .Bear-Alert--outlined {
+  background-color: transparent;
+}
+
+.Bear-Alert .Bear-Typography,
+.Bear-Alert__icon {
+  color: inherit;
+}
+
 .bear-alert-filled-success {
-  background-color: var(--bear-success-500);
+  background-color: var(--bear-success-600);
+  color: var(--bear-success-50);
 }
+
 .bear-alert-filled-info {
-  background-color: var(--bear-info-500);
+  background-color: var(--bear-info-600);
+  color: var(--bear-info-50);
 }
+
 .bear-alert-filled-warning {
-  background-color: var(--bear-warning-500);
+  background-color: var(--bear-warning-400);
+  color: var(--bear-warning-950, #451a03);
 }
+
 .bear-alert-filled-error {
-  background-color: var(--bear-danger-500);
+  background-color: var(--bear-danger-600);
+  color: var(--bear-danger-50);
+}
+
+.dark .bear-alert-filled-success,
+.bear-dark .bear-alert-filled-success,
+.dark .bear-alert-filled-info,
+.bear-dark .bear-alert-filled-info,
+.dark .bear-alert-filled-warning,
+.bear-dark .bear-alert-filled-warning,
+.dark .bear-alert-filled-error,
+.bear-dark .bear-alert-filled-error {
+  border-color: transparent;
 }

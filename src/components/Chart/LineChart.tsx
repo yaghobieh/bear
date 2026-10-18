@@ -3,7 +3,7 @@ import { cn, resolveBearId, useBearId } from '@utils';
 import type { CSSProperties } from 'react';
 import type { LineChartProps } from './Chart.types';
 import { CHART } from './Chart.const';
-import { calculateLinePoints, generateLinePath } from './Chart.utils';
+import { calculateLinePoints, chartMotionClass, generateLinePath } from './Chart.utils';
 
 export const LineChart = (props: LineChartProps) => {
   const {
@@ -17,6 +17,7 @@ export const LineChart = (props: LineChartProps) => {
     strokeWidth = CHART.DEFAULT_STROKE_WIDTH,
     color = 'var(--bear-primary-500, #ec4899)',
     animated = true,
+    motion,
     className,
     id,
     testId,
@@ -51,7 +52,7 @@ export const LineChart = (props: LineChartProps) => {
           <path
             d={areaD}
             fill={`url(#${gradientId})`}
-            className={cn(animated && 'animate-fade-in')}
+            className={chartMotionClass(animated, motion, 'animate-fade-in')}
           />
         )}
 
@@ -62,7 +63,7 @@ export const LineChart = (props: LineChartProps) => {
           strokeWidth={strokeWidth / TEN}
           strokeLinecap="round"
           strokeLinejoin="round"
-          className={cn(animated && 'animate-draw-line')}
+          className={chartMotionClass(animated, motion, 'animate-draw-line')}
         />
 
         {showDots &&
@@ -73,7 +74,7 @@ export const LineChart = (props: LineChartProps) => {
               cy={point.y}
               r={CHART.DOT_RADIUS}
               fill={color}
-              className={cn(animated && 'animate-scale-in')}
+              className={chartMotionClass(animated, motion, 'animate-scale-in')}
               style={{ animationDelay: `${index * FIFTY}ms` }}
             />
           ))}

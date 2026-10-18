@@ -32,4 +32,10 @@ export const OVERLAY_OPEN_EFFECT_SCALE = 'scale';
 
 export const OVERLAY_OPEN_EFFECT_FOLD = 'fold';
 
+export const OVERLAY_OPEN_EFFECT_ELASTIC = 'elastic';
+
+export const OVERLAY_OPEN_EFFECT_REVEAL = 'reveal';
+
+export const OVERLAY_OPEN_EFFECT_EXPAND = 'expand';
+
 export const OVERLAY_OPEN_EFFECT_DEFAULT = OVERLAY_OPEN_EFFECT_FOLD;

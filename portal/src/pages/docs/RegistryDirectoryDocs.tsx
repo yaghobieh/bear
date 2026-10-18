@@ -26,7 +26,9 @@ const RegistryDirectoryDocsPage: FC = () => {
                   <Typography variant="body2" className="font-mono font-semibold text-pink-600 dark:text-pink-400">
                     {item.name}
                   </Typography>
-                  {'badgeKey' in item && item.badgeKey && <span className="doc-page__badge">{t[item.badgeKey]}</span>}
+                  {'badgeKey' in item && typeof item.badgeKey === 'string' && item.badgeKey && (
+                    <span className="doc-page__badge">{t[item.badgeKey]}</span>
+                  )}
                 </div>
                 <Typography variant="body2" color="muted">{t[item.descKey]}</Typography>
               </>

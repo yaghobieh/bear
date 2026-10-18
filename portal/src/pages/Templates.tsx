@@ -44,15 +44,15 @@ const TemplatesPage: FC = () => {
                 background: `linear-gradient(135deg, ${template.gradient[0]}, ${template.gradient[1]})`,
               }}
             >
-              {template.image && (
+              {(template.screenshot || template.image) && (
                 <img
-                  src={template.image}
+                  src={template.screenshot || template.image}
                   alt=""
                   className="absolute inset-0 w-full h-full object-cover"
                   onError={(e) => { e.currentTarget.style.display = 'none'; }}
                 />
               )}
-              {!template.image && (
+              {!template.screenshot && !template.image && (
                 <BearIcons.SparklesIcon size="lg" color="rgba(255,255,255,0.9)" className="relative z-10" />
               )}
             </div>

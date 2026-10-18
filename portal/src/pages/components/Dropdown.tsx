@@ -64,7 +64,7 @@ const DropdownPage: FC = () => {
 
       <ComponentPreview
         title="Open and close effects"
-        description="Pick motion independently: none, fade, slide-down, or scale."
+        description="Pick motion on the menu panel: fade, slide, scale, fold, elastic, reveal, or expand."
         code={`<Dropdown trigger={<Button>Fade</Button>} openEffect="fade" closeEffect="fade" items={items} />
 <Dropdown trigger={<Button>Slide</Button>} openEffect="slide-down" closeEffect="slide-down" items={items} />
 <Dropdown trigger={<Button>Scale</Button>} openEffect="scale" closeEffect="scale" items={items} />
@@ -80,6 +80,9 @@ const DropdownPage: FC = () => {
           <Dropdown trigger={<Button>Fade</Button>} openEffect="fade" closeEffect="fade" items={MENU_ITEMS} />
           <Dropdown trigger={<Button>Slide</Button>} openEffect="slide-down" closeEffect="slide-down" items={MENU_ITEMS} />
           <Dropdown trigger={<Button>Scale</Button>} openEffect="scale" closeEffect="scale" items={MENU_ITEMS} />
+          <Dropdown trigger={<Button>Elastic</Button>} openEffect="elastic" closeEffect="elastic" items={MENU_ITEMS} />
+          <Dropdown trigger={<Button>Reveal</Button>} openEffect="reveal" closeEffect="reveal" items={MENU_ITEMS} />
+          <Dropdown trigger={<Button>Expand</Button>} openEffect="expand" closeEffect="expand" items={MENU_ITEMS} />
           <Dropdown trigger={<Button>None</Button>} openEffect="none" closeEffect="none" items={MENU_ITEMS} />
           <Dropdown trigger={<Button>Mixed</Button>} effect={{ open: 'scale', close: 'fade' }} items={MENU_ITEMS} />
         </div>
@@ -168,8 +171,8 @@ const DropdownPage: FC = () => {
           { name: 'matchWidth', type: 'boolean', default: 'false', description: 'Match trigger width' },
           { name: 'maxHeight', type: 'number', description: 'Max height before scroll' },
           { name: 'closeOnSelect', type: 'boolean', default: 'true', description: 'Close on item click' },
-          { name: 'openEffect', type: "'none' | 'fade' | 'slide-down' | 'scale'", default: 'slide-down', description: 'Menu open animation' },
-          { name: 'closeEffect', type: "'none' | 'fade' | 'slide-down' | 'scale'", default: 'same as openEffect', description: 'Menu close animation' },
+          { name: 'openEffect', type: "'none' | 'fade' | 'slide-down' | 'scale' | 'fold' | 'elastic' | 'reveal' | 'expand'", default: 'fold', description: 'Motion on the menu panel' },
+          { name: 'closeEffect', type: "'none' | 'fade' | 'slide-down' | 'scale' | 'fold' | 'elastic' | 'reveal' | 'expand'", default: 'same as openEffect', description: 'Motion on the menu panel as it closes' },
           { name: 'effect', type: '{ open?: OverlayMotionEffect; close?: OverlayMotionEffect }', description: 'Open and close motion in one prop' },
           { name: 'searchable', type: 'boolean', default: 'false', description: 'Enable search/filter input' },
           { name: 'searchPlaceholder', type: 'string', description: 'Placeholder for search input' },

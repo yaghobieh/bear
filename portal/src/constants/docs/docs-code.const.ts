@@ -106,6 +106,24 @@ forge add [package]
 forge generate page Dashboard
 forge generate component UserCard`;
 
+export const BEAR_CLI_INIT = `npm install @forgedevstack/bear
+npx @forgedevstack/bear-cli init --exclude map --exclude kanban --exclude ai --exclude code
+npx @forgedevstack/bear-cli add charts
+npx @forgedevstack/bear-cli add icons
+npx @forgedevstack/bear-cli add map
+npx @forgedevstack/bear-cli add kanban`;
+
+export const BEAR_PACKAGE_INSTALLS = `npm install @forgedevstack/bear
+npx @forgedevstack/bear-cli add charts
+npx @forgedevstack/bear-cli add icons
+npx @forgedevstack/bear-cli add map
+npx @forgedevstack/bear-cli add kanban
+npx @forgedevstack/bear-cli add ai
+npx @forgedevstack/bear-cli add code
+
+# leave a surface out of a new app
+npx @forgedevstack/bear-cli init --exclude map --exclude kanban --exclude ai --exclude code`;
+
 export const PACKAGE_JSON_IMPORTS = `{
   "imports": {
     "#components/*": "./src/components/*.tsx",

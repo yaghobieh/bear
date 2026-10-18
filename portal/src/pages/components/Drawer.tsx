@@ -146,7 +146,8 @@ const DrawerPage: FC = () => {
         <Flex gap={2} wrap="wrap" justify="center">
           <DrawerDemo openEffect="slide-down" closeEffect="fade" />
           <DrawerDemo openEffect="scale" closeEffect="slide-down" />
-          <DrawerDemo openEffect="fade" closeEffect="scale" />
+          <DrawerDemo openEffect="elastic" closeEffect="reveal" />
+          <DrawerDemo openEffect="expand" closeEffect="fade" />
           <DrawerDemo openEffect="none" closeEffect="none" />
         </Flex>
       </ComponentPreview>

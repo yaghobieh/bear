@@ -6,7 +6,7 @@ import reactHooks from 'eslint-plugin-react-hooks';
 // Import order convention: put @utils, @hooks, @context imports LAST in the block (see .cursor rules).
 
 export default [
-  { ignores: ['dist/**', '**/*.kiln.*', '.kiln/**', 'portal/**', 'src/postcss/**'] },
+  { ignores: ['dist/**', 'packages/**/dist/**', '**/*.kiln.*', '.kiln/**', 'portal/**', 'src/postcss/**'] },
   js.configs.recommended,
   {
     files: ['**/*.ts', '**/*.tsx'],

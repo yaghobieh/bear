@@ -6,6 +6,24 @@ const LATEST = CHANGELOG_ENTRIES[0];
 
 const RELEASE_ITEMS = [
   {
+    title: 'Bear X packages',
+    path: '/libraries',
+    icon: BearIcons.LayersIcon,
+    description: 'Charts are the optional package @forgedevstack/bear-x-charts. AI and code are @forgedevstack/bear-x-ai and bear-x-code. Tree stays in Core. There is no bear-x-tree package. Icons and charts are left out of the default npm install.',
+  },
+  {
+    title: 'Map and Kanban stay separate',
+    path: '/products/map',
+    icon: BearIcons.PackageIcon,
+    description: 'Map is @forgedevstack/bear-map, with street, light, dark, and terrain tiles plus zoom and drag. Kanban is @forgedevstack/kanban, not a bear-kanban package. Both still render from Core if you already import them there.',
+  },
+  {
+    title: 'Hooks stay outside',
+    path: '/hooks',
+    icon: BearIcons.WrenchIcon,
+    description: 'Hooks are not a Bear X package. useMediaQuery, useClipboard, useDebounce, and the rest stay on Core, so you can keep them outside the optional libraries.',
+  },
+  {
     title: 'ToggleGroup & ToggleGroupItem',
     path: '/components/toggle-group',
     icon: BearIcons.ToggleButtonIcon,
@@ -57,8 +75,11 @@ const WhatsNew124Page = () => (
     <div>
       <Badge variant="primary" className="mb-4">v{LATEST.version}</Badge>
       <Typography variant="h1" className="mb-3">What&apos;s new in Bear {LATEST.version}</Typography>
-      <Typography variant="body1" className="text-gray-600 dark:text-gray-400">
-        Introducing the new ToggleGroup component, full overlay motion parity, standardized focus traps, density parity, and enhanced component modularity.
+      <Typography variant="body1" className="text-gray-600 dark:text-gray-400 mb-4">
+        Bear 1.3.5 gives charts, trees, AI, and code their own install names, and keeps map, kanban, and hooks outside those packages. Core does not drop the components you already import.
+      </Typography>
+      <Typography variant="body2" className="text-gray-600 dark:text-gray-400">
+        Install a Bear X package when you want that surface alone. Leave hooks on @forgedevstack/bear. Media playback stays Torch. The rich editor stays Ink. Date pickers stay in Core. @forgedevstack/grid-table keeps its name.
       </Typography>
     </div>
 

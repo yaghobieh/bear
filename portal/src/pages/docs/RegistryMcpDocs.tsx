@@ -20,7 +20,7 @@ const RegistryMcpDocsPage: FC = () => {
   const [client, setClient] = useState<McpClientId>('cursor');
 
   return (
-    <DocPage title={t.registryMcpTitle} badge={t.soon} description={t.registryMcpDesc}>
+    <DocPage title={t.registryMcpTitle} description={t.registryMcpDesc}>
       <section className="doc-section mb-10">
         <Typography variant="body2" color="muted" className="leading-relaxed">{t.registryMcpIntro}</Typography>
       </section>
@@ -31,7 +31,7 @@ const RegistryMcpDocsPage: FC = () => {
 
       <section className="doc-section mb-10">
         <Typography variant="h4" className="doc-section__title mb-3">{t.registryMcpComponentsJson}</Typography>
-        <CodeBlock code={MCP_CONFIG_EXAMPLE} language="json" showLineNumbers={false} />
+        <CodeBlock code={MCP_CONFIG_EXAMPLE} language="tsx" showLineNumbers={false} />
       </section>
 
       <section className="doc-section mb-10">

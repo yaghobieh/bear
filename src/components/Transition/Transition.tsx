@@ -35,12 +35,15 @@ export const Transition: FC<TransitionProps> = ({
   onLeft,
   children,
   className,
+  style: styleProp,
+  nodeRef,
+  elementProps,
   as = 'div',
 }) => {
 
   const [mounted, setMounted] = useState(show);
   const [phase, setPhase] = useState<'enter' | 'enter-active' | 'exit' | 'exit-active' | 'idle'>(
-    show ? 'idle' : 'exit-active'
+    show ? 'enter' : 'exit-active'
   );
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const hasMountedRef = useRef(false);
@@ -114,7 +117,7 @@ export const Transition: FC<TransitionProps> = ({
 
   return createElement(
     as,
-    { className: cn(className), style: styles },
+    { ref: nodeRef, className: cn(className), style: { ...styleProp, ...styles }, ...elementProps },
     children
   );
 };

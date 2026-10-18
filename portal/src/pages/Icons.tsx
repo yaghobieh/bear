@@ -1,6 +1,6 @@
 import { type ChangeEvent, FC, useState, useMemo, useCallback } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
-import { BearIcons, ComponentsIcon, SandboxIcon, StorybookIcon, Typography, Tabs, TabList, Tab, TabPanel } from '@forgedevstack/bear';
+import { BearIcons, Chip, ComponentsIcon, SandboxIcon, StorybookIcon, Typography } from '@forgedevstack/bear';
 
 type IconComponentType = FC<{ size?: number | string; className?: string; [key: string]: unknown }>;
 
@@ -32,8 +32,10 @@ const ICON_CATEGORIES = {
   Bear: entriesFrom(BearIcons.Bear as Record<string, unknown>),
 };
 
+const ICON_ALL_TAB = 'All';
 const CATEGORY_NAMES = Object.keys(ICON_CATEGORIES) as Array<keyof typeof ICON_CATEGORIES>;
-const DEFAULT_ICON_TAB = 'Product';
+const ICON_TABS = [ICON_ALL_TAB, ...CATEGORY_NAMES];
+const DEFAULT_ICON_TAB = ICON_ALL_TAB;
 const ICON_IMPORT_TEMPLATE = (name: string) => `import { ${name} } from '@forgedevstack/bear';`;
 
 const ICON_COLORS = [
@@ -47,7 +49,14 @@ const ICON_COLORS = [
   { label: 'Cyan', value: 'text-cyan-500' },
 ];
 
-const ICON_SIZES = [16, 20, 24, 32, 40];
+const ICON_SIZES = [32, 40, 48, 64, 80];
+
+const ICON_EFFECTS = [
+  { id: 'none', label: 'None', className: '' },
+  { id: 'spin', label: 'Spinner', className: 'animate-spin' },
+  { id: 'pulse', label: 'Pulse', className: 'animate-pulse' },
+  { id: 'bounce', label: 'Bounce', className: 'animate-bounce' },
+];
 
 const IconPreview: FC<{
   name: string;
@@ -55,7 +64,8 @@ const IconPreview: FC<{
   colorClass: string;
   iconSize: number;
   showCircle: boolean;
-}> = ({ name, IconComponent, colorClass, iconSize, showCircle }) => {
+  effectClass: string;
+}> = ({ name, IconComponent, colorClass, iconSize, showCircle, effectClass }) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = useCallback(async () => {
@@ -69,7 +79,7 @@ const IconPreview: FC<{
       <polyline points="20 6 9 17 4 12" />
     </svg>
   ) : (
-    <IconComponent size={iconSize} className={colorClass || 'text-gray-600 dark:text-gray-300'} />
+    <IconComponent size={iconSize} className={`${colorClass || 'text-gray-600 dark:text-gray-300'} ${effectClass}`} />
   );
 
   return (
@@ -82,10 +92,13 @@ const IconPreview: FC<{
         }`}
       title={copied ? 'Copied!' : `Click to copy import for ${name}`}
     >
-      <div className={showCircle
-        ? 'flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700/60'
-        : 'flex items-center justify-center'
-      }>
+      <div
+        className={showCircle
+          ? 'flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700/60'
+          : 'flex items-center justify-center'
+        }
+        style={{ width: iconSize + 28, height: iconSize + 28 }}
+      >
         {iconEl}
       </div>
       <span className="text-[11px] text-gray-500 dark:text-gray-400 truncate max-w-full leading-tight">
@@ -99,11 +112,13 @@ const Icons: FC = () => {
   const [search, setSearch] = useState('');
   const [activeTab, setActiveTab] = useState<string>(DEFAULT_ICON_TAB);
   const [colorIdx, setColorIdx] = useState(0);
-  const [sizeIdx, setSizeIdx] = useState(2);
+  const [sizeIdx, setSizeIdx] = useState(1);
   const [showCircle, setShowCircle] = useState(false);
+  const [effectId, setEffectId] = useState(ICON_EFFECTS[0].id);
 
   const colorClass = ICON_COLORS[colorIdx]?.value ?? '';
-  const iconSize = ICON_SIZES[sizeIdx] ?? 24;
+  const iconSize = ICON_SIZES[sizeIdx] ?? 40;
+  const effectClass = ICON_EFFECTS.find((effect) => effect.id === effectId)?.className ?? '';
 
   const filteredBySearch = useMemo(() => {
     const searchLower = search.trim().toLowerCase();
@@ -118,40 +133,39 @@ const Icons: FC = () => {
     return result;
   }, [search]);
 
-  const categoriesToShow: Record<string, Array<[string, IconComponentType]>> = filteredBySearch[activeTab]
-    ? { [activeTab]: filteredBySearch[activeTab] }
-    : {};
+  const categoriesToShow: Record<string, Array<[string, IconComponentType]>> = activeTab === ICON_ALL_TAB || search.trim()
+    ? filteredBySearch
+    : (filteredBySearch[activeTab] ? { [activeTab]: filteredBySearch[activeTab] } : {});
 
   const totalIcons = Object.values(ICON_CATEGORIES).flat().length;
 
   return (
     <div className="fade-in">
       <Typography variant="h1" className="text-gray-900 dark:text-white mb-2">Icons</Typography>
-        <Typography variant="body1" className="text-gray-600 dark:text-gray-400 mb-8">
+        <Typography variant="body1" className="text-gray-600 dark:text-gray-400 mb-4">
           {totalIcons}+ SVG icons across {CATEGORY_NAMES.length} categories. Click any icon to copy its import statement.
         </Typography>
+        <a
+          className="mb-8 inline-flex items-center rounded-lg border border-pink-500 px-3 py-1.5 text-sm font-medium text-pink-600 dark:text-pink-400"
+          href="https://bundlephobia.com/package/@forgedevstack/bear-icons"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Bundle size
+        </a>
 
         <section className="mb-8 space-y-6">
           <div>
-            <Typography variant="h4" className="mb-2">Install with Bear (icons included)</Typography>
+            <Typography variant="h4" className="mb-2">Icons are not in the default install</Typography>
             <Typography variant="body2" className="mb-3 text-gray-600 dark:text-gray-400">
-              One package: components, theme, and the full icon set re-exported from Bear.
+              npm install @forgedevstack/bear includes the components except icons and charts. Add icons with the CLI.
             </Typography>
             <CodeBlock code={`npm install @forgedevstack/bear
+npx @forgedevstack/bear-cli add icons
 
-import { SearchIcon, BearIcons } from '@forgedevstack/bear';
+import { SearchIcon, BearIcons } from '@forgedevstack/bear-icons';
 
-<SearchIcon size={24} />
-<BearIcons.Charts.CakeIcon size={20} />`} language="tsx" />
-          </div>
-          <div>
-            <Typography variant="h4" className="mb-2">Install Bear without icons</Typography>
-            <Typography variant="body2" className="mb-3 text-gray-600 dark:text-gray-400">
-              npm has no --no-icons flag. Use --omit=optional so @forgedevstack/bear-icons is not installed.
-            </Typography>
-            <CodeBlock code={`npm install @forgedevstack/bear --omit=optional
-yarn add @forgedevstack/bear --ignore-optional
-pnpm add @forgedevstack/bear --no-optional`} language="bash" />
+<SearchIcon size={48} className="animate-spin" />`} language="tsx" />
           </div>
           <div>
             <Typography variant="h4" className="mb-2">Install icons only</Typography>
@@ -179,19 +193,16 @@ import { SearchIcon, BearIcons } from '@forgedevstack/bear-icons';
             value={search}
             onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
             placeholder="Search icons..."
-            className="w-full pl-8 pr-8 py-2 text-sm rounded-md border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500/30 focus:border-pink-500"
+            className="w-full pl-8 pr-3 py-2 text-sm rounded-md border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500/30 focus:border-pink-500"
           />
-          {search.trim() && (
-            <button
-              type="button"
-              onClick={() => setSearch('')}
-              className="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 rounded text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-              aria-label="Clear search"
-            >
-              <BearIcons.CloseIcon size={14} />
-            </button>
-          )}
         </div>
+        <button
+          type="button"
+          onClick={() => setSearch('')}
+          className="px-3 py-2 text-xs font-medium rounded-md border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:border-pink-400"
+        >
+          Clear
+        </button>
 
         {/* Color */}
         <div className="flex items-center gap-1.5">
@@ -230,6 +241,26 @@ import { SearchIcon, BearIcons } from '@forgedevstack/bear-icons';
           </div>
         </div>
 
+        <div className="flex items-center gap-1.5">
+          <span className="text-xs text-gray-500 dark:text-gray-400">Effect</span>
+          <div className="flex gap-1">
+            {ICON_EFFECTS.map((effect) => (
+              <button
+                key={effect.id}
+                type="button"
+                onClick={() => setEffectId(effect.id)}
+                className={`px-2 py-0.5 text-xs rounded transition-all ${
+                  effect.id === effectId
+                    ? 'bg-pink-500 text-white'
+                    : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300'
+                }`}
+              >
+                {effect.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
         {/* Circle toggle */}
         <button
           onClick={() => setShowCircle(!showCircle)}
@@ -244,32 +275,39 @@ import { SearchIcon, BearIcons } from '@forgedevstack/bear-icons';
         </button>
       </div>
 
-      {/* Category tabs + grid */}
-      <Tabs value={activeTab} defaultTab={DEFAULT_ICON_TAB} onChange={setActiveTab} variant="pills">
-        <TabList wrap className="mb-4">
-          {CATEGORY_NAMES.map((category) => (
-            <Tab key={category} id={category}>
-              {category} ({ICON_CATEGORIES[category].length})
-            </Tab>
-          ))}
-        </TabList>
-
-        {CATEGORY_NAMES.map((category) => (
-          <TabPanel key={category} tabId={category} className="pt-2">
-            {categoriesToShow[category] ? (
-              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-2">
-                {categoriesToShow[category].map(([name, IconComponent]) => (
-                  <IconPreview key={name} name={name} IconComponent={IconComponent} colorClass={colorClass} iconSize={iconSize} showCircle={showCircle} />
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-16 text-gray-500 dark:text-gray-400">
-                {search.trim() ? `No icons found in ${category} matching "${search}"` : `No icons in ${category}.`}
-              </div>
-            )}
-          </TabPanel>
+      <div className="mb-3 flex flex-wrap gap-2">
+        {ICON_TABS.map((category) => (
+          <Chip
+            key={category}
+            variant={activeTab === category ? 'filled' : 'outlined'}
+            color="primary"
+            onClick={() => setActiveTab(category)}
+          >
+            {category}
+          </Chip>
         ))}
-      </Tabs>
+      </div>
+      <Typography variant="body2" className="mb-6 text-gray-500 dark:text-gray-400">
+        {totalIcons} components
+      </Typography>
+      {Object.keys(categoriesToShow).length > 0 ? (
+        Object.entries(categoriesToShow).map(([group, icons]) => (
+          <section key={group} className="mb-8">
+            {(activeTab === ICON_ALL_TAB || search.trim()) && (
+              <Typography variant="h5" className="mb-3">{group}</Typography>
+            )}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
+              {icons.map(([name, IconComponent]) => (
+                <IconPreview key={name} name={name} IconComponent={IconComponent} colorClass={colorClass} iconSize={iconSize} showCircle={showCircle} effectClass={effectClass} />
+              ))}
+            </div>
+          </section>
+        ))
+      ) : (
+        <div className="text-center py-16 text-gray-500 dark:text-gray-400">
+          {search.trim() ? `No icons matching "${search}"` : 'No icons.'}
+        </div>
+      )}
 
       <section className="mt-10 mb-8">
         <Typography variant="h3" className="text-gray-900 dark:text-white mb-4">Icon Props</Typography>

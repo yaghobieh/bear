@@ -35,8 +35,32 @@ const config: StorybookConfig = {
     viteConfig.resolve.alias = {
       ...(viteConfig.resolve.alias ?? {}),
       '@': portalSrc,
+      '@utils': resolve(root, '../../src/utils'),
+      '@hooks': resolve(root, '../../src/hooks'),
+      '@context': resolve(root, '../../src/context'),
+      '@types': resolve(root, '../../src/types'),
+      '@const': resolve(root, '../../src/constants'),
+      '@constants': resolve(root, '../../src/constants'),
+      '@forgedevstack/bear-x-charts': resolve(root, '../../packages/bear-x-charts/src/index.ts'),
+      '@forgedevstack/bear-x-ai': resolve(root, '../../packages/bear-x-ai/src/index.ts'),
+      '@forgedevstack/bear-x-code': resolve(root, '../../packages/bear-x-code/src/index.ts'),
+      '@forgedevstack/bear-map': resolve(root, '../../packages/bear-map/src/index.ts'),
+      '@forgedevstack/kanban': resolve(root, '../../packages/kanban/src/index.ts'),
       vue: resolve(portalSrc, 'vue-stub.ts'),
     };
+    viteConfig.plugins = [
+      ...(viteConfig.plugins ?? []),
+      {
+        name: 'bear-source-entry',
+        enforce: 'pre' as const,
+        resolveId(source: string) {
+          if (source === '@forgedevstack/bear') {
+            return resolve(root, '../../src/index.ts');
+          }
+          return null;
+        },
+      },
+    ];
     if (options.configType === 'PRODUCTION') {
       viteConfig.base = '/storybook/';
     }

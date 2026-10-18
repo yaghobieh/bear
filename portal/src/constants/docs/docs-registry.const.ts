@@ -43,22 +43,52 @@ export const REGISTRY_DIRECTORY_LINKS = [
     descKey: 'registryLinkMcpDesc',
     href: '/docs/registry/mcp',
     external: false,
-    badgeKey: 'soon',
   },
 ] as const;
 
-export const MCP_CONFIG_EXAMPLE = `{
-  "registries": {
-    "@acme": "https://acme.com/r/{name}.json"
-  }
-}`;
+export const MCP_CONFIG_EXAMPLE = `npm install @forgedevstack/forge-mcp
+
+import { createMcpServer, textResult } from '@forgedevstack/forge-mcp';
+
+const { start } = createMcpServer({
+  name: 'bear-ui',
+  version: '1.3.5',
+  tools: [
+    {
+      name: 'list-components',
+      description: 'List Bear UI components',
+      inputSchema: { type: 'object', properties: {} },
+      handler: () => textResult('Button, Alert, Chart, Map'),
+    },
+  ],
+});
+
+start();`;
 
 export const MCP_CLIENT_COMMANDS = {
-  cursor: 'npx forge-cli mcp init --client cursor',
-  vscode: 'npx forge-cli mcp init --client vscode',
-  codex: 'npx forge-cli mcp init --client codex',
-  opencode: 'npx forge-cli mcp init --client opencode',
-  claude: 'npx forge-cli mcp init --client claude',
+  cursor: `{
+  "mcpServers": {
+    "bear-ui": {
+      "command": "node",
+      "args": ["server.js"]
+    }
+  }
+}`,
+  vscode: `{
+  "servers": {
+    "bear-ui": {
+      "command": "node",
+      "args": ["server.js"]
+    }
+  }
+}`,
+  codex: `codex mcp add bear-ui -- node server.js`,
+  opencode: `{
+  "mcp": {
+    "bear-ui": { "command": "node", "args": ["server.js"] }
+  }
+}`,
+  claude: `claude mcp add bear-ui -- node server.js`,
 } as const;
 
 export type McpClientId = keyof typeof MCP_CLIENT_COMMANDS;

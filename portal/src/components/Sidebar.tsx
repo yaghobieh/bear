@@ -1,5 +1,5 @@
 import { FC, useCallback, useState, useEffect, useMemo } from 'react';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { NAVIGATION, VERSIONS } from '@/constants/navigation.const';
 import { ICON_COUNT } from '@/constants/icons.const';
 import { useIsMobile, BearIcons } from '@forgedevstack/bear';
@@ -7,6 +7,9 @@ import { useNpmPackageVersion } from '@/hooks/useNpmPackageVersion';
 import type { SidebarProps, NestedNavItemProps, CollapsibleGroupProps } from './Sidebar.types';
 import { GROUP_ICON_MAP } from './Sidebar.const';
 import { getNavLabel, getNavItemStorageKey, getGroupStorageKey } from './Sidebar.utils';
+import { TOP_NAV_LINKS } from './Topbar/Topbar.const';
+import { PORTAL_TEXT } from '@/constants/portal-i18n.const';
+import { usePortalLanguage } from '@/hooks/usePortalLanguage';
 
 const NestedNavItem: FC<NestedNavItemProps> = (props) => {
   const { item, onItemClick, searchQuery = '' } = props;
@@ -239,6 +242,8 @@ export const Sidebar: FC<SidebarProps> = (props) => {
   const { isOpen = true, onClose, topOffset = 104, hiddenDesktop = false } = props;
   const isMobile = useIsMobile();
   const navigate = useNavigate();
+  const { language } = usePortalLanguage();
+  const text = PORTAL_TEXT[language];
   const { version } = useNpmPackageVersion();
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -319,6 +324,16 @@ export const Sidebar: FC<SidebarProps> = (props) => {
         </div>
 
         <div className="flex-1 overflow-y-auto py-2 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700">
+          <nav className="lg:hidden px-2 pb-2 space-y-1" aria-label={text.navProduct}>
+            <Link to="/libraries" onClick={handleItemClick} className="block px-3 py-1.5 text-sm font-medium text-gray-700 dark:text-gray-300 rounded-md hover:bg-pink-50 dark:hover:bg-pink-950/20">
+              {text.navProduct}
+            </Link>
+            {TOP_NAV_LINKS.map((link) => (
+              <Link key={link.path} to={link.path} onClick={handleItemClick} className="block px-3 py-1.5 text-sm font-medium text-gray-700 dark:text-gray-300 rounded-md hover:bg-pink-50 dark:hover:bg-pink-950/20">
+                {text[link.labelKey]}
+              </Link>
+            ))}
+          </nav>
           <nav>
             {NAVIGATION.map((group) => (
               <CollapsibleGroup

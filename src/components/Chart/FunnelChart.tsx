@@ -6,7 +6,7 @@ import { Flex } from '../Flex';
 import { Typography } from '../Typography';
 import type { FunnelChartProps } from './Chart.types';
 import { CHART } from './Chart.const';
-import { getChartColor } from './Chart.utils';
+import { chartMotionClass, getChartColor } from './Chart.utils';
 
 export const FunnelChart = (props: FunnelChartProps) => {
   const {
@@ -15,6 +15,7 @@ export const FunnelChart = (props: FunnelChartProps) => {
     showLabels = true,
     showValues = true,
     animated = true,
+    motion,
     color,
     className,
     id,
@@ -48,7 +49,7 @@ export const FunnelChart = (props: FunnelChartProps) => {
         return (
           <Flex key={item.label} direction="column" align="center" gap={1} className="bear-w-full">
             <Box
-              className={cn('Bear-Chart__funnel-step bear-rounded-md', animated && 'animate-grow-right')}
+              className={cn('Bear-Chart__funnel-step bear-rounded-md', chartMotionClass(animated, motion, 'animate-grow-right'))}
               style={stepStyle}
             />
             {showLabels && (

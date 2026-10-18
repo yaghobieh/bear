@@ -19,10 +19,11 @@ const slugFromPath = (pathname: string): string => {
 };
 
 export const resolveSandboxAppSource = (pathname?: string): string => {
-  if (!pathname || !isComponentDocsPath(pathname)) {
-    return SANDBOX_STARTER_APP;
+  if (!pathname) return SANDBOX_STARTER_APP;
+  if (isComponentDocsPath(pathname) || pathname.startsWith('/products/')) {
+    return buildSandboxApp(pathname, slugFromPath(pathname));
   }
-  return buildSandboxApp(pathname, slugFromPath(pathname));
+  return SANDBOX_STARTER_APP;
 };
 
 export const openCodeSandbox = (pathname?: string) => {

@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
 import { Typography } from '@forgedevstack/bear';
 import { DocPage } from '@/components/DocPage';
 import { CodeBlock } from '@/components/CodeBlock';
@@ -10,6 +9,7 @@ import {
   TSCONFIG_IMPORTS,
   COMPONENTS_JSON_ALIASES,
   PACKAGE_IMPORTS_USAGE,
+  BEAR_PACKAGE_INSTALLS,
 } from '@/constants/docs';
 
 const PackageImportsDocsPage: FC = () => {
@@ -31,6 +31,14 @@ const PackageImportsDocsPage: FC = () => {
       <section className="doc-section mb-10">
         <Typography variant="h4" className="doc-section__title mb-3">{t.packageImportsComponentsJson}</Typography>
         <CodeBlock code={COMPONENTS_JSON_ALIASES} language="json" showLineNumbers={false} />
+      </section>
+
+      <section className="doc-section mb-10">
+        <Typography variant="h4" className="doc-section__title mb-3">{t.packageImportsLibraries}</Typography>
+        <Typography variant="body2" className="mb-3 text-gray-600 dark:text-gray-400">
+          The default install is every Bear component except icons and charts. Tree stays in Core. Map, kanban, AI, and code are included unless the CLI is started with --exclude. Charts and icons are added by name.
+        </Typography>
+        <CodeBlock code={BEAR_PACKAGE_INSTALLS} language="bash" showLineNumbers={false} />
       </section>
 
       <section className="doc-section mb-10">

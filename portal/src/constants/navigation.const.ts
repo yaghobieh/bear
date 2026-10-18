@@ -17,9 +17,10 @@ export interface NavGroup {
   icon?: string;
 }
 
-export const BEAR_VERSION = '1.3.4';
+export const BEAR_VERSION = '1.3.5';
 
 export const VERSION_HIGHLIGHT_BY_VERSION: Record<string, string> = {
+  '1.3.5': 'Bear X charts, tree, AI, code · bear-map · kanban',
   '1.3.4': 'ToggleGroup · Lotso redesign · Overlay effects parity · Focus traps',
   '1.3.3': 'AI chat kit · Drawer variants · system theme',
   '1.3.2': 'Drawer close effects · no-icons install · Chart views',
@@ -27,7 +28,7 @@ export const VERSION_HIGHLIGHT_BY_VERSION: Record<string, string> = {
   '1.3.0': 'ModalsProvider · overlays above blur · SignPad',
 };
 
-export const VERSION_HIGHLIGHT_FALLBACK = 'ToggleGroup · Lotso redesign · Overlay effects parity · Focus traps';
+export const VERSION_HIGHLIGHT_FALLBACK = 'Bear X charts, tree, AI, code · bear-map · kanban';
 
 /** Main Bear UI repository */
 export const GITHUB_URL = 'https://github.com/yaghobieh/bear';
@@ -54,6 +55,15 @@ export const STORYBOOK_EXPORT_BY_SLUG: Record<string, string> = {
   'otp-input': 'OTPInput',
   'qr-code': 'QRCode',
   'json-viewer': 'JsonViewer',
+  'bar-chart': 'Chart',
+  'stacked-chart': 'Chart',
+  'line-chart': 'Chart',
+  'area-chart': 'Chart',
+  'pie-chart': 'Chart',
+  'polar-chart': 'Chart',
+  'donut-chart': 'Chart',
+  'radar-chart': 'Chart',
+  'funnel-chart': 'Chart',
 };
 
 const toComponentExportName = (slug: string): string => {
@@ -95,6 +105,8 @@ export const NAVIGATION: NavGroup[] = [
     icon: 'RocketIcon',
     items: [
       { path: '/', label: 'Introduction' },
+      { path: '/about', label: 'About us' },
+      { path: '/blog', label: 'Blog' },
       { path: '/whats-new', label: "What's New", badge: 'New' },
       { path: '/installation', label: 'Installation' },
       { path: '/changelog', label: 'Changelog' },
@@ -108,6 +120,7 @@ export const NAVIGATION: NavGroup[] = [
       { path: '/docs/nextjs', label: 'Next.js' },
       { path: '/typescript', label: 'TypeScript' },
       { path: '/icons', label: 'Icons', badge: 'icons' },
+      { path: '/libraries', label: 'Libraries', badge: '1.3.5' },
       { path: '/docs/directory', label: 'Registry Directory' },
       { path: '/docs/registry/github', label: 'GitHub Registry' },
       { path: '/docs/registry/mcp', label: 'MCP Server', badge: 'Soon' },
@@ -480,12 +493,21 @@ export const NAVIGATION: NavGroup[] = [
     title: 'Charts',
     icon: 'BarChartIcon',
     items: [
-      { path: '/components/chart', label: 'Chart' },
-      { path: '/components/bar-chart', label: 'BarChart' },
-      { path: '/components/line-chart', label: 'LineChart' },
-      { path: '/components/pie-chart', label: 'PieChart' },
-      { path: '/components/radar-chart', label: 'RadarChart' },
-      { path: '/components/funnel-chart', label: 'FunnelChart' },
+      {
+        path: '/components/chart',
+        label: 'Chart',
+        children: [
+          { path: '/components/bar-chart', label: 'Bar' },
+          { path: '/components/stacked-chart', label: 'Stacked' },
+          { path: '/components/line-chart', label: 'Line' },
+          { path: '/components/area-chart', label: 'Area' },
+          { path: '/components/pie-chart', label: 'Pie' },
+          { path: '/components/polar-chart', label: 'Polar area' },
+          { path: '/components/donut-chart', label: 'Donut' },
+          { path: '/components/radar-chart', label: 'Radar' },
+          { path: '/components/funnel-chart', label: 'Funnel' },
+        ],
+      },
       { path: '/components/sparkline', label: 'Sparkline' },
       { path: '/components/gauge', label: 'Gauge' },
       { path: '/components/heatmap', label: 'Heatmap' },

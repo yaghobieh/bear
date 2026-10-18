@@ -1,16 +1,11 @@
 import { ELEVEN_THOUSAND, EIGHT } from '@constants';
+import { OVERLAY_EFFECT_CLASS_MAP } from '../OverlayPortal/OverlayPortal.const';
 
 export const POPOVER_ROOT_CLASS = 'Bear-Popover';
 export const POPOVER_Z_INDEX = ELEVEN_THOUSAND;
 export const POPOVER_DEFAULT_OFFSET = EIGHT;
 
-export const POPOVER_EFFECT_CLASS_MAP: Record<string, string> = {
-  scale: 'animate-scale-in',
-  fade: 'animate-fade-in',
-  'slide-down': 'animate-grow-up',
-  fold: 'animate-alert-dialog-in',
-  none: '',
-};
+export const POPOVER_EFFECT_CLASS_MAP: Record<string, string> = OVERLAY_EFFECT_CLASS_MAP;
 
 export const PLACEMENT_BOTTOM = 'bottom';
 export const PLACEMENT_TOP = 'top';

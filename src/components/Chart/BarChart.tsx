@@ -3,7 +3,7 @@ import { cn, resolveBearId, useBearId } from '@utils';
 import type { CSSProperties } from 'react';
 import type { BarChartProps } from './Chart.types';
 import { CHART } from './Chart.const';
-import { getChartColor, getStackTotal } from './Chart.utils';
+import { chartMotionClass, getChartColor, getStackTotal } from './Chart.utils';
 
 export const BarChart = (props: BarChartProps) => {
   const {
@@ -12,6 +12,7 @@ export const BarChart = (props: BarChartProps) => {
     showLabels = true,
     showValues = false,
     animated = true,
+    motion,
     color,
     orientation = 'vertical',
     barRadius = CHART.DEFAULT_BAR_RADIUS,
@@ -59,7 +60,7 @@ export const BarChart = (props: BarChartProps) => {
               {showLabels && !isVertical && <span className="Bear-Chart__label">{item.label}</span>}
               <div className="Bear-Chart__plot">
                 <div
-                  className={cn('Bear-Chart__stack', animated && (isVertical ? 'animate-grow-up' : 'animate-grow-right'))}
+                  className={cn('Bear-Chart__stack', chartMotionClass(animated, motion, isVertical ? 'animate-grow-up' : 'animate-grow-right'))}
                   style={colStyle}
                 >
                   {segments.map((segment, segmentIndex) => {

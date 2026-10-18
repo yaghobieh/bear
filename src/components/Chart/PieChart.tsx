@@ -16,7 +16,7 @@ import {
   PIE_VIEW_HALF,
   PIE_VIEW_ROSE,
 } from './Chart.const';
-import { createArcPath, getChartColor, polarOffset } from './Chart.utils';
+import { chartMotionClass, createArcPath, getChartColor, polarOffset } from './Chart.utils';
 import type { SliceTooltipState } from './PieChart.types';
 
 export const PieChart = (props: PieChartProps) => {
@@ -28,6 +28,7 @@ export const PieChart = (props: PieChartProps) => {
     startAngle,
     padAngle = CHART.DEFAULT_PAD_ANGLE,
     animated = true,
+    motion,
     pieView = PIE_VIEW_FULL,
     explodeIndex,
     legendPosition = 'right',
@@ -129,7 +130,7 @@ export const PieChart = (props: PieChartProps) => {
                   className={cn(
                     onSliceClick && 'bear-cursor-pointer',
                     'bear-transition-opacity hover:bear-opacity-80',
-                    animated && 'animate-scale-in'
+                    chartMotionClass(animated, motion, 'animate-scale-in')
                   )}
                   style={{ animationDelay: `${index * CHART.SLICE_DELAY_MS}ms` }}
                   onClick={() => onSliceClick?.(data[index], index)}

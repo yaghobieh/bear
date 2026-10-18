@@ -2,9 +2,12 @@
   "installCommand": "npm install && npm run portal:install",
   "buildCommand": "npm run portal:build",
   "outputDirectory": "portal/dist",
+  "functions": {
+    "api/bear-ask.ts": { "maxDuration": 60 }
+  },
   "rewrites": [
     { "source": "/storybook", "destination": "/storybook/index.html" },
     { "source": "/storybook/", "destination": "/storybook/index.html" },
-    { "source": "/((?!storybook(?:/|$)).*)", "destination": "/index.html" }
+    { "source": "/((?!storybook(?:/|$)|api(?:/|$)).*)", "destination": "/index.html" }
   ]
 }

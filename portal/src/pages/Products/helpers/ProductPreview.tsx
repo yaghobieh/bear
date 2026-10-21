@@ -6,6 +6,7 @@ import { PRODUCT_CHAT_MESSAGES, PRODUCT_KANBAN_COLUMNS } from '../ProductPage.co
 import { CalendarPreview } from './CalendarPreview';
 import { ChartsGallery } from './ChartsGallery';
 import { CodeGallery } from './CodeGallery';
+import { InkPreview } from './InkPreview';
 import { MapPreview } from './MapPreview';
 
 interface ProductPreviewProps {
@@ -19,6 +20,7 @@ const PREVIEW_BY_PRODUCT: Record<ProductId, () => ReactNode> = {
   map: () => <MapPreview />,
   kanban: () => <Kanban columns={PRODUCT_KANBAN_COLUMNS} />,
   calendar: () => <CalendarPreview />,
+  ink: () => <InkPreview />,
 };
 
 export const ProductPreview: FC<ProductPreviewProps> = (props) => {

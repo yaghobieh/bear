@@ -23,7 +23,7 @@ export interface ProductMenuItem {
   path: string;
   nameKey: PortalCopyKey;
   descKey: PortalCopyKey;
-  icon: 'package' | 'sparkles' | 'layers' | 'code' | 'wrench' | 'globe' | 'inbox' | 'palette' | 'calendar';
+  icon: 'package' | 'sparkles' | 'layers' | 'code' | 'wrench' | 'globe' | 'inbox' | 'palette' | 'calendar' | 'edit';
 }
 
 export interface ProductMenuGroup {

@@ -6,6 +6,8 @@ import { Sidebar } from './components/Sidebar';
 import { PageBreadcrumbs } from './components/PageBreadcrumbs';
 import { ComponentSandboxLink } from './components/ComponentSandboxLink';
 import { DocPageNav } from './components/DocPageNav';
+import { DocFrame } from './components/DocFrame/DocFrame';
+import { DocsVersionProvider } from './context/DocsVersionContext';
 import { RouteSEO } from './components/RouteSEO';
 
 import { useNpmPackageVersion } from './hooks/useNpmPackageVersion';
@@ -280,6 +282,11 @@ const ResponsiveUiPage = lazy(() => import('./pages/guides/ResponsiveUi'));
 const MinimizeBundlePage = lazy(() => import('./pages/guides/MinimizeBundle'));
 const ServerRenderingPage = lazy(() => import('./pages/guides/ServerRendering'));
 const AccessibilityPage = lazy(() => import('./pages/guides/Accessibility'));
+const GuideArticlePage = lazy(() => import('./pages/docs/GuideArticle'));
+const McpDocsPage = lazy(() => import('./pages/docs/McpDocs'));
+const FaqDocsPage = lazy(() => import('./pages/docs/FaqDocs'));
+const VersionsDocsPage = lazy(() => import('./pages/docs/VersionsDocs'));
+const ThemeViewerPage = lazy(() => import('./pages/docs/ThemeViewer'));
 
 // API
 const ApiOverviewPage = lazy(() => import('./pages/api/Overview'));
@@ -374,12 +381,14 @@ function App() {
   }
 
   return (
-    <PortalLayout
-      sidebarOpen={sidebarOpen}
-      setSidebarOpen={setSidebarOpen}
-      topOffset={topOffset}
-      onBannerVisibilityChange={handleBannerVisibilityChange}
-    />
+    <DocsVersionProvider>
+      <PortalLayout
+        sidebarOpen={sidebarOpen}
+        setSidebarOpen={setSidebarOpen}
+        topOffset={topOffset}
+        onBannerVisibilityChange={handleBannerVisibilityChange}
+      />
+    </DocsVersionProvider>
   );
 }
 
@@ -440,7 +449,7 @@ function PortalLayout({
                 ? 'w-full px-2 sm:px-4 py-4'
                 : isWide
                   ? 'max-w-7xl mx-auto px-3.5 sm:px-6 py-5 sm:py-10'
-                  : 'max-w-3xl mx-auto px-3.5 sm:px-6 py-5 sm:py-10 doc-layout'
+                  : 'w-full px-3.5 sm:px-6 lg:px-10 py-5 sm:py-10 doc-layout'
             }
           >
             {!isLanding && !isStorybook && (
@@ -451,6 +460,7 @@ function PortalLayout({
                 </div>
               </div>
             )}
+            <DocFrame>
             <Suspense fallback={<PageLoader />}>
               <Routes>
                 <Route path="/" element={<IntroductionPage />} />
@@ -755,11 +765,33 @@ function PortalLayout({
                 <Route path="/customization/dark-mode" element={<CustomizationDarkModePage />} />
                 <Route path="/customization/css-variables" element={<CustomizationCssVariablesPage />} />
                 <Route path="/customization/custom-components" element={<CustomizationCustomComponentsPage />} />
+                <Route path="/usage" element={<GuideArticlePage />} />
+                <Route path="/support" element={<GuideArticlePage />} />
+                <Route path="/docs/llms" element={<GuideArticlePage />} />
+                <Route path="/showcase" element={<GuideArticlePage />} />
+                <Route path="/vision" element={<GuideArticlePage />} />
+                <Route path="/customization/overriding-structure" element={<GuideArticlePage />} />
+                <Route path="/customization/color" element={<GuideArticlePage />} />
+                <Route path="/customization/rtl" element={<GuideArticlePage />} />
+                <Route path="/customization/shadow-dom" element={<GuideArticlePage />} />
+                <Route path="/theme/components" element={<GuideArticlePage />} />
+                <Route path="/customization/shape" element={<GuideArticlePage />} />
+                <Route path="/customization/focus-visible" element={<GuideArticlePage />} />
+                <Route path="/customization/transitions" element={<GuideArticlePage />} />
+                <Route path="/customization/css-variables/usage" element={<GuideArticlePage />} />
+                <Route path="/customization/css-variables/native-color" element={<GuideArticlePage />} />
+                <Route path="/customization/css-variables/advanced" element={<GuideArticlePage />} />
+                <Route path="/styles/cascade-layers" element={<GuideArticlePage />} />
+                <Route path="/docs/mcp" element={<McpDocsPage />} />
+                <Route path="/faq" element={<FaqDocsPage />} />
+                <Route path="/versions" element={<VersionsDocsPage />} />
+                <Route path="/theme/default" element={<ThemeViewerPage />} />
                 
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </Suspense>
             <DocPageNav />
+            </DocFrame>
           </div>
         </main>
       </div>

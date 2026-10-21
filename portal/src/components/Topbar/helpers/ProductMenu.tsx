@@ -19,6 +19,7 @@ const PRODUCT_ICONS = {
   inbox: BearIcons.InboxIcon,
   palette: BearIcons.PaletteIcon,
   calendar: BearIcons.CalendarIcon,
+  edit: BearIcons.EditIcon,
 } as const;
 
 export const ProductMenu: FC<ProductMenuProps> = (props) => {

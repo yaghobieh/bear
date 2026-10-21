@@ -13,7 +13,7 @@ import { PORTAL_TEXT } from '@/constants/portal-i18n.const';
 import { TopbarProps } from './Topbar.types';
 import { BearIcon, NpmIcon } from './Topbar.icons';
 import { BellSvg, DocsMenu, ProductMenu } from './helpers';
-import { PATH_DOCS, PRODUCT_MENU_CLOSE_DELAY_MS, TOP_NAV_LINKS } from './Topbar.const';
+import { PATH_BLOG, PATH_DOCS, PRODUCT_MENU_CLOSE_DELAY_MS, TOP_NAV_LINKS } from './Topbar.const';
 import { isProductPath, isTopNavActive } from './Topbar.utils';
 import { useTopbar } from './hooks/useTopbar';
 import { usePortalLanguage } from '@/hooks/usePortalLanguage';
@@ -229,6 +229,7 @@ export const Topbar: FC<TopbarProps> = (props) => {
                 return (
                   <Link key={link.path} to={link.path} className={navClass(isActive)}>
                     {t[link.labelKey]}
+                    {link.path === PATH_BLOG ? <span className="doc-nav-badge doc-nav-badge--new ml-1.5">New</span> : null}
                   </Link>
                 );
               })}

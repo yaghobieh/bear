@@ -108,6 +108,19 @@ export const App = () => (
     install: 'npm install @forgedevstack/bear @forgedevstack/calendar',
     docLinks: [{ label: 'Calendar', path: '/components/calendar' }],
   },
+  ink: {
+    id: 'ink',
+    packageName: '@forgedevstack/ink',
+    install: `npm install @forgedevstack/ink
+
+import { InkEditor } from '@forgedevstack/ink';
+import '@forgedevstack/ink/styles.css';
+
+export const App = () => (
+  <InkEditor placeholder="Start writing..." />
+);`,
+    docLinks: [{ label: 'RichEditor', path: '/components/rich-editor' }],
+  },
 };
 
 export const PRODUCT_SUMMARY_KEY = {
@@ -117,6 +130,7 @@ export const PRODUCT_SUMMARY_KEY = {
   map: 'librariesMap',
   kanban: 'librariesKanban',
   calendar: 'librariesCalendar',
+  ink: 'librariesInk',
 } as const;
 
 export const PRODUCT_NAME_KEY = {
@@ -126,6 +140,7 @@ export const PRODUCT_NAME_KEY = {
   map: 'productMapName',
   kanban: 'productKanbanName',
   calendar: 'productCalendarName',
+  ink: 'productInkName',
 } as const;
 
 const PRODUCT_IDS = Object.keys(PRODUCT_PAGES);

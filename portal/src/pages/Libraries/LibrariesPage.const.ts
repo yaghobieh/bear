@@ -58,6 +58,14 @@ export const BEAR_LIBRARIES: BearLibraryCard[] = [
     install: 'npm install @forgedevstack/bear @forgedevstack/calendar',
     components: ['EventCalendar', 'EventTimeline', 'EventEditDialog', 'ResourceFilter', 'Calendar'],
   },
+  {
+    id: 'ink',
+    name: '@forgedevstack/ink',
+    kind: 'library',
+    summaryKey: 'librariesInk',
+    install: 'npm install @forgedevstack/ink',
+    components: ['InkEditor', 'InkWorkspace'],
+  },
 ];
 
 export const LIBRARY_IMPORT_SAMPLE = `import { BearProvider, BarChart } from '@forgedevstack/bear-x-charts';

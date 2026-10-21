@@ -339,6 +339,43 @@ function MyComponent() {
           language="tsx"
         />
       </section>
+
+      <section className="mb-12">
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+          Behind the scenes
+        </h2>
+        <p className="text-gray-600 dark:text-gray-400 mb-4">
+          BearProvider does not paint components one by one. It builds one stylesheet and puts it in the document head. The style element id is bear-theme-vars. Its text is a single rule for light mode and a single rule for dark mode.
+        </p>
+        <p className="text-gray-600 dark:text-gray-400 mb-4">
+          Light mode targets :root.bear-light and :root when .dark is absent. Dark mode targets :root.bear-dark, :root.dark, and .dark. The same effect also toggles those classes on documentElement, sets dir, and adds bear-rtl or bear-density-compact when you ask for them.
+        </p>
+        <p className="text-gray-600 dark:text-gray-400 mb-4">
+          A color string such as #3b82f6 or blue is not stored as one value. Bear normalizes named colors to hex, then lightens and darkens that base. Shade 500 is the color you passed. 50 through 400 are lighter. 600 through 950 are darker. Those shades are written as --bear-primary-50 through --bear-primary-950, and the same scale is built for secondary, success, warning, danger, info, and neutral.
+        </p>
+        <p className="text-gray-600 dark:text-gray-400 mb-4">
+          Background, text, and border tokens are separate variables: --bear-bg-primary, --bear-text-primary, --bear-text-muted, --bear-border-default. Typography becomes --bear-font-sans and --bear-font-mono. Button variant colors become --bear-btn-primary-bg and the matching hover, text, border, and ring names. A customVariants entry named brand becomes --bear-brand-bg, --bear-brand-bg-hover, and --bear-brand-text.
+        </p>
+        <CodeBlock
+          code={`/* Written to <style id="bear-theme-vars"> */
+:root.bear-light, :root:not(.dark) {
+  --bear-primary-500: #3b82f6;
+  --bear-primary-600: /* darkened 10% */;
+  --bear-bg-primary: #ffffff;
+  --bear-text-primary: #111827;
+  --bear-btn-primary-bg: var(--bear-primary-500);
+  --bear-brand-bg: #ec4899;
+}
+:root.bear-dark, :root.dark, .dark {
+  --bear-bg-primary: #09090b;
+  --bear-text-primary: #fafafa;
+}`}
+          language="css"
+        />
+        <p className="text-gray-600 dark:text-gray-400 mt-4">
+          Components never read the theme object during render for color. They use classes such as bear-bg-primary-500, which point at those variables. That is why one updateTheme call restyles every button, chart line, and focus ring without each component subscribing to a color prop. useBear still exposes the theme object when you need the hex in JavaScript.
+        </p>
+      </section>
     </div>
   );
 };

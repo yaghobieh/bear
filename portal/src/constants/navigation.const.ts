@@ -104,37 +104,15 @@ export const NAVIGATION: NavGroup[] = [
     title: 'Getting Started',
     icon: 'RocketIcon',
     items: [
-      { path: '/', label: 'Introduction' },
-      { path: '/about', label: 'About us' },
-      { path: '/blog', label: 'Blog' },
-      { path: '/whats-new', label: "What's New", badge: 'New' },
+      { path: '/', label: 'Overview' },
       { path: '/installation', label: 'Installation' },
-      { path: '/changelog', label: 'Changelog' },
-      { path: '/skills', label: 'Skills', badge: 'New' },
-      { path: '/docs/forms', label: 'Forms' },
-      { path: '/docs/cli', label: 'CLI' },
-      { path: '/docs/package-imports', label: 'Package Imports' },
-      { path: '/theming', label: 'Theming' },
-      { path: '/docs/dark-mode', label: 'Dark Mode' },
-      { path: '/docs/javascript', label: 'JavaScript' },
-      { path: '/docs/nextjs', label: 'Next.js' },
-      { path: '/typescript', label: 'TypeScript' },
-      { path: '/icons', label: 'Icons', badge: 'icons' },
-      { path: '/libraries', label: 'Libraries', badge: '1.3.5' },
-      { path: '/docs/directory', label: 'Registry Directory' },
-      { path: '/docs/registry/github', label: 'GitHub Registry' },
-      { path: '/docs/registry/mcp', label: 'MCP Server', badge: 'Soon' },
-      { path: '/roadmap', label: 'Roadmap' },
-      {
-        path: '/templates',
-        label: 'Templates',
-        badge: 'New',
-        children: [
-          { path: '/templates/dashboard', label: 'Dashboard kit', badge: 'New' },
-          { path: '/templates/form', label: 'Form kit', badge: 'New' },
-          { path: '/templates/auth', label: 'Auth kit', badge: 'New' },
-        ],
-      },
+      { path: '/usage', label: 'Usage' },
+      { path: '/docs/mcp', label: 'MCP', badge: 'New' },
+      { path: '/docs/llms', label: 'llms.txt', badge: 'New' },
+      { path: '/faq', label: 'FAQ' },
+      { path: '/guides/accessibility', label: 'Accessibility' },
+      { path: '/support', label: 'Support' },
+      { path: '/versions', label: 'Versions' },
     ],
   },
 
@@ -518,7 +496,7 @@ export const NAVIGATION: NavGroup[] = [
 
   // Component API
   {
-    title: 'Component API',
+    title: 'Component APIs',
     icon: 'CodeIcon',
     items: [
       { path: '/api/overview', label: 'Overview' },
@@ -573,30 +551,93 @@ export const NAVIGATION: NavGroup[] = [
 
   // Theming & Customization
   {
-    title: 'Theming & Customization',
+    title: 'Customization',
+    icon: 'TuneIcon',
+    items: [
+      { path: '/customization/overview', label: 'How to customize' },
+      { path: '/customization/overriding-structure', label: 'Overriding component structure' },
+      { path: '/customization/dark-mode', label: 'Dark mode' },
+      { path: '/customization/color', label: 'Color' },
+      { path: '/customization/rtl', label: 'Right-to-left' },
+      { path: '/customization/shadow-dom', label: 'Shadow DOM' },
+    ],
+  },
+  {
+    title: 'Theme',
     icon: 'PaletteIcon',
     items: [
-      { path: '/customization/overview', label: 'Overview' },
+      { path: '/theme/default', label: 'Default theme viewer' },
+      { path: '/theming', label: 'Customizing the theme' },
+      { path: '/customization/custom-components', label: 'Creating themed components' },
+      { path: '/theme/components', label: 'Components' },
+    ],
+  },
+  {
+    title: 'Tokens',
+    icon: 'GridIcon',
+    items: [
       { path: '/customization/palette', label: 'Palette' },
       { path: '/customization/typography', label: 'Typography' },
       { path: '/customization/spacing', label: 'Spacing' },
+      { path: '/customization/shape', label: 'Shape' },
       { path: '/customization/breakpoints', label: 'Breakpoints' },
+      { path: '/customization/focus-visible', label: 'Focus visible' },
       { path: '/customization/z-index', label: 'z-index' },
-      { path: '/customization/dark-mode', label: 'Dark Mode' },
-      { path: '/customization/css-variables', label: 'CSS Variables' },
-      { path: '/customization/custom-components', label: 'Custom Components' },
+      { path: '/customization/transitions', label: 'Transitions' },
     ],
   },
-
-  // Guides
   {
-    title: 'Guides',
+    title: 'CSS variables',
+    icon: 'CssIcon',
+    items: [
+      { path: '/customization/css-variables', label: 'Overview' },
+      { path: '/customization/css-variables/usage', label: 'Basic usage' },
+      { path: '/customization/css-variables/native-color', label: 'Native color' },
+      { path: '/customization/css-variables/advanced', label: 'Advanced configuration' },
+    ],
+  },
+  {
+    title: 'Styles',
+    icon: 'StyleIcon',
+    items: [
+      { path: '/styles/cascade-layers', label: 'Cascade layers' },
+    ],
+  },
+  {
+    title: 'More',
     icon: 'BookOpenIcon',
     items: [
+      { path: '/showcase', label: 'Showcase' },
+      { path: '/roadmap', label: 'Roadmap' },
+      { path: '/vision', label: 'Vision' },
+      { path: '/changelog', label: 'Changelog' },
+      { path: '/whats-new', label: "What's New", badge: 'New' },
+      { path: '/about', label: 'About us' },
+      { path: '/blog', label: 'Blog' },
+      { path: '/skills', label: 'Skills', badge: 'New' },
+      { path: '/docs/forms', label: 'Forms' },
+      { path: '/docs/cli', label: 'CLI' },
+      { path: '/docs/package-imports', label: 'Package Imports' },
+      { path: '/docs/javascript', label: 'JavaScript' },
+      { path: '/docs/nextjs', label: 'Next.js' },
+      { path: '/typescript', label: 'TypeScript' },
+      { path: '/icons', label: 'Icons', badge: 'icons' },
+      { path: '/libraries', label: 'Libraries', badge: '1.3.5' },
+      { path: '/docs/directory', label: 'Registry Directory' },
+      { path: '/docs/registry/github', label: 'GitHub Registry' },
       { path: '/guides/responsive-ui', label: 'Responsive UI' },
       { path: '/guides/minimize-bundle', label: 'Minimize Bundle Size' },
       { path: '/guides/server-rendering', label: 'Server Rendering' },
-      { path: '/guides/accessibility', label: 'Accessibility' },
+      {
+        path: '/templates',
+        label: 'Templates',
+        badge: 'New',
+        children: [
+          { path: '/templates/dashboard', label: 'Dashboard kit', badge: 'New' },
+          { path: '/templates/form', label: 'Form kit', badge: 'New' },
+          { path: '/templates/auth', label: 'Auth kit', badge: 'New' },
+        ],
+      },
     ],
   },
 
@@ -640,7 +681,12 @@ export const NAVIGATION: NavGroup[] = [
 ];
 
 export const VERSIONS = [
-  { value: '1.3.4', label: 'v1.3.4 (current)' },
+  { value: '1.3.5', label: 'v1.3.5 (current)' },
+  { value: '1.3', label: 'v1.3' },
+  { value: '1.2', label: 'v1.2' },
+  { value: '1.1', label: 'v1.1' },
+  { value: '1.0', label: 'v1.0' },
+  { value: '1.3.4', label: 'v1.3.4' },
   { value: '1.3.3', label: 'v1.3.3' },
   { value: '1.3.2', label: 'v1.3.2' },
   { value: '1.3.1', label: 'v1.3.1' },

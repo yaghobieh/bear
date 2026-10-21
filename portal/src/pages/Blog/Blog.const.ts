@@ -6,7 +6,40 @@ export const BLOG_WHATS_NEW_VERSION = '1.3.5';
 export const PATH_WHATS_NEW = '/whats-new';
 export const PATH_CHANGELOG = '/changelog';
 
+export const BLOG_PUBLISHED_AT: Record<string, string> = {
+  'theme-behind': '2026-10-21T07:23:00.000Z',
+  'core-exports': '2026-10-18T14:00:00.000Z',
+  'hooks-outside': '2026-10-12T11:30:00.000Z',
+  'map-tiles': '2026-10-05T08:15:00.000Z',
+  'icons-optional': '2026-09-28T16:40:00.000Z',
+  'kanban-name': '2026-09-20T09:05:00.000Z',
+  'torch-ink': '2026-09-14T13:20:00.000Z',
+};
+
 const ENGLISH_TIPS: BlogTip[] = [
+  {
+    id: 'theme-behind',
+    title: 'What Bear does after you pass a theme',
+    body: 'A hex color becomes a full 50–950 scale, then one style tag in the document head. Components read CSS variables, so dark mode and custom variants update without a color prop.',
+    path: '/theming',
+    sections: [
+      {
+        heading: 'One style tag',
+        body: 'BearProvider writes a style element with id bear-theme-vars. Light rules sit on :root.bear-light. Dark rules sit on :root.dark and .dark. The provider also toggles those classes on the document element.',
+      },
+      {
+        heading: 'How a single color becomes a scale',
+        body: 'Shade 500 is the color you passed. Lighter shades are 50 through 400. Darker shades are 600 through 950. Named colors such as blue are mapped to hex before that scale is built. The variables are --bear-primary-50 through --bear-primary-950.',
+        code: `<BearProvider theme={{ colors: { primary: '#3b82f6' } }}>
+  <Button variant="primary">Save</Button>
+</BearProvider>`,
+      },
+      {
+        heading: 'Custom variants are variables too',
+        body: 'customVariants.brand becomes --bear-brand-bg and --bear-brand-bg-hover. Built-in button variants use --bear-btn-primary-bg. Charts and focus rings read --bear-primary-500, so they follow the same tag.',
+      },
+    ],
+  },
   {
     id: 'core-exports',
     title: 'Theme the charts with BearProvider',
@@ -149,6 +182,25 @@ import { TorchPlayer } from '@forgedevstack/torch';
 ];
 
 const SPANISH_TIPS: BlogTip[] = [
+  {
+    id: 'theme-behind',
+    title: 'Qué hace Bear después de pasar un theme',
+    body: 'Un color hex se convierte en una escala 50–950 y en una etiqueta style en el head. Los componentes leen variables CSS, así que el modo oscuro y las variantes custom cambian sin un prop color.',
+    path: '/theming',
+    sections: [
+      {
+        heading: 'Una sola etiqueta style',
+        body: 'BearProvider escribe un elemento style con id bear-theme-vars. La luz va en :root.bear-light. La oscuridad va en :root.dark y .dark. El provider también alterna esas clases en el documento.',
+      },
+      {
+        heading: 'De un color a una escala',
+        body: 'El tono 500 es el color que pasaste. 50 a 400 son más claros. 600 a 950 son más oscuros. Un nombre como blue se traduce a hex antes de construir la escala.',
+        code: `<BearProvider theme={{ colors: { primary: '#3b82f6' } }}>
+  <Button variant="primary">Guardar</Button>
+</BearProvider>`,
+      },
+    ],
+  },
   {
     id: 'core-exports',
     title: 'Tema de los gráficos con BearProvider',

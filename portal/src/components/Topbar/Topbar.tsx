@@ -19,8 +19,13 @@ import { useTopbar } from './hooks/useTopbar';
 import { usePortalLanguage } from '@/hooks/usePortalLanguage';
 import { useNpmPackageVersion } from '@/hooks/useNpmPackageVersion';
 
+const ALLOY_DISMISS_KEY = 'bear-alloy-dismissed';
+const NAV_HEIGHT = 56;
+const STRIPE_HEIGHT = 40;
+const ALLOY_HEIGHT = 44;
+
 export const Topbar: FC<TopbarProps> = (props) => {
-  const { onMenuClick, banner, onBannerVisibilityChange } = props;
+  const { onMenuClick, banner, onBannerVisibilityChange, onPromoVisibilityChange } = props;
   const { language, setLanguage } = usePortalLanguage();
   const { version } = useNpmPackageVersion();
   const t = PORTAL_TEXT[language];
@@ -29,6 +34,13 @@ export const Topbar: FC<TopbarProps> = (props) => {
   const productRef = useRef<HTMLDivElement>(null);
   const productFlyoutRef = useRef<HTMLDivElement>(null);
   const productCloseTimer = useRef<number | null>(null);
+  const [alloyOpen, setAlloyOpen] = useState(() => {
+    try {
+      return sessionStorage.getItem(ALLOY_DISMISS_KEY) !== '1';
+    } catch {
+      return true;
+    }
+  });
   const [docsOpen, setDocsOpen] = useState(false);
   const docsRef = useRef<HTMLDivElement>(null);
   const docsFlyoutRef = useRef<HTMLDivElement>(null);
@@ -115,7 +127,21 @@ export const Topbar: FC<TopbarProps> = (props) => {
   });
 
   const showBanner = banner && bannerVisible;
-  const topbarStyle = { '--bear-topbar-offset': showBanner ? '6rem' : '3.5rem' } as CSSProperties;
+  const chrome = NAV_HEIGHT + (showBanner ? STRIPE_HEIGHT : 0) + (alloyOpen ? ALLOY_HEIGHT : 0);
+  const topbarStyle = { '--bear-topbar-offset': `${chrome}px` } as CSSProperties;
+
+  useEffect(() => {
+    onPromoVisibilityChange?.(alloyOpen);
+  }, [alloyOpen, onPromoVisibilityChange]);
+
+  const dismissAlloy = () => {
+    try {
+      sessionStorage.setItem(ALLOY_DISMISS_KEY, '1');
+    } catch {
+      /* private mode */
+    }
+    setAlloyOpen(false);
+  };
   const navClass = (active: boolean) =>
     `inline-flex items-center gap-1 px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
       active
@@ -547,6 +573,19 @@ export const Topbar: FC<TopbarProps> = (props) => {
                 </div>
               )}
             </div>
+          </div>
+        )}
+
+        {alloyOpen && (
+          <div className="alloy-banner">
+            <span className="alloy-banner__mark">Alloy</span>
+            <p className="alloy-banner__text">Want to build your app in 1 minute?</p>
+            <a className="alloy-banner__cta" href="https://www.alloy-ai.dev/" target="_blank" rel="noopener noreferrer">
+              Start for free
+            </a>
+            <button type="button" onClick={dismissAlloy} className="alloy-banner__close" aria-label="Dismiss">
+              <BearIcons.CloseIcon size={16} />
+            </button>
           </div>
         )}
       </header>

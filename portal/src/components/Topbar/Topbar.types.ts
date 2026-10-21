@@ -11,6 +11,7 @@ export interface TopbarProps {
     linkText?: string;
   };
   onBannerVisibilityChange?: (visible: boolean) => void;
+  onPromoVisibilityChange?: (visible: boolean) => void;
 }
 
 export interface TopNavLink {

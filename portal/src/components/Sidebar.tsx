@@ -1,9 +1,9 @@
 import { FC, useCallback, useState, useEffect, useMemo } from 'react';
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { NAVIGATION, VERSIONS } from '@/constants/navigation.const';
 import { ICON_COUNT } from '@/constants/icons.const';
 import { useIsMobile, BearIcons } from '@forgedevstack/bear';
-import { useNpmPackageVersion } from '@/hooks/useNpmPackageVersion';
+import { useDocsVersion } from '@/context/DocsVersionContext';
 import type { SidebarProps, NestedNavItemProps, CollapsibleGroupProps } from './Sidebar.types';
 import { GROUP_ICON_MAP } from './Sidebar.const';
 import { getNavLabel, getNavItemStorageKey, getGroupStorageKey } from './Sidebar.utils';
@@ -241,10 +241,9 @@ const CollapsibleGroup: FC<CollapsibleGroupProps> = (props) => {
 export const Sidebar: FC<SidebarProps> = (props) => {
   const { isOpen = true, onClose, topOffset = 104, hiddenDesktop = false } = props;
   const isMobile = useIsMobile();
-  const navigate = useNavigate();
   const { language } = usePortalLanguage();
   const text = PORTAL_TEXT[language];
-  const { version } = useNpmPackageVersion();
+  const { version, setVersion } = useDocsVersion();
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleItemClick = useCallback(() => {
@@ -304,14 +303,7 @@ export const Sidebar: FC<SidebarProps> = (props) => {
           </div>
           <select
             value={version}
-            onChange={(e) => {
-              const val = e.target.value;
-              if (val === '1.3.4') {
-                navigate('/whats-new');
-              } else {
-                navigate('/changelog');
-              }
-            }}
+            onChange={(event) => setVersion(event.target.value)}
             aria-label="Documentation version"
             className="w-full px-2 py-1.5 text-xs rounded-md border border-gray-200 dark:border-gray-700
               bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400

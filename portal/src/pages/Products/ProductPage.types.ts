@@ -1,4 +1,4 @@
-export type ProductId = 'charts' | 'ai' | 'code' | 'map' | 'kanban' | 'calendar';
+export type ProductId = 'charts' | 'ai' | 'code' | 'map' | 'kanban' | 'calendar' | 'ink';
 
 export interface ProductDocLink {
   label: string;

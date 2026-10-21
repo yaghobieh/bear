@@ -55,6 +55,7 @@ export const PRODUCT_MENU: ProductMenuGroup[] = [
       { id: 'hooks', path: PATH_HOOKS, nameKey: 'productHooksName', descKey: 'productHooksDesc', icon: 'wrench' },
       { id: 'map', path: '/products/map', nameKey: 'productMapName', descKey: 'productMapDesc', icon: 'globe' },
       { id: 'calendar', path: '/products/calendar', nameKey: 'productCalendarName', descKey: 'productCalendarDesc', icon: 'calendar' },
+      { id: 'ink', path: '/products/ink', nameKey: 'productInkName', descKey: 'productInkDesc', icon: 'edit' },
       { id: 'kanban', path: '/products/kanban', nameKey: 'productKanbanName', descKey: 'productKanbanDesc', icon: 'inbox' },
       { id: 'templates', path: PATH_TEMPLATES, nameKey: 'productTemplatesName', descKey: 'productTemplatesDesc', icon: 'palette' },
     ],

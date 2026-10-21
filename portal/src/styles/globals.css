@@ -2029,3 +2029,75 @@ html.dark body {
   display: none;
 }
 
+.alloy-banner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: 44px;
+  padding: 0 44px 0 16px;
+  background: #111111;
+  color: #ffffff;
+}
+.alloy-banner__mark {
+  flex: none;
+  padding: 3px 7px;
+  border-radius: 4px;
+  background: #f5c518;
+  color: #1a1206;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+.alloy-banner__text {
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.alloy-banner__cta {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #111111;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+}
+.alloy-banner__cta:hover {
+  background: #f5c518;
+  color: #1a1206;
+}
+.alloy-banner__close {
+  position: absolute;
+  right: 8px;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+}
+.alloy-banner__close:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+@media (max-width: 640px) {
+  .alloy-banner { gap: 8px; }
+  .alloy-banner__text { font-size: 13px; }
+}
+

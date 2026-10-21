@@ -9,7 +9,6 @@ import { DocPageNav } from './components/DocPageNav';
 import { DocFrame } from './components/DocFrame/DocFrame';
 import { DocsVersionProvider } from './context/DocsVersionContext';
 import { RouteSEO } from './components/RouteSEO';
-
 import { useNpmPackageVersion } from './hooks/useNpmPackageVersion';
 
 // Lazy load pages - Getting Started
@@ -348,16 +347,19 @@ const PageLoader = () => (
 );
 
 // Height constants
-const TOPBAR_HEIGHT = 64; // h-16 = 64px
-const BANNER_HEIGHT = 40; // py-2 + content = ~40px
+const TOPBAR_HEIGHT = 56;
+const BANNER_HEIGHT = 40;
+const PROMO_HEIGHT = 44;
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [bannerVisible, setBannerVisible] = useState(true);
+  const [promoVisible, setPromoVisible] = useState(true);
 
-  // Calculate top offset based on banner visibility
-  const topOffset = TOPBAR_HEIGHT + (bannerVisible ? BANNER_HEIGHT : 0);
+  const topOffset = TOPBAR_HEIGHT
+    + (bannerVisible ? BANNER_HEIGHT : 0)
+    + (promoVisible ? PROMO_HEIGHT : 0);
 
   // Show loader on initial load
   useEffect(() => {
@@ -376,6 +378,10 @@ function App() {
     setBannerVisible(visible);
   }, []);
 
+  const handlePromoVisibilityChange = useCallback((visible: boolean) => {
+    setPromoVisible(visible);
+  }, []);
+
   if (isLoading) {
     return <BearLoader onComplete={handleLoaderComplete} duration={600} />;
   }
@@ -387,6 +393,7 @@ function App() {
         setSidebarOpen={setSidebarOpen}
         topOffset={topOffset}
         onBannerVisibilityChange={handleBannerVisibilityChange}
+        onPromoVisibilityChange={handlePromoVisibilityChange}
       />
     </DocsVersionProvider>
   );
@@ -397,6 +404,7 @@ interface PortalLayoutProps {
   setSidebarOpen: (open: boolean) => void;
   topOffset: number;
   onBannerVisibilityChange: (visible: boolean) => void;
+  onPromoVisibilityChange: (visible: boolean) => void;
 }
 
 function PortalLayout({
@@ -404,6 +412,7 @@ function PortalLayout({
   setSidebarOpen,
   topOffset,
   onBannerVisibilityChange,
+  onPromoVisibilityChange,
 }: PortalLayoutProps) {
   const location = useLocation();
   const isLanding = location.pathname === '/';
@@ -428,6 +437,7 @@ function PortalLayout({
         onMenuClick={() => setSidebarOpen(!sidebarOpen)}
         banner={banner}
         onBannerVisibilityChange={onBannerVisibilityChange}
+        onPromoVisibilityChange={onPromoVisibilityChange}
       />
 
       <div

@@ -6,6 +6,10 @@ describe('isBearProLicenseKey', () => {
     expect(isBearProLicenseKey('bear_pro_AB12_CD34_EF56_GH78')).toBe(true);
   });
 
+  it('accepts the license key Lemon emails', () => {
+    expect(isBearProLicenseKey('38b1460a-5104-4067-a91d-77b872934d51')).toBe(true);
+  });
+
   it('rejects an empty or invented string', () => {
     expect(isBearProLicenseKey('')).toBe(false);
     expect(isBearProLicenseKey('not-a-key')).toBe(false);

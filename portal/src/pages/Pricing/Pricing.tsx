@@ -1,13 +1,15 @@
-import { FormEvent, Fragment, useState } from 'react';
+import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Flex, Input, Typography } from '@forgedevstack/bear';
+import { Typography } from '@forgedevstack/bear';
 import { DocPage } from '@/components/DocPage';
 import { usePortalLanguage } from '@/hooks/usePortalLanguage';
-import { useBearProLicense } from '@/hooks/useBearProLicense';
-import { PRICING_COPY, PRICING_FAQ, PRICING_FACTS, PRICING_GROUPS, PRICING_KEY_ID, PRICING_PLANS } from './Pricing.const';
+import { PRICING_COPY, PRICING_FAQ, PRICING_FACTS, PRICING_GROUPS, PRICING_PLANS } from './Pricing.const';
 import type { PricingPlan } from './Pricing.types';
 
 const PlanCta = ({ plan }: { plan: PricingPlan }) => {
+  if (!plan.href) {
+    return <p className="pricing-plan__cta pricing-plan__cta--pay">{plan.cta}</p>;
+  }
   if (plan.external) {
     return (
       <a className="pricing-plan__cta" href={plan.href} target="_blank" rel="noreferrer">
@@ -38,15 +40,6 @@ const PricingPage = () => {
   const groups = PRICING_GROUPS[language];
   const facts = PRICING_FACTS[language];
   const faqs = PRICING_FAQ[language];
-  const { active, activate, clear } = useBearProLicense();
-  const [draft, setDraft] = useState('');
-  const [message, setMessage] = useState('');
-
-  const onSubmit = (event: FormEvent) => {
-    event.preventDefault();
-    const saved = activate(draft);
-    setMessage(saved ? copy.saved : copy.invalid);
-  };
 
   return (
     <DocPage title={copy.title} description={copy.description}>
@@ -67,6 +60,8 @@ const PricingPage = () => {
             </article>
           ))}
         </section>
+
+        <p className="pricing-pay">{copy.payNote}</p>
 
         <section>
           <Typography variant="h3" className="pricing-section__title">{copy.compareTitle}</Typography>
@@ -125,26 +120,6 @@ const PricingPage = () => {
               </details>
             ))}
           </div>
-        </section>
-
-        <section id={PRICING_KEY_ID}>
-          <Typography variant="body1" className="mb-3">{copy.email}</Typography>
-          <form onSubmit={onSubmit}>
-            <Flex direction="column" gap={3} className="max-w-md">
-              <Input
-                label={copy.keyLabel}
-                placeholder={copy.keyPlaceholder}
-                value={draft}
-                onChange={(event) => setDraft(event.target.value)}
-              />
-              <Flex gap={2}>
-                <Button type="submit">{copy.save}</Button>
-                <Button type="button" variant="outline" onClick={() => { clear(); setMessage(''); }}>{copy.clear}</Button>
-              </Flex>
-              {message ? <Typography variant="body2">{message}</Typography> : null}
-              {active ? <Typography variant="body2">{copy.saved}</Typography> : null}
-            </Flex>
-          </form>
         </section>
       </div>
     </DocPage>

@@ -219,7 +219,7 @@ export const PRODUCT_DETAILS: Record<PortalLanguage, Record<ProductId, ProductDe
     },
     grid: {
       price: '$9 / year',
-      why: 'Bear Grid is the table you pay for. Pin a column while the rest scroll, group rows by a field such as team, and download Excel or CSV. Simple sort and a sticky header stay on the free DataTable, so a settings page does not need a license. One key covers one app. Paste it from the receipt email and the watermark goes away. Without a key the grid still runs, with a Bear Pro mark, so you can try the pin, the groups, and the export first.',
+      why: 'Bear Grid is the table you pay for. Pin a column while the rest scroll, group rows by a field such as team, and download Excel or CSV. Simple sort and a sticky header stay on the free DataTable, so a settings page does not need a license. One key covers one app. Pay, and the key is emailed to you. That key clears the watermark. Without a key the grid still runs, with a Bear Pro mark, so you can try the pin, the groups, and the export first.',
       benefits: ['Pinned columns', 'Row grouping', 'Excel and CSV download', 'One app, one emailed key'],
     },
     blocks: {
@@ -271,7 +271,7 @@ export const PRODUCT_DETAILS: Record<PortalLanguage, Record<ProductId, ProductDe
     },
     grid: {
       price: '$9 / año',
-      why: 'Bear Grid es la tabla de pago. Fija una columna mientras el resto hace scroll, agrupa filas por un campo como el equipo y descarga Excel o CSV. El orden simple y la cabecera fija siguen en DataTable gratis, así que una página de ajustes no necesita licencia. Una clave cubre una app. Pégala desde el email del recibo y desaparece la marca de agua. Sin clave la tabla sigue funcionando, con la marca Bear Pro, para probar fijar, agrupar y exportar.',
+      why: 'Bear Grid es la tabla de pago. Fija una columna mientras el resto hace scroll, agrupa filas por un campo como el equipo y descarga Excel o CSV. El orden simple y la cabecera fija siguen en DataTable gratis, así que una página de ajustes no necesita licencia. Una clave cubre una app. Pagas y la clave llega por email. Esa clave quita la marca de agua. Sin clave la tabla sigue funcionando, con la marca Bear Pro, para probar fijar, agrupar y exportar.',
       benefits: ['Columnas fijadas', 'Agrupación de filas', 'Descarga Excel y CSV', 'Una app, una clave por email'],
     },
     blocks: {

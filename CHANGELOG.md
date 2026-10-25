@@ -9,7 +9,7 @@ All notable changes to Bear UI will be documented in this file.
 - **bear_flutter** — Flutter widgets on the Bear tokens: button, text field, card, app bar, list, dialog, and bottom sheet. Free.
 - **@forgedevstack/bear-grid** — column pin, row grouping, and Excel export. A missing license key shows a watermark. Sort and the sticky header stay on the free DataTable.
 - **@forgedevstack/bear-blocks** — free `DashboardBlock`.
-- **Pricing** — Core and Flutter stay free. Pro is $9 a year for now. The key is pasted from the receipt email.
+- **Pricing** — Core and Flutter stay free. Pro is $9 a year for now. Pay, and the license key is emailed to you.
 - **Ask Bear** — the question includes the current page, the thread stays on that route, and Run opens the sandbox.
 - **Icons** — the home page and the libraries list feature `@forgedevstack/bear-icons`. Core still renders without that package.
 

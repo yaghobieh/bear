@@ -12,8 +12,6 @@ Flat vector style. The only word is Bear. No watermark, no camera move, no extra
 export const HOME_SIDE_RATING = 4;
 export const HOME_SIDE_PROGRESS = 68;
 
-export const INGOT_URL = 'https://github.com/yaghobieh/ingot';
-
 export const HOME_PRODUCTS: { path: string; nameKey: PortalCopyKey; descKey: PortalCopyKey; external?: boolean }[] = [
   { path: '/icons', nameKey: 'productIconsName', descKey: 'productIconsDesc' },
   { path: '/products/flutter', nameKey: 'productFlutterName', descKey: 'productFlutterDesc' },

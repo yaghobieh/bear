@@ -44,7 +44,7 @@ const ENGLISH_TIPS: BlogTip[] = [
       },
       {
         heading: 'Why the $9 is for the grid',
-        body: 'The screen stays useful with the free DataTable. You pay when the table has to behave like a spreadsheet: pin a column while you scroll, group rows by team, and download Excel. That is Bear Grid. One key covers one app for a year. The intro price is $9. Paste the key from the receipt email and the watermark goes away. Without a key the grid still runs, with a Bear Pro mark, so you can try it.',
+        body: 'The screen stays useful with the free DataTable. You pay when the table has to behave like a spreadsheet: pin a column while you scroll, group rows by team, and download Excel. That is Bear Grid. One key covers one app for a year. The intro price is $9. Pay, and the key is emailed to you. That key clears the watermark. Without a key the grid still runs, with a Bear Pro mark, so you can try it.',
         code: `npm install @forgedevstack/bear @forgedevstack/bear-grid`,
       },
     ],
@@ -240,7 +240,7 @@ const SPANISH_TIPS: BlogTip[] = [
       },
       {
         heading: 'Por qué los $9 son de la tabla',
-        body: 'La pantalla sirve con el DataTable gratis. Pagas cuando la tabla tiene que parecer una hoja de cálculo: fijar una columna al hacer scroll, agrupar filas y descargar Excel. Eso es Bear Grid. Una clave cubre una app durante un año. El precio de entrada es $9. Pega la clave del email y desaparece la marca de agua. Sin clave la tabla sigue funcionando, con la marca Bear Pro, para que puedas probarla.',
+        body: 'La pantalla sirve con el DataTable gratis. Pagas cuando la tabla tiene que parecer una hoja de cálculo: fijar una columna al hacer scroll, agrupar filas y descargar Excel. Eso es Bear Grid. Una clave cubre una app durante un año. El precio de entrada es $9. Pagas y la clave llega por email. Esa clave quita la marca de agua. Sin clave la tabla sigue funcionando, con la marca Bear Pro, para que puedas probarla.',
         code: `npm install @forgedevstack/bear @forgedevstack/bear-grid`,
       },
     ],

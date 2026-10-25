@@ -7,6 +7,7 @@ import { HomeIcons } from '@/pages/home/HomeIcons';
 import { HomeProductStrip } from '@/pages/home/HomeProductStrip';
 import { HomeSideExamples } from '@/pages/home/HomeSideExamples';
 import { INGOT_URL } from '@/pages/home/home.const';
+import { IngotMark } from '@/pages/home/IngotMark';
 import {
   GITHUB_URL,
   VERSION_HIGHLIGHT_BY_VERSION,
@@ -116,13 +117,9 @@ const Introduction: FC = () => {
 
   return (
     <div className="fade-in overflow-x-hidden relative">
-      <a className="ingot-buzz" href={INGOT_URL} target="_blank" rel="noreferrer">
-        <span className="ingot-buzz__mark">{text.homeIngotMark}</span>
-        <span className="ingot-buzz__text">
-          {text.homeIngotBuzz}{' '}
-          <span className="ingot-buzz__bye">{text.homeIngotBye}</span>
-        </span>
-        <span className="ingot-buzz__cta">{text.homeIngotCta}</span>
+      <a className="ingot-buzz" href={INGOT_URL} target="_blank" rel="noreferrer" aria-label={`Ingot. ${text.homeIngotBye}`}>
+        <IngotMark />
+        <span className="ingot-buzz__words">{text.homeIngotBye}</span>
       </a>
       <section className="home-hero">
         <div className="home-hero__copy">

@@ -1251,50 +1251,50 @@ html.dark body {
 
 .ingot-buzz {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem 1rem;
+  gap: 0.85rem;
   margin-bottom: 1.25rem;
-  padding: 0.95rem 1.25rem;
+  padding: 0.65rem 1.25rem;
   border-radius: 1rem;
   background: #1b2647;
   color: #fff;
   text-decoration: none;
 }
 
-.ingot-buzz__mark {
-  padding: 0.2rem 0.55rem;
-  border-radius: 0.35rem;
-  background: #d9a04e;
-  color: #1b2647;
-  font-size: 0.75rem;
+.ingot-buzz__words {
+  font-size: clamp(1.6rem, 3vw, 2.25rem);
   font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.ingot-buzz__text {
-  font-size: 1rem;
-  font-weight: 600;
-  text-align: center;
-}
-
-.ingot-buzz__bye {
+  letter-spacing: -0.03em;
   color: #d9a04e;
+  line-height: 1;
 }
 
-.ingot-buzz__cta {
-  padding: 0.4rem 0.9rem;
-  border-radius: 999px;
-  background: #d9a04e;
-  color: #1b2647;
-  font-size: 0.85rem;
-  font-weight: 800;
-}
-
-.ingot-buzz:hover .ingot-buzz__cta {
-  background: #f0c27a;
+.ingot-buzz .brand-mark { display: block; overflow: visible; flex: none; }
+.ingot-buzz .brand-mark .im-left { animation: im-left 1.6s cubic-bezier(.2,.8,.2,1) both; }
+.ingot-buzz .brand-mark .im-right { animation: im-right 1.6s cubic-bezier(.2,.8,.2,1) both; }
+.ingot-buzz .brand-mark .im-slash { animation: im-slash 1.6s cubic-bezier(.2,.8,.2,1) both; }
+.ingot-buzz .brand-mark .im-dots circle { opacity: 0; animation: im-dot 1.6s ease both; }
+.ingot-buzz .brand-mark .im-dots circle:nth-child(2) { animation-name: im-dot2; }
+.ingot-buzz .brand-mark .im-dots circle:nth-child(3) { animation-name: im-dot3; }
+.ingot-buzz .brand-mark .im-shine { animation: im-shine 1.6s ease-in-out both; }
+.ingot-buzz .brand-mark .im-glow { animation: im-glow 1.6s ease both; opacity: .55; }
+.ingot-buzz .brand-mark.brand-mark-loop .im-shine { animation: im-shine 2.4s ease-in-out 1.6s infinite; }
+.ingot-buzz .brand-mark.brand-mark-loop .im-glow { animation: im-pulse 2.4s ease-in-out 1.6s infinite; }
+.ingot-buzz:hover .brand-mark .im-shine { animation: im-shine 1.2s ease-in-out both; }
+@keyframes im-left { 0% { transform: translateX(150px); } 35%, 100% { transform: translateX(0); } }
+@keyframes im-right { 0% { transform: translateX(-150px); } 35%, 100% { transform: translateX(0); } }
+@keyframes im-slash { 0%, 70% { transform: translateY(-260px); opacity: 0; } 90%, 100% { transform: translateY(0); opacity: 1; } }
+@keyframes im-dot { 0%, 35% { opacity: 0; } 45%, 72% { opacity: 1; } 82%, 100% { opacity: 0; } }
+@keyframes im-dot2 { 0%, 42% { opacity: 0; } 52%, 72% { opacity: 1; } 82%, 100% { opacity: 0; } }
+@keyframes im-dot3 { 0%, 50% { opacity: 0; } 60%, 72% { opacity: 1; } 82%, 100% { opacity: 0; } }
+@keyframes im-shine { 0%, 80% { transform: translateX(0); } 100% { transform: translateX(1500px); } }
+@keyframes im-glow { 0%, 80% { opacity: .35; } 90% { opacity: .85; } 100% { opacity: .55; } }
+@keyframes im-pulse { 0%, 100% { opacity: .45; } 50% { opacity: .85; } }
+@media (prefers-reduced-motion: reduce) {
+  .ingot-buzz .brand-mark *,
+  .ingot-buzz .brand-mark.brand-mark-loop * { animation: none !important; }
+  .ingot-buzz .brand-mark .im-dots circle { opacity: 1; }
 }
 
 .home-products {

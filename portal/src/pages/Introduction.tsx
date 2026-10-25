@@ -6,7 +6,6 @@ import { HomeAiPrompt } from '@/pages/home/HomeAiPrompt';
 import { HomeIcons } from '@/pages/home/HomeIcons';
 import { HomeProductStrip } from '@/pages/home/HomeProductStrip';
 import { HomeSideExamples } from '@/pages/home/HomeSideExamples';
-import { INGOT_URL } from '@/pages/home/home.const';
 import { IngotMark } from '@/pages/home/IngotMark';
 import {
   GITHUB_URL,
@@ -117,10 +116,10 @@ const Introduction: FC = () => {
 
   return (
     <div className="fade-in overflow-x-hidden relative">
-      <a className="ingot-buzz" href={INGOT_URL} target="_blank" rel="noreferrer" aria-label={`Ingot. ${text.homeIngotBye}`}>
+      <div className="ingot-buzz">
         <IngotMark />
         <span className="ingot-buzz__words">{text.homeIngotBye}</span>
-      </a>
+      </div>
       <section className="home-hero">
         <div className="home-hero__copy">
           <Link to="/whats-new" className="home-hero__pill">

@@ -6,7 +6,7 @@ export interface PricingPlan {
   interval: string;
   points: string[];
   cta: string;
-  href: string;
+  href?: string;
   external?: boolean;
   featured?: boolean;
 }

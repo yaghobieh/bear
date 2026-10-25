@@ -2221,6 +2221,22 @@ html.dark body {
   color: #fff;
 }
 
+.pricing-plan__cta--pay {
+  margin-bottom: 0;
+}
+
+.pricing-pay {
+  margin: 1.25rem 0 2.5rem;
+  max-width: 36rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #18181b;
+}
+
+.dark .pricing-pay {
+  color: #fafafa;
+}
+
 .pricing-plan__points {
   margin: 0.75rem 0 0;
   padding: 0;

@@ -2,7 +2,10 @@ import type { PortalLanguage } from '@/constants/portal-i18n.const';
 import type { PricingFact, PricingFaq, PricingGroup, PricingPlan } from './Pricing.types';
 
 export const BEAR_PRO_PRICE_USD = 9;
-export const PRICING_KEY_ID = 'bear-pro-key';
+
+/** Same Lemon checkout as Ink Pro. */
+export const BEAR_PRO_CHECKOUT_URL =
+  'https://alloy-ai.lemonsqueezy.com/checkout/buy/f18d9ba7-5d9b-4263-a108-66f69ab0a55b';
 
 export const PRICING_COPY: Record<PortalLanguage, {
   title: string;
@@ -13,13 +16,7 @@ export const PRICING_COPY: Record<PortalLanguage, {
   missing: string;
   factsTitle: string;
   faqTitle: string;
-  keyLabel: string;
-  keyPlaceholder: string;
-  save: string;
-  clear: string;
-  saved: string;
-  invalid: string;
-  email: string;
+  payNote: string;
   planNames: string[];
 }> = {
   en: {
@@ -31,13 +28,7 @@ export const PRICING_COPY: Record<PortalLanguage, {
     missing: 'Not included',
     factsTitle: 'Key information about the paid plan',
     faqTitle: 'Frequently asked questions',
-    keyLabel: 'License key',
-    keyPlaceholder: 'bear_pro_xxxx_xxxx_xxxx_xxxx',
-    save: 'Save key',
-    clear: 'Remove key',
-    saved: 'Pro is on in this browser.',
-    invalid: 'That key does not match a Bear Pro license.',
-    email: 'After checkout, the receipt email contains the key. Paste it here. There is no checkout link on this page yet.',
+    payNote: 'Pay $9 a year on Lemon Squeezy. The license key is emailed to you.',
     planNames: ['Community', 'Pro'],
   },
   es: {
@@ -49,13 +40,7 @@ export const PRICING_COPY: Record<PortalLanguage, {
     missing: 'No incluido',
     factsTitle: 'Información clave del plan de pago',
     faqTitle: 'Preguntas frecuentes',
-    keyLabel: 'Clave de licencia',
-    keyPlaceholder: 'bear_pro_xxxx_xxxx_xxxx_xxxx',
-    save: 'Guardar clave',
-    clear: 'Quitar clave',
-    saved: 'Pro está activo en este navegador.',
-    invalid: 'Esa clave no coincide con una licencia Bear Pro.',
-    email: 'Después del pago, el email del recibo trae la clave. Pégala aquí. En esta página todavía no hay un enlace de pago.',
+    payNote: 'Paga $9 al año en Lemon Squeezy. La clave de licencia llega por email.',
     planNames: ['Community', 'Pro'],
   },
 };
@@ -80,8 +65,9 @@ export const PRICING_PLANS: Record<PortalLanguage, PricingPlan[]> = {
       interval: 'per year',
       featured: true,
       points: ['Everything in Community', 'Column pin, row grouping, Excel', 'One app, one key, emailed to you'],
-      cta: 'Paste a key',
-      href: `#${PRICING_KEY_ID}`,
+      cta: 'Pay',
+      href: BEAR_PRO_CHECKOUT_URL,
+      external: true,
     },
   ],
   es: [
@@ -103,8 +89,9 @@ export const PRICING_PLANS: Record<PortalLanguage, PricingPlan[]> = {
       interval: 'al año',
       featured: true,
       points: ['Todo lo de Community', 'Fijar columnas, agrupar filas, Excel', 'Una app, una clave, por email'],
-      cta: 'Pegar una clave',
-      href: `#${PRICING_KEY_ID}`,
+      cta: 'Pagar',
+      href: BEAR_PRO_CHECKOUT_URL,
+      external: true,
     },
   ],
 };
@@ -191,11 +178,11 @@ export const PRICING_FACTS: Record<PortalLanguage, PricingFact[]> = {
     },
     {
       title: 'One app, one key',
-      body: 'The intro price is $9 for one year and one app. The key arrives in the receipt email. Paste it on this page and the watermark goes away in that browser.',
+      body: 'The intro price is $9 for one year and one app. Pay, and the license key is emailed to you. That key clears the watermark.',
     },
     {
       title: 'You can try the grid first',
-      body: 'Bear Grid still runs without a key. Pin, grouping, and export show a Bear Pro mark and one console warning until the key is saved.',
+      body: 'Bear Grid still runs before you pay. Pin, grouping, and export show a Bear Pro mark until the emailed key is in the app.',
     },
     {
       title: 'Ink is separate',
@@ -213,11 +200,11 @@ export const PRICING_FACTS: Record<PortalLanguage, PricingFact[]> = {
     },
     {
       title: 'Una app, una clave',
-      body: 'El precio de entrada es $9 por un año y una app. La clave llega en el email del recibo. Pégala en esta página y la marca de agua desaparece en ese navegador.',
+      body: 'El precio de entrada es $9 por un año y una app. Pagas y la clave de licencia llega por email. Esa clave quita la marca de agua.',
     },
     {
       title: 'Puedes probar la tabla antes',
-      body: 'Bear Grid funciona sin clave. Fijar, agrupar y exportar muestran la marca Bear Pro y un aviso en la consola hasta que guardas la clave.',
+      body: 'Bear Grid funciona antes de pagar. Fijar, agrupar y exportar muestran la marca Bear Pro hasta que la clave del email está en la app.',
     },
     {
       title: 'Ink es aparte',
@@ -234,7 +221,7 @@ export const PRICING_FAQ: Record<PortalLanguage, PricingFaq[]> = {
     },
     {
       question: 'How do I remove the watermark?',
-      answer: 'Buy Pro, then paste the key from the receipt email into the form on this page. Checkout is not linked here yet.',
+      answer: 'Pay for Pro. The license key is emailed to you and clears the watermark.',
     },
     {
       question: 'Does the Bear key include Ink?',
@@ -252,7 +239,7 @@ export const PRICING_FAQ: Record<PortalLanguage, PricingFaq[]> = {
     },
     {
       question: '¿Cómo quito la marca de agua?',
-      answer: 'Compra Pro y pega la clave del email del recibo en el formulario de esta página. Aquí todavía no hay un enlace de pago.',
+      answer: 'Paga Pro. La clave de licencia llega por email y quita la marca de agua.',
     },
     {
       question: '¿La clave de Bear incluye Ink?',

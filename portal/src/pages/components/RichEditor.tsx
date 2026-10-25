@@ -45,15 +45,6 @@ const RichEditorPage: FC = () => {
               <BearIcons.PackageIcon size={16} />
               npm
             </a>
-            <a
-              href="https://inkforgejs.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-800 hover:bg-gray-900 dark:bg-gray-700 dark:hover:bg-gray-600 text-white text-sm font-medium transition-colors"
-            >
-              <BearIcons.GlobeIcon size={16} />
-              inkforgejs.com
-            </a>
           </div>
         </div>
       </Card>

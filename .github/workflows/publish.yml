@@ -35,7 +35,16 @@ jobs:
         run: npm run build
 
       - name: Publish to npm
-        run: npm publish --access public --provenance
+        run: |
+          set +e
+          out=$(npm publish --access public --provenance 2>&1)
+          code=$?
+          set -e
+          echo "$out"
+          if [ "$code" -ne 0 ]; then
+            echo "$out" | grep -q "previously staged version\|You cannot publish over the previously published versions" || exit "$code"
+            echo "Bear 1.3.6 is already published."
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -43,8 +52,21 @@ jobs:
         run: |
           npm run build --prefix packages/bear-grid
           npm run build --prefix packages/bear-blocks
-          npm --prefix packages/bear-grid publish --access public --provenance
-          npm --prefix packages/bear-blocks publish --access public --provenance
+          node --input-type=module <<'EOF'
+          import { readFileSync, writeFileSync } from 'node:fs';
+          for (const dir of ['packages/bear-grid', 'packages/bear-blocks']) {
+            const file = `${dir}/package.json`;
+            const pkg = JSON.parse(readFileSync(file, 'utf8'));
+            const pub = pkg.publishConfig;
+            pkg.main = pub.main;
+            pkg.module = pub.module;
+            pkg.types = pub.types;
+            pkg.exports = pub.exports;
+            writeFileSync(file, `${JSON.stringify(pkg, null, 2)}\n`);
+          }
+          EOF
+          npm publish ./packages/bear-grid --access public --provenance
+          npm publish ./packages/bear-blocks --access public --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 

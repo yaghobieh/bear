@@ -84,7 +84,7 @@ const PricingPage = () => {
                 {groups.map((group) => (
                   <Fragment key={group.title}>
                     <tr className="pricing-table__group">
-                      <th scope="colgroup" colSpan={4}>{group.title}</th>
+                      <th scope="colgroup" colSpan={3}>{group.title}</th>
                     </tr>
                     {group.rows.map((row) => (
                       <tr key={row.feature}>

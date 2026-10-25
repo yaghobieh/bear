@@ -1249,6 +1249,54 @@ html.dark body {
   gap: 0.5rem;
 }
 
+.ingot-buzz {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem 1rem;
+  margin-bottom: 1.25rem;
+  padding: 0.95rem 1.25rem;
+  border-radius: 1rem;
+  background: #1b2647;
+  color: #fff;
+  text-decoration: none;
+}
+
+.ingot-buzz__mark {
+  padding: 0.2rem 0.55rem;
+  border-radius: 0.35rem;
+  background: #d9a04e;
+  color: #1b2647;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ingot-buzz__text {
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.ingot-buzz__bye {
+  color: #d9a04e;
+}
+
+.ingot-buzz__cta {
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  background: #d9a04e;
+  color: #1b2647;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.ingot-buzz:hover .ingot-buzz__cta {
+  background: #f0c27a;
+}
+
 .home-products {
   margin-top: 5.5rem;
   margin-bottom: 4rem;
@@ -2116,8 +2164,9 @@ html.dark body {
 
 @media (min-width: 900px) {
   .pricing-plans {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     align-items: stretch;
+    max-width: 52rem;
   }
 }
 

@@ -6,6 +6,7 @@ import { HomeAiPrompt } from '@/pages/home/HomeAiPrompt';
 import { HomeIcons } from '@/pages/home/HomeIcons';
 import { HomeProductStrip } from '@/pages/home/HomeProductStrip';
 import { HomeSideExamples } from '@/pages/home/HomeSideExamples';
+import { INGOT_URL } from '@/pages/home/home.const';
 import {
   GITHUB_URL,
   VERSION_HIGHLIGHT_BY_VERSION,
@@ -115,6 +116,14 @@ const Introduction: FC = () => {
 
   return (
     <div className="fade-in overflow-x-hidden relative">
+      <a className="ingot-buzz" href={INGOT_URL} target="_blank" rel="noreferrer">
+        <span className="ingot-buzz__mark">{text.homeIngotMark}</span>
+        <span className="ingot-buzz__text">
+          {text.homeIngotBuzz}{' '}
+          <span className="ingot-buzz__bye">{text.homeIngotBye}</span>
+        </span>
+        <span className="ingot-buzz__cta">{text.homeIngotCta}</span>
+      </a>
       <section className="home-hero">
         <div className="home-hero__copy">
           <Link to="/whats-new" className="home-hero__pill">

@@ -25,7 +25,6 @@ export const HOME_PRODUCTS: { path: string; nameKey: PortalCopyKey; descKey: Por
   { path: '/products/map', nameKey: 'productMapName', descKey: 'productMapDesc' },
   { path: '/products/calendar', nameKey: 'productCalendarName', descKey: 'productCalendarDesc' },
   { path: '/products/ink', nameKey: 'productInkName', descKey: 'productInkDesc' },
-  { path: INGOT_URL, nameKey: 'productIngotName', descKey: 'productIngotDesc', external: true },
   { path: '/products/kanban', nameKey: 'productKanbanName', descKey: 'productKanbanDesc' },
   { path: '/templates', nameKey: 'productTemplatesName', descKey: 'productTemplatesDesc' },
   { path: '/products/ai', nameKey: 'productAiName', descKey: 'productAiDesc' },

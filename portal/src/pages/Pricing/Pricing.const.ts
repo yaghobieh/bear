@@ -2,7 +2,6 @@ import type { PortalLanguage } from '@/constants/portal-i18n.const';
 import type { PricingFact, PricingFaq, PricingGroup, PricingPlan } from './Pricing.types';
 
 export const BEAR_PRO_PRICE_USD = 9;
-export const INGOT_URL = 'https://github.com/yaghobieh/ingot';
 export const PRICING_KEY_ID = 'bear-pro-key';
 
 export const PRICING_COPY: Record<PortalLanguage, {
@@ -39,7 +38,7 @@ export const PRICING_COPY: Record<PortalLanguage, {
     saved: 'Pro is on in this browser.',
     invalid: 'That key does not match a Bear Pro license.',
     email: 'After checkout, the receipt email contains the key. Paste it here. There is no checkout link on this page yet.',
-    planNames: ['Community', 'Pro', 'Ingot'],
+    planNames: ['Community', 'Pro'],
   },
   es: {
     title: 'Empieza con Bear gratis',
@@ -57,7 +56,7 @@ export const PRICING_COPY: Record<PortalLanguage, {
     saved: 'Pro está activo en este navegador.',
     invalid: 'Esa clave no coincide con una licencia Bear Pro.',
     email: 'Después del pago, el email del recibo trae la clave. Pégala aquí. En esta página todavía no hay un enlace de pago.',
-    planNames: ['Community', 'Pro', 'Ingot'],
+    planNames: ['Community', 'Pro'],
   },
 };
 
@@ -84,17 +83,6 @@ export const PRICING_PLANS: Record<PortalLanguage, PricingPlan[]> = {
       cta: 'Paste a key',
       href: `#${PRICING_KEY_ID}`,
     },
-    {
-      id: 'ingot',
-      name: 'Ingot',
-      summary: 'The open-source AI IDE. Not a Bear component.',
-      price: '$0',
-      interval: 'Free to start',
-      points: ['Apache-2.0, bring your own model key', 'Agents, plugins, and an IDE keymap', 'The $9 Bear key does not unlock it'],
-      cta: 'View Ingot',
-      href: INGOT_URL,
-      external: true,
-    },
   ],
   es: [
     {
@@ -118,17 +106,6 @@ export const PRICING_PLANS: Record<PortalLanguage, PricingPlan[]> = {
       cta: 'Pegar una clave',
       href: `#${PRICING_KEY_ID}`,
     },
-    {
-      id: 'ingot',
-      name: 'Ingot',
-      summary: 'El IDE de IA de código abierto. No es un componente de Bear.',
-      price: '$0',
-      interval: 'Gratis para empezar',
-      points: ['Apache-2.0, con tus claves de modelo', 'Agentes, plugins y atajos de IDE', 'La clave de $9 de Bear no lo abre'],
-      cta: 'Ver Ingot',
-      href: INGOT_URL,
-      external: true,
-    },
   ],
 };
 
@@ -140,41 +117,31 @@ export const PRICING_GROUPS: Record<PortalLanguage, PricingGroup[]> = {
     {
       title: 'Bear Core',
       rows: [
-        { feature: 'Button, Input, Modal, theme', cells: [yes, yes, no] },
-        { feature: 'DataTable sort and sticky header', cells: [yes, yes, no] },
-        { feature: 'Icons', cells: [yes, yes, no] },
-        { feature: 'Flutter (same tokens)', cells: [yes, yes, no] },
-        { feature: 'Blocks, the dashboard screen', cells: [yes, yes, no] },
-        { feature: 'Charts, map, calendar, kanban, AI, code', cells: [yes, yes, no] },
-        { feature: 'Ask Bear on the docs', cells: [yes, yes, no] },
+        { feature: 'Button, Input, Modal, theme', cells: [yes, yes] },
+        { feature: 'DataTable sort and sticky header', cells: [yes, yes] },
+        { feature: 'Icons', cells: [yes, yes] },
+        { feature: 'Flutter (same tokens)', cells: [yes, yes] },
+        { feature: 'Blocks, the dashboard screen', cells: [yes, yes] },
+        { feature: 'Charts, map, calendar, kanban, AI, code', cells: [yes, yes] },
+        { feature: 'Ask Bear on the docs', cells: [yes, yes] },
       ],
     },
     {
       title: 'Bear Grid',
       rows: [
-        { feature: 'Column pin', cells: [no, yes, no] },
-        { feature: 'Row grouping', cells: [no, yes, no] },
-        { feature: 'Excel and CSV export', cells: [no, yes, no] },
-        { feature: 'Runs before you buy', cells: ['Free DataTable', 'Yes, with a watermark', no] },
-        { feature: 'Watermark removed', cells: [no, 'With the key', no] },
-      ],
-    },
-    {
-      title: 'Ingot',
-      rows: [
-        { feature: 'Open-source AI IDE', cells: [no, no, yes] },
-        { feature: 'Bring your own model key', cells: [no, no, yes] },
-        { feature: 'Agents, plugins, and keymap', cells: [no, no, yes] },
-        { feature: 'Included in the Bear Pro key', cells: [no, no, no] },
-        { feature: 'Paid Ingot plans', cells: [no, no, 'Not priced yet'] },
+        { feature: 'Column pin', cells: [no, yes] },
+        { feature: 'Row grouping', cells: [no, yes] },
+        { feature: 'Excel and CSV export', cells: [no, yes] },
+        { feature: 'Runs before you buy', cells: ['Free DataTable', 'Yes, with a watermark'] },
+        { feature: 'Watermark removed', cells: [no, 'With the key'] },
       ],
     },
     {
       title: 'License',
       rows: [
-        { feature: 'Price', cells: ['$0', '$9 / year', 'Free to start'] },
-        { feature: 'Covers', cells: ['Any app, MIT', 'One app', 'The IDE, Apache-2.0'] },
-        { feature: 'Ink rich text', cells: ['Own license', 'Own license', no] },
+        { feature: 'Price', cells: ['$0', '$9 / year'] },
+        { feature: 'Covers', cells: ['Any app, MIT', 'One app'] },
+        { feature: 'Ink rich text', cells: ['Own license', 'Own license'] },
       ],
     },
   ],
@@ -182,41 +149,31 @@ export const PRICING_GROUPS: Record<PortalLanguage, PricingGroup[]> = {
     {
       title: 'Bear Core',
       rows: [
-        { feature: 'Button, Input, Modal, tema', cells: [yes, yes, no] },
-        { feature: 'DataTable con orden y cabecera fija', cells: [yes, yes, no] },
-        { feature: 'Iconos', cells: [yes, yes, no] },
-        { feature: 'Flutter (los mismos tokens)', cells: [yes, yes, no] },
-        { feature: 'Bloques, la pantalla de panel', cells: [yes, yes, no] },
-        { feature: 'Gráficos, mapa, calendario, kanban, IA, código', cells: [yes, yes, no] },
-        { feature: 'Ask Bear en la documentación', cells: [yes, yes, no] },
+        { feature: 'Button, Input, Modal, tema', cells: [yes, yes] },
+        { feature: 'DataTable con orden y cabecera fija', cells: [yes, yes] },
+        { feature: 'Iconos', cells: [yes, yes] },
+        { feature: 'Flutter (los mismos tokens)', cells: [yes, yes] },
+        { feature: 'Bloques, la pantalla de panel', cells: [yes, yes] },
+        { feature: 'Gráficos, mapa, calendario, kanban, IA, código', cells: [yes, yes] },
+        { feature: 'Ask Bear en la documentación', cells: [yes, yes] },
       ],
     },
     {
       title: 'Bear Grid',
       rows: [
-        { feature: 'Columnas fijadas', cells: [no, yes, no] },
-        { feature: 'Agrupación de filas', cells: [no, yes, no] },
-        { feature: 'Exportación Excel y CSV', cells: [no, yes, no] },
-        { feature: 'Funciona antes de comprar', cells: ['DataTable gratis', 'Sí, con marca de agua', no] },
-        { feature: 'Marca de agua quitada', cells: [no, 'Con la clave', no] },
-      ],
-    },
-    {
-      title: 'Ingot',
-      rows: [
-        { feature: 'IDE de IA de código abierto', cells: [no, no, yes] },
-        { feature: 'Tus propias claves de modelo', cells: [no, no, yes] },
-        { feature: 'Agentes, plugins y atajos', cells: [no, no, yes] },
-        { feature: 'Incluido en la clave Bear Pro', cells: [no, no, no] },
-        { feature: 'Planes de pago de Ingot', cells: [no, no, 'Aún sin precio'] },
+        { feature: 'Columnas fijadas', cells: [no, yes] },
+        { feature: 'Agrupación de filas', cells: [no, yes] },
+        { feature: 'Exportación Excel y CSV', cells: [no, yes] },
+        { feature: 'Funciona antes de comprar', cells: ['DataTable gratis', 'Sí, con marca de agua'] },
+        { feature: 'Marca de agua quitada', cells: [no, 'Con la clave'] },
       ],
     },
     {
       title: 'Licencia',
       rows: [
-        { feature: 'Precio', cells: ['$0', '$9 / año', 'Gratis para empezar'] },
-        { feature: 'Cubre', cells: ['Cualquier app, MIT', 'Una app', 'El IDE, Apache-2.0'] },
-        { feature: 'Texto enriquecido de Ink', cells: ['Licencia propia', 'Licencia propia', no] },
+        { feature: 'Precio', cells: ['$0', '$9 / año'] },
+        { feature: 'Cubre', cells: ['Cualquier app, MIT', 'Una app'] },
+        { feature: 'Texto enriquecido de Ink', cells: ['Licencia propia', 'Licencia propia'] },
       ],
     },
   ],
@@ -241,10 +198,6 @@ export const PRICING_FACTS: Record<PortalLanguage, PricingFact[]> = {
       body: 'Bear Grid still runs without a key. Pin, grouping, and export show a Bear Pro mark and one console warning until the key is saved.',
     },
     {
-      title: 'Ingot is separate',
-      body: 'Ingot is the open-source AI IDE: a calm desktop editor, any model with your own key, agents, plugins, and an IDE keymap. It is Apache-2.0 and still in development. It is not a Bear component, and the Bear Pro key does not include it. Paid Ingot plans are not priced yet.',
-    },
-    {
       title: 'Ink is separate',
       body: 'Ink is the rich-text editor, with tables, comments, and track changes. It has its own license. Bear RichEditor stays the lighter editor in Core.',
     },
@@ -267,10 +220,6 @@ export const PRICING_FACTS: Record<PortalLanguage, PricingFact[]> = {
       body: 'Bear Grid funciona sin clave. Fijar, agrupar y exportar muestran la marca Bear Pro y un aviso en la consola hasta que guardas la clave.',
     },
     {
-      title: 'Ingot es aparte',
-      body: 'Ingot es el IDE de IA de código abierto: un editor de escritorio, cualquier modelo con tu clave, agentes, plugins y atajos de IDE. Es Apache-2.0 y sigue en desarrollo. No es un componente de Bear, y la clave Bear Pro no lo incluye. Los planes de pago de Ingot aún no tienen precio.',
-    },
-    {
       title: 'Ink es aparte',
       body: 'Ink es el editor enriquecido, con tablas, comentarios y control de cambios. Tiene su propia licencia. RichEditor de Bear sigue siendo el editor ligero de Core.',
     },
@@ -288,8 +237,8 @@ export const PRICING_FAQ: Record<PortalLanguage, PricingFaq[]> = {
       answer: 'Buy Pro, then paste the key from the receipt email into the form on this page. Checkout is not linked here yet.',
     },
     {
-      question: 'Does the Bear key include Ingot or Ink?',
-      answer: 'No. Ingot is the AI IDE and starts free with your own model keys. Ink has its own license. The $9 key is only Bear Grid.',
+      question: 'Does the Bear key include Ink?',
+      answer: 'No. Ink has its own license. The $9 key is only Bear Grid.',
     },
     {
       question: 'Is Flutter free?',
@@ -306,8 +255,8 @@ export const PRICING_FAQ: Record<PortalLanguage, PricingFaq[]> = {
       answer: 'Compra Pro y pega la clave del email del recibo en el formulario de esta página. Aquí todavía no hay un enlace de pago.',
     },
     {
-      question: '¿La clave de Bear incluye Ingot o Ink?',
-      answer: 'No. Ingot es el IDE de IA y empieza gratis con tus claves de modelo. Ink tiene su propia licencia. La clave de $9 es solo Bear Grid.',
+      question: '¿La clave de Bear incluye Ink?',
+      answer: 'No. Ink tiene su propia licencia. La clave de $9 es solo Bear Grid.',
     },
     {
       question: '¿Flutter es gratis?',

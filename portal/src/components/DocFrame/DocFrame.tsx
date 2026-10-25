@@ -3,8 +3,11 @@ import { Link, useLocation } from 'react-router-dom';
 import { BearIcons } from '@forgedevstack/bear';
 import { CodeBlock } from '@/components/CodeBlock';
 import { GITHUB_URL } from '@/constants/navigation.const';
+import { openCodeSandbox } from '@/pages/Sandbox/openCodeSandbox';
 
 const ASK_LIMIT = 5;
+const ASK_STORAGE_PREFIX = 'bear-ask:';
+const ASK_PROPS_LIMIT = 1200;
 
 const ARIA_PATTERNS: Record<string, string> = {
   autocomplete: 'https://www.w3.org/WAI/ARIA/apg/patterns/combobox/',
@@ -204,8 +207,21 @@ export const DocFrame: FC<{ children: ReactNode }> = ({ children }) => {
     setShowMarkdown(false);
     setMarkdown('');
     setChatOpen(false);
-    setAnswer('');
     setError('');
+    const stored = window.sessionStorage.getItem(`${ASK_STORAGE_PREFIX}${location.pathname}`);
+    if (!stored) {
+      setQuestion('');
+      setAnswer('');
+    } else {
+      try {
+        const saved = JSON.parse(stored) as { question?: string; answer?: string };
+        setQuestion(saved.question ?? '');
+        setAnswer(saved.answer ?? '');
+      } catch {
+        setQuestion('');
+        setAnswer('');
+      }
+    }
     const collect = () => {
       const root = document.querySelector('[data-doc-body]');
       if (!root) return;
@@ -260,8 +276,8 @@ export const DocFrame: FC<{ children: ReactNode }> = ({ children }) => {
     setMode(nextMode);
     setQuestion(prompt);
     setChatOpen(true);
-    setAnswer('');
     setError('');
+    if (nextMode === 'run') openCodeSandbox(location.pathname);
   };
 
   const onSubmit = async (event: FormEvent) => {
@@ -275,13 +291,21 @@ export const DocFrame: FC<{ children: ReactNode }> = ({ children }) => {
       const response = await fetch('/api/bear-ask', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question: nextQuestion }),
+        body: JSON.stringify({
+          question: nextQuestion,
+          page: `${location.pathname} ${title}`,
+          props: document.querySelector('[data-doc-body]')?.textContent?.replace(/\s+/g, ' ').trim().slice(0, ASK_PROPS_LIMIT) ?? '',
+        }),
       });
       const payload = (await response.json()) as { answer?: string; error?: string; remaining?: number; sources?: AskSource[] };
       if (typeof payload.remaining === 'number') setRemaining(payload.remaining);
       if (payload.answer) {
         setAnswer(payload.answer);
         setSources(payload.sources ?? []);
+        window.sessionStorage.setItem(
+          `${ASK_STORAGE_PREFIX}${location.pathname}`,
+          JSON.stringify({ question: nextQuestion, answer: payload.answer }),
+        );
       }
       if (payload.error) setError(payload.error);
     } catch {
@@ -350,6 +374,11 @@ export const DocFrame: FC<{ children: ReactNode }> = ({ children }) => {
                   <button type="button" className="doc-ai__close" aria-label="Close" onClick={() => setChatOpen(false)}>
                     <BearIcons.CloseIcon size={14} />
                   </button>
+                </div>
+                <div className="doc-ai__suggestions">
+                  {[`Which props does ${title} take?`, `How do I use ${title} in Bear?`, `Can you show a ${title} example?`].map((suggestion) => (
+                    <button key={suggestion} type="button" onClick={() => setQuestion(suggestion)}>{suggestion}</button>
+                  ))}
                 </div>
                 <textarea
                   value={question}

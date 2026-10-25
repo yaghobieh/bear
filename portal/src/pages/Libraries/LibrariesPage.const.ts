@@ -11,6 +11,38 @@ export const LIBRARY_CHART_DATA = [
 
 export const BEAR_LIBRARIES: BearLibraryCard[] = [
   {
+    id: 'icons',
+    name: '@forgedevstack/bear-icons',
+    kind: 'library',
+    summaryKey: 'librariesIcons',
+    install: 'npm install @forgedevstack/bear-icons',
+    components: ['SearchIcon', 'BearFaceIcon', 'SparklesIcon', 'LayersIcon', 'PackageIcon'],
+  },
+  {
+    id: 'flutter',
+    name: 'bear_flutter',
+    kind: 'flutter',
+    summaryKey: 'librariesFlutter',
+    install: 'flutter pub add bear_flutter',
+    components: ['BearButton', 'BearTextField', 'BearCard', 'BearAppBar', 'BearList', 'BearDialog', 'BearBottomSheet'],
+  },
+  {
+    id: 'grid',
+    name: '@forgedevstack/bear-grid',
+    kind: 'pro',
+    summaryKey: 'librariesGrid',
+    install: 'npm install @forgedevstack/bear @forgedevstack/bear-grid',
+    components: ['BearGrid'],
+  },
+  {
+    id: 'blocks',
+    name: '@forgedevstack/bear-blocks',
+    kind: 'library',
+    summaryKey: 'librariesBlocks',
+    install: 'npm install @forgedevstack/bear @forgedevstack/bear-blocks',
+    components: ['DashboardBlock'],
+  },
+  {
     id: 'charts',
     name: '@forgedevstack/bear-x-charts',
     kind: 'x',

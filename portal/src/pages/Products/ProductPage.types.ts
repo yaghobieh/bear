@@ -1,4 +1,4 @@
-export type ProductId = 'charts' | 'ai' | 'code' | 'map' | 'kanban' | 'calendar' | 'ink';
+export type ProductId = 'flutter' | 'grid' | 'blocks' | 'charts' | 'ai' | 'code' | 'map' | 'kanban' | 'calendar' | 'ink';
 
 export interface ProductDocLink {
   label: string;
@@ -10,4 +10,10 @@ export interface ProductPageData {
   packageName: string;
   install: string;
   docLinks: ProductDocLink[];
+}
+
+export interface ProductDetail {
+  price: string;
+  why: string;
+  benefits: string[];
 }

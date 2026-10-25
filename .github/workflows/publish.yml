@@ -39,6 +39,15 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Publish Bear Grid and Blocks
+        run: |
+          npm run build --prefix packages/bear-grid
+          npm run build --prefix packages/bear-blocks
+          npm --prefix packages/bear-grid publish --access public --provenance
+          npm --prefix packages/bear-blocks publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
   portal:
     needs: publish
     runs-on: ubuntu-latest

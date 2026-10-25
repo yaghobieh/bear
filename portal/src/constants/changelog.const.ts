@@ -10,6 +10,23 @@ export interface ChangelogEntry {
 
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
+    version: '1.3.6',
+    date: 'October 25, 2026',
+    tag: 'minor',
+    sections: [
+      {
+        title: 'Added',
+        items: [
+          'bear_flutter: Button, TextField, Card, AppBar, List, Dialog, and BottomSheet on the Bear tokens. Free.',
+          '@forgedevstack/bear-grid: column pin, row grouping, and Excel export. DataTable sort and sticky header stay free. Pro is $9 a year and the key arrives by email.',
+          '@forgedevstack/bear-blocks: a free DashboardBlock.',
+          'Pricing page, Storybook entries, sandbox recipes, and page-aware Ask Bear.',
+          'Home and libraries feature @forgedevstack/bear-icons. Core still renders without that package.',
+        ],
+      },
+    ],
+  },
+  {
     version: '1.3.5',
     date: 'October 17, 2026',
     tag: 'minor',

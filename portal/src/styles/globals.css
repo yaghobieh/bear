@@ -1249,7 +1249,57 @@ html.dark body {
   gap: 0.5rem;
 }
 
+.ingot-buzz {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem;
+  margin-bottom: 1.25rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.ingot-buzz__words {
+  font-size: clamp(1.6rem, 3vw, 2.25rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #1b2647;
+  line-height: 1;
+}
+
+.dark .ingot-buzz__words {
+  color: #f4f7fb;
+}
+
+.ingot-buzz .brand-mark { display: block; overflow: visible; flex: none; }
+.ingot-buzz .brand-mark .im-left { animation: im-left 1.6s cubic-bezier(.2,.8,.2,1) both; }
+.ingot-buzz .brand-mark .im-right { animation: im-right 1.6s cubic-bezier(.2,.8,.2,1) both; }
+.ingot-buzz .brand-mark .im-slash { animation: im-slash 1.6s cubic-bezier(.2,.8,.2,1) both; }
+.ingot-buzz .brand-mark .im-dots circle { opacity: 0; animation: im-dot 1.6s ease both; }
+.ingot-buzz .brand-mark .im-dots circle:nth-child(2) { animation-name: im-dot2; }
+.ingot-buzz .brand-mark .im-dots circle:nth-child(3) { animation-name: im-dot3; }
+.ingot-buzz .brand-mark .im-shine { animation: im-shine 1.6s ease-in-out both; }
+.ingot-buzz .brand-mark .im-glow { animation: im-glow 1.6s ease both; opacity: .55; }
+.ingot-buzz .brand-mark.brand-mark-loop .im-shine { animation: im-shine 2.4s ease-in-out 1.6s infinite; }
+.ingot-buzz .brand-mark.brand-mark-loop .im-glow { animation: im-pulse 2.4s ease-in-out 1.6s infinite; }
+.ingot-buzz:hover .brand-mark .im-shine { animation: im-shine 1.2s ease-in-out both; }
+@keyframes im-left { 0% { transform: translateX(150px); } 35%, 100% { transform: translateX(0); } }
+@keyframes im-right { 0% { transform: translateX(-150px); } 35%, 100% { transform: translateX(0); } }
+@keyframes im-slash { 0%, 70% { transform: translateY(-260px); opacity: 0; } 90%, 100% { transform: translateY(0); opacity: 1; } }
+@keyframes im-dot { 0%, 35% { opacity: 0; } 45%, 72% { opacity: 1; } 82%, 100% { opacity: 0; } }
+@keyframes im-dot2 { 0%, 42% { opacity: 0; } 52%, 72% { opacity: 1; } 82%, 100% { opacity: 0; } }
+@keyframes im-dot3 { 0%, 50% { opacity: 0; } 60%, 72% { opacity: 1; } 82%, 100% { opacity: 0; } }
+@keyframes im-shine { 0%, 80% { transform: translateX(0); } 100% { transform: translateX(1500px); } }
+@keyframes im-glow { 0%, 80% { opacity: .35; } 90% { opacity: .85; } 100% { opacity: .55; } }
+@keyframes im-pulse { 0%, 100% { opacity: .45; } 50% { opacity: .85; } }
+@media (prefers-reduced-motion: reduce) {
+  .ingot-buzz .brand-mark *,
+  .ingot-buzz .brand-mark.brand-mark-loop * { animation: none !important; }
+  .ingot-buzz .brand-mark .im-dots circle { opacity: 1; }
+}
+
 .home-products {
+  margin-top: 5.5rem;
   margin-bottom: 4rem;
 }
 
@@ -2099,5 +2149,210 @@ html.dark body {
 @media (max-width: 640px) {
   .alloy-banner { gap: 8px; }
   .alloy-banner__text { font-size: 13px; }
+}
+
+.pricing {
+  display: flex;
+  flex-direction: column;
+  gap: 4.5rem;
+}
+
+.pricing-plans {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 900px) {
+  .pricing-plans {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    max-width: 52rem;
+  }
+}
+
+.pricing-plan {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 1.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  background: #fff;
+}
+
+.dark .pricing-plan {
+  border-color: #27272a;
+  background: #09090b;
+}
+
+.pricing-plan--featured {
+  border-color: #ec4899;
+  box-shadow: 0 0 0 1px #ec4899;
+}
+
+.pricing-plan__price {
+  margin: 0.75rem 0 0;
+  font-size: 2.75rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: #18181b;
+}
+
+.dark .pricing-plan__price {
+  color: #fafafa;
+}
+
+.pricing-plan__cta {
+  display: inline-flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+  padding: 0.65rem 1rem;
+  border-radius: 0.65rem;
+  border: 1px solid #ec4899;
+  color: #db2777;
+  font-weight: 600;
+  text-align: center;
+}
+
+.pricing-plan--featured .pricing-plan__cta {
+  background: #ec4899;
+  color: #fff;
+}
+
+.pricing-plan__points {
+  margin: 0.75rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  font-size: 0.925rem;
+}
+
+.pricing-plan__points li::before {
+  content: "✓ ";
+  color: #db2777;
+}
+
+.pricing-section__title {
+  margin-bottom: 1.25rem;
+}
+
+.pricing-table-wrap {
+  overflow-x: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+}
+
+.dark .pricing-table-wrap {
+  border-color: #27272a;
+}
+
+.pricing-table {
+  width: 100%;
+  min-width: 40rem;
+  border-collapse: collapse;
+  font-size: 0.925rem;
+}
+
+.pricing-table th,
+.pricing-table td {
+  padding: 0.75rem 1rem;
+  text-align: center;
+  border-bottom: 1px solid #f4f4f5;
+  vertical-align: middle;
+}
+
+.dark .pricing-table th,
+.dark .pricing-table td {
+  border-bottom-color: #27272a;
+}
+
+.pricing-table thead th {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  font-weight: 700;
+}
+
+.dark .pricing-table thead th {
+  background: #09090b;
+}
+
+.pricing-table th[scope="row"],
+.pricing-table thead th:first-child {
+  text-align: left;
+  font-weight: 500;
+}
+
+.pricing-table__group th {
+  text-align: left;
+  background: #fdf2f8;
+  color: #9d174d;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.dark .pricing-table__group th {
+  background: #2a1420;
+  color: #f9a8d4;
+}
+
+.pricing-mark {
+  color: #a1a1aa;
+}
+
+.pricing-mark--yes {
+  color: #db2777;
+  font-weight: 700;
+}
+
+.pricing-facts {
+  display: grid;
+  gap: 1.5rem;
+}
+
+@media (min-width: 800px) {
+  .pricing-facts {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.pricing-facts article {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.pricing-faq {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid #e5e7eb;
+}
+
+.dark .pricing-faq {
+  border-top-color: #27272a;
+}
+
+.pricing-faq details {
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0.9rem 0;
+}
+
+.dark .pricing-faq details {
+  border-bottom-color: #27272a;
+}
+
+.pricing-faq summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.pricing-faq details p,
+.pricing-faq details .bear-typography {
+  margin-top: 0.55rem;
 }
 

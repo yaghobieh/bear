@@ -82,7 +82,11 @@ export const HomeAiPrompt: FC = () => {
       const response = await fetch('/api/bear-ask', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question: nextQuestion }),
+        body: JSON.stringify({
+          question: nextQuestion,
+          page: 'Home',
+          props: 'Flutter is free. Bear Grid Pro is $9 a year. Core DataTable stays free. Icons are @forgedevstack/bear-icons.',
+        }),
       });
       const payload = (await response.json()) as AskResponse;
       if (typeof payload.remaining === 'number') setRemaining(payload.remaining);

@@ -8,6 +8,7 @@
   "rewrites": [
     { "source": "/storybook", "destination": "/storybook/index.html" },
     { "source": "/storybook/", "destination": "/storybook/index.html" },
-    { "source": "/((?!storybook(?:/|$)|api(?:/|$)).*)", "destination": "/index.html" }
+    { "source": "/blog/bear-1-3-6", "destination": "/blog/bear-1-3-6.html" },
+    { "source": "/((?!storybook(?:/|$)|api(?:/|$)|blog/bear-1-3-6(?:\\.html)?$).*)", "destination": "/index.html" }
   ]
 }

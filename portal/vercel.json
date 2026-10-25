@@ -1,5 +1,6 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/blog/bear-1-3-6", "destination": "/blog/bear-1-3-6.html" },
+    { "source": "/((?!blog/bear-1-3-6(?:\\.html)?$).*)", "destination": "/index.html" }
   ]
 }

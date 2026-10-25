@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom';
 import { CodeBlock } from '@/components/CodeBlock';
 import { HomeBentoGrid } from '@/components/HomeBentoGrid';
 import { HomeAiPrompt } from '@/pages/home/HomeAiPrompt';
+import { HomeIcons } from '@/pages/home/HomeIcons';
 import { HomeProductStrip } from '@/pages/home/HomeProductStrip';
 import { HomeSideExamples } from '@/pages/home/HomeSideExamples';
+import { INGOT_URL } from '@/pages/home/home.const';
+import { IngotMark } from '@/pages/home/IngotMark';
 import {
   GITHUB_URL,
   VERSION_HIGHLIGHT_BY_VERSION,
@@ -114,6 +117,10 @@ const Introduction: FC = () => {
 
   return (
     <div className="fade-in overflow-x-hidden relative">
+      <a className="ingot-buzz" href={INGOT_URL} target="_blank" rel="noreferrer" aria-label={`Ingot. ${text.homeIngotBye}`}>
+        <IngotMark />
+        <span className="ingot-buzz__words">{text.homeIngotBye}</span>
+      </a>
       <section className="home-hero">
         <div className="home-hero__copy">
           <Link to="/whats-new" className="home-hero__pill">
@@ -170,6 +177,7 @@ const Introduction: FC = () => {
       </section>
 
       <HomeProductStrip />
+      <HomeIcons />
       <HomeAiPrompt />
 
       <section className="mb-20">
@@ -210,7 +218,7 @@ const Introduction: FC = () => {
                   variant="standard"
                   severity="success"
                   icon={<BearIcons.CheckIcon size={18} />}
-                  title="Bear v1.3.5 Loaded"
+                  title="Bear v1.3.6 Loaded"
                 >
                   Zero config needed. Full TypeScript IntelliSense enabled.
                 </Alert>

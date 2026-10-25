@@ -1,6 +1,6 @@
 # @forgedevstack/bear
 
-React components, a theme provider, and AeroCraft tokens. Version 1.3.5 in this repository. The published npm release is still 1.3.4 until 1.3.5 is published.
+React components, a theme provider, and AeroCraft tokens. Version 1.3.6 in this repository. Publishing happens when this release is merged to main.
 
 Author: John Yaghobieh. Docs: [bearui.com](https://bearui.com). Package: [@forgedevstack/bear](https://www.npmjs.com/package/@forgedevstack/bear).
 
@@ -13,6 +13,8 @@ npm install @forgedevstack/bear
 That install is the component set and the theme. Icons are a separate package. Charts still ship inside the core build today, and they also have a dedicated package entry so you can import them on their own.
 
 ```bash
+npm install @forgedevstack/bear-grid
+npm install @forgedevstack/bear-blocks
 npm install @forgedevstack/bear-icons
 npm install @forgedevstack/bear-x-charts
 npm install @forgedevstack/bear-x-ai
@@ -136,6 +138,14 @@ forge add calendar
 `forge add bear` asks the same library question. Icons and calendar install from npm. Charts, AI, code, map, and kanban are recorded in a comment in `src/main.tsx` until those packages are published, so the install does not fail on a missing package.
 
 `npx @forgedevstack/bear-cli` is the name reserved for a Bear-only binary. That binary is not published, so those commands do not run yet.
+
+## What 1.3.6 adds
+
+- `bear_flutter` in `packages/bear_flutter`. Free widgets on the Bear tokens.
+- `@forgedevstack/bear-grid`. Pin, grouping, and Excel export. The watermark clears with a license key. Pro is $9 a year. DataTable stays free.
+- `@forgedevstack/bear-blocks`. Free `DashboardBlock`.
+- Portal pricing, Storybook entries, and sandbox recipes.
+- `@forgedevstack/bear-icons` is called out on the home page and the libraries list.
 
 ## What 1.3.5 adds
 

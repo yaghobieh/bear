@@ -6,6 +6,9 @@ import { PRODUCT_CHAT_MESSAGES, PRODUCT_KANBAN_COLUMNS } from '../ProductPage.co
 import { CalendarPreview } from './CalendarPreview';
 import { ChartsGallery } from './ChartsGallery';
 import { CodeGallery } from './CodeGallery';
+import { BlocksPreview } from './BlocksPreview';
+import { FlutterPreview } from './FlutterPreview';
+import { GridPreview } from './GridPreview';
 import { InkPreview } from './InkPreview';
 import { MapPreview } from './MapPreview';
 
@@ -14,6 +17,9 @@ interface ProductPreviewProps {
 }
 
 const PREVIEW_BY_PRODUCT: Record<ProductId, () => ReactNode> = {
+  flutter: () => <FlutterPreview />,
+  grid: () => <GridPreview />,
+  blocks: () => <BlocksPreview />,
   charts: () => <ChartsGallery />,
   ai: () => <Chat messages={PRODUCT_CHAT_MESSAGES} onSend={() => undefined} height={280} />,
   code: () => <CodeGallery />,

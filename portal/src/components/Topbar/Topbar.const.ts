@@ -11,8 +11,11 @@ export const PATH_PRODUCTS = '/products';
 export const PRODUCT_MENU_CLOSE_DELAY_MS = 200;
 export const DOCS_MENU_CHILD_LIMIT = 6;
 
+export const PATH_PRICING = '/pricing';
+
 export const TOP_NAV_LINKS: TopNavLink[] = [
   { labelKey: 'navDocs', path: PATH_DOCS },
+  { labelKey: 'navPremium', path: PATH_PRICING },
   { labelKey: 'navAbout', path: PATH_ABOUT },
   { labelKey: 'navBlog', path: PATH_BLOG },
 ];
@@ -31,6 +34,16 @@ export const DOCS_ACTIVE_PREFIXES = [
 ];
 
 export const PRODUCT_MENU: ProductMenuGroup[] = [
+  {
+    id: 'flutter',
+    titleKey: 'productGroupFlutter',
+    items: [
+      { id: 'flutter', path: '/products/flutter', nameKey: 'productFlutterName', descKey: 'productFlutterDesc', icon: 'sparkles' },
+      { id: 'grid', path: '/products/grid', nameKey: 'productGridName', descKey: 'productGridDesc', icon: 'layers' },
+      { id: 'blocks', path: '/products/blocks', nameKey: 'productBlocksName', descKey: 'productBlocksDesc', icon: 'package' },
+      { id: 'pricing', path: '/pricing', nameKey: 'productPricingName', descKey: 'productPricingDesc', icon: 'inbox' },
+    ],
+  },
   {
     id: 'core',
     titleKey: 'productGroupCore',

@@ -16,6 +16,9 @@ export * from './hooks';
 // Utils
 export * from './utils';
 
+// License — Core stays free. The key only clears the Pro watermark.
+export * from './license';
+
 // Types
 export * from './types';
 

@@ -6,7 +6,7 @@ const SERVER = `import { createMcpServer, textResult } from '@forgedevstack/forg
 
 const { start } = createMcpServer({
   name: 'bear-ui',
-  version: '1.3.5',
+  version: '1.3.6',
   tools: [
     {
       name: 'bear-docs',

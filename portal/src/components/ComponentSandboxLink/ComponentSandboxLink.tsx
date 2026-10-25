@@ -7,6 +7,10 @@ import { openCodeSandbox } from '@/pages/Sandbox/openCodeSandbox';
 import { DOCS_LINK_ICON_SIZE } from './ComponentSandboxLink.const';
 
 const PACKAGE_STORY_ID: Record<string, string> = {
+  '/products/flutter': 'packages-bear-flutter-tokens--docs',
+  '/products/grid': 'packages-bear-grid-beargrid--docs',
+  '/products/blocks': 'packages-bear-blocks-dashboardblock--docs',
+  '/pricing': 'packages-bear-grid-beargrid--docs',
   '/products/charts': 'packages-bear-x-charts-barchart--docs',
   '/products/code': 'packages-bear-x-code-codeeditor--docs',
   '/products/calendar': 'packages-calendar-eventcalendar--docs',

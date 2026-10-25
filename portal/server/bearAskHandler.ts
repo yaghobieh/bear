@@ -2,7 +2,8 @@ import { execFile } from 'node:child_process';
 
 const ASK_LIMIT = 5;
 const QUESTION_MAX = 600;
-const REFUSAL = 'Ask a question about Bear.';
+const REFUSAL = 'Ask about a Bear component, prop, or install. Flutter, Grid, and pricing are part of Bear.';
+const OTHER_LIB_REPLY = 'That name sits outside Bear. Use DataTable or Bear Grid for tables, and Ink for rich text today. A Bear editor is coming. Ask about a Bear prop.';
 const DEEPSEEK_URL = 'https://api.deepseek.com/chat/completions';
 const DEEPSEEK_MODEL = 'deepseek-chat';
 const NPM_PACKAGE = '@forgedevstack/bear';
@@ -11,7 +12,7 @@ const FORGE_DOCS = 'https://forgedevstack.com/bear';
 
 const QUESTION_WORD = /[?]|\b(what|how|why|which|when|where|who|can|could|does|do|did|is|are|should|would|will|explain|describe)\b/i;
 const OTHER_LIB = /\b(harbor|grid[-\s]?table|rail|compass|synapse|kiln|lingo|aerocraft|torch|ink|calendar|kanban|gitforge|lintforge|anvil|warden|forge\s?form|forge\s?query)\b/i;
-const BEAR_TOPIC = /\b(bear|button|alert|theme|modal|drawer|input|select|tooltip|chart|hook|provider|component|icon|typography|card|badge|switch|checkbox|dialog|toast|accordion|tabs|avatar|chip|menu|navbar|sidebar|variant|prop|install|chat|overlay|popover|skeleton|progress|slider|radio|textarea|dropdown|breadcrumb|pagination|table|color|colour|dark|light|style)\b/i;
+const BEAR_TOPIC = /\b(bear|button|alert|theme|modal|drawer|input|select|tooltip|chart|hook|provider|component|icon|typography|card|badge|switch|checkbox|dialog|toast|accordion|tabs|avatar|chip|menu|navbar|sidebar|variant|prop|install|chat|overlay|popover|skeleton|progress|slider|radio|textarea|dropdown|breadcrumb|pagination|table|color|colour|dark|light|style|flutter|grid|pricing|license|watermark|block|editor|token)\b/i;
 const STOP = new Set(['how', 'can', 'the', 'what', 'does', 'did', 'for', 'and', 'with', 'you', 'change', 'from', 'this', 'that', 'are', 'use', 'using']);
 
 const counts = new Map<string, number>();
@@ -33,8 +34,14 @@ export interface AskResult {
 
 const isBearQuestion = (text: string): boolean => {
   const trimmed = text.trim();
-  if (OTHER_LIB.test(trimmed)) return false;
-  return QUESTION_WORD.test(trimmed) && BEAR_TOPIC.test(trimmed);
+  return QUESTION_WORD.test(trimmed) && BEAR_TOPIC.test(trimmed) && !OTHER_LIB.test(trimmed);
+};
+
+export const bearAskReply = (text: string): string | null => {
+  const trimmed = text.trim();
+  if (OTHER_LIB.test(trimmed)) return OTHER_LIB_REPLY;
+  if (!isBearQuestion(trimmed)) return REFUSAL;
+  return null;
 };
 
 const searchTerms = (question: string): string => {
@@ -126,8 +133,9 @@ const askDeepSeek = async (key: string, question: string, notes: string): Promis
             'You answer only questions about Bear, the React UI kit @forgedevstack/bear.',
             'If the message is not a Bear question, including greetings, weather, or any other Forge library, reply with exactly:',
             REFUSAL,
-            'For a Bear question, write three short paragraphs about the real props, then one fenced tsx example from the research.',
+            'For a Bear question, name the prop you mean and the page heading it belongs to. Then write three short paragraphs and one fenced tsx example from the research.',
             'Link https://bearui.com, https://forgedevstack.com/bear, and the npm package. Do not invent props.',
+            'Core, Flutter, and blocks are free. Bear Grid pin, grouping, and Excel export are Pro at $9 a year.',
             '',
             notes,
           ].join('\n'),
@@ -146,6 +154,8 @@ const askDeepSeek = async (key: string, question: string, notes: string): Promis
 export const handleBearAsk = async (input: {
   method: string;
   question: string;
+  page?: string;
+  props?: string;
   ip: string;
   key: string;
   bearRoot: string;
@@ -161,14 +171,16 @@ export const handleBearAsk = async (input: {
   if (!question || question.length > QUESTION_MAX) {
     return { status: 400, body: { error: 'Send one short question about Bear.', remaining } };
   }
-  if (!isBearQuestion(question)) return { status: 200, body: { answer: REFUSAL, remaining } };
+  const early = bearAskReply(question);
+  if (early) return { status: 200, body: { answer: early, remaining } };
   if (!input.key) return { status: 500, body: { error: 'DeepSeek is not configured.', remaining } };
 
   try {
     const research = await researchBear(input.bearRoot, question);
-    let answer = await askDeepSeek(input.key, question, research.notes);
+    const pageNotes = [`Page: ${input.page ?? 'Bear docs'}`, input.props ? `Visible props and copy:\n${input.props}` : ''].filter(Boolean).join('\n\n');
+    let answer = await askDeepSeek(input.key, question, `${pageNotes}\n\n${research.notes}`);
     if (!answer.includes('```') && answer !== REFUSAL) {
-      answer = await askDeepSeek(input.key, `${question}\n\nRewrite with a complete tsx example.`, research.notes);
+      answer = await askDeepSeek(input.key, `${question}\n\nRewrite with a complete tsx example. Name the prop.`, `${pageNotes}\n\n${research.notes}`);
     }
     const nextUsed = used + 1;
     counts.set(ip, nextUsed);

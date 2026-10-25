@@ -20,6 +20,7 @@ const FormsDocsPage = lazy(() => import('./pages/docs/FormsDocs'));
 const CliDocsPage = lazy(() => import('./pages/docs/CliDocs'));
 const PackageImportsDocsPage = lazy(() => import('./pages/docs/PackageImportsDocs'));
 const LibrariesPage = lazy(() => import('./pages/Libraries'));
+const PricingPage = lazy(() => import('./pages/Pricing'));
 const AboutPage = lazy(() => import('./pages/About'));
 const BlogPage = lazy(() => import('./pages/Blog'));
 const BlogArticlePage = lazy(() => import('./pages/Blog/BlogArticle'));
@@ -482,6 +483,7 @@ function PortalLayout({
                 <Route path="/docs/cli" element={<CliDocsPage />} />
                 <Route path="/docs/package-imports" element={<PackageImportsDocsPage />} />
                 <Route path="/libraries" element={<LibrariesPage />} />
+                <Route path="/pricing" element={<PricingPage />} />
                 <Route path="/products/:productId" element={<ProductPage />} />
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/blog" element={<BlogPage />} />

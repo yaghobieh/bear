@@ -17,9 +17,10 @@ export interface NavGroup {
   icon?: string;
 }
 
-export const BEAR_VERSION = '1.3.5';
+export const BEAR_VERSION = '1.3.6';
 
 export const VERSION_HIGHLIGHT_BY_VERSION: Record<string, string> = {
+  '1.3.6': 'Flutter · Bear Grid · $9 Pro · editor coming',
   '1.3.5': 'Bear X charts, tree, AI, code · bear-map · kanban',
   '1.3.4': 'ToggleGroup · Lotso redesign · Overlay effects parity · Focus traps',
   '1.3.3': 'AI chat kit · Drawer variants · system theme',
@@ -28,7 +29,7 @@ export const VERSION_HIGHLIGHT_BY_VERSION: Record<string, string> = {
   '1.3.0': 'ModalsProvider · overlays above blur · SignPad',
 };
 
-export const VERSION_HIGHLIGHT_FALLBACK = 'Bear X charts, tree, AI, code · bear-map · kanban';
+export const VERSION_HIGHLIGHT_FALLBACK = 'Flutter · Bear Grid · $9 Pro · editor coming';
 
 /** Main Bear UI repository */
 export const GITHUB_URL = 'https://github.com/yaghobieh/bear';
@@ -622,7 +623,8 @@ export const NAVIGATION: NavGroup[] = [
       { path: '/docs/nextjs', label: 'Next.js' },
       { path: '/typescript', label: 'TypeScript' },
       { path: '/icons', label: 'Icons', badge: 'icons' },
-      { path: '/libraries', label: 'Libraries', badge: '1.3.5' },
+      { path: '/libraries', label: 'Libraries', badge: '1.3.6' },
+      { path: '/pricing', label: 'Pricing', badge: '$9' },
       { path: '/docs/directory', label: 'Registry Directory' },
       { path: '/docs/registry/github', label: 'GitHub Registry' },
       { path: '/guides/responsive-ui', label: 'Responsive UI' },
@@ -681,7 +683,8 @@ export const NAVIGATION: NavGroup[] = [
 ];
 
 export const VERSIONS = [
-  { value: '1.3.5', label: 'v1.3.5 (current)' },
+  { value: '1.3.6', label: 'v1.3.6 (current)' },
+  { value: '1.3.5', label: 'v1.3.5' },
   { value: '1.3', label: 'v1.3' },
   { value: '1.2', label: 'v1.2' },
   { value: '1.1', label: 'v1.1' },

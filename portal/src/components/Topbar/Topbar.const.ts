@@ -32,6 +32,16 @@ export const DOCS_ACTIVE_PREFIXES = [
 
 export const PRODUCT_MENU: ProductMenuGroup[] = [
   {
+    id: 'flutter',
+    titleKey: 'productGroupFlutter',
+    items: [
+      { id: 'flutter', path: '/products/flutter', nameKey: 'productFlutterName', descKey: 'productFlutterDesc', icon: 'sparkles' },
+      { id: 'grid', path: '/products/grid', nameKey: 'productGridName', descKey: 'productGridDesc', icon: 'layers' },
+      { id: 'blocks', path: '/products/blocks', nameKey: 'productBlocksName', descKey: 'productBlocksDesc', icon: 'package' },
+      { id: 'pricing', path: '/pricing', nameKey: 'productPricingName', descKey: 'productPricingDesc', icon: 'inbox' },
+    ],
+  },
+  {
     id: 'core',
     titleKey: 'productGroupCore',
     items: [

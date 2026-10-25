@@ -1,0 +1,21 @@
+name: bear_flutter
+description: Bear tokens and widgets for Flutter. Same color, radius, type, and density as Bear UI.
+version: 0.1.0
+homepage: https://bearui.com/products/flutter
+repository: https://github.com/yaghobieh/bear
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+  flutter: ">=3.16.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: false

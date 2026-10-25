@@ -41,10 +41,14 @@ export const bearAskPlugin = (): Plugin => ({
       }
 
       let question = '';
+      let page = '';
+      let props = '';
       if (request.method === 'POST') {
         try {
-          const body = JSON.parse(await readJson(request)) as { question?: string };
+          const body = JSON.parse(await readJson(request)) as { question?: string; page?: string; props?: string };
           question = typeof body.question === 'string' ? body.question : '';
+          page = typeof body.page === 'string' ? body.page.slice(0, 200) : '';
+          props = typeof body.props === 'string' ? body.props.slice(0, 1200) : '';
         } catch {
           sendJson(response, 400, { error: 'Send a question.' });
           return;
@@ -54,6 +58,8 @@ export const bearAskPlugin = (): Plugin => ({
       const result = await handleBearAsk({
         method: request.method ?? 'GET',
         question,
+        page,
+        props,
         ip: clientIp(request),
         key,
         bearRoot,

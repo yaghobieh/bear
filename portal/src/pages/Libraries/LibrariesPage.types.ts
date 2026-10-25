@@ -1,4 +1,4 @@
-export type BearLibraryKind = 'x' | 'library';
+export type BearLibraryKind = 'x' | 'library' | 'flutter' | 'pro';
 
 export interface BearLibraryCard {
   id: string;

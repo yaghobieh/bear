@@ -29,7 +29,7 @@ const ProductPage: FC = () => {
           <CodeBlock code={product.install} language={product.install.includes('import') ? 'tsx' : 'bash'} showLineNumbers={false} />
           <a
             className="mt-3 inline-flex items-center rounded-lg border border-pink-500 px-3 py-1.5 text-sm font-medium text-pink-600 dark:text-pink-400"
-            href={`https://bundlephobia.com/package/${product.packageName}`}
+            href={product.id === 'flutter' ? 'https://pub.dev/packages/bear_flutter' : `https://bundlephobia.com/package/${product.packageName}`}
             target="_blank"
             rel="noreferrer"
           >

@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { BarChart } from '@forgedevstack/bear-x-charts';
 import { Badge, Card, CardBody, CardHeader, Flex, Typography } from '@forgedevstack/bear';
 import { DocPage } from '@/components/DocPage';
+import { BEAR_VERSION } from '@/constants/navigation.const';
 import { CodeBlock } from '@/components/CodeBlock';
 import { usePortalLanguage } from '@/hooks/usePortalLanguage';
 import { DOCS_TEXT } from '@/constants/docs-i18n.const';
@@ -18,7 +19,7 @@ const LibrariesPage: FC = () => {
   const text = DOCS_TEXT[language];
 
   return (
-    <DocPage title={text.librariesTitle} description={text.librariesDesc} badge="1.3.5">
+    <DocPage title={text.librariesTitle} description={text.librariesDesc} badge={BEAR_VERSION}>
       <Flex wrap="wrap" gap={2} className="mb-8">
         <a className="inline-flex items-center rounded-lg border border-pink-500 px-3 py-1.5 text-sm font-medium text-pink-600 dark:text-pink-400" href="https://bundlephobia.com/package/@forgedevstack/bear" target="_blank" rel="noreferrer">
           {text.librariesBundle} · @forgedevstack/bear
@@ -44,8 +45,8 @@ const LibrariesPage: FC = () => {
             <CardHeader>
               <Flex gap={2} align="center">
                 <Typography variant="h5">{library.name}</Typography>
-                <Badge variant={library.kind === 'x' ? 'primary' : 'neutral'}>
-                  {library.kind === 'x' ? text.librariesKindX : text.librariesKindSeparate}
+                <Badge variant={library.kind === 'library' ? 'neutral' : 'primary'}>
+                  {library.kind === 'x' ? text.librariesKindX : library.kind === 'flutter' ? text.librariesKindFlutter : library.kind === 'pro' ? text.librariesKindPro : text.librariesKindSeparate}
                 </Badge>
               </Flex>
             </CardHeader>
@@ -54,7 +55,7 @@ const LibrariesPage: FC = () => {
               <CodeBlock code={library.install} language="bash" showLineNumbers={false} />
               <a
                 className="mt-3 inline-flex items-center rounded-lg border border-pink-500 px-3 py-1.5 text-sm font-medium text-pink-600 dark:text-pink-400"
-                href={`https://bundlephobia.com/package/${library.name}`}
+                href={library.kind === 'flutter' ? 'https://pub.dev/packages/bear_flutter' : `https://bundlephobia.com/package/${library.name}`}
                 target="_blank"
                 rel="noreferrer"
               >

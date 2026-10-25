@@ -47,7 +47,7 @@ const FaqDocsPage: FC = () => (
     <section className="mb-12">
       <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">How do I read an older version?</h2>
       <p className="text-gray-600 dark:text-gray-400">
-        The version menu in the sidebar switches the release notes pinned to every page. Component examples describe the latest API. Pick v1.3.5 for the current kit, or a version line such as v1.2 to read what that line shipped.
+        The version menu in the sidebar switches the release notes pinned to every page. Component examples describe the latest API. Pick v1.3.6 for the current kit, or a version line such as v1.2 to read what that line shipped.
       </p>
     </section>
 

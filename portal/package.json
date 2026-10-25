@@ -9,6 +9,8 @@
     "@forgedevstack/bear-map": "file:../packages/bear-map",
     "@forgedevstack/bear-x-ai": "file:../packages/bear-x-ai",
     "@forgedevstack/bear-x-charts": "file:../packages/bear-x-charts",
+    "@forgedevstack/bear-blocks": "file:../packages/bear-blocks",
+    "@forgedevstack/bear-grid": "file:../packages/bear-grid",
     "@forgedevstack/bear-x-code": "file:../packages/bear-x-code",
     "@forgedevstack/calendar": "^1.0.2",
     "@forgedevstack/grid-table": "1.0.2",

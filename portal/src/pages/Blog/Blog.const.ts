@@ -2,7 +2,7 @@ import type { PortalLanguage } from '@/constants/portal-i18n.const';
 import type { BlogTip } from './Blog.types';
 
 export const BLOG_POST_COUNT = 6;
-export const BLOG_WHATS_NEW_VERSION = '1.3.5';
+export const BLOG_WHATS_NEW_VERSION = '1.3.6';
 export const PATH_WHATS_NEW = '/whats-new';
 export const PATH_CHANGELOG = '/changelog';
 

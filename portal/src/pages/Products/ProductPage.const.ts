@@ -48,6 +48,62 @@ export const PRODUCT_KANBAN_COLUMNS = [
 ];
 
 export const PRODUCT_PAGES: Record<ProductId, ProductPageData> = {
+  flutter: {
+    id: 'flutter',
+    packageName: 'bear_flutter',
+    install: `flutter pub add bear_flutter
+
+import 'package:bear_flutter/bear_flutter.dart';
+
+class Home extends StatelessWidget {
+  const Home({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const BearTheme(
+      data: BearThemeData(),
+      child: BearButton(label: 'Continue'),
+    );
+  }
+}`,
+    docLinks: [
+      { label: 'Pricing', path: '/pricing' },
+      { label: 'Theming', path: '/theming' },
+    ],
+  },
+  grid: {
+    id: 'grid',
+    packageName: '@forgedevstack/bear-grid',
+    install: `npm install @forgedevstack/bear @forgedevstack/bear-grid
+
+import { BearGrid } from '@forgedevstack/bear-grid';
+
+export const App = () => (
+  <BearGrid
+    licenseKey={process.env.BEAR_PRO_LICENSE_KEY}
+    excelExport
+    columns={[{ key: 'name', header: 'Name', pinned: 'left', sortable: true }]}
+    data={[{ name: 'Ada' }]}
+    rowKey={(row) => row.name}
+  />
+);`,
+    docLinks: [
+      { label: 'DataTable', path: '/components/data-table' },
+      { label: 'Pricing', path: '/pricing' },
+    ],
+  },
+  blocks: {
+    id: 'blocks',
+    packageName: '@forgedevstack/bear-blocks',
+    install: `npm install @forgedevstack/bear @forgedevstack/bear-blocks
+
+import { DashboardBlock } from '@forgedevstack/bear-blocks';
+
+export const App = () => (
+  <DashboardBlock stats={[{ id: 'users', title: 'Users', value: '1.2k' }]} />
+);`,
+    docLinks: [{ label: 'StatCard', path: '/components/stat-card' }],
+  },
   charts: {
     id: 'charts',
     packageName: '@forgedevstack/bear-x-charts',
@@ -124,6 +180,9 @@ export const App = () => (
 };
 
 export const PRODUCT_SUMMARY_KEY = {
+  flutter: 'librariesFlutter',
+  grid: 'librariesGrid',
+  blocks: 'librariesBlocks',
   charts: 'librariesCharts',
   ai: 'librariesAi',
   code: 'librariesCode',
@@ -134,6 +193,9 @@ export const PRODUCT_SUMMARY_KEY = {
 } as const;
 
 export const PRODUCT_NAME_KEY = {
+  flutter: 'productFlutterName',
+  grid: 'productGridName',
+  blocks: 'productBlocksName',
   charts: 'productChartsName',
   ai: 'productAiName',
   code: 'productCodeName',

@@ -1,0 +1,6 @@
+Bear Grid is commercial software.
+
+Button, Input, Modal, theme, and DataTable in @forgedevstack/bear stay MIT.
+Column pin, row grouping, and Excel export in this package need a Bear Pro license key.
+The package is on the public npm registry. A missing key shows a watermark and a console warning.
+The intro price is $9 per year per app. https://bearui.com/pricing

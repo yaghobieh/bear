@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { CodeBlock } from '@/components/CodeBlock';
 import { HomeBentoGrid } from '@/components/HomeBentoGrid';
 import { HomeAiPrompt } from '@/pages/home/HomeAiPrompt';
+import { HomeEditorNote } from '@/pages/home/HomeEditorNote';
 import { HomeProductStrip } from '@/pages/home/HomeProductStrip';
 import { HomeSideExamples } from '@/pages/home/HomeSideExamples';
 import {
@@ -170,6 +171,7 @@ const Introduction: FC = () => {
       </section>
 
       <HomeProductStrip />
+      <HomeEditorNote />
       <HomeAiPrompt />
 
       <section className="mb-20">
@@ -210,7 +212,7 @@ const Introduction: FC = () => {
                   variant="standard"
                   severity="success"
                   icon={<BearIcons.CheckIcon size={18} />}
-                  title="Bear v1.3.5 Loaded"
+                  title="Bear v1.3.6 Loaded"
                 >
                   Zero config needed. Full TypeScript IntelliSense enabled.
                 </Alert>

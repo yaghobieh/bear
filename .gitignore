@@ -1,5 +1,9 @@
 node_modules
 dist
+.dart_tool/
+packages/bear_flutter/build/
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
 .env
 .env.*
 !.env.example

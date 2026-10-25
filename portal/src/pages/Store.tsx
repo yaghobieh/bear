@@ -1,4 +1,5 @@
 import { FC, useState, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Typography,
   Card,
@@ -49,6 +50,9 @@ const Store: FC = () => {
         <Button variant="outline" className="mt-6">
           {t.browseItems}
         </Button>
+        <div className="mt-4">
+          <Link to="/pricing">Core and Flutter are free. Pro is $9 a year.</Link>
+        </div>
       </div>
 
       {/* Categories via Tabs */}

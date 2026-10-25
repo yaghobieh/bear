@@ -6,6 +6,24 @@ const LATEST = CHANGELOG_ENTRIES[0];
 
 const RELEASE_ITEMS = [
   {
+    title: 'Flutter',
+    path: '/products/flutter',
+    icon: BearIcons.SparklesIcon,
+    description: 'bear_flutter is the mobile kit. Button, text field, card, app bar, list, dialog, and bottom sheet use the same Bear tokens. It is free.',
+  },
+  {
+    title: 'Bear Grid',
+    path: '/products/grid',
+    icon: BearIcons.LayersIcon,
+    description: 'Column pin, row grouping, and Excel export. DataTable sort and the sticky header stay free. Pro is $9 a year. The license key comes by email and clears the watermark.',
+  },
+  {
+    title: 'A Bear editor is coming',
+    path: '/',
+    icon: BearIcons.PackageIcon,
+    description: 'Bear will have its own editor. We are building it in Ingot, the open-source AI IDE. Ink stays the rich-text editor you can install today.',
+  },
+  {
     title: 'Bear X packages',
     path: '/libraries',
     icon: BearIcons.LayersIcon,
@@ -76,10 +94,10 @@ const WhatsNew124Page = () => (
       <Badge variant="primary" className="mb-4">v{LATEST.version}</Badge>
       <Typography variant="h1" className="mb-3">What&apos;s new in Bear {LATEST.version}</Typography>
       <Typography variant="body1" className="text-gray-600 dark:text-gray-400 mb-4">
-        Bear 1.3.5 gives charts, trees, AI, and code their own install names, and keeps map, kanban, and hooks outside those packages. Core does not drop the components you already import.
+        Bear 1.3.6 adds Flutter, a $9 Pro grid, and free blocks. Core does not drop the components you already import. Button, Input, Modal, DataTable, and the theme stay free.
       </Typography>
       <Typography variant="body2" className="text-gray-600 dark:text-gray-400">
-        Install a Bear X package when you want that surface alone. Leave hooks on @forgedevstack/bear. Media playback stays Torch. The rich editor stays Ink. Date pickers stay in Core. @forgedevstack/grid-table keeps its name.
+        A Bear editor is coming. That work is being built in Ingot. Ink stays the rich-text editor today. Media playback stays Torch. Date pickers stay in Core. @forgedevstack/grid-table keeps its name.
       </Typography>
     </div>
 

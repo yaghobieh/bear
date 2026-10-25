@@ -1,0 +1,42 @@
+{
+  "name": "@forgedevstack/bear-grid",
+  "version": "0.1.0",
+  "description": "Bear Grid. Sort and sticky headers stay on the free DataTable. Column pin, row grouping, and Excel export use a Bear Pro key.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "node ../../node_modules/vite/bin/vite.js build"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0",
+    "@forgedevstack/bear": ">=1.3.6"
+  },
+  "publishConfig": {
+    "access": "public",
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js",
+        "require": "./dist/index.cjs"
+      }
+    }
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "sideEffects": false
+}

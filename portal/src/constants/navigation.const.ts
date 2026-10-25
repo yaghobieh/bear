@@ -20,7 +20,7 @@ export interface NavGroup {
 export const BEAR_VERSION = '1.3.6';
 
 export const VERSION_HIGHLIGHT_BY_VERSION: Record<string, string> = {
-  '1.3.6': 'Flutter · Bear Grid · $9 Pro · editor coming',
+  '1.3.6': 'Flutter · Bear Grid · icons · $9 Pro',
   '1.3.5': 'Bear X charts, tree, AI, code · bear-map · kanban',
   '1.3.4': 'ToggleGroup · Lotso redesign · Overlay effects parity · Focus traps',
   '1.3.3': 'AI chat kit · Drawer variants · system theme',
@@ -29,7 +29,7 @@ export const VERSION_HIGHLIGHT_BY_VERSION: Record<string, string> = {
   '1.3.0': 'ModalsProvider · overlays above blur · SignPad',
 };
 
-export const VERSION_HIGHLIGHT_FALLBACK = 'Flutter · Bear Grid · $9 Pro · editor coming';
+export const VERSION_HIGHLIGHT_FALLBACK = 'Flutter · Bear Grid · icons · $9 Pro';
 
 /** Main Bear UI repository */
 export const GITHUB_URL = 'https://github.com/yaghobieh/bear';

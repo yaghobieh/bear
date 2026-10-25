@@ -85,7 +85,7 @@ export const HomeAiPrompt: FC = () => {
         body: JSON.stringify({
           question: nextQuestion,
           page: 'Home',
-          props: 'Flutter is free. Bear Grid Pro is $9 a year. Core DataTable stays free. A Bear editor built in Ingot is coming.',
+          props: 'Flutter is free. Bear Grid Pro is $9 a year. Core DataTable stays free. Icons are @forgedevstack/bear-icons.',
         }),
       });
       const payload = (await response.json()) as AskResponse;

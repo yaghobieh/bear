@@ -21,7 +21,7 @@ export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
           '@forgedevstack/bear-grid: column pin, row grouping, and Excel export. DataTable sort and sticky header stay free. Pro is $9 a year and the key arrives by email.',
           '@forgedevstack/bear-blocks: a free DashboardBlock.',
           'Pricing page, Storybook entries, sandbox recipes, and page-aware Ask Bear.',
-          'A Bear editor is coming. That work is being built in Ingot.',
+          'Home and libraries feature @forgedevstack/bear-icons. Core still renders without that package.',
         ],
       },
     ],

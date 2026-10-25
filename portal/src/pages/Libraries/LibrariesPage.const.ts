@@ -11,6 +11,14 @@ export const LIBRARY_CHART_DATA = [
 
 export const BEAR_LIBRARIES: BearLibraryCard[] = [
   {
+    id: 'icons',
+    name: '@forgedevstack/bear-icons',
+    kind: 'library',
+    summaryKey: 'librariesIcons',
+    install: 'npm install @forgedevstack/bear-icons',
+    components: ['SearchIcon', 'BearFaceIcon', 'SparklesIcon', 'LayersIcon', 'PackageIcon'],
+  },
+  {
     id: 'flutter',
     name: 'bear_flutter',
     kind: 'flutter',

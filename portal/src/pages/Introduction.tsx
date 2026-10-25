@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { CodeBlock } from '@/components/CodeBlock';
 import { HomeBentoGrid } from '@/components/HomeBentoGrid';
 import { HomeAiPrompt } from '@/pages/home/HomeAiPrompt';
-import { HomeEditorNote } from '@/pages/home/HomeEditorNote';
+import { HomeIcons } from '@/pages/home/HomeIcons';
 import { HomeProductStrip } from '@/pages/home/HomeProductStrip';
 import { HomeSideExamples } from '@/pages/home/HomeSideExamples';
 import {
@@ -171,7 +171,7 @@ const Introduction: FC = () => {
       </section>
 
       <HomeProductStrip />
-      <HomeEditorNote />
+      <HomeIcons />
       <HomeAiPrompt />
 
       <section className="mb-20">

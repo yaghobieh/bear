@@ -3,7 +3,7 @@ import { execFile } from 'node:child_process';
 const ASK_LIMIT = 5;
 const QUESTION_MAX = 600;
 const REFUSAL = 'Ask about a Bear component, prop, or install. Flutter, Grid, and pricing are part of Bear.';
-const OTHER_LIB_REPLY = 'That name sits outside Bear. Use DataTable or Bear Grid for tables, and Ink for rich text today. A Bear editor is coming. Ask about a Bear prop.';
+const OTHER_LIB_REPLY = 'That name sits outside Bear. Use DataTable or Bear Grid for tables, Ink for rich text, and @forgedevstack/bear-icons for icons. Ask about a Bear prop.';
 const DEEPSEEK_URL = 'https://api.deepseek.com/chat/completions';
 const DEEPSEEK_MODEL = 'deepseek-chat';
 const NPM_PACKAGE = '@forgedevstack/bear';

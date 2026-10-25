@@ -18,10 +18,10 @@ const RELEASE_ITEMS = [
     description: 'Column pin, row grouping, and Excel export. DataTable sort and the sticky header stay free. Pro is $9 a year. The license key comes by email and clears the watermark.',
   },
   {
-    title: 'A Bear editor is coming',
-    path: '/',
-    icon: BearIcons.PackageIcon,
-    description: 'Bear will have its own editor. We are building it in Ingot, the open-source AI IDE. Ink stays the rich-text editor you can install today.',
+    title: 'Icons',
+    path: '/icons',
+    icon: BearIcons.SparklesIcon,
+    description: 'The icon set is @forgedevstack/bear-icons. Install it when you want the icons. Core still renders if you leave that package out.',
   },
   {
     title: 'Bear X packages',
@@ -97,7 +97,7 @@ const WhatsNew124Page = () => (
         Bear 1.3.6 adds Flutter, a $9 Pro grid, and free blocks. Core does not drop the components you already import. Button, Input, Modal, DataTable, and the theme stay free.
       </Typography>
       <Typography variant="body2" className="text-gray-600 dark:text-gray-400">
-        A Bear editor is coming. That work is being built in Ingot. Ink stays the rich-text editor today. Media playback stays Torch. Date pickers stay in Core. @forgedevstack/grid-table keeps its name.
+        Icons stay on @forgedevstack/bear-icons. Ink stays the rich-text editor. Media playback stays Torch. Date pickers stay in Core. @forgedevstack/grid-table keeps its name.
       </Typography>
     </div>
 

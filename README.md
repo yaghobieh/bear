@@ -145,7 +145,7 @@ forge add calendar
 - `@forgedevstack/bear-grid`. Pin, grouping, and Excel export. The watermark clears with a license key. Pro is $9 a year. DataTable stays free.
 - `@forgedevstack/bear-blocks`. Free `DashboardBlock`.
 - Portal pricing, Storybook entries, and sandbox recipes.
-- A Bear editor is coming. That work is being built in Ingot.
+- `@forgedevstack/bear-icons` is called out on the home page and the libraries list.
 
 ## What 1.3.5 adds
 

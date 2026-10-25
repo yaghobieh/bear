@@ -11,7 +11,7 @@ All notable changes to Bear UI will be documented in this file.
 - **@forgedevstack/bear-blocks** — free `DashboardBlock`.
 - **Pricing** — Core and Flutter stay free. Pro is $9 a year for now. The key is pasted from the receipt email.
 - **Ask Bear** — the question includes the current page, the thread stays on that route, and Run opens the sandbox.
-- **Editor** — a Bear editor is coming. The work is being built in Ingot.
+- **Icons** — the home page and the libraries list feature `@forgedevstack/bear-icons`. Core still renders without that package.
 
 ### Migration
 

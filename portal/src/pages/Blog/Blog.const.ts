@@ -7,6 +7,7 @@ export const PATH_WHATS_NEW = '/whats-new';
 export const PATH_CHANGELOG = '/changelog';
 
 export const BLOG_PUBLISHED_AT: Record<string, string> = {
+  'bear-1-3-6': '2026-10-25T12:00:00.000Z',
   'theme-behind': '2026-10-21T07:23:00.000Z',
   'core-exports': '2026-10-18T14:00:00.000Z',
   'hooks-outside': '2026-10-12T11:30:00.000Z',
@@ -17,6 +18,37 @@ export const BLOG_PUBLISHED_AT: Record<string, string> = {
 };
 
 const ENGLISH_TIPS: BlogTip[] = [
+  {
+    id: 'bear-1-3-6',
+    title: 'Bear 1.3.6: Flutter, icons, and a $9 grid',
+    body: 'Core stays free. Flutter and the icon set are free. Bear Grid is $9 a year because pinned columns, row groups, and Excel export are the parts teams budget for. Blocks are the screens you build on top of that.',
+    path: '/pricing',
+    sections: [
+      {
+        heading: 'What stays free',
+        body: 'Button, Input, Modal, the theme, and DataTable stay on the MIT core. DataTable still sorts and sticks the header. Ask Bear on the docs stays free. You do not pay to ship a form or a dialog.',
+      },
+      {
+        heading: 'Flutter',
+        body: 'bear_flutter is the mobile kit. It uses the same color, radius, space, and type as Bear. The first widgets are a button, text field, card, app bar, list, dialog, and bottom sheet. Web stays React. Mobile stays Flutter. This kit is free.',
+        code: `flutter pub add bear_flutter`,
+      },
+      {
+        heading: 'Icons',
+        body: 'Icons are a separate install, @forgedevstack/bear-icons. Core still renders if you leave them out. The home page and /icons browse the set.',
+        code: `npm install @forgedevstack/bear-icons`,
+      },
+      {
+        heading: 'What Blocks are',
+        body: 'A block is a finished screen made from Bear components. DashboardBlock is the first one: a title and stat cards. It is free, so you can see the pattern and drop a dashboard in without a license. A block is not a locked button. It is the layout you would otherwise copy from a screenshot.',
+      },
+      {
+        heading: 'Why the $9 is for the grid',
+        body: 'The screen stays useful with the free DataTable. You pay when the table has to behave like a spreadsheet: pin a column while you scroll, group rows by team, and download Excel. That is Bear Grid. One key covers one app for a year. The intro price is $9. Paste the key from the receipt email and the watermark goes away. Without a key the grid still runs, with a Bear Pro mark, so you can try it.',
+        code: `npm install @forgedevstack/bear @forgedevstack/bear-grid`,
+      },
+    ],
+  },
   {
     id: 'theme-behind',
     title: 'What Bear does after you pass a theme',
@@ -182,6 +214,37 @@ import { TorchPlayer } from '@forgedevstack/torch';
 ];
 
 const SPANISH_TIPS: BlogTip[] = [
+  {
+    id: 'bear-1-3-6',
+    title: 'Bear 1.3.6: Flutter, iconos y una tabla a $9',
+    body: 'Core sigue gratis. Flutter y los iconos son gratis. Bear Grid cuesta $9 al año porque fijar columnas, agrupar filas y exportar Excel es lo que los equipos presupuestan. Los bloques son las pantallas que construyes encima.',
+    path: '/pricing',
+    sections: [
+      {
+        heading: 'Qué sigue gratis',
+        body: 'Button, Input, Modal, el tema y DataTable siguen en el core MIT. DataTable ordena y fija la cabecera. Ask Bear en la documentación sigue gratis. No pagas por publicar un formulario o un diálogo.',
+      },
+      {
+        heading: 'Flutter',
+        body: 'bear_flutter es el kit móvil. Usa el mismo color, radio, espacio y tipo que Bear. Los primeros widgets son botón, campo, tarjeta, barra, lista, diálogo y bottom sheet. La web sigue en React. El móvil sigue en Flutter. Este kit es gratis.',
+        code: `flutter pub add bear_flutter`,
+      },
+      {
+        heading: 'Iconos',
+        body: 'Los iconos son una instalación aparte, @forgedevstack/bear-icons. Core se sigue viendo si los omites. La home y /icons muestran el set.',
+        code: `npm install @forgedevstack/bear-icons`,
+      },
+      {
+        heading: 'Qué son los bloques',
+        body: 'Un bloque es una pantalla terminada hecha con componentes de Bear. DashboardBlock es el primero: un título y tarjetas de cifras. Es gratis, para ver el patrón y poner un panel sin licencia. Un bloque no es un botón cerrado. Es el layout que si no copiarías de una captura.',
+      },
+      {
+        heading: 'Por qué los $9 son de la tabla',
+        body: 'La pantalla sirve con el DataTable gratis. Pagas cuando la tabla tiene que parecer una hoja de cálculo: fijar una columna al hacer scroll, agrupar filas y descargar Excel. Eso es Bear Grid. Una clave cubre una app durante un año. El precio de entrada es $9. Pega la clave del email y desaparece la marca de agua. Sin clave la tabla sigue funcionando, con la marca Bear Pro, para que puedas probarla.',
+        code: `npm install @forgedevstack/bear @forgedevstack/bear-grid`,
+      },
+    ],
+  },
   {
     id: 'theme-behind',
     title: 'Qué hace Bear después de pasar un theme',

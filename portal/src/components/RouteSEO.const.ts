@@ -11,7 +11,7 @@ export const SEO_MAP: Record<string, SEOEntry> = {
   '/changelog': { title: 'Changelog', description: `Bear UI release notes and changelog — latest updates by ${SEO_AUTHOR_NAME}.` },
   '/skills': { title: 'Skills', description: `Cursor AI skills for Bear UI development — component patterns, code review, and portal docs by ${SEO_AUTHOR_NAME}.` },
   '/whats-new': { title: "What's New", description: `What's new in Bear UI v1.3.6 — Flutter, Bear Grid, and $9 Pro by ${SEO_AUTHOR_NAME}.` },
-  '/pricing': { title: 'Pricing', description: `Bear UI pricing by ${SEO_AUTHOR_NAME}. Core and Flutter are free. Pro is $9 a year.` },
+  '/pricing': { title: 'Premium', description: `Bear UI premium by ${SEO_AUTHOR_NAME}. Core, icons, Flutter, and Blocks are free. Bear Grid is $9 a year for pin, grouping, and Excel.` },
   '/components/toggle-group': { title: 'ToggleGroup', description: `Two-state button group supporting single or multiple selection with WAI-ARIA roving tabindex keyboard navigation by ${SEO_AUTHOR_NAME}.` },
   '/components/ai-chat': { title: 'AI chat kit', description: `Bear UI AI chat primitives — composer, streaming, tools, citations, and approvals by ${SEO_AUTHOR_NAME}.` },
   '/components/theme-switcher': { title: 'ThemeSwitcher', description: `Switch Bear UI light, dark, or system color scheme by ${SEO_AUTHOR_NAME}.` },

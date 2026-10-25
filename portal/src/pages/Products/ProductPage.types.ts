@@ -11,3 +11,9 @@ export interface ProductPageData {
   install: string;
   docLinks: ProductDocLink[];
 }
+
+export interface ProductDetail {
+  price: string;
+  why: string;
+  benefits: string[];
+}

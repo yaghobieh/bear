@@ -6,7 +6,7 @@ import { DocPage } from '@/components/DocPage';
 import { DOCS_TEXT } from '@/constants/docs-i18n.const';
 import { PORTAL_TEXT } from '@/constants/portal-i18n.const';
 import { usePortalLanguage } from '@/hooks/usePortalLanguage';
-import { PRODUCT_NAME_KEY, PRODUCT_PAGES, PRODUCT_SUMMARY_KEY, isProductId } from './ProductPage.const';
+import { PRODUCT_DETAILS, PRODUCT_NAME_KEY, PRODUCT_PAGES, PRODUCT_SUMMARY_KEY, isProductId } from './ProductPage.const';
 import { ProductPreview } from './helpers/ProductPreview';
 
 const ProductPage: FC = () => {
@@ -20,6 +20,7 @@ const ProductPage: FC = () => {
   }
 
   const product = PRODUCT_PAGES[productId];
+  const detail = PRODUCT_DETAILS[language][productId];
 
   return (
     <DocPage title={text[PRODUCT_NAME_KEY[productId]]} description={docs[PRODUCT_SUMMARY_KEY[productId]]} badge={product.packageName}>
@@ -35,6 +36,17 @@ const ProductPage: FC = () => {
           >
             {text.productBundleSize}
           </a>
+        </section>
+        <section>
+          <Flex gap={2} align="center" className="mb-3">
+            <Typography variant="h4">{text.productWhy}</Typography>
+            <Badge variant="primary">{detail.price}</Badge>
+          </Flex>
+          <Typography variant="body1">{detail.why}</Typography>
+          <Typography variant="h5" className="mb-2 mt-4">{text.productBenefits}</Typography>
+          {detail.benefits.map((benefit) => (
+            <Typography key={benefit} variant="body2">{benefit}</Typography>
+          ))}
         </section>
         <section>
           <Typography variant="h4" className="mb-3">{text.productPreview}</Typography>

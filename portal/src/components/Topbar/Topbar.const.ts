@@ -11,8 +11,11 @@ export const PATH_PRODUCTS = '/products';
 export const PRODUCT_MENU_CLOSE_DELAY_MS = 200;
 export const DOCS_MENU_CHILD_LIMIT = 6;
 
+export const PATH_PRICING = '/pricing';
+
 export const TOP_NAV_LINKS: TopNavLink[] = [
   { labelKey: 'navDocs', path: PATH_DOCS },
+  { labelKey: 'navPremium', path: PATH_PRICING },
   { labelKey: 'navAbout', path: PATH_ABOUT },
   { labelKey: 'navBlog', path: PATH_BLOG },
 ];

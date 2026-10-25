@@ -4,12 +4,13 @@ import { Badge, Button, Card, CardBody, Flex, Input, Typography } from '@forgede
 import { DocPage } from '@/components/DocPage';
 import { usePortalLanguage } from '@/hooks/usePortalLanguage';
 import { useBearProLicense } from '@/hooks/useBearProLicense';
-import { PRICING_COPY, PRICING_PLANS } from './Pricing.const';
+import { PRICING_BLOCKS, PRICING_CATALOG, PRICING_COPY, PRICING_PLANS } from './Pricing.const';
 
 const PricingPage = () => {
   const { language } = usePortalLanguage();
   const copy = PRICING_COPY[language];
   const plans = PRICING_PLANS[language];
+  const catalog = PRICING_CATALOG[language];
   const { active, activate, clear } = useBearProLicense();
   const [draft, setDraft] = useState('');
   const [message, setMessage] = useState('');
@@ -37,13 +38,37 @@ const PricingPage = () => {
                   {plan.points.map((point) => (
                     <Typography key={point} variant="body2">{point}</Typography>
                   ))}
-                  {plan.id === 'flutter' ? <Link to="/products/flutter">Flutter</Link> : null}
-                  {plan.id === 'pro' ? <Link to="/products/grid">Bear Grid</Link> : null}
+                  {plan.path ? <Link to={plan.path}>{plan.name}</Link> : null}
                 </Flex>
               </CardBody>
             </Card>
           ))}
         </Flex>
+        <section>
+          <Typography variant="h4" className="mb-2">{copy.benefitsTitle}</Typography>
+          <Typography variant="body1">{copy.benefitsLead}</Typography>
+        </section>
+        <section>
+          <Typography variant="h4" className="mb-2">{copy.blocksTitle}</Typography>
+          <Typography variant="body1" className="mb-3">{PRICING_BLOCKS[language]}</Typography>
+          <Link to="/products/blocks">{plans.find((plan) => plan.id === 'blocks')?.name}</Link>
+        </section>
+        <section>
+          <Typography variant="h4" className="mb-3">{copy.catalogTitle}</Typography>
+          <Flex direction="column" gap={3}>
+            {catalog.map((note) => (
+              <Card key={note.path}>
+                <CardBody>
+                  <Flex gap={2} align="center" className="mb-1">
+                    <Link to={note.path}><Typography variant="h6">{note.title}</Typography></Link>
+                    <Badge variant="primary">{note.price}</Badge>
+                  </Flex>
+                  <Typography variant="body2">{note.body}</Typography>
+                </CardBody>
+              </Card>
+            ))}
+          </Flex>
+        </section>
         <section>
           <Typography variant="body1" className="mb-3">{copy.email}</Typography>
           <form onSubmit={onSubmit}>

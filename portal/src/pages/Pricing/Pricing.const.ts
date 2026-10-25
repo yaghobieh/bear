@@ -1,11 +1,19 @@
 import type { PortalLanguage } from '@/constants/portal-i18n.const';
-import type { PricingNote, PricingPlan } from './Pricing.types';
+import type { PricingFact, PricingFaq, PricingGroup, PricingPlan } from './Pricing.types';
 
 export const BEAR_PRO_PRICE_USD = 9;
+export const INGOT_URL = 'https://github.com/yaghobieh/ingot';
+export const PRICING_KEY_ID = 'bear-pro-key';
 
 export const PRICING_COPY: Record<PortalLanguage, {
   title: string;
   description: string;
+  plansLabel: string;
+  compareTitle: string;
+  included: string;
+  missing: string;
+  factsTitle: string;
+  faqTitle: string;
   keyLabel: string;
   keyPlaceholder: string;
   save: string;
@@ -13,14 +21,17 @@ export const PRICING_COPY: Record<PortalLanguage, {
   saved: string;
   invalid: string;
   email: string;
-  benefitsTitle: string;
-  benefitsLead: string;
-  blocksTitle: string;
-  catalogTitle: string;
+  planNames: string[];
 }> = {
   en: {
-    title: 'Premium',
-    description: 'Core, icons, Flutter, and Blocks stay free. Pro is $9 a year for Bear Grid. The license key arrives by email and clears the watermark.',
+    title: 'Start with Bear for free',
+    description: 'Switch to Pro when a table needs pinned columns, row groups, and Excel. Blocks, Flutter, and the icon set stay free.',
+    plansLabel: 'Plans',
+    compareTitle: 'Compare plans',
+    included: 'Included',
+    missing: 'Not included',
+    factsTitle: 'Key information about the paid plan',
+    faqTitle: 'Frequently asked questions',
     keyLabel: 'License key',
     keyPlaceholder: 'bear_pro_xxxx_xxxx_xxxx_xxxx',
     save: 'Save key',
@@ -28,14 +39,17 @@ export const PRICING_COPY: Record<PortalLanguage, {
     saved: 'Pro is on in this browser.',
     invalid: 'That key does not match a Bear Pro license.',
     email: 'After checkout, the receipt email contains the key. Paste it here. There is no checkout link on this page yet.',
-    benefitsTitle: 'What the $9 pays for',
-    benefitsLead: 'You pay when a table has to work like a spreadsheet. Everything you need to ship a form, a dialog, a dashboard shell, or a phone screen stays free.',
-    blocksTitle: 'What Blocks are',
-    catalogTitle: 'Every library',
+    planNames: ['Community', 'Pro', 'Ingot'],
   },
   es: {
-    title: 'Premium',
-    description: 'Core, iconos, Flutter y bloques siguen gratis. Pro cuesta $9 al año por Bear Grid. La clave llega por email y quita la marca de agua.',
+    title: 'Empieza con Bear gratis',
+    description: 'Pasa a Pro cuando una tabla necesite columnas fijadas, grupos de filas y Excel. Los bloques, Flutter y los iconos siguen gratis.',
+    plansLabel: 'Planes',
+    compareTitle: 'Comparar planes',
+    included: 'Incluido',
+    missing: 'No incluido',
+    factsTitle: 'Información clave del plan de pago',
+    faqTitle: 'Preguntas frecuentes',
     keyLabel: 'Clave de licencia',
     keyPlaceholder: 'bear_pro_xxxx_xxxx_xxxx_xxxx',
     save: 'Guardar clave',
@@ -43,118 +57,261 @@ export const PRICING_COPY: Record<PortalLanguage, {
     saved: 'Pro está activo en este navegador.',
     invalid: 'Esa clave no coincide con una licencia Bear Pro.',
     email: 'Después del pago, el email del recibo trae la clave. Pégala aquí. En esta página todavía no hay un enlace de pago.',
-    benefitsTitle: 'Qué pagan los $9',
-    benefitsLead: 'Pagas cuando una tabla tiene que funcionar como una hoja de cálculo. Todo lo que necesitas para publicar un formulario, un diálogo, un panel o una pantalla de teléfono sigue gratis.',
-    blocksTitle: 'Qué son los bloques',
-    catalogTitle: 'Todas las librerías',
+    planNames: ['Community', 'Pro', 'Ingot'],
   },
 };
 
 export const PRICING_PLANS: Record<PortalLanguage, PricingPlan[]> = {
   en: [
     {
-      id: 'core',
-      name: 'Core',
+      id: 'community',
+      name: 'Community',
+      summary: 'The React kit. MIT, free forever.',
       price: '$0',
-      interval: 'forever',
-      points: ['Button, Input, Modal, theme', 'DataTable sort and sticky header', 'Ask Bear on the docs', 'MIT'],
-      path: '/components',
-    },
-    {
-      id: 'blocks',
-      name: 'Blocks',
-      price: '$0',
-      interval: 'the screen',
-      points: ['A finished dashboard', 'Title and stat cards', 'No license and no watermark', 'Pay only if you add Bear Grid'],
-      path: '/products/blocks',
+      interval: 'Free forever',
+      points: ['Button, Input, Modal, and theme', 'DataTable sort and sticky header', 'Icons, Flutter, and Blocks'],
+      cta: 'Get started',
+      href: '/installation',
     },
     {
       id: 'pro',
       name: 'Pro',
+      summary: 'Spreadsheet behavior for one app.',
       price: '$9',
       interval: 'per year',
       featured: true,
-      points: ['Column pin', 'Row grouping', 'Excel and CSV export', 'One app, one key, emailed to you', 'Watermark gone after you paste the key'],
-      path: '/products/grid',
+      points: ['Everything in Community', 'Column pin, row grouping, Excel', 'One app, one key, emailed to you'],
+      cta: 'Paste a key',
+      href: `#${PRICING_KEY_ID}`,
     },
     {
-      id: 'flutter',
-      name: 'Flutter',
+      id: 'ingot',
+      name: 'Ingot',
+      summary: 'The open-source AI IDE. Not a Bear component.',
       price: '$0',
-      interval: 'with the kit',
-      points: ['Same Bear tokens', 'Button, field, card, app bar', 'List, dialog, bottom sheet', 'The mobile kit'],
-      path: '/products/flutter',
+      interval: 'Free to start',
+      points: ['Apache-2.0, bring your own model key', 'Agents, plugins, and an IDE keymap', 'The $9 Bear key does not unlock it'],
+      cta: 'View Ingot',
+      href: INGOT_URL,
+      external: true,
     },
   ],
   es: [
     {
-      id: 'core',
-      name: 'Core',
+      id: 'community',
+      name: 'Community',
+      summary: 'El kit de React. MIT, gratis siempre.',
       price: '$0',
-      interval: 'siempre',
-      points: ['Button, Input, Modal, tema', 'DataTable con orden y cabecera fija', 'Ask Bear en la documentación', 'MIT'],
-      path: '/components',
-    },
-    {
-      id: 'blocks',
-      name: 'Bloques',
-      price: '$0',
-      interval: 'la pantalla',
-      points: ['Un panel terminado', 'Título y tarjetas de cifras', 'Sin licencia y sin marca de agua', 'Pagas solo si añades Bear Grid'],
-      path: '/products/blocks',
+      interval: 'Gratis siempre',
+      points: ['Button, Input, Modal y tema', 'DataTable con orden y cabecera fija', 'Iconos, Flutter y bloques'],
+      cta: 'Empezar',
+      href: '/installation',
     },
     {
       id: 'pro',
       name: 'Pro',
+      summary: 'Comportamiento de hoja de cálculo para una app.',
       price: '$9',
       interval: 'al año',
       featured: true,
-      points: ['Columnas fijadas', 'Agrupación de filas', 'Exportación Excel y CSV', 'Una app, una clave, por email', 'La marca de agua se va al pegar la clave'],
-      path: '/products/grid',
+      points: ['Todo lo de Community', 'Fijar columnas, agrupar filas, Excel', 'Una app, una clave, por email'],
+      cta: 'Pegar una clave',
+      href: `#${PRICING_KEY_ID}`,
     },
     {
-      id: 'flutter',
-      name: 'Flutter',
+      id: 'ingot',
+      name: 'Ingot',
+      summary: 'El IDE de IA de código abierto. No es un componente de Bear.',
       price: '$0',
-      interval: 'con el kit',
-      points: ['Los mismos tokens de Bear', 'Botón, campo, tarjeta, barra', 'Lista, diálogo, bottom sheet', 'El kit móvil'],
-      path: '/products/flutter',
+      interval: 'Gratis para empezar',
+      points: ['Apache-2.0, con tus claves de modelo', 'Agentes, plugins y atajos de IDE', 'La clave de $9 de Bear no lo abre'],
+      cta: 'Ver Ingot',
+      href: INGOT_URL,
+      external: true,
     },
   ],
 };
 
-export const PRICING_BLOCKS: Record<PortalLanguage, string> = {
-  en: 'A block is a finished screen made from Bear components. DashboardBlock is the first one: a title and stat cards. It is free. You do not pay to use the block, and it has no watermark. You pay when the screen under those cards needs spreadsheet behavior. That behavior is Bear Grid: pin a column while you scroll, group rows, and download Excel. The free DataTable still sorts and sticks its header, so a small table does not need the key.',
-  es: 'Un bloque es una pantalla terminada hecha con componentes de Bear. DashboardBlock es el primero: un título y tarjetas de cifras. Es gratis. No pagas por usar el bloque y no tiene marca de agua. Pagas cuando la pantalla bajo esas tarjetas necesita comportarse como una hoja de cálculo. Eso es Bear Grid: fijar una columna al hacer scroll, agrupar filas y descargar Excel. DataTable gratis sigue ordenando y fijando la cabecera, así que una tabla pequeña no necesita la clave.',
-};
+const yes = 'yes';
+const no = 'no';
 
-export const PRICING_CATALOG: Record<PortalLanguage, PricingNote[]> = {
+export const PRICING_GROUPS: Record<PortalLanguage, PricingGroup[]> = {
   en: [
-    { title: 'Core', price: 'Free', path: '/components', body: 'Buttons, inputs, modals, theme, and DataTable. The parts every screen needs.' },
-    { title: 'Icons', price: 'Free', path: '/icons', body: 'Optional set. Install @forgedevstack/bear-icons only if you want the icons. Core still renders without them.' },
-    { title: 'Flutter', price: 'Free', path: '/products/flutter', body: 'Mobile widgets on the same tokens. Button, field, card, app bar, list, dialog, and bottom sheet.' },
-    { title: 'Blocks', price: 'Free', path: '/products/blocks', body: 'Finished screens. The dashboard block is a title and stat cards. Pay only if you add Bear Grid under it.' },
-    { title: 'Grid', price: '$9 / year', path: '/products/grid', body: 'Pin, group, and Excel. One key, one app, emailed after checkout. The watermark stays until you paste the key.' },
-    { title: 'Charts', price: 'Free', path: '/products/charts', body: 'Bar, line, area, pie, radar, gauge, heatmap, and the other common shapes.' },
-    { title: 'AI', price: 'Free', path: '/products/ai', body: 'Chat, composer, streaming, tools, and citations for your own app.' },
-    { title: 'Code', price: 'Free', path: '/products/code', body: 'Editor, terminal, diff, and JSON viewer. Ink is the rich-text editor, not this package.' },
-    { title: 'Map', price: 'Free', path: '/products/map', body: 'Street, light, dark, and terrain tiles, with zoom and drag.' },
-    { title: 'Kanban', price: 'Free', path: '/products/kanban', body: 'A board of columns and cards in its own package.' },
-    { title: 'Calendar', price: 'Free', path: '/products/calendar', body: 'Event grid and resource timeline.' },
-    { title: 'Ink', price: 'Own license', path: '/products/ink', body: 'Rich text: tables, comments, and track changes. The $9 Bear key does not unlock Ink.' },
+    {
+      title: 'Bear Core',
+      rows: [
+        { feature: 'Button, Input, Modal, theme', cells: [yes, yes, no] },
+        { feature: 'DataTable sort and sticky header', cells: [yes, yes, no] },
+        { feature: 'Icons', cells: [yes, yes, no] },
+        { feature: 'Flutter (same tokens)', cells: [yes, yes, no] },
+        { feature: 'Blocks, the dashboard screen', cells: [yes, yes, no] },
+        { feature: 'Charts, map, calendar, kanban, AI, code', cells: [yes, yes, no] },
+        { feature: 'Ask Bear on the docs', cells: [yes, yes, no] },
+      ],
+    },
+    {
+      title: 'Bear Grid',
+      rows: [
+        { feature: 'Column pin', cells: [no, yes, no] },
+        { feature: 'Row grouping', cells: [no, yes, no] },
+        { feature: 'Excel and CSV export', cells: [no, yes, no] },
+        { feature: 'Runs before you buy', cells: ['Free DataTable', 'Yes, with a watermark', no] },
+        { feature: 'Watermark removed', cells: [no, 'With the key', no] },
+      ],
+    },
+    {
+      title: 'Ingot',
+      rows: [
+        { feature: 'Open-source AI IDE', cells: [no, no, yes] },
+        { feature: 'Bring your own model key', cells: [no, no, yes] },
+        { feature: 'Agents, plugins, and keymap', cells: [no, no, yes] },
+        { feature: 'Included in the Bear Pro key', cells: [no, no, no] },
+        { feature: 'Paid Ingot plans', cells: [no, no, 'Not priced yet'] },
+      ],
+    },
+    {
+      title: 'License',
+      rows: [
+        { feature: 'Price', cells: ['$0', '$9 / year', 'Free to start'] },
+        { feature: 'Covers', cells: ['Any app, MIT', 'One app', 'The IDE, Apache-2.0'] },
+        { feature: 'Ink rich text', cells: ['Own license', 'Own license', no] },
+      ],
+    },
   ],
   es: [
-    { title: 'Core', price: 'Gratis', path: '/components', body: 'Botones, campos, modales, tema y DataTable. Las piezas que toda pantalla necesita.' },
-    { title: 'Iconos', price: 'Gratis', path: '/icons', body: 'Set opcional. Instala @forgedevstack/bear-icons solo si quieres los iconos. Core se ve igual sin ellos.' },
-    { title: 'Flutter', price: 'Gratis', path: '/products/flutter', body: 'Widgets móviles con los mismos tokens. Botón, campo, tarjeta, barra, lista, diálogo y bottom sheet.' },
-    { title: 'Bloques', price: 'Gratis', path: '/products/blocks', body: 'Pantallas terminadas. El panel es un título y tarjetas de cifras. Pagas solo si añades Bear Grid debajo.' },
-    { title: 'Grid', price: '$9 / año', path: '/products/grid', body: 'Fijar, agrupar y Excel. Una clave, una app, por email después del pago. La marca de agua sigue hasta que pegas la clave.' },
-    { title: 'Gráficos', price: 'Gratis', path: '/products/charts', body: 'Barras, líneas, área, pastel, radar, gauge, heatmap y las otras formas habituales.' },
-    { title: 'IA', price: 'Gratis', path: '/products/ai', body: 'Chat, compositor, streaming, herramientas y citas para tu propia app.' },
-    { title: 'Código', price: 'Gratis', path: '/products/code', body: 'Editor, terminal, diff y visor JSON. Ink es el editor enriquecido, no este paquete.' },
-    { title: 'Mapa', price: 'Gratis', path: '/products/map', body: 'Teselas de calle, claro, oscuro y terreno, con zoom y arrastre.' },
-    { title: 'Kanban', price: 'Gratis', path: '/products/kanban', body: 'Un tablero de columnas y tarjetas en su propio paquete.' },
-    { title: 'Calendario', price: 'Gratis', path: '/products/calendar', body: 'Cuadrícula de eventos y línea de tiempo de recursos.' },
-    { title: 'Ink', price: 'Licencia propia', path: '/products/ink', body: 'Texto enriquecido: tablas, comentarios y control de cambios. La clave de $9 de Bear no abre Ink.' },
+    {
+      title: 'Bear Core',
+      rows: [
+        { feature: 'Button, Input, Modal, tema', cells: [yes, yes, no] },
+        { feature: 'DataTable con orden y cabecera fija', cells: [yes, yes, no] },
+        { feature: 'Iconos', cells: [yes, yes, no] },
+        { feature: 'Flutter (los mismos tokens)', cells: [yes, yes, no] },
+        { feature: 'Bloques, la pantalla de panel', cells: [yes, yes, no] },
+        { feature: 'Gráficos, mapa, calendario, kanban, IA, código', cells: [yes, yes, no] },
+        { feature: 'Ask Bear en la documentación', cells: [yes, yes, no] },
+      ],
+    },
+    {
+      title: 'Bear Grid',
+      rows: [
+        { feature: 'Columnas fijadas', cells: [no, yes, no] },
+        { feature: 'Agrupación de filas', cells: [no, yes, no] },
+        { feature: 'Exportación Excel y CSV', cells: [no, yes, no] },
+        { feature: 'Funciona antes de comprar', cells: ['DataTable gratis', 'Sí, con marca de agua', no] },
+        { feature: 'Marca de agua quitada', cells: [no, 'Con la clave', no] },
+      ],
+    },
+    {
+      title: 'Ingot',
+      rows: [
+        { feature: 'IDE de IA de código abierto', cells: [no, no, yes] },
+        { feature: 'Tus propias claves de modelo', cells: [no, no, yes] },
+        { feature: 'Agentes, plugins y atajos', cells: [no, no, yes] },
+        { feature: 'Incluido en la clave Bear Pro', cells: [no, no, no] },
+        { feature: 'Planes de pago de Ingot', cells: [no, no, 'Aún sin precio'] },
+      ],
+    },
+    {
+      title: 'Licencia',
+      rows: [
+        { feature: 'Precio', cells: ['$0', '$9 / año', 'Gratis para empezar'] },
+        { feature: 'Cubre', cells: ['Cualquier app, MIT', 'Una app', 'El IDE, Apache-2.0'] },
+        { feature: 'Texto enriquecido de Ink', cells: ['Licencia propia', 'Licencia propia', no] },
+      ],
+    },
+  ],
+};
+
+export const PRICING_FACTS: Record<PortalLanguage, PricingFact[]> = {
+  en: [
+    {
+      title: 'What the $9 pays for',
+      body: 'Column pin, row grouping, and Excel or CSV export in Bear Grid. Sort and a sticky header stay on the free DataTable, so a simple table does not need a license.',
+    },
+    {
+      title: 'What Blocks are',
+      body: 'A block is a finished screen made from Bear components. DashboardBlock is a title and stat cards. It is free and has no watermark. You pay only when the table under those cards needs Bear Grid.',
+    },
+    {
+      title: 'One app, one key',
+      body: 'The intro price is $9 for one year and one app. The key arrives in the receipt email. Paste it on this page and the watermark goes away in that browser.',
+    },
+    {
+      title: 'You can try the grid first',
+      body: 'Bear Grid still runs without a key. Pin, grouping, and export show a Bear Pro mark and one console warning until the key is saved.',
+    },
+    {
+      title: 'Ingot is separate',
+      body: 'Ingot is the open-source AI IDE: a calm desktop editor, any model with your own key, agents, plugins, and an IDE keymap. It is Apache-2.0 and still in development. It is not a Bear component, and the Bear Pro key does not include it. Paid Ingot plans are not priced yet.',
+    },
+    {
+      title: 'Ink is separate',
+      body: 'Ink is the rich-text editor, with tables, comments, and track changes. It has its own license. Bear RichEditor stays the lighter editor in Core.',
+    },
+  ],
+  es: [
+    {
+      title: 'Qué pagan los $9',
+      body: 'Fijar columnas, agrupar filas y exportar Excel o CSV en Bear Grid. El orden y la cabecera fija siguen en DataTable gratis, así que una tabla simple no necesita licencia.',
+    },
+    {
+      title: 'Qué son los bloques',
+      body: 'Un bloque es una pantalla terminada hecha con componentes de Bear. DashboardBlock es un título y tarjetas de cifras. Es gratis y no tiene marca de agua. Pagas solo cuando la tabla bajo esas tarjetas necesita Bear Grid.',
+    },
+    {
+      title: 'Una app, una clave',
+      body: 'El precio de entrada es $9 por un año y una app. La clave llega en el email del recibo. Pégala en esta página y la marca de agua desaparece en ese navegador.',
+    },
+    {
+      title: 'Puedes probar la tabla antes',
+      body: 'Bear Grid funciona sin clave. Fijar, agrupar y exportar muestran la marca Bear Pro y un aviso en la consola hasta que guardas la clave.',
+    },
+    {
+      title: 'Ingot es aparte',
+      body: 'Ingot es el IDE de IA de código abierto: un editor de escritorio, cualquier modelo con tu clave, agentes, plugins y atajos de IDE. Es Apache-2.0 y sigue en desarrollo. No es un componente de Bear, y la clave Bear Pro no lo incluye. Los planes de pago de Ingot aún no tienen precio.',
+    },
+    {
+      title: 'Ink es aparte',
+      body: 'Ink es el editor enriquecido, con tablas, comentarios y control de cambios. Tiene su propia licencia. RichEditor de Bear sigue siendo el editor ligero de Core.',
+    },
+  ],
+};
+
+export const PRICING_FAQ: Record<PortalLanguage, PricingFaq[]> = {
+  en: [
+    {
+      question: 'Do I need to pay for Blocks?',
+      answer: 'No. DashboardBlock is free. The $9 is for Bear Grid: pin, grouping, and Excel under that screen.',
+    },
+    {
+      question: 'How do I remove the watermark?',
+      answer: 'Buy Pro, then paste the key from the receipt email into the form on this page. Checkout is not linked here yet.',
+    },
+    {
+      question: 'Does the Bear key include Ingot or Ink?',
+      answer: 'No. Ingot is the AI IDE and starts free with your own model keys. Ink has its own license. The $9 key is only Bear Grid.',
+    },
+    {
+      question: 'Is Flutter free?',
+      answer: 'Yes. The mobile kit uses the same color, radius, space, and type as Bear. Web stays React.',
+    },
+  ],
+  es: [
+    {
+      question: '¿Hay que pagar por los bloques?',
+      answer: 'No. DashboardBlock es gratis. Los $9 son de Bear Grid: fijar, agrupar y Excel bajo esa pantalla.',
+    },
+    {
+      question: '¿Cómo quito la marca de agua?',
+      answer: 'Compra Pro y pega la clave del email del recibo en el formulario de esta página. Aquí todavía no hay un enlace de pago.',
+    },
+    {
+      question: '¿La clave de Bear incluye Ingot o Ink?',
+      answer: 'No. Ingot es el IDE de IA y empieza gratis con tus claves de modelo. Ink tiene su propia licencia. La clave de $9 es solo Bear Grid.',
+    },
+    {
+      question: '¿Flutter es gratis?',
+      answer: 'Sí. El kit móvil usa el mismo color, radio, espacio y tipo que Bear. La web sigue en React.',
+    },
   ],
 };

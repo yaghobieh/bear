@@ -12,7 +12,9 @@ Flat vector style. The only word is Bear. No watermark, no camera move, no extra
 export const HOME_SIDE_RATING = 4;
 export const HOME_SIDE_PROGRESS = 68;
 
-export const HOME_PRODUCTS: { path: string; nameKey: PortalCopyKey; descKey: PortalCopyKey }[] = [
+export const INGOT_URL = 'https://github.com/yaghobieh/ingot';
+
+export const HOME_PRODUCTS: { path: string; nameKey: PortalCopyKey; descKey: PortalCopyKey; external?: boolean }[] = [
   { path: '/icons', nameKey: 'productIconsName', descKey: 'productIconsDesc' },
   { path: '/products/flutter', nameKey: 'productFlutterName', descKey: 'productFlutterDesc' },
   { path: '/products/grid', nameKey: 'productGridName', descKey: 'productGridDesc' },
@@ -23,6 +25,7 @@ export const HOME_PRODUCTS: { path: string; nameKey: PortalCopyKey; descKey: Por
   { path: '/products/map', nameKey: 'productMapName', descKey: 'productMapDesc' },
   { path: '/products/calendar', nameKey: 'productCalendarName', descKey: 'productCalendarDesc' },
   { path: '/products/ink', nameKey: 'productInkName', descKey: 'productInkDesc' },
+  { path: INGOT_URL, nameKey: 'productIngotName', descKey: 'productIngotDesc', external: true },
   { path: '/products/kanban', nameKey: 'productKanbanName', descKey: 'productKanbanDesc' },
   { path: '/templates', nameKey: 'productTemplatesName', descKey: 'productTemplatesDesc' },
   { path: '/products/ai', nameKey: 'productAiName', descKey: 'productAiDesc' },

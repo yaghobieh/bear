@@ -3,6 +3,14 @@ import type { CSSProperties, ReactNode } from 'react';
 /**
  * Marker to display on the map
  */
+export interface MarkerDragState {
+  marker: MapMarker;
+  startX: number;
+  startY: number;
+  originLat: number;
+  originLng: number;
+}
+
 export interface MapMarker {
   /** Unique identifier */
   id: string;

@@ -2,6 +2,21 @@
 
 All notable changes to Bear UI will be documented in this file.
 
+## [1.3.7] - 2026-11-05
+
+### Fixed
+
+- **LoadingOverlay** — `overlayOpacity` and blur sit on the backdrop. The spinner and label stay fully visible.
+- **ActiveBar** — the default selected item uses the theme primary color.
+- **Alert** — standard and dark colors use Bear theme tokens (`--bear-success-*`, `--bear-info-*`, `--bear-warning-*`, `--bear-danger-*`).
+- **Focus trap** — Menu, Dropdown, Popover, ContextMenu, and Spotlight trap Tab and restore focus. Tooltip and HoverCard stay open to the page.
+- **Map** — a marker with `draggable` reports the new latitude and longitude through `onMarkerDrag`.
+
+### Added
+
+- **Charts** — `series` on line and area charts draws more than one line on a shared scale.
+- **bear-blocks** — `ListBlock` joins `DashboardBlock`.
+
 ## [1.3.6] - 2026-10-25
 
 ### Added

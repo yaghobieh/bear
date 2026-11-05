@@ -16,6 +16,7 @@ import {
   SUB_MENU_OFFSET,
 } from '../../ContextMenu.const';
 import { clampMenuPosition, isDivider } from '../../ContextMenu.utils';
+import { useFocusTrap } from '@hooks/useFocusTrap';
 
 type ContextMenuMenuListProps = {
   items: ContextMenuEntry[];
@@ -29,6 +30,7 @@ export const ContextMenuMenuList = (props: ContextMenuMenuListProps) => {
   const [subPos, setSubPos] = useState({ x: 0, y: 0 });
   const [adjustedPos, setAdjustedPos] = useState(position);
   const menuRef = useRef<HTMLDivElement>(null);
+  useFocusTrap(menuRef, { enabled: true, onEscape: onClose });
 
   useLayoutEffect(() => {
     setAdjustedPos(position);

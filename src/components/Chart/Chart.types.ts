@@ -8,6 +8,18 @@ export type ChartLegendPosition = 'right' | 'bottom' | 'none';
 
 export type ChartMotion = 'grow' | 'fade' | 'scale' | 'none';
 
+export interface LineScaleBounds {
+  min: number;
+  max: number;
+}
+
+export interface ChartSeries {
+  id: string;
+  label: string;
+  color?: string;
+  values: number[];
+}
+
 export interface ChartDataPoint {
   label: string;
   value: number;
@@ -16,6 +28,7 @@ export interface ChartDataPoint {
 }
 
 export interface ChartProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
+  series?: ChartSeries[];
   testId?: string;
   type?: ChartType;
   data: ChartDataPoint[];

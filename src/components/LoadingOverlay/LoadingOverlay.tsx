@@ -34,20 +34,23 @@ export const LoadingOverlay: FC<LoadingOverlayProps> = ({
       {visible && (
         <div
           className={OVERLAY_CLASS}
-          style={{
-            opacity: overlayOpacity,
-            backdropFilter: `blur(${overlayBlur}px)`,
-            WebkitBackdropFilter: `blur(${overlayBlur}px)`,
-            zIndex,
-          }}
+          style={{ zIndex }}
           aria-busy
           aria-live="polite"
         >
+          <div
+            className="Bear-LoadingOverlay__backdrop bear-absolute bear-inset-0 bear-bg-white dark:bear-bg-zinc-900"
+            style={{
+              opacity: overlayOpacity,
+              backdropFilter: `blur(${overlayBlur}px)`,
+              WebkitBackdropFilter: `blur(${overlayBlur}px)`,
+            }}
+          />
           {loader ?? (
-            <Spinner size={SPINNER_SIZE_MAP[loaderSize]} className="bear-text-primary-500 dark:bear-text-primary-400" />
+            <Spinner size={SPINNER_SIZE_MAP[loaderSize]} className="bear-relative bear-text-primary-500 dark:bear-text-primary-400" />
           )}
           {label && (
-            <Typography variant="body2" color="secondary" className={LABEL_CLASS}>
+            <Typography variant="body2" color="secondary" className={`bear-relative ${LABEL_CLASS}`}>
               {label}
             </Typography>
           )}

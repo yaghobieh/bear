@@ -35,7 +35,13 @@ jobs:
         run: npm run build
 
       - name: Publish to npm
-        run: npm publish --access public --provenance
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if npm view "@forgedevstack/bear@${VERSION}" version >/dev/null 2>&1; then
+            echo "@forgedevstack/bear@${VERSION} is already on npm"
+          else
+            npm publish --access public --provenance
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -43,8 +49,19 @@ jobs:
         run: |
           npm run build --prefix packages/bear-grid
           npm run build --prefix packages/bear-blocks
-          npm --prefix packages/bear-grid publish --access public --provenance
-          npm --prefix packages/bear-blocks publish --access public --provenance
+          publish_if_new() {
+            local dir="$1"
+            local name version
+            name=$(node -p "require('./${dir}/package.json').name")
+            version=$(node -p "require('./${dir}/package.json').version")
+            if npm view "${name}@${version}" version >/dev/null 2>&1; then
+              echo "${name}@${version} is already on npm"
+            else
+              npm --prefix "$dir" publish --access public --provenance
+            fi
+          }
+          publish_if_new packages/bear-grid
+          publish_if_new packages/bear-blocks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 

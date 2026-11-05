@@ -10,6 +10,30 @@ export interface ChangelogEntry {
 
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
+    version: '1.3.7',
+    date: 'November 5, 2026',
+    tag: 'patch',
+    sections: [
+      {
+        title: 'Fixed',
+        items: [
+          'LoadingOverlay opacity and blur apply to the backdrop. The spinner and label stay opaque.',
+          'ActiveBar default selection uses the theme primary color.',
+          'Alert standard colors follow Bear success, info, warning, and danger tokens, including dark mode.',
+          'Menu, Dropdown, Popover, ContextMenu, and Spotlight trap focus. Tooltip and HoverCard do not.',
+          'Map markers with draggable call onMarkerDrag with the new latitude and longitude.',
+        ],
+      },
+      {
+        title: 'Added',
+        items: [
+          'Line and area charts accept series and share one scale.',
+          'bear-blocks exports ListBlock next to DashboardBlock.',
+        ],
+      },
+    ],
+  },
+  {
     version: '1.3.6',
     date: 'October 25, 2026',
     tag: 'minor',

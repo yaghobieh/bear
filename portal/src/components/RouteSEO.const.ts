@@ -10,7 +10,7 @@ export const SEO_MAP: Record<string, SEOEntry> = {
   '/installation': { title: 'Installation', description: `Install Bear UI by ${SEO_AUTHOR_NAME} in your React project. npm, yarn, pnpm setup with AeroCraft CSS and TypeScript.` },
   '/changelog': { title: 'Changelog', description: `Bear UI release notes and changelog — latest updates by ${SEO_AUTHOR_NAME}.` },
   '/skills': { title: 'Skills', description: `Cursor AI skills for Bear UI development — component patterns, code review, and portal docs by ${SEO_AUTHOR_NAME}.` },
-  '/whats-new': { title: "What's New", description: `What's new in Bear UI v1.3.6 — Flutter, Bear Grid, and $9 Pro by ${SEO_AUTHOR_NAME}.` },
+  '/whats-new': { title: "What's New", description: `What's new in Bear UI v1.3.7 — overlay fixes, chart series, and ListBlock by ${SEO_AUTHOR_NAME}.` },
   '/pricing': { title: 'Pricing', description: `Bear UI pricing by ${SEO_AUTHOR_NAME}. Community is free. Pro is $9 a year for Bear Grid.` },
   '/components/toggle-group': { title: 'ToggleGroup', description: `Two-state button group supporting single or multiple selection with WAI-ARIA roving tabindex keyboard navigation by ${SEO_AUTHOR_NAME}.` },
   '/components/ai-chat': { title: 'AI chat kit', description: `Bear UI AI chat primitives — composer, streaming, tools, citations, and approvals by ${SEO_AUTHOR_NAME}.` },

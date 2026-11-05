@@ -40,7 +40,7 @@ export const BEAR_LIBRARIES: BearLibraryCard[] = [
     kind: 'library',
     summaryKey: 'librariesBlocks',
     install: 'npm install @forgedevstack/bear @forgedevstack/bear-blocks',
-    components: ['DashboardBlock'],
+    components: ['DashboardBlock', 'ListBlock'],
   },
   {
     id: 'charts',

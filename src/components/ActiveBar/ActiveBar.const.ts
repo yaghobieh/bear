@@ -17,7 +17,7 @@ export const ACTIVE_BAR_VARIANT_CLASSES: Record<ActiveBarVariant, { active: stri
     inactive: 'bear-text-gray-600 dark:bear-text-gray-400 hover:bear-text-gray-900 dark:hover:bear-text-gray-200',
   },
   [VARIANT_DEFAULT]: {
-    active: 'bear-bg-gray-100 dark:bear-bg-gray-800 bear-text-gray-900 dark:bear-text-white bear-font-medium',
+    active: 'bear-bg-primary-100 dark:bear-bg-primary-900/40 bear-text-primary-700 dark:bear-text-primary-200 bear-font-medium',
     inactive: 'bear-text-gray-600 dark:bear-text-gray-400 hover:bear-bg-gray-50 dark:hover:bear-bg-gray-800/50',
   },
 };

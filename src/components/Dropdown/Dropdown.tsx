@@ -1,6 +1,7 @@
 import { FC, useState, useRef, useCallback, useEffect, cloneElement, isValidElement, ReactElement, useMemo } from 'react';
 import { cn } from '@utils';
 import { resolveOverlayEffects, useClickOutsideMultiple, useFixedAnchorPosition } from '@hooks';
+import { useFocusTrap } from '@hooks/useFocusTrap';
 import type { OverlayPlacement } from '@hooks/useFixedAnchorPosition';
 import { OverlayPortal } from '../OverlayPortal';
 import type { DropdownProps, DropdownItem } from './Dropdown.types';
@@ -102,6 +103,11 @@ export const Dropdown: FC<DropdownProps> = (props) => {
   const handleClickOutside = useCallback(() => {
     if (isOpen && closeOnClickOutside) close();
   }, [isOpen, closeOnClickOutside, close]);
+
+  useFocusTrap(menuRef, {
+    enabled: isOpen,
+    onEscape: close,
+  });
 
   useClickOutsideMultiple([containerRef, menuRef], handleClickOutside, {
     enabled: isOpen && closeOnClickOutside,

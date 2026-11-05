@@ -4,6 +4,7 @@ import { PopoverProps } from './Popover.types';
 import { cn } from '@utils';
 import { TWO } from '@constants';
 import { resolveOverlayEffects } from '@hooks/useFixedAnchorPosition';
+import { useFocusTrap } from '@hooks/useFocusTrap';
 import {
   POPOVER_Z_INDEX,
   POPOVER_DEFAULT_OFFSET,
@@ -137,6 +138,11 @@ export const Popover: FC<PopoverProps> = ({
 
   const arrowDirection = placement.split('-')[0];
   const { openEffect } = resolveOverlayEffects({ openEffect: openEffectProp, closeEffect: closeEffectProp, effect }, 'fade');
+  useFocusTrap(contentRef, {
+    enabled: isOpen,
+    onEscape: closeOnEscape ? () => setIsOpen(false) : undefined,
+  });
+
   const effectClass = POPOVER_EFFECT_CLASS_MAP[openEffect] ?? POPOVER_EFFECT_CLASS_MAP.fade;
 
   const portalContent =

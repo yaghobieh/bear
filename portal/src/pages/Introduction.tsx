@@ -217,7 +217,7 @@ const Introduction: FC = () => {
                   variant="standard"
                   severity="success"
                   icon={<BearIcons.CheckIcon size={18} />}
-                  title="Bear v1.3.6 Loaded"
+                  title="Bear v1.3.7 Loaded"
                 >
                   Zero config needed. Full TypeScript IntelliSense enabled.
                 </Alert>

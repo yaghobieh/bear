@@ -1,6 +1,7 @@
 import { FC, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { cn } from '@utils';
 import { resolveOverlayEffects } from '@hooks/useFixedAnchorPosition';
+import { useFocusTrap } from '@hooks/useFocusTrap';
 import { Portal } from '../Portal';
 import { MENU_Z_INDEX, MENU_EFFECT_CLASS_MAP } from './Menu.const';
 import type { MenuProps } from './Menu.types';
@@ -118,6 +119,11 @@ export const Menu: FC<MenuProps> = ({
       document.removeEventListener('keydown', handleEscape);
     };
   }, [open, anchorEl, onClose]);
+
+  useFocusTrap(menuRef, {
+    enabled: open,
+    onEscape: () => onClose?.(),
+  });
 
   const { openEffect } = resolveOverlayEffects(props, 'fade');
   const effectClass = MENU_EFFECT_CLASS_MAP[openEffect] ?? MENU_EFFECT_CLASS_MAP.fade;

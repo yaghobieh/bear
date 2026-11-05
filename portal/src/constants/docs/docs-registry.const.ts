@@ -52,7 +52,7 @@ import { createMcpServer, textResult } from '@forgedevstack/forge-mcp';
 
 const { start } = createMcpServer({
   name: 'bear-ui',
-  version: '1.3.6',
+  version: '1.3.7',
   tools: [
     {
       name: 'list-components',

@@ -10,6 +10,7 @@ import {
   FOCUS_DELAY,
 } from './Spotlight.const';
 import { matchAction, highlightText } from './Spotlight.utils';
+import { useFocusTrap } from '@hooks/useFocusTrap';
 
 /**
  * Spotlight - macOS-style search overlay (Cmd+K).
@@ -36,6 +37,7 @@ export const Spotlight: FC<SpotlightProps> = (props) => {
   const [query, setQuery] = useState('');
   const [activeIndex, setActiveIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
   const isOpen = controlledOpen ?? internalOpen;
@@ -50,6 +52,11 @@ export const Spotlight: FC<SpotlightProps> = (props) => {
     },
     [onOpenChange]
   );
+  useFocusTrap(dialogRef, {
+    enabled: isOpen,
+    autoFocus: false,
+    onEscape: () => setOpen(false),
+  });
 
   // Keyboard shortcut listener
   useEffect(() => {
@@ -150,6 +157,7 @@ export const Spotlight: FC<SpotlightProps> = (props) => {
           className,
         )}
         style={style}
+        ref={dialogRef}
         role="dialog"
         aria-label="Search"
       >

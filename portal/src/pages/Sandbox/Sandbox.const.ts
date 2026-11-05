@@ -65,7 +65,7 @@ export const SANDBOX_PACKAGE_JSON = `{
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
-    "@forgedevstack/bear": "1.3.6",
+    "@forgedevstack/bear": "1.3.7",
     "@forgedevstack/bear-grid": "0.1.0",
     "@forgedevstack/bear-blocks": "0.1.0",
     "@forgedevstack/bear-icons": "1.0.3",

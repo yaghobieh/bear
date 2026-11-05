@@ -1,6 +1,6 @@
-import { FC, useRef, useState, useCallback, useMemo } from 'react';
+import { FC, useRef, useState, useCallback, useMemo, type PointerEvent as ReactPointerEvent } from 'react';
 import {cn } from '@utils';
-import type { MapProps, MapViewport } from './Map.types';
+import type { MapMarker, MapProps, MapViewport, MarkerDragState } from './Map.types';
 import {
   DEFAULT_VIEWPORT,
   DEFAULT_MARKER_COLOR,
@@ -37,7 +37,7 @@ export const Map: FC<MapProps> = ({
   onViewportChange,
   onMarkerClick,
   onMapClick,
-  onMarkerDrag: _onMarkerDrag,
+  onMarkerDrag,
   tileProvider = 'openstreetmap',
   customTileUrl,
   width = '100%',
@@ -55,6 +55,7 @@ export const Map: FC<MapProps> = ({
 }) => {
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const markerDragRef = useRef<MarkerDragState | null>(null);
   const [internalViewport, setInternalViewport] = useState<MapViewport>(
     initialViewport ?? DEFAULT_VIEWPORT
   );
@@ -175,6 +176,35 @@ export const Map: FC<MapProps> = ({
     [isDragging, dragStart, dragViewportStart, updateViewport]
   );
 
+  const handleMarkerPointerDown = useCallback((event: ReactPointerEvent<HTMLDivElement>, marker: MapMarker) => {
+    if (!marker.draggable) return;
+    event.stopPropagation();
+    event.preventDefault();
+    event.currentTarget.setPointerCapture(event.pointerId);
+    markerDragRef.current = {
+      marker,
+      startX: event.clientX,
+      startY: event.clientY,
+      originLat: marker.lat,
+      originLng: marker.lng,
+    };
+  }, []);
+
+  const handleMarkerPointerMove = useCallback((event: ReactPointerEvent<HTMLDivElement>) => {
+    const drag = markerDragRef.current;
+    if (!drag || !onMarkerDrag) return;
+    const dx = event.clientX - drag.startX;
+    const dy = event.clientY - drag.startY;
+    const z = vp.zoom;
+    const originX = lngToTileX(drag.originLng, z);
+    const originY = latToTileY(drag.originLat, z);
+    onMarkerDrag(drag.marker, tileYToLat(originY + dy / TILE_SIZE, z), tileXToLng(originX + dx / TILE_SIZE, z));
+  }, [onMarkerDrag, vp.zoom]);
+
+  const handleMarkerPointerUp = useCallback(() => {
+    markerDragRef.current = null;
+  }, []);
+
   const handleMouseUp = useCallback(() => {
     setIsDragging(false);
     setDragStart(null);
@@ -275,6 +305,9 @@ export const Map: FC<MapProps> = ({
             width: MARKER_SIZE,
             height: MARKER_SIZE,
           }}
+          onPointerDown={(event) => handleMarkerPointerDown(event, marker)}
+          onPointerMove={handleMarkerPointerMove}
+          onPointerUp={handleMarkerPointerUp}
           onClick={(e) => {
             e.stopPropagation();
             setSelectedMarker(selectedMarker === marker.id ? null : marker.id);

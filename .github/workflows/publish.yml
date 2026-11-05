@@ -43,7 +43,7 @@ jobs:
           echo "$out"
           if [ "$code" -ne 0 ]; then
             echo "$out" | grep -q "previously staged version\|You cannot publish over the previously published versions" || exit "$code"
-            echo "Bear 1.3.6 is already published."
+            echo "This Bear version is already published."
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -65,8 +65,20 @@ jobs:
             writeFileSync(file, `${JSON.stringify(pkg, null, 2)}\n`);
           }
           EOF
-          npm publish ./packages/bear-grid --access public --provenance
-          npm publish ./packages/bear-blocks --access public --provenance
+          publish_pkg() {
+            local dir="$1"
+            set +e
+            out=$(npm publish "./${dir}" --access public --provenance 2>&1)
+            code=$?
+            set -e
+            echo "$out"
+            if [ "$code" -ne 0 ]; then
+              echo "$out" | grep -q "previously staged version\|You cannot publish over the previously published versions" || exit "$code"
+              echo "${dir} is already published."
+            fi
+          }
+          publish_pkg packages/bear-grid
+          publish_pkg packages/bear-blocks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 

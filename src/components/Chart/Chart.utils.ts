@@ -1,6 +1,6 @@
 import { ZERO, ONE } from '@const';
 import { DEFAULT_COLORS, CHART } from './Chart.const';
-import type { ChartMotion } from './Chart.types';
+import type { ChartMotion, LineScaleBounds } from './Chart.types';
 
 export const chartMotionClass = (animated: boolean, motion: ChartMotion | undefined, fallback: string): string => {
   if (!animated || motion === 'none') return '';
@@ -82,10 +82,11 @@ export const generateLinePath = (
 };
 
 export const calculateLinePoints = (
-  data: Array<{ value: number }>
+  data: Array<{ value: number }>,
+  bounds?: LineScaleBounds,
 ): Array<{ x: number; y: number }> => {
-  const maxValue = Math.max(...data.map((d) => d.value));
-  const minValue = Math.min(...data.map((d) => d.value));
+  const maxValue = bounds?.max ?? Math.max(...data.map((d) => d.value));
+  const minValue = bounds?.min ?? Math.min(...data.map((d) => d.value));
   const range = maxValue - minValue || ONE;
   const lastIndex = data.length - ONE || ONE;
 
